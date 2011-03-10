@@ -126,11 +126,31 @@ und zum Abschluss ein einfarbig-roter Streifen.
 Zusätzlich kann in der rechten oberen Ecke des Absenderbereich ein
 Instituts-Logo platziert werden.
 
+\subsection{Befehle}
+
+Es können die Standardbefehle zur Titelseitenerstellung, wie
+\lstinline{\title},
+\lstinline{\subtitle},
+\lstinline{\author}
+und \lstinline{\logo} verwendet werden.
+
+Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
+
+\begin{lstlisting}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+\end{lstlisting}
+
+Für die Einbindung des Titelbildes stehen weitere Nicht-Standard-Befehle zur
+Verfügung.
+
+
 \subsection{Bild}
 
 Damit das Bild auf der Titelfolie den gesamten zur Verfügung stehenden Raum
 ausfüllen kann, muss es ein korrektes Seitenverhältnis haben.
-In Tabelle \ref{tab:picratio} sind Bild-Seitenverhältnisse für verschiedene
+In Tabelle \ref{tab:picratio} sind Bild-Seiten\-verhältnisse für verschiedene
 Seitenverhältnisse der Präsentation aufgeführt.
 
 \begin{table}[ht]
@@ -145,7 +165,7 @@ $16:10$ & \\
 \end{tabular}
 \caption{Bild-Seitenverhältnisse}
 \label{tab:picratio}
-\end{table}
+\end{table}%TODO: Tabelle füllen
 
 Werden keine korrekten Verhältnisse verwendet, wird das Bild vertikal
 skaliert und zentriert im Bildbereich dargestellt.
@@ -155,7 +175,8 @@ einem Gelbton aus den Sekundärfarben eingefärbt.\medskip
 
 Die Einbindung der Bildes erfolgt mit dem Befehl \lstinline{\titlegraphic}.
 
-Nutze: \lstinline{\titlegraphicsheight}
+Die Verwendung von \lstinline{\titlegraphicsheight} als Höhenbeschränkung für
+die Grafik stellt deren automatische korrekte vertikale Skalierung sicher.
 
 \begin{example}
 \begin{lstlisting}
@@ -163,7 +184,24 @@ Nutze: \lstinline{\titlegraphicsheight}
 \end{lstlisting}
 \end{example}
 
-% 
+\subsection{Logo}
+
+Das mittels \lstinline{\logo} eingebundene Logo wird in der rechten oberen
+Ecke des Absenderbereiches angezeigt und standardmäßig auch auf allen weiteren
+Folien im Fußbereich, sofern nicht die Option \lstinline{nologoinfoot}
+verwendet wird.
+
+Die Verwendung von \lstinline{\logoheight} als Höhenbeschränkung für Grafiken
+stellt deren automatische korrekte vertikale Skalierung sicher.
+Das Seitenverhältnis der verwendeten Grafik-Datei ist dabei relativ
+frei, sollte jedoch nach Möglichkeit und Gründen der Lesbarkeit mehr Breite als
+Höhe haben.
+
+\begin{example}
+\begin{lstlisting}
+\logo{\includegraphics[height=\logoheight]{institut.jpg}}
+\end{lstlisting}
+\end{example}
 
 
 \section{Fuzeile}
@@ -185,7 +223,8 @@ Support von aspectratio
 
 \section{Optionen}
 
-% \command{\usetheme\oarg{options}\marg{TU-CD}}
+Auflistung aller Theme-spezieller Optionen zur Übergabe and die
+Dokumentenklasse.
 
 \subsection{Kopf-/Fußbereich}
 
