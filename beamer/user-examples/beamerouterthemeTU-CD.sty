@@ -280,13 +280,6 @@
 }
 \vspace{9pt}
 }
-\iftrue
-
-\else
-
-\fi
-
-
 \end{minipage}
 \begin{minipage}{\paperwidth}
 \vspace*{-16mm}
@@ -309,10 +302,17 @@
 }
 
 %% This new environment allows to switch the headline-color
-\newenvironment{highlightframe}[1]{\setboolean{highlighttitle}{true}\begin{frame}{#1} }{
-    \end{frame}\setboolean{highlighttitle}{false}}
-\newenvironment{notitleframe}[1]{\setboolean{notitle}{true}\begin{frame}{#1} }{
-    \end{frame}\setboolean{notitle}{false}}
+\newenvironment{highlightframe}[1]{%
+  \setboolean{highlighttitle}{true}\begin{frame}{#1}%
+}{%
+  \end{frame}\setboolean{highlighttitle}{false}%
+}
+
+\newenvironment{notitleframe}[1]{%
+  \setboolean{notitle}{true}\begin{frame}{#1}%
+}{
+  \end{frame}\setboolean{notitle}{false}%
+}
 
 %% Strange numbers are 10/21 and 11/21
 \def\leftwidth{0.52\textwidth}
