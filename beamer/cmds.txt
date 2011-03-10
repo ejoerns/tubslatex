@@ -1,0 +1,61 @@
+\usetheme{TU-CD}
+
+\defineSecondary{Blue}
+
+\tulogo[zoom]
+
+\tulogoAbs{width}
+
+\titlegraphic{\includegraphics[height=\titlegraphicsheight]
+{../sechseck}}
+
+Optionen:
+
+nopagenum   - Keine Seitenzahl in Fußzeile
+% noendpagenum - gibts net!
+nodate      - Kein Datum in Fußzeile
+tocinheader - mitlaufendes Inhaltsverzeichnis
+tinytocinheader - wie tocinheader, jedoch mit kleinerer Schrift
+mathserif   - Euler-Schrift für Formelsatz
+rgbprint    - wird an TU-CDcolors weitergerecht
+              und schaltet die Farben auf die RGB-Druckwerte um
+fleqn       - sorgt für linksbündige Gleichungen
+t           -  ssetzt die Seiten von oben, nicht vertikal zentriert
+nosubsectionsinheader - 
+minion
+widetoc
+
+narrowtoc
+9,10,11,12,14
+
+
+env:
+highlightframe
+notitleframe
+leftside
+rightside
+narrowitemize
+emptyitemize
+
+
+
+
+\equivalent
+\newcommand\person{}%
+\person=\emph
+\new
+\engl
+\emph
+\qed
+\qedname{\rule{1ex}{1ex}}
+\tr{\mathop{\operator@font tr}\nolimits}
+\e{\mathop{\operator@font e}\nolimits}
+\D{\ensuremath{\upDelta}}
+\grad{\mathop{\operator@font grad}\nolimits}
+cases
+nomathindent
+
+
+\micro
+\nano
+
