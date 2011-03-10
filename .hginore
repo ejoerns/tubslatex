@@ -1,0 +1,4 @@
+syntax: glob
+
+TUBS_repo/*
+expl/*
