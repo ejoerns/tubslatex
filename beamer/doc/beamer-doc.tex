@@ -4,10 +4,11 @@
 \usepackage[LY1]{fontenc}
 \usepackage{ngerman}
 \usepackage{listings}
-\lstset{basicstyle=\sffamily}
+\lstset{basicstyle=\ttfamily}
 \usepackage{xcolor}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage{tikz} % TODO: should be RequirePackage
+\usepackage{booktabs}
 
 \input{beamerug-macros}
 
@@ -100,8 +101,8 @@ Bezug von CTAN: \url{http://www.ctan.org/tex-archive/fonts/urw/arial/}
 
 Grundsätzlich handelt es sich bei der Vorlage lediglich um ein Theme für
 das beamer-Paket. An der Funktionalität von beamer wird so gut wie nichts
-geändert, sodass für allgemeine Fragen zur Präsentationserstellung auf die
-entsprechende Dokumentation verwiesen wird. % TODO: LINK/BIB
+geändert, sodass für allgemeine Fragen zur Präsentationserstellung mit beamer
+auf die entsprechende Dokumentation verwiesen wird. % TODO: LINK/BIB
 
 Beschrieben werden hier alle Besonderheiten des Corporate-Design-Themes, sowie
 einige damit verbundene allgemeiner Hinweise gegeben.
@@ -110,8 +111,59 @@ einige damit verbundene allgemeiner Hinweise gegeben.
 
 \section{Titelfolie}
 
+Die Titelfolie ist im Absender/Kommunikations-Bereichslayout mit
+Spiegelband-Logo im Sinne der allgemeinen Gestaltungsprinzipien des
+Corporate Design gehalten.
+
+Die Kommunikationsfläche ist nach Vorlage des Gaußrasters %TODO: ref
+in 3 Bereiche aufgeteilt:
+Ein Bildbereich, der ein Foto oder eine Grafik als Blickfang enthalten
+sollte,
+darunter der Titelbereich, der Präsentationstitel, sowie alle relevanten
+Informationen trägt
+und zum Abschluss ein einfarbig-roter Streifen.
+
+Zusätzlich kann in der rechten oberen Ecke des Absenderbereich ein
+Instituts-Logo platziert werden.
+
 \subsection{Bild}
 
+Damit das Bild auf der Titelfolie den gesamten zur Verfügung stehenden Raum
+ausfüllen kann, muss es ein korrektes Seitenverhältnis haben.
+In Tabelle \ref{tab:picratio} sind Bild-Seitenverhältnisse für verschiedene
+Seitenverhältnisse der Präsentation aufgeführt.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}
+\toprule
+\bfseries Präsentation  & \bfseries  Bild  \\
+\midrule
+$3:4$ &  $1:3,146$ \\
+$16:10$ & \\
+\bottomrule
+\end{tabular}
+\caption{Bild-Seitenverhältnisse}
+\label{tab:picratio}
+\end{table}
+
+Werden keine korrekten Verhältnisse verwendet, wird das Bild vertikal
+skaliert und zentriert im Bildbereich dargestellt.
+
+Der Bildbereich kann theoretisch auch freigelassen werden, er ist mit
+einem Gelbton aus den Sekundärfarben eingefärbt.\medskip
+
+Die Einbindung der Bildes erfolgt mit dem Befehl \lstinline{\titlegraphic}.
+
+Nutze: \lstinline{\titlegraphicsheight}
+
+\begin{example}
+\begin{lstlisting}
+\titlegraphic{\includegraphics[height=\titlegraphicsheight]{titlepicture } }
+\end{lstlisting}
+\end{example}
+
+% 
 
 
 \section{Fuzeile}
