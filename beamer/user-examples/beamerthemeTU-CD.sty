@@ -1,0 +1,78 @@
+\ProvidesPackage{beamerthemeTU-CD}[2010/05/17  v1.00  IfW-Slides (beamer)]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+% Modified by Martin Baeker 2010 <martin.baeker@tu-bs.de>
+
+% Option nopagenum entfernt die Seitenzahl aus der Fusszeile
+%        nodate tut dasselbe mit dem Datum
+% Fontgrößen: 9pt entspricht in etwa der ppt-Vorlage
+%  Für bessere Lesbarkeit sind auch 10pt oder 11pt möglich
+%        (12pt macht z.Zt. Probleme mit mitlaufendem
+%         Inhaltsverzeichnis)
+%
+%  Die Option minion kann (mit entsprechender Anpassung in
+% beamerinnertheme) verwendet werden, um zwischen unterschiedlichen
+% Fonts umzuschalten. Leider ist aber ja Arial (bzw. in LaTeX
+% Helvetica) vorgeschrieben - vielleicht gibt es ja irgendwann Nexus
+% für die Folien...
+%
+% Rechts oben kann ein mitlaufendes Inhaltsverzeichnis eingeblendet
+% werden. Dazu die Option
+%  tocinheader   angeben
+% Falls nur sections, aber keine subsections eingeblendet werden
+% sollen, zusätzlich die Option
+% nosubsectionsinheader   setzen
+% Falls die Schrift zu groß ist, kann statt der Option
+% tocinheader die Option tinytocinheader angegeben werden, die eine
+% kleinere Schriftgröße auswählt.
+%\PassOptionsToPackage{rgb,600}{ifwlogo}
+\PassOptionsToPackage{rgb}{TU-logo}
+\DeclareOptionBeamer{minion}{\PassOptionsToPackage{minion}{beamerinnerthemeTU-CD}}
+\DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgbprint}{beamercolorthemeTU-CD}%
+%\PassOptionsToPackage{rgbprint,600}{ifwlogo}
+\PassOptionsToPackage{rgbprint}{TU-logo}}
+\DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{beamercolorthemeTU-CD}%
+%\PassOptionsToPackage{cmyk}{ifwlogo}
+\PassOptionsToPackage{cmyk}{TU-logo}}
+
+\DeclareOptionBeamer{nopagenum}{\PassOptionsToPackage{nopagenum}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{nodate}{\PassOptionsToPackage{nodate}{beamerouterthemeTU-CD}}
+%%% BEGIN EDITED
+% \DeclareOptionBeamer{noendpagenum}{
+%   \PassOptionsToPackage{noendpagenum}{beamerouterthemeTU-CD}}
+%%% END EDITED
+\DeclareOptionBeamer{tocinheader}{\PassOptionsToPackage{tocinheader}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{nosubsectionsinheader}{\PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemeTU-CD}}
+%% Needed to fix spacing in the running toc in the header
+\DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerouterthemeTU-CD}}
+
+
+
+\ProcessOptionsBeamer
+%\RequirePackage{ifwlogo}
+\RequirePackage{TU-logo}
+
+\mode<presentation>
+
+\usecolortheme{TU-CD}
+\useoutertheme{TU-CD}
+\useinnertheme{TU-CD}
+
+% The title on the left top enters into the spacing of the
+% framtetitle.
+% If the user does not set it, set a dummy
+\title{ \rule{0em}{0.5em}}
+\author{ \rule{0em}{0.5em}}
+
+\mode
+<all>

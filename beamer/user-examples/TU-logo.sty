@@ -1,0 +1,33 @@
+\ProvidesPackage{tulogo}%[2010/05/19  v1.00  ]
+\RequirePackage{graphics}
+\RequirePackage{ifthen}
+
+\newboolean{rgbprintLogo}
+\setboolean{rgbprintLogo}{false}
+\newboolean{cmykLogo}
+\setboolean{cmykLogo}{false}
+
+\DeclareOption{rgb}{}
+\DeclareOption{rgbprint}{\setboolean{rgbprintLogo}{true}}
+\DeclareOption{cmyk}{\setboolean{cmykLogo}{true}}
+
+\newlength{\tulogoWidth}
+\setlength{\tulogoWidth}{0.7mm}
+%
+%
+\ExecuteOptions{rgb}%
+\ProcessOptions
+%
+%
+\ifthenelse{\boolean{cmykLogo}}{%
+\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-cmyk}}
+\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
+}{%
+\ifthenelse{\boolean{rgbprintLogo}}{%
+\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
+\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
+}
+{%% RGB
+\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
+\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
+}}
