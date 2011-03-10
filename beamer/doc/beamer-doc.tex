@@ -1,0 +1,209 @@
+\documentclass[a4paper,colorscheme=green,TUBStitlepage=picture]{tubsreprt}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[LY1]{fontenc}
+\usepackage{ngerman}
+\usepackage{listings}
+\lstset{basicstyle=\sffamily}
+\usepackage{xcolor}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{tikz} % TODO: should be RequirePackage
+
+\input{beamerug-macros}
+
+
+\author{Michael Dumke}
+\title{LaTeX-Präsentationen im Corporate Design}
+\institute{TU-Braunschweig}
+\subject{Anleitung und Dokumentation}
+% \institute{Institut für Lorem Ipsum}
+% \address{123 Fakestreet \\ 1337 Notown}
+
+% \renewcommand{\maketitle}{
+% \begin{TUBStitlepage}
+%   \TUBSGaussGridImageBox{6}{8}{0}{6}{./titlepicture}
+%   \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\bfseries\Huge\TUBStitle}
+%     {primary_white}{secondary_dark}{top}
+%   \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge\TUBSsubject\\ \Large
+%     \TUBSdate} {primary_white}{transparent}{bottom}
+%   \TUBSGaussGridTextBox{3}{4}{0}{6}{\sffamily\huge
+%     \TUBSauthor} {primary_white}{secondary_medium}{center}
+%   \TUBSGaussGridTextBox{0}{3}{0}{6}{Lorem ipsum dolor sit amet, consetetur
+%     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+% dolore
+%     magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+% duo
+%     dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+% est
+%     Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+%     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+% dolore %     magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
+% justo duo %     dolores et ea rebum. Stet clita kasd gubergren, no sea
+% takimata % sanctus est %     Lorem ipsum dolor sit
+% amet.}{secondary_dark}{secondary_light}{top}
+% \end{TUBStitlepage}
+% }
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+% \begin{abstract}
+% 
+% \end{abstract}
+
+
+\chapter{Installation}
+
+\section{Miktex}
+
+Unter Version 2.9 sollte es keine Probleme bei der Verwendung der Vorlage geben.
+Alle benötigten Pakete werden automatisch nachgeladen.
+
+\section{Texlive}
+
+\subsection{Fonts}
+
+\paragraph{Installation von Arial unter Linux}
+
+Erscheint die Warnung, dass das Paket \lstinline{uarial} nicht gefunden wurde,
+so ist Arial noch zu installieren.
+
+Dies lässt sich unter Linux mit Hilfe des Kommandos
+\lstinline{getnonfreefonts-sys} durchführen.
+
+\begin{lstlisting}
+sudo getnonfreefonts-sys arial-urw
+\end{lstlisting}
+
+Bezug von CTAN: \url{http://www.ctan.org/tex-archive/fonts/urw/arial/}
+
+\chapter{Anwendung}
+
+\section{Titelfolie}
+
+\subsection{Bild}
+
+
+
+\section{Fuzeile}
+
+In der Fußzeile steht laut Vorgabe Datum und Seitenzahl.
+Ist das mal nicht gewollt, einfach die Optionen \lstinline{nopagenum} bzw.
+\lstinline{nodate} angeben.
+
+Autor und Titel kommen aus dem optionalen Argument von \lstinline{\author}
+und \lstinline{\title}, sodass auch Kurztitel möglich sind.
+Ändert man im Babel-Paket die Sprache, ändert sich auch automatisch
+die Fußzeile (\textit{page} statt Seite, anderes Datumsformat).
+
+
+\section{Skalierbarkeit}
+
+Support von aspectratio
+
+
+\section{Optionen}
+
+% \command{\usetheme\oarg{options}\marg{TU-CD}}
+
+\subsection{Kopf-/Fußbereich}
+
+\begin{classoption}{nopagenum}
+  Blendet die mitlaufende Seitenzählung im Fuß der Folie aus
+\end{classoption}
+
+\begin{classoption}{nodate}
+  Blendet das Datum im Fuß der Folie aus.
+\end{classoption}
+
+\begin{classoption}{tocinheader}
+  Erzeugt ein mitlaufendes Inhaltsverzeichnis im Folienkopf,
+  das auch zur Navigation im Dokument genutz werden kann
+  (entsprechend der Standard-Beamer-Klassen).
+  
+  Angezeigt werden standardmäßig sections und subsections.
+  Sollen nur sections angezeigt werden, bitte die Option
+  \lstinline{nosubsectionsinheader} verwenden.
+  
+\end{classoption}
+
+\begin{classoption}{tinytocinheader}
+  Wie \lstinline{tocinheader}, jedoch mit kleinerer Schrift.
+
+  Kann eingesetzt werden für den Fall, dass das mit \lstinline{tocinheader}
+  erzeugte Inhaltsverzeichnis zu breit wirkt oder die Foliendimension
+  überragt.
+\end{classoption}
+
+\begin{classoption}{nosubsectionsinheader}
+  Deaktiviert die Anzeige von subsections im Header.
+  
+  Nur wirksam, wenn Option \lstinline{tocinheader} oder
+  \lstinline{tinytocinheader} verwendet wird!
+\end{classoption}
+
+\begin{classoption}{nologoinfoot}
+  Deaktiviert die Anzeige des Logos im Fußbereich.
+\end{classoption}
+
+\subsection{Farben}
+
+\begin{classoption}{rgbprint}
+  Ausgabe in RGB-Druckfraben
+\end{classoption}
+
+\begin{classoption}{cmyk}
+  Ausgabe in CMYK-Farben.
+\end{classoption}
+
+
+\begin{classoption}{mathserif}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{fleqn}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{minion}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{widetoc}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{narrowtoc}
+  Beschreibung
+\end{classoption}
+
+\subsection{Schriftgröße}
+
+\begin{classoption}{9pt}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{10pt}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{11pt}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{12pt}
+  Beschreibung
+\end{classoption}
+
+\begin{classoption}{14pt}
+  Beschreibung
+\end{classoption}
+
+
+
+
+
+\end{document}

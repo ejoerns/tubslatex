@@ -1,0 +1,30 @@
+\RequirePackage{fancyhdr}
+%Definition des Standardseitenlayouts
+
+\ifthenelse{\equal{\twosided}{true}}
+{
+	\fancyhead{}
+	\fancyhead[RO,LE]{\leftmark}
+	\fancyfoot{}
+	\fancyfoot[RO,LE]{\thepage}
+	\pagestyle{fancy}
+}
+{
+	\fancyhead{}
+	\fancyhead[R]{\leftmark}
+	\fancyfoot{}
+	\fancyfoot[R]{\thepage}
+	\pagestyle{fancy}
+}
+
+%Definition des Seitenlayouts für Kapitelstartseiten
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyhead[L]{}
+\fancyhead[C]{}
+\fancyhead[R]{}
+\fancyfoot[L]{}
+\fancyfoot[C]{}
+\fancyfoot[R]{}
+\renewcommand{\headrulewidth}{0.0pt}
+}

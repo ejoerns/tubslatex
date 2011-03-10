@@ -1,0 +1,255 @@
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+
+\usetikzlibrary{fit,patterns}
+
+%% Switch logo position and layout
+\ifthenelse{\equal{\TUBSLogoPosition}{top}}{\def\DirectionSign{1}\def\DirectionOrigin{current page.south west}\def\RightSign{-1}}{}
+\ifthenelse{\equal{\TUBSLogoPosition}{topright}}{\def\DirectionSign{1}\def\DirectionOrigin{current page.south west}\def\RightSign{1}}{}
+
+\ifthenelse{\equal{\TUBSLogoPosition}{bottom}}{\def\DirectionSign{-1}\def\DirectionOrigin{current page.north west}\def\RightSign{-1}}{}
+\ifthenelse{\equal{\TUBSLogoPosition}{bottomright}}{\def\DirectionSign{-1}\def\DirectionOrigin{current page.north west}\def\RightSign{1}}{}
+
+
+% Include dimensions from the TUBS Design
+\input{layoutdimensions}
+%% Standard variables for the use in the layout
+\gdef\TUBSauthor{\makeatletter\@author\makeatother}
+\gdef\TUBStitle{\makeatletter\@title\makeatother}
+\gdef\TUBSsubject{\makeatletter\@subject\makeatother}
+\gdef\TUBSdate{\makeatletter\@date\makeatother}
+\def\institute#1{\gdef\@institute{#1}}
+\gdef\TUBSinstitute{\makeatletter\@institute\makeatother}
+\def\address#1{\gdef\@address{#1}}
+\gdef\TUBSaddress{\makeatletter\@address\makeatother}
+
+%% Non-standard variables
+\gdef\@tubsinstlogo{}
+\gdef\TUBSInstituteLogo#1{\makeatletter\gdef\@tubsinstlogo{#1}\makeatother}
+\gdef\@tubsinstname{}
+\gdef\TUBSInstituteName#1{\makeatletter\gdef\@tubsinstname{#1}\makeatother}
+
+%% Gauss addition series at each iteration [parameter: \thegaussgrid]
+% Parameters:
+% 1. beam into a TikZ environment after each iteration 
+% 2. beam into a TikZ environment after the eighth iteration
+\newcounter{gaussgrid}
+\newcommand{\TUBSGaussGrid}[2]
+	{
+	\begin{tikzpicture}[remember picture,overlay]
+	\setcounter{gaussgrid}{0}
+	\foreach \y in {0,...,\TUBSGaussGridSegments}
+		{
+		\addtocounter{gaussgrid}{\y}
+		#1
+		}
+	#2
+	\end{tikzpicture}
+	}
+
+%% Schow debugging information: grid with its own coordninate system and dimensions of each cell.
+% Parameter:
+% none
+\newcounter{cell}
+\newcommand{\TUBSShowGaussGrid}
+	{
+	\TUBSGaussGrid
+		{
+		\draw(\DirectionOrigin)++(0mm,\TUBSGaussRatio * \thegaussgrid mm + \TUBSBottomMargin mm) -- ++(\TUBSCommunicationWidth mm + 2 * \TUBSFrameWidth mm,0mm)node[xshift=-\TUBSFrameWidth mm /2]{\y};
+		\foreach \x in {0,...,6}
+			{
+			\ifthenelse{\equal{0}{\y}}
+				{
+				\draw(\DirectionOrigin)++(\TUBSLeftMargin mm + \TUBSCommunicationWidth mm/6*\x,0)node[name=a]{}node[yshift=\DirectionSign * \TUBSFrameWidth mm /2]{\x} -- ++(0mm,\TUBSCommunicationHeight mm + \TUBSBottomMargin mm)node[name=b]{};
+				\ifthenelse{\x > 0}
+					{
+					\node[xshift={\TUBSLeftMargin mm + \TUBSCommunicationWidth mm/6*(\x -1)},yshift={\TUBSGaussRatio * \thecell mm + \TUBSBottomMargin mm}] (a) at (\DirectionOrigin){};
+					\node[xshift={\TUBSLeftMargin mm + \TUBSCommunicationWidth mm/6*\x},yshift={\TUBSGaussRatio * \thegaussgrid mm + \TUBSBottomMargin mm}] (b) at (\DirectionOrigin){};
+					\pgfmathparse{\TUBSCommunicationWidth /6}
+					\edef\cellwidth{\pgfmathresult}
+					\node[fit=(a)(b),below]{\small \bfseries \cellwidth mm};
+					}{}
+				}{
+				\ifthenelse{\x = 1}
+					{
+					\node[xshift={\TUBSLeftMargin mm + \TUBSCommunicationWidth mm/6*(\x -1)},yshift={\TUBSGaussRatio * \thecell mm + \TUBSBottomMargin mm}] (a) at (\DirectionOrigin){};
+					\node[xshift={\TUBSLeftMargin mm + \TUBSCommunicationWidth mm/6*\x},yshift={\TUBSGaussRatio * \thegaussgrid mm + \TUBSBottomMargin mm}] (b) at (\DirectionOrigin){};
+					\pgfmathparse{\TUBSGaussRatio*abs(\thegaussgrid-\thecell)}
+					\edef\cellheight{\pgfmathresult}
+					\node[fit=(a)(b)](tmpnode){};
+					\node[at=(tmpnode.west),right,xshift=-\TUBSLeftMargin mm /2]{\small \bfseries \cellheight mm};
+					}{}
+				}
+			}
+		\setcounter{cell}{\thegaussgrid}
+		}{}
+	}
+
+%% A colored box on the TUBS gauss grid.
+% Parameter:
+% 1. Start gauss row
+% 2. End gauss row
+% 3. Start gaus column
+% 4. End gauss column
+% 5. Content of box
+% 6. Color of the font
+% 7. Color of the box (background)
+% 8. Vertical text position: 'top', 'bottom', 'center'
+\newcounter{firstnode}
+\newcounter{secondnode}
+\newcommand{\TUBSGaussGridTextBox}[8]
+	{
+	\ifthenelse{#1 > #2}
+		{
+		\def\numone{#2}
+		\def\numtwo{#1}
+		}{
+		\def\numone{#1}
+		\def\numtwo{#2}
+		}
+	\ifthenelse{#3 > #4}
+		{
+		\def\numthree{#4}
+		\def\numfour{#3}
+		}{
+		\def\numthree{#3}
+		\def\numfour{#4}
+		}
+	\TUBSGaussGrid
+		{
+		\ifthenelse{\equal{\numone}{\y}}
+			{
+			\setcounter{firstnode}{\thegaussgrid}
+			}{}
+		\ifthenelse{\equal{\numtwo}{\y}}
+			{
+			\setcounter{secondnode}{\thegaussgrid}
+			}{}
+		}{
+		\pgfmathparse{\TUBSLeftMargin + \numthree * \TUBSCommunicationWidth /6}
+		\edef\cellax{\pgfmathresult mm}
+		\pgfmathparse{\TUBSBottomMargin + \thefirstnode * \TUBSGaussRatio}
+		\edef\cellay{\pgfmathresult mm}
+		\pgfmathparse{\TUBSLeftMargin + \numfour * \TUBSCommunicationWidth /6}
+		\edef\cellbx{\pgfmathresult mm}
+		\pgfmathparse{\TUBSBottomMargin + \thesecondnode *\TUBSGaussRatio}
+		\edef\cellby{\pgfmathresult mm}
+			
+		\node[	inner sep=0,outer sep=0,line width=0,
+			xshift=\cellax,
+			yshift=\cellay,
+			] (firstnode) at (\DirectionOrigin){};
+		\node[	inner sep=0,outer sep=0,line width=0,
+			xshift=\cellbx,
+			yshift=\cellby,
+			] (secondnode) at (\DirectionOrigin){};
+
+		\fill[#7] (firstnode) rectangle (secondnode);
+		\ifthenelse{\equal{\TUBSDesignHelper}{true}}{\fill[#7,pattern=north west lines] (firstnode) rectangle (secondnode);}{}
+
+		\node[	inner sep=0,outer sep=0,line width=0,
+			xshift=\cellax+\TUBSFrameWidth mm,
+			yshift=\cellay+\DirectionSign * \TUBSFrameWidth mm,
+			] (firstnode) at (\DirectionOrigin){};
+		\node[	inner sep=0,outer sep=0,line width=0,
+			xshift=\cellbx-\TUBSFrameWidth mm,
+			yshift=\cellby-\DirectionSign * \TUBSFrameWidth mm,
+			] (secondnode) at (\DirectionOrigin){};
+
+		\pgfmathparse{abs(\thefirstnode - \thesecondnode)*(abs(\TUBSGaussRatio))};
+		\edef\TUBSBoxHeight{\pgfmathresult}
+		\pgfmathparse{abs(#3 - #4)/6*\TUBSCommunicationWidth - 2*abs(\TUBSFrameWidth) };
+		\edef\TUBSBoxWidth{\pgfmathresult}
+		
+		\node[name=Box,outer sep=0mm,inner sep=0,fit=(firstnode)(secondnode)]{};
+		\ifthenelse{\equal{\TUBSDesignHelper}{true}}{\fill[#7] (firstnode) rectangle (secondnode);}{}
+		
+		\def\textposition{north west} %default
+		\ifthenelse{\equal{#8}{top}}
+			{
+			\def\textposition{north west}
+			}{}
+		\ifthenelse{\equal{#8}{bottom}}
+			{
+			\def\textposition{south west}
+			}{}
+		\ifthenelse{\equal{#8}{center}}
+			{
+			\def\textposition{west}
+			}{}
+
+		\node[at=(Box.\textposition),inner sep=0,outer sep=0,text width=\TUBSBoxWidth mm,anchor=\textposition,text ragged,#6]{#5};
+
+
+%		\node[fit=(firstnode),above]{#5};
+		}
+	}
+
+%% A box on the TUBS gauss grid with an scaled image. If the aspect ratio
+%% of the given image does not fit to the dimensions of the box, the image will be deformed!
+%Parameter:
+% 1. Start gauss row
+% 2. End gauss row
+% 3. Start gaus column
+% 4. End gauss column
+% 5. Path to the image file
+\newcommand{\TUBSGaussGridImageBox}[5]
+	{
+	\TUBSGaussGrid
+		{
+		\ifthenelse{\equal{#1}{\y}}
+			{
+			\setcounter{firstnode}{\thegaussgrid}
+			}{}
+		\ifthenelse{\equal{#2}{\y}}
+			{
+			\setcounter{secondnode}{\thegaussgrid}
+			}{}
+		}{
+
+		\ifthenelse{#1 > #2}
+			{
+			\def\numone{#2}
+			\def\numtwo{#1}
+			}{
+			\def\numone{#1}
+			\def\numtwo{#2}
+			}
+		\ifthenelse{#3 > #4}
+			{
+			\def\numthree{#4}
+			\def\numfour{#3}
+			}{
+			\def\numthree{#3}
+			\def\numfour{#4}
+			}
+
+		\pgfmathparse{\TUBSLeftMargin + \numthree * \TUBSCommunicationWidth /6}
+		\edef\cellax{\pgfmathresult mm}
+		\pgfmathparse{\TUBSBottomMargin + \thefirstnode * \TUBSGaussRatio}
+		\edef\cellay{\pgfmathresult mm}
+		\pgfmathparse{\TUBSLeftMargin + \numfour * \TUBSCommunicationWidth /6}
+		\edef\cellbx{\pgfmathresult mm}
+		\pgfmathparse{\TUBSBottomMargin + \thesecondnode * \TUBSGaussRatio}
+		\edef\cellby{\pgfmathresult mm}
+		
+		\node[	inner sep=0,outer sep=0,line width=0,
+			xshift=\cellax,
+			yshift=\cellay,
+			] (firstnode) at (\DirectionOrigin){};
+		\node[	inner sep=0,outer sep=0,line width=0,
+			xshift=\cellbx,
+			yshift=\cellby,
+			] (secondnode) at (\DirectionOrigin){};
+
+		\pgfmathparse{abs(#3 - #4)/6*\TUBSCommunicationWidth};
+		\edef\TUBSImageWidth{\pgfmathresult}
+		\pgfmathparse{abs(\thefirstnode - \thesecondnode)*(abs(\TUBSGaussRatio))};
+		\edef\TUBSImageHeight{\pgfmathresult}
+		% quick-hack, else texlive and miktex would display something different
+		\node[inner sep=0,fit=(firstnode)(secondnode),inner sep=0mm](firstandsecond){};
+		\node (final) at ++(firstandsecond) {\includegraphics[width=\TUBSImageWidth mm, height=\TUBSImageHeight mm]{#5}};
+		%quick-hack end
+		\ifthenelse{\equal{\TUBSDesignHelper}{true}}{\node[inner sep=0,fit=(firstnode)(secondnode),inner sep=0]{\Large \bfseries Width: \TUBSImageWidth mm \\ Height: \TUBSImageHeight mm \\ Aspect ratio: \pgfmathparse{ \TUBSImageWidth / \TUBSImageHeight}\pgfmathresult};}{}
+		}
+	}
