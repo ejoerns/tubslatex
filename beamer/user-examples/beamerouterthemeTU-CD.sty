@@ -269,14 +269,23 @@
 \rule{\textwidth}{0.3pt}}
 \vspace{-9pt}
 
-\tulogoAbs{24.7mm}
+\newdimen\beamer@CDlogowidth
+\beamer@CDlogowidth=24.7mm
+
+\tulogoAbs{\beamer@CDlogowidth}
 
 \ifthenelse{\boolean{nologoinfoot}}{%
-\vspace{10.7pt}
+  \vspace{10.7pt}
 }{%
 \vspace{-19pt}
-\hbox to \hsize{\hfill
-{\logoheight=20.7pt \insertlogo\hspace*{0.5\beamer@CDborderwidth}}
+\logoheight=20.7pt
+\vbox to \logoheight{
+\hfill
+\parbox[b]{0.3\textwidth}{%
+\setbeamerfont{footlinelogo}{size=\scriptsize}
+\usebeamerfont{footlinelogo}
+\vspace*{3pt}
+\raggedleft\insertlogo}\hspace*{0.5\beamer@CDborderwidth}
 }
 \vspace{9pt}
 }
