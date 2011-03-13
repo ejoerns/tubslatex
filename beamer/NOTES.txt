@@ -1,1 +1,20 @@
 - UTF-8 statt latin1!?! 
+
+---
+
+[DOC]
+
+LY1-encoding benötigt paket:
+
+sudo apt-get install texlive-fonts-extra
+
+---
+
+[BEAMER]
+
+"eulervm" benötigt Paket
+
+sudo apt-get install texlive-fonts-extra
+
+---
+
