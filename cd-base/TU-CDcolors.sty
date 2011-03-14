@@ -1,0 +1,356 @@
+\ProvidesPackage{TU-CDcolors}[2011/03/10  v0.2  TU-Braunschweig-CD (beamer)]
+\RequirePackage{xcolor}
+\RequirePackage{ifthen}
+\RequirePackage{forloop}
+
+\newboolean{rgbprint}
+\setboolean{rgbprint}{false}
+\newboolean{cmyk}
+\setboolean{cmyk}{false}
+\def\secondaryColorName{undefined}
+\DeclareOption{orange}{\def\secondaryColorName{Orange}}
+\DeclareOption{green}{\def\secondaryColorName{Green}}
+\DeclareOption{blue}{\def\secondaryColorName{Blue}}
+\DeclareOption{violet}{\def\secondaryColorName{Violet}}
+\DeclareOption{Orange}{\def\secondaryColorName{Orange}}
+\DeclareOption{Green}{\def\secondaryColorName{Green}}
+\DeclareOption{Blue}{\def\secondaryColorName{Blue}}
+\DeclareOption{Violet}{\def\secondaryColorName{Violet}}
+
+\DeclareOption{rgbprint}{\setboolean{rgbprint}{true}}
+\DeclareOption{cmyk}{\setboolean{cmyk}{true}}
+\ProcessOptions
+
+
+\ifthenelse{\boolean{cmyk}}{%
+\definecolor{tuRed}{cmyk}{0.1,1.0,0.8,0.0}
+\definecolor{tuBlack}{cmyk}{0.0,0.0,0.0,1.0}
+\definecolor{tuGrey100}{cmyk}{0,0,0,1}
+\definecolor{tuGrey80}{cmyk}{0,0,0,0.8}
+\definecolor{tuGrey60}{cmyk}{0,0,0,0.6}
+\definecolor{tuGrey40}{cmyk}{0,0,0,0.4}
+\definecolor{tuGrey20}{cmyk}{0,0,0,0.2}
+\definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
+
+\definecolor{tuYellow100}{cmyk}{0.0,0.25,0.90,0.0}
+\colorlet{tuYellow80}{tuYellow100!80}
+\colorlet{tuYellow60}{tuYellow100!60}
+\colorlet{tuYellow40}{tuYellow100!40}
+\colorlet{tuYellow20}{tuYellow100!20}
+\definecolor{tuOrange100}{cmyk}{0.0,0.58,0.93,0.0}
+\colorlet{tuOrange80}{tuOrange100!80}
+\colorlet{tuOrange60}{tuOrange100!60}
+\colorlet{tuOrange40}{tuOrange100!40}
+\colorlet{tuOrange20}{tuOrange100!20}
+\definecolor{tuRed100}{cmyk}{0.0,1.00,0.6,0.6}
+\colorlet{tuRed80}{tuRed100!80}
+\colorlet{tuRed60}{tuRed100!60}
+\colorlet{tuRed40}{tuRed100!40}
+\colorlet{tuRed20}{tuRed100!20}
+
+\definecolor{tuGreenLight100}{cmyk}{0.4,0.0,1.0,0.0}
+\colorlet{tuGreenLight80}{tuGreenLight100!80}
+\colorlet{tuGreenLight60}{tuGreenLight100!60}
+\colorlet{tuGreenLight40}{tuGreenLight100!40}
+\colorlet{tuGreenLight20}{tuGreenLight100!20}
+
+\definecolor{tuGreen100}{cmyk}{0.45,0.0,1.0,0.4}
+\colorlet{tuGreen80}{tuGreen100!80}
+\colorlet{tuGreen60}{tuGreen100!60}
+\colorlet{tuGreen40}{tuGreen100!40}
+\colorlet{tuGreen20}{tuGreen100!20}
+
+\definecolor{tuGreenDark100}{cmyk}{0.94,0.0,0.59,0.64}
+\colorlet{tuGreenDark80}{tuGreenDark100!80}
+\colorlet{tuGreenDark60}{tuGreenDark100!60}
+\colorlet{tuGreenDark40}{tuGreenDark100!40}
+\colorlet{tuGreenDark20}{tuGreenDark100!20}
+
+\definecolor{tuBlueLight100}{cmyk}{0.7,0.07,0.1,0.0}
+\colorlet{tuBlueLight80}{tuBlueLight100!80}
+\colorlet{tuBlueLight60}{tuBlueLight100!60}
+\colorlet{tuBlueLight40}{tuBlueLight100!40}
+\colorlet{tuBlueLight20}{tuBlueLight100!20}
+\definecolor{tuBlue100}{cmyk}{1.0,0.0,0.06,0.4}
+\colorlet{tuBlue80}{tuBlue100!80}
+\colorlet{tuBlue60}{tuBlue100!60}
+\colorlet{tuBlue40}{tuBlue100!40}
+\colorlet{tuBlue20}{tuBlue100!20}
+\definecolor{tuBlueDark100}{cmyk}{1.0,0.2,0.12,0.73}
+\colorlet{tuBlueDark80}{tuBlueDark100!80}
+\colorlet{tuBlueDark60}{tuBlueDark100!60}
+\colorlet{tuBlueDark40}{tuBlueDark100!40}
+\colorlet{tuBlueDark20}{tuBlueDark100!20}
+
+\definecolor{tuVioletLight100}{cmyk}{0.54,0.93,0.0,0.0}
+\colorlet{tuVioletLight80}{tuVioletLight100!80}
+\colorlet{tuVioletLight60}{tuVioletLight100!60}
+\colorlet{tuVioletLight40}{tuVioletLight100!40}
+\colorlet{tuVioletLight20}{tuVioletLight100!20}
+\definecolor{tuViolet100}{cmyk}{0.5,1.0,0.0,0.5}
+\colorlet{tuViolet80}{tuViolet100!80}
+\colorlet{tuViolet60}{tuViolet100!60}
+\colorlet{tuViolet40}{tuViolet100!40}
+\colorlet{tuViolet20}{tuViolet100!20}
+\definecolor{tuVioletDark100}{cmyk}{0.5,1.0,0.35,0.60}
+\colorlet{tuVioletDark80}{tuVioletDark100!80}
+\colorlet{tuVioletDark60}{tuVioletDark100!60}
+\colorlet{tuVioletDark40}{tuVioletDark100!40}
+\colorlet{tuVioletDark20}{tuVioletDark100!20}
+}{%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{rgbprint}}{%
+\definecolor{tuRed}{RGB}{190,30,60} 
+\definecolor{tuBlack}{RGB}{0,0,0} 
+\definecolor{tuWhite}{RGB}{255,255,255} 
+%%% Grey
+\definecolor{tuGrey100}{RGB}{0,0,0}
+\definecolor{tuGrey80}{RGB}{51,51,51}
+\definecolor{tuGrey60}{RGB}{102,102,102}
+\definecolor{tuGrey40}{RGB}{153,153,153}
+\definecolor{tuGrey20}{RGB}{204,204,204}
+%%% Yellow
+\definecolor{tuYellow100}{RGB}{255,200,41}
+\definecolor{tuYellow80}{RGB}{255,211,85}
+\definecolor{tuYellow60}{RGB}{255,222,127}
+\definecolor{tuYellow40}{RGB}{255,233,170}
+\definecolor{tuYellow20}{RGB}{255,244,212}
+%%% Orange
+\definecolor{tuOrange100}{RGB}{225,109,0}
+\definecolor{tuOrange80}{RGB}{231,138,51}
+\definecolor{tuOrange60}{RGB}{237,167,102}
+\definecolor{tuOrange40}{RGB}{243,197,153}
+\definecolor{tuOrange20}{RGB}{249,226,204}
+%%%Red
+\definecolor{tuRed100}{RGB}{113,28,47}
+\definecolor{tuRed80}{RGB}{141,73,89}
+\definecolor{tuRed60}{RGB}{170,119,130}
+\definecolor{tuRed40}{RGB}{198,164,172}
+\definecolor{tuRed20}{RGB}{227,210,223}
+%% light green
+\definecolor{tuGreenLight100}{RGB}{172,193,58}
+\definecolor{tuGreenLight80}{RGB}{189,205,97}
+\definecolor{tuGreenLight60}{RGB}{205,218,137}
+\definecolor{tuGreenLight40}{RGB}{222,230,176}
+\definecolor{tuGreenLight20}{RGB}{238,243,216}
+%% green
+\definecolor{tuGreen100}{RGB}{109,131,0}
+\definecolor{tuGreen80}{RGB}{138,156,51} 
+\definecolor{tuGreen60}{RGB}{167,181,102}
+\definecolor{tuGreen40}{RGB}{197,205,153}
+\definecolor{tuGreen20}{RGB}{226,230,204}
+%% dark green
+\definecolor{tuGreenDark100}{RGB}{0,83,74 }
+\definecolor{tuGreenDark80}{RGB}{51,117,110} 
+\definecolor{tuGreenDark60}{RGB}{102,152,146} 
+\definecolor{tuGreenDark40}{RGB}{153,186,183 }
+\definecolor{tuGreenDark20}{RGB}{204,221,219 }
+%light blue
+\definecolor{tuBlueLight100}{RGB}{ 102,180,211}
+\definecolor{tuBlueLight80}{RGB}{133,195,220}
+\definecolor{tuBlueLight60}{RGB}{163,210,229}
+\definecolor{tuBlueLight40}{RGB}{194,225,237}
+\definecolor{tuBlueLight20}{RGB}{224,240,246}
+%blue
+\definecolor{tuBlue100}{RGB}{0,112,155}
+\definecolor{tuBlue80}{RGB}{51,141,175}
+\definecolor{tuBlue60}{RGB}{102,169,195}
+\definecolor{tuBlue40}{RGB}{153,198,215}
+\definecolor{tuBlue20}{RGB}{204,226,235}
+%dark blue
+\definecolor{tuBlueDark100}{RGB}{0,63,87}
+\definecolor{tuBlueDark80}{RGB}{51,101,121}
+\definecolor{tuBlueDark60}{RGB}{102,140,154}
+\definecolor{tuBlueDark40}{RGB}{153,178,188}
+\definecolor{tuBlueDark20}{RGB}{ 204,217, 221}
+% light violet
+\definecolor{tuVioletLight100}{RGB}{ 138,48,127 }
+\definecolor{tuVioletLight80}{RGB}{161,89,153 }
+\definecolor{tuVioletLight60}{RGB}{185,131,178 }
+\definecolor{tuVioletLight40}{RGB}{208,172,204 }
+\definecolor{tuVioletLight20}{RGB}{232,214,229 }
+%  violet
+\definecolor{tuViolet100}{RGB}{81,18,70 }
+\definecolor{tuViolet80}{RGB}{116,65,107 }
+\definecolor{tuViolet60}{RGB}{151,113,144 }
+\definecolor{tuViolet40}{RGB}{185,160,181 }
+\definecolor{tuViolet20}{RGB}{220,208,218 }
+% dark violet
+\definecolor{tuVioletDark100}{RGB}{ 76,24,48 }
+\definecolor{tuVioletDark80}{RGB}{112,70,89 }
+\definecolor{tuVioletDark60}{RGB}{148,116,131} 
+\definecolor{tuVioletDark40}{RGB}{183,163,172 }
+\definecolor{tuVioletDark20}{RGB}{219,209,214 }
+}{%
+%%% Screen colors from the ppt-template
+\definecolor{tuRed}{RGB}{190,30,60} 
+\definecolor{tuBlack}{RGB}{0,0,0} 
+\definecolor{tuWhite}{RGB}{255,255,255} 
+%%% Grey
+\definecolor{tuGrey100}{RGB}{8,8,8} 
+\definecolor{tuGrey80}{RGB}{95,95,95} 
+\definecolor{tuGrey60}{RGB}{150,150,150} 
+\definecolor{tuGrey40}{RGB}{192,192,192} 
+\definecolor{tuGrey20}{RGB}{221,221,221} 
+%%% Yellow
+\definecolor{tuYellow100}{RGB}{255,205,0} 
+\definecolor{tuYellow80}{RGB}{255,220,77} 
+\definecolor{tuYellow60}{RGB}{255,230,127} 
+\definecolor{tuYellow40}{RGB}{255,240,178} 
+\definecolor{tuYellow20}{RGB}{255,245,204}
+%%% Orange
+\definecolor{tuOrange100}{RGB}{250,110,0} 
+\definecolor{tuOrange80}{RGB}{252,154,77} 
+\definecolor{tuOrange60}{RGB}{252,182,127}
+\definecolor{tuOrange40}{RGB}{252,211,178}
+\definecolor{tuOrange20}{RGB}{254,226,204}
+%%%Red
+\definecolor{tuRed100}{RGB}{176,0,70} 
+\definecolor{tuRed80}{RGB}{192,51,107} 
+\definecolor{tuRed60}{RGB}{215,127,162} 
+\definecolor{tuRed40}{RGB}{235,191,209} 
+\definecolor{tuRed20}{RGB}{243,217,227} 
+%% light green
+\definecolor{tuGreenLight100}{RGB}{198,238,0}
+\definecolor{tuGreenLight80}{RGB}{215,243,77 }
+\definecolor{tuGreenLight60}{RGB}{226,246,127}
+\definecolor{tuGreenLight40}{RGB}{238,250,178}
+\definecolor{tuGreenLight20}{RGB}{244,252,204}
+%% green
+\definecolor{tuGreen100}{RGB}{137,164,0}
+\definecolor{tuGreen80}{RGB}{173,191,77} 
+\definecolor{tuGreen60}{RGB}{196,209,127} 
+\definecolor{tuGreen40}{RGB}{219,228,178 }
+\definecolor{tuGreen20}{RGB}{231,237,204 }
+%% dark green
+\definecolor{tuGreenDark100}{RGB}{0,113,86 }
+\definecolor{tuGreenDark80}{RGB}{77,156,137} 
+\definecolor{tuGreenDark60}{RGB}{140,191,179} 
+\definecolor{tuGreenDark40}{RGB}{191,219,213 }
+\definecolor{tuGreenDark20}{RGB}{218,234,231 } 
+%light blue
+\definecolor{tuBlueLight100}{RGB}{124,205,230}
+\definecolor{tuBlueLight80}{RGB}{164,220,238}
+\definecolor{tuBlueLight60}{RGB}{189,230,242}
+\definecolor{tuBlueLight40}{RGB}{215,240,247}
+\definecolor{tuBlueLight20}{RGB}{229,245,250}
+%blue
+\definecolor{tuBlue100}{RGB}{0,128,180}
+\definecolor{tuBlue80}{RGB}{77,166,203}
+\definecolor{tuBlue60}{RGB}{140,198,221}
+\definecolor{tuBlue40}{RGB}{191,223,236}
+\definecolor{tuBlue20}{RGB}{217,236,244}
+%dark blue
+\definecolor{tuBlueDark100}{RGB}{0,83,116}
+\definecolor{tuBlueDark80}{RGB}{64,126,151}
+\definecolor{tuBlueDark60}{RGB}{140,177,192}
+\definecolor{tuBlueDark40}{RGB}{191,212,220}
+\definecolor{tuBlueDark20}{RGB}{217,229,234}
+%
+\definecolor{tuVioletLight100}{RGB}{204,0,153 }
+\definecolor{tuVioletLight80}{RGB}{222,89,189 }
+\definecolor{tuVioletLight60}{RGB}{235,153,214 }
+\definecolor{tuVioletLight40}{RGB}{245,204,235 }
+\definecolor{tuVioletLight20}{RGB}{250,229,245 }
+\definecolor{tuViolet100}{RGB}{118,0,118 }
+\definecolor{tuViolet80}{RGB}{152,64,152}
+\definecolor{tuViolet60}{RGB}{186,127,186}
+\definecolor{tuViolet40}{RGB}{214,178,214}
+\definecolor{tuViolet20}{RGB}{235,217,235}
+\definecolor{tuVioletDark100}{RGB}{118,0,84 }
+\definecolor{tuVioletDark80}{RGB}{156,77,136 }
+\definecolor{tuVioletDark60}{RGB}{193,140,178} 
+\definecolor{tuVioletDark40}{RGB}{221,191,212}
+\definecolor{tuVioletDark20}{RGB}{235,217,230}
+}}
+
+%% Yellow/red auch als orangeLight bzw. dark zugreifbar
+\colorlet{tuOrangeLight100}{tuYellow100}
+\colorlet{tuOrangeLight80}{tuYellow80}
+\colorlet{tuOrangeLight60}{tuYellow60}
+\colorlet{tuOrangeLight40}{tuYellow40}
+\colorlet{tuOrangeLight20}{tuYellow20}
+\colorlet{tuOrangeMedium100}{tuOrange100}
+\colorlet{tuOrangeMedium80}{tuOrange80}
+\colorlet{tuOrangeMedium60}{tuOrange60}
+\colorlet{tuOrangeMedium40}{tuOrange40}
+\colorlet{tuOrangeMedium20}{tuOrange20}
+\colorlet{tuOrangeDark100}{tuRed100}
+\colorlet{tuOrangeDark80}{tuRed80}
+\colorlet{tuOrangeDark60}{tuRed60}
+\colorlet{tuOrangeDark40}{tuRed40}
+\colorlet{tuOrangeDark20}{tuRed20}
+
+%% Definiere: Alle Medium-Farben auch mit Zusatz  Medium zugreifbar
+\colorlet{tuOrangeMedium100}{tuOrange100}
+\colorlet{tuOrangeMedium80}{tuOrange80}
+\colorlet{tuOrangeMedium60}{tuOrange60}
+\colorlet{tuOrangeMedium40}{tuOrange40}
+\colorlet{tuOrangeMedium20}{tuOrange20}
+
+\colorlet{tuGreenMedium100}{tuGreen100}
+\colorlet{tuGreenMedium80}{tuGreen80}
+\colorlet{tuGreenMedium60}{tuGreen60}
+\colorlet{tuGreenMedium40}{tuGreen40}
+\colorlet{tuGreenMedium20}{tuGreen20}
+
+\colorlet{tuBlueMedium100}{tuBlue100}
+\colorlet{tuBlueMedium80}{tuBlue80}
+\colorlet{tuBlueMedium60}{tuBlue60}
+\colorlet{tuBlueMedium40}{tuBlue40}
+\colorlet{tuBlueMedium20}{tuBlue20}
+
+\colorlet{tuVioletMedium100}{tuViolet100}
+\colorlet{tuVioletMedium80}{tuViolet80}
+\colorlet{tuVioletMedium60}{tuViolet60}
+\colorlet{tuVioletMedium40}{tuViolet40}
+\colorlet{tuVioletMedium20}{tuViolet20}
+
+%%   Alle 100%-Farben ohne Prozentzahl zugreifbar
+%% Ausnahme: tuRed100 kann nicht tuRed sein
+\colorlet{tuYellow}{tuYellow100}
+\colorlet{tuOrangeLight}{tuOrangeLight100}
+\colorlet{tuOrangeMedium}{tuOrangeMedium100}
+\colorlet{tuOrange}{tuOrangeMedium100}
+\colorlet{tuOrangeDark}{tuOrangeDark100}
+
+\colorlet{tuGreenLight}{tuGreenLight100}
+\colorlet{tuGreenMedium}{tuGreenMedium100}
+\colorlet{tuGreen}{tuGreenMedium100}
+\colorlet{tuGreenDark}{tuGreenDark100}
+
+\colorlet{tuBlueLight}{tuBlueLight100}
+\colorlet{tuBlueMedium}{tuBlueMedium100}
+\colorlet{tuBlue}{tuBlueMedium100}
+\colorlet{tuBlueDark}{tuBlueDark100}
+
+\colorlet{tuVioletLight}{tuVioletLight100}
+\colorlet{tuVioletMedium}{tuVioletMedium100}
+\colorlet{tuViolet}{tuVioletMedium100}
+\colorlet{tuVioletDark}{tuVioletDark100}
+
+%% Define secondary colors
+%% Can be adressed as tuSecondary exactly as the other colors
+%% Defined via \defineSecondary
+
+
+\newcounter{perc}
+\def\createSecColor#1#2{%
+\colorlet{tuSecondaryLight#2}{tu#1Light#2}%
+\colorlet{tuSecondaryMedium#2}{tu#1Medium#2}%
+\colorlet{tuSecondary#2}{tu#1Medium#2}%
+\colorlet{tuSecondaryDark#2}{tu#1Dark#2}%
+}
+\def\defineSecondary#1{%
+\forloop[20]{perc}{20}{\value{perc}< 101}{%
+\createSecColor{#1}{\arabic{perc}}%
+}%
+\colorlet{tuSecondaryLight}{tu#1Light100}%
+\colorlet{tuSecondaryMedium}{tu#1Medium100}%
+\colorlet{tuSecondary}{tu#1Medium100}%
+\colorlet{tuSecondaryDark}{tu#1Dark100}%
+}
+
+\ifthenelse{\equal{\secondaryColorName}{undefined}}{}{%
+\defineSecondary{\secondaryColorName}}
+
+
