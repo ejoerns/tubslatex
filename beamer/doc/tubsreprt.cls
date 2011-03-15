@@ -5,8 +5,9 @@
 
 \RequirePackage{ifthen}
 \RequirePackage[cmyk]{xcolor}
-
-\input{colors}
+\RequirePackage{Nexus} % CD
+\RequirePackage[green]{TU-CDcolors}
+% \input{colors}
 
 \input{predefinedtitlepages}
 
@@ -63,7 +64,7 @@
 \ExecuteOptionsX{TUBStitlepage=classic,TUBSLogo=top}
 \ProcessOptionsX
 
-\input{font}
+% \input{font}
 \input{gaussgrid}
 \input{titlepage}
 \input{backpage}

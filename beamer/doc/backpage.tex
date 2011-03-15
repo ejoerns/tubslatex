@@ -21,7 +21,10 @@
 	{
 	\begin{tikzpicture}[remember picture,overlay]
 	\node[inner sep=0, outer sep=0, yshift=\TUBSBottomMargin mm + \TUBSCommunicationHeight mm + \DirectionSign * 0.25 * \TUBSLogoHeight mm,minimum width=\TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm, inner sep=0pt, draw=none] (tulogoposition) at (\DirectionOrigin){};
-	\node[xshift=5mm+ 2* \TUBSFrameWidth mm + \TUBSCommunicationWidth mm,at=(tulogoposition), inner sep=0, outer sep=0, left, minimum width=5mm + \TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm, fill=primary_red] (tulogo_overprint){};
+	\node[xshift=5mm+ 2* \TUBSFrameWidth mm + \TUBSCommunicationWidth
+mm,at=(tulogoposition), inner sep=0, outer sep=0, left, minimum width=5mm +
+\TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm, fill=tuRed]
+(tulogo_overprint){};
 	\end{tikzpicture}
 	\ifthenelse{\equal{\TUBSDesignHelper}{true}}{\TUBSShowGaussGrid}{}
 	}

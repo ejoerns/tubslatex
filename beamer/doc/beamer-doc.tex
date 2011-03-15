@@ -20,31 +20,6 @@
 % \institute{Institut für Lorem Ipsum}
 % \address{123 Fakestreet \\ 1337 Notown}
 
-% \renewcommand{\maketitle}{
-% \begin{TUBStitlepage}
-%   \TUBSGaussGridImageBox{6}{8}{0}{6}{./titlepicture}
-%   \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\bfseries\Huge\TUBStitle}
-%     {primary_white}{secondary_dark}{top}
-%   \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge\TUBSsubject\\ \Large
-%     \TUBSdate} {primary_white}{transparent}{bottom}
-%   \TUBSGaussGridTextBox{3}{4}{0}{6}{\sffamily\huge
-%     \TUBSauthor} {primary_white}{secondary_medium}{center}
-%   \TUBSGaussGridTextBox{0}{3}{0}{6}{Lorem ipsum dolor sit amet, consetetur
-%     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-% dolore
-%     magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-% duo
-%     dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-% est
-%     Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-%     sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-% dolore %     magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-% justo duo %     dolores et ea rebum. Stet clita kasd gubergren, no sea
-% takimata % sanctus est %     Lorem ipsum dolor sit
-% amet.}{secondary_dark}{secondary_light}{top}
-% \end{TUBStitlepage}
-% }
-
 
 \begin{document}
 
@@ -98,6 +73,7 @@ sudo getnonfreefonts-sys arial-urw
 Bezug von CTAN: \url{http://www.ctan.org/tex-archive/fonts/urw/arial/}
 
 \chapter{Anwendung}
+fre
 
 Grundsätzlich handelt es sich bei der Vorlage lediglich um ein Theme für
 das beamer-Paket. An der Funktionalität von beamer wird so gut wie nichts
@@ -180,7 +156,8 @@ die Grafik stellt deren automatische korrekte vertikale Skalierung sicher.
 
 \begin{example}
 \begin{lstlisting}
-\titlegraphic{\includegraphics[height=\titlegraphicsheight]{titlepicture } }
+\titlegraphic{\includegraphics[height=\titlegraphicsheight]
+    {titlepicture}}
 \end{lstlisting}
 \end{example}
 
@@ -319,8 +296,15 @@ Dokumentenklasse.
   Beschreibung
 \end{classoption}
 
-
-
+Test:\\
+This is a text test.\\
+\textit{This is a text test.}\\
+\textsl{This is a text test.}\\
+\textbf{This is a text test.}\\
+\textbf{\itshape This is a text test.}\\
+\textbf{\slshape This is a text test.}\\
+\texttt{This is a text test.}\\
+\textsc{This is a text test.}\\
 
 
 \end{document}

@@ -13,7 +13,9 @@
 	\ifthenelse{\equal{\RightSign}{1}}{\def\switchsides{\TUBSCommunicationWidth mm + 2* \TUBSFrameWidth mm - \TUBSLogoWidth mm}}{\def\switchsides{0}}
 	
 	\node[inner sep=0, outer sep=0, xshift=\switchsides, yshift=\TUBSBottomMargin mm + \TUBSCommunicationHeight mm + \DirectionSign * 0.25 * \TUBSLogoHeight mm,minimum width=\TUBSLogoWidth mm,minimum height=\TUBSLogoHeight mm, inner sep=0pt, draw=none] (tulogoposition) at (\DirectionOrigin){};
-	\node[xshift=\RightSign * 5mm,at=(tulogoposition), inner sep=0, outer sep=0, right, minimum width=\TUBSLogoWidth mm + 5mm, minimum height=\TUBSLogoHeight mm, fill=primary_red] (tulogo_overprint){};
+	\node[xshift=\RightSign * 5mm,at=(tulogoposition), inner sep=0, outer sep=0,
+right, minimum width=\TUBSLogoWidth mm + 5mm, minimum height=\TUBSLogoHeight mm,
+fill=tuRed] (tulogo_overprint){};
 	\ifthenelse{\equal{\TUBSDesignHelper}{true}}{\node[pattern=north east lines,xshift= -0.25*\TUBSLogoHeight mm,at=(tulogoposition), inner sep=0, draw, outer sep=0, right, minimum width=0.5*\TUBSLogoHeight mm + \TUBSLogoWidth mm, minimum height=1.5*\TUBSLogoHeight mm] (tulogo_overprint){};}{}
 	\node[at=(tulogoposition),inner sep=0, outer sep=0,right](tulogo){\includegraphics[height=\TUBSLogoHeight mm]{TUBS_logo_tubs.pdf}};
 
