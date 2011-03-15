@@ -1,0 +1,153 @@
+\documentclass{scrartcl}
+
+\usepackage[green]{TU-CDcolors}
+\usepackage[T1]{fontenc}
+\usepackage{Nexus}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
+
+\def\rainbow#1{{\sffamily\footnotesize%
+\colorbox{#1100}{\hbox to 0.18\textwidth{#1{}100}}% 
+\colorbox{#180}{\hbox to 0.18\textwidth{#1{}80}}% 
+\colorbox{#160}{\hbox to 0.18\textwidth{#1{}60}}% 
+\colorbox{#140}{\hbox to 0.18\textwidth{#1{}40}}% 
+\colorbox{#120}{\hbox to 0.18\textwidth{#1{}20}}\\% 
+}}
+
+\newcommand{\classoptionitem}[1][ ]{
+  \item[\mdseries{\ttfamily%
+    \textbackslash usepackage%
+    {[{\color{red}#1}]}%
+    \{TU-CDcolors\}}]\hfill\\
+}
+
+\parindent0mm
+\parskip\medskipamount
+
+\title{TU-CDcolors}
+\subtitle{Paket-Dokumentation}
+\author{Martin Bäker \and \normalsize Enrico Jörns}
+
+\begin{document}
+
+\maketitle
+
+\section{Verfügbare Farben}
+
+Der Farbklang der TU-Braunschweig ist in eine Primär- und einen
+Sekundärfarbbereich aufgeteilt.
+
+Die Primärfarben bilden dabei Rot, Schwarz und Weiß, sowie in
+20-Prozent-Schritten abgestufte Grautöne. Die Primärfarben dienen
+vor allem Hintergrund, Textfarbe und dem TU-Logo.
+Zu in individuellen Dokumente-Gestaltung ist der Sekundärfarbbereich vorgesehen.
+
+Die Sekundärfarben setzen sich aus 12 weiteren aufeinander abgestimmten
+Farben zusammen, die 
+in 4 Farbklänge (Gelb-Orange, Grün, Blau und Violett) mit je 3 Grundfarben,
+aufgeteilt sind.
+Alle Sekundärfarben können in 20-Prozent-Schritten aufgehellt werden.
+
+Die Namen über die die einzelnen Farben angesprochen werden können, sind in den
+Beispielfeldern angegeben.
+
+\subsection{Primärfarben}
+
+{\sffamily\footnotesize%
+\colorbox{tuRed}{\hbox to 0.18\textwidth{tuRed}}%
+\colorbox{tuBlack}{\hbox to 0.18\textwidth{\color{white}tuBlack}}%
+\colorbox{tuWhite}{\hbox to 0.18\textwidth{tuWhite}}\\%
+}
+
+\rainbow{tuGrey}
+
+\paragraph{Hinweis:}
+\lstinline{tuRed} ist nicht zu verwechseln mit \lstinline{tuRed100} aus dem
+Sekundärfarbbereich. Es handelt sich dabei um eine komplett andere Farbe.
+
+\subsection{Sekundärfarben}
+
+\rainbow{tuYellow}
+\rainbow{tuOrange}
+\rainbow{tuRed}
+
+\rainbow{tuGreenLight}
+\rainbow{tuGreen}
+\rainbow{tuGreenDark}
+
+\rainbow{tuBlueLight}
+\rainbow{tuBlue}
+\rainbow{tuBlueDark}
+
+\rainbow{tuVioletLight}
+\rainbow{tuViolet}
+\rainbow{tuVioletDark}
+
+Zusätzlich kann als Paketoption ein Farbklang ausgewählt werden, dessen Farben
+dann über die Werte \lstinline{tuSecondaryLight},
+\lstinline{tuSecondaryMedium}, \lstinline{tuSecondaryDark}, sowie die
+entsprechenden Prozentualwert (\lstinline{tuSecondaryLight20},
+\lstinline{tuSecondaryLight40}, \ldots) angsprochen werden können.
+Dies erlaubt eine flexible Verwendung der 4 Sekundärfarbklänge.
+
+In folgendem Beispiel wurde \lstinline{green} als Farbklang ausgewählt:
+
+\rainbow{tuSecondaryLight}
+\rainbow{tuSecondary}
+\rainbow{tuSecondaryDark}
+
+\paragraph{Hinweise:}
+Die Farben des gelb-orange-Farbklangs können entsprechend der anderen
+Farbmodelle auch noch einheitlich über die Alternativnamen
+\lstinline{tuOrangeLight}, \lstinline{tuOrange},\\
+\lstinline{tuOrangeDark}, sowie de entsprechenden Prozentwerte aufgerufen
+werden.
+
+Außerdem können alle mittleren Farbwerte auch über den Zusatz
+\lstinline{Medium} angesprochen werden (statt \lstinline{tuGreen100} auch
+\lstinline{tuGreenMedium100}).
+
+Bei allen 100er-Farben (außer \lstinline{tuRed}) kann darüber hinaus die
+Zahl weggelassen werden (statt \lstinline{tuGreenLight100} auch 
+\lstinline{tuGreenLight}).
+
+\section{Optionen}
+
+\begin{description}
+  \classoptionitem[cmyk]
+    Verwendung der cmyk-Farben
+  \classoptionitem[rgbprint]
+    Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung.
+\end{description}
+
+
+\begin{description}
+  \classoptionitem[\textit{\sffamily$<$farbe$>$}]
+    Legt den verwendeten Sekundärfarbklang fest.
+
+    Die Farben können dann über die Werte \lstinline{tuSecondaryLight},
+    \lstinline{tuSecondaryMedium}, \lstinline{tuSecondaryDark} angsprochen
+    werden.
+
+    Mögliche Werte für \textit{farbe}:
+    \begin{itemize}
+      \item orange
+      \item green
+      \item blue
+      \item violet
+    \end{itemize}
+\end{description}
+
+\section{Befehle}
+
+\begin{description}
+  \item[\ttfamily\mdseries\textbackslash selectsecondary]
+    Wählt eine Farbe als Sekundärfarbe.
+\end{description}
+
+
+
+\end{document}
