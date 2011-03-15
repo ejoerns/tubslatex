@@ -22,3 +22,7 @@
 \renewcommand{\rmdefault}{NexusProSerif}
 \renewcommand{\sfdefault}{NexusProSans}
 
+% use computer modern as typewriter (T1)
+\let\oldttfamily\ttfamily
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\ttfamily}{\fontencoding{T1}\oldttfamily}
