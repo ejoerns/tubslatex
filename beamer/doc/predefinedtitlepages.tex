@@ -1,90 +1,88 @@
 \newcommand{\makebackpage}{}
 
 \DeclareOptionX{TUBStitlepage}[classic]{
-	\ifthenelse{\equal{#1}{classic}}
-	{
-		\renewcommand{\maketitle}
-		{
-			\begin{TUBStitlepage}
-				\TUBSGaussGridTextBox{6}{8}{0}{6}{}{tuBlack}{tuSecondaryLight20}{top}
-				\TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\bfseries\Huge
-\TUBStitle}{tuBlack}{tuSecondaryLight20}{top}
-				\TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge \TUBSsubject \\ \Large
-\TUBSdate}{tuBlack}{transparent}{bottom}
-				\TUBSGaussGridTextBox{0}{4}{0}{6}{\sffamily\huge
-\TUBSauthor}{tuBlack}{tuSecondaryMedium20}{top}
-			\end{TUBStitlepage}
-		}
-		\renewcommand{\makebackpage}
-		{
-			\begin{TUBSbackpage}
-				\TUBSGaussGridTextBox{0}{4}{3}{6}{\TUBSauthor \\ \textbf{\TUBSinstitute}
-\\ \TUBSaddress}{tuBlack}{tuSecondaryMedium20}{bottom}
-			
-\TUBSGaussGridTextBox{0}{4}{0}{3}{}{tuBlack}{tuSecondaryMedium20}{bottom}
-			\end{TUBSbackpage}
-		}
-	}
-	{
-		\ifthenelse{\equal{#1}{picture}}
-		{
-			\renewcommand{\maketitle}
-			{
-				\begin{TUBStitlepage}
-					\TUBSGaussGridImageBox{6}{8}{0}{6}{./titlepicture}
-					\TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\bfseries\Huge
-\TUBStitle}{tuWhite}{tuSecondaryDark}{top}
-					\TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge \TUBSsubject \\
+  \ifthenelse{\equal{#1}{classic}}{%
+    \renewcommand{\maketitle}{%
+      \begin{TUBStitlepage}
+        \TUBSGaussGridTextBox{6}{8}{0}{6}{}{tuBlack}{tuSecondaryLight20}{top}
+        \TUBSGaussGridTextBox{6}{4}{0}{6}{%
+          \sffamily\bfseries\Huge\TUBStitle}{tuBlack}{tuSecondaryLight20}{top}
+        \TUBSGaussGridTextBox{6}{4}{0}{6}{%
+          \sffamily\Huge\TUBSsubject\\ \Large%
+          \TUBSdate}{tuBlack}{transparent}{bottom}
+        \TUBSGaussGridTextBox{0}{4}{0}{6}{%
+          \sffamily\huge\TUBSauthor}{tuBlack}{tuSecondaryMedium20}{top}
+      \end{TUBStitlepage}
+    }
+    \renewcommand{\makebackpage}{%
+      \begin{TUBSbackpage}
+        \TUBSGaussGridTextBox{0}{4}{3}{6}{\TUBSauthor\\
+        \textbf{\TUBSinstitute}\\
+        \TUBSaddress}{tuBlack}{tuSecondaryMedium20}{bottom}
+        \TUBSGaussGridTextBox{0}{4}{0}{3}{}{tuBlack}{%
+          tuSecondaryMedium20}{bottom}
+      \end{TUBSbackpage}
+    }
+  }
+  {%
+    \ifthenelse{\equal{#1}{picture}}{%
+      \renewcommand{\maketitle}{%
+        \begin{TUBStitlepage}
+          \TUBSGaussGridImageBox{6}{8}{0}{6}{./titlepicture}
+          \TUBSGaussGridTextBox{6}{4}{0}{6}{%
+            \sffamily\bfseries\Huge\TUBStitle}{tuWhite}{tuSecondaryDark}{top}
+          \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge \TUBSsubject \\
 \Large \TUBSdate}{tuWhite}{transparent}{bottom}
-					\TUBSGaussGridTextBox{3}{4}{0}{6}{\sffamily\huge
+          \TUBSGaussGridTextBox{3}{4}{0}{6}{\sffamily\huge
 \TUBSauthor}{tuWhite}{tuSecondaryMedium}{center}
-				
+        
 \TUBSGaussGridTextBox{0}{3}{0}{6}{}{tuSecondaryDark}{tuSecondaryLight}{top}
-				\end{TUBStitlepage}
-			}
-			\renewcommand{\makebackpage}
-			{
-				\begin{TUBSbackpage}
-					\TUBSGaussGridTextBox{0}{3}{3}{6}{\TUBSauthor \\
+        \end{TUBStitlepage}
+      }
+      \renewcommand{\makebackpage}
+      {
+        \begin{TUBSbackpage}
+          \TUBSGaussGridTextBox{0}{3}{3}{6}{\TUBSauthor \\
 \textbf{\TUBSinstitute} \\ \TUBSaddress}{tuWhite}{tuSecondaryDark}{top}
-				
+        
 \TUBSGaussGridTextBox{3}{4}{0}{6}{}{tuWhite}{tuSecondaryMedium}{center}
-					\TUBSGaussGridTextBox{0}{3}{0}{3}{}{tuWhite}{tuSecondaryDark}{bottom}
-				\end{TUBSbackpage}
-			}
-		}
-		{
-			\ifthenelse{\equal{#1}{alternate}}
-			{
-				\renewcommand{\maketitle}
-				{
-					\begin{TUBStitlepage}
-						\TUBSGaussGridImageBox{6}{8}{0}{6}{./titlepicture}
-						\TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\bfseries\Huge
+          \TUBSGaussGridTextBox{0}{3}{0}{3}{}{tuWhite}{tuSecondaryDark}{bottom}
+        \end{TUBSbackpage}
+      }
+    }
+    {
+      \ifthenelse{\equal{#1}{alternate}}
+      {
+        \renewcommand{\maketitle}
+        {
+          \begin{TUBStitlepage}
+            \TUBSGaussGridImageBox{6}{8}{0}{6}{./titlepicture}
+            \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\bfseries\Huge
 \TUBStitle}{tuBlack}{tuSecondaryDark20}{top}
-						\TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge \TUBSsubject \\
+            \TUBSGaussGridTextBox{6}{4}{0}{6}{\sffamily\Huge \TUBSsubject \\
 \Large \TUBSdate}{tuBlack}{transparent}{bottom}
-						\TUBSGaussGridTextBox{3}{4}{0}{6}{\sffamily\huge
+            \TUBSGaussGridTextBox{3}{4}{0}{6}{\sffamily\huge
 \TUBSauthor}{tuBlack}{tuSecondaryMedium20}{center}
-					
+          
 \TUBSGaussGridTextBox{0}{3}{0}{6}{}{tuBlack}{tuSecondaryLight20}{top}
-					\end{TUBStitlepage}
-				}
-				\renewcommand{\makebackpage}
-				{
-					\begin{TUBSbackpage}
-						\TUBSGaussGridTextBox{0}{3}{3}{6}{\TUBSauthor \\
+          \end{TUBStitlepage}
+        }
+        \renewcommand{\makebackpage}
+        {
+          \begin{TUBSbackpage}
+            \TUBSGaussGridTextBox{0}{3}{3}{6}{\TUBSauthor \\
 \textbf{\TUBSinstitute} \\ \TUBSaddress}{tuBlack}{tuSecondaryDark20}{top}
-					
+          
 \TUBSGaussGridTextBox{3}{4}{0}{6}{}{tuBlack}{tuSecondaryMedium20}{center}
-					
+          
 \TUBSGaussGridTextBox{0}{3}{0}{4}{}{tuBlack}{tuSecondaryDark20}{bottom}
-					\end{TUBSbackpage}
-				}
-			}
-			{
-				\PackageError{tubs*}{Illegal selection for package option titlepage: #1, possible values are classic, picture, alternate}
-			}
-		}
-	}
+          \end{TUBSbackpage}
+        }
+      }
+      {
+        \PackageError{tubs*}{Illegal selection for package option titlepage: #1,
+possible values are classic, picture, alternate}
+      }
+    }
+  }
 }
