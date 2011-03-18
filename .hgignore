@@ -2,3 +2,36 @@ syntax: glob
 
 TUBS_repo/*
 expl/*
+
+
+# no autosave
+*~
+*.backup
+*.orig
+
+# built things from tex
+*.aux
+*.log
+*.toc
+*.bbl
+*.blg
+*.lof
+*.lot
+*.out
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.lol
+*.dvi
+*.idx
+*.pdf
+*.ilg
+*.ind
+*.slg
+*.syg
+*.syi
+
