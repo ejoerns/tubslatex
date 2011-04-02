@@ -23,15 +23,18 @@
 
 
 \ifthenelse{\boolean{cmyk}}{%
+%%% Primary colors
 \definecolor{tuRed}{cmyk}{0.1,1.0,0.8,0.0}
 \definecolor{tuBlack}{cmyk}{0.0,0.0,0.0,1.0}
+\definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
+
 \definecolor{tuGrey100}{cmyk}{0,0,0,1}
 \definecolor{tuGrey80}{cmyk}{0,0,0,0.8}
 \definecolor{tuGrey60}{cmyk}{0,0,0,0.6}
 \definecolor{tuGrey40}{cmyk}{0,0,0,0.4}
 \definecolor{tuGrey20}{cmyk}{0,0,0,0.2}
-\definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
 
+%%% Secondary colors
 \definecolor{tuYellow100}{cmyk}{0.0,0.25,0.90,0.0}
 \colorlet{tuYellow80}{tuYellow100!80}
 \colorlet{tuYellow60}{tuYellow100!60}
@@ -161,72 +164,72 @@
 \definecolor{tuBlueDark80}{RGB}{51,101,121}
 \definecolor{tuBlueDark60}{RGB}{102,140,154}
 \definecolor{tuBlueDark40}{RGB}{153,178,188}
-\definecolor{tuBlueDark20}{RGB}{ 204,217, 221}
+\definecolor{tuBlueDark20}{RGB}{204,217,221}
 % light violet
-\definecolor{tuVioletLight100}{RGB}{ 138,48,127 }
-\definecolor{tuVioletLight80}{RGB}{161,89,153 }
-\definecolor{tuVioletLight60}{RGB}{185,131,178 }
-\definecolor{tuVioletLight40}{RGB}{208,172,204 }
-\definecolor{tuVioletLight20}{RGB}{232,214,229 }
+\definecolor{tuVioletLight100}{RGB}{138,48,127}
+\definecolor{tuVioletLight80}{RGB}{161,89,153}
+\definecolor{tuVioletLight60}{RGB}{185,131,178}
+\definecolor{tuVioletLight40}{RGB}{208,172,204}
+\definecolor{tuVioletLight20}{RGB}{232,214,229}
 %  violet
-\definecolor{tuViolet100}{RGB}{81,18,70 }
-\definecolor{tuViolet80}{RGB}{116,65,107 }
-\definecolor{tuViolet60}{RGB}{151,113,144 }
-\definecolor{tuViolet40}{RGB}{185,160,181 }
-\definecolor{tuViolet20}{RGB}{220,208,218 }
+\definecolor{tuViolet100}{RGB}{81,18,70}
+\definecolor{tuViolet80}{RGB}{116,65,107}
+\definecolor{tuViolet60}{RGB}{151,113,144}
+\definecolor{tuViolet40}{RGB}{185,160,181}
+\definecolor{tuViolet20}{RGB}{220,208,218}
 % dark violet
-\definecolor{tuVioletDark100}{RGB}{ 76,24,48 }
-\definecolor{tuVioletDark80}{RGB}{112,70,89 }
-\definecolor{tuVioletDark60}{RGB}{148,116,131} 
-\definecolor{tuVioletDark40}{RGB}{183,163,172 }
-\definecolor{tuVioletDark20}{RGB}{219,209,214 }
+\definecolor{tuVioletDark100}{RGB}{76,24,48}
+\definecolor{tuVioletDark80}{RGB}{112,70,89}
+\definecolor{tuVioletDark60}{RGB}{148,116,131}
+\definecolor{tuVioletDark40}{RGB}{183,163,172}
+\definecolor{tuVioletDark20}{RGB}{219,209,214}
 }{%
 %%% Screen colors from the ppt-template
-\definecolor{tuRed}{RGB}{190,30,60} 
-\definecolor{tuBlack}{RGB}{0,0,0} 
-\definecolor{tuWhite}{RGB}{255,255,255} 
+\definecolor{tuRed}{RGB}{190,30,60}
+\definecolor{tuBlack}{RGB}{0,0,0}
+\definecolor{tuWhite}{RGB}{255,255,255}
 %%% Grey
-\definecolor{tuGrey100}{RGB}{8,8,8} 
-\definecolor{tuGrey80}{RGB}{95,95,95} 
-\definecolor{tuGrey60}{RGB}{150,150,150} 
-\definecolor{tuGrey40}{RGB}{192,192,192} 
-\definecolor{tuGrey20}{RGB}{221,221,221} 
+\definecolor{tuGrey100}{RGB}{8,8,8}
+\definecolor{tuGrey80}{RGB}{95,95,95}
+\definecolor{tuGrey60}{RGB}{150,150,150}
+\definecolor{tuGrey40}{RGB}{192,192,192}
+\definecolor{tuGrey20}{RGB}{221,221,221}
 %%% Yellow
-\definecolor{tuYellow100}{RGB}{255,205,0} 
-\definecolor{tuYellow80}{RGB}{255,220,77} 
-\definecolor{tuYellow60}{RGB}{255,230,127} 
-\definecolor{tuYellow40}{RGB}{255,240,178} 
+\definecolor{tuYellow100}{RGB}{255,205,0}
+\definecolor{tuYellow80}{RGB}{255,220,77}
+\definecolor{tuYellow60}{RGB}{255,230,127}
+\definecolor{tuYellow40}{RGB}{255,240,178}
 \definecolor{tuYellow20}{RGB}{255,245,204}
 %%% Orange
-\definecolor{tuOrange100}{RGB}{250,110,0} 
-\definecolor{tuOrange80}{RGB}{252,154,77} 
+\definecolor{tuOrange100}{RGB}{250,110,0}
+\definecolor{tuOrange80}{RGB}{252,154,77}
 \definecolor{tuOrange60}{RGB}{252,182,127}
 \definecolor{tuOrange40}{RGB}{252,211,178}
 \definecolor{tuOrange20}{RGB}{254,226,204}
 %%%Red
-\definecolor{tuRed100}{RGB}{176,0,70} 
-\definecolor{tuRed80}{RGB}{192,51,107} 
-\definecolor{tuRed60}{RGB}{215,127,162} 
-\definecolor{tuRed40}{RGB}{235,191,209} 
-\definecolor{tuRed20}{RGB}{243,217,227} 
+\definecolor{tuRed100}{RGB}{176,0,70}
+\definecolor{tuRed80}{RGB}{192,51,107}
+\definecolor{tuRed60}{RGB}{215,127,162}
+\definecolor{tuRed40}{RGB}{235,191,209}
+\definecolor{tuRed20}{RGB}{243,217,227}
 %% light green
 \definecolor{tuGreenLight100}{RGB}{198,238,0}
-\definecolor{tuGreenLight80}{RGB}{215,243,77 }
+\definecolor{tuGreenLight80}{RGB}{215,243,77}
 \definecolor{tuGreenLight60}{RGB}{226,246,127}
 \definecolor{tuGreenLight40}{RGB}{238,250,178}
 \definecolor{tuGreenLight20}{RGB}{244,252,204}
 %% green
 \definecolor{tuGreen100}{RGB}{137,164,0}
-\definecolor{tuGreen80}{RGB}{173,191,77} 
-\definecolor{tuGreen60}{RGB}{196,209,127} 
-\definecolor{tuGreen40}{RGB}{219,228,178 }
-\definecolor{tuGreen20}{RGB}{231,237,204 }
+\definecolor{tuGreen80}{RGB}{173,191,77}
+\definecolor{tuGreen60}{RGB}{196,209,127}
+\definecolor{tuGreen40}{RGB}{219,228,178}
+\definecolor{tuGreen20}{RGB}{231,237,204}
 %% dark green
-\definecolor{tuGreenDark100}{RGB}{0,113,86 }
-\definecolor{tuGreenDark80}{RGB}{77,156,137} 
-\definecolor{tuGreenDark60}{RGB}{140,191,179} 
-\definecolor{tuGreenDark40}{RGB}{191,219,213 }
-\definecolor{tuGreenDark20}{RGB}{218,234,231 } 
+\definecolor{tuGreenDark100}{RGB}{0,113,86}
+\definecolor{tuGreenDark80}{RGB}{77,156,137}
+\definecolor{tuGreenDark60}{RGB}{140,191,179}
+\definecolor{tuGreenDark40}{RGB}{191,219,213}
+\definecolor{tuGreenDark20}{RGB}{218,234,231}
 %light blue
 \definecolor{tuBlueLight100}{RGB}{124,205,230}
 \definecolor{tuBlueLight80}{RGB}{164,220,238}
@@ -246,19 +249,19 @@
 \definecolor{tuBlueDark40}{RGB}{191,212,220}
 \definecolor{tuBlueDark20}{RGB}{217,229,234}
 %
-\definecolor{tuVioletLight100}{RGB}{204,0,153 }
-\definecolor{tuVioletLight80}{RGB}{222,89,189 }
-\definecolor{tuVioletLight60}{RGB}{235,153,214 }
-\definecolor{tuVioletLight40}{RGB}{245,204,235 }
-\definecolor{tuVioletLight20}{RGB}{250,229,245 }
-\definecolor{tuViolet100}{RGB}{118,0,118 }
+\definecolor{tuVioletLight100}{RGB}{204,0,153}
+\definecolor{tuVioletLight80}{RGB}{222,89,189}
+\definecolor{tuVioletLight60}{RGB}{235,153,214}
+\definecolor{tuVioletLight40}{RGB}{245,204,235}
+\definecolor{tuVioletLight20}{RGB}{250,229,245}
+\definecolor{tuViolet100}{RGB}{118,0,118}
 \definecolor{tuViolet80}{RGB}{152,64,152}
 \definecolor{tuViolet60}{RGB}{186,127,186}
 \definecolor{tuViolet40}{RGB}{214,178,214}
 \definecolor{tuViolet20}{RGB}{235,217,235}
-\definecolor{tuVioletDark100}{RGB}{118,0,84 }
-\definecolor{tuVioletDark80}{RGB}{156,77,136 }
-\definecolor{tuVioletDark60}{RGB}{193,140,178} 
+\definecolor{tuVioletDark100}{RGB}{118,0,84}
+\definecolor{tuVioletDark80}{RGB}{156,77,136}
+\definecolor{tuVioletDark60}{RGB}{193,140,178}
 \definecolor{tuVioletDark40}{RGB}{221,191,212}
 \definecolor{tuVioletDark20}{RGB}{235,217,230}
 }}
@@ -334,15 +337,15 @@
 
 
 \newcounter{perc}
-\def\createSecColor#1#2{%
+\def\create@SecColor#1#2{%
 \colorlet{tuSecondaryLight#2}{tu#1Light#2}%
 \colorlet{tuSecondaryMedium#2}{tu#1Medium#2}%
 \colorlet{tuSecondary#2}{tu#1Medium#2}%
 \colorlet{tuSecondaryDark#2}{tu#1Dark#2}%
 }
-\def\defineSecondary#1{%
+\def\define@Secondary#1{%
 \forloop[20]{perc}{20}{\value{perc}< 101}{%
-\createSecColor{#1}{\arabic{perc}}%
+\create@SecColor{#1}{\arabic{perc}}%
 }%
 \colorlet{tuSecondaryLight}{tu#1Light100}%
 \colorlet{tuSecondaryMedium}{tu#1Medium100}%
@@ -351,6 +354,8 @@
 }
 
 \ifthenelse{\equal{\secondaryColorName}{undefined}}{}{%
-\defineSecondary{\secondaryColorName}}
+\define@Secondary{\secondaryColorName}}
 
-
+\newcommand{\selectsecondary}[1]{
+  \define@Secondary{#1}
+}
