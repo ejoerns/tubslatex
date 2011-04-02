@@ -1,0 +1,26 @@
+\usepackage[LY1]{fontenc}
+
+%Anführungszeichen
+%%deutsch
+%%%einfach
+\ProvideTextCommand{\glq}{LY1}{\symbol{0130}}
+\ProvideTextCommand{\grq}{LY1}{\symbol{0096}}
+%%%doppelt
+\ProvideTextCommand{\glqq}{LY1}{\symbol{0132}}
+\ProvideTextCommand{\grqq}{LY1}{\symbol{0147}}
+%%%einfach
+\ProvideTextCommand{\flq}{LY1}{\symbol{0139}}
+\ProvideTextCommand{\frq}{LY1}{\symbol{0155}}
+%%%doppelt
+\ProvideTextCommand{\flqq}{LY1}{\symbol{0171}}
+\ProvideTextCommand{\frqq}{LY1}{\symbol{0187}}
+
+\DeclareTextCommand{\textasteriskcentered}{LY1}{$*$}
+
+\renewcommand{\rmdefault}{NexusProSerif}
+\renewcommand{\sfdefault}{NexusProSans}
+
+\renewcommand{\labelitemi}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
+\renewcommand{\labelitemii}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
+\renewcommand{\labelitemiii}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
+\renewcommand{\labelitemiv}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
