@@ -89,8 +89,3 @@
 	}
 }
 \ProcessOptionsX
-
-\renewcommand{\labelitemi}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
-\renewcommand{\labelitemii}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
-\renewcommand{\labelitemiii}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}
-\renewcommand{\labelitemiv}{\raisebox{1.5pt}{\vrule width 3.5pt height 3.5pt}}

@@ -19,12 +19,17 @@
 
 %Definition des Seitenlayouts für Kapitelstartseiten
 \fancypagestyle{plain}{%
-\fancyhf{} % clear all header and footer fields
-\fancyhead[L]{}
-\fancyhead[C]{}
-\fancyhead[R]{}
-\fancyfoot[L]{}
-\fancyfoot[C]{}
-\fancyfoot[R]{}
-\renewcommand{\headrulewidth}{0.0pt}
+\ifthenelse{\equal{\twosided}{true}}
+{
+ \fancyhead{}
+ \fancyfoot{}
+ \fancyfoot[RO,LE]{\thepage}
+ \pagestyle{fancy}
+}
+{
+ \fancyhead{}
+ \fancyfoot{}
+ \fancyfoot[R]{\thepage}
+ \pagestyle{fancy}
+}\renewcommand{\headrulewidth}{0.0pt}
 }
