@@ -28,10 +28,12 @@
 
 
 % logo dimensions
+\newlength{\tulogoBaseWidth}
+\setlength{\tulogoBaseWidth}{70mm}
+\newlength{\tulogoBaseHeight}
+\setlength{\tulogoBaseHeight}{26mm}
 \newlength{\tulogoWidth}
-\setlength{\tulogoWidth}{70mm}
 \newlength{\tulogoHeight}
-\setlength{\tulogoHeight}{26mm}
 %
 %
 \ExecuteOptions{rgb}%
@@ -47,24 +49,26 @@
 \ifthenelse{\equal{\logo@papersize}{0}}{\def\tulogo@scale{4.0}}{% 400%
 \def\tulogo@scale{1.0}% default
 }}}}}}}
+\setlength{\tulogoWidth}{\tulogo@scale\tulogoBaseWidth}
+\setlength{\tulogoHeight}{\tulogo@scale\tulogoBaseHeight}
 %
 %
 \ifthenelse{\boolean{cmykLogo}}{%% CMYK
 \newcommand{\tulogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-cmyk}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-cmyk}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
 }{%% RGB-print
 \ifthenelse{\boolean{rgbprintLogo}}{%
 \newcommand{\tulogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }{%% Monochrome
 \ifthenelse{\boolean{monoLogo}}{%
 \newcommand{\tulogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-mono}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-mono}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-mono}}
 }{%% RGB
 \newcommand{\tulogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }}}

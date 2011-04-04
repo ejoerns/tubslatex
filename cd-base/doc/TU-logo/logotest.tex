@@ -7,7 +7,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage[a4paper]{TU-logo}
+\usepackage[a5paper]{TU-logo}
 \usepackage{TU-CDcolors}
 
 \usepackage{listings}
@@ -41,18 +41,18 @@ werden. Die Auwahl erfolgt dabei über die Paketoptionen
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoWidth]{TUBraunschweig-rgb}
+  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-rgb}
   {\sffamily Logo in Standardgröße (rgb)}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoWidth]{TUBraunschweig-cmyk}
+  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-cmyk}
   {\sffamily Logo in Standardgröße (cmyk)}
 \end{minipage}
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoWidth]{TUBraunschweig-mono}
+  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-mono}
   {\sffamily Logo in Standardgröße (schwarz)}
 \end{minipage}
 
@@ -137,10 +137,14 @@ individuell gewählte absolute Breite angegeben werden.
 
 \section{Längen}
   \begin{description}
-    \item[\mdseries\ttfamily \textbackslash tulogoWidth]
+    \item[\mdseries\ttfamily \textbackslash tulogoBaseWidth]\hfill\\
       Standardbreite des Logos (70mm).
-    \item[\mdseries\ttfamily \textbackslash tulogoHeight]
+    \item[\mdseries\ttfamily \textbackslash tulogoBaseHeight]\hfill\\
       Standardhöhe des Logos (26mm).
+    \item[\mdseries\ttfamily \textbackslash tulogoWidth]\hfill\\
+      Breite des automatisch skalierten Logos.
+    \item[\mdseries\ttfamily \textbackslash tulogoHeight]\hfill\\
+      Höhe des automatisch skalierten Logos.
   \end{description}
 
 
