@@ -1,4 +1,4 @@
-\ProvidesPackage{tulogo}%[2010/05/19  v1.00  ]
+\ProvidesPackage{TU-logo}[2011/04/04  v1.00]
 \RequirePackage{graphics}
 \RequirePackage{ifthen}
 
@@ -19,10 +19,10 @@
 \ProcessOptions
 %
 %
-\ifthenelse{\boolean{cmykLogo}}{%
+\ifthenelse{\boolean{cmykLogo}}{%% CMYK
 \newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-cmyk}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
-}{%
+}{%% RGB-print
 \ifthenelse{\boolean{rgbprintLogo}}{%
 \newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
