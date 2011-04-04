@@ -7,7 +7,8 @@
 \usepackage[ngerman]{babel}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage{TU-logo}
+\usepackage[a4paper]{TU-logo}
+\usepackage{TU-CDcolors}
 
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily}
@@ -15,7 +16,7 @@
 \newcommand{\classoptionitem}[1][ ]{
   \item[\mdseries{\ttfamily%
     \textbackslash usepackage%
-    {[{\color{red}#1}]}%
+    {[{\color{tuRed}#1}]}%
     \{TU-CDcolors\}}]\hfill\\
 }
 
@@ -24,7 +25,7 @@
 
 \title{TU-logo}
 \subtitle{Paket-Dokumentation}
-\author{Martin Bäker \and \normalsize Enrico Jörns}
+\author{Dummy Author \and Enrico Jörns}
 
 \begin{document}
 
@@ -33,32 +34,48 @@
 \section{Beschreibung}
 
 Dieses Paket ermöglicht das einfache Einbinden des TU-logos in \LaTeX-Dokumente.
-Dabei kann zwischen einer Variante im rgb-Farbmodell und einer im
-cmyk-Farbmodell gewählt werden.
-
-Es werden 2 Befehle bereit gestellt, die sowohl das einfache Einfügen in
-Standard-Breite%??
-als auch in relativ oder absolut angegebener Breite ermöglichen.
-
+Dabei kann zwischen einer Variante im rgb-Farbmodell, einer im
+cmyk-Farbmodell oder (für Ausnahmefälle) einer monochromen Variante gewählt
+werden. Die Auwahl erfolgt dabei über die Paketoptionen
+(siehe Abschnitt \ref{options:color}).
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=100\tulogoWidth]{TUBraunschweig-rgb}
+  \includegraphics[width=\tulogoWidth]{TUBraunschweig-rgb}
   {\sffamily Logo in Standardgröße (rgb)}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=100\tulogoWidth]{TUBraunschweig-cmyk}
+  \includegraphics[width=\tulogoWidth]{TUBraunschweig-cmyk}
   {\sffamily Logo in Standardgröße (cmyk)}
 \end{minipage}
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=100\tulogoWidth]{TUBraunschweig-mono}
+  \includegraphics[width=\tulogoWidth]{TUBraunschweig-mono}
   {\sffamily Logo in Standardgröße (schwarz)}
 \end{minipage}
 
-\section{Optionen}
+Es werden 2 Befehle zum Einfügen des Logos in Dokumente bereit gestellt.
+Mit dem Befehl {\color{tuRed}\lstinline{\tulogo}} wird ein Logo in
+standardkonformer Größe der verwendeten Papiergröße entsprechend skaliert
+eingefügt. Die verwendete Papiergröße kann dabei als Paketoption übergeben
+werden und ist standardmäßig auf \lstinline{a4paper} voreingestellt
+(siehe Abschnitt \ref{options:papersize}.
+Also optionales Argument kann auch ein frei gewählter Skalierungsfaktor
+vorgegeben werden (siehe Abschnitt \ref{cmd:tulogo}).
+
+Mit {\color{tuRed}\lstinline!\tulogoAbs{}!} kann dagegen zusätzlich eine
+individuell gewählte absolute Breite angegeben werden.
+
+% die sowohl das einfache Einfügen in
+% den Standardbreiten als auch in individuell relativ oder absolut
+% angegebener Breite ermöglichen.
+
+\clearpage
+\section{Paket-Optionen}
+
+\subsection{Farbmodell}\label{options:color}
 
 \begin{description}
   \classoptionitem[rgb]
@@ -72,19 +89,59 @@ als auch in relativ oder absolut angegebener Breite ermöglichen.
     Verwendung einer schwarz-weiß-Version des Logos.
 \end{description}
 
-
-
-\section{Befehle}
+\subsection{Papiergröße}\label{options:papersize}
 
 \begin{description}
-  \item[\mdseries\ttfamily \textbackslash tulogo%
-    {[\textcolor{red}{\sffamily\itshape $<$Breite rel.$>$}]}]
-  \item[\ttfamily \textbackslash tulogoAbs\{\textcolor{red}{Breite abs.}\}]
+  \classoptionitem[a6paper]
+    Skaliert das Logo passend für A6-Dokumente auf 60\% der Standardgröße.
+  \classoptionitem[a5paper]
+    Skaliert das Logo passend für A5-Dokumente auf 70\% der Standardgröße.
+  \classoptionitem[a4paper]
+    Skaliert das Logo passend für A4-Dokumente auf Standardgröße.
+  \classoptionitem[a3paper]
+    Skaliert das Logo passend für A3-Dokumente auf 140\% der Standardgröße.
+  \classoptionitem[a2paper]
+    Skaliert das Logo passend für A2-Dokumente auf 200\% der Standardgröße.
+  \classoptionitem[a1paper]
+    Skaliert das Logo passend für A1-Dokumente auf 280\% der Standardgröße.
+  \classoptionitem[a0paper]
+    Skaliert das Logo passend für A0-Dokumente auf 400\% der Standardgröße.
 \end{description}
 
-\section{Interna}
 
-Ein Prozent der Standardbreite (70mm) ist definiert in der Länge
-\lstinline{\tulogoWidth}.
+\clearpage
+\section{Befehle}
+
+\begin{description}\label{cmd:tulogo}
+  \item[\color{tuRed}\mdseries\ttfamily \textbackslash tulogo%
+    {[\textcolor{tuGreenDark}{\sffamily\itshape $<$Breite rel.$>$}]}]
+    Erzeugt ein Logo, dass entsprechend des durch Angabe der Papiergröße
+    gewählten Skalierungsfaktors skaliert wird.
+
+    Wird das optionale Argument {\sffamily\itshape $<$Breite rel.$>$}
+    verwendet, so kann ein freier Skalierungsfaktor ausgehend von der
+    Standardgröße für DINA4-Dokumente ($70$mm$\times 26$mm) übergeben werden.
+
+    \lstinline!\tulogo[0.6]! erzeugt beispielsweise ein auf 60\% der 
+    Standardgröße für DINA4-Dokumente skaliertes Logo.
+    
+  \item[\color{tuRed}\ttfamily \textbackslash tulogoAbs%
+    \{\textcolor{tuGreenDark}{Breite abs.}\}]
+    Dieser Befehl erlaubt die Erzeugung eines Logos mit absolut vorgegebener
+    Breite.\footnote{Generell ist die Verwendung von standardkonformen Größen
+    einer individuellen Skalierung vorzuziehen!}
+    
+    \lstinline!\tulogoAbs{5cm}! erzeugt beispielsweise ein 5cm breites Logo.
+\end{description}
+
+
+\section{Längen}
+  \begin{description}
+    \item[\mdseries\ttfamily \textbackslash tulogoWidth]
+      Standardbreite des Logos (70mm).
+    \item[\mdseries\ttfamily \textbackslash tulogoHeight]
+      Standardhöhe des Logos (26mm).
+  \end{description}
+
 
 \end{document}
