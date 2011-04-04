@@ -2,41 +2,69 @@
 \RequirePackage{graphics}
 \RequirePackage{ifthen}
 
+% color vars
 \newboolean{rgbprintLogo}
 \setboolean{rgbprintLogo}{false}
 \newboolean{cmykLogo}
 \setboolean{cmykLogo}{false}
 \newboolean{monoLogo}
 \setboolean{monoLogo}{false}
+% papersize vars
 
+% color options
 \DeclareOption{rgb}{}
 \DeclareOption{rgbprint}{\setboolean{rgbprintLogo}{true}}
 \DeclareOption{cmyk}{\setboolean{cmykLogo}{true}}
 \DeclareOption{mono}{\setboolean{monoLogo}{true}}
+% papersize options
+\def\logo@papersize{}
+\DeclareOption{a6paper}{\def\logo@papersize{6}}
+\DeclareOption{a5paper}{\def\logo@papersize{5}}
+\DeclareOption{a4paper}{\def\logo@papersize{4}}
+\DeclareOption{a3paper}{\def\logo@papersize{3}}
+\DeclareOption{a2paper}{\def\logo@papersize{2}}
+\DeclareOption{a1paper}{\def\logo@papersize{1}}
+\DeclareOption{a0paper}{\def\logo@papersize{0}}
 
+
+% logo dimensions
 \newlength{\tulogoWidth}
-\setlength{\tulogoWidth}{0.7mm}
+\setlength{\tulogoWidth}{70mm}
+\newlength{\tulogoHeight}
+\setlength{\tulogoHeight}{26mm}
 %
 %
 \ExecuteOptions{rgb}%
 \ProcessOptions
 %
 %
+\ifthenelse{\equal{\logo@papersize}{6}}{\def\tulogo@scale{0.6}}{%  60%
+\ifthenelse{\equal{\logo@papersize}{5}}{\def\tulogo@scale{0.7}}{%  70%
+\ifthenelse{\equal{\logo@papersize}{4}}{\def\tulogo@scale{1.0}}{% 100%
+\ifthenelse{\equal{\logo@papersize}{3}}{\def\tulogo@scale{1.4}}{% 140%
+\ifthenelse{\equal{\logo@papersize}{2}}{\def\tulogo@scale{2.0}}{% 200%
+\ifthenelse{\equal{\logo@papersize}{1}}{\def\tulogo@scale{2.8}}{% 280%
+\ifthenelse{\equal{\logo@papersize}{0}}{\def\tulogo@scale{4.0}}{% 400%
+\def\tulogo@scale{1.0}% default
+}}}}}}}
+%
+%
 \ifthenelse{\boolean{cmykLogo}}{%% CMYK
-\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-cmyk}}
+\newcommand{\tulogo}[1][\tulogo@scale]{%
+\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-cmyk}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
 }{%% RGB-print
 \ifthenelse{\boolean{rgbprintLogo}}{%
-\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
+\newcommand{\tulogo}[1][\tulogo@scale]{%
+\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }{%% Monochrome
 \ifthenelse{\boolean{monoLogo}}{%
-\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{
-TUBraunschweig-mono}}
+\newcommand{\tulogo}[1][\tulogo@scale]{%
+\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-mono}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-mono}}
 }{%% RGB
-\newcommand{\tulogo}[1][100]{\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
+\newcommand{\tulogo}[1][\tulogo@scale]{%
+\includegraphics[width=#1\tulogoWidth]{TUBraunschweig-rgb}}
 \newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }}}
-
-%TODO: schwarze Version!?
