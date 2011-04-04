@@ -1,0 +1,90 @@
+\documentclass{scrartcl}
+
+% \usepackage[green,rgbprint]{TU-CDcolors}
+\usepackage[T1]{fontenc}
+\usepackage{Nexus}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{TU-logo}
+
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
+
+\newcommand{\classoptionitem}[1][ ]{
+  \item[\mdseries{\ttfamily%
+    \textbackslash usepackage%
+    {[{\color{red}#1}]}%
+    \{TU-CDcolors\}}]\hfill\\
+}
+
+\parindent0mm
+\parskip\medskipamount
+
+\title{TU-logo}
+\subtitle{Paket-Dokumentation}
+\author{Martin Bäker \and \normalsize Enrico Jörns}
+
+\begin{document}
+
+\maketitle
+
+\section{Beschreibung}
+
+Dieses Paket ermöglicht das einfache Einbinden des TU-logos in \LaTeX-Dokumente.
+Dabei kann zwischen einer Variante im rgb-Farbmodell und einer im
+cmyk-Farbmodell gewählt werden.
+
+Es werden 2 Befehle bereit gestellt, die sowohl das einfache Einfügen in
+Standard-Breite%??
+als auch in relativ oder absolut angegebener Breite ermöglichen.
+
+
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[width=100\tulogoWidth]{TUBraunschweig-rgb}
+  {\sffamily Logo in Standardgröße (rgb)}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[width=100\tulogoWidth]{TUBraunschweig-cmyk}
+  {\sffamily Logo in Standardgröße (cmyk)}
+\end{minipage}
+
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[width=100\tulogoWidth]{TUBraunschweig-mono}
+  {\sffamily Logo in Standardgröße (schwarz)}
+\end{minipage}
+
+\section{Optionen}
+
+\begin{description}
+  \classoptionitem[rgb]
+    Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung.
+  \classoptionitem[cmyk]
+    Verwendung der cmyk-Farben
+  \classoptionitem[rgbprint]
+    Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung.
+    Entspricht Option \lstinline{rgb}.
+  \classoptionitem[mono]
+    Verwendung einer schwarz-weiß-Version des Logos.
+\end{description}
+
+
+
+\section{Befehle}
+
+\begin{description}
+  \item[\mdseries\ttfamily \textbackslash tulogo%
+    {[\textcolor{red}{\sffamily\itshape $<$Breite rel.$>$}]}]
+  \item[\ttfamily \textbackslash tulogoAbs\{\textcolor{red}{Breite abs.}\}]
+\end{description}
+
+\section{Interna}
+
+Ein Prozent der Standardbreite (70mm) ist definiert in der Länge
+\lstinline{\tulogoWidth}.
+
+\end{document}
