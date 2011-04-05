@@ -10,6 +10,11 @@
 \DeclareOptionBeamer{minion}{\setboolean{useminion}{true}}
 \ProcessOptionsBeamer
 
+% loads the default title graphic
+\newcommand{\tuDefaultTitlegraphic}{%
+\includegraphics[width=\titlegraphicswidth]{defaulttitlepicture}}
+
+
 \mode<presentation>
 \ifthenelse{\boolean{useminion}}{%
   \usepackage{MinionPro}%
@@ -128,7 +133,9 @@
 
 %%% TODO: Entfernen????
 
-
+\newboolean{usethis}
+\setboolean{usethis}{false}
+\ifthenelse{\boolean{usethis}}{%
 \DeclareRobustCommand\noscshape{%
   \not@math@alphabet\noscshape\relax
   \ifthenelse{\equal{\f@shape}{\scdefault}}{%
@@ -207,6 +214,6 @@
 \let\grqq=\flqq
 \let\glq=\frq
 \let\grq=\flq
-
+}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
