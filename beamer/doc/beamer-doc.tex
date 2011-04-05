@@ -27,7 +27,6 @@
 
 \maketitle
 
-\tableofcontents
 \begin{abstract}
 Es ist freilich nicht jedem Menschen zuzumuten, seine Präsentationen in
 Powerpoint oder ähnlichen Programmen erstellen zu müssen.
@@ -36,7 +35,7 @@ TU-Braunschweig in ein Vorlage für das \LaTeX-Beamer-Paket zu gießen.\medskip
 
 Dabei wurde unter anderem Wert darauf gelegt, so wenig wie möglich an dem
 Standardverhalten und Kommandoumfang des Beamer-Paketes zu ändern und darüber
-hinaus so viel Flexibilität wie möglich und sinnvol zu behalten.\medskip
+hinaus so viel Flexibilität wie möglich und sinnvoll zu behalten.\medskip
 
 Das Beamer-Theme stammt maßgeblich von Martin Bäker. Ebenfalls daran beteiligt
 waren Mr X, Mrs Y und Enrico Jörns.%TODO...
@@ -48,6 +47,8 @@ Wir wünschen viel Erfolg und Freude bei der Arbeit mit der Vorlage.
 {\hfill Braunschweig, \today}
 \end{abstract}
 
+\clearpage
+\tableofcontents
 
 \chapter{Installation}
 
@@ -74,8 +75,10 @@ sudo getnonfreefonts-sys arial-urw
 
 Bezug von CTAN: \url{http://www.ctan.org/tex-archive/fonts/urw/arial/}
 
-\chapter{Anwendung}
-fre
+% TODO:
+% \usetheme{TU-CD}
+
+\chapter{Anwendung und Folienaufbau}
 
 Grundsätzlich handelt es sich bei der Vorlage lediglich um ein Theme für
 das beamer-Paket. An der Funktionalität von beamer wird so gut wie nichts
@@ -85,7 +88,7 @@ auf die entsprechende Dokumentation verwiesen wird. % TODO: LINK/BIB
 Beschrieben werden hier alle Besonderheiten des Corporate-Design-Themes, sowie
 einige damit verbundene allgemeiner Hinweise gegeben.
 
-
+Die Vorlage wird mit dem Beamer-Befehl \lstinline!\usetheme{TU-CD}! geladen.
 
 \section{Titelfolie}
 
@@ -103,6 +106,22 @@ und zum Abschluss ein einfarbig-roter Streifen.
 
 Zusätzlich kann in der rechten oberen Ecke des Absenderbereich ein
 Instituts-Logo platziert werden.
+
+\begin{minipage}{0.5\textwidth}
+\begin{verbatim}
+\title{Corporate Design}
+\subtitle{Jetzt mit \LaTeX}
+\author{Max Mustermann}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+\end{verbatim}
+\end{minipage}
+\fboxsep0mm
+\begin{minipage}{0.5\textwidth}
+\fbox{\includegraphics[width=0.9\textwidth]{examples/titelseite.pdf}}
+\end{minipage}
 
 \subsection{Befehle}
 
@@ -124,7 +143,30 @@ Für die Einbindung des Titelbildes stehen weitere Nicht-Standard-Befehle zur
 Verfügung.
 
 
-\subsection{Bild}
+\subsection{Titelgrafik}
+
+Das Titelbild kann (im Rahmen der Corporate Design-Richtlinine
+unter Beachtung der unten aufgeführten Hinweise) frei gewählt werden.
+Wenn kein eigenes Bild zur Hand ist, kann alternativ ein Standardbild eingefügt
+werden, dass die Front des TU-Altgebäudes zeigt und gut mit den Folienfarben
+harmoniert.
+
+Die Einbindung der Bildes erfolgt in beiden Fällen mit dem Befehl
+\lstinline!\titlegraphic{}!.
+
+\paragraph{Standardgrafik}
+
+Das Einfügen des Standardbildes ist mit dem Befehl
+\linebreak\lstinline{\tuDefaultTitlegraphic} möglich,
+der \lstinline!\titlepicture{}! direkt als Argument übergeben werden kann.
+
+\begin{example}
+\begin{lstlisting}
+\titlegraphic{\tuDefaultTitlegraphic}
+\end{lstlisting}
+\end{example}
+
+\paragraph{Individuelle Grafik}
 
 Damit das Bild auf der Titelfolie den gesamten zur Verfügung stehenden Raum
 ausfüllen kann, muss es ein korrektes Seitenverhältnis haben.
@@ -137,8 +179,9 @@ Seitenverhältnisse der Präsentation aufgeführt.
 \toprule
 \bfseries Präsentation  & \bfseries  Bild  \\
 \midrule
-$3:4$ &  $1:3,146$ \\
-$16:10$ & \\
+$3:4$   & $1:3,15$ \\
+$16:9$  & $1:4,30$ \\
+$16:10$ & $1:3,83$ \\
 \bottomrule
 \end{tabular}
 \caption{Bild-Seitenverhältnisse}
@@ -151,10 +194,23 @@ skaliert und zentriert im Bildbereich dargestellt.
 Der Bildbereich kann theoretisch auch freigelassen werden, er ist mit
 einem Gelbton aus den Sekundärfarben eingefärbt.\medskip
 
-Die Einbindung der Bildes erfolgt mit dem Befehl \lstinline{\titlegraphic}.
+Die Verwendung von \lstinline{\titlegraphicswidth} als Breitenbeschränkung sorgt
+darfür, dass das Bild in der korrekten Breite dargestellt wird. Das Titelbild 
+wird generell an der unteren Kante des dafür vorgesehenen Bereichs ausgerichtet,
+sodass in falschem Seitenverhältnis vorliegene Bilder nach Oben 'rausgeschoben'
+werden.
 
-Die Verwendung von \lstinline{\titlegraphicsheight} als Höhenbeschränkung für
-die Grafik stellt deren automatische korrekte vertikale Skalierung sicher.
+\begin{example}
+\begin{lstlisting}
+\titlegraphic{\includegraphics[width=\titlegraphicswidth]
+    {titlepicture}}
+\end{lstlisting}
+\end{example}
+
+Alternativ kann auch eine Höhenbeschränkung über die Längenangabe
+\lstinline{\titlegraphicsheight} erfolgen. Dies ist besonders bei Grafiken
+sinnvoll, deren Breite geringer als benötigt ist. Damit wird deren automatische
+korrekte vertikale Skalierung sichergestellt.
 
 \begin{example}
 \begin{lstlisting}
@@ -173,8 +229,8 @@ verwendet wird.
 Die Verwendung von \lstinline{\logoheight} als Höhenbeschränkung für Grafiken
 stellt deren automatische korrekte vertikale Skalierung sicher.
 Das Seitenverhältnis der verwendeten Grafik-Datei ist dabei relativ
-frei, sollte jedoch nach Möglichkeit und Gründen der Lesbarkeit mehr Breite als
-Höhe haben.
+frei, sollte jedoch nach Möglichkeit und Gründen der Lesbarkeit breiter sein als
+hoch.
 
 \begin{example}
 \begin{lstlisting}
@@ -183,11 +239,68 @@ Höhe haben.
 \end{example}
 
 
-\section{Fuzeile}
+\section{Inhaltsfolien}
+
+Das Layout der Inhaltsfolien ist relativ schlicht und bietet viel Platz.
+Die Überschrift ist im Kopfbereich grau hinterlegt und im Fußbereich der Folien
+findet sich das TU-Logo, sowie eine rote Trennlinie.
+Rechts unterhalbt der Trennlinie wird, wenn definiert, das Logo angezeigt.
+Ist dies nicht gewünscht, kann dies mit der Klassenoption
+\lstinline{nologoinfoot} unterdrückt werden.
+
+\begin{minipage}{0.5\textwidth}
+\begin{verbatim}
+\begin{frame}{Inhaltsseite}
+  \begin{itemize}
+    \item Hier steht der Inhalt
+    \item Hier nicht
+    \item Weitere Informationen
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.9\textwidth]{examples/inhaltsseite.pdf}}
+\end{minipage}
+
+\subsection{Hervorgehobene Folien}
+
+Einzelne wichtige Folien können extra hervorgehoben werden. Diese werden mit
+der Umgebung \lstinline{highlightframe} erzeugt. Dies hat einen breiteren und
+rot hinterlegten Titelbereich zur Folge.
+
+\begin{example}
+\begin{lstlisting}
+\begin{highlightframe}{Wichtig}
+Diese Folie ist wichtig!
+\end{highlightframe}
+\end{lstlisting}
+\end{example}
+
+\begin{minipage}{0.5\textwidth}
+\begin{verbatim}
+\begin{highlightframe}
+  {Inhaltsseite -- Hervorgehoben}
+  \begin{itemize}
+    \item Hier steht der Inhalt
+    \item Hier nicht
+    \item Weitere Informationen
+  \end{itemize}
+\end{highlightframe}
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.9\textwidth]{%
+  examples/inhaltsseite_hervorgehoben.pdf}}
+\end{minipage}
+
+\subsection{Fußzeile}
 
 In der Fußzeile steht laut Vorgabe Datum und Seitenzahl.
-Ist das mal nicht gewollt, einfach die Optionen \lstinline{nopagenum} bzw.
-\lstinline{nodate} angeben.
+Ist das einmal nicht gewollt, kann dies durch Angabe der Optionen
+\lstinline{nopagenum} bzw. \lstinline{nodate} unterdrückt werden.
 
 Autor und Titel kommen aus dem optionalen Argument von \lstinline{\author}
 und \lstinline{\title}, sodass auch Kurztitel möglich sind.
@@ -197,8 +310,14 @@ die Fußzeile (\textit{page} statt Seite, anderes Datumsformat).
 
 \section{Skalierbarkeit}
 
-Support von aspectratio
+Die beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
+andere Seitenformate gebrachte werden kann, wird vom Layout generell
+unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
+Seitenverhältnis benötigt wird, wenn es passend dargestellt werden soll
+(siehe Tabelle \ref{tab:picratio}).
 
+
+\chapter{Optionen und Befehle}
 
 \section{Optionen}
 
@@ -208,7 +327,7 @@ Dokumentenklasse.
 \subsection{Kopf-/Fußbereich}
 
 \begin{classoption}{nopagenum}
-  Blendet die mitlaufende Seitenzählung im Fuß der Folie aus
+  Blendet die mitlaufende Seitenzählung im Fuß der Folie aus.
 \end{classoption}
 
 \begin{classoption}{nodate}
@@ -234,6 +353,14 @@ Dokumentenklasse.
   überragt.
 \end{classoption}
 
+\begin{classoption}{widetoc}
+  Horizontal gestreckte Version des mitlaufenden Inahltsverzeichnisses.
+\end{classoption}
+
+\begin{classoption}{narrowtoc}
+  Horizontal gestauchte Version des mitlaufenden Inahltsverzeichnisses.
+\end{classoption}
+
 \begin{classoption}{nosubsectionsinheader}
   Deaktiviert die Anzeige von subsections im Header.
   
@@ -256,25 +383,19 @@ Dokumentenklasse.
 \end{classoption}
 
 
-\begin{classoption}{mathserif}
-  Beschreibung
-\end{classoption}
+% \begin{classoption}{mathserif}
+%   Beschreibung
+% \end{classoption}
 
-\begin{classoption}{fleqn}
-  Beschreibung
-\end{classoption}
+% \begin{classoption}{fleqn}
+%   Beschreibung
+% \end{classoption}
 
-\begin{classoption}{minion}
-  Beschreibung
-\end{classoption}
+% \begin{classoption}{minion}
+%   Beschreibung
+% \end{classoption}
 
-\begin{classoption}{widetoc}
-  Beschreibung
-\end{classoption}
 
-\begin{classoption}{narrowtoc}
-  Beschreibung
-\end{classoption}
 
 \subsection{Schriftgröße}
 
@@ -299,4 +420,44 @@ Dokumentenklasse.
 \end{classoption}
 
 
+\chapter{Minimalbeispiel}
+
+Im folgenden ist der Code eines Minimalbeispieles aufgeführt, zusammen mit den
+daraus erzeugten Folien.
+
+\begin{verbatim}
+\documentclass{beamer}
+
+\usetheme{TU-CD}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+
+\title{Corporate Design}
+\subtitle{Jetzt mit \LaTeX}
+\author{Max Mustermann}
+\titlegraphic{\includegraphics[width=\titlegraphicswidth]{titlepicture}}
+\logo{\includegraphics[height=\logoheight]{institut.jpg}}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Inhaltsseite}
+  \begin{itemize}
+    \item Hier steht der Inhalt
+    \item Hier nicht
+    \item Weitere Informationen
+  \end{itemize}
+\end{frame}
+
+\end{document}
+\end{verbatim}
+
+\begin{center}
+  \fbox{\includegraphics[width=0.9\textwidth]{examples/titelseite.pdf}}
+
+  \fbox{\includegraphics[width=0.9\textwidth]{examples/inhaltsseite.pdf}}
+\end{center}
 \end{document}
