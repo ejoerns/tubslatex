@@ -1,6 +1,8 @@
-\ProvidesPackage{Nexus} [2011/03/12 v0.1 Nexus support for LaTeX]
+\ProvidesPackage{Nexus} [2011/03/12 v0.2 Nexus support for LaTeX]
 
-\usepackage[LY1]{fontenc}
+\RequirePackage{ae}
+\PassOptionsToPackage{LY1}{fontenc}
+\RequirePackage{fontenc}
 
 %Anführungszeichen
 %%deutsch
@@ -24,5 +26,4 @@
 
 % use computer modern as typewriter (T1)
 \let\oldttfamily\ttfamily
-\renewcommand{\ttdefault}{cmtt}
 \renewcommand{\ttfamily}{\fontencoding{T1}\oldttfamily}
