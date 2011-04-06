@@ -30,7 +30,6 @@
 \beamer@tochorizontalspace=0.15em
 
 % Lengths for the gauss-layout
-
 \newdimen\beamer@CDsenderheight
 \beamer@CDsenderheight=0.2\paperheight
 
@@ -54,6 +53,10 @@
 
 \newdimen\logoheight
 \logoheight=4\beamer@CDgaussunit
+
+\newdimen\beamer@titlepagetextwidth
+\beamer@titlepagetextwidth=\textwidth
+\addtolength\beamer@titlepagetextwidth{-\beamer@leftmarginwidth}
 
 \setbeamersize{text margin left=\beamer@leftmarginwidth}
 \setbeamersize{text margin right=\beamer@leftmarginwidth}
