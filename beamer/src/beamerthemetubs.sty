@@ -1,4 +1,4 @@
-\ProvidesPackage{beamerthemeTU-CD}[2010/05/17  v1.00  IfW-Slides (beamer)]
+\ProvidesPackage{beamerthemetubs}[2010/04/12 v1.0 Beamer-Template TuBs]
 
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
 %
@@ -29,37 +29,29 @@
 % Falls die Schrift zu groß ist, kann statt der Option
 % tocinheader die Option tinytocinheader angegeben werden, die eine
 % kleinere Schriftgröße auswählt.
-%\PassOptionsToPackage{rgb,600}{ifwlogo}
+
 \PassOptionsToPackage{rgb}{TU-logo}
-\DeclareOptionBeamer{minion}{\PassOptionsToPackage{minion}{beamerinnerthemeTU-CD}}
-\DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgbprint}{beamercolorthemeTU-CD}%
-%\PassOptionsToPackage{rgbprint,600}{ifwlogo}
+\DeclareOptionBeamer{minion}{\PassOptionsToPackage{minion}{beamerinnerthemetubs}}
+\DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgbprint}{beamercolorthemetubs}%
 \PassOptionsToPackage{rgbprint}{TU-logo}}
-\DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{beamercolorthemeTU-CD}%
-%\PassOptionsToPackage{cmyk}{ifwlogo}
+\DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{beamercolorthemetubs}%
 \PassOptionsToPackage{cmyk}{TU-logo}}
 
-\DeclareOptionBeamer{nopagenum}{\PassOptionsToPackage{nopagenum}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{nodate}{\PassOptionsToPackage{nodate}{beamerouterthemeTU-CD}}
-%%% BEGIN EDITED
-% \DeclareOptionBeamer{noendpagenum}{
-%   \PassOptionsToPackage{noendpagenum}{beamerouterthemeTU-CD}}
-%%% END EDITED
-\DeclareOptionBeamer{tocinheader}{\PassOptionsToPackage{tocinheader}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{nosubsectionsinheader}{\PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemeTU-CD}}
+\DeclareOptionBeamer{nopagenum}{\PassOptionsToPackage{nopagenum}{beamerouterthemetubs}}
+\DeclareOptionBeamer{nodate}{\PassOptionsToPackage{nodate}{beamerouterthemetubs}}
+\DeclareOptionBeamer{tocinheader}{\PassOptionsToPackage{tocinheader}{beamerouterthemetubs}}
+\DeclareOptionBeamer{nosubsectionsinheader}{\PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemetubs}}
+\DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
+\DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
 %% Needed to fix spacing in the running toc in the header
-\DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerouterthemeTU-CD}}
-\DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerouterthemeTU-CD}}
-
-
+\DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerouterthemetubs}}
+\DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerouterthemetubs}}
+\DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerouterthemetubs}}
+\DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerouterthemetubs}}
+\DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerouterthemetubs}}
 
 \ProcessOptionsBeamer
-%\RequirePackage{ifwlogo}
+
 \RequirePackage{TU-logo}
 \PassOptionsToPackage{ngerman}{babel}  % used in outer theme for \pagename
 \RequirePackage{babel}
@@ -70,9 +62,8 @@
 
 \mode<presentation>
 
-\usecolortheme{TU-CD}
-\useoutertheme{TU-CD}
-\useinnertheme{TU-CD}
+\usecolortheme{tubs}
+\useoutertheme{tubs}
+\useinnertheme{tubs}
 
-\mode
-<all>
+\mode<all>
