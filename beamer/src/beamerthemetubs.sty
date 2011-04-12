@@ -55,15 +55,21 @@
 \RequirePackage{TU-logo}
 \PassOptionsToPackage{ngerman}{babel}  % used in outer theme for \pagename
 \RequirePackage{babel}
+
+\mode<presentation>
+
 % Default font scheme: uarial in T1 encoding
 \PassOptionsToPackage{T1}{fontenc}
 \RequirePackage{fontenc}
 \RequirePackage{uarial} % use arial font
 
-\mode<presentation>
-
 \usecolortheme{tubs}
 \useoutertheme{tubs}
 \useinnertheme{tubs}
+
+\mode<article>
+
+% Default font: Nexus
+\RequirePackage{Nexus}
 
 \mode<all>
