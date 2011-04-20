@@ -9,8 +9,8 @@
 \mode<all>
 
 %% TU Farbschema 
-
-\DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgbprint}{tubscolors}}
+\PassOptionsToPackage{rgbbeamer}{tubscolors}%default option
+\DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgb}{tubscolors}}
 \DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{tubscolors}}
 
 \ProcessOptionsBeamer
