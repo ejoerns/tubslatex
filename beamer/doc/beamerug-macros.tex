@@ -83,6 +83,12 @@
   \par\topsep=0pt}
 \def\endclassoption{\endlist}
 
+\def\themeoption#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+\item{{\ttfamily\char`\\usetheme[\declare{#1}]\char`\{tubs\char`\}}}
+  \index{#1@\protect\texttt{#1} class option}%
+  \index{Theme options for \textsc{tubs}!#1@\protect\texttt{#1}}%
+  \par\topsep=0pt}
+\def\endthemeoption{\endlist}
 
 \newcommand\beameroption[2]{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
 \item{{\ttfamily\char`\\setbeameroption\char`\{\declare{#1}{\normalfont\opt{#2}}\char`\}}}

@@ -46,7 +46,8 @@ Wir wünschen viel Erfolg und Freude bei der Arbeit mit der Vorlage.
 
 {\hfill Braunschweig, \today}
 \vfill
-\footnotesize{Titelbild (Audimax TU Braunschweig): \url{http://commons.wikimedia.org/wiki/File:Braunschweig_TU_Audimax.jpg}\\
+\footnotesize{Titelbild (Audimax TU Braunschweig):\\
+\url{http://commons.wikimedia.org/wiki/File:Braunschweig_TU_Audimax.jpg}\\
 lizenziert unter CC BY-SA 3.0 (\url{http://creativecommons.org/licenses/by-sa/3.0/deed.de})\\
 von Igge (\url{http://de.wikipedia.org/wiki/Benutzer:-Igge-})}
 \end{abstract}
@@ -318,12 +319,143 @@ Seitenverhältnis benötigt wird, wenn es passend dargestellt werden soll
 (siehe Tabelle \ref{tab:picratio}).
 
 
+\chapter{Farbanpassung}
+
+Um ein individuelleres Foliendesign zu ermöglichen, können einige Elemente
+(unter Verwendung des CorporateDesign-Farbkontingents)
+farblich angepasst werden.
+
+Dazu zählen die Elemente der Titelseite (mit Ausnahme des Logos),
+sowie die Hintergrundfarbe der Folientitel.
+
+Zur einfachen Farbanpassung stehen einige spezielle Optionen zur Verfügung.
+Eine komplett freie Gestaltung kann bei Bedarf über Änderung der
+jeweiligen Templates erfolgen. Beide Möglichkeiten werden im folgenden
+erläutert.
+
+Details über die Farben der CorporateDesign-Farbklänge sind bitte der
+entsprechenden Dokumentation zu entnehmen.%TODO: ref
+
+\section{Anpassung über Optionen}
+
+Über die Angabe von Farbargumenten können alle zur farblichen Anpassung
+vorgesehenen Elemente nach einem vordefinierten Farbschema unter freier Auswahl
+eines Farbklangs verändert werden.
+
+Die Optionen gliedern sich in 3 Kategorien:
+\begin{itemize}
+  \item \emph{Farbe} -- Auswahl des Farbklangs\\
+    Optionen: \texttt{yellow}, \texttt{green}, \texttt{blue}, \texttt{violet}
+  \item \emph{Helligkeit} -- Auswahl der Helligkeitsabstufung
+    innerhalb des gewählten Farbklangs\\
+    Optionen: \texttt{dark}, \texttt{medium}, \texttt{light}
+  \item \emph{Elemente} -- Färbung von Fußbereiche/ Kopfbereich aktivieren\\
+    Optionen: \texttt{colorhead}, \texttt{colorfoot}
+\end{itemize}
+
+Weitere Details zu Verwendung der Optionen sind im Kapitel \ref{optionen}
+zu finden.
+
+\clearpage
+\paragraph{Beispiele}\hfill\\
+
+% \begin{minipage}{0.55\textwidth}
+% \lstinline!\usetheme[green,dark]{tubs}!
+% \end{minipage}\hfill
+\begin{center}
+\begin{minipage}{0.49\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.99\textwidth,page=1]{%
+  examples/colorscheme1.pdf}}
+\end{minipage}\hfill
+\begin{minipage}{0.49\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.99\textwidth,page=2]{%
+  examples/colorscheme1.pdf}}
+\end{minipage}\medskip\\
+{\ttfamily \textbackslash usetheme[green,dark]\{tubs\}}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.49\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.99\textwidth,page=1]{%
+  examples/colorscheme2.pdf}}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.99\textwidth,page=2]{%
+  examples/colorscheme2.pdf}}
+\end{minipage}\medskip\\
+{\ttfamily \textbackslash usetheme[green,dark,colorfoot,colorhead]\{tubs\}}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.49\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.99\textwidth,page=1]{%
+  examples/colorscheme3.pdf}}
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.99\textwidth,page=2]{%
+  examples/colorscheme3.pdf}}
+\end{minipage}\medskip\\
+{\ttfamily%
+  \textbackslash usetheme[blue,colorhead]\{tubs\}}
+\end{center}
+
+% \begin{minipage}{0.55\textwidth}
+% \lstinline!\usetheme[blue,colorhead]{tubs}!
+% \end{minipage}\hfill
+% \begin{minipage}{0.49\textwidth}
+% \fboxsep0mm
+% \fbox{\includegraphics[width=0.99\textwidth]{%
+%   examples/colorscheme3.pdf}}
+% \lstinline!\usetheme[blue,colorhead]{tubs}!
+% \end{minipage}\hfill
+% \begin{minipage}{0.49\textwidth}
+% \fboxsep0mm
+% \fbox{\includegraphics[width=0.99\textwidth]{%
+%   examples/colorscheme4.pdf}}
+% \lstinline!\usetheme[blue,colorhead]{tubs}!
+% \end{minipage}
+
+\section{Anpassung über Templates}
+
+Es können Folgende Templates angepasst werden:
+\begin{description}
+  \item[\color{tuRed100}\ttfamily titlebarsecond]
+    Der Hintergrund des Grafik-Bereichs auf der Titelseite
+  \item[\color{tuRed100}\ttfamily titlebarthird]
+    Der Bereich unterhalb des Grafik-Bereichs auf der Titelseite
+  \item[\color{tuRed100}\ttfamily titlebarlow]
+    Die schmale Fußleiste auf der Titelseite
+  \item[\color{tuRed100}\ttfamily titlebarlike]
+    Der Hintergrund der einzelnen Folientitel
+\end{description}
+
+\example
+
+\begin{lstlisting}
+\setbeamercolor{titlebarthird}{bg=tuBlueDark80}
+\setbeamercolor{titlebarsecond}{bg=tuBlueDark40,fg=black}
+\setbeamercolor{titlebarlow}{bg=tuBlueDark80}
+\setbeamercolor{titlelike}{bg=tuBlueDark40,fg=black}
+\end{lstlisting}
+
+Die Anpassung weiterer Elemente ist natürlich möglich,
+wird aber nicht empfohlen.
+
 \chapter{Optionen und Befehle}
 
-\section{Optionen}
+\section{Optionen}\label{optionen}
 
 Auflistung aller Theme-spezieller Optionen zur Übergabe and die
-Dokumentenklasse.
+Dokumentenklasse bzw. das Beamer-theme.
+
+Die templatespezifischen Argumente sollten bevorzugt
+über \lstinline!\usetheme! übergeben werden.
 
 \subsection{Kopf-/Fußbereich}
 
@@ -373,16 +505,56 @@ Dokumentenklasse.
   Deaktiviert die Anzeige des Logos im Fußbereich.
 \end{classoption}
 
-\subsection{Farben}
+\subsection{Farbmodell}
 
 \begin{classoption}{rgbprint}
-  Ausgabe in RGB-Druckfraben
+  Ausgabe in RGB-Druckfraben.\\
+  Standardmäßig wird sonst ein auf Beamer optimiertes Farbmodell genutzt.
 \end{classoption}
 
 \begin{classoption}{cmyk}
   Ausgabe in CMYK-Farben.
 \end{classoption}
 
+
+\subsection{Farbschema}
+
+\paragraph{Farbklang}
+\begin{themeoption}{yellow}
+  Auswahl des gelben Farbklangs
+\end{themeoption}
+\begin{themeoption}{green}
+  Auswahl des grünen Farbklangs
+\end{themeoption}
+\begin{themeoption}{blue}
+  Auswahl des blauen Farbklangs
+\end{themeoption}
+\begin{themeoption}{violet}
+  Auswahl des violetten Farbklangs
+\end{themeoption}
+\paragraph{Helligkeit}
+\begin{themeoption}{dark}
+  Auswahl der hellen Farbreihe aus gewähltem Farbklang
+\end{themeoption}
+\begin{themeoption}{medium}
+  Auswahl der mittleren Farbreihe aus gewähltem Farbklang
+\end{themeoption}
+\begin{themeoption}{light}
+  Auswahl der dunklen Farbreihe aus gewähltem Farbklang
+\end{themeoption}
+\paragraph{Elemente}
+\begin{themeoption}{colorfoot}
+  Bewirkt, dass auch die Farbe der standardmäßig rot gefärbten Fußleiste auf
+  der Titelseite dem gewählten Farbschema angepasst wird.
+\end{themeoption}
+\begin{themeoption}{colorhead}
+  Bewirkt, dass auch die Farbe des standardmäßig hellgrau gefärbten
+  Titelhintergrunds auf jeder Inhaltsfolie
+  dem gewählten Farbschema angepasst wird.
+\end{themeoption}
+
+%TODO : notieren, dass Argumenten sowohl an die klasse als auch an
+% das Theme übergeben werden können! (-> tubs-spezifische besser an theme!?)
 
 % \begin{classoption}{mathserif}
 %   Beschreibung
