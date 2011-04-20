@@ -49,8 +49,12 @@
 \DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerouterthemetubs}}
-
 \ProcessOptionsBeamer
+
+\DeclareOption*{%
+  \PassOptionsToPackage{\CurrentOption}{beamercolorthemetubs}%
+}
+\ProcessOptions
 
 \RequirePackage{tubslogo}
 \PassOptionsToPackage{ngerman}{babel}  % used in outer theme for \pagename
