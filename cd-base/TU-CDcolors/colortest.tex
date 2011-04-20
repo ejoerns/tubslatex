@@ -1,6 +1,6 @@
 \documentclass{scrartcl}
 
-\usepackage[green,rgbprint]{TU-CDcolors}
+\usepackage[green,rgb]{tubscolors}
 \usepackage[T1]{fontenc}
 \usepackage{Nexus}
 \usepackage[utf8]{inputenc}
@@ -114,15 +114,34 @@ Bei allen 100er-Farben (außer \lstinline{tuRed}) kann darüber hinaus die
 Zahl weggelassen werden (statt \lstinline{tuGreenLight100} auch 
 \lstinline{tuGreenLight}).
 
+\subsection{Farbmodelle}
+
+In den Paketoptionen kann zwischen 3 Farbmodellen gewählt werden.
+Das Standardmodell stellt die CD-konformen RGB-Farbwerte zur Verfügung.
+
+Für die Ausgabe in CMYK-Farben steht die Option \lstinline!cmyk! zur Verfügung.
+
+Darüber hinaus gibt es noch ein RGB-Farbschema, dass für die Ausgabe auf
+Beamern optimiert ist, es kann über die Option \lstinline!rgbbeamer! geladen
+werden.
+
+Für weitere Details zu Verwendung der Argumente siehe folgender Abschnitt.
+
 \section{Optionen}
 
+\paragraph{Farbmodell}
+
 \begin{description}
+  \classoptionitem[rgb]
+    Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung und muss
+    nicht explizit angegeben werden.
   \classoptionitem[cmyk]
     Verwendung der cmyk-Farben
-  \classoptionitem[rgbprint]
-    Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung.
+  \classoptionitem[rgbbeamer]
+    Für Beamer-Ausgabe optimiertes RGB-Farbmodell.
 \end{description}
 
+\paragraph{Farbklang}
 
 \begin{description}
   \classoptionitem[\textit{\sffamily$<$farbe$>$}]
