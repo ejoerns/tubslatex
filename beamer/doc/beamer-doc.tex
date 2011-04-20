@@ -79,8 +79,6 @@ sudo getnonfreefonts-sys arial-urw
 
 Bezug von CTAN: \url{http://www.ctan.org/tex-archive/fonts/urw/arial/}
 
-% TODO:
-% \usetheme{TU-CD}
 
 \chapter{Anwendung und Folienaufbau}
 
@@ -132,7 +130,8 @@ Instituts-Logo platziert werden.
 Es können die Standardbefehle zur Titelseitenerstellung, wie
 \lstinline{\title},
 \lstinline{\subtitle},
-\lstinline{\author}
+\lstinline{\author},
+\lstinline{\titlegraphic}
 und \lstinline{\logo} verwendet werden.
 
 Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
@@ -142,9 +141,6 @@ Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
   \titlepage
 \end{frame}
 \end{lstlisting}
-
-Für die Einbindung des Titelbildes stehen weitere Nicht-Standard-Befehle zur
-Verfügung.
 
 
 \subsection{Titelgrafik}
@@ -191,7 +187,7 @@ $16:10$ & $1:3,83$ \\
 \end{tabular}
 \caption{Bild-Seitenverhältnisse}
 \label{tab:picratio}
-\end{table}%TODO: Tabelle füllen
+\end{table}
 
 Werden keine korrekten Verhältnisse verwendet, wird das Bild vertikal
 skaliert und zentriert im Bildbereich dargestellt.
@@ -275,13 +271,13 @@ Einzelne wichtige Folien können extra hervorgehoben werden. Diese werden mit
 der Umgebung \lstinline{highlightframe} erzeugt. Dies hat einen breiteren und
 rot hinterlegten Titelbereich zur Folge.
 
-\begin{example}
-\begin{lstlisting}
-\begin{highlightframe}{Wichtig}
-Diese Folie ist wichtig!
-\end{highlightframe}
-\end{lstlisting}
-\end{example}
+% \begin{example}
+% \begin{lstlisting}
+% \begin{highlightframe}{Wichtig}
+% Diese Folie ist wichtig!
+% \end{highlightframe}
+% \end{lstlisting}
+% \end{example}
 
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
@@ -401,6 +397,10 @@ Dokumentenklasse.
 % \end{classoption}
 
 
+\section{Befehle}
+
+% \titlegraphicsheight
+% \tuDefaultTitlegraphic
 
 \subsection{Schriftgröße}
 
