@@ -3,8 +3,8 @@
 \RequirePackage{ifthen}
 \RequirePackage{forloop}
 
-\newboolean{rgbprint}
-\setboolean{rgbprint}{false}
+\newboolean{rgbbeamer}
+\setboolean{rgbbeamer}{false}
 \newboolean{cmyk}
 \setboolean{cmyk}{false}
 \def\secondaryColorName{undefined}
@@ -17,7 +17,10 @@
 \DeclareOption{Blue}{\def\secondaryColorName{Blue}}
 \DeclareOption{Violet}{\def\secondaryColorName{Violet}}
 
-\DeclareOption{rgbprint}{\setboolean{rgbprint}{true}}
+% 'rgb' is the default color scheme
+% 'rgbbeamer' is optimated for beamer output
+\DeclareOption{rgb}{\relax}
+\DeclareOption{rgbbeamer}{\setboolean{rgbbeamer}{true}}
 \DeclareOption{cmyk}{\setboolean{cmyk}{true}}
 \ProcessOptions
 
@@ -101,89 +104,7 @@
 \colorlet{tuVioletDark40}{tuVioletDark100!40}
 \colorlet{tuVioletDark20}{tuVioletDark100!20}
 }{%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifthenelse{\boolean{rgbprint}}{%
-\definecolor{tuRed}{RGB}{190,30,60} 
-\definecolor{tuBlack}{RGB}{0,0,0} 
-\definecolor{tuWhite}{RGB}{255,255,255} 
-%%% Grey
-\definecolor{tuGrey100}{RGB}{0,0,0}
-\definecolor{tuGrey80}{RGB}{51,51,51}
-\definecolor{tuGrey60}{RGB}{102,102,102}
-\definecolor{tuGrey40}{RGB}{153,153,153}
-\definecolor{tuGrey20}{RGB}{204,204,204}
-%%% Yellow
-\definecolor{tuYellow100}{RGB}{255,200,41}
-\definecolor{tuYellow80}{RGB}{255,211,85}
-\definecolor{tuYellow60}{RGB}{255,222,127}
-\definecolor{tuYellow40}{RGB}{255,233,170}
-\definecolor{tuYellow20}{RGB}{255,244,212}
-%%% Orange
-\definecolor{tuOrange100}{RGB}{225,109,0}
-\definecolor{tuOrange80}{RGB}{231,138,51}
-\definecolor{tuOrange60}{RGB}{237,167,102}
-\definecolor{tuOrange40}{RGB}{243,197,153}
-\definecolor{tuOrange20}{RGB}{249,226,204}
-%%%Red
-\definecolor{tuRed100}{RGB}{113,28,47}
-\definecolor{tuRed80}{RGB}{141,73,89}
-\definecolor{tuRed60}{RGB}{170,119,130}
-\definecolor{tuRed40}{RGB}{198,164,172}
-\definecolor{tuRed20}{RGB}{227,210,223}
-%% light green
-\definecolor{tuGreenLight100}{RGB}{172,193,58}
-\definecolor{tuGreenLight80}{RGB}{189,205,97}
-\definecolor{tuGreenLight60}{RGB}{205,218,137}
-\definecolor{tuGreenLight40}{RGB}{222,230,176}
-\definecolor{tuGreenLight20}{RGB}{238,243,216}
-%% green
-\definecolor{tuGreen100}{RGB}{109,131,0}
-\definecolor{tuGreen80}{RGB}{138,156,51} 
-\definecolor{tuGreen60}{RGB}{167,181,102}
-\definecolor{tuGreen40}{RGB}{197,205,153}
-\definecolor{tuGreen20}{RGB}{226,230,204}
-%% dark green
-\definecolor{tuGreenDark100}{RGB}{0,83,74 }
-\definecolor{tuGreenDark80}{RGB}{51,117,110} 
-\definecolor{tuGreenDark60}{RGB}{102,152,146} 
-\definecolor{tuGreenDark40}{RGB}{153,186,183 }
-\definecolor{tuGreenDark20}{RGB}{204,221,219 }
-%light blue
-\definecolor{tuBlueLight100}{RGB}{ 102,180,211}
-\definecolor{tuBlueLight80}{RGB}{133,195,220}
-\definecolor{tuBlueLight60}{RGB}{163,210,229}
-\definecolor{tuBlueLight40}{RGB}{194,225,237}
-\definecolor{tuBlueLight20}{RGB}{224,240,246}
-%blue
-\definecolor{tuBlue100}{RGB}{0,112,155}
-\definecolor{tuBlue80}{RGB}{51,141,175}
-\definecolor{tuBlue60}{RGB}{102,169,195}
-\definecolor{tuBlue40}{RGB}{153,198,215}
-\definecolor{tuBlue20}{RGB}{204,226,235}
-%dark blue
-\definecolor{tuBlueDark100}{RGB}{0,63,87}
-\definecolor{tuBlueDark80}{RGB}{51,101,121}
-\definecolor{tuBlueDark60}{RGB}{102,140,154}
-\definecolor{tuBlueDark40}{RGB}{153,178,188}
-\definecolor{tuBlueDark20}{RGB}{204,217,221}
-% light violet
-\definecolor{tuVioletLight100}{RGB}{138,48,127}
-\definecolor{tuVioletLight80}{RGB}{161,89,153}
-\definecolor{tuVioletLight60}{RGB}{185,131,178}
-\definecolor{tuVioletLight40}{RGB}{208,172,204}
-\definecolor{tuVioletLight20}{RGB}{232,214,229}
-%  violet
-\definecolor{tuViolet100}{RGB}{81,18,70}
-\definecolor{tuViolet80}{RGB}{116,65,107}
-\definecolor{tuViolet60}{RGB}{151,113,144}
-\definecolor{tuViolet40}{RGB}{185,160,181}
-\definecolor{tuViolet20}{RGB}{220,208,218}
-% dark violet
-\definecolor{tuVioletDark100}{RGB}{76,24,48}
-\definecolor{tuVioletDark80}{RGB}{112,70,89}
-\definecolor{tuVioletDark60}{RGB}{148,116,131}
-\definecolor{tuVioletDark40}{RGB}{183,163,172}
-\definecolor{tuVioletDark20}{RGB}{219,209,214}
-}{%
+\ifthenelse{\boolean{rgbbeamer}}{%
 %%% Screen colors from the ppt-template
 \definecolor{tuRed}{RGB}{190,30,60}
 \definecolor{tuBlack}{RGB}{0,0,0}
@@ -264,6 +185,88 @@
 \definecolor{tuVioletDark60}{RGB}{193,140,178}
 \definecolor{tuVioletDark40}{RGB}{221,191,212}
 \definecolor{tuVioletDark20}{RGB}{235,217,230}
+}{% standard rgb
+\definecolor{tuRed}{RGB}{190,30,60}
+\definecolor{tuBlack}{RGB}{0,0,0}
+\definecolor{tuWhite}{RGB}{255,255,255}
+%%% Grey
+\definecolor{tuGrey100}{RGB}{0,0,0}
+\definecolor{tuGrey80}{RGB}{51,51,51}
+\definecolor{tuGrey60}{RGB}{102,102,102}
+\definecolor{tuGrey40}{RGB}{153,153,153}
+\definecolor{tuGrey20}{RGB}{204,204,204}
+%%% Yellow
+\definecolor{tuYellow100}{RGB}{255,200,41}
+\definecolor{tuYellow80}{RGB}{255,211,85}
+\definecolor{tuYellow60}{RGB}{255,222,127}
+\definecolor{tuYellow40}{RGB}{255,233,170}
+\definecolor{tuYellow20}{RGB}{255,244,212}
+%%% Orange
+\definecolor{tuOrange100}{RGB}{225,109,0}
+\definecolor{tuOrange80}{RGB}{231,138,51}
+\definecolor{tuOrange60}{RGB}{237,167,102}
+\definecolor{tuOrange40}{RGB}{243,197,153}
+\definecolor{tuOrange20}{RGB}{249,226,204}
+%%%Red
+\definecolor{tuRed100}{RGB}{113,28,47}
+\definecolor{tuRed80}{RGB}{141,73,89}
+\definecolor{tuRed60}{RGB}{170,119,130}
+\definecolor{tuRed40}{RGB}{198,164,172}
+\definecolor{tuRed20}{RGB}{227,210,223}
+%% light green
+\definecolor{tuGreenLight100}{RGB}{172,193,58}
+\definecolor{tuGreenLight80}{RGB}{189,205,97}
+\definecolor{tuGreenLight60}{RGB}{205,218,137}
+\definecolor{tuGreenLight40}{RGB}{222,230,176}
+\definecolor{tuGreenLight20}{RGB}{238,243,216}
+%% green
+\definecolor{tuGreen100}{RGB}{109,131,0}
+\definecolor{tuGreen80}{RGB}{138,156,51} 
+\definecolor{tuGreen60}{RGB}{167,181,102}
+\definecolor{tuGreen40}{RGB}{197,205,153}
+\definecolor{tuGreen20}{RGB}{226,230,204}
+%% dark green
+\definecolor{tuGreenDark100}{RGB}{0,83,74 }
+\definecolor{tuGreenDark80}{RGB}{51,117,110} 
+\definecolor{tuGreenDark60}{RGB}{102,152,146} 
+\definecolor{tuGreenDark40}{RGB}{153,186,183 }
+\definecolor{tuGreenDark20}{RGB}{204,221,219 }
+%light blue
+\definecolor{tuBlueLight100}{RGB}{ 102,180,211}
+\definecolor{tuBlueLight80}{RGB}{133,195,220}
+\definecolor{tuBlueLight60}{RGB}{163,210,229}
+\definecolor{tuBlueLight40}{RGB}{194,225,237}
+\definecolor{tuBlueLight20}{RGB}{224,240,246}
+%blue
+\definecolor{tuBlue100}{RGB}{0,112,155}
+\definecolor{tuBlue80}{RGB}{51,141,175}
+\definecolor{tuBlue60}{RGB}{102,169,195}
+\definecolor{tuBlue40}{RGB}{153,198,215}
+\definecolor{tuBlue20}{RGB}{204,226,235}
+%dark blue
+\definecolor{tuBlueDark100}{RGB}{0,63,87}
+\definecolor{tuBlueDark80}{RGB}{51,101,121}
+\definecolor{tuBlueDark60}{RGB}{102,140,154}
+\definecolor{tuBlueDark40}{RGB}{153,178,188}
+\definecolor{tuBlueDark20}{RGB}{204,217,221}
+% light violet
+\definecolor{tuVioletLight100}{RGB}{138,48,127}
+\definecolor{tuVioletLight80}{RGB}{161,89,153}
+\definecolor{tuVioletLight60}{RGB}{185,131,178}
+\definecolor{tuVioletLight40}{RGB}{208,172,204}
+\definecolor{tuVioletLight20}{RGB}{232,214,229}
+%  violet
+\definecolor{tuViolet100}{RGB}{81,18,70}
+\definecolor{tuViolet80}{RGB}{116,65,107}
+\definecolor{tuViolet60}{RGB}{151,113,144}
+\definecolor{tuViolet40}{RGB}{185,160,181}
+\definecolor{tuViolet20}{RGB}{220,208,218}
+% dark violet
+\definecolor{tuVioletDark100}{RGB}{76,24,48}
+\definecolor{tuVioletDark80}{RGB}{112,70,89}
+\definecolor{tuVioletDark60}{RGB}{148,116,131}
+\definecolor{tuVioletDark40}{RGB}{183,163,172}
+\definecolor{tuVioletDark20}{RGB}{219,209,214}
 }}
 
 %% Yellow/red auch als orangeLight bzw. dark zugreifbar
