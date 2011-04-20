@@ -12,8 +12,25 @@
 \PassOptionsToPackage{rgbbeamer}{tubscolors}%default option
 \DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgb}{tubscolors}}
 \DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{tubscolors}}
+% color options
+\def\tubscolor{Yellow} % yellow is standard color
+\DeclareOptionBeamer{yellow}{\def\tubscolor{Yellow}}
+\DeclareOptionBeamer{green}{\def\tubscolor{Green}}
+\DeclareOptionBeamer{blue}{\def\tubscolor{Blue}}
+\DeclareOptionBeamer{violet}{\def\tubscolor{Violet}}
+% shade options
+\def\tubscolorshade{}
+\DeclareOptionBeamer{light}{\def\tubscolorshade{Light}}
+\DeclareOptionBeamer{medium}{\def\tubscolorshade{}}
+\DeclareOptionBeamer{dark}{\def\tubscolorshade{Dark}}
+% % %
+\newboolean{colorhead}\setboolean{colorhead}{false}
+\newboolean{colorfoot}\setboolean{colorfoot}{false}
+\DeclareOptionBeamer{colorhead}{\setboolean{colorhead}{true}}
+\DeclareOptionBeamer{colorfoot}{\setboolean{colorfoot}{true}}
 
 \ProcessOptionsBeamer
+
 
 \RequirePackage{tubscolors}
 
@@ -51,14 +68,22 @@
 
 \setbeamercolor{partpage}{bg=tuRed,fg=white}
 
+% set title page colors, (depending on options...)
+\setbeamercolor{titlebarthird}{bg=tu\tubscolor\tubscolorshade 80}
+\setbeamercolor{titlebarsecond}{bg=tu\tubscolor\tubscolorshade 40,fg=black}
 
+% set head an foot (depending on options...)
+\ifthenelse{\boolean{colorhead}}{%
+  \setbeamercolor{titlelike}{bg=tu\tubscolor\tubscolorshade 40,fg=black}
+}{%
+  \setbeamercolor{titlelike}{bg=tuGrey20,fg=black}
+}
+\ifthenelse{\boolean{colorfoot}}{%
+  \setbeamercolor{titlebarlow}{bg=tu\tubscolor\tubscolorshade 80}
+}{%
+  \setbeamercolor{titlebarlow}{bg=tuRed}
+}
 
-\setbeamercolor{titlebarthird}{bg=tuYellow80}
-\setbeamercolor{titlebarsecond}{bg=tuYellow40,fg=black}
-\setbeamercolor{titlebarlow}{bg=tuRed}
-
-%\setbeamercolor{titlelike}{parent=structure}
-\setbeamercolor{titlelike}{bg=tuGrey20,fg=black}
 
 \setbeamercolor{title}{parent=titlelike}
 \setbeamercolor{title in head/foot}{parent=palette quaternary}
