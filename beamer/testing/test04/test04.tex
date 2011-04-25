@@ -1,0 +1,49 @@
+\documentclass{beamer}
+
+\usepackage[ngerman]{babel}
+
+\usetheme[green,light]{tubs}
+% \usecolortheme[blue]{tubs}
+\usepackage{uarial}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+
+
+% \title{Design oder nicht sein?}
+\subtitle{Das Corporate Design in  LaTeX}
+\author{Martin Bäker\and Enrico Jörns}
+% \titlegraphic{\defaulttitlegraphic}
+% \logo{\includegraphics[height=\logoheight]{institut.jpg}}
+\logo{Institut für Unkreativität\\und Schreibschwäche}
+
+
+\begin{document} %Beginn der Folien
+
+% \setbeamercolor{titlebarthird}{bg=tuBlueDark80}
+% \setbeamercolor{titlebarsecond}{bg=tuBlueDark40,fg=black}
+% \setbeamercolor{titlebarlow}{bg=tuBlueDark80}
+% \setbeamercolor{titlelike}{bg=tuBlueDark40,fg=black}
+
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Splitting a slide into columns}
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    Here is the first column.  We put an itemized list in it.
+    \begin{itemize}
+      \item This is an item
+      \item This is another item
+      \item Yet another item
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+
+\end{document}
