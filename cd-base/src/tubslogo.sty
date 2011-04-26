@@ -54,21 +54,32 @@
 %
 %
 \ifthenelse{\boolean{cmykLogo}}{%% CMYK
-\newcommand{\tulogo}[1][\tulogo@scale]{%
+\newcommand{\tubslogo}[1][\tulogo@scale]{%
 \includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-cmyk}}
-\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
 }{%% RGB-print
 \ifthenelse{\boolean{rgbprintLogo}}{%
-\newcommand{\tulogo}[1][\tulogo@scale]{%
+\newcommand{\tubslogo}[1][\tulogo@scale]{%
 \includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
-\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }{%% Monochrome
 \ifthenelse{\boolean{monoLogo}}{%
-\newcommand{\tulogo}[1][\tulogo@scale]{%
+\newcommand{\tubslogo}[1][\tulogo@scale]{%
 \includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-mono}}
-\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-mono}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-mono}}
 }{%% RGB
-\newcommand{\tulogo}[1][\tulogo@scale]{%
+\newcommand{\tubslogo}[1][\tulogo@scale]{%
 \includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
-\newcommand{\tulogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }}}
+
+
+% % % % %
+\newcommand{\tulogo}[1][]{%
+  \PackageError{tubslogo}{Command 'tulogo' is outdated.}{%
+    Replace with tubslogo}
+}
+\newcommand{\tulogoAbs}[1]{%
+  \PackageError{tubslogo}{Command 'tulogoAbs' is outdated.}{%
+    Replace with tubslogoAbs}
+}
