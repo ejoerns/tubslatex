@@ -6,6 +6,7 @@
 \RequirePackage{ifthen}
 \RequirePackage{Nexus}
 \RequirePackage[green]{tubscolors}
+\RequirePackage{tubslogo}
 
 \input{predefinedtitlepages}
 
