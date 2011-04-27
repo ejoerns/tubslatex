@@ -24,6 +24,8 @@ case "$1" in
     /usr/bin/mktexlsr
     fi
     /usr/bin/getnonfreefonts-sys arial-urw
+    /usr/bin/updmap-sys --enable Map=NexusProSans.map
+    /usr/bin/updmap-sys --enable Map=NexusProSerif.map
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
