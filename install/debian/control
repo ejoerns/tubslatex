@@ -1,0 +1,10 @@
+Package: texlive-tubs
+Version: 0.1
+Architecture: i386
+Installed-Size: unknown
+Section: unknown
+Priority: extra
+Depends: texlive-base, texlive-latex-extra, texlive-fonts-extra, latex-beamer
+Maintainer: Enrico Jörns <e.joerns@tu-bs.de>
+Homepage: http://tu-braunschweig.de
+Description: LaTeX-Pakete zur Erstellung von Präsentationen und Dokumenten im Corporate Design der TU Braunschweig.
