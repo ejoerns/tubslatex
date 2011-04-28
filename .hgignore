@@ -1,7 +1,8 @@
 syntax: glob
 
-TUBS_repo/*
-expl/*
+cd-base/logo/TUBraunschweig_Logos/*
+cd-base/logo/*.eps
+install/*
 
 
 # no autosave
@@ -34,4 +35,6 @@ expl/*
 *.slg
 *.syg
 *.syi
-
+*.nav
+*.snm
+*.vrb
