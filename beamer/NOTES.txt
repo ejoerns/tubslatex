@@ -6,7 +6,7 @@
 
 LY1-encoding benötigt paket:
 
-sudo apt-get install texlive-fonts-extra
+texlive-fonts-extra
 
 ---
 
@@ -14,7 +14,33 @@ sudo apt-get install texlive-fonts-extra
 
 "eulervm" benötigt Paket
 
-sudo apt-get install texlive-fonts-extra
+texlive-fonts-extra
 
 ---
 
+[SRC]
+
+irgendein Fehler wenn babel nicht benutzt wird!?
+
+---
+
+[SRC]
+
+Bei anderer Schriftgröße als 10pt entsteht eine Lücke auf der Titelseite
+zwischen Titelbereicht und rotem Streifen.
+
+---
+
+forloop.sty
+
+Benötigt Paket:
+  texlive-latex-extra
+
+---
+
+ngerman.sty
+
+Benötigt Paket:
+  texlive-lang-german
+
+-> Standardinstall?
