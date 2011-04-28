@@ -19,16 +19,15 @@
 
 % Number of Segments. 8 in portrait and 6 in landscape,
 % Sum over Segments 1+2+3+...+8
-\ifthenelse{\equal{\landscape}{false}}
-	{
-	\def\TUBSGaussGridSegments{8}
-	\def\TUBSGaussGridSum{36}
-	}{
-	\def\TUBSGaussGridSegments{6}
-	\def\TUBSGaussGridSum{21}
-	}
+\ifthenelse{\equal{\landscape}{false}}{%
+  \def\TUBSGaussGridSegments{8}%
+  \def\TUBSGaussGridSum{36}%
+}{%
+  \def\TUBSGaussGridSegments{6}%
+  \def\TUBSGaussGridSum{21}%
+}
 
-% The width of the white margin around the page:
+% The width of the white margin around the page [mm]:
 \ifthenelse{\equal{\papersize}{0}}{\def\TUBSFrameWidth{32}}{}
 \ifthenelse{\equal{\papersize}{1}}{\def\TUBSFrameWidth{22}}{}
 \ifthenelse{\equal{\papersize}{2}}{\def\TUBSFrameWidth{16}}{}
@@ -45,7 +44,7 @@
 \pgfmathparse{\ThePaperWidth - 2 * \TUBSFrameWidth}
 \edef\TUBSCommunicationWidth{\pgfmathresult}
 
-% The height of the area of the adresser.
+% The height of the area of the adresser [mm].
 \ifthenelse{\equal{\papersize}{0}}{\def\TUBSAdresserHeight{160}}{}
 \ifthenelse{\equal{\papersize}{1}}{\def\TUBSAdresserHeight{120}}{}
 \ifthenelse{\equal{\papersize}{2}}{\def\TUBSAdresserHeight{80}}{}
