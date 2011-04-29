@@ -1,4 +1,4 @@
-all: clean structure fetch font build
+all: structure fetch font build
 
 VERSION = 0.2
 DIST = ubuntu
@@ -9,12 +9,12 @@ build:
 	sudo dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb
 
 structure:
-	mkdir texlive-tubs
-	mkdir texlive-tubs/DEBIAN
+	mkdir -p texlive-tubs
+	mkdir -p texlive-tubs/DEBIAN
 	mkdir -p texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs
-	mkdir texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs/beamer
-	mkdir texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs/cd-base
-	mkdir texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs/report
+	mkdir -p texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs/beamer
+	mkdir -p texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs/cd-base
+	mkdir -p texlive-tubs/usr/share/texmf-texlive/tex/latex/tubs/report
 
 fetch:
 	cp control postinst texlive-tubs/DEBIAN/.
@@ -27,7 +27,8 @@ fetch:
 	cp $(REPODIR)/report/src/*.tex report/.;
 
 clean:
-	rm -r texlive-tubs
+	rm -rf texlive-tubs
+	rm -f *.otf
 
 install:
 	sudo dpkg -i texlive-tubs_$(VERSION)$(DIST).deb

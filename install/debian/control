@@ -1,6 +1,6 @@
 Package: texlive-tubs
 Version: 0.2
-Architecture: i386
+Architecture: all
 Installed-Size: unknown
 Section: unknown
 Priority: extra
