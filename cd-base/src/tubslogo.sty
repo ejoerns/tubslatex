@@ -1,23 +1,25 @@
-\ProvidesPackage{tubslogo}[2011/04/12  v1.00 CD-Logo der TU Braunschweig]
+%% tubslogo.sty
+%% Copyright 2011 by Mr.x, Enrico Jörns
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tubslogo}[2011/05/01  v1.00 CD-Logo der TU Braunschweig]
 \RequirePackage{graphics}
 \RequirePackage{ifthen}
-
+%
 % color vars
-\newboolean{rgbprintLogo}
-\setboolean{rgbprintLogo}{false}
-\newboolean{cmykLogo}
-\setboolean{cmykLogo}{false}
-\newboolean{monoLogo}
-\setboolean{monoLogo}{false}
+\newboolean{rgbprintLogo}\setboolean{rgbprintLogo}{false}
+\newboolean{cmykLogo}\setboolean{cmykLogo}{false}
+\newboolean{monoLogo}\setboolean{monoLogo}{false}
 % papersize vars
-
+\def\logo@papersize{}
+%
+%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color options
-\DeclareOption{rgb}{}
+\DeclareOption{rgb}{\relax}
 \DeclareOption{rgbprint}{\setboolean{rgbprintLogo}{true}}
 \DeclareOption{cmyk}{\setboolean{cmykLogo}{true}}
 \DeclareOption{mono}{\setboolean{monoLogo}{true}}
 % papersize options
-\def\logo@papersize{}
 \DeclareOption{a6paper}{\def\logo@papersize{6}}
 \DeclareOption{a5paper}{\def\logo@papersize{5}}
 \DeclareOption{a4paper}{\def\logo@papersize{4}}
@@ -25,8 +27,14 @@
 \DeclareOption{a2paper}{\def\logo@papersize{2}}
 \DeclareOption{a1paper}{\def\logo@papersize{1}}
 \DeclareOption{a0paper}{\def\logo@papersize{0}}
-
-
+\DeclareOption*{%
+  \PackageWarning{tubslogo}{Unknown option `\CurrentOption'}%
+}
+%
+\ExecuteOptions{rgb}%
+\ProcessOptions\relax
+%
+%
 % logo dimensions
 \newlength{\tulogoBaseWidth}
 \setlength{\tulogoBaseWidth}{70mm}
@@ -34,11 +42,6 @@
 \setlength{\tulogoBaseHeight}{26mm}
 \newlength{\tulogoWidth}
 \newlength{\tulogoHeight}
-%
-%
-\ExecuteOptions{rgb}%
-\ProcessOptions
-%
 %
 \ifthenelse{\equal{\logo@papersize}{6}}{\def\tulogo@scale{0.6}}{%  60%
 \ifthenelse{\equal{\logo@papersize}{5}}{\def\tulogo@scale{0.7}}{%  70%
@@ -72,14 +75,3 @@
 \includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }}}
-
-
-% % % % %
-\newcommand{\tulogo}[1][]{%
-  \PackageError{tubslogo}{Command 'tulogo' is outdated.}{%
-    Replace with tubslogo}
-}
-\newcommand{\tulogoAbs}[1]{%
-  \PackageError{tubslogo}{Command 'tulogoAbs' is outdated.}{%
-    Replace with tubslogoAbs}
-}
