@@ -7,6 +7,10 @@
 % Modified by Enrico Jörns 2011 <e.joerns@tu-bs.de>
 %
 \RequirePackage{ifthen}
+\RequirePackage{tubslogo}
+\PassOptionsToPackage{ngerman}{babel}
+\RequirePackage{babel}
+\RequirePackage{tubsbeamersizes}
 %
 %% tocspace governs the vertical position of the running toc
 \newdimen\beamer@tocspace
@@ -42,46 +46,6 @@
 
 \newboolean{highlighttitle}\setboolean{highlighttitle}{false}
 \newboolean{notitle}\setboolean{notitle}{false}
-
-\newdimen\beamer@sidebarwidth
-\newdimen\beamer@headheight
-\newdimen\beamer@leftmarginwidth
-\newdimen\beamer@eleheight
-
-
-\beamer@sidebarwidth=0cm
-\beamer@headheight=27pt
-\beamer@leftmarginwidth=0.7cm
-\beamer@eleheight=3.4mm
-
-% Lengths for the gauss-layout
-\newdimen\beamer@CDsenderheight
-\beamer@CDsenderheight=0.2\paperheight
-
-\newdimen\beamer@CDborderwidth
-\beamer@CDborderwidth=0.03\paperwidth
-
-\newdimen\beamer@CDcommunicationwidth
-\beamer@CDcommunicationwidth=\paperwidth
-\addtolength\beamer@CDcommunicationwidth{-2\beamer@CDborderwidth}
-
-\newdimen\beamer@CDgaussunit
-\beamer@CDgaussunit=\paperheight
-\addtolength\beamer@CDgaussunit{-\beamer@CDsenderheight}
-\addtolength\beamer@CDgaussunit{-\beamer@CDborderwidth}
-\beamer@CDgaussunit=0.0476\beamer@CDgaussunit
-
-\newdimen\titlegraphicsheight
-\titlegraphicsheight=11\beamer@CDgaussunit
-\newdimen\titlegraphicswidth
-\titlegraphicswidth=\beamer@CDcommunicationwidth
-
-\newdimen\logoheight
-\logoheight=4\beamer@CDgaussunit
-
-\newdimen\beamer@titlepagetextwidth
-\beamer@titlepagetextwidth=\textwidth
-\addtolength\beamer@titlepagetextwidth{-\beamer@leftmarginwidth}
 
 \setbeamersize{text margin left=\beamer@leftmarginwidth}
 \setbeamersize{text margin right=\beamer@leftmarginwidth}

@@ -3,13 +3,15 @@
 \RequirePackage{ifthen}
 \RequirePackage{relsize}[1999/11/01]
 \RequirePackage{printlen}
+\RequirePackage{tubsbeamersizes}
+\RequirePackage{tubslogo}
 
 \newboolean{useminion}
 
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 \DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
-\ExecuteOptionsBeamer{shadow=false}
 \DeclareOptionBeamer{minion}{\setboolean{useminion}{true}}
+\ExecuteOptionsBeamer{shadow=false}
 \ProcessOptionsBeamer\relax
 
 % loads the default title graphic
