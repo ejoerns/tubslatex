@@ -30,14 +30,6 @@
 % tocinheader die Option tinytocinheader angegeben werden, die eine
 % kleinere Schriftgröße auswählt.
 %
-\RequirePackage{tubslogo}
-% babel used in outer theme for \pagename
-% \PassOptionsToPackage{ngerman}{babel}
-% \RequirePackage{babel}
-% Default font scheme: uarial in T1 encoding
-% \PassOptionsToPackage{T1}{fontenc}
-% \RequirePackage{fontenc}
-% \RequirePackage{uarial} % use arial font
 
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color options
@@ -59,8 +51,6 @@
   \PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemetubs}}
 \DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
 \DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
-% font options
-\DeclareOptionBeamer{minion}{\PassOptionsToPackage{minion}{beamerinnerthemetubs}}%TODO:check
 %% Needed to fix spacing in the running toc in the header
 \DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerouterthemetubs}}
@@ -85,6 +75,7 @@
 %
 %
 \usecolortheme{tubs}
+\usefonttheme{tubs}
 \useoutertheme{tubs}
 \useinnertheme{tubs}
 %
