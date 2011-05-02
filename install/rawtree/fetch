@@ -18,7 +18,7 @@ echo -e '\t -> report'
 cp $REPODIR/report/src/*.cls tex/latex/tubs/report/.
 cp $REPODIR/report/src/*.tex tex/latex/tubs/report/.
 
-OTFDEFAULT="--warn-missing --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force"
+OTFDEFAULT="--warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force"
 
 cp $REPODIR/cd-base/nexus/*.otf .
 
@@ -27,44 +27,44 @@ then
 echo -e 'STEP3: \t creating font files...'
 # Serif
 echo -e '\t -> Serif'
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
 # otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic --warn-missing --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSerif.map NexusSerifPro-Italic.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Slanted --slant=.167  $(OTFDEFAULT)  --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Slanted --slant=.167  $OTFDEFAULT  --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Regular  $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Regular  $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
 # otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Italic --warn-missing --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSerif.map NexusSerifPro-Bold-Italic.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
 
 # Sans Serif
 echo -e '\t -> Sans Serif'
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Regular.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Regular.otf 
 #otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Italic --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSans.map NexusSansPro-Italic.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSans.map NexusSansPro-Regular.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Regular.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSans.map NexusSansPro-Regular.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Slanted --slant=.167  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Regular.otf 
 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Regular  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Bold.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Regular  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Bold.otf 
 #otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSans.map NexusSansPro-Bold-Italic.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSans.map NexusSansPro-Bold.otf 
-otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Bold.otf
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSans.map NexusSansPro-Bold.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Bold.otf
 
 # Move generated fonts
 echo -e 'STEP 4: \t Copying font files...'
-mkdir -p texlive-tubs/usr/share/texmf-texlive/fonts/enc/dvips/Fontshop/
-mv *.enc texlive-tubs/usr/share/texmf-texlive/fonts/enc/dvips/Fontshop/
+mkdir -p fonts/enc/dvips/Fontshop/
+mv *.enc fonts/enc/dvips/Fontshop/
 
-mkdir -p texlive-tubs/usr/share/texmf-texlive/fonts/map/
-mv *.map texlive-tubs/usr/share/texmf-texlive/fonts/map/
+mkdir -p fonts/map/
+mv *.map fonts/map/
 
-mkdir -p texlive-tubs/usr/share/texmf-texlive/fonts/tfm/Nexus/
-mv *.tfm texlive-tubs/usr/share/texmf-texlive/fonts/tfm/Nexus/
+mkdir -p fonts/tfm/Nexus/
+mv *.tfm fonts/tfm/Nexus/
 
-mkdir -p texlive-tubs/usr/share/texmf-texlive/fonts/vf/Nexus/
-mv *.vf texlive-tubs/usr/share/texmf-texlive/fonts/vf/Nexus/
+mkdir -p fonts/vf/Nexus/
+mv *.vf  fonts/vf/Nexus/
 
-mkdir -p texlive-tubs/usr/share/texmf-texlive/fonts/type1/Nexus/
-mv *.pfb texlive-tubs/usr/share/texmf-texlive/fonts/type1/Nexus/
+mkdir -p fonts/type1/Nexus/
+mv *.pfb fonts/type1/Nexus/
 
 else
 
@@ -72,6 +72,5 @@ echo -e 'Command otftofm not found. Skipping...'
 
 fi
 
-# 	mkdir -p texlive-tubs/usr/share/texmf-texlive/tex/latex/
-cp -r $REPODIR/cd-base/nexus/Nexus tex/latex/
-
+cp -r 	$REPODIR/cd-base/nexus/Nexus tex/latex/
+rm *.otf
