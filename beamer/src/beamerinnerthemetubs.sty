@@ -2,14 +2,15 @@
 % Load packages
 \RequirePackage{ifthen}
 \RequirePackage{relsize}[1999/11/01]
-\newboolean{useminion}
-
 \RequirePackage{printlen}
 
+\newboolean{useminion}
+
+%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 \DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
 \ExecuteOptionsBeamer{shadow=false}
 \DeclareOptionBeamer{minion}{\setboolean{useminion}{true}}
-\ProcessOptionsBeamer
+\ProcessOptionsBeamer\relax
 
 % loads the default title graphic
 \newcommand{\tuDefaultTitlegraphic}{%
@@ -18,12 +19,12 @@
 \mode<presentation>
 
 \ifthenelse{\boolean{useminion}}{%
-  \usepackage{MinionPro}%
+  \RequirePackage{MinionPro}% % TODO: Check
   \usefonttheme{serif}
 }{%
   %% Change here for different maths font, if desired
-  \usepackage{eulervm}
-  \usepackage{uarial}%
+  \RequirePackage{eulervm}
+  \RequirePackage{uarial}%
 }
 
 
@@ -32,8 +33,7 @@
 %% Trick: To re-define a template from scratch, give it a new name as
 %% second argument.
 
-\defbeamertemplate*{title page}{TU-CD}[1][]
-{%
+\defbeamertemplate*{title page}{TU-CD}[1][]{%
   \vspace*{-5.5pt} % korrigierte Nulllinie
   \vspace*{\beamer@CDsenderheight}
   \begin{beamercolorbox}[
@@ -133,6 +133,9 @@
 
 %%% TODO: Entfernen????
 
+\RequirePackage[sepfour]{numprint}[2003/09/18]
+\RequirePackage[activate]{pdfcprot}[2002/02/27]
+
 \newboolean{usethis}
 \setboolean{usethis}{false}
 \ifthenelse{\boolean{usethis}}{%
@@ -144,8 +147,6 @@
   }%
   \selectfont
 }
-\RequirePackage[sepfour]{numprint}[2003/09/18]
-\RequirePackage[activate]{pdfcprot}[2002/02/27]
 
 \DeclareRobustCommand\acro[1]{\textsmaller{\MakeUppercase{#1}}}
 

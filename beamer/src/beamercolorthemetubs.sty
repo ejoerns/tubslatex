@@ -1,47 +1,49 @@
-\ProvidesPackage{beamercolorthemetubs}[2010/04/12 v1.0 Farbschema TuBs (beamer)]
-
-
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
+% Modified by Martin Baeker, Enrico Jörns
+%
+\ProvidesPackage{beamercolorthemetubs}[2010/04/12 v1.0 Farbschema TuBs (beamer)]
+
+\RequirePackage{tubscolors}
+
 
 \mode<all>
 
-%% TU Farbschema 
-\PassOptionsToPackage{rgbbeamer}{tubscolors}%default option
+\def\tubscolor{Yellow} % yellow is standard color
+\def\tubscolorshade{}
+\newboolean{colorhead}\setboolean{colorhead}{false}
+\newboolean{colorfoot}\setboolean{colorfoot}{false}
+
+%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
+% color model options
+\DeclareOptionBeamer{rgb}{\PassOptionsToPackage{rgbbeamer}{tubscolors}}
 \DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgb}{tubscolors}}
 \DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{tubscolors}}
 % color options
-\def\tubscolor{Yellow} % yellow is standard color
 \DeclareOptionBeamer{yellow}{\def\tubscolor{Yellow}}
 \DeclareOptionBeamer{green}{\def\tubscolor{Green}}
 \DeclareOptionBeamer{blue}{\def\tubscolor{Blue}}
 \DeclareOptionBeamer{violet}{\def\tubscolor{Violet}}
 % shade options
-\def\tubscolorshade{}
 \DeclareOptionBeamer{light}{\def\tubscolorshade{Light}}
 \DeclareOptionBeamer{medium}{\def\tubscolorshade{}}
 \DeclareOptionBeamer{dark}{\def\tubscolorshade{Dark}}
-% % %
-\newboolean{colorhead}\setboolean{colorhead}{false}
-\newboolean{colorfoot}\setboolean{colorfoot}{false}
+% head / foot options
 \DeclareOptionBeamer{colorhead}{\setboolean{colorhead}{true}}
 \DeclareOptionBeamer{colorfoot}{\setboolean{colorfoot}{true}}
+\ExecuteOptionsBeamer{rgb,yellow}
+\ProcessOptionsBeamer\relax
 
-\ProcessOptionsBeamer
-
-
-\RequirePackage{tubscolors}
 
 \mode<presentation>
 
 \setbeamercolor{normal text}{fg=black,bg=white}
-\setbeamercolor{alerted text}{fg=tuRed}
-\setbeamercolor{example text}{fg=tuGreenDark}
+\setbeamercolor{alerted text}{fg=tuRed}% TODO: check
+\setbeamercolor{example text}{fg=tuGreenDark}% TODO: check
 
 \setbeamercolor{structure}{fg=tuRed}
-%\setbeamercolor{structure}{fg=red}
 \setbeamercolor{highlight}{bg=tuRed,fg=white}
 
 \setbeamercolor{background canvas}{parent=normal text}
@@ -161,7 +163,6 @@
 \setbeamercolor{mini frame}{parent=section in head/foot}
 \setbeamercolor{runningtoc}{use=structure,fg=green}
 
-
 \setbeamercolor{block body}{}
 \setbeamercolor{block body alerted}{}
 \setbeamercolor{block body example}{}
@@ -217,7 +218,6 @@
 \setbeamercolor{quote}{parent=quotation}
 
 \setbeamercolor{page number in head/foot}{fg=fg!50!bg}
-
 
 \setbeamercolor{qed symbol}{parent=structure}
 

@@ -8,6 +8,7 @@
 %
 \RequirePackage{ifthen}
 %
+%% tocspace governs the vertical position of the running toc
 \newdimen\beamer@tocspace
 \beamer@tocspace=0.3em
 %% Horizontal distance in running toc
@@ -36,9 +37,8 @@
 %
 \ProcessOptionsBeamer\relax
 
-%% Es gibt sections und subsections, nicht mehr
+%% Only sections and subsections in toc
 \setcounter{tocdepth}{2}
-%
 
 \newboolean{highlighttitle}\setboolean{highlighttitle}{false}
 \newboolean{notitle}\setboolean{notitle}{false}
@@ -47,7 +47,7 @@
 \newdimen\beamer@headheight
 \newdimen\beamer@leftmarginwidth
 \newdimen\beamer@eleheight
-%% tocspace governs the vertical position of the running toc
+
 
 \beamer@sidebarwidth=0cm
 \beamer@headheight=27pt
@@ -122,7 +122,6 @@
 
 % Set the font for the running toc - if option tinytocinheader is
 % chosen, switch the tocinheader on
-
 \ifthenelse{\boolean{tinytocinheader}}{%
   \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}%
   \setboolean{tocinheader}{true}%
@@ -136,13 +135,11 @@
 \defbeamertemplate*{frametitle}{sidebar theme}{}
 
 %% Define the frame title using the color scheme titlelike
-\defbeamertemplate*{headline}{sidebar theme}
-{%
+\defbeamertemplate*{headline}{sidebar theme}{%
   \usebeamerfont{frametitle}
   \vspace*{-0.4em}
   \ifthenelse{\boolean{notitle}}{%
-    %\vspace*{0.7em}
-    %\vspace*{0.1em}
+    % notitle
   }{%
   \ifthenelse{\boolean{highlighttitle}}{%
     \begin{beamercolorbox}[ht=1.5\beamer@headheight]{highlight}%
@@ -160,60 +157,43 @@
     \insertsectionnavigationhorizontal{100mm}{\hskip20pt plus1filll}{\quad}}%
     \ifthenelse{\boolean{nosubsectionsinheader}}{\hbox to \hsize{\hfill%
     \usebeamerfont{headertoc}\ \vphantom{FAp}}}{%
-    \hbox to \hsize{\hfill \usebeamerfont{headertoc}\ %
-    \vphantom{FAp}\hfill\insertsubsectionnavigationhorizontal{100mm}%
-    {\hskip0pt plus1filll}{\quad}}
+      \hbox to \hsize{\hfill \usebeamerfont{headertoc}\ %
+      \vphantom{FAp}\hfill\insertsubsectionnavigationhorizontal{100mm}%
+      {\hskip0pt plus1filll}{\quad}}
+    }% End of ifthenelse for subsections
+    \vspace{\beamer@tocspace}
+    \ifthenelse{\boolean{tinytocinheader}}{\vspace{0.5\beamer@tocspace}}{}
+    }
+    }%% End of ifthenelse for tocinheader
+    %% Correct the spacing for different font sizes
+    %%\ifthenelse{\boolean{nosubsectionsinheader}}{\vspace{\beamer@tocspace}}{}
+    \par
+    \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}
+    \vspace*{.1\beamer@headheight}
+    \end{beamercolorbox}
+    }
+  }
 }
-%% End of ifthenelse for subsections
-%\vfill}%
-\vspace{\beamer@tocspace}
-\ifthenelse{\boolean{tinytocinheader}}{\vspace{0.5\beamer@tocspace}}{}
-}
-}%% End of ifthenelse for tocinheader
-%% Correct the spacing for different font sizes
-%%\ifthenelse{\boolean{nosubsectionsinheader}}{\vspace{\beamer@tocspace}}{}
-\par
-\hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}
-\vspace*{.1\beamer@headheight}
-\end{beamercolorbox}
-%\vspace*{-0.1em}
-}}}
 
-
-% \def\beamer@sidebarformat#1#2#3{%
-%   \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex
-% plus1fil,vmode]{#2}
-%     \vbox{}%
-%     #3\par%
-%     \vbox{}%
-%     \vskip-1.5ex%
-%   \end{beamercolorbox}
-% }
-
-\defbeamertemplate*{section in head/foot}{tubs}
-{%
+\defbeamertemplate*{section in head/foot}{tubs}{%
 \usebeamercolor[fg]{section in head/foot}%
 {\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 
-\defbeamertemplate*{section in head/foot shaded}{tubs}
-{%
+\defbeamertemplate*{section in head/foot shaded}{tubs}{%
 \usebeamercolor[bg]{section in head/foot shaded}%
 \insertsectionhead\hspace{\beamer@tochorizontalspace}%
 }
 
-\defbeamertemplate*{subsection in head/foot}{tubs}
-{%
+\defbeamertemplate*{subsection in head/foot}{tubs}{%
 \usebeamercolor[fg]{subsection in head/foot}%
 {\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 
-\defbeamertemplate*{subsection in head/foot shaded}{tubs}
-{%
+\defbeamertemplate*{subsection in head/foot shaded}{tubs}{%
 \usebeamercolor[bg]{subsection in head/foot shaded}%
 \insertsubsectionhead\hspace{\beamer@tochorizontalspace}%
 }
-
 
 \defbeamertemplate*{section in sidebar}{sidebar theme}{}
 \defbeamertemplate*{section in sidebar shaded}{sidebar theme}{}
@@ -227,12 +207,10 @@
 \setbeamerfont*{subtitle}{series=\mdseries,size=\normalsize}
 \setbeamerfont*{author}{series=\mdseries,size=\normalsize}
 
-
 \setbeamercolor*{page number in sidebar}{fg=structure.fg}
 \setbeamercolor*{page number in sidebar shaded}{fg=structure.fg!40}
 
-\defbeamertemplate*{footline}{sidebar theme}
-{
+\defbeamertemplate*{footline}{sidebar theme}{%
 %% Additional space needed to increase the calculated height of the footline
 \vspace*{0.25cm}
 \begin{minipage}{\paperwidth}
@@ -244,21 +222,21 @@
 \beamer@CDlogowidth=24.7mm
 
 \tubslogoAbs{\beamer@CDlogowidth}
-
+% handle option 'nologoinfoot'
 \ifthenelse{\boolean{nologoinfoot}}{%
-  \vspace{10.7pt}
+\vspace{10.7pt}
 }{%
-\vspace{-19pt}
-\logoheight=20.7pt
-\vbox to \logoheight{
-\hfill
+\vspace{-19pt}%
+\logoheight=20.7pt%
+\vbox to \logoheight{%
+\hfill%
 \parbox[b]{0.3\textwidth}{%
-\setbeamerfont{footlinelogo}{size=\scriptsize}
-\usebeamerfont{footlinelogo}
-\vspace*{3pt}
-\raggedleft\insertlogo}\hspace*{0.5\beamer@CDborderwidth}
-}
-\vspace{9pt}
+\setbeamerfont{footlinelogo}{size=\scriptsize}%
+\usebeamerfont{footlinelogo}%
+\vspace*{3pt}%
+\raggedleft\insertlogo}\hspace*{0.5\beamer@CDborderwidth}%
+}%
+\vspace{9pt}%
 }
 \end{minipage}
 \begin{minipage}{\paperwidth}
@@ -278,7 +256,8 @@
 %% Get rid of the stupid navigation symbol bar
 \setbeamertemplate{navigation symbols}{}
 
-%% This new environment allows to switch the headline-color
+%%%%%%%%%%%%%%%%%%%% newenvironments %%%%%%%%%%%%%%%%%%%%
+%% allows to switch the headline-color
 \newenvironment{highlightframe}[1]{%
   \setboolean{highlighttitle}{true}\begin{frame}{#1}%
 }{%
@@ -296,9 +275,15 @@
 \def\rightwidth{0.47\textwidth}
 \def\topadjust{{\ \par \vspace{-1em}}}
 
-\newenvironment{leftside}[1][\leftwidth]{\begin{minipage}[t]{#1}\raggedright\topadjust}
-{\end{minipage}}
-\newenvironment{rightside}[1][\rightwidth]{\begin{minipage}[t]{#1}\topadjust}{\end{minipage}}
+% TODO: check
+\newenvironment{leftside}[1][\leftwidth]{%
+\begin{minipage}[t]{#1}\raggedright\topadjust}{%
+\end{minipage}%
+}
+\newenvironment{rightside}[1][\rightwidth]{%
+\begin{minipage}[t]{#1}\topadjust}{%
+\end{minipage}%
+}
 
 \mode
 <all>
