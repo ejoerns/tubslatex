@@ -1,33 +1,58 @@
 \ProvidesPackage{beamerouterthemetubs}[2010/04/12 v1.0 Beamer-Outer-Template TuBs]
-
-
-% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+% Copyright 2011 by Mr X. <tantau@users.sourceforge.net>
 %
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
 % Modified by Martin Baeker 2010 <martin.baeker@tu-bs.de>
-
+% Modified by Enrico Jörns 2011 <e.joerns@tu-bs.de>
+%
+\RequirePackage{ifthen}
+%
+\newdimen\beamer@tocspace
+\beamer@tocspace=0.3em
+%% Horizontal distance in running toc
+\newdimen\beamer@tochorizontalspace
+\beamer@tochorizontalspace=0.15em
+\newboolean{nopagenum}\setboolean{nopagenum}{false}
+\newboolean{nodate}\setboolean{nodate}{false}
+\newboolean{tocinheader}\setboolean{tocinheader}{false}
+\newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
+\newboolean{nosubsectionsinheader}\setboolean{nosubsectionsinheader}{false}
+\newboolean{nologoinfoot}\setboolean{nologoinfoot}{false}
+%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
+\DeclareOptionBeamer{nopagenum}{\setboolean{nopagenum}{true}}
+\DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
+\DeclareOptionBeamer{tocinheader}{\setboolean{tocinheader}{true}}
+\DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
+\DeclareOptionBeamer{nosubsectionsinheader}{\setboolean{nosubsectionsinheader}{true}}
+\DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
+\DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
+\DeclareOptionBeamer{narrowtoc}{\beamer@tochorizontalspace=0.em}
+\DeclareOptionBeamer{14pt}{\beamer@tocspace=-0.1em}
+\DeclareOptionBeamer{12pt}{\beamer@tocspace=-0.em}
+\DeclareOptionBeamer{11pt}{\beamer@tocspace=0.1em}
+\DeclareOptionBeamer{10pt}{\beamer@tocspace=0.4em}
+\DeclareOptionBeamer{9pt}{\beamer@tocspace=0.7em}
+%
+\ProcessOptionsBeamer\relax
 
 %% Es gibt sections und subsections, nicht mehr
 \setcounter{tocdepth}{2}
 %
+
+\newboolean{highlighttitle}\setboolean{highlighttitle}{false}
+\newboolean{notitle}\setboolean{notitle}{false}
 
 \newdimen\beamer@sidebarwidth
 \newdimen\beamer@headheight
 \newdimen\beamer@leftmarginwidth
 \newdimen\beamer@eleheight
 %% tocspace governs the vertical position of the running toc
-\newdimen\beamer@tocspace
+
 \beamer@sidebarwidth=0cm
 \beamer@headheight=27pt
 \beamer@leftmarginwidth=0.7cm
 \beamer@eleheight=3.4mm
-\beamer@tocspace=0.3em
-
-
-%% Horizontal distance in running toc
-\newdimen\beamer@tochorizontalspace
-\beamer@tochorizontalspace=0.15em
 
 % Lengths for the gauss-layout
 \newdimen\beamer@CDsenderheight
@@ -68,64 +93,28 @@
 \def\insertframesubtitle{Dummy}
 
 \def\beamer@lefttext{left}
-\RequirePackage{ifthen}
-\newboolean{nopagenum}
-\setboolean{nopagenum}{false}
-\newboolean{nodate}
-\setboolean{nodate}{false}
-\newboolean{highlighttitle}
-\setboolean{highlighttitle}{false}
-\newboolean{notitle}
-\setboolean{notitle}{false}
-\newboolean{tocinheader}
-\setboolean{tocinheader}{false}
-\newboolean{nosubsectionsinheader}
-\setboolean{nosubsectionsinheader}{false}
-\newboolean{tinytocinheader}
-\setboolean{tinytocinheader}{false}
-\newboolean{twelvepointfont}
-\setboolean{twelvepointfont}{false}
-\newboolean{nologoinfoot}
-\setboolean{nologoinfoot}{false}
-
-\DeclareOptionBeamer{nopagenum}{\setboolean{nopagenum}{true}}
-\DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
-\DeclareOptionBeamer{tocinheader}{\setboolean{tocinheader}{true}}
-\DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
-\DeclareOptionBeamer{nosubsectionsinheader}{\setboolean{nosubsectionsinheader}{true}}
-\DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
-\DeclareOptionBeamer{narrowtoc}{\beamer@tochorizontalspace=0.em}
-\DeclareOptionBeamer{14pt}{\beamer@tocspace=-0.1em}
-\DeclareOptionBeamer{12pt}{\beamer@tocspace=-0.em}
-\DeclareOptionBeamer{11pt}{\beamer@tocspace=0.1em}
-\DeclareOptionBeamer{10pt}{\beamer@tocspace=0.4em}
-\DeclareOptionBeamer{9pt}{\beamer@tocspace=0.7em}
-\DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
-
-
-\ProcessOptionsBeamer
 
 
 \mode<presentation>
 
 %Smaller fonts, dank Harald Harders 
 \newcommand\micro{%
-  \tiny
-  \@tempdima=\f@size pt
-  \@tempdima=0.8333333\@tempdima
-  \@tempdimb=1.2\@tempdima
+  \tiny%
+  \@tempdima=\f@size pt%
+  \@tempdima=0.8333333\@tempdima%
+  \@tempdimb=1.2\@tempdima%
   \@setfontsize\micro{\the\@tempdima}{\the\@tempdimb}%
 }
 \newcommand\nano{%
-  \micro
-  \@tempdima=\f@size pt
-  \@tempdima=0.8333333\@tempdima
-  \@tempdimb=1.2\@tempdima
+  \micro%
+  \@tempdima=\f@size pt%
+  \@tempdima=0.8333333\@tempdima%
+  \@tempdimb=1.2\@tempdima%
   \@setfontsize\nano{\the\@tempdima}{\the\@tempdimb}%
 }
 
-  \setbeamerfont*{frametitle}{series=\bfseries,size=\large}
-  \setbeamerfont*{footline}{series=\mdseries,size=\micro}
+\setbeamerfont*{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont*{footline}{series=\mdseries,size=\micro}
 
 
 \setbeamerfont*{section in toc}{series=\bfseries,size=\large}
@@ -135,20 +124,16 @@
 % chosen, switch the tocinheader on
 
 \ifthenelse{\boolean{tinytocinheader}}{%
-  \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}
-\setboolean{tocinheader}{true}
+  \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}%
+  \setboolean{tocinheader}{true}%
 }{%
-  \setbeamerfont*{headertoc}{series=\mdseries,size=\micro}
+  \setbeamerfont*{headertoc}{series=\mdseries,size=\micro}%
 }
 
 % Let the logo disappear
-\defbeamertemplate*{sidebar right}{sidebar theme}
-{%
-}
+\defbeamertemplate*{sidebar right}{sidebar theme}{}
 
-\defbeamertemplate*{frametitle}{sidebar theme}
-{%
-}
+\defbeamertemplate*{frametitle}{sidebar theme}{}
 
 %% Define the frame title using the color scheme titlelike
 \defbeamertemplate*{headline}{sidebar theme}
@@ -160,23 +145,23 @@
     %\vspace*{0.1em}
   }{%
   \ifthenelse{\boolean{highlighttitle}}{%
-    \begin{beamercolorbox}[ht=1.5\beamer@headheight]{highlight}
-    \vspace*{1.em}\par
+    \begin{beamercolorbox}[ht=1.5\beamer@headheight]{highlight}%
+    \vspace*{1.em}\par%
     %% vphantom makes sure that underlengths are always accounted for
-    \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}
-    \vspace*{0.7em}
+    \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}%
+    \vspace*{0.7em}%
     \end{beamercolorbox}
     %\vspace*{0.1em}
   }{%
     \begin{beamercolorbox}[ht=1.3\beamer@headheight]{titlelike}
     \ifthenelse{\boolean{tocinheader}}{%
-    \vbox{
-    \hbox to \hsize{\hfill\usebeamerfont{headertoc}
-    \insertsectionnavigationhorizontal{100mm}{\hskip20pt plus1filll}{\quad}}
-    \ifthenelse{\boolean{nosubsectionsinheader}}{\hbox to \hsize{\hfill
+    \vbox{%
+    \hbox to \hsize{\hfill\usebeamerfont{headertoc}%
+    \insertsectionnavigationhorizontal{100mm}{\hskip20pt plus1filll}{\quad}}%
+    \ifthenelse{\boolean{nosubsectionsinheader}}{\hbox to \hsize{\hfill%
     \usebeamerfont{headertoc}\ \vphantom{FAp}}}{%
-    \hbox to \hsize{\hfill \usebeamerfont{headertoc}\
-    \vphantom{FAp}\hfill\insertsubsectionnavigationhorizontal{100mm}
+    \hbox to \hsize{\hfill \usebeamerfont{headertoc}\ %
+    \vphantom{FAp}\hfill\insertsubsectionnavigationhorizontal{100mm}%
     {\hskip0pt plus1filll}{\quad}}
 }
 %% End of ifthenelse for subsections
@@ -207,54 +192,35 @@
 
 \defbeamertemplate*{section in head/foot}{tubs}
 {%
-\usebeamercolor[fg]{section in head/foot}
-{\insertsectionhead}\hspace{\beamer@tochorizontalspace}
-
+\usebeamercolor[fg]{section in head/foot}%
+{\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 
 \defbeamertemplate*{section in head/foot shaded}{tubs}
 {%
-\usebeamercolor[bg]{section in head/foot shaded}
-\insertsectionhead\hspace{\beamer@tochorizontalspace}
+\usebeamercolor[bg]{section in head/foot shaded}%
+\insertsectionhead\hspace{\beamer@tochorizontalspace}%
 }
 
 \defbeamertemplate*{subsection in head/foot}{tubs}
 {%
-\usebeamercolor[fg]{subsection in head/foot}
-{\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}
-
+\usebeamercolor[fg]{subsection in head/foot}%
+{\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 
 \defbeamertemplate*{subsection in head/foot shaded}{tubs}
 {%
-\usebeamercolor[bg]{subsection in head/foot shaded}
-\insertsubsectionhead\hspace{\beamer@tochorizontalspace}
+\usebeamercolor[bg]{subsection in head/foot shaded}%
+\insertsubsectionhead\hspace{\beamer@tochorizontalspace}%
 }
 
 
-\defbeamertemplate*{section in sidebar}{sidebar theme}
-{%
-}
-
-\defbeamertemplate*{section in sidebar shaded}{sidebar theme}
-{%
-}
-
-\defbeamertemplate*{subsection in sidebar}{sidebar theme}
-{%
-}
-
-\defbeamertemplate*{subsection in sidebar shaded}{sidebar theme}
-{%
-}
-
-\defbeamertemplate*{subsubsection in sidebar}{sidebar theme}
-{%
-}
-
-\defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}
-{%
-}
+\defbeamertemplate*{section in sidebar}{sidebar theme}{}
+\defbeamertemplate*{section in sidebar shaded}{sidebar theme}{}
+\defbeamertemplate*{subsection in sidebar}{sidebar theme}{}
+\defbeamertemplate*{subsection in sidebar shaded}{sidebar theme}{}
+\defbeamertemplate*{subsubsection in sidebar}{sidebar theme}{}
+\defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}{}
 
 \setbeamerfont*{page number in sidebar}{size=\small,series=\bfseries}
 \setbeamerfont*{title}{series=\bfseries,size=\large}
@@ -310,10 +276,7 @@
 }
 
 %% Get rid of the stupid navigation symbol bar
-\setbeamertemplate{navigation symbols}
-{%
-
-}
+\setbeamertemplate{navigation symbols}{}
 
 %% This new environment allows to switch the headline-color
 \newenvironment{highlightframe}[1]{%
@@ -336,8 +299,6 @@
 \newenvironment{leftside}[1][\leftwidth]{\begin{minipage}[t]{#1}\raggedright\topadjust}
 {\end{minipage}}
 \newenvironment{rightside}[1][\rightwidth]{\begin{minipage}[t]{#1}\topadjust}{\end{minipage}}
-
-
 
 \mode
 <all>

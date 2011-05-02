@@ -1,12 +1,12 @@
 \ProvidesPackage{beamerthemetubs}[2010/04/12 v1.0 Beamer-Template TuBs]
-
+%
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
 %
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
-
+%
 % Modified by Martin Baeker 2010 <martin.baeker@tu-bs.de>
-
+%
 % Option nopagenum entfernt die Seitenzahl aus der Fusszeile
 %        nodate tut dasselbe mit dem Datum
 % Fontgrößen: 9pt entspricht in etwa der ppt-Vorlage
@@ -29,46 +29,56 @@
 % Falls die Schrift zu groß ist, kann statt der Option
 % tocinheader die Option tinytocinheader angegeben werden, die eine
 % kleinere Schriftgröße auswählt.
-
-\PassOptionsToPackage{rgb}{tubslogo}
-\DeclareOptionBeamer{minion}{\PassOptionsToPackage{minion}{beamerinnerthemetubs}}
-\DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgbprint}{beamercolorthemetubs}%
-\PassOptionsToPackage{rgbprint}{tubslogo}}
-\DeclareOptionBeamer{cmyk}{\PassOptionsToPackage{cmyk}{beamercolorthemetubs}%
-\PassOptionsToPackage{cmyk}{tubslogo}}
-
+%
+%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
+% color options
+\PassOptionsToPackage{rgb}{tubslogo}% default
+\DeclareOptionBeamer{rgb}{%
+  \PassOptionsToPackage{rgb}{beamercolorthemetubs}%
+  \PassOptionsToPackage{rgb}{tubslogo}}
+\DeclareOptionBeamer{rgbprint}{%
+  \PassOptionsToPackage{rgbprint}{beamercolorthemetubs}%
+  \PassOptionsToPackage{rgbprint}{tubslogo}}
+\DeclareOptionBeamer{cmyk}{%
+  \PassOptionsToPackage{cmyk}{beamercolorthemetubs}%
+  \PassOptionsToPackage{cmyk}{tubslogo}}
+%
 \DeclareOptionBeamer{nopagenum}{\PassOptionsToPackage{nopagenum}{beamerouterthemetubs}}
 \DeclareOptionBeamer{nodate}{\PassOptionsToPackage{nodate}{beamerouterthemetubs}}
 \DeclareOptionBeamer{tocinheader}{\PassOptionsToPackage{tocinheader}{beamerouterthemetubs}}
 \DeclareOptionBeamer{nosubsectionsinheader}{\PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemetubs}}
 \DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
 \DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
+% font options
+\DeclareOptionBeamer{minion}{\PassOptionsToPackage{minion}{beamerinnerthemetubs}}
 %% Needed to fix spacing in the running toc in the header
 \DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerouterthemetubs}}
 \DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerouterthemetubs}}
-\ProcessOptionsBeamer
-
+\ExecuteOptionsBeamer{rgb}
+\ProcessOptionsBeamer\relax
+%
 \DeclareOption*{%
   \PassOptionsToPackage{\CurrentOption}{beamercolorthemetubs}%
 }
-\ProcessOptions
-
+\ProcessOptions\relax
+%
 \RequirePackage{tubslogo}
 \PassOptionsToPackage{ngerman}{babel}  % used in outer theme for \pagename
 \RequirePackage{babel}
-
+%
 \mode<presentation>
-
+%
 % Default font scheme: uarial in T1 encoding
 \PassOptionsToPackage{T1}{fontenc}
 \RequirePackage{fontenc}
 \RequirePackage{uarial} % use arial font
-
+%
 \usecolortheme{tubs}
 \useoutertheme{tubs}
 \useinnertheme{tubs}
-
+%
 \mode<all>
+%
