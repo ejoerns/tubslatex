@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo -e 'STEP0: \t Cleaning potential previous installations...'
+rm -r tex
+rm -r fonts
+
 REPODIR=../..
 echo -e 'STEP1: \t Creating directory structure...'
 mkdir -p tex/latex/tubs
