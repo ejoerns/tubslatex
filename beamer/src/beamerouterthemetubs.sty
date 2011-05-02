@@ -171,8 +171,8 @@
     \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}
     \vspace*{.1\beamer@headheight}
     \end{beamercolorbox}
-    }
-  }
+    }%
+  }%
 }
 
 \defbeamertemplate*{section in head/foot}{tubs}{%
@@ -221,7 +221,8 @@
 \newdimen\beamer@CDlogowidth
 \beamer@CDlogowidth=24.7mm
 
-\tubslogoAbs{\beamer@CDlogowidth}
+\tubslogoAbs{\beamer@CDlogowidth}%
+\par
 % handle option 'nologoinfoot'
 \ifthenelse{\boolean{nologoinfoot}}{%
 \vspace{10.7pt}
