@@ -31,9 +31,13 @@
 % kleinere Schriftgröße auswählt.
 %
 \RequirePackage{tubslogo}
-\RequirePackage{babel}
-\RequirePackage{fontenc}
-\RequirePackage{uarial} % use arial font
+% babel used in outer theme for \pagename
+% \PassOptionsToPackage{ngerman}{babel}
+% \RequirePackage{babel}
+% Default font scheme: uarial in T1 encoding
+% \PassOptionsToPackage{T1}{fontenc}
+% \RequirePackage{fontenc}
+% \RequirePackage{uarial} % use arial font
 
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color options
@@ -74,9 +78,8 @@
 }
 \ProcessOptions\relax
 %
-\PassOptionsToPackage{ngerman}{babel}  % used in outer theme for \pagename
-% Default font scheme: uarial in T1 encoding
-\PassOptionsToPackage{T1}{fontenc}
+
+
 %
 \mode<presentation>
 %

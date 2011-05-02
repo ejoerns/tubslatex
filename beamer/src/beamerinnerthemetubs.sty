@@ -6,8 +6,6 @@
 \RequirePackage{tubsbeamersizes}
 \RequirePackage{tubslogo}
 
-\newboolean{useminion}
-
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 \DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
 \DeclareOptionBeamer{minion}{\setboolean{useminion}{true}}
@@ -18,16 +16,8 @@
 \newcommand{\tuDefaultTitlegraphic}{%
 \includegraphics[width=\titlegraphicswidth]{defaulttitlepicture}}
 
-\mode<presentation>
 
-\ifthenelse{\boolean{useminion}}{%
-  \RequirePackage{MinionPro}% % TODO: Check
-  \usefonttheme{serif}
-}{%
-  %% Change here for different maths font, if desired
-  \RequirePackage{eulervm}
-  \RequirePackage{uarial}%
-}
+\mode<presentation>
 
 
 \setbeamertemplate{blocks}[rounded][shadow=\beamer@themerounded@shadow]

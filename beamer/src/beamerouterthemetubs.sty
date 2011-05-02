@@ -21,14 +21,17 @@
 \newboolean{nopagenum}\setboolean{nopagenum}{false}
 \newboolean{nodate}\setboolean{nodate}{false}
 \newboolean{tocinheader}\setboolean{tocinheader}{false}
-\newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
+\newboolean{tinytocinheader@outer}\setboolean{tinytocinheader@outer}{false}
 \newboolean{nosubsectionsinheader}\setboolean{nosubsectionsinheader}{false}
 \newboolean{nologoinfoot}\setboolean{nologoinfoot}{false}
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 \DeclareOptionBeamer{nopagenum}{\setboolean{nopagenum}{true}}
 \DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
 \DeclareOptionBeamer{tocinheader}{\setboolean{tocinheader}{true}}
-\DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
+\DeclareOptionBeamer{tinytocinheader}{%
+  \setboolean{tinytocinheader@outer}{true}%
+  \PassOptionsToPackage{tinytocinheader}{beamerfonttheme}%
+}
 \DeclareOptionBeamer{nosubsectionsinheader}{\setboolean{nosubsectionsinheader}{true}}
 \DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
 \DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
@@ -60,38 +63,6 @@
 
 
 \mode<presentation>
-
-%Smaller fonts, dank Harald Harders 
-\newcommand\micro{%
-  \tiny%
-  \@tempdima=\f@size pt%
-  \@tempdima=0.8333333\@tempdima%
-  \@tempdimb=1.2\@tempdima%
-  \@setfontsize\micro{\the\@tempdima}{\the\@tempdimb}%
-}
-\newcommand\nano{%
-  \micro%
-  \@tempdima=\f@size pt%
-  \@tempdima=0.8333333\@tempdima%
-  \@tempdimb=1.2\@tempdima%
-  \@setfontsize\nano{\the\@tempdima}{\the\@tempdimb}%
-}
-
-\setbeamerfont*{frametitle}{series=\bfseries,size=\large}
-\setbeamerfont*{footline}{series=\mdseries,size=\micro}
-
-
-\setbeamerfont*{section in toc}{series=\bfseries,size=\large}
-\setbeamerfont*{subsection in toc}{series=\mdseries,size=\normalsize}
-
-% Set the font for the running toc - if option tinytocinheader is
-% chosen, switch the tocinheader on
-\ifthenelse{\boolean{tinytocinheader}}{%
-  \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}%
-  \setboolean{tocinheader}{true}%
-}{%
-  \setbeamerfont*{headertoc}{series=\mdseries,size=\micro}%
-}
 
 % Let the logo disappear
 \defbeamertemplate*{sidebar right}{sidebar theme}{}
@@ -126,7 +97,7 @@
       {\hskip0pt plus1filll}{\quad}}
     }% End of ifthenelse for subsections
     \vspace{\beamer@tocspace}
-    \ifthenelse{\boolean{tinytocinheader}}{\vspace{0.5\beamer@tocspace}}{}
+    \ifthenelse{\boolean{tinytocinheader@outer}}{\vspace{0.5\beamer@tocspace}}{}
     }
     }%% End of ifthenelse for tocinheader
     %% Correct the spacing for different font sizes
@@ -166,10 +137,7 @@
 \defbeamertemplate*{subsubsection in sidebar}{sidebar theme}{}
 \defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}{}
 
-\setbeamerfont*{page number in sidebar}{size=\small,series=\bfseries}
-\setbeamerfont*{title}{series=\bfseries,size=\large}
-\setbeamerfont*{subtitle}{series=\mdseries,size=\normalsize}
-\setbeamerfont*{author}{series=\mdseries,size=\normalsize}
+
 
 \setbeamercolor*{page number in sidebar}{fg=structure.fg}
 \setbeamercolor*{page number in sidebar shaded}{fg=structure.fg!40}
@@ -196,7 +164,6 @@
 \vbox to \logoheight{%
 \hfill%
 \parbox[b]{0.3\textwidth}{%
-\setbeamerfont{footlinelogo}{size=\scriptsize}%
 \usebeamerfont{footlinelogo}%
 \vspace*{3pt}%
 \raggedleft\insertlogo}\hspace*{0.5\beamer@CDborderwidth}%
