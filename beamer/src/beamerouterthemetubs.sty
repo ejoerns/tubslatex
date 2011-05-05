@@ -1,5 +1,5 @@
 \ProvidesPackage{beamerouterthemetubs}[2010/04/12 v1.0 Beamer-Outer-Template TuBs]
-% Copyright 2011 by Mr X. <tantau@users.sourceforge.net>
+% Copyright 2011 by Till Tantau <tantau@users.sourceforge.net>
 %
 % This program can be redistributed and/or modified under the terms
 % of the GNU Public License, version 2.
@@ -198,7 +198,7 @@
 
 \newenvironment{notitleframe}[1]{%
   \setboolean{notitle}{true}\begin{frame}{#1}%
-}{
+}{%
   \end{frame}\setboolean{notitle}{false}%
 }
 
