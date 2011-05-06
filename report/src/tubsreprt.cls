@@ -4,7 +4,7 @@
 \LoadClass{scrreprt}
 
 \RequirePackage{ifthen}
-\RequirePackage{Nexus}
+\RequirePackage{nexus}
 \RequirePackage[green]{tubscolors}
 \RequirePackage{tubslogo}
 

@@ -5,7 +5,7 @@
 
 \RequirePackage{xkeyval}
 \RequirePackage{ifthen}
-\RequirePackage{Nexus}
+\RequirePackage{nexus}
 \RequirePackage[green]{tubscolors}
 \RequirePackage{xcolor}
 
