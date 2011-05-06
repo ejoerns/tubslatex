@@ -1,4 +1,4 @@
-all: structure fetch build
+all: clean structure fetch build
 
 VERSION = 0.2
 DIST = debian

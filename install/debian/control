@@ -4,7 +4,7 @@ Architecture: all
 Installed-Size: unknown
 Section: unknown
 Priority: extra
-Depends: texlive-base, texlive-latex-extra, texlive-fonts-extra, latex-beamer
+Depends: texlive-base, texlive-latex-extra, texlive-fonts-extra, latex-beamer, texlive-lang-german
 Maintainer: Enrico Jörns <e.joerns@tu-bs.de>
 Homepage: http://tu-braunschweig.de
 Description: LaTeX-Pakete zur Erstellung von Präsentationen und Dokumenten im Corporate Design der TU Braunschweig.
