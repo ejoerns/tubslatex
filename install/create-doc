@@ -1,0 +1,19 @@
+REPODIR=..
+
+#!/bin/bash
+echo -e "generating doc:\t tubscolors"
+cd $REPODIR/cd-base/doc/tubscolors/
+pdflatex tubscolorsguide.tex | grep error
+cd -
+echo -e "generating doc:\t tubslogo"
+cd $REPODIR/cd-base/doc/tubslogo/
+pdflatex tubslogoguide.tex | grep error
+cd -
+echo -e "generating doc:\t beamer"
+cd $REPODIR/beamer/doc/
+pdflatex beamer-doc.tex | grep error
+cd -
+echo -e "generating doc:\t nexus"
+cd $REPODIR/nexus/doc/
+pdflatex nexusdoc.tex | grep error
+echo "finished"
