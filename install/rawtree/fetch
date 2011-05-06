@@ -10,7 +10,13 @@ mkdir -p tex/latex/tubs
 mkdir -p tex/latex/tubs/beamer
 mkdir -p tex/latex/tubs/cd-base
 mkdir -p tex/latex/tubs/report
+mkdir -p tex/latex/tubs/nexus
 mkdir -p doc/latex/tubs
+mkdir -p doc/latex/tubs/beamer
+mkdir -p doc/latex/tubs/cd-base
+mkdir -p doc/latex/tubs/report
+mkdir -p doc/latex/tubs/nexus
+
 
 echo -e 'STEP2: \t Copying package files...'
 echo -e '\t -> cd-base'
@@ -20,15 +26,22 @@ echo -e '\t -> beamer'
 cp $REPODIR/beamer/src/*.sty  tex/latex/tubs/beamer/.
 cp $REPODIR/beamer/src/defaulttitlepicture.jpg tex/latex/tubs/beamer/.
 echo -e '\t -> report'
-cp $REPODIR/report/src/*.cls tex/latex/tubs/report/.
-cp $REPODIR/report/src/*.tex tex/latex/tubs/report/.
+cp $REPODIR/report/src/*.cls  tex/latex/tubs/report/.
+cp $REPODIR/report/src/*.tex  tex/latex/tubs/report/.
+echo -e '\t -> nexus'
+cp $REPODIR/nexus/src/*.sty   tex/latex/tubs/nexus/.
+cp $REPODIR/nexus/src/*.fd    tex/latex/tubs/nexus/.
 
-echo -e 'STEP3: \t opying doc files'
-cp $REPODIR/cd-base/doc/tubscolors/*.pdf doc/latex/.
+echo -e 'STEP3: \t copying doc files'
+cp $REPODIR/cd-base/doc/tubscolors/*.pdf  doc/latex/tubs/cd-base/.
+cp $REPODIR/cd-base/doc/tubslogo/*.pdf    doc/latex/tubs/cd-base/.
+cp $REPODIR/nexus/doc/*.pdf               doc/latex/tubs/nexus/.
+cp $REPODIR/beamer/doc/*.pdf              doc/latex/tubs/beamer/.
+
 
 OTFDEFAULT="--warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force"
 
-cp $REPODIR/cd-base/nexus/*.otf .
+cp $REPODIR/nexus/otf-src/*.otf .
 
 if [ -x /usr/bin/otftotfm ]
 then
@@ -80,5 +93,4 @@ echo -e 'Command otftofm not found. Skipping...'
 
 fi
 
-cp -r 	$REPODIR/cd-base/nexus/Nexus tex/latex/
 rm *.otf
