@@ -1,7 +1,6 @@
 \ProvidesPackage{Nexus} [2011/03/12 v0.2 Nexus support for LaTeX]
 
-\RequirePackage{ae}
-\PassOptionsToPackage{LY1}{fontenc}
+\PassOptionsToPackage{T1,LY1}{fontenc}
 \RequirePackage{fontenc}
 
 %Anführungszeichen
@@ -21,9 +20,7 @@
 
 \DeclareTextCommand{\textasteriskcentered}{LY1}{$*$}
 
-\renewcommand{\rmdefault}{NexusProSerif}
-\renewcommand{\sfdefault}{NexusProSans}
-
-% use computer modern as typewriter (T1)
-\let\oldttfamily\ttfamily
-\renewcommand{\ttfamily}{\fontencoding{T1}\oldttfamily}
+\renewcommand*{\encodingdefault}{LY1}
+\renewcommand*{\rmdefault}{NexusProSerif}
+\renewcommand*{\sfdefault}{NexusProSans}
+\renewcommand*{\ttdefault}{txtt} % with bold series!
