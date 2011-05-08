@@ -1,0 +1,9 @@
+Installation der Nexus-Schrift für LaTeX.
+
+Dies ist die Hausschrift der TU-Braunschweig.
+
+Das Paket installiert die vier verfügbaren Schnitte
+(serifenlos, serifenlos fett, serifen, serifen fett)
+und generiert jeweils Varianten für kursive, geneigte
+und Kapitälchen-Schrift.
+Der Typewriter-Font wird standardmäßig aus den TxFonts geladen.
