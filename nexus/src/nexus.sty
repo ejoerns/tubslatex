@@ -1,5 +1,6 @@
 \ProvidesPackage{nexus} [2011/03/12 v0.2 Nexus support for LaTeX]
 
+\RequirePackage[scaled]{uarial} % for T1 encoding
 \PassOptionsToPackage{T1,LY1}{fontenc}
 \RequirePackage{fontenc}
 
@@ -24,3 +25,20 @@
 \renewcommand*{\rmdefault}{NexusProSerif}
 \renewcommand*{\sfdefault}{NexusProSans}
 \renewcommand*{\ttdefault}{txtt} % with bold series!
+
+%% support for babels latintext (used by LaTeX, TeX, etc.)
+\AtBeginDocument{%
+\ifx\@undefined\latintext%
+\else%
+\renewcommand{\latintext}{%
+\ifx\f@family\rmdefault%
+\fontencoding{\latinencoding}\fontfamily{ptm}\selectfont%
+\else%
+  \ifx\f@family\sfdefault%
+  \fontencoding{\latinencoding}\fontfamily{ua1}\selectfont%
+  \else%
+  \fi%
+\fi%
+\def\encodingdefault{\latinencoding}}%
+\fi%
+}
