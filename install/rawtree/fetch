@@ -3,6 +3,7 @@
 echo -e 'STEP0: \t Cleaning potential previous installations...'
 rm -r tex
 rm -r fonts
+rm -r doc
 
 REPODIR=../..
 echo -e 'STEP1: \t Creating tex and doc directory structure...'
@@ -17,11 +18,11 @@ mkdir -p doc/latex/tubs/cd-base
 mkdir -p doc/latex/tubs/report
 mkdir -p doc/latex/tubs/nexus
 
-
 echo -e 'STEP2: \t Copying package files...'
 echo -e '\t -> cd-base'
 cp $REPODIR/cd-base/src/*.sty tex/latex/tubs/cd-base/.
 cp $REPODIR/cd-base/src/*.pdf tex/latex/tubs/cd-base/.
+cp -r $REPODIR/cd-base/src/logos tex/latex/tubs/cd-base/.
 echo -e '\t -> beamer'
 cp $REPODIR/beamer/src/*.sty  tex/latex/tubs/beamer/.
 cp $REPODIR/beamer/src/defaulttitlepicture.jpg tex/latex/tubs/beamer/.
