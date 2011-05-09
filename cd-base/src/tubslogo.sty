@@ -2,12 +2,12 @@
 %% Copyright 2011 by Enrico Jörns
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubslogo}[2011/05/01  v1.00 CD-Logo der TU Braunschweig]
+\ProvidesPackage{tubslogo}[2011/05/09  v1.00 CD-Logo der TU Braunschweig]
 \RequirePackage{graphics}
 \RequirePackage{ifthen}
 %
 % color vars
-\newboolean{rgbprintLogo}\setboolean{rgbprintLogo}{false}
+\newboolean{hksLogo}\setboolean{hksLogo}{false}
 \newboolean{cmykLogo}\setboolean{cmykLogo}{false}
 \newboolean{monoLogo}\setboolean{monoLogo}{false}
 % papersize vars
@@ -16,7 +16,7 @@
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color options
 \DeclareOption{rgb}{\relax}
-\DeclareOption{rgbprint}{\setboolean{rgbprintLogo}{true}}
+\DeclareOption{hks}{\setboolean{hksLogo}{true}}
 \DeclareOption{cmyk}{\setboolean{cmykLogo}{true}}
 \DeclareOption{mono}{\setboolean{monoLogo}{true}}
 % papersize options
@@ -58,18 +58,18 @@
 %
 \ifthenelse{\boolean{cmykLogo}}{%% CMYK
 \newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-cmyk}}
-\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-cmyk}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig_4C}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_4C}}
 }{%% RGB-print
-\ifthenelse{\boolean{rgbprintLogo}}{%
+\ifthenelse{\boolean{hksLogo}}{%
 \newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
-\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig_SC}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_SC}}
 }{%% Monochrome
 \ifthenelse{\boolean{monoLogo}}{%
 \newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-mono}}
-\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-mono}}
+\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig_B}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_B}}
 }{%% RGB
 \newcommand{\tubslogo}[1][\tulogo@scale]{%
 \includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
