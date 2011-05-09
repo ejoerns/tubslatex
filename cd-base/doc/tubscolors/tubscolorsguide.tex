@@ -10,18 +10,18 @@
 \lstset{basicstyle=\ttfamily}
 
 \def\rainbow#1{{\sffamily\footnotesize%
-\colorbox{#1100}{\hbox to 0.18\textwidth{#1{}100}}% 
-\colorbox{#180}{\hbox to 0.18\textwidth{#1{}80}}% 
-\colorbox{#160}{\hbox to 0.18\textwidth{#1{}60}}% 
-\colorbox{#140}{\hbox to 0.18\textwidth{#1{}40}}% 
-\colorbox{#120}{\hbox to 0.18\textwidth{#1{}20}}\\% 
+\colorbox{#1100}{\hbox to 0.18\textwidth{#1{}100\hfill}}% 
+\colorbox{#180}{\hbox to 0.18\textwidth{#1{}80\hfill}}% 
+\colorbox{#160}{\hbox to 0.18\textwidth{#1{}60\hfill}}% 
+\colorbox{#140}{\hbox to 0.18\textwidth{#1{}40\hfill}}% 
+\colorbox{#120}{\hbox to 0.18\textwidth{#1{}20\hfill}}\\% 
 }}
 
 \newcommand{\classoptionitem}[1][ ]{
   \item[\mdseries{\ttfamily%
     \textbackslash usepackage%
     {[{\color{red}#1}]}%
-    \{TU-CDcolors\}}]\hfill\\
+    \{tubscolors\}}]\hfill\\
 }
 
 \parindent0mm
@@ -36,8 +36,6 @@
 \maketitle
 
 \section{Verfügbare Farben}
-
-{\ttfamily This is a typewriter \textbf{bold} test text!}
 
 Der Farbklang der TU-Braunschweig ist in eine Primär- und einen
 Sekundärfarbbereich aufgeteilt.
@@ -59,9 +57,9 @@ Beispielfeldern angegeben.
 \subsection{Primärfarben}
 
 {\sffamily\footnotesize%
-\colorbox{tuRed}{\hbox to 0.18\textwidth{tuRed}}%
-\colorbox{tuBlack}{\hbox to 0.18\textwidth{\color{white}tuBlack}}%
-\fcolorbox{tuBlack}{tuWhite}{\hbox to 0.18\textwidth{tuWhite}}\\%
+\colorbox{tuRed}{\hbox to 0.18\textwidth{tuRed\hfill}}%
+\colorbox{tuBlack}{\hbox to 0.18\textwidth{\color{white}tuBlack\hfill}}%
+\fcolorbox{tuBlack}{tuWhite}{\hbox to 0.18\textwidth{tuWhite\hfill}}\\%
 }
 
 \rainbow{tuGrey}

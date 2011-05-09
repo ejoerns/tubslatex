@@ -6,7 +6,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage[a5paper]{tubslogo}
+\usepackage[a5paper,cmyk]{tubslogo}
 \usepackage{tubscolors}
 
 \usepackage{listings}
@@ -16,7 +16,7 @@
   \item[\mdseries{\ttfamily%
     \textbackslash usepackage%
     {[{\color{tuRed}#1}]}%
-    \{TU-CDcolors\}}]\hfill\\
+    \{tubslogo\}}]\hfill\\
 }
 
 \parindent0mm
@@ -30,28 +30,36 @@
 
 \maketitle
 
+\tubslogo
+
 \section{Beschreibung}
 
-Dieses Paket ermöglicht das einfache Einbinden des TU-logos in \LaTeX-Dokumente.
+Dieses Paket ermöglicht das einfache Einbinden des Siegelband-Logos
+der TU Braunschweig in \LaTeX-Dokumente.
 Dabei kann zwischen einer Variante im rgb-Farbmodell, einer im
 cmyk-Farbmodell oder (für Ausnahmefälle) einer monochromen Variante gewählt
-werden. Die Auwahl erfolgt dabei über die Paketoptionen
+werden. Die Auwahl erfolgt dabei über Paketoptionen
 (siehe Abschnitt \ref{options:color}).
 
 \begin{minipage}{0.5\textwidth}
   \centering
   \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-rgb}
-  {\sffamily Logo in Standardgröße (rgb)}
+  {\sffamily Logo in Standardgröße (RGB)}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-cmyk}
-  {\sffamily Logo in Standardgröße (cmyk)}
+  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig_4C}
+  {\sffamily Logo in Standardgröße (CMYK)}
 \end{minipage}
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-mono}
+  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig_SC}
+  {\sffamily Logo in Standardgröße (HSK 15)}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig_B}
   {\sffamily Logo in Standardgröße (schwarz)}
 \end{minipage}
 
@@ -60,18 +68,16 @@ Mit dem Befehl {\color{tuRed}\lstinline{\tubslogo}} wird ein Logo in
 standardkonformer Größe der verwendeten Papiergröße entsprechend skaliert
 eingefügt. Die verwendete Papiergröße kann dabei als Paketoption übergeben
 werden und ist standardmäßig auf \lstinline{a4paper} voreingestellt
-(siehe Abschnitt \ref{options:papersize}.
+(siehe Abschnitt \ref{options:papersize}).
 Also optionales Argument kann auch ein frei gewählter Skalierungsfaktor
 vorgegeben werden (siehe Abschnitt \ref{cmd:tulogo}).
 
-Mit {\color{tuRed}\lstinline!\tubslogoAbs{}!} kann dagegen zusätzlich eine
-individuell gewählte absolute Breite angegeben werden.
+Mit {\color{tuRed}\ttfamily \textbackslash tubslogoAbs%
+    \{\textcolor{tuGreenDark}{Breite}\}}
+kann dagegen zusätzlich eine individuell gewählte absolute Breite
+angegeben werden.
 
-% die sowohl das einfache Einfügen in
-% den Standardbreiten als auch in individuell relativ oder absolut
-% angegebener Breite ermöglichen.
 
-\clearpage
 \section{Paket-Optionen}
 
 \subsection{Farbmodell}\label{options:color}
@@ -81,9 +87,8 @@ individuell gewählte absolute Breite angegeben werden.
     Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung.
   \classoptionitem[cmyk]
     Verwendung der cmyk-Farben
-  \classoptionitem[rgbprint]
-    Verwendung der rgb-Druckfarben. Dies ist die Standardeinstellung.
-    Entspricht Option \lstinline{rgb}.
+  \classoptionitem[hks]
+    Verwendung der Spezialfarbe HKS 15.
   \classoptionitem[mono]
     Verwendung einer schwarz-weiß-Version des Logos.
 \end{description}
@@ -124,7 +129,7 @@ individuell gewählte absolute Breite angegeben werden.
     \lstinline!\tubslogo[0.6]! erzeugt beispielsweise ein auf 60\% der 
     Standardgröße für DINA4-Dokumente skaliertes Logo.
 
-  \item[\color{tuRed}\ttfamily \textbackslash tubslogoAbs%
+  \item[\color{tuRed}\mdseries\ttfamily \textbackslash tubslogoAbs%
     \{\textcolor{tuGreenDark}{Breite abs.}\}]
     Dieser Befehl erlaubt die Erzeugung eines Logos mit absolut vorgegebener
     Breite.\footnote{Generell ist die Verwendung von standardkonformen Größen
