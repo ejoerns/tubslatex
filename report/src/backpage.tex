@@ -1,30 +1,33 @@
 %% The environment where the TUBS backpage can be constructed.
-\newenvironment{TUBSbackpage}
-	{
-	\newcommand{\newevenpageintwosidemode}
-		{
-		\ifthenelse{\isodd{\thepage}}
-			{
-			\ifthenelse{\equal{\twosided}{true}}
-				{
-				~\newpage\thispagestyle{empty}
-				}{}
-			}{}
-	}
-	\clearpage
-	\thispagestyle{empty}
-	\newevenpageintwosidemode
-	\thispagestyle{empty}
-	\begin{tikzpicture}[remember picture,overlay]
-	\end{tikzpicture}
-	}
-	{
-	\begin{tikzpicture}[remember picture,overlay]
-	\node[inner sep=0, outer sep=0, yshift=\TUBSBottomMargin mm + \TUBSCommunicationHeight mm + \DirectionSign * 0.25 * \TUBSLogoHeight mm,minimum width=\TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm, inner sep=0pt, draw=none] (tulogoposition) at (\DirectionOrigin){};
-	\node[xshift=5mm+ 2* \TUBSFrameWidth mm + \TUBSCommunicationWidth
-mm,at=(tulogoposition), inner sep=0, outer sep=0, left, minimum width=5mm +
-\TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm, fill=tuRed]
-(tulogo_overprint){};
-	\end{tikzpicture}
-	\ifthenelse{\equal{\TUBSDesignHelper}{true}}{\TUBSShowGaussGrid}{}
-	}
+\newenvironment{TUBSbackpage}{%
+  \newcommand{\newevenpageintwosidemode}{%
+    \ifthenelse{\isodd{\thepage}}{%
+      \ifthenelse{\equal{\twosided}{true}}{%
+        ~\newpage\thispagestyle{empty}
+        }{}
+      }{}
+  }
+  \clearpage
+  \thispagestyle{empty}
+  \newevenpageintwosidemode
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+  \end{tikzpicture}
+}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[inner sep=0, outer sep=0,
+        yshift=\TUBSBottomMargin mm + \TUBSCommunicationHeight mm
+          + \DirectionSign * 0.25 * \TUBSLogoHeight mm,
+        minimum width=\TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm,
+        inner sep=0pt, draw=none]
+      (tulogoposition) at (\DirectionOrigin){};
+    \node[inner sep=0, outer sep=0,
+        xshift=5mm+ 2* \TUBSFrameWidth mm + \TUBSCommunicationWidth mm,
+        at=(tulogoposition),
+        left,
+        minimum width=5mm+\TUBSLogoWidth mm, minimum height=\TUBSLogoHeight mm,
+        fill=tuRed]
+      (tulogo_overprint){};
+  \end{tikzpicture}
+  \ifthenelse{\equal{\TUBSDesignHelper}{true}}{\TUBSShowGaussGrid}{}
+}
