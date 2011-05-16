@@ -2,24 +2,32 @@
 \ProvidesPackage{tubstypearea}% 'tubslayout'?
 
 \RequirePackage{ifthen}
-
+\RequirePackage{geometry}
 
 \newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
 
 % calculates dimensions for LaTeXs page layout
 \newcommand{\tubspage@calclayout}{%
-  \setlength{\topmargin}{0mm}%
-  \setlength{\voffset}{\tubspage@borderwidth-1in}
-  \setlength{\topskip}{0mm}
-  \setlength{\headsep}{\tubspage@borderwidth}
-  \setlength{\headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
-  \setlength{\hoffset}{-1in}
-  \addtolength\hoffset\tubspage@borderwidth
-  \evensidemargin=0pt
-  \oddsidemargin=0pt
-  \setlength\textwidth{\paperwidth}
-  \addtolength\textwidth{-2\tubspage@borderwidth}
-  \setlength\textheight\tubspage@communicationheight
+%   \setlength{\topmargin}{0mm}%
+%   \setlength{\voffset}{\tubspage@borderwidth-1in}
+%   \setlength{\topskip}{0mm}
+%   \setlength{\headsep}{\tubspage@borderwidth}
+%   \setlength{\headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+%   \setlength{\hoffset}{-1in}
+%   \addtolength\hoffset\tubspage@borderwidth
+%   \evensidemargin=0pt
+%   \oddsidemargin=0pt
+%   \setlength\textwidth{\paperwidth}
+%   \addtolength\textwidth{-2\tubspage@borderwidth}
+%   \setlength\textheight\tubspage@communicationheight
+  \geometry{%
+    a5paper,
+    headheight=\tubspage@senderheight-2\tubspage@borderwidth,
+    headsep=\tubspage@borderwidth,
+    top=\tubspage@senderheight,
+    left=\tubspage@borderwidth,
+    right=\tubspage@borderwidth,
+    bottom=\tubspage@borderwidth}
 }
 
 \newlength{\tubspage@borderwidth}
