@@ -1,0 +1,137 @@
+\documentclass[BCOR=3cm,a0,portrait]{a0poster}
+
+\usepackage{tikz}
+\usepackage{tubslogo}
+\usepackage[green]{tubscolors}
+\usepackage{tabularx}
+\usepackage{afterpage}
+\usepackage{calc}
+\usepackage{scrpage2} 
+
+% A0 font sizes
+\newcommand{\Headlinesize}{\fontsize{270}{297}\selectfont}
+\newcommand{\headlinesize}{\fontsize{180}{198}\selectfont}
+\newcommand{\subheadlinesize}{\fontsize{90}{108}\selectfont}   
+\newcommand{\institutesize}{\fontsize{60}{72}\selectfont}
+\newcommand{\infotextsize}{\fontsize{60}{78}\selectfont}
+\newcommand{\infotextitemizesize}{\fontsize{60}{78}\selectfont}
+\newcommand{\copytextsize}{\fontsize{40}{56}\selectfont}
+
+% A0
+\newlength{\borderwidth}  % width of outer border
+\setlength{\borderwidth}{32mm}
+\newlength{\senderheight}
+\setlength{\senderheight}{160mm}%{0.86\pageheight}
+\newlength{\communicationareaheight}
+\setlength{\communicationareaheight}{997mm}%{0.14\pageheigth}
+\newlength{\senderprintareaheight}
+\setlength{\senderprintareaheight}{\senderheight}
+\addtolength{\senderprintareaheight}{-2\borderwidth}
+% reset length
+\setlength\textwidth{\paperwidth}
+\addtolength\textwidth{-2\borderwidth}
+\setlength\textheight\communicationareaheight
+
+\parindent0mm
+% \usepackage[a0paper]{geometry}
+
+\usepackage{german,epsf,pstricks,multicol,pst-grad,color}
+
+\newsavebox{\dummybox}
+\setlength{\topmargin}{0mm}  % -1in +1.47cm
+% \setlength{\voffset}{-1in}
+\setlength{\voffset}{\borderwidth-1in}
+\setlength{\topskip}{0mm}
+% \setlength{\headsep}{0mm}
+\setlength{\headsep}{\borderwidth}
+% \setlength{\headheight}{0mm}
+\setlength{\headheight}{\senderheight-2\borderwidth}
+\setlength{\hoffset}{-1in}
+\addtolength\hoffset\borderwidth
+\evensidemargin=0pt
+\oddsidemargin=0pt
+% \setlength\hoffset{0pt}
+
+\let\showbox\relax
+
+\newlength{\segmentwidth}
+\setlength{\segmentwidth}{0.167\textwidth}
+\newlength{\gaussheight}
+\setlength{\gaussheight}{0.0278\communicationareaheight}
+
+% params:
+% 1 (opt) - width [1-6]
+% 2       - height [1-6] / [1-8]
+\newenvironment{tubsbox}[3][tuWhite]{%
+\newsavebox{\storebox}
+\def\bgcolor{#1}
+\begin{lrbox}{\storebox}
+\begin{minipage}[t][#3\gaussheight]{#2\segmentwidth}
+}{%
+\end{minipage}
+\end{lrbox}
+\colorbox{\bgcolor}{%
+\usebox{\storebox}
+}
+}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+
+}
+\makeatother
+
+\begin{document}
+
+\ohead{\fbox{\parbox[t][\senderprintareaheight]{0.5\textwidth}{%
+\raggedleft asdf}}}
+
+
+\pagestyle{scrheadings}
+
+
+% \afterpage{asdf}
+% \showbox{%
+%   \begin{minipage}[t][\senderheight]{\textwidth}%
+% %     \vspace*{\borderwidth}\hfill\fbox{%
+% %       \begin{minipage}[t][\senderprintareaheight]{0.5\textwidth}
+% %         \raggedleft%
+% %         \Large Institut\\ fuer Lorem-Ipsum
+% %       \end{minipage}}
+%   \end{minipage}}
+\showbox{%
+  \colorbox{tuSecondaryLight}{%
+    \begin{minipage}[t][0.99\communicationareaheight]{\textwidth}%
+      \vspace*{-78mm}{\hspace*{-\borderwidth}\tubslogo[4]}%
+      \section*{This is the header}
+      \begin{tubsbox}[tuRed]{3}{2}
+        \LARGE asdf dfg sdfg dsfg dsf 
+      \end{tubsbox}
+
+
+\begin{tabularx}{\textwidth}{|X|X|X|X|X|X|}
+\hline
+\vbox to \gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+\hline
+\vbox to 2\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+\hline
+\vbox to 3\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+\hline
+\vbox to 4\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+% \hline
+% \vbox to 5\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+% \hline
+% \vbox to 6\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+% \hline
+% \vbox to 7\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+% \hline
+% \vbox to 8\gaussheight{} & 2 & 3 & 4 & 5 & 6 \\
+% \hline
+\end{tabularx}
+    \end{minipage}}}
+
+
+\newpage
+\fbox{\parbox{\textwidth}{\vbox to \textheight{asdf}}}
+
+\end{document}
