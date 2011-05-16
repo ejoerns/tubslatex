@@ -3,7 +3,8 @@
 
 \RequirePackage{ifthen}
 \RequirePackage{geometry}
-\RequirePackage{textpos}
+\RequirePackage[absolute]{textpos}
+\RequirePackage{calc}
 
 \newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
 
@@ -31,8 +32,12 @@
     bottom=\tubspage@borderwidth}
   %
   % dimension is a hack..
-  \setlength{\TPHorizModule}{\textwidth*\ratio{1mm}{\tubspage@xsegments mm}}
-  \setlength{\TPVertModule}{\textheight*\ratio{1mm}{\tubspage@ysegments mm}}
+  \setlength{\TPHorizModule}{%
+    (\textwidth-2\tubspage@borderwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
+  \setlength{\TPVertModule}{%
+    (\textheight-2\tubspage@borderwidth)*\ratio{1mm}{\tubspage@ysegments mm}}
+  \textblockorigin{2\tubspage@borderwidth}{%
+    \tubspage@senderheight+\tubspage@borderwidth}
 }
 
 \newlength{\tubspage@borderwidth}
@@ -122,6 +127,11 @@
 \setlength{\tubspage@columnsep}{5mm}
 
 
+
+\newlength{\tubsbox@leftmargin}
+\newlength{\tubsbox@rightmargin}
+\newsavebox{\storebox}
+\newcounter{tubsbox@lastelement}
 % params:
 % 1 - color
 % 2 - xpos
@@ -130,37 +140,39 @@
 % 5 - height [1-6] / [1-8]
 \newenvironment{tubsbox}[5][tuWhite]{%
 % calc left margin in box
-\newlength{\tubsbox@leftmargin}
 \ifnum#2=0
 \setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
 \else
-\setlength{\tubsbox@leftmargin}{\tubspage@columnsep}
+\setlength{\tubsbox@leftmargin}{0mm}
 \fi
-\newlength{\tubsbox@rightmargin}
-\ifx{#2}{\tubspage@xsegments}
+\setcounter{tubsbox@lastelement}{#2}
+\addtocounter{tubsbox@lastelement}{#4}
+\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
 \setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
 \else
-\setlength{\tubsbox@rightmargin}{\tubspage@columnsep}
+\setlength{\tubsbox@rightmargin}{0mm}
 \fi
-\newsavebox{\storebox}
 \def\bgcolor{#1}
 \def\tubsbox@xpos{#2}
 \def\tubsbox@ypos{#3}
 \def\tubsbox@width{#4}
 \def\tubsbox@height{#5}
 \begin{lrbox}{\storebox}
+% \hspace*{\tubspage@leftsep}%
 \begin{minipage}[t]%
   [\tubsbox@height\gaussheight]%
-  {\tubsbox@width\segmentwidth-\tubsbox@leftmargin-\tubsbox@rightmargin}%
+  {\tubsbox@width\TPHorizModule}%
+  \vspace*{\tubspage@borderwidth}%
 }{%
 \end{minipage}
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
 \begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
+\hspace*{-\tubsbox@leftmargin}%
 \colorbox{\bgcolor}{%
 \hspace*{\tubsbox@leftmargin}%
-\usebox{\storebox}
-\hspace*{\tubsbox@rightmargin}
+\usebox{\storebox}%
+\hspace*{\tubsbox@rightmargin}%
 }%
 \end{textblock}
 }
