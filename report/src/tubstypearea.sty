@@ -130,6 +130,8 @@
 
 \newlength{\tubsbox@leftmargin}
 \newlength{\tubsbox@rightmargin}
+\newlength{\tubsbox@leftsep}
+\newlength{\tubsbox@rightsep}
 \newsavebox{\storebox}
 \newcounter{tubsbox@lastelement}
 % params:
@@ -142,15 +144,22 @@
 % calc left margin in box
 \ifnum#2=0
 \setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@rightmargin}{0mm}
+\setlength{\tubsbox@leftsep}{0mm}
+\setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+\else
+\setcounter{tubsbox@lastelement}{#2}\addtocounter{tubsbox@lastelement}{#4}
+\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
+\setlength{\tubsbox@leftmargin}{0mm}
+\setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\setlength{\tubsbox@rightsep}{0mm}
 \else
 \setlength{\tubsbox@leftmargin}{0mm}
-\fi
-\setcounter{tubsbox@lastelement}{#2}
-\addtocounter{tubsbox@lastelement}{#4}
-\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
-\setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
-\else
 \setlength{\tubsbox@rightmargin}{0mm}
+\setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\fi
 \fi
 \def\bgcolor{#1}
 \def\tubsbox@xpos{#2}
@@ -161,19 +170,21 @@
 % \hspace*{\tubspage@leftsep}%
 \begin{minipage}[t]%
   [\tubsbox@height\gaussheight]%
-  {\tubsbox@width\TPHorizModule}%
+  {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
   \vspace*{\tubspage@borderwidth}%
 }{%
 \end{minipage}
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
 \begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
+\hspace*{\tubsbox@leftsep}%
 \hspace*{-\tubsbox@leftmargin}%
 \colorbox{\bgcolor}{%
 \hspace*{\tubsbox@leftmargin}%
 \usebox{\storebox}%
 \hspace*{\tubsbox@rightmargin}%
 }%
+\hspace*{\tubsbox@rightsep}%
 \end{textblock}
 }
 
