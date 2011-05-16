@@ -1,11 +1,115 @@
+\NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{tubstypearea}% 'tubslayout'?
 
-\DeclareOption{a4paper}{%
-  
+\RequirePackage{ifthen}
+
+
+\newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
+
+% calculates dimensions for LaTeXs page layout
+\newcommand{\tubspage@calclayout}{%
+  \setlength{\topmargin}{0mm}%
+  \setlength{\voffset}{\tubspage@borderwidth-1in}
+  \setlength{\topskip}{0mm}
+  \setlength{\headsep}{\tubspage@borderwidth}
+  \setlength{\headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  \setlength{\hoffset}{-1in}
+  \addtolength\hoffset\tubspage@borderwidth
+  \evensidemargin=0pt
+  \oddsidemargin=0pt
+  \setlength\textwidth{\paperwidth}
+  \addtolength\textwidth{-2\tubspage@borderwidth}
+  \setlength\textheight\tubspage@communicationheight
 }
 
-\ExecuteOptions{a4paper}
-\ProcessOptions}
+\newlength{\tubspage@borderwidth}
+\newlength{\tubspage@senderheight}
+\newlength{\tubspage@communicationheight}
+\def\tubspage@xsegments{6}
+\def\tubspage@ysegments{8}
+
+% landscape
+\DeclareOption{landscape}{%
+  \setboolean{tubspage@landscape}{true}
+}
+% A0
+\DeclareOption{a0paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{649mm}%
+    \def\tubspage@ysegments{6}%
+  }{%
+    \setlength{\tubspage@communicationheight}{997mm}%
+    \def\tubspage@ysegments{8}%
+  }
+  \setlength{\tubspage@borderwidth}{32mm}%
+  \setlength{\tubspage@senderheight}{160mm}%
+  \tubspage@calclayout
+}
+% ...
+% A3
+\DeclareOption{a3paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{226mm}%
+    \def\tubspage@ysegments{6}%
+  }{%
+    \setlength{\tubspage@communicationheight}{349mm}%
+    \def\tubspage@ysegments{8}%
+  }
+  \setlength{\tubspage@borderwidth}{11mm}%
+  \setlength{\tubspage@senderheight}{60mm}%
+  \tubspage@calclayout
+}
+% A4
+\DeclareOption{a4paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{162mm}%
+    \def\tubspage@ysegments{6}%
+  }{%
+    \setlength{\tubspage@communicationheight}{249mm}%
+    \def\tubspage@ysegments{8}%
+  }
+  \setlength{\tubspage@borderwidth}{8mm}%
+  \setlength{\tubspage@senderheight}{40mm}%
+  \tubspage@calclayout
+}
+% A5
+\DeclareOption{a5paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{112.5mm}%
+  }{%
+    \setlength{\tubspage@communicationheight}{174.5mm}%
+  }
+  \setlength{\tubspage@borderwidth}{5.5mm}%
+  \setlength{\tubspage@senderheight}{30mm}%
+  \tubspage@calclayout
+}
+% A6
+\DeclareOption{a6paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{75mm}%
+  }{%
+    \setlength{\tubspage@communicationheight}{118mm}%
+  }
+  \setlength{\tubspage@borderwidth}{5mm}%
+  \setlength{\tubspage@senderheight}{25mm}%
+  \tubspage@calclayout
+}
+% any
+\DeclareOption{anypaper}{%
+  % calculate dimensions
+  % ...
+%   \tubspage@calclayout
+}
+
+% \ExecuteOptions{anypaper}
+\ProcessOptions\relax
+
+
+\newlength{\tubspage@columnsep}
+\setlength{\tubspage@columnsep}{5mm}
+
+
+
 
 % y segments
 % x
@@ -17,3 +121,5 @@
 %   senderheight = 1/7 paperheight
 % landscape:
 %   senderheight = 1/5 paperheight
+
+% missing formats can be added by simple style file...
