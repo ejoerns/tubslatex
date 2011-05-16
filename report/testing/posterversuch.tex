@@ -10,6 +10,8 @@
 \usepackage[a5paper]{tubstypearea}
 \usepackage[a5paper]{tubslogo}
 \usepackage[green]{tubscolors}
+\usepackage{typearea}
+
 
 % A0 font sizes
 \newcommand{\Headlinesize}{\fontsize{270}{297}\selectfont}
@@ -33,44 +35,18 @@
 \newlength{\gaussheight}
 \setlength{\gaussheight}{0.0278\textheight}
 
-
-% params:
-% 1 (opt) - width [1-6]
-% 2       - height [1-6] / [1-8]
-\newenvironment{tubsbox}[3][tuWhite]{%
-\newsavebox{\storebox}
-\def\bgcolor{#1}
-\begin{lrbox}{\storebox}
-\begin{minipage}[t][#3\gaussheight]{#2\segmentwidth}
-}{%
-\end{minipage}
-\end{lrbox}
-\colorbox{\bgcolor}{%
-\usebox{\storebox}
-}
+% cd pagestyle
+\newcommand*{\ps@cd}{
+  \tubspage@calclayout
 }
 
+\newcommand*{\ps@tubsheadings}{
+  \typearea{12}
+  \ps@scrheadings
+}
 
 \renewcommand{\maketitle}{%
-
-}
-\makeatother
-
-\pagestyle{scrheadings}
-
-\begin{document}
-\ohead{\fbox{\parbox[t][1cm]{0.5\textwidth}{%
-  \raggedleft asdf}}}
-
-%   \begin{minipage}[t][\senderheight]{\textwidth}%
-% %     \vspace*{\borderwidth}\hfill\fbox{%
-% %       \begin{minipage}[t][\senderprintareaheight]{0.5\textwidth}
-% %         \raggedleft%
-% %         \Large Institut\\ fuer Lorem-Ipsum
-% %       \end{minipage}}
-%   \end{minipage}}
 \setlength{\fboxsep}{0cm}%
-%
 \colorbox{tuSecondaryLight}{%
   \begin{minipage}[t][\textheight]{\textwidth}%
 %     \begin{tubsbox}[tuRed]{3}{2}
@@ -83,14 +59,53 @@
 \colorbox{tuRed}{%
 \hbox to \tulogoWidth{\vbox to \tulogoHeight{\tubslogo}}%
 }\vspace*{-0.25\tulogoHeight}\\%
+}
+
+
+
+% \renewcommand{\maketitle}{%
+% 
+% }
+\makeatother
+
+\pagestyle{scrheadings}
+
+\begin{document}
+
+\author{Enrico Jörns}
+\title{The infinite way to LaTeX}
+
+\maketitle
 
 \newpage
 
-% This is just a text...
-\fbox{\parbox{\textwidth}{\vbox to \textheight{asdf}}}
+\begin{tubsbox}[tuBlueLight40]{3}{3}
+  TUBSBOX
+\end{tubsbox}
+
+
+\begin{textblock}{3}(0,1)
+Dieser Text ist an 2,1
+% \fbox{\parbox{\textwidth}{\vbox to \texteight{asdf}}}
+\end{textblock}
+
+\begin{textblock}{3}(3,0)
+Dieser Text ist an 1,1
+% \fbox{\parbox{\textwidth}{\vbox to \texteight{asdf}}}
+\end{textblock}
+
+\ohead{\fbox{\parbox[t][1cm]{0.5\textwidth}{%
+  \raggedleft asdf}}}
+
+Dies hier ist nur so ein Text
 
 \newpage
 
+% \pagestyle{cd}
+
+\newpage
+
+\setlength{\fboxsep}{0cm}%
 \colorbox{tuSecondaryLight}{%
 \parbox{\textwidth}{\vbox to \textheight{asdf}}%
 }

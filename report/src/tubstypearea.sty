@@ -3,6 +3,7 @@
 
 \RequirePackage{ifthen}
 \RequirePackage{geometry}
+\RequirePackage{textpos}
 
 \newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
 
@@ -28,6 +29,10 @@
     left=\tubspage@borderwidth,
     right=\tubspage@borderwidth,
     bottom=\tubspage@borderwidth}
+  %
+  % dimension is a hack..
+  \setlength{\TPHorizModule}{\textwidth*\ratio{1mm}{\tubspage@xsegments mm}}
+  \setlength{\TPVertModule}{\textheight*\ratio{1mm}{\tubspage@ysegments mm}}
 }
 
 \newlength{\tubspage@borderwidth}
@@ -117,6 +122,25 @@
 \setlength{\tubspage@columnsep}{5mm}
 
 
+% params:
+% 1 (opt) - width [1-6]
+% 2       - height [1-6] / [1-8]
+\newenvironment{tubsbox}[3][tuWhite]{%
+\newsavebox{\storebox}
+\def\bgcolor{#1}
+\begin{lrbox}{\storebox}
+\begin{minipage}[t][#3\gaussheight]{#2\segmentwidth}
+}{%
+\end{minipage}
+\end{lrbox}
+\setlength{\fboxsep}{0cm}%
+
+\begin{textblock}{3}(0,1)
+\colorbox{\bgcolor}{%
+\usebox{\storebox}%
+}%
+\end{textblock}
+}
 
 
 % y segments
