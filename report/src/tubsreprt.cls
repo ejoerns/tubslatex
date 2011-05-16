@@ -50,7 +50,7 @@
 \DeclareOptionX{config}{%
   \IfFileExists{TUBS_#1.cfg}{\input{TUBS_#1.cfg}}{%
     \PackageWarning{tubs*}{%
-    Config file TUBS_#1.cfg does not exist, standard configuration used}
+      Config file TUBS_#1.cfg does not exist, standard configuration used}
   }
 }
 \ProcessOptionsX

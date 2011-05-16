@@ -4,18 +4,18 @@
 %% Calculate DIN Ax paper dimensions
 % Fits DIN at least up to A9
 % Page orientation
-\ifthenelse{\equal{\landscape}{false}}
-	{
+% TODO: superfluous
+\ifthenelse{\equal{\landscape}{false}}{%
 	\pgfmathparse{(round(1189/2^(( \papersize + 1 )/2)-.2))}
 	\edef\ThePaperWidth{\pgfmathresult}
 	\pgfmathparse{(round(1189/2^(( \papersize)/2)-.2))}
 	\edef\ThePaperHeight{\pgfmathresult}
-	}{
+	}{%
 	\pgfmathparse{(round(1189/2^(( \papersize)/2)-.2))}
 	\edef\ThePaperWidth{\pgfmathresult}
 	\pgfmathparse{(round(1189/2^(( \papersize + 1 )/2)-.2))}
 	\edef\ThePaperHeight{\pgfmathresult}
-	}
+}
 
 % Number of Segments. 8 in portrait and 6 in landscape,
 % Sum over Segments 1+2+3+...+8

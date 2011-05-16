@@ -1,6 +1,7 @@
 \newcommand{\makebackpage}{}
 
 \DeclareOptionX{TUBStitlepage}[classic]{
+  % classic style
   \ifthenelse{\equal{#1}{classic}}{%
     \renewcommand{\maketitle}{%
       \begin{TUBStitlepage}
@@ -69,8 +70,7 @@
               {tuBlack}{tuSecondaryLight20}{top}
           \end{TUBStitlepage}
         }
-        \renewcommand{\makebackpage}
-        {%
+        \renewcommand{\makebackpage}{%
           \begin{TUBSbackpage}
             \TUBSGaussGridTextBox{0}{3}{3}{6}{\TUBSauthor \\
             \textbf{\TUBSinstitute} \\
@@ -81,12 +81,9 @@
             {tuBlack}{tuSecondaryDark20}{bottom}
           \end{TUBSbackpage}
         }
-      }
-      {
-        \ifthenelse{\equal{#1}{script}}
-        {
-          \renewcommand{\maketitle}
-          {
+      }{% script style
+        \ifthenelse{\equal{#1}{script}}{%
+          \renewcommand{\maketitle}{%
             \begin{TUBStitlepage}
               \TUBSGaussGridImageBox{5}{8}{0}{6}{./titlepicture}
               \TUBSGaussGridTextBox{5}{3}{0}{6}{\sffamily\Huge
@@ -96,8 +93,7 @@
                 \TUBSauthor}{primary_white}{tuSecondaryDark}{top}
             \end{TUBStitlepage}
           }
-          \renewcommand{\makebackpage}
-         {
+          \renewcommand{\makebackpage}{%
            \begin{TUBSbackpage}
             \TUBSGaussGridTextBox{0}{3}{3}{6}{
               \TUBSauthor \\
@@ -109,11 +105,10 @@
               {primary_white}{tuSecondaryDark}{bottom}
            \end{TUBSbackpage}
          }
-       }
-       {
+       }{%
          \PackageError{tubs*}{Illegal selection for package option titlepage:
 #1, possible values are classic, picture, alternate}
-       }
+        }
       }
     }
   }
