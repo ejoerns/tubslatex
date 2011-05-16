@@ -123,21 +123,44 @@
 
 
 % params:
-% 1 (opt) - width [1-6]
-% 2       - height [1-6] / [1-8]
-\newenvironment{tubsbox}[3][tuWhite]{%
+% 1 - color
+% 2 - xpos
+% 3 - ypos
+% 4 - width [1-6]
+% 5 - height [1-6] / [1-8]
+\newenvironment{tubsbox}[5][tuWhite]{%
+% calc left margin in box
+\newlength{\tubsbox@leftmargin}
+\ifnum#2=0
+\setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
+\else
+\setlength{\tubsbox@leftmargin}{\tubspage@columnsep}
+\fi
+\newlength{\tubsbox@rightmargin}
+\ifx{#2}{\tubspage@xsegments}
+\setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
+\else
+\setlength{\tubsbox@rightmargin}{\tubspage@columnsep}
+\fi
 \newsavebox{\storebox}
 \def\bgcolor{#1}
+\def\tubsbox@xpos{#2}
+\def\tubsbox@ypos{#3}
+\def\tubsbox@width{#4}
+\def\tubsbox@height{#5}
 \begin{lrbox}{\storebox}
-\begin{minipage}[t][#3\gaussheight]{#2\segmentwidth}
+\begin{minipage}[t]%
+  [\tubsbox@height\gaussheight]%
+  {\tubsbox@width\segmentwidth-\tubsbox@leftmargin-\tubsbox@rightmargin}%
 }{%
 \end{minipage}
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
-
-\begin{textblock}{3}(0,1)
+\begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
 \colorbox{\bgcolor}{%
-\usebox{\storebox}%
+\hspace*{\tubsbox@leftmargin}%
+\usebox{\storebox}
+\hspace*{\tubsbox@rightmargin}
 }%
 \end{textblock}
 }
