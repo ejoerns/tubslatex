@@ -29,6 +29,7 @@
 \DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
 \DeclareOptionBeamer{tocinheader}{\setboolean{tocinheader}{true}}
 \DeclareOptionBeamer{tinytocinheader}{%
+  \setboolean{tocinheader}{true}
   \setboolean{tinytocinheader@outer}{true}%
   \PassOptionsToPackage{tinytocinheader}{beamerfonttheme}%
 }
@@ -96,7 +97,7 @@
       \vphantom{FAp}\hfill\insertsubsectionnavigationhorizontal{100mm}%
       {\hskip0pt plus1filll}{\quad}}
     }% End of ifthenelse for subsections
-    \vspace{\beamer@tocspace}
+%     \vspace{\beamer@tocspace}
     \ifthenelse{\boolean{tinytocinheader@outer}}{\vspace{0.5\beamer@tocspace}}{}
     }
     }%% End of ifthenelse for tocinheader
