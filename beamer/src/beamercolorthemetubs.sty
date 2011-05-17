@@ -4,8 +4,9 @@
 % of the GNU Public License, version 2.
 % Modified by Martin Baeker, Enrico Jörns
 %
-\ProvidesPackage{beamercolorthemetubs}[2010/04/12 v1.0 Farbschema TuBs (beamer)]
+\ProvidesPackage{beamercolorthemetubs}[2010/05/15 v1.1 Farbschema TuBs (beamer)]
 
+\RequirePackage{ifthen}
 \RequirePackage{tubscolors}
 
 
@@ -15,7 +16,7 @@
 \def\tubscolorshade{}
 \newboolean{colorhead}\setboolean{colorhead}{false}
 \newboolean{colorfoot}\setboolean{colorfoot}{false}
-
+\newboolean{colorblocks}\setboolean{colorblocks}{false}
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color model options
 \DeclareOptionBeamer{rgb}{\PassOptionsToPackage{rgbbeamer}{tubscolors}}
@@ -33,6 +34,8 @@
 % head / foot options
 \DeclareOptionBeamer{colorhead}{\setboolean{colorhead}{true}}
 \DeclareOptionBeamer{colorfoot}{\setboolean{colorfoot}{true}}
+% block option
+\DeclareOptionBeamer{colorblocks}{\setboolean{colorblocks}{true}}
 \ExecuteOptionsBeamer{rgb,yellow}
 \ProcessOptionsBeamer\relax
 
@@ -40,7 +43,7 @@
 \mode<presentation>
 
 \setbeamercolor{normal text}{fg=black,bg=white}
-\setbeamercolor{alerted text}{fg=tuRed}% TODO: check
+\setbeamercolor{alerted text}{fg=tuRed100}% TODO: check
 \setbeamercolor{example text}{fg=tuGreenDark}% TODO: check
 
 \setbeamercolor{structure}{fg=tuRed}
@@ -163,12 +166,21 @@
 \setbeamercolor{mini frame}{parent=section in head/foot}
 \setbeamercolor{runningtoc}{use=structure,fg=green}
 
+\ifthenelse{\boolean{colorblocks}}{%
+\setbeamercolor{block body}{bg=tuBlueDark20}
+\setbeamercolor{block body alerted}{bg=tuRed20}
+\setbeamercolor{block body example}{bg=tuGreenDark20}
+\setbeamercolor{block title}{fg=tuBlueDark,bg=tuBlueDark40}
+\setbeamercolor{block title alerted}{fg=tuRed100,bg=tuRed60}
+\setbeamercolor{block title example}{fg=tuGreenDark,bg=tuGreenDark40}
+}{%
 \setbeamercolor{block body}{}
 \setbeamercolor{block body alerted}{}
 \setbeamercolor{block body example}{}
 \setbeamercolor{block title}{fg=tuBlue}
 \setbeamercolor{block title alerted}{parent=alerted text}
 \setbeamercolor{block title example}{parent=example text}
+}
 
 \setbeamercolor{item}{parent=local structure,fg=black}
 \setbeamercolor{subitem}{parent=item}
