@@ -22,18 +22,18 @@
     a5paper,
     headheight=\tubspage@senderheight-2\tubspage@borderwidth,
     headsep=\tubspage@borderwidth,
-    top=\tubspage@senderheight,
-    left=\tubspage@borderwidth,
-    right=\tubspage@borderwidth,
-    bottom=\tubspage@borderwidth}
+    top=\tubspage@senderheight+\tubspage@borderwidth,
+    left=2\tubspage@borderwidth,
+    right=2\tubspage@borderwidth,
+    bottom=2\tubspage@borderwidth}
   %
   \setcounter{tubspage@gausssum}{%
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
   % dimension is a hack..
   \setlength{\TPHorizModule}{%
-    (\textwidth-2\tubspage@borderwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
+    (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
   \setlength{\TPVertModule}{%
-    (\textheight-2\tubspage@borderwidth)%
+    (\textheight)%
 %     *\ratio{1mm}{\value{tubspage@gausssum} mm}}
     *\real{0.0277}}
   \textblockorigin{2\tubspage@borderwidth}{%
