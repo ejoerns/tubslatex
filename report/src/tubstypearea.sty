@@ -6,21 +6,28 @@
 \RequirePackage[absolute]{textpos}
 \RequirePackage{calc}
 
+%%%%%%% Pre definitions %%%%%%%%
+
+% Boolean to check if landscape mode is used
 \newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
-
-
+% width of outer white border
 \newlength{\tubspage@borderwidth}
+% height of sender area (top of the page
+% until borderwidth above communication area
 \newlength{\tubspage@senderheight}
+% height of communication area (TODO: not neccesair?)
 \newlength{\tubspage@communicationheight}
+% Nr of horizontal segments for box layout
 \def\tubspage@xsegments{6}
+% Nr of vertical segments for gaussian layout system
 \def\tubspage@ysegments{8}
+% Counter to store the gaussian sum of \tubspage@ysegments
 \newcounter{tubspage@gausssum}
 
 % calculates dimensions for LaTeXs page layout
 \newcommand{\tubspage@calclayout}{%
   \geometry{%
-    a5paper,
-    headheight=\tubspage@senderheight-2\tubspage@borderwidth,
+    headheight=\tubspage@senderheight-\tubspage@borderwidth,
     headsep=\tubspage@borderwidth,
     top=\tubspage@senderheight+\tubspage@borderwidth,
     left=2\tubspage@borderwidth,
@@ -39,6 +46,8 @@
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
 }
+
+%%%%%%% options section %%%%%%%%
 
 % landscape
 \DeclareOption{landscape}{%
@@ -116,7 +125,7 @@
 % \ExecuteOptions{anypaper}
 \ProcessOptions\relax
 
-
+% space between boxes (columns) in layout. It is independent from papersize
 \newlength{\tubspage@columnsep}
 \setlength{\tubspage@columnsep}{5mm}
 

@@ -44,30 +44,32 @@
   \typearea{12}
   \ps@scrheadings
 }
+\clearscrheadfoot
 
 \newcommand{\tubsohead}[1]{\ohead{%
-% \fbox{%
-\parbox[t][\tubspage@senderheight-2\tubspage@borderwidth]{3cm}{%
+\fbox{%
+\parbox[t][\headheight]{3cm}{%
 \raggedleft #1%
 }%
-% }%
-\hspace*{\tubspage@borderwidth}%
+}%
 }}%
 
 \renewcommand{\maketitle}{%
 \setlength{\fboxsep}{0cm}%
+\hspace*{-\tubspage@borderwidth}%
+\raisebox{\tubspage@borderwidth}[0cm]{%
 \colorbox{tuSecondaryLight}{%
-  \begin{minipage}[t][\textheight]{\textwidth}%
+  \begin{minipage}[t][\textheight+2\tubspage@borderwidth]{\textwidth+2\tubspage@borderwidth}%
 %     \begin{tubsbox}[tuRed]{3}{2}
       \LARGE asdf dfg sdfg dsfg dsf
 %     \end{tubsbox}
   \end{minipage}%
-}
-\vspace*{-0.75\tulogoHeight}\vspace{-\textheight}\\%
-\hspace*{-\tubspage@borderwidth}%
+}}%
+\vspace*{-0.75\tulogoHeight}\vspace{-\textheight}\vspace*{-2\tubspage@borderwidth}\\%
+\hspace*{-2\tubspage@borderwidth}%
 \colorbox{tuRed}{%
 \hbox to \tulogoWidth{\vbox to \tulogoHeight{\tubslogo}}%
-}\vspace*{-0.25\tulogoHeight}\\%
+}\vspace*{-0.25\tulogoHeight}%
 }
 
 
@@ -96,31 +98,31 @@
 
 % This is some text. It is not interesting where it is but i would like to place another text here.
 
-\begin{tubsbox}[tuBlueLight40]{0}{1}{3}{1}
+\begin{tubsbox}[tuBlueLight20]{0}{1}{3}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{3}{1}{3}{1}
+\begin{tubsbox}[tuBlueLight20]{3}{1}{3}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{1}{2}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{1}{2}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{0}{3}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{0}{3}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{1}{4}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{1}{4}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{0}{5}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{0}{5}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{1}{6}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{1}{6}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{0}{7}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{0}{7}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight40]{1}{8}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{1}{8}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
 
