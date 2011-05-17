@@ -40,9 +40,7 @@
   \setlength{\TPHorizModule}{%
     (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
   \setlength{\TPVertModule}{%
-    (\textheight)%
-%     *\ratio{1mm}{\value{tubspage@gausssum} mm}}
-    *\real{0.0277}}
+    (\textheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
 }
@@ -66,7 +64,32 @@
   \setlength{\tubspage@senderheight}{160mm}%
   \tubspage@calclayout
 }
-% ...
+% A1
+\DeclareOption{a1paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{649mm}%
+    \def\tubspage@ysegments{6}%
+  }{%
+    \setlength{\tubspage@communicationheight}{699mm}%
+    \def\tubspage@ysegments{8}%
+  }
+  \setlength{\tubspage@borderwidth}{22mm}%
+  \setlength{\tubspage@senderheight}{120mm}%
+  \tubspage@calclayout
+}
+% A2
+\DeclareOption{a2paper}{%
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\tubspage@communicationheight}{324mm}%
+    \def\tubspage@ysegments{6}%
+  }{%
+    \setlength{\tubspage@communicationheight}{498mm}%
+    \def\tubspage@ysegments{8}%
+  }
+  \setlength{\tubspage@borderwidth}{16mm}%
+  \setlength{\tubspage@senderheight}{80mm}%
+  \tubspage@calclayout
+}
 % A3
 \DeclareOption{a3paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
