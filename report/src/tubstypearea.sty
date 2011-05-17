@@ -33,7 +33,9 @@
   \setlength{\TPHorizModule}{%
     (\textwidth-2\tubspage@borderwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
   \setlength{\TPVertModule}{%
-    (\textheight-2\tubspage@borderwidth)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+    (\textheight-2\tubspage@borderwidth)%
+%     *\ratio{1mm}{\value{tubspage@gausssum} mm}}
+    *\real{0.0277}}
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
 }
@@ -178,9 +180,9 @@ ypos:\tubsbox@ypos,
 height:\tubsbox@height
 \begin{lrbox}{\storebox}
 \begin{minipage}[t]%
-  [\tubsbox@height\gaussheight]%
+  [\tubsbox@height\TPVertModule]%
   {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
-  \vspace*{\tubspage@borderwidth}%
+%   \vspace*{\tubspage@borderwidth}%
 }{%
 \end{minipage}
 \end{lrbox}
