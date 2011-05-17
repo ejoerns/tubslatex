@@ -162,8 +162,17 @@
 % calculate top and bottom marings and seps
 \ifnum#3=1
 \setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@bottommargin}{0mm}
+\else
+\setcounter{tubsbox@lastelement}{#3}
+\addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
+\ifnum\value{tubsbox@lastelement}=\tubspage@ysegments
+\setlength{\tubsbox@topmargin}{0mm}
+\setlength{\tubsbox@bottommargin}{\tubspage@borderwidth}
 \else
 \setlength{\tubsbox@topmargin}{0mm}
+\setlength{\tubsbox@bottommargin}{0mm}
+\fi
 \fi
 %
 \def\bgcolor{#1}
@@ -181,10 +190,11 @@
 \def\tubsbox@height{\thetubsbox@calcheight}
 \begin{lrbox}{\storebox}
 \begin{minipage}[t]%
-  [\tubsbox@height\TPVertModule+\tubsbox@topmargin]%
+  [\tubsbox@height\TPVertModule+\tubsbox@topmargin+\tubsbox@bottommargin]%
   {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
   \vspace*{\tubsbox@topmargin}%
 }{%
+\vspace*{\tubsbox@bottommargin}%
 \end{minipage}
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
