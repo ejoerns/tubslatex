@@ -55,16 +55,15 @@
   %
   \ifthenelse{\boolean{tubspage@marginleft}}{%
     \geometry{%
-%       includemp,
       lmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
-%       rmargin=-\tubspage@columnsep,
       marginparsep=\tubspage@columnsep,
       marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
   }{}
   \ifthenelse{\boolean{tubspage@marginright}}{%
     \geometry{%
       rmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
-      marginparsep=0.5\tubspage@borderwidth}
+      marginparsep=\tubspage@columnsep,
+      marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
   }{}
 %   \setlength{\marginparwidth}{\TPHorizModule}
 }
