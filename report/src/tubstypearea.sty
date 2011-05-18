@@ -10,6 +10,10 @@
 
 % Boolean to check if landscape mode is used
 \newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
+% Boolean to check if left margin is used
+\newboolean{tubspage@marginleft}
+% Boolean to check if right margin is used
+\newboolean{tubspage@marginright}
 % width of outer white border
 \newlength{\tubspage@borderwidth}
 % height of sender area (top of the page
@@ -23,9 +27,14 @@
 \def\tubspage@ysegments{8}
 % Counter to store the gaussian sum of \tubspage@ysegments
 \newcounter{tubspage@gausssum}
+% space between boxes (columns) in layout. It is independent from papersize
+\newlength{\tubspage@columnsep}
+
 
 % calculates dimensions for LaTeXs page layout
 \newcommand{\tubspage@calclayout}{%
+  \setlength{\tubspage@columnsep}{5mm}
+  % outer geometry
   \geometry{%
     headheight=\tubspage@senderheight-\tubspage@borderwidth,
     headsep=\tubspage@borderwidth,
@@ -33,7 +42,7 @@
     left=2\tubspage@borderwidth,
     right=2\tubspage@borderwidth,
     bottom=2\tubspage@borderwidth}
-  %
+  % inner geometry
   \setcounter{tubspage@gausssum}{%
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
   % dimension is a hack..
@@ -43,10 +52,33 @@
     (\textheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
+  %
+  \ifthenelse{\boolean{tubspage@marginleft}}{%
+    \geometry{%
+%       includemp,
+      lmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+%       rmargin=-\tubspage@columnsep,
+      marginparsep=\tubspage@columnsep,
+      marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
+  }{}
+  \ifthenelse{\boolean{tubspage@marginright}}{%
+    \geometry{%
+      rmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+      marginparsep=0.5\tubspage@borderwidth}
+  }{}
+%   \setlength{\marginparwidth}{\TPHorizModule}
 }
 
 %%%%%%% options section %%%%%%%%
 
+% margin left
+\DeclareOption{marginleft}{%
+  \setboolean{tubspage@marginleft}{true}
+}
+% margin right
+\DeclareOption{marginright}{%
+  \setboolean{tubspage@marginright}{true}
+}
 % landscape
 \DeclareOption{landscape}{%
   \setboolean{tubspage@landscape}{true}
@@ -145,12 +177,11 @@
 %   \tubspage@calclayout
 }
 
+%
 % \ExecuteOptions{anypaper}
 \ProcessOptions\relax
 
-% space between boxes (columns) in layout. It is independent from papersize
-\newlength{\tubspage@columnsep}
-\setlength{\tubspage@columnsep}{5mm}
+
 
 
 
