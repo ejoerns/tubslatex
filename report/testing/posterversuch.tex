@@ -1,18 +1,40 @@
 \documentclass[a4paper,portrait]{scrreprt}
 % \documentclass[a0,portrait]{a0poster}
-
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{tikz}
 \usepackage{tabularx}
 \usepackage{afterpage}
 \usepackage{calc}
 \usepackage{scrpage2}
 \usepackage{nexus}
-\usepackage[a4paper]{tubstypearea}
+\usepackage[a4paper,marginleft,marginright]{tubstypearea}
 \usepackage[a4paper]{tubslogo}
 \usepackage[green]{tubscolors}
+\usepackage[compact]{titlesec}
 % \usepackage{typearea}
 
+\titleformat{\chapter}[block]
+{\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
+\titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
+
+% \titleformat{\chapter}[display]
+% {}
+% {%\titlerule[1pt]%
+% %\vspace{1pt}%
+% % \titlerule
+% % \vspace{1pc}%
+% % \LARGE\MakeUppercase{\chaptertitlename} \thechapter
+% }
+% {-1pc}
+% {%\titlerule
+% % \vspace{1pc}%
+% }
+
+
+% \titleformat*{\chapter}{\mdseries}
+% \titlespacing*{\chapter}{0pt}{*1}{*1}
 % A0 font sizes
 \newcommand{\Headlinesize}{\fontsize{270}{297}\selectfont}
 \newcommand{\headlinesize}{\fontsize{180}{198}\selectfont}
@@ -25,7 +47,7 @@
 \parindent0mm
 % \usepackage[a0paper]{geometry}
 
-\usepackage{german,epsf,pstricks,multicol,pst-grad,color}
+\usepackage{epsf,pstricks,multicol,pst-grad,color}
 
 
 \makeatletter
@@ -47,11 +69,11 @@
 \clearscrheadfoot
 
 \newcommand{\tubsohead}[1]{\ohead{%
-\fbox{%
+% \fbox{%
 \parbox[t][\headheight]{3cm}{%
 \raggedleft #1%
 }%
-}%
+% }%
 }}%
 
 \renewcommand{\maketitle}{%
@@ -113,35 +135,55 @@
 \begin{tubsbox}[tuBlueLight20]{1}{4}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight20]{0}{5}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{2}{5}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight20]{1}{6}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{3}{6}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight20]{0}{7}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{4}{7}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
-\begin{tubsbox}[tuBlueLight20]{1}{8}{1}{1}
+\begin{tubsbox}[tuBlueLight20]{5}{8}{1}{1}
   TUBSBOX with a bit of test text . . . . . . . . . . . .
 \end{tubsbox}
 
-\setlength{\fboxsep}{0cm}%
-\fbox{%
-\parbox{\textwidth}{\vbox to \textheight{asdf}}%
-}
+% \setlength{\fboxsep}{0cm}%
+% \fbox{%
+% \parbox{\textwidth}{\vbox to \textheight{asdf}}%
+% }
 
 
 % \ohead{\fbox{\parbox[t][\textheight]{0.5\textwidth}{%
 %   \raggedleft asdf}}}
 \tubsohead{\pagename~\pagemark}
-
+~
 
 
 % Dies hier ist nur so ein Text
 
 \newpage
 
+~
+\begin{tubsbox}{0}{1}{1}{8}\footnotesize
+  Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+  Fehlanzeige!
+\end{tubsbox}
+\begin{tubsbox}{1}{1}{5}{2}
+ Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+  Fehlanzeige!
+  \chapter{Vom Leben und Sterben}
+  TUBSBOX with a bit of test text . . . . . . . . . . . .
+\end{tubsbox}
+\begin{tubsbox}[tuBlue20]{1}{3}{5}{2}
+asf
+\end{tubsbox}
 % \pagestyle{cd}
 
 \newpage
@@ -156,4 +198,45 @@
 \fbox{asdf}
 }
 }
+
+\newpage
+% \twocolumn
+
+ Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  \marginpar[\footnotesize Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken. Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.]{. . . . . . . . . . . . . . . . . .}
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+  Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+    Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
 \end{document}
