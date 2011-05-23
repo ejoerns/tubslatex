@@ -68,7 +68,11 @@
 }
 \ProcessOptions\relax
 %
-
+% Hack: If available use short title for pdftitle
+\g@addto@macro\beamer@firstminutepatches{%
+  \hypersetup{%
+    pdftitle={\beamer@shorttitle\ifx\insertsubtitle\@empty\else\ - \insertsubtitle\fi}}
+}
 
 %
 \mode<presentation>
