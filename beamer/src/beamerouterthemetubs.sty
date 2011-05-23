@@ -179,8 +179,8 @@
 \end{minipage}
 \setlength{\fboxsep}{0mm}% @TESTING
 \hspace*{26mm}
-\begin{minipage}{\textwidth-26mm-0.2\textwidth}% TODO: width computation
-\vspace*{-16mm}
+\begin{minipage}[t]{\textwidth-26mm-0.2\textwidth}% TODO: width computation
+\vspace*{-9mm}
 % reset lengths
 \setlength{\tubs@outer@datewidth}{0mm}
 \setlength{\tubs@outer@titlepagewidth}{0mm}
@@ -192,12 +192,12 @@
 }%
 \ifthenelse{\boolean{nopagenum}}{}{%
   \settowidth{\tubs@outer@tempwidth}{%
-    \ \rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber}%
+    ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber}%
   \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
   \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
 }%
 \settowidth{\tubs@outer@tempwidth}{%
-  \insertshortauthor\ \rule[-0.1em]{0.1em}{1em}\ }%
+  \insertshortauthor~\rule[-0.1em]{0.1em}{1em}\ }%
 \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
 \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
 \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
@@ -205,15 +205,16 @@
 % test if fooltine width exceeds available space
 \ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
   \insertshortauthor[%
-    width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em]%
-  \ \rule[-0.1em]{0.1em}{1em}\ %
+    width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
+    respectlinebreaks]%
+  ~\rule[-0.1em]{0.1em}{1em}\ %
 }{%
   \insertshortauthor%
-  \ \rule[-0.1em]{0.1em}{1em}\ %
+  ~\rule[-0.1em]{0.1em}{1em}\ %
 }%
 \insertshorttitle%
 \ifthenelse{\boolean{nopagenum}}{}{%
-  \ \rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber%
+  ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber%
 }%
 \end{minipage}
 }
