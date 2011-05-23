@@ -7,6 +7,7 @@
 % Modified by Enrico Jörns 2011 <e.joerns@tu-bs.de>
 %
 \RequirePackage{ifthen}
+\RequirePackage{calc}
 \RequirePackage{tubslogo}
 \PassOptionsToPackage{ngerman}{babel}
 \RequirePackage{babel}
@@ -143,6 +144,10 @@
 \setbeamercolor*{page number in sidebar}{fg=structure.fg}
 \setbeamercolor*{page number in sidebar shaded}{fg=structure.fg!40}
 
+\newlength{\tubs@outer@datewidth}% width of date
+\newlength{\tubs@outer@tempwidth}% used for settowidth
+\newlength{\tubs@outer@fullfootwidth}% width of short authro
+\newlength{\tubs@outer@titlepagewidth}% width of title and page
 \defbeamertemplate*{footline}{sidebar theme}{%
 %% Additional space needed to increase the calculated height of the footline
 \vspace*{0.25cm}
@@ -172,17 +177,44 @@
 \vspace{9pt}%
 }
 \end{minipage}
-\begin{minipage}{\paperwidth}
-\vspace*{-16mm}
+\setlength{\fboxsep}{0mm}% @TESTING
 \hspace*{26mm}
+\begin{minipage}{\textwidth-26mm-0.2\textwidth}% TODO: width computation
+\vspace*{-16mm}
+% reset lengths
+\setlength{\tubs@outer@datewidth}{0mm}
+\setlength{\tubs@outer@titlepagewidth}{0mm}
+% calculate footline width
 \ifthenelse{\boolean{nodate}}{}{%
- \insertdate 
-\ \rule[-0.1em]{0.1em}{1em}
-}
-\insertshortauthor\ \rule[-0.1em]{0.1em}{1em}\ \insertshorttitle 
+  \insertdate\ \rule[-0.1em]{0.1em}{1em}\ %
+  \settowidth{\tubs@outer@datewidth}{\insertdate\ \rule[-0.1em]{0.1em}{1em}\ }%
+  \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
+}%
 \ifthenelse{\boolean{nopagenum}}{}{%
-\ \rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber
-}
+  \settowidth{\tubs@outer@tempwidth}{%
+    \ \rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber}%
+  \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+  \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+}%
+\settowidth{\tubs@outer@tempwidth}{%
+  \insertshortauthor\ \rule[-0.1em]{0.1em}{1em}\ }%
+\addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+\settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
+\addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+\addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+% test if fooltine width exceeds available space
+\ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
+  \insertshortauthor[%
+    width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em]%
+  \ \rule[-0.1em]{0.1em}{1em}\ %
+}{%
+  \insertshortauthor%
+  \ \rule[-0.1em]{0.1em}{1em}\ %
+}%
+\insertshorttitle%
+\ifthenelse{\boolean{nopagenum}}{}{%
+  \ \rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber%
+}%
 \end{minipage}
 }
 
