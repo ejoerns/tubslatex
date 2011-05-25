@@ -14,6 +14,9 @@
 \usepackage[compact]{titlesec}
 % \usepackage{typearea}
 
+% \newboolean{marginleft}\setboolean{marginleft}false}
+% \newboolean{marginleft}\setboolean{marginleft}false}
+
 \titleformat{\chapter}[block]
 {\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{40pt}
@@ -79,9 +82,14 @@
 \renewcommand{\maketitle}{%
 \setlength{\fboxsep}{0cm}%
 \hspace*{-\tubspage@borderwidth}%
+\ifthenelse{\boolean{tubspage@marginleft}}{%
+  \hspace*{-\marginparwidth}%
+  \hspace*{-\marginparsep}%
+}{}%
 \raisebox{\tubspage@borderwidth}[0cm]{%
 \colorbox{tuSecondaryLight}{%
-  \begin{minipage}[t][\textheight+2\tubspage@borderwidth]{\textwidth+2\tubspage@borderwidth}%
+  \begin{minipage}[t][\textheight+2\tubspage@borderwidth]{%
+    \paperwidth-2\tubspage@borderwidth}%
 %     \begin{tubsbox}[tuRed]{3}{2}
       \LARGE asdf dfg sdfg dsfg dsf
 %     \end{tubsbox}
@@ -89,6 +97,10 @@
 }}%
 \vspace*{-0.75\tulogoHeight}\vspace{-\textheight}\vspace*{-2\tubspage@borderwidth}\\%
 \hspace*{-2\tubspage@borderwidth}%
+\ifthenelse{\boolean{tubspage@marginleft}}{%
+  \hspace*{-\marginparwidth}%
+  \hspace*{-\marginparsep}%
+}{}%
 \colorbox{tuRed}{%
 \hbox to \tulogoWidth{\vbox to \tulogoHeight{\tubslogo}}%
 }\vspace*{-0.25\tulogoHeight}%
@@ -101,12 +113,15 @@
 
 \begin{document}
 
+
 \author{Enrico Jörns}
 \title{The infinite way to LaTeX}
 
 \maketitle
 
 \newpage
+
+\fbox{\parbox{\oddsidemargin}{a}}
 
 % \begin{tubsbox}[tuBlueLight40]{0}{1}{2}{1}
 %   TUBSBOX with a bit of test text . . . . . . . . . . . .
