@@ -107,12 +107,21 @@
 }
 
 
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{%
+\put(\LenToUnit{\tubspage@borderwidth},\LenToUnit{\tubspage@borderwidth}){%
+\colorbox{tuGreen40}{\parbox[b][\paperheight-\tubspage@senderheight-\tubspage@borderwidth]{%
+  \paperwidth-2\tubspage@borderwidth}{%
+~
+}}}}
+
+
 \makeatother
 
 \pagestyle{scrheadings}
 
 \begin{document}
-
+\AddToShipoutPicture{\BackgroundPic}
 
 \author{Enrico Jörns}
 \title{The infinite way to LaTeX}
