@@ -1,6 +1,6 @@
 all: clean structure fetch build
 
-VERSION = 0.2
+VERSION = 0.2.2
 DIST = debian
 
 REPODIR = /home/enrico/CD-LaTeX
@@ -24,7 +24,7 @@ fetch:
 clean:
 	rm -rf texlive-tubs
 	rm -f *.otf
-	rm texlive-tubs_$(VERSION)$(DIST).deb
+	rm -f texlive-tubs_$(VERSION)$(DIST).deb
 
 install:
 	sudo dpkg -i texlive-tubs_$(VERSION)$(DIST).deb

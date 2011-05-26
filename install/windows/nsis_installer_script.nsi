@@ -1,5 +1,5 @@
 ; Beispiel-Skript
-Name "MeinBeispiel"
+Name "Tubs-Miktex-Installer V 0.2.2"
 OutFile "Tubs-Miktex-Installer.exe"
 
 !include "Registry.nsh"
@@ -28,5 +28,7 @@ ${registry::Close} "$0"
 
 SetOutPath $INSTDIR/
 FILE /r data\tex
+FILE /r data\doc
+FILE /r data\fonts
 ExecCmd::exec /TIMEOUT=10000 '"initexmf --admin --update-fndb"'
 SectionEnd
