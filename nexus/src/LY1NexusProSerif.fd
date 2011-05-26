@@ -4,12 +4,12 @@
 \DeclareFontShape{LY1}{NexusProSerif}{m}{n}{ <-> NexusProSerif-Regular }{}
 \DeclareFontShape{LY1}{NexusProSerif}{m}{sc}{ <-> NexusProSerif-SmallCaps }{}
 \DeclareFontShape{LY1}{NexusProSerif}{m}{sl}{ <-> NexusProSerif-Slanted }{}
-\DeclareFontShape{LY1}{NexusProSerif}{m}{it}{ <-> ssub * NexusProSerif/m/sl}{}
+\DeclareFontShape{LY1}{NexusProSerif}{m}{it}{ <-> NexusProSerif-Italic}{}
 
 \DeclareFontShape{LY1}{NexusProSerif}{b}{n}{ <-> NexusProSerif-Bold-Regular }{}
 \DeclareFontShape{LY1}{NexusProSerif}{b}{sc}{ <-> NexusProSerif-Bold-SmallCaps }{}
 \DeclareFontShape{LY1}{NexusProSerif}{b}{sl}{ <-> NexusProSerif-Bold-Slanted }{}
-\DeclareFontShape{LY1}{NexusProSerif}{b}{it}{ <-> ssub * NexusProSerif/b/sl }{}
+\DeclareFontShape{LY1}{NexusProSerif}{b}{it}{ <-> NexusProSerif-Bold-Italic }{}
 
 \DeclareFontShape{LY1}{NexusProSerif}{bx}{n}{ <-> ssub * NexusProSerif/b/n }{}
 \DeclareFontShape{LY1}{NexusProSerif}{bx}{it}{ <-> ssub * NexusProSerif/b/it }{}
