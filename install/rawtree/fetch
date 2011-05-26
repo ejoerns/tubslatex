@@ -50,24 +50,24 @@ echo -e 'STEP4: \t creating font files...'
 # Serif
 echo -e '\t -> Serif'
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
-# otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic --warn-missing --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSerif.map NexusSerifPro-Italic.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Italic.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Slanted --slant=.167  $OTFDEFAULT  --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Regular  $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
-# otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Italic --warn-missing --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSerif.map NexusSerifPro-Bold-Italic.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Italic $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-BoldItalic.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $OTFDEFAULT --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
 
 # Sans Serif
 echo -e '\t -> Sans Serif'
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Regular.otf 
-#otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Italic --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSans.map NexusSansPro-Italic.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Italic $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Italic.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSans.map NexusSansPro-Regular.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Slanted --slant=.167  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Regular.otf 
 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Regular  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Bold.otf 
-#otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic --verbose --encoding=texnansx --feature=kern --feature=liga --feature=lnum --map-file=NexusProSans.map NexusSansPro-Bold-Italic.otf 
+otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-BoldItalic.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $OTFDEFAULT --feature=smcp --map-file=NexusProSans.map NexusSansPro-Bold.otf 
 otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $OTFDEFAULT --map-file=NexusProSans.map NexusSansPro-Bold.otf
 
