@@ -76,8 +76,8 @@ echo -e 'STEP 5: \t Copying font files...'
 mkdir -p fonts/enc/dvips/Fontshop/
 mv *.enc fonts/enc/dvips/Fontshop/
 
-mkdir -p fonts/map/
-mv *.map fonts/map/
+mkdir -p fonts/map/dvips/Nexus/
+mv *.map fonts/map/dvips/Nexus/
 
 mkdir -p fonts/tfm/Nexus/
 mv *.tfm fonts/tfm/Nexus/
