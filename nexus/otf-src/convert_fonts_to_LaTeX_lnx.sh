@@ -29,8 +29,8 @@ otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=
 mkdir -p ~/texmf/fonts/enc/dvips/Fontshop/
 mv *.enc ~/texmf/fonts/enc/dvips/Fontshop/
 
-mkdir -p ~/texmf/fonts/map/
-mv *.map ~/texmf/fonts/map/
+mkdir -p ~/texmf/fonts/map/dvips/Nexus/
+mv *.map ~/texmf/fonts/map/dvips/Nexus/
 
 mkdir -p ~/texmf/fonts/tfm/Nexus/
 mv *.tfm ~/texmf/fonts/tfm/Nexus/
@@ -49,7 +49,7 @@ texhash ~/texmf/
 
 # Enable font maps and update the font map database
 
-#updmap --enable Map=NexusProSans.map
-#updmap --enable Map=NexusProSerif.map
+updmap --enable Map=NexusProSans.map
+updmap --enable Map=NexusProSerif.map
 
 updmap
