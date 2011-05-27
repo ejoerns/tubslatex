@@ -5,6 +5,7 @@
 \usepackage{flowfram}
 \usepackage[colorlinks]{hyperref}
 \usepackage{tubscolors}
+\usepackage[a4paper]{tubslogo}
 \usepackage[a4paper]{tubstypearea}
 
 % Use sans-serif font as default font
@@ -32,37 +33,30 @@
 
 \makeatletter
 
-% Make static frames for background (only for page 1)
-% \vtwotone[1]{0.6\paperwidth}{[cmyk]{0.65,0.13,0,0}}{backleft}%
-% {0.4\paperwidth}{[cmyk]{0.94,0.54,0,0}}{backright}
-% \hNtoneleft[all][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
-% % {\textwidth}{tuWhite}{lborder}%
-% {1\TPVertModule}{tuBlue}{bg1}%
-% {2\TPVertModule}{tuBlue80}{bg2}%
-% {3\TPVertModule}{tuBlue60}{bg3}%
-% {4\TPVertModule}{tuBlue40}{bg4}%
-% {5\TPVertModule}{tuBlue20}{bg5}%
-% {6\TPVertModule}{tuGreen}{bg6}%
-% {7\TPVertModule}{tuGreen80}{bg7}%
-% {8\TPVertModule}{tuGreen60}{bg8}%
-
-
 % sets background to 6 specified colors
-\newcommand{\tubsSetBackground}[8]{%
-\hNtoneleft[all][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
+\newcommand{\tubsSetBackground}[9][1]{%
+\hNtoneleft[#1][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
 % {\textwidth}{tuWhite}{lborder}%
-{1\TPVertModule}{#8}{bg1}%
-{2\TPVertModule}{#7}{bg2}%
-{3\TPVertModule}{#6}{bg3}%
-{4\TPVertModule}{#5}{bg4}%
-{5\TPVertModule}{#4}{bg5}%
-{6\TPVertModule}{#3}{bg6}%
-{7\TPVertModule}{#2}{bg7}%
-{8\TPVertModule}{#1}{bg8}%
+{1\TPVertModule}{#9}{bg1}%
+{2\TPVertModule}{#8}{bg2}%
+{3\TPVertModule}{#7}{bg3}%
+{4\TPVertModule}{#6}{bg4}%
+{5\TPVertModule}{#5}{bg5}%
+{6\TPVertModule}{#4}{bg6}%
+{7\TPVertModule}{#3}{bg7}%
+{8\TPVertModule}{#2}{bg8}%
+% left white border
+\vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}
 }
 
 
-\tubsSetBackground%
+% params:
+% 1 (opt) - pages to set color for
+% 2       - color of first element
+% 3       - color of second element
+% ...
+% 9       - color of last element
+\tubsSetBackground[1]%
   {tuBlueDark80}
   {tuBlueDark60}
   {tuBlue}
@@ -71,16 +65,22 @@
   {tuBlueLight}
   {tuBlueLight80}
   {tuBlueLight60}
-% left white border
-\vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}
+
+% logo
+% make a static frame for the logo
+% note: small white blank after logo remains...
+\newstaticframe{\tulogoWidth}{\tulogoHeight}%
+  {-2\tubspage@borderwidth}{-\tubspage@borderwidth+\textheight-0.25\tulogoHeight}[logo]
+\setstaticcontents*{logo}{\includegraphics{../../cd-base/src/TUBraunschweig-rgb.pdf}}
+\setstaticframe*{logo}{backcolor=tuRed}
+
 
 \makeatother
 % Make a border along the top of each page
 % \vtwotonetop{12cm}{0.6\paperwidth}{[cmyk]{0.65,0.13,0,0}}{topleft}%
 % {0.4\paperwidth}{[cmyk]{0.94,0.54,0,0}}{topright}
 
-% make a static frame for the logo
-\newstaticframe{0.2\textwidth}{0.25\textheight}{0pt}{0pt}[logo]
+
 
 % empty page style, because I am going to make my own
 \pagestyle{empty}
@@ -104,8 +104,7 @@ page \thepage\ of \pageref*{lastpage}}
 
 \begin{document}
 
-% not a very interesting logo
-\setstaticcontents*{logo}{\sffamily{\Huge\slshape FLF} Flowfram}
+
 
 {\noindent
 \slshape\Huge\MakeUppercase{A Sample Brochure}\par
