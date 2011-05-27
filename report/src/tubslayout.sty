@@ -1,0 +1,65 @@
+\ProvidesPackage{tubslayout}
+
+\RequirePackage{tubscolors}
+\RequirePackage[a4paper]{tubslogo}
+\RequirePackage[a4paper]{tubstypearea}
+\RequirePackage{nexus}
+
+\usepackage[draft]{flowfram}
+
+
+% sets background to 6 specified colors
+% params:
+% 1 (opt) - pages to set color for
+% 2       - color of first element
+% 3       - color of second element
+% ...
+% 9       - color of last element
+\newcommand{\tubsSetBackground}[9][1]{%
+\hNtoneleft[#1][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
+% {\textwidth}{tuWhite}{lborder}%
+{1\TPVertModule}{#9}{bg1}%
+{2\TPVertModule}{#8}{bg2}%
+{3\TPVertModule}{#7}{bg3}%
+{4\TPVertModule}{#6}{bg4}%
+{5\TPVertModule}{#5}{bg5}%
+{6\TPVertModule}{#4}{bg6}%
+{7\TPVertModule}{#3}{bg7}%
+{8\TPVertModule}{#2}{bg8}%
+% left white border
+\vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}
+}
+
+
+% logo
+% make a static frame for the logo
+% note: small white blank after logo remains...
+\newstaticframe[1]{\tulogoWidth}{\tulogoHeight}%
+{-2\tubspage@borderwidth}{-\tubspage@borderwidth+\textheight-0.25\tulogoHeight}%
+[logo]
+\setstaticcontents*{logo}{\tubslogo}
+\setstaticframe*{logo}{backcolor=tuRed}
+
+
+\newdynamicframe[1]{\textwidth}{\TPVertModule}{0pt}{0pt}[author]
+
+\setdynamiccontents*{author}{%
+  \sffamily\Huge Enrico Jörns
+}
+
+\newdynamicframe[1]{\textwidth}{3\TPVertModule}{0pt}{5\TPVertModule}[title]
+
+\setdynamiccontents*{title}{%
+  \sffamily%
+  \Huge This Is My Title\\\vfill
+  \LARGE An perhaps a subtitle
+}
+
+\newdynamicframe[1]{\textwidth}{15\TPVertModule}{-\tubspage@borderwidth}{
+20\TPVertModule}[image]
+
+\setdynamiccontents*{image}{%
+\includegraphics[width=\textwidth+2\tubspage@borderwidth]{%
+../../beamer/doc/titlepicture.jpg}
+}
+
