@@ -8,10 +8,11 @@
 \usepackage{calc}
 \usepackage{scrpage2}
 \usepackage{nexus}
-\usepackage[a4paper,marginleft,marginright]{tubstypearea}
+\usepackage[a4paper,marginleft]{tubstypearea}
 \usepackage[a4paper]{tubslogo}
 \usepackage[green]{tubscolors}
 \usepackage[compact]{titlesec}
+\usepackage{multicol}
 % \usepackage{typearea}
 
 % \newboolean{marginleft}\setboolean{marginleft}false}
@@ -217,14 +218,33 @@ asf
 \parbox{\textwidth}{\vbox to \textheight{asdf}}%
 }
 
-\fbox{bums
-\raisebox{1cm}{%
-\fbox{asdf}
-}
-}
 
 \newpage
+
+\makeatletter
+\setlength{\columnsep}{\tubspage@columnsep}
+\makeatother
+
 % \twocolumn
+\begin{multicols}{3}
+\begin{tubsbox}[tuBlueLight20]{0}{1}{1}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlueLight20]{1}{1}{1}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlueLight20]{2}{1}{1}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlueLight20]{3}{1}{1}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlueLight20]{4}{1}{1}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlueLight20]{5}{1}{1}{1}
+~
+\end{tubsbox}
 
  Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
   \marginpar[\footnotesize Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken. Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.]{. . . . . . . . . . . . . . . . . .}
@@ -263,4 +283,16 @@ asf
    Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
   
   Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+    Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+  
+   Dies hier ist nur ein einfacher Spaltentext und dient lediglich zu Demonstrationszwecken.
+  
+  Erwarten Sie also bitte keinen tieferen Sinn oder eine allgemeingültige Aussage, die das Leben auf diesem Planeten auf wundersame Weise ein bisschen gemütlicher oder zumindest erträglicher machen könnte.
+ 
+\end{multicols}
 \end{document}
