@@ -1,12 +1,14 @@
 \documentclass[a4paper]{report}
 
+\usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
-\usepackage{flowfram}
+\usepackage[draft]{flowfram}
 \usepackage[colorlinks]{hyperref}
 \usepackage{tubscolors}
 \usepackage[a4paper]{tubslogo}
 \usepackage[a4paper]{tubstypearea}
+% \usepackage{graphicx}
 
 % Use sans-serif font as default font
 \renewcommand{\familydefault}{cmss}
@@ -69,11 +71,29 @@
 % logo
 % make a static frame for the logo
 % note: small white blank after logo remains...
-\newstaticframe{\tulogoWidth}{\tulogoHeight}%
+\newstaticframe[1]{\tulogoWidth}{\tulogoHeight}%
   {-2\tubspage@borderwidth}{-\tubspage@borderwidth+\textheight-0.25\tulogoHeight}[logo]
-\setstaticcontents*{logo}{\includegraphics{../../cd-base/src/TUBraunschweig-rgb.pdf}}
+\setstaticcontents*{logo}{\tubslogo}
 \setstaticframe*{logo}{backcolor=tuRed}
 
+
+\newdynamicframe[1]{\textwidth}{\TPVertModule}{0pt}{0pt}[author]
+
+\setdynamiccontents*{author}{%
+  \Huge Enrico Jörns
+}
+
+\newdynamicframe[1]{\textwidth}{\TPVertModule}{0pt}{5\TPVertModule}[title]
+
+\setdynamiccontents*{title}{%
+  \Huge This Is My Title
+}
+
+\newdynamicframe[1]{\textwidth}{15\TPVertModule}{-\tubspage@borderwidth}{20\TPVertModule}[image]
+
+\setdynamiccontents*{image}{%
+  \includegraphics[width=\textwidth+2\tubspage@borderwidth]{../../beamer/doc/titlepicture.jpg}
+}
 
 \makeatother
 % Make a border along the top of each page
@@ -88,14 +108,14 @@
 % Each new chapter sets \thispagestyle{\chapterfirstpagestyle}, change this empty as well
 \renewcommand{\chapterfirstpagestyle}{empty} 
 
-% Now make a frame in which to put my own customized footer
-\newdynamicframe[>1]{\textwidth}{\headheight}{0pt}{-\footskip}[footer]
-
-% set the contents of the frame:
-\setdynamiccontents*{footer}{%
-School of Computing Sciences, University of East Anglia\hfill
-http://www.cmp.uea.ac.uk/\hfill
-page \thepage\ of \pageref*{lastpage}}
+% % Now make a frame in which to put my own customized footer
+% \newdynamicframe[>1]{\textwidth}{\headheight}{0pt}{-\footskip}[footer]
+% 
+% % set the contents of the frame:
+% \setdynamiccontents*{footer}{%
+% School of Computing Sciences, University of East Anglia\hfill
+% http://www.cmp.uea.ac.uk/\hfill
+% page \thepage\ of \pageref*{lastpage}}
 
 
 \newcommand{\env}[1]{\texttt{#1}}
