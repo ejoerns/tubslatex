@@ -111,6 +111,17 @@
 \else
 \addtolength\temp@width{-0.5\tubspage@columnsep}
 \fi
+% adjust ypos and height for columnsep
+\ifnum#2=1
+\else
+\addtolength\temp@height{-0.5\tubspage@columnsep}
+\fi
+\setcounter{temp@calca}{#2+#3-1}
+\ifnum\value{temp@calca}=\tubspage@ysegments
+\else
+\addtolength\temp@ypos{0.5\tubspage@columnsep}
+\addtolength\temp@height{-0.5\tubspage@columnsep}
+\fi
 % create dynamic frame ...
 \newdynamicframe[1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#1]
 %
@@ -121,17 +132,21 @@
 }
 }
 
-\newdynamictubsframe[bla1]{5}{2}{1}{1}
+\newdynamictubsframe[bla1]{1}{1}{1}{1}
 
-\newdynamictubsframe[bla2]{5}{2}{2}{1}
+\newdynamictubsframe[bla2]{2}{1}{2}{1}
 
-\newdynamictubsframe[bla3]{5}{2}{3}{1}
+\newdynamictubsframe[bla3]{3}{1}{3}{1}
 
-\newdynamictubsframe[bla4]{5}{2}{4}{1}
+\newdynamictubsframe[bla4]{4}{1}{4}{1}
 
-\newdynamictubsframe[bla5]{5}{2}{5}{1}
+\newdynamictubsframe[bla5]{5}{1}{5}{1}
 
-\newdynamictubsframe[bla6]{5}{2}{6}{1}
+\newdynamictubsframe[bla6]{6}{1}{6}{1}
+
+\newdynamictubsframe[bla7]{7}{1}{5}{1}
+
+\newdynamictubsframe[bla8]{8}{1}{4}{1}
 
 
 \setlength{\temp@ypos}{-\tubspage@borderwidth+16\tubspage@gaussheight-0.5em}
