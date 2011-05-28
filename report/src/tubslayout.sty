@@ -1,12 +1,12 @@
 \ProvidesPackage{tubslayout}
-
+% sys packages
+\RequirePackage{ifthenelse}
+\usepackage[draft]{flowfram}
+% cd packages
 \RequirePackage{tubscolors}
 \RequirePackage[a4paper]{tubslogo}
 \RequirePackage[a4paper]{tubstypearea}
 \RequirePackage{nexus}
-
-\usepackage[draft]{flowfram}
-
 
 % sets background to 6 specified colors
 % params:
@@ -18,36 +18,46 @@
 \newcommand{\tubsSetBackground}[9][1]{%
 \hNtoneleft[#1][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
 % {\textwidth}{tuWhite}{lborder}%
-{1\TPVertModule}{#9}{bg1}%
-{2\TPVertModule}{#8}{bg2}%
-{3\TPVertModule}{#7}{bg3}%
-{4\TPVertModule}{#6}{bg4}%
-{5\TPVertModule}{#5}{bg5}%
-{6\TPVertModule}{#4}{bg6}%
-{7\TPVertModule}{#3}{bg7}%
-{8\TPVertModule}{#2}{bg8}%
+{1\tubspage@gaussheight}{#9}{bg1}%
+{2\tubspage@gaussheight}{#8}{bg2}%
+{3\tubspage@gaussheight}{#7}{bg3}%
+{4\tubspage@gaussheight}{#6}{bg4}%
+{5\tubspage@gaussheight}{#5}{bg5}%
+{6\tubspage@gaussheight}{#4}{bg6}%
+{7\tubspage@gaussheight}{#3}{bg7}%
+{8\tubspage@gaussheight}{#2}{bg8}%
 % left white border
 \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}
 }
 
 
-% logo
-% make a static frame for the logo
-% note: small white blank after logo remains...
+\newlength{\tubslayout@logooffset}
+% sets the tu logo
+% params:
+% 1 (opt.)  - placement (left, right), default=left
+\newcommand{\tubslayout@setlogo}[1][left]{%
+\ifthenelse{\equal{#1}{right}}{%
+  \setlength{\tubslayout@logooffset}{\paperwidth-\tulogoWidth}
+}{%
+  \setlength{\tubslayout@logooffset}{0mm}
+}
 \newstaticframe[1]{\tulogoWidth}{\tulogoHeight}%
-{-2\tubspage@borderwidth}{-\tubspage@borderwidth+\textheight-0.25\tulogoHeight}%
-[logo]
-\setstaticcontents*{logo}{\tubslogo}
-\setstaticframe*{logo}{backcolor=tuRed}
+  {-2\tubspage@borderwidth+\tubslayout@logooffset}%
+  {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tulogoHeight}%
+  [tubslogo]
+\setstaticcontents*{tubslogo}{\tubslogo}
+\setstaticframe*{tubslogo}{backcolor=tuRed}
+}
 
+\tubslayout@setlogo[right]
 
-\newdynamicframe[1]{\textwidth}{\TPVertModule}{0pt}{0pt}[author]
+\newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
 
 \setdynamiccontents*{author}{%
   \sffamily\Huge Enrico Jörns
 }
 
-\newdynamicframe[1]{\textwidth}{3\TPVertModule}{0pt}{5\TPVertModule}[title]
+\newdynamicframe[1]{\textwidth}{3\tubspage@gaussheight}{0pt}{5\tubspage@gaussheight}[title]
 
 \setdynamiccontents*{title}{%
   \sffamily%
@@ -55,8 +65,8 @@
   \LARGE An perhaps a subtitle
 }
 
-\newdynamicframe[1]{\textwidth}{15\TPVertModule}{-\tubspage@borderwidth}{
-20\TPVertModule}[image]
+\newdynamicframe[1]{\textwidth}{15\tubspage@gaussheight}{-\tubspage@borderwidth}{
+20\tubspage@gaussheight}[image]
 
 \setdynamiccontents*{image}{%
 \includegraphics[width=\textwidth+2\tubspage@borderwidth]{%
