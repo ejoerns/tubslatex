@@ -78,17 +78,19 @@
 
 % params:
 % 1 (opt.)  - name
-% 1         - row number
-% 2         - row span
-\newcommand{\newdynamictubsframe}[3][title]{%
+% 2         - row number
+% 3         - row span
+% 4         - column number
+% 5         - column span
+\newcommand{\newdynamictubsframe}[5][title]{%
 \def\mk@frameId{title}% new frame id
 \calc@gaussum{temp@gausspos}{(\tubspage@ysegments-(#2)-(#3-1))}\addtocounter{temp@gausspos}{-1}
 \setlength\temp@ypos{\value{temp@gausspos}\tubspage@gaussheight}
 \calc@gaussum{temp@gaussposb}{(\tubspage@ysegments-(#2-1))}\addtocounter{temp@gaussposb}{-1}
 \addtocounter{temp@gaussposb}{-\thetemp@gausspos}
 \setlength\temp@height{\thetemp@gaussposb\tubspage@gaussheight}
-\setlength\temp@width\textwidth
-\setlength\temp@xpos{0pt}
+\setlength\temp@xpos{\tubspage@columnwidth*(#4-1)}
+\setlength\temp@width{\temp@xpos*(#5)}
 
 \newdynamicframe[1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[title]
 
@@ -99,7 +101,7 @@
 }
 }
 
-\newdynamictubsframe{5}{3}
+\newdynamictubsframe{4}{2}{2}{2}
 
 \setlength{\temp@ypos}{-\tubspage@borderwidth+16\tubspage@gaussheight-0.5em}
 \setlength{\temp@width}{\textwidth+2\tubspage@borderwidth}
