@@ -1,6 +1,7 @@
 \ProvidesPackage{tubslayout}
 % sys packages
 \RequirePackage{ifthen}
+\RequirePackage{calc}
 \usepackage[draft]{flowfram}
 % cd packages
 \RequirePackage{tubscolors}
@@ -57,17 +58,57 @@
   \sffamily\Huge Enrico Jörns
 }
 
-\newdynamicframe[1]{\textwidth}{3\tubspage@gaussheight}{0pt}{5\tubspage@gaussheight}[title]
+
+% calculates gaussum and returns as plain number
+% parameters:
+% 1 - counter to set
+% 2 - value to calc sum of
+\newcommand{\calc@gaussum}[2]{%
+\setcounter{#1}{%
+  (#2*(#2+1))/2}%
+}
+
+\newlength{\temp@xpos}
+\newlength{\temp@ypos}
+\newlength{\temp@width}
+\newlength{\temp@height}
+\newcounter{temp@gausspos}
+\newcounter{temp@gaussposb}
+
+
+% params:
+% 1 (opt.)  - name
+% 1         - row number
+% 2         - row span
+\newcommand{\newdynamictubsframe}[3][title]{%
+\def\mk@frameId{title}% new frame id
+\calc@gaussum{temp@gausspos}{(\tubspage@ysegments-(#2)-(#3-1))}\addtocounter{temp@gausspos}{-1}
+\setlength\temp@ypos{\value{temp@gausspos}\tubspage@gaussheight}
+\calc@gaussum{temp@gaussposb}{(\tubspage@ysegments-(#2-1))}\addtocounter{temp@gaussposb}{-1}
+\addtocounter{temp@gaussposb}{-\thetemp@gausspos}
+\setlength\temp@height{\thetemp@gaussposb\tubspage@gaussheight}
+\setlength\temp@width\textwidth
+\setlength\temp@xpos{0pt}
+
+\newdynamicframe[1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[title]
 
 \setdynamiccontents*{title}{%
   \sffamily%
-  \Huge This Is My Title\\\vfill
+  \Huge Result: \thetemp@gausspos, \thetemp@gaussposb This Is My Title\\\vfill
   \LARGE An perhaps a subtitle
 }
+}
 
-\newdynamicframe[1]{\textwidth}{15\tubspage@gaussheight}{-\tubspage@borderwidth}{
+\newdynamictubsframe{5}{3}
+
+\setlength{\temp@ypos}{-\tubspage@borderwidth+16\tubspage@gaussheight-0.5em}
+\setlength{\temp@width}{\textwidth+2\tubspage@borderwidth}
+\newdynamicframe[1]{\temp@width}{\temp@ypos}{-\tubspage@borderwidth}{%
 20\tubspage@gaussheight}[image]
 
+\setdynamicframe*{image}{%
+%   x=\tubspage@borderwidth
+}
 \setdynamiccontents*{image}{%
 \includegraphics[width=\textwidth+2\tubspage@borderwidth]{%
 ../../beamer/doc/titlepicture.jpg}
