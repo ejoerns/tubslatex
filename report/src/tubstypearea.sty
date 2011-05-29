@@ -29,7 +29,10 @@
 \newcounter{tubspage@gausssum}
 % space between boxes (columns) in layout. It is independent from papersize
 \newlength{\tubspage@columnsep}
-
+% height of a single gauss element for vertical layout
+\newlength{\tubspage@gaussheight}
+%
+\newlength{\tubspage@columnwidth}
 
 % calculates dimensions for LaTeXs page layout
 \newcommand{\tubspage@calclayout}{%
@@ -48,8 +51,12 @@
   % dimension is a hack..
   \setlength{\TPHorizModule}{%
     (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
+  \setlength{\tubspage@columnwidth}{%
+    (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
   \setlength{\TPVertModule}{%
     (\textheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+  \setlength{\tubspage@gaussheight}{%
+    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
   %
