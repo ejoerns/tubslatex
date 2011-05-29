@@ -3,6 +3,7 @@
 \RequirePackage{ifthen}
 \RequirePackage{calc}
 \RequirePackage{xkeyval}
+\RequirePackage{forloop}
 \usepackage[draft]{flowfram}
 % cd packages
 \RequirePackage{tubscolors}
@@ -30,8 +31,44 @@
 {8\tubspage@gaussheight}{#2}{bg8}%
 % left white border
 \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}%
+%
+\setstaticcontents*{bg8}{This is a background command}
 }
 
+
+% places an image in the background
+% params:
+% 1 - row number
+% 2 - row span
+% 3 - images
+\newcommand{\tubsSetBackgroundImage}[3]{%
+  \setstaticcontents*{bg8}{%
+    \includegraphics[width=\paperwidth-2\tubspage@borderwidth]{#3}}
+}
+
+\tubsSetBackgroundImage{1}{2}{../../beamer/doc/titlepicture.jpg}
+
+
+%
+% params
+% 1 - row
+% 2 - row span
+\newcounter{@ct}
+\newcommand{\bg@add@color}[3]{%
+  \forloop{@ct}
+  \def\bg@pos1{}
+  \def\bg@pos2\relax
+}
+
+\newenvironment{tubsSetBackground}{%
+  \def\addcolor\bg@add@color
+}{%
+
+  \hNtoneleft[#1][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
+    \bg@pos1
+    \bg@pos2
+    % ...
+}
 
 \newlength{\tubslayout@logooffset}
 % sets the tu logo
@@ -132,22 +169,6 @@
 }
 }
 
-\newdynamictubsframe[bla1]{1}{1}{1}{1}
-
-\newdynamictubsframe[bla2]{2}{1}{2}{1}
-
-\newdynamictubsframe[bla3]{3}{1}{3}{1}
-
-\newdynamictubsframe[bla4]{4}{1}{4}{1}
-
-\newdynamictubsframe[bla5]{5}{1}{5}{1}
-
-\newdynamictubsframe[bla6]{6}{1}{6}{1}
-
-\newdynamictubsframe[bla7]{7}{1}{5}{1}
-
-\newdynamictubsframe[bla8]{8}{1}{4}{1}
-
 
 \setlength{\temp@ypos}{-\tubspage@borderwidth+16\tubspage@gaussheight-0.5em}
 \setlength{\temp@width}{\textwidth+2\tubspage@borderwidth}
@@ -158,7 +179,7 @@
 %   x=\tubspage@borderwidth
 }
 \setdynamiccontents*{image}{%
-\includegraphics[width=\textwidth+2\tubspage@borderwidth]{%
-../../beamer/doc/titlepicture.jpg}
+% \includegraphics[width=\textwidth+2\tubspage@borderwidth]{%
+% ../../beamer/doc/titlepicture.jpg}
 }
 
