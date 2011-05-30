@@ -5,7 +5,7 @@
 \RequirePackage{xkeyval}
 \RequirePackage{forloop}
 \RequirePackage{environ}
-\usepackage[draft]{flowfram}
+\usepackage{flowfram}
 % cd packages
 \RequirePackage{tubscolors}
 \RequirePackage[a4paper]{tubslogo}
@@ -173,12 +173,12 @@
 }{%
   \setlength{\tubslayout@logooffset}{0mm}
 }
-\newstaticframe[1]{\tulogoWidth}{\tulogoHeight}%
+\newdynamicframe[1]{\tulogoWidth}{\tulogoHeight}%
   {-2\tubspage@borderwidth+\tubslayout@logooffset}%
   {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tulogoHeight}%
   [tubslogo]
-\setstaticcontents*{tubslogo}{\tubslogo}
-\setstaticframe*{tubslogo}{backcolor=tuRed}
+\setdynamiccontents*{tubslogo}{\tubslogo}
+\setdynamicframe*{tubslogo}{backcolor=tuRed}
 }
 
 \tubslayout@setlogo[right]
