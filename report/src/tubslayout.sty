@@ -164,30 +164,45 @@
 
 
 \newlength{\tubslayout@logooffset}
-% sets the tu logo
+% sets the tu logo frame (but not the content)
 % params:
-% 1 (opt.)  - placement (left, right), default=left
-\newcommand{\tubslayout@setlogo}[1][left]{%
-\ifthenelse{\equal{#1}{right}}{%
+% 1 (opt.)  - page selection
+% 2         - placement (left, right), default=left
+\newcommand{\tubslayout@setlogo}[2][1]{%
+% process placement (left/right)
+\ifthenelse{\equal{#2}{right}}{%
   \setlength{\tubslayout@logooffset}{\paperwidth-\tulogoWidth}
 }{%
   \setlength{\tubslayout@logooffset}{0mm}
 }
-\newdynamicframe[1]{\tulogoWidth}{\tulogoHeight}%
+% create dynamic frame
+\edef\@p@sel{#1}
+\expandafter\newdynamicframe\expandafter[\@p@sel]%
+  {\tulogoWidth}{\tulogoHeight}%
   {-2\tubspage@borderwidth+\tubslayout@logooffset}%
   {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tulogoHeight}%
-  [tubslogo]
-\setdynamiccontents*{tubslogo}{\tubslogo}
-\setdynamicframe*{tubslogo}{backcolor=tuRed}
+  [tubslogo\the@bg@frames@cnt]
 }
 
-\tubslayout@setlogo[right]
-
-\newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
-
-\setdynamiccontents*{author}{%
-  \sffamily\Huge Enrico Jörns
+% place the logo
+% params
+% 1 (opt.)  - [plain] = only background
+% 2         - left/right
+\newcommand{\placelogo}[2][\relax]{%
+% place \the@bg@frames@cnt at \@page@select with opt: #1, #2
+  \tubslayout@setlogo[\@page@select]{#2}
+  \ifthenelse{\equal{#1}{plain}}{
+    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
+  }{%
+    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{\tubslogo}
+  }
 }
+
+% \newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
+
+% \setdynamiccontents*{author}{%
+%   \sffamily\Huge Enrico Jörns
+% }
 
 
 % calculates gaussum and returns as plain number
