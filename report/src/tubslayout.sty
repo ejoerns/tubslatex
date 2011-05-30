@@ -4,6 +4,7 @@
 \RequirePackage{calc}
 \RequirePackage{xkeyval}
 \RequirePackage{forloop}
+\RequirePackage{environ}
 \usepackage[draft]{flowfram}
 % cd packages
 \RequirePackage{tubscolors}
@@ -19,20 +20,20 @@
 % ...
 % 9       - color of last element
 \newcommand{\tubsSetBackground}[9][1]{%
-\hNtoneleft[#1][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
+\hNtoneleft[#1][\tubspage@borderwidth]{2}{\paperwidth-\tubspage@borderwidth}%
 % {\textwidth}{tuWhite}{lborder}%
 {1\tubspage@gaussheight}{#9}{bg1}%
 {2\tubspage@gaussheight}{#8}{bg2}%
-{3\tubspage@gaussheight}{#7}{bg3}%
-{4\tubspage@gaussheight}{#6}{bg4}%
-{5\tubspage@gaussheight}{#5}{bg5}%
-{6\tubspage@gaussheight}{#4}{bg6}%
-{7\tubspage@gaussheight}{#3}{bg7}%
-{8\tubspage@gaussheight}{#2}{bg8}%
+% {3\tubspage@gaussheight}{#7}{bg3}%
+% {4\tubspage@gaussheight}{#6}{bg4}%
+% {5\tubspage@gaussheight}{#5}{bg5}%
+% {6\tubspage@gaussheight}{#4}{bg6}%
+% {7\tubspage@gaussheight}{#3}{bg7}%
+% {8\tubspage@gaussheight}{#2}{bg8}%
 % left white border
 \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}%
 %
-\setstaticcontents*{bg8}{This is a background command}
+% \setstaticcontents*{bg8}{This is a background command}
 }
 
 
@@ -46,29 +47,80 @@
     \includegraphics[width=\paperwidth-2\tubspage@borderwidth]{#3}}
 }
 
-\tubsSetBackgroundImage{1}{2}{../../beamer/doc/titlepicture.jpg}
+% \tubsSetBackgroundImage{1}{2}{../../beamer/doc/titlepicture.jpg}
 
+%%%%
+\newcounter{@bg@cnt}
 
-%
-% params
-% 1 - row
-% 2 - row span
-\newcounter{@ct}
-\newcommand{\bg@add@color}[3]{%
-  \forloop{@ct}
-  \def\bg@pos1{}
-  \def\bg@pos2\relax
+\newcommand{\emptyframe}[1]{%
+  \addtocounter{@bg@cnt}{1}
 }
 
-\newenvironment{tubsSetBackground}{%
-  \def\addcolor\bg@add@color
-}{%
-
-  \hNtoneleft[#1][\tubspage@borderwidth]{8}{\paperwidth-\tubspage@borderwidth}%
-    \bg@pos1
-    \bg@pos2
-    % ...
+\newcommand{\colorframe}[2]{%
+  \addtocounter{@bg@cnt}{1}
+  \def\bg@color@I{tuGreen}
+%   \def\@bg@frame@posI{{\tubspage@gaussheight}{tuGreen}{bgI}}
 }
+
+\newcommand{\imageframe}[2]{%
+  \addtocounter{@bg@cnt}{1}
+}
+
+\def\@test@height@I{1\tubspage@gaussheight}
+\def\@test@color@I{tuYellow}
+\def\@test@id@I{bg1}
+\def\@test@height@II{2\tubspage@gaussheight}
+\def\@test@color@II{tuRed}
+\def\@test@id@II{bg2}
+\def\@test@height@III{3\tubspage@gaussheight}
+\def\@test@color@III{tuBlue}
+\def\@test@id@III{bg3}
+\def\@test@height@IV{4\tubspage@gaussheight}
+\def\@test@color@IV{tuGreen}
+\def\@test@id@IV{bg4}
+
+% \def\@testall{\@testa\@testb\@testc}
+
+% \environfinalcode{\vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}}
+% \NewEnviron{tubsbgtemplate}[1][all]{%
+\newcommand{\defbgtemplate}[2][all]{
+  \def\@page@select{#1}
+  \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
+    \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
+  }
+  \setcounter{@bg@cnt}{0}
+  %
+  #2
+  %
+  \hNtoneleft[all][\tubspage@borderwidth]%
+    {\value{@bg@cnt}}{\paperwidth-\tubspage@borderwidth}%
+    \@test@height@I\@test@color@I\@test@id@I%
+    \@test@height@II\@test@color@II\@test@id@II%
+    \@test@height@III\@test@color@III\@test@id@III%
+    \@test@height@IV\@test@color@IV\@test@id@IV%
+%     \@testall
+%     {2\tubspage@gaussheight}{\bg@color@II}{bg2}%
+%     {3\tubspage@gaussheight}{tuRed}{bg3}%
+%     {4\tubspage@gaussheight}{tuRed}{bg4}
+  \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}%
+}
+
+% \newcommand{\setbgframe}{%
+%   % ...
+%   \hNtoneleft[all][\tubspage@borderwidth]%
+%     {\value{@bg@cnt}}{\paperwidth-\tubspage@borderwidth}%11
+%     \bgroup 1\tubspage@gaussheight\egroup{tuWhite}{bg1}%
+% %     \@bg@frame@posI%
+%     {2\tubspage@gaussheight}{tuRed}{bg2}
+%     {3\tubspage@gaussheight}{tuRed}{bg3}
+%     {4\tubspage@gaussheight}{tuRed}{bg4}
+% 
+%   % ...
+%   \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}%
+%   \setcounter{@bg@cnt}{0}
+% }
+
+
 
 \newlength{\tubslayout@logooffset}
 % sets the tu logo
