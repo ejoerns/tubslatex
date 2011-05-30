@@ -141,8 +141,13 @@
       {You have to set all your segments! (\@page@div)}
       {Set missing segments (\the@bg@cnt)}
   \fi
+  \ifnum\the@bg@y<\tubspage@ysegments
+    \PackageWarning{tubslayout}%
+      {Your segments do not fill the whole page!}
+      {}
+  \fi
   %
-  \hNtoneleft[all][\tubspage@borderwidth]%
+  \hNtoneleft[#1][\tubspage@borderwidth]%
     {\@page@div}{\paperwidth-\tubspage@borderwidth}%
     \@test@height@I\@test@color@I\@test@id@I%
     \@test@height@II\@test@color@II\@test@id@II%
