@@ -64,12 +64,13 @@
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   \expandafter\edef\csname @temp@gaussheight\Roman{@bg@cnt}\endcsname{\thetemp@calca}
-%   emptyframe: \thetemp@calca
   %
   \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuWhite}
   \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
     \thetemp@calca\tubspage@gaussheight
+  }
+  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+    bg\the@bg@cnt
   }
   \addtocounter{@bg@y}{#1}
 }
@@ -80,14 +81,15 @@
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   \expandafter\edef\csname @temp@gaussheight\Roman{@bg@cnt}\endcsname{\thetemp@calca}
   %
   \def\bg@color@I{tuGreen}
   \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{#2}
   \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\expandafter\endcsname{%
     \thetemp@calca\tubspage@gaussheight
   }
-%   \def\@bg@frame@posI{{\tubspage@gaussheight}{tuGreen}{bgI}}
+  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+    bg\the@bg@cnt
+  }
   \addtocounter{@bg@y}{#1}
 }
 
@@ -97,12 +99,14 @@
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   \expandafter\edef\csname @temp@gaussheight\Roman{@bg@cnt}\endcsname{\thetemp@calca}
 %   imageframe: \thetemp@calca
   %
   \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuYellow}
   \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
     \thetemp@calca\tubspage@gaussheight
+  }
+  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+    bg\the@bg@cnt
   }
   \addtocounter{@bg@y}{#1}
 }
@@ -132,10 +136,32 @@
 \def\@test@color@VI{tuDarkBlue80}
 \def\@test@id@VI{bg8}
 
-% \def\@testall{\@testa\@testb\@testc}
+\def\@test@height@I{\relax}
+\def\@test@color@I{\relax}
+\def\@test@id@I{\relax}
+\def\@test@height@II{\relax}
+\def\@test@color@II{\relax}
+\def\@test@id@II{\relax}
+\def\@test@height@III{\relax}
+\def\@test@color@III{\relax}
+\def\@test@id@III{\relax}
+\def\@test@height@IV{\relax}
+\def\@test@color@IV{\relax}
+\def\@test@id@IV{\relax}
+\def\@test@height@V{\relax}
+\def\@test@color@V{\relax}
+\def\@test@id@V{\relax}
+\def\@test@height@VI{\relax}
+\def\@test@color@VI{\relax}
+\def\@test@id@VI{\relax}
+\def\@test@height@VII{\relax}
+\def\@test@color@VII{\relax}
+\def\@test@id@VII{\relax}
+\def\@test@height@VIII{\relax}
+\def\@test@color@VIII{\relax}
+\def\@test@id@VIII{\relax}
 
-% \environfinalcode{\vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}}
-% \NewEnviron{tubsbgtemplate}[1][all]{%
+
 \newcommand{\defbgtemplate}[2][all]{
   \def\@page@select{#1}
   \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
@@ -148,14 +174,15 @@
   %
   \hNtoneleft[all][\tubspage@borderwidth]%
     {\value{@bg@cnt}}{\paperwidth-\tubspage@borderwidth}%
-    \@test@height@IV\@test@color@IV\@test@id@IV%
-    \@test@height@III\@test@color@III\@test@id@III%
-    \@test@height@II\@test@color@II\@test@id@II%
     \@test@height@I\@test@color@I\@test@id@I%
-%     \@testall
-%     {2\tubspage@gaussheight}{\bg@color@II}{bg2}%
-%     {3\tubspage@gaussheight}{tuRed}{bg3}%
-%     {4\tubspage@gaussheight}{tuRed}{bg4}
+    \@test@height@II\@test@color@II\@test@id@II%
+    \@test@height@III\@test@color@III\@test@id@III%
+    \@test@height@IV\@test@color@IV\@test@id@IV%
+    \@test@height@V\@test@color@V\@test@id@V%
+    \@test@height@VI\@test@color@VI\@test@id@VI%
+    \@test@height@VII\@test@color@VII\@test@id@VII%
+    \@test@height@VIII\@test@color@VIII\@test@id@VIII%
+
   \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}%
 }
 
