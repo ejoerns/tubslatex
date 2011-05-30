@@ -1,11 +1,5 @@
 %% ToDo-List:
-%% - add description for inner, outer, font and color theme
 %% - add description for option colorblocks
-%% - Bemerkung über Option [fragile] für frame ? -> listing (alltt?)
-%% - zusätzliche Schriftgrößen micro, nano
-%% - Anmerkung zu Änderung von pdftitle? -> evtl. Option mit beachten?
-%% - Anmerkung oder redefine:
-%%     columns environmen nur mit [onlytextwidth] option sinnvoll
 %% Changelog:
 %% V 0.2.1:
 %%  - 
@@ -16,8 +10,7 @@
 %% V 0.2.X:
 %%  - 
 
-\documentclass[cmyk,a4paper,colorscheme=green,TUBStitlepage=picture,
-TUBSDesignHelper=true]{tubsreprt}
+\documentclass[cmyk,a4paper,colorscheme=green,TUBStitlepage=picture]{tubsreprt}
 
 \usepackage[utf8x]{inputenc}
 \usepackage[LY1]{fontenc}
@@ -620,6 +613,81 @@ Die templatespezifischen Argumente sollten bevorzugt
 \begin{classoption}{14pt}
   Beschreibung
 \end{classoption}
+
+
+\chapter{Hinweise}
+
+\section{Inner-, Outer-, Font-, Color-Template}
+
+Die einzelnen Teil-Templates des beamer-Templates können,
+entsprechend der beamer-Konventionen, selbstverständlich
+auch unabhängig voneinander verwendet werden.
+So kann zum Beispiel das color-Template in Kombination mit einem der
+Standard-Template verwendet werden, etc.
+
+Die Kompbination mit anderen Templates ist im allgemeinen jedoch nicht
+CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
+
+\section{columns-Umgebung}
+
+Die Verwendung der columns-Umgebung ist in vielen Fällen sinnvoll.
+Jedoch ist auf eine korrekte Verwendung zu achten.
+Nachfolgendes Beispiel Teilt die Folie zwar in 2 Spalten,
+jedoch werden dabei die normalen Seitenränder überschritten.
+
+\begin{lstlisting}
+\begin{columns}
+  \column{0.5\textwidth}
+  \column{0.5\textwidth}
+\end{columns}
+\end{lstlisting}
+
+Der Grund dafür ist, dass zwar 2 Spalten mit jeweils halber Textbreite erstellt
+werden, jedoch dazwischen noch ein Abstand eingefügt wird. Dies kann mit der
+Option \lstinline{onlytextwidth} verhindert werden.
+Das Beispiel wäre wie folgt zu ändern:
+
+\begin{lstlisting}[morekeywords={onlytextwidth},keywordstyle=\color{tuOrange}]
+\begin{columns}[onlytextwidth]
+  \column{0.5\textwidth}
+  \column{0.5\textwidth}
+\end{columns}
+\end{lstlisting}
+
+
+\section{Listings in Folien}
+
+Auch wenn dies in der beamer-Dokumentation ausdrücklich erläutert ist,
+sollte hier noch einmal erwähnt werden, dass bei Gebraucht von Listings etc.
+in Folien die Option \lstinline{fragile} übergeben werden muss.
+
+\begin{lstlisting}
+\begin{frame}[fragile]{Titel}
+  % Listings, etc.
+\end{frame}
+\end{lstlisting}
+
+
+
+\section{PDF-Titel}
+
+Die standardmäßige Erstellung des PDF-Titel von beamer ist dahingehend
+abgeändert, dass, sofern vorhanden, die Kurzversion des Präsentationstitels
+als PDF-Titel verwendet wird.
+
+Dies ermöglicht es zum Beispiel kleine Grafiken in den Titel einzubringen und
+trotzdem einen korrekten PDF-Titel zu erhalten.
+
+
+\section{Zusätzliche Schriftgrößen}
+
+Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\micro}
+und \lstinline{\nano} an, die jeweils noch kleiner sind als alle restlich
+verfügbaren.
+
+Sie werden intern verwendet, können aber auch bei \emph{begründeter}
+Notwendigkeit von Autoren verwendet werden, z\,B für kleinste Quellenangaben
+etc.
 
 
 \chapter{Minimalbeispiel}
