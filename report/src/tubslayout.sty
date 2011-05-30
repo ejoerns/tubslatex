@@ -59,7 +59,6 @@
 \newcounter{@bg@y}
 
 \newcommand{\emptyframe}[1]{%
-  \addtocounter{@bg@cnt}{1}
   % calc and store number of gauss elements
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
@@ -72,11 +71,11 @@
   \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     bg\the@bg@cnt
   }
+  \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
 
 \newcommand{\colorframe}[2]{%
-  \addtocounter{@bg@cnt}{1}
   % calc and store number of gauss elements
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
@@ -90,16 +89,15 @@
   \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     bg\the@bg@cnt
   }
+  \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
 
 \newcommand{\imageframe}[2]{%
-  \addtocounter{@bg@cnt}{1}
   % calc and store number of gauss eleme
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   imageframe: \thetemp@calca
   %
   \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuYellow}
   \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
@@ -108,6 +106,7 @@
   \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     bg\the@bg@cnt
   }
+  \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
 
@@ -162,18 +161,23 @@
 \def\@test@id@VIII{\relax}
 
 
-\newcommand{\defbgtemplate}[2][all]{
+% arguments:
+% 1 - page set
+% 2 - nr of segments
+% 3 - segment definitions
+\newcommand{\defbgtemplate}[3][all]{
   \def\@page@select{#1}
+  \def\@page@div{#2}% nr of segments the page is splitted into
   \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
     \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
   }
-  \setcounter{@bg@cnt}{0}
+  \setcounter{@bg@cnt}{\@page@div}%TODO
   \setcounter{@bg@y}{0}
   %
-  #2
+  #3
   %
   \hNtoneleft[all][\tubspage@borderwidth]%
-    {\value{@bg@cnt}}{\paperwidth-\tubspage@borderwidth}%
+    {\@page@div}{\paperwidth-\tubspage@borderwidth}%
     \@test@height@I\@test@color@I\@test@id@I%
     \@test@height@II\@test@color@II\@test@id@II%
     \@test@height@III\@test@color@III\@test@id@III%
@@ -182,7 +186,7 @@
     \@test@height@VI\@test@color@VI\@test@id@VI%
     \@test@height@VII\@test@color@VII\@test@id@VII%
     \@test@height@VIII\@test@color@VIII\@test@id@VIII%
-
+  % left white border
   \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{lborder}%
 }
 
