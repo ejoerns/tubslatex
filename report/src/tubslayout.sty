@@ -12,6 +12,11 @@
 \RequirePackage[a4paper]{tubstypearea}
 \RequirePackage{nexus}
 
+
+\newcounter{temp@calca}
+\newcounter{temp@calcb}
+
+
 % sets background to 6 specified colors
 % params:
 % 1 (opt) - pages to set color for
@@ -51,33 +56,81 @@
 
 %%%%
 \newcounter{@bg@cnt}
+\newcounter{@bg@y}
 
 \newcommand{\emptyframe}[1]{%
   \addtocounter{@bg@cnt}{1}
+  % calc and store number of gauss elements
+  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+  \addtocounter{temp@calca}{-\thetemp@calcb}
+%   \expandafter\edef\csname @temp@gaussheight\Roman{@bg@cnt}\endcsname{\thetemp@calca}
+%   emptyframe: \thetemp@calca
+  %
+  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuWhite}
+  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
+    \thetemp@calca\tubspage@gaussheight
+  }
+  \addtocounter{@bg@y}{#1}
 }
 
 \newcommand{\colorframe}[2]{%
   \addtocounter{@bg@cnt}{1}
+  % calc and store number of gauss elements
+  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+  \addtocounter{temp@calca}{-\thetemp@calcb}
+%   \expandafter\edef\csname @temp@gaussheight\Roman{@bg@cnt}\endcsname{\thetemp@calca}
+  %
   \def\bg@color@I{tuGreen}
+  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{#2}
+  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\expandafter\endcsname{%
+    \thetemp@calca\tubspage@gaussheight
+  }
 %   \def\@bg@frame@posI{{\tubspage@gaussheight}{tuGreen}{bgI}}
+  \addtocounter{@bg@y}{#1}
 }
 
 \newcommand{\imageframe}[2]{%
   \addtocounter{@bg@cnt}{1}
+  % calc and store number of gauss eleme
+  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+  \addtocounter{temp@calca}{-\thetemp@calcb}
+%   \expandafter\edef\csname @temp@gaussheight\Roman{@bg@cnt}\endcsname{\thetemp@calca}
+%   imageframe: \thetemp@calca
+  %
+  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuYellow}
+  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
+    \thetemp@calca\tubspage@gaussheight
+  }
+  \addtocounter{@bg@y}{#1}
 }
 
 \def\@test@height@I{1\tubspage@gaussheight}
-\def\@test@color@I{tuYellow}
+\def\@test@color@I{tuBlue}
 \def\@test@id@I{bg1}
 \def\@test@height@II{2\tubspage@gaussheight}
-\def\@test@color@II{tuRed}
+\def\@test@color@II{tuBlue80}
 \def\@test@id@II{bg2}
 \def\@test@height@III{3\tubspage@gaussheight}
-\def\@test@color@III{tuBlue}
+\def\@test@color@III{tuBlue60}
 \def\@test@id@III{bg3}
 \def\@test@height@IV{4\tubspage@gaussheight}
-\def\@test@color@IV{tuGreen}
+\def\@test@color@IV{tuLightBlue}
 \def\@test@id@IV{bg4}
+\def\@test@height@V{5\tubspage@gaussheight}
+\def\@test@color@V{tuLightBlue80}
+\def\@test@id@V{bg5}
+\def\@test@height@VI{6\tubspage@gaussheight}
+\def\@test@color@VI{tuLightBlue60}
+\def\@test@id@VI{bg6}
+\def\@test@height@V{7\tubspage@gaussheight}
+\def\@test@color@V{tuDarkBlue}
+\def\@test@id@V{bg7}
+\def\@test@height@VI{8\tubspage@gaussheight}
+\def\@test@color@VI{tuDarkBlue80}
+\def\@test@id@VI{bg8}
 
 % \def\@testall{\@testa\@testb\@testc}
 
@@ -89,15 +142,16 @@
     \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
   }
   \setcounter{@bg@cnt}{0}
+  \setcounter{@bg@y}{0}
   %
   #2
   %
   \hNtoneleft[all][\tubspage@borderwidth]%
     {\value{@bg@cnt}}{\paperwidth-\tubspage@borderwidth}%
-    \@test@height@I\@test@color@I\@test@id@I%
-    \@test@height@II\@test@color@II\@test@id@II%
-    \@test@height@III\@test@color@III\@test@id@III%
     \@test@height@IV\@test@color@IV\@test@id@IV%
+    \@test@height@III\@test@color@III\@test@id@III%
+    \@test@height@II\@test@color@II\@test@id@II%
+    \@test@height@I\@test@color@I\@test@id@I%
 %     \@testall
 %     {2\tubspage@gaussheight}{\bg@color@II}{bg2}%
 %     {3\tubspage@gaussheight}{tuRed}{bg3}%
@@ -162,8 +216,7 @@
 \newlength{\temp@ypos}
 \newlength{\temp@width}
 \newlength{\temp@height}
-\newcounter{temp@calca}
-\newcounter{temp@calcb}
+
 
 
 \newboolean{imageframe}
