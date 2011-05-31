@@ -18,6 +18,41 @@
 \newcounter{temp@calcb}
 
 
+% HACK for scrheadings (mbox wrapping @thehead)
+\renewcommand*{\makedfheaderfooter}{%
+\setlength{\@ff@tmp@y}{\textheight}%
+\addtolength{\@ff@tmp@y}{\headsep}%
+\newdynamicframe{\textwidth}{\headheight}{0pt}{\@ff@tmp@y}[header]%
+\newdynamicframe{\textwidth}{\headheight}{0pt}{-\footskip}[footer]%
+\renewcommand{\@dothehead}{}%
+\renewcommand{\@dothefoot}{}%
+\renewcommand{\@dodynamicthehead}{%
+\@dynamicframeid{header}%
+\expandafter
+\def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
+\vspace*{-\baselineskip}% NOTE: a hack, no idea if thats the best to do...
+\mbox{\@thehead}\vfill}%
+}%
+\renewcommand{\@dodynamicthefoot}{%
+\@dynamicframeid{footer}%
+\expandafter
+\def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
+\vfill\mbox{\@thefoot}\vfill}%
+}%
+}
+
+\makedfheaderfooter
+\setheadwidth[0mm]{\textwidth+2\tubspage@borderwidth}
+\newlength{\@tubsff@tmp@w}
+\setlength{\@tubsff@tmp@w}{\textwidth+2\tubspage@borderwidth}
+\setdynamicframe*{header}{%
+  x=-\tubspage@borderwidth,
+  width=\@tubsff@tmp@w
+}
+%
+
+
+
 % places an image in the background
 % params:
 % 1 - row number
