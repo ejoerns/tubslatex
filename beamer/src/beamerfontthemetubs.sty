@@ -52,11 +52,9 @@
 
 \setbeamerfont{footlinelogo}{size=\scriptsize}%
 
-% Set the font for the running toc - if option tinytocinheader is
-% chosen, switch the tocinheader on
+% Set the font for the running toc dependig on option tinytocinheader
 \ifthenelse{\boolean{tinytocinheader}}{%
   \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}%
-%   \setboolean{tocinheader}{true}%
 }{%
   \setbeamerfont*{headertoc}{series=\mdseries,size=\micro}%
 }
