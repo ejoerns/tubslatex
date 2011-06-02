@@ -13,9 +13,6 @@
 \RequirePackage{babel}
 \RequirePackage{tubsbeamersizes}
 %
-%% tocspace governs the vertical position of the running toc
-\newdimen\beamer@tocspace
-\beamer@tocspace=0.3em
 %% Horizontal distance in running toc
 \newdimen\beamer@tochorizontalspace
 \beamer@tochorizontalspace=0.15em
@@ -36,11 +33,6 @@
 \DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
 \DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
 \DeclareOptionBeamer{narrowtoc}{\beamer@tochorizontalspace=0.em}
-\DeclareOptionBeamer{14pt}{\beamer@tocspace=-0.1em}
-\DeclareOptionBeamer{12pt}{\beamer@tocspace=-0.em}
-\DeclareOptionBeamer{11pt}{\beamer@tocspace=0.1em}
-\DeclareOptionBeamer{10pt}{\beamer@tocspace=0.4em}
-\DeclareOptionBeamer{9pt}{\beamer@tocspace=0.7em}
 %
 \ProcessOptionsBeamer\relax
 
@@ -72,7 +64,6 @@
 %% Define the frame title using the color scheme titlelike
 \defbeamertemplate*{headline}{sidebar theme}{%
   \usebeamerfont{frametitle}
-%   \vspace*{-0.4em}
   \ifthenelse{\boolean{notitle}}{%
     % notitle
   }{%
@@ -85,7 +76,6 @@
     \end{beamercolorbox}
     %\vspace*{0.1em}
   }{%
-    \setlength{\fboxsep}{0mm}
     \begin{beamercolorbox}[dp=0mm, ht=\beamer@headheight]{titlelike}
       \raisebox{\depth+.05\beamer@headheight}{%
       \parbox[b][\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
@@ -174,7 +164,6 @@
 \vspace{9pt}%
 }
 \end{minipage}
-\setlength{\fboxsep}{0mm}% @TESTING
 \hspace*{26mm}
 \begin{minipage}[t]{\textwidth-26mm-0.2\textwidth}% TODO: width computation
 \vspace*{-9.5mm}
