@@ -46,7 +46,11 @@
 % layout options
 \DeclareOptionBeamer{nopagenum}{\PassOptionsToPackage{nopagenum}{beamerouterthemetubs}}
 \DeclareOptionBeamer{nodate}{\PassOptionsToPackage{nodate}{beamerouterthemetubs}}
-\DeclareOptionBeamer{tocinheader}{\PassOptionsToPackage{tocinheader}{beamerouterthemetubs}}
+\DeclareOptionBeamer{tocinheader}{%
+  \PassOptionsToPackage{tocinheader}{beamerouterthemetubs}}
+\DeclareOptionBeamer{tinytocinheader}{%
+  \PassOptionsToPackage{tinytocinheader}{beamerouterthemetubs}
+  \PassOptionsToPackage{tinytocinheader}{beamerfontthemetubs}}
 \DeclareOptionBeamer{nosubsectionsinheader}{%
   \PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemetubs}}
 \DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemetubs}}

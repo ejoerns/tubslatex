@@ -22,7 +22,6 @@
 \newboolean{nopagenum}\setboolean{nopagenum}{false}
 \newboolean{nodate}\setboolean{nodate}{false}
 \newboolean{tocinheader}\setboolean{tocinheader}{false}
-\newboolean{tinytocinheader@outer}\setboolean{tinytocinheader@outer}{false}
 \newboolean{nosubsectionsinheader}\setboolean{nosubsectionsinheader}{false}
 \newboolean{nologoinfoot}\setboolean{nologoinfoot}{false}
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
@@ -31,10 +30,9 @@
 \DeclareOptionBeamer{tocinheader}{\setboolean{tocinheader}{true}}
 \DeclareOptionBeamer{tinytocinheader}{%
   \setboolean{tocinheader}{true}
-  \setboolean{tinytocinheader@outer}{true}%
-  \PassOptionsToPackage{tinytocinheader}{beamerfonttheme}%
 }
-\DeclareOptionBeamer{nosubsectionsinheader}{\setboolean{nosubsectionsinheader}{true}}
+\DeclareOptionBeamer{nosubsectionsinheader}{%
+  \setboolean{nosubsectionsinheader}{true}}
 \DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
 \DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
 \DeclareOptionBeamer{narrowtoc}{\beamer@tochorizontalspace=0.em}
