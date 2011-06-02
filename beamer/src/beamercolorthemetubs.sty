@@ -128,7 +128,11 @@
 \setbeamercolor{subsection in toc shaded}{parent=highlight,bg=white,fg=black}
 \setbeamertemplate{subsection in toc shaded}[default][40]
 %%% Change this to change section fonts in the running toc in the header
-\setbeamercolor{subsection in head/foot}{parent=highlight,bg=tuRed40,fg=tuRed}
+\ifthenelse{\boolean{colorhead}}{%
+  \setbeamercolor{subsection in head/foot}{parent=highlight,bg=tuGrey60,fg=tuRed}
+}{
+  \setbeamercolor{subsection in head/foot}{parent=highlight,bg=tuRed40,fg=tuRed}
+}
 \setbeamertemplate{section in head/foot shaded}[default][0]
 %
 \setbeamercolor{subsection in sidebar}{parent=palette sidebar primary}
