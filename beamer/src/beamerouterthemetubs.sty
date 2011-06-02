@@ -74,7 +74,7 @@
 %% Define the frame title using the color scheme titlelike
 \defbeamertemplate*{headline}{sidebar theme}{%
   \usebeamerfont{frametitle}
-  \vspace*{-0.4em}
+%   \vspace*{-0.4em}
   \ifthenelse{\boolean{notitle}}{%
     % notitle
   }{%
@@ -87,27 +87,25 @@
     \end{beamercolorbox}
     %\vspace*{0.1em}
   }{%
-    \begin{beamercolorbox}[ht=1.3\beamer@headheight]{titlelike}
-    \ifthenelse{\boolean{tocinheader}}{%
-    \vbox{%
-    \hbox to \hsize{\hfill\usebeamerfont{headertoc}%
-    \insertsectionnavigationhorizontal{100mm}{\hskip20pt plus1filll}{\quad}}%
-    \ifthenelse{\boolean{nosubsectionsinheader}}{\hbox to \hsize{\hfill%
-    \usebeamerfont{headertoc}\ \vphantom{FAp}}}{%
-      \hbox to \hsize{\hfill \usebeamerfont{headertoc}\ %
-      \vphantom{FAp}\hfill\insertsubsectionnavigationhorizontal{100mm}%
-      {\hskip0pt plus1filll}{\quad}}
-    }% End of ifthenelse for subsections
-%     \vspace{\beamer@tocspace}
-    \ifthenelse{\boolean{tinytocinheader@outer}}{\vspace{0.5\beamer@tocspace}}{}
-    }
-    }%% End of ifthenelse for tocinheader
-    %% Correct the spacing for different font sizes
-    %%\ifthenelse{\boolean{nosubsectionsinheader}}{\vspace{\beamer@tocspace}}{}
-    \par
-    \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}
-    \vspace*{.1\beamer@headheight}
-    \end{beamercolorbox}
+    \setlength{\fboxsep}{0mm}
+    \begin{beamercolorbox}[dp=0mm, ht=\beamer@headheight]{titlelike}
+      \raisebox{\depth+.05\beamer@headheight}{%
+      \parbox[b][\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
+      \ifthenelse{\boolean{tocinheader}}{%
+        {\usebeamerfont{headertoc}%
+        \vspace*{0.8ex}%
+        \insertsectionnavigationhorizontal{\textwidth}%
+          {\hskip20pt plus1filll}{\quad}%
+        \ifthenelse{\boolean{nosubsectionsinheader}}{%
+        }{%
+          \insertsubsectionnavigationhorizontal{\textwidth}%
+            {\hskip20pt plus1filll}{\quad}}%
+        }%
+      }{}%
+      \vfill%
+      \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}%
+      }}%
+    \end{beamercolorbox}%
     }%
   }%
 }
