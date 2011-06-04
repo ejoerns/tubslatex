@@ -8,8 +8,11 @@
 %%  - Footline fuer mehrzeiligen Autor angepasst
 %%  - pdftitle benutzt short title, wenn verfuegbar
 %% V 0.2.X:
-%%  - 
-
+%%  - author-Fontsize auf \footnotesize korrigiert
+%%  - Titelleite neu programmiert (etwas größer, Alignment-Probleme behoben)
+%%  - Benutze tuGrey60, falls Option colorhead gesetzt
+%%  - Abstand zwischen section und subection im toc um 0.5mm reduziert
+%%  - Option tinytocinheader funktioniert (wieder)
 \documentclass[cmyk,a4paper,colorscheme=green,TUBStitlepage=picture]{tubsreprt}
 
 \usepackage[utf8x]{inputenc}
@@ -439,9 +442,9 @@ zu finden.
 % \lstinline!\usetheme[blue,colorhead]{tubs}!
 % \end{minipage}
 
-\section{Anpassung über Templates}
+\section{Anpassung über Farb-Templates}
 
-Es können Folgende Templates angepasst werden:
+Es können folgende Farb-Templates angepasst werden:
 \begin{description}
   \item[\color{tuRed100}\ttfamily titlebarsecond]
     Der Hintergrund des Grafik-Bereichs auf der Titelseite
