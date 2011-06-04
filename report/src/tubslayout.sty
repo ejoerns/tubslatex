@@ -19,7 +19,7 @@
 
 
 % HACK for scrheadings (mbox wrapping @thehead)
-\renewcommand*{\makedfheaderfooter}{%
+\newcommand*{\makedfheader}{%
 \setlength{\@ff@tmp@y}{\textheight}%
 \addtolength{\@ff@tmp@y}{\headsep}%
 \newdynamicframe{\textwidth}{\headheight}{0pt}{\@ff@tmp@y}[header]%
@@ -30,26 +30,12 @@
 \@dynamicframeid{header}%
 \expandafter
 \def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
-\vspace*{-\baselineskip}% NOTE: a hack, no idea if thats the best to do...
-\mbox{\@thehead}\vfill}%
-}%
-\renewcommand{\@dodynamicthefoot}{%
-\@dynamicframeid{footer}%
-\expandafter
-\def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
-\vfill\mbox{\@thefoot}\vfill}%
+% \vspace*{-\baselineskip}% NOTE: a hack, no idea if thats the best to do...
+\mbox{\@thehead}\vfill}% HACK for scrheadings (mbox wrapping @thehead)
 }%
 }
 
-\makedfheaderfooter
-\setheadwidth[0mm]{\textwidth+2\tubspage@borderwidth}
-\newlength{\@tubsff@tmp@w}
-\setlength{\@tubsff@tmp@w}{\textwidth+2\tubspage@borderwidth}
-\setdynamicframe*{header}{%
-  x=-\tubspage@borderwidth,
-  width=\@tubsff@tmp@w
-}
-%
+\makedfheader
 
 
 

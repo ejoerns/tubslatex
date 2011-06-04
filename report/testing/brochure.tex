@@ -25,16 +25,40 @@
 \raggedright\Huge\slshape\MakeUppercase{#1}\par}
 
 
-\tubsSetBackground[1]%
-  {tuBlueDark80}
-  {tuBlueDark60}
-  {tuBlue}
-  {tuBlue80}
-  {tuBlue60}
-  {tuBlueLight}
-  {tuBlueLight80}
-  {tuBlueLight60}
+% \tubsSetBackground[1]%
+%   {tuBlueDark80}
+%   {tuBlueDark60}
+%   {tuBlue}
+%   {tuBlue80}
+%   {tuBlue60}
+%   {tuBlueLight}
+%   {tuBlueLight80}
+%   {tuBlueLight60}
 
+% \begin{tubsbgtemplate}
+% \foo
+\defbgtemplate[1]{4}{%
+  \imageframe{2}{myImage.jpg}
+  \colorframe{3}{tuGreenDark80}
+  \colorframe{2}{tuGreenDark60}
+  \colorframe{1}{tuGreenDark}
+}
+% \setbgframe
+% \end{tubsbgtemplate}
+
+% \tubsbgtemplate
+\defbgtemplate[2]{4}{%
+  \colorframe{2}{tuGreen}
+%   \emptyframe{2}
+  \imageframe{2}{myImage.jpg}
+  \colorframe{2}{tuGreenDark}
+  \colorframe{2}{tuGreenLight}
+}
+% \endtubsbgtemplate
+
+
+% \def\cmd1{CMD}
+% \def\cmd2{ASD}
 
 % empty page style, because I am going to make my own
 \pagestyle{empty}
@@ -67,7 +91,13 @@
 }
 
 
+
+
 \chapter{Introduction}
+
+% \cmd1
+% \cmd2
+
 
 The \textsl{flowfram} package is designed to enable you to create
 frames in a document such that the 
@@ -94,6 +124,7 @@ The order used to draw the contents of each frame on the page
 is described in column~\ref{flow:stacking} on 
 page~\pageref{flow:stacking}. Floats are describe in 
 column~\ref{flow:floats} on page~\pageref{flow:floats}.
+
 
 \chapter{Setting up Frames}
 
