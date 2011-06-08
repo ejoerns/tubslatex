@@ -174,7 +174,7 @@
 \ifthenelse{\boolean{nodate}}{}{%
   \insertdate\ \rule[-0.1em]{0.1em}{1em}\ %
   \settowidth{\tubs@outer@datewidth}{\insertdate\ \rule[-0.1em]{0.1em}{1em}\ }%
-}%
+  \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
 }%
 \ifthenelse{\boolean{nopagenum}}{}{%
   \settowidth{\tubs@outer@tempwidth}{%
