@@ -193,16 +193,16 @@
 \newcommand{\tubslayout@setlogo}[2][1]{%
 % process placement (left/right)
 \ifthenelse{\equal{#2}{right}}{%
-  \setlength{\tubslayout@logooffset}{\paperwidth-\tulogoWidth}
+  \setlength{\tubslayout@logooffset}{\paperwidth-\tubslogoWidth}
 }{%
   \setlength{\tubslayout@logooffset}{0mm}
 }
 % create dynamic frame
 \edef\@p@sel{#1}
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
-  {\tulogoWidth}{\tulogoHeight}%
+  {\tubslogoWidth}{\tubslogoHeight}%
   {-2\tubspage@borderwidth+\tubslayout@logooffset}%
-  {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tulogoHeight}%
+  {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
 }
 
