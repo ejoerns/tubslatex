@@ -24,7 +24,7 @@
 
 \title{tubslogo}
 \subtitle{Paket-Dokumentation}
-\author{Dummy Author \and Enrico Jörns}
+\author{Enrico Jörns}
 
 \begin{document}
 
@@ -41,23 +41,23 @@ werden. Die Auwahl erfolgt dabei über Paketoptionen
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig-rgb}
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig-rgb}
   {\sffamily Logo in Standardgröße (RGB)}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig_4C}
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_4C}
   {\sffamily Logo in Standardgröße (CMYK)}
 \end{minipage}
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig_SC}
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_SC}
   {\sffamily Logo in Standardgröße (HKS 15)}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tulogoBaseWidth]{TUBraunschweig_B}
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_B}
   {\sffamily Logo in Standardgröße (schwarz)}
 \end{minipage}
 
@@ -68,7 +68,7 @@ eingefügt. Die verwendete Papiergröße kann dabei als Paketoption übergeben
 werden und ist standardmäßig auf \lstinline{a4paper} voreingestellt
 (siehe Abschnitt \ref{options:papersize}).
 Also optionales Argument kann auch ein frei gewählter Skalierungsfaktor
-vorgegeben werden (siehe Abschnitt \ref{cmd:tulogo}).
+vorgegeben werden (siehe Abschnitt \ref{cmd:tubslogo}).
 
 Mit {\color{tuRed}\ttfamily \textbackslash tubslogoAbs%
     \{\textcolor{tuGreenDark}{Breite}\}}
@@ -114,7 +114,7 @@ angegeben werden.
 \clearpage
 \section{Befehle}
 
-\begin{description}\label{cmd:tulogo}
+\begin{description}\label{cmd:tubslogo}
   \item[\color{tuRed}\mdseries\ttfamily \textbackslash tubslogo%
     {[\textcolor{tuGreenDark}{\sffamily\itshape $<$Breite rel.$>$}]}]
     Erzeugt ein Logo, dass entsprechend des durch Angabe der Papiergröße
@@ -139,15 +139,15 @@ angegeben werden.
 
 \section{Längen}
   \begin{description}
-    \item[\mdseries\ttfamily \textbackslash tulogoBaseWidth]\hfill\\
+    \item[\mdseries\ttfamily \textbackslash tubslogoBaseWidth]\hfill\\
       Standardbreite des Logos (70mm).
-    \item[\mdseries\ttfamily \textbackslash tulogoBaseHeight]\hfill\\
+    \item[\mdseries\ttfamily \textbackslash tubslogoBaseHeight]\hfill\\
       Standardhöhe des Logos (26mm).
-    \item[\mdseries\ttfamily \textbackslash tulogoWidth]\hfill\\
-      Breite des automatisch skalierten Logos.
-    \item[\mdseries\ttfamily \textbackslash tulogoHeight]\hfill\\
-      Höhe des automatisch skalierten Logos.
+    \item[\mdseries\ttfamily \textbackslash tubslogoWidth]\hfill\\
+      Breite des automatisch skalierten Logos. Wird automatisch berechnet und
+      kann zur dynamischen Positionierung verwendet werden.
+    \item[\mdseries\ttfamily \textbackslash tubslogoHeight]\hfill\\
+      Höhe des automatisch skalierten Logos. Siehe \lstinline{tubslogoWidth}.
   \end{description}
-
 
 \end{document}
