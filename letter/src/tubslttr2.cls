@@ -1,7 +1,7 @@
 \RequirePackage{xkeyval}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{scrlttr2}}
 \ProcessOptionsX
-\LoadClass[pagenumber=botleft]{scrlttr2}
+\LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}
 
 \RequirePackage{Nexus}
 \RequirePackage[green]{tubscolors}
@@ -10,6 +10,7 @@
 \@setplength{lochpos}{-15.75cm}
 \@setplength{locvpos}{4.7cm}
 \@setplength{locwidth}{4.75cm}
+\@setplength{locheight}{212pt}
 
 \@setplength{refhpos}{2.4cm}
 \@setplength{refwidth}{12.5cm}
@@ -30,31 +31,41 @@
 \newkomavar{fromphonedirect}
 \newkomavar{fromfaxdirect}
 
-\firsthead{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]
+\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]
 \tubslogo[0.9]
 }
 
-\setkomavar{backaddress}{
-\begin{tabular}{l}
+\setkomavar{backaddress}{\makebox[0pt][l]{\begin{tabular}{l}
 Technische Universität Braunschweig | \usekomavar{frominstitute}\\
 \usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland
-\end{tabular}
-}
+\end{tabular}}}
 
 \setkomafont{addressee}{\sffamily}
+\setkomafont{subject}{\sffamily}
+\setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
+\AtBeginLetter{\sffamily}
 
-\nexthead{
+\setkomavar{nexthead}{
 \begin{tabular}{l}
 Technische Universität Braunschweig\\
 \usekomavar{frominstitute}\\
-\ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}
-}
+\ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
 \end{tabular}
 }
 
-\setkomavar{fromphone}{+49\,531\,391-\usekomavar{fromphonedirect}}
-\setkomavar{fromfax}{+49\,531\,391-\usekomavar{fromfaxdirect}}
+\ifkomavarempty{fromphonedirect}{\relax}{\setkomavar{fromphone}{+49\,531\,391-\usekomavar{fromphonedirect}}}
+\ifkomavarempty{fromfaxdirect}{\relax}{\setkomavar{fromfax}{+49\,531\,391-\usekomavar{fromfaxdirect}}}
+
+\newcommand{\checkmissingvar}[1]{\ifkomavarempty{#1}{\setkomavar{#1}{{\ttfamily[#1]}}\ClassWarning{tubslttr2}{Set komavar #1}}{\relax}}
+
+\checkmissingvar{frominstitute}
+\checkmissingvar{fromstreet}
+\checkmissingvar{fromzipcode}
+\checkmissingvar{fromtown}
+\checkmissingvar{fromemail}
+\checkmissingvar{fromname}
+\checkmissingvar{signature}
 
 \setkomavar{location}{\footnotesize \sffamily
 Technische Universität\\Braunschweig\\
@@ -69,7 +80,7 @@ Technische Universität\\Braunschweig\\
 \usekomavar{fromzipcode}~\usekomavar{fromtown}\\
 Deutschland\\
 ~\\
-\usekomavar{fromtitle}\\
+\ifkomavarempty{fromtitle}{\relax}{\usekomavar{fromtitle}\\}
 \usekomavar{fromname}\\
 ~\\
 \usekomavar{fromphone}\\
