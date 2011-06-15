@@ -5,7 +5,7 @@
 \removereffields
 
 \RequirePackage{Nexus}
-\RequirePackage[green]{tubscolors}
+\RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 
 \@setplength{lochpos}{-15.75cm}
