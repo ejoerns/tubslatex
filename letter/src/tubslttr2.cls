@@ -11,7 +11,7 @@
 \@setplength{lochpos}{-15.75cm}
 \@setplength{locvpos}{4.7cm}
 \@setplength{locwidth}{4.75cm}
-\@setplength{locheight}{272pt}
+\@setplength{locheight}{292pt}
 
 \@setplength{refhpos}{2.4cm}
 \@setplength{refwidth}{12.5cm}
