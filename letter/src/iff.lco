@@ -2,5 +2,6 @@
 \setkomavar{fromstreet}{Hermann-Blenk-Str. 27}
 \setkomavar{fromzipcode}{38108}
 \setkomavar{fromtown}{Braunschweig}
+\setkomavar{fromurl}{http://www.tu-bs.de/iff}
 
 \setkomavar{fromfaxdirect}{9804}
