@@ -2,6 +2,7 @@
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{scrlttr2}}
 \ProcessOptionsX
 \LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}
+\pagestyle{headings}
 \removereffields
 
 \RequirePackage{Nexus}
@@ -94,5 +95,3 @@ Datum: \usekomavar{date}\\
 ~\\
 \end{flushleft}
 }
-
-\pagestyle{headings}
