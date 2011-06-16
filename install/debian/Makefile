@@ -16,7 +16,7 @@ structure:
 
 fetch:
 	. ../rawtree/fetch
-	cp control postinst postrm texlive-tubs/DEBIAN/.
+	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
 	mv tex texlive-tubs/$(INSTALLPATH)/.
 	mv doc texlive-tubs/$(INSTALLPATH)/.
 	mv fonts texlive-tubs/$(INSTALLPATH)/.
