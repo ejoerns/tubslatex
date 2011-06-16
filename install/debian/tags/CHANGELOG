@@ -1,0 +1,10 @@
+V 0.2.3:
+  beamer:
+    - author-Fontsize auf \footnotesize korrigiert
+    - Titelleite neu programmiert (etwas größer, Alignment-Probleme behoben)
+    - Benutze tuGrey60, falls Option colorhead gesetzt
+    - Abstand zwischen section und subection im toc um 0.5mm reduziert
+    - Option tinytocinheader funktioniert (wieder)
+    - erweiterte Dokumentation
+  nexus:
+    - Italic-Schnitte hinzugefuegt
