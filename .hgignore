@@ -2,8 +2,11 @@ syntax: glob
 
 cd-base/logo/TUBraunschweig_Logos/*
 cd-base/logo/*.eps
-install/*
-
+install/windows/data/*
+install/rawtree/doc/*
+install/rawtree/fonts/*
+install/rawtree/tex/*
+install/debian/texlive-tubs/*
 
 # no autosave
 *~
@@ -29,6 +32,7 @@ install/*
 *.lol
 *.dvi
 *.idx
+*.ps
 *.pdf
 *.ilg
 *.ind
