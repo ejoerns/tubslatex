@@ -36,42 +36,42 @@
 %
 %
 % logo dimensions
-\newlength{\tulogoBaseWidth}
-\setlength{\tulogoBaseWidth}{70mm}
-\newlength{\tulogoBaseHeight}
-\setlength{\tulogoBaseHeight}{26mm}
-\newlength{\tulogoWidth}
-\newlength{\tulogoHeight}
+\newlength{\tubslogoBaseWidth}
+\setlength{\tubslogoBaseWidth}{70mm}
+\newlength{\tubslogoBaseHeight}
+\setlength{\tubslogoBaseHeight}{26mm}
+\newlength{\tubslogoWidth}
+\newlength{\tubslogoHeight}
 %
-\ifthenelse{\equal{\logo@papersize}{6}}{\def\tulogo@scale{0.6}}{%  60%
-\ifthenelse{\equal{\logo@papersize}{5}}{\def\tulogo@scale{0.7}}{%  70%
-\ifthenelse{\equal{\logo@papersize}{4}}{\def\tulogo@scale{1.0}}{% 100%
-\ifthenelse{\equal{\logo@papersize}{3}}{\def\tulogo@scale{1.4}}{% 140%
-\ifthenelse{\equal{\logo@papersize}{2}}{\def\tulogo@scale{2.0}}{% 200%
-\ifthenelse{\equal{\logo@papersize}{1}}{\def\tulogo@scale{2.8}}{% 280%
-\ifthenelse{\equal{\logo@papersize}{0}}{\def\tulogo@scale{4.0}}{% 400%
-\def\tulogo@scale{1.0}% default
+\ifthenelse{\equal{\logo@papersize}{6}}{\def\tubslogo@scale{0.6}}{%  60%
+\ifthenelse{\equal{\logo@papersize}{5}}{\def\tubslogo@scale{0.7}}{%  70%
+\ifthenelse{\equal{\logo@papersize}{4}}{\def\tubslogo@scale{1.0}}{% 100%
+\ifthenelse{\equal{\logo@papersize}{3}}{\def\tubslogo@scale{1.4}}{% 140%
+\ifthenelse{\equal{\logo@papersize}{2}}{\def\tubslogo@scale{2.0}}{% 200%
+\ifthenelse{\equal{\logo@papersize}{1}}{\def\tubslogo@scale{2.8}}{% 280%
+\ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{4.0}}{% 400%
+\def\tubslogo@scale{1.0}% default
 }}}}}}}
-\setlength{\tulogoWidth}{\tulogo@scale\tulogoBaseWidth}
-\setlength{\tulogoHeight}{\tulogo@scale\tulogoBaseHeight}
+\setlength{\tubslogoWidth}{\tubslogo@scale\tubslogoBaseWidth}
+\setlength{\tubslogoHeight}{\tubslogo@scale\tubslogoBaseHeight}
 %
 %
 \ifthenelse{\boolean{cmykLogo}}{%% CMYK
-\newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig_4C}}
+\newcommand{\tubslogo}[1][\tubslogo@scale]{%
+\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig_4C}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_4C}}
 }{%% RGB-print
 \ifthenelse{\boolean{hksLogo}}{%
-\newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig_SC}}
+\newcommand{\tubslogo}[1][\tubslogo@scale]{%
+\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig_SC}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_SC}}
 }{%% Monochrome
 \ifthenelse{\boolean{monoLogo}}{%
-\newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig_B}}
+\newcommand{\tubslogo}[1][\tubslogo@scale]{%
+\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig_B}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_B}}
 }{%% RGB
-\newcommand{\tubslogo}[1][\tulogo@scale]{%
-\includegraphics[width=#1\tulogoBaseWidth]{TUBraunschweig-rgb}}
+\newcommand{\tubslogo}[1][\tubslogo@scale]{%
+\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig-rgb}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }}}

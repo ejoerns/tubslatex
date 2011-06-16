@@ -2,7 +2,7 @@
 %% Copyright 2011 by Mr.x, Enrico Jörns
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubscolors}[2011/05/02  v0.2  Color scheme TU-Braunschweig]
+\ProvidesPackage{tubscolors}[2011/06/09  v0.3  Color scheme TU-Braunschweig]
 %
 \RequirePackage{xcolor}
 \RequirePackage{ifthen}
@@ -43,11 +43,11 @@
 \definecolor{tuBlack}{cmyk}{0.0,0.0,0.0,1.0}
 \definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
 %%% Grey
-\definecolor{tuGrey100}{cmyk}{0,0,0,1}
-\definecolor{tuGrey80}{cmyk}{0,0,0,0.8}
-\definecolor{tuGrey60}{cmyk}{0,0,0,0.6}
-\definecolor{tuGrey40}{cmyk}{0,0,0,0.4}
-\definecolor{tuGrey20}{cmyk}{0,0,0,0.2}
+\definecolor{tuGray100}{cmyk}{0,0,0,1}
+\definecolor{tuGray80}{cmyk}{0,0,0,0.8}
+\definecolor{tuGray60}{cmyk}{0,0,0,0.6}
+\definecolor{tuGray40}{cmyk}{0,0,0,0.4}
+\definecolor{tuGray20}{cmyk}{0,0,0,0.2}
 %
 %%%%%% Secondary colors %%%%%%
 %%% Orange %%%
@@ -135,11 +135,11 @@
 \definecolor{tuBlack}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
 %%% Grey
-\definecolor{tuGrey100}{RGB}{8,8,8}
-\definecolor{tuGrey80}{RGB}{95,95,95}
-\definecolor{tuGrey60}{RGB}{150,150,150}
-\definecolor{tuGrey40}{RGB}{192,192,192}
-\definecolor{tuGrey20}{RGB}{221,221,221}
+\definecolor{tuGray100}{RGB}{8,8,8}
+\definecolor{tuGray80}{RGB}{95,95,95}
+\definecolor{tuGray60}{RGB}{150,150,150}
+\definecolor{tuGray40}{RGB}{192,192,192}
+\definecolor{tuGray20}{RGB}{221,221,221}
 %%%%%% Secondary colors %%%%%%
 %%% Orange %%%
 % light (yellow)
@@ -224,11 +224,11 @@
 \definecolor{tuBlack}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
 %%% Grey
-\definecolor{tuGrey100}{RGB}{0,0,0}
-\colorlet{tuGrey80}{tuGrey100!80}
-\colorlet{tuGrey60}{tuGrey100!60}
-\colorlet{tuGrey40}{tuGrey100!40}
-\colorlet{tuGrey20}{tuGrey100!20}
+\definecolor{tuGray100}{RGB}{0,0,0}
+\colorlet{tuGray80}{tuGray100!80}
+\colorlet{tuGray60}{tuGray100!60}
+\colorlet{tuGray40}{tuGray100!40}
+\colorlet{tuGray20}{tuGray100!20}
 %%%%%% Secondary colors %%%%%%
 %%% Orange %%%
 % light (yellow)
@@ -374,10 +374,23 @@
 \colorlet{tuViolet}{tuVioletMedium100}
 \colorlet{tuVioletDark}{tuVioletDark100}
 
+% Make tuGray60 accessable under name tuGray
+% and tu tuGray20 under name tuLightGray
+\colorlet{tuGray}{tuGray60}
+\colorlet{tuLightGray}{tuGray20}
+
+% Allow british english for gray
+\colorlet{tuGrey}{tuGray}
+\colorlet{tuLightGrey}{tuLightGray}
+\colorlet{tuGrey100}{tuGray100}
+\colorlet{tuGrey80}{tuGray80}
+\colorlet{tuGrey60}{tuGray60}
+\colorlet{tuGrey40}{tuGray40}
+\colorlet{tuGrey20}{tuGray20}
+
 %% Define secondary colors
 %% Can be adressed as tuSecondary exactly as the other colors
 %% Defined via \defineSecondary
-
 
 \newcounter{perc}
 \def\create@SecColor#1#2{%
