@@ -1,74 +1,72 @@
 \RequirePackage{xkeyval}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{scrlttr2}}
 \ProcessOptionsX
-\LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}
-\pagestyle{headings}
-\removereffields
 
+%pagenumber=botleft Seitennummern werden nach unten links gesetzt
+%refline=nodate In der Geschäftszeile erscheint kein Datum
+\LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}
+
+%Die Basispakete des Corporate Design werden geladen
 \RequirePackage{Nexus}
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 
-\@setplength{lochpos}{-15.75cm}
-\@setplength{locvpos}{4.7cm}
-\@setplength{locwidth}{4.75cm}
-\@setplength{locheight}{292pt}
-
-\@setplength{refhpos}{2.4cm}
-\@setplength{refwidth}{12.5cm}
-
+%Positionierung des Seitenkopfs (Logo und rote Linie)
 \@setplength{firstheadhpos}{1.75cm}
 \@setplength{firstheadvpos}{1.75cm}
 \@setplength{firstheadwidth}{17.6cm}
 
+%Vergrößerung der Rückaddresszeile (da zweizeilig)
 \@setplength{backaddrheight}{21pt}
 
+%Positionierung des Locationfeldes (Informationen auf der rechten Seite)
+\@setplength{lochpos}{-15.75cm}
+\@setplength{locvpos}{4.7cm}
+\@setplength{locwidth}{4.75cm}
+\@setplength{locheight}{316pt}
+
+%Positionierung der Geschäftszeile, bzw. da nicht vorhanden des Briefanfangs
+\@setplength{refhpos}{2.4cm}
+\@setplength{refwidth}{12.5cm}
+
+%Anpassung der Textbreite
 \setlength{\textwidth}{12.5cm}
 
-\newkomavar{fromtitle}
-
+%Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
+%%Institutsdaten
 \newkomavar{frominstitute}
 \newkomavar{fromdepartment}
 \newkomavar{fromstreet}
 \newkomavar{fromtown}
-
+%%Titel des Absenders
+\newkomavar{fromtitle}
+%%Telefon und Faxdurchwahl
 \newkomavar{fromphonedirect}
 \newkomavar{fromfaxdirect}
-
+%%Referenzfeld Unser Schreiben vom:
 \newkomavar{mymail}
 
-\renewcommand*{\raggedsignature}{\raggedright}
-
-\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]
-\tubslogo[0.9]
-}
-
-\setkomavar{backaddress}{\makebox[0pt][l]{\begin{tabular}[t]{l}
-Technische Universität Braunschweig | \usekomavar{frominstitute}\\
-\usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland
-\end{tabular}}}
-
+%Setzen der Schriftattribute
 \setkomafont{addressee}{\sffamily}
 \setkomafont{subject}{\sffamily}
 \setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
 \AtBeginLetter{\sffamily}
 
-\setkomavar{nexthead}{
-\begin{tabular}{l}
-Technische Universität Braunschweig\\
-\usekomavar{frominstitute}\\
-\ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
-\end{tabular}
-}
+%Siegelband und rote Linie im Kopf des Briefs
+\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]\tubslogo[0.9]}
 
-\setkomavar{location}{\begin{flushleft}
+%Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
+\setkomavar{location}{%
+\begin{flushleft}
+%Wenn eine Durchwahl angegeben wurde, wird diese zusammengesetzt, ansonsten wird das komplette phone/fax Feld genutzt
 \ifkomavarempty{fromphonedirect}{\relax}{\setkomavar{fromphone}{+49\,531\,391-\usekomavar{fromphonedirect}}}%
 \ifkomavarempty{fromfaxdirect}{\relax}{\setkomavar{fromfax}{+49\,531\,391-\usekomavar{fromfaxdirect}}}%
-\footnotesize \sffamily
+\footnotesize\sffamily
 Technische Universität\\Braunschweig\\
 \textbf{\usekomavar{frominstitute}}\\
-\ifkomavarempty{fromdepartment}{\relax}
+\ifkomavarempty{fromdepartment}
+{\relax}
 {
 ~\\
 \usekomavar{fromdepartment}\\
@@ -95,3 +93,33 @@ Datum: \usekomavar{date}\\
 ~\\
 \end{flushleft}
 }
+
+
+
+
+
+
+
+
+
+
+%Es werden Kopf- und Fußzeilen auf Folgeseiten gesetzt
+\pagestyle{headings}
+%Alle Felder werden aus der Geschäfszeile entfernt, damit diese in jedem Fall leer bleibt.
+\removereffields
+
+\setkomavar{backaddress}{\makebox[0pt][l]{\begin{tabular}[t]{l}
+Technische Universität Braunschweig | \usekomavar{frominstitute}\\
+\usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland
+\end{tabular}}}
+
+\setkomavar{nexthead}{
+\begin{tabular}{l}
+Technische Universität Braunschweig\\
+\usekomavar{frominstitute}\\
+\ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
+\end{tabular}
+}
+
+
+\renewcommand*{\raggedsignature}{\raggedright}
