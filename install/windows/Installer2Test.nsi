@@ -32,7 +32,7 @@
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
-  !insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
+  ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
@@ -47,6 +47,7 @@
 ;Languages
 
   !insertmacro MUI_LANGUAGE "English"
+  !insertmacro MUI_LANGUAGE "German"
 
 ;--------------------------------
 ;Functions
@@ -129,7 +130,7 @@ FunctionEnd
 ;--------------------------------
 ;Installer Sections
 
-Section "Dummy Section" SecDummy
+Section "tubslatex" SecTubslatex
 
   SetOutPath "$INSTDIR"
 
@@ -143,15 +144,28 @@ Section "Dummy Section" SecDummy
 
 SectionEnd
 
+
+;--------------------------------
+;Installer Functions
+
+Function .onInit
+
+  !insertmacro MUI_LANGDLL_DISPLAY
+
+FunctionEnd
+
+
+
 ;--------------------------------
 ;Descriptions
 
   ;Language strings
-  LangString DESC_SecDummy ${LANG_ENGLISH} "A test section."
+  LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
+  LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
 
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecDummy} $(DESC_SecDummy)
+    !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
   !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
