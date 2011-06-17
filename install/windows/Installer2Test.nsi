@@ -57,68 +57,6 @@
 ;Functions
 
 
-Function FileSearch
-Exch $R0 ;search for
-Exch
-Exch $R1 ;input file
-Push $R2
-Push $R3
-Push $R4
-Push $R5
-Push $R6
-Push $R7
-Push $R8
-Push $R9
- 
-  StrLen $R4 $R0
-  StrCpy $R7 0
-  StrCpy $R8 0
- 
-  ClearErrors
-  FileOpen $R2 $R1 r
-  IfErrors Done
- 
-  LoopRead:
-    ClearErrors
-    FileRead $R2 $R3
-    IfErrors DoneRead
- 
-    IntOp $R7 $R7 + 1
-    StrCpy $R5 -1
-    StrCpy $R9 0
- 
-    LoopParse:
-      IntOp $R5 $R5 + 1
-      StrCpy $R6 $R3 $R4 $R5
-      StrCmp $R6 "" 0 +4
-        StrCmp $R9 1 LoopRead
-          IntOp $R7 $R7 - 1
-          Goto LoopRead
-      StrCmp $R6 $R0 0 LoopParse
-        StrCpy $R9 1
-        IntOp $R8 $R8 + 1
-        Goto LoopParse
- 
-  DoneRead:
-    FileClose $R2
-  Done:
-    StrCpy $R0 $R8
-    StrCpy $R1 $R7
- 
-Pop $R9
-Pop $R8
-Pop $R7
-Pop $R6
-Pop $R5
-Pop $R4
-Pop $R3
-Pop $R2
-Exch $R1 ;number of lines found on
-Exch
-Exch $R0 ;output count found
-FunctionEnd
-
-
 ; StrContains
 ; This function does a case sensitive searches for an occurrence of a substring in a string. 
 ; It returns the substring if it is found. 
@@ -194,6 +132,7 @@ Function addLocaltexmf
 FunctionEnd
 
 
+;; Adds specified data at the end of the specified file
 Function WriteToFile
  Exch $0 ;file to write to
  Exch
@@ -216,6 +155,15 @@ FunctionEnd
 !define WriteToFile "!insertmacro WriteToFile"
 
 
+;; Delete every line from specified file that contains the specified text
+;Function deleteLineFromFile
+;	; TODO...
+;FunctionEnd
+
+
+;; Searches in given updmap config file for given map definitions and
+;; removes them if found.
+;; Then this map information is simply added at the end of the file
 Function enableUpdmaps
 	;; search for map an delete if found
 	Exch $R0 ;map name
@@ -257,6 +205,16 @@ Section "tubslatex" SecTubslatex
   Call getMiktexInstallPath
   Call addLocaltexmf
 
+	;; files to copy
+	SetOutPath $INSTDIR/
+	FILE /r data\tex
+	FILE /r data\doc
+	FILE /r data\fonts
+
+	;; run file db update script
+	ExecCmd::exec /TIMEOUT=10000 '"initexmf --update-fndb"'
+
+	;; enable updmaps
 	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
 	Push "NexusProSans.map"
 		Call enableUpdmaps
@@ -264,6 +222,9 @@ Section "tubslatex" SecTubslatex
 	Push "NexusProSerif.map"
 		Call enableUpdmaps
 
+
+	;; run font update
+	ExecCmd::exec /TIMEOUT=10000 '"initexmf --mkmaps"'
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
