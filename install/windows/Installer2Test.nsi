@@ -1,28 +1,30 @@
-;NSIS Modern User Interface
-;Welcome/Finish Page Example Script
-;Written by Joost Verburg
+;; Tubslatex Installer
+;; Written by Enrico Joerns
 
 ;--------------------------------
 ;Include Modern UI
 
   !include "MUI2.nsh"
   !include "TextFunc.nsh"
+	!include "Sections.nsh"
+
 
 ;--------------------------------
 ;General
 
-  ;Name and file
+  ;; Name and file
   Name "tubslatex"
   OutFile "Installer2Test.exe"
 
-  ;Default installation folder
+  ;; Default installation folder
   InstallDir "$PROGRAMFILES\tubslatex"
 
-  ;Get installation folder from registry if available
+  ;; Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\tubslatex" ""
 
-  ;Request application privileges for Windows Vista / 7
+  ;; Request application privileges for Windows Vista / 7
   RequestExecutionLevel admin
+
 
 ;--------------------------------
 ;Interface Settings
@@ -31,6 +33,7 @@
 
 	;; Directory page
   !define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
+
 
 ;--------------------------------
 ;Pages
@@ -47,15 +50,16 @@
   !insertmacro MUI_UNPAGE_INSTFILES
   !insertmacro MUI_UNPAGE_FINISH
 
+
 ;--------------------------------
 ;Languages
 
   !insertmacro MUI_LANGUAGE "English"
   !insertmacro MUI_LANGUAGE "German"
 
+
 ;--------------------------------
 ;Functions
-
 
 ; StrContains
 ; This function does a case sensitive searches for an occurrence of a substring in a string. 
@@ -170,7 +174,7 @@ Function enableUpdmaps
 	Exch
 	Exch $R1 ;updmap config file
 	ClearErrors
-	messageBox MB_OK "File: $R1, Content: $R0"
+	;messageBox MB_OK "File: $R1, Content: $R0"
 	FileOpen $0 $R1 "r"                     ; open target file for reading
 	GetTempFileName $R9                           ; get new temp file name
 	FileOpen $1 $R9 "w"                           ; open temp file for writing
@@ -200,6 +204,9 @@ FunctionEnd
 
 Section "tubslatex" SecTubslatex
 
+  ;; enables install logging
+  ;LogSet on ; not working, NSIS_CONFIG_LOG not defined
+
   ;ADD YOUR OWN FILES HERE...
 
   Call getMiktexInstallPath
@@ -217,7 +224,7 @@ Section "tubslatex" SecTubslatex
 	FILE /r data\fonts
 
 	;; run file db update script
-	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
 	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --update-fndb"'
 
 	;; enable updmaps
@@ -228,11 +235,10 @@ Section "tubslatex" SecTubslatex
 	Push "NexusProSerif.map"
 		Call enableUpdmaps
 
-
 	;; run font update
 	;ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
 	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --mkmaps"'
-	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
