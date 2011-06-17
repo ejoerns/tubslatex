@@ -77,7 +77,7 @@ Function StrContains
   Exch 1
   Exch $STR_HAYSTACK
   ; Uncomment to debug
-  ;MessageBox MB_OK 'STR_NEEDLE = $STR_NEEDLE STR_HAYSTACK = $STR_HAYSTACK '
+;  MessageBox MB_OK 'STR_NEEDLE = $STR_NEEDLE STR_HAYSTACK = $STR_HAYSTACK '
     StrCpy $STR_RETURN_VAR ""
     StrCpy $STR_CONTAINS_VAR_1 -1
     StrLen $STR_CONTAINS_VAR_2 $STR_NEEDLE
@@ -112,7 +112,7 @@ Function getMiktexInstallPath
   StrCmp $R0 "" 0 installDirReady
   StrCpy $R0 "$PROGRAMFILES\MiKTeX 2.9"
   InstallDirReady:
-  messageBox MB_OK " Ok, MiKTeX is installed in $R0"
+;  messageBox MB_OK " Ok, MiKTeX is installed in $R0"
   !define MiktexInstallPath $R0
 FunctionEnd
 
@@ -126,7 +126,7 @@ Function addLocaltexmf
   ;; Test if directory ist already listed in UserRoots, skip if true
   ${StrContains} $R1 $INSTDIR $R0
   StrCmp $R1 "" 0 skipRootsUpdate
-  messageBox MB_OK "Updating UserRoots..."
+;  messageBox MB_OK "Updating UserRoots..."
   WriteRegStr HKCU "Software\MiKTeX.org\MiKTeX\2.9\Core" "UserRoots" "$INSTDIR;$R0"
   skipRootsUpdate:
 FunctionEnd
@@ -190,6 +190,8 @@ Function enableUpdmaps
 		Delete $R9                                  ; delete temp file
 	;; add map
 	${WriteToFile} "Map $R0$\r$\n" $R1
+	IfErrors 0 +2
+		messageBox MB_OK "Error while writing updmap.cfg!"
 FunctionEnd
 
 
@@ -198,21 +200,25 @@ FunctionEnd
 
 Section "tubslatex" SecTubslatex
 
-  SetOutPath "$INSTDIR"
-
   ;ADD YOUR OWN FILES HERE...
 
   Call getMiktexInstallPath
   Call addLocaltexmf
 
+	;; Make sure that updmap.cfg exists
+	SetOutPath "$APPDATA\MiKTeX\2.9\miktex\config\"
+	FileOpen $9 "updmap.cfg" w
+	FileClose $9
+
 	;; files to copy
-	SetOutPath $INSTDIR/
+  SetOutPath "$INSTDIR"
 	FILE /r data\tex
 	FILE /r data\doc
 	FILE /r data\fonts
 
 	;; run file db update script
-	ExecCmd::exec /TIMEOUT=10000 '"initexmf --update-fndb"'
+	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --update-fndb"'
 
 	;; enable updmaps
 	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
@@ -224,7 +230,8 @@ Section "tubslatex" SecTubslatex
 
 
 	;; run font update
-	ExecCmd::exec /TIMEOUT=10000 '"initexmf --mkmaps"'
+	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
+	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --mkmaps"'
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
