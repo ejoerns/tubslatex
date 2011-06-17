@@ -11,14 +11,14 @@
 ;General
 
   ;Name and file
-  Name "MiKTeX Installer2 Test"
+  Name "tubslatex"
   OutFile "Installer2Test.exe"
 
   ;Default installation folder
-  InstallDir "$LOCALAPPDATA\Modern UI Test"
+  InstallDir "$PROGRAMFILES\tubslatex"
 
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\Modern UI Test" ""
+  InstallDirRegKey HKCU "Software\tubslatex" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel user
@@ -27,6 +27,9 @@
 ;Interface Settings
 
   !define MUI_ABORTWARNING
+
+	;; Directory page
+  !define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
 
 ;--------------------------------
 ;Pages
@@ -150,7 +153,7 @@ SectionEnd
 
 Function .onInit
 
-  !insertmacro MUI_LANGDLL_DISPLAY
+  ;!insertmacro MUI_LANGDLL_DISPLAY
 
 FunctionEnd
 
