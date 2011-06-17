@@ -21,8 +21,8 @@
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\tubslatex" ""
 
-  ;Request application privileges for Windows Vista
-  RequestExecutionLevel user
+  ;Request application privileges for Windows Vista / 7
+  RequestExecutionLevel admin
 
 ;--------------------------------
 ;Interface Settings
@@ -38,7 +38,7 @@
   !insertmacro MUI_PAGE_WELCOME
   ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
   !insertmacro MUI_PAGE_COMPONENTS
-  !insertmacro MUI_PAGE_DIRECTORY
+	!insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
   !insertmacro MUI_PAGE_FINISH
 
@@ -230,8 +230,9 @@ Section "tubslatex" SecTubslatex
 
 
 	;; run font update
-	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
+	;ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
 	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --mkmaps"'
+	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -242,9 +243,20 @@ SectionEnd
 ;--------------------------------
 ;Installer Functions
 
+Var userrights ;stores user rights, either "admin" or "user"
+
 Function .onInit
 
   ;!insertmacro MUI_LANGDLL_DISPLAY
+
+  # call userInfo plugin to get user info.
+  userInfo::getAccountType
+  # pop the result from the stack into $0
+  pop $0
+  StrCpy $userrights "admin"
+  strCmp $0 "Admin" +3
+		StrCpy $userrights "user"
+		messageBox MB_OK "Info: Installer started without admin privileges. Only local install will be possible."
 
 FunctionEnd
 
