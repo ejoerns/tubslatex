@@ -6,6 +6,7 @@
 ;Include Modern UI
 
   !include "MUI2.nsh"
+  !include "TextFunc.nsh"
 
 ;--------------------------------
 ;General
@@ -54,6 +55,69 @@
 
 ;--------------------------------
 ;Functions
+
+
+Function FileSearch
+Exch $R0 ;search for
+Exch
+Exch $R1 ;input file
+Push $R2
+Push $R3
+Push $R4
+Push $R5
+Push $R6
+Push $R7
+Push $R8
+Push $R9
+ 
+  StrLen $R4 $R0
+  StrCpy $R7 0
+  StrCpy $R8 0
+ 
+  ClearErrors
+  FileOpen $R2 $R1 r
+  IfErrors Done
+ 
+  LoopRead:
+    ClearErrors
+    FileRead $R2 $R3
+    IfErrors DoneRead
+ 
+    IntOp $R7 $R7 + 1
+    StrCpy $R5 -1
+    StrCpy $R9 0
+ 
+    LoopParse:
+      IntOp $R5 $R5 + 1
+      StrCpy $R6 $R3 $R4 $R5
+      StrCmp $R6 "" 0 +4
+        StrCmp $R9 1 LoopRead
+          IntOp $R7 $R7 - 1
+          Goto LoopRead
+      StrCmp $R6 $R0 0 LoopParse
+        StrCpy $R9 1
+        IntOp $R8 $R8 + 1
+        Goto LoopParse
+ 
+  DoneRead:
+    FileClose $R2
+  Done:
+    StrCpy $R0 $R8
+    StrCpy $R1 $R7
+ 
+Pop $R9
+Pop $R8
+Pop $R7
+Pop $R6
+Pop $R5
+Pop $R4
+Pop $R3
+Pop $R2
+Exch $R1 ;number of lines found on
+Exch
+Exch $R0 ;output count found
+FunctionEnd
+
 
 ; StrContains
 ; This function does a case sensitive searches for an occurrence of a substring in a string. 
@@ -130,6 +194,57 @@ Function addLocaltexmf
 FunctionEnd
 
 
+Function WriteToFile
+ Exch $0 ;file to write to
+ Exch
+ Exch $1 ;text to write
+ 
+  FileOpen $0 $0 a #open file
+   FileSeek $0 0 END #go to end
+   FileWrite $0 $1 #write to file
+  FileClose $0
+ 
+ Pop $1
+ Pop $0
+FunctionEnd
+ 
+!macro WriteToFile String File
+ Push "${String}"
+ Push "${File}"
+  Call WriteToFile
+!macroend
+!define WriteToFile "!insertmacro WriteToFile"
+
+
+Function enableUpdmaps
+	;; search for map an delete if found
+	Exch $R0 ;map name
+	Exch
+	Exch $R1 ;updmap config file
+	ClearErrors
+	messageBox MB_OK "File: $R1, Content: $R0"
+	FileOpen $0 $R1 "r"                     ; open target file for reading
+	GetTempFileName $R9                           ; get new temp file name
+	FileOpen $1 $R9 "w"                           ; open temp file for writing
+	loop:
+		FileRead $0 $2                              ; read line from target file
+		IfErrors done                               ; check if end of file reached
+		${StrContains} $R2 $R0 $2
+		StrCmp $R2 "" 0 loop
+		;StrCmp $2 $R0 loop 0
+		FileWrite $1 $2                             ; write changed or unchanged line to temp file
+		Goto loop
+	done:
+		FileClose $0                                ; close target file
+		FileClose $1                                ; close temp file
+		Delete "file.txt"                           ; delete target file
+		CopyFiles /SILENT $R9 $R1            				; copy temp file to target file
+		Delete $R9                                  ; delete temp file
+	;; add map
+	${WriteToFile} "Map $R0$\r$\n" $R1
+FunctionEnd
+
+
 ;--------------------------------
 ;Installer Sections
 
@@ -141,6 +256,14 @@ Section "tubslatex" SecTubslatex
 
   Call getMiktexInstallPath
   Call addLocaltexmf
+
+	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
+	Push "NexusProSans.map"
+		Call enableUpdmaps
+	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
+	Push "NexusProSerif.map"
+		Call enableUpdmaps
+
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
