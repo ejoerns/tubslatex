@@ -202,30 +202,14 @@ FunctionEnd
 ;--------------------------------
 ;Installer Sections
 
-Section "tubslatex" SecTubslatex
-
-  ;; enables install logging
-  ;LogSet on ; not working, NSIS_CONFIG_LOG not defined
-
-  ;ADD YOUR OWN FILES HERE...
-
-  Call getMiktexInstallPath
-  Call addLocaltexmf
-
+Section "Nexus" SecNexus
 	;; Make sure that updmap.cfg exists
 	SetOutPath "$APPDATA\MiKTeX\2.9\miktex\config\"
 	FileOpen $9 "updmap.cfg" w
 	FileClose $9
 
-	;; files to copy
   SetOutPath "$INSTDIR"
-	FILE /r data\tex
-	FILE /r data\doc
 	FILE /r data\fonts
-
-	;; run file db update script
-	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
-	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --update-fndb"'
 
 	;; enable updmaps
 	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
@@ -238,7 +222,32 @@ Section "tubslatex" SecTubslatex
 	;; run font update
 	;ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
 	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --mkmaps"'
-	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+SectionEnd
+
+
+Section "Dokumentation" SecDoc
+
+  ;; files to copy
+  SetOutPath "$INSTDIR"
+	FILE /r data\doc
+
+SectionEnd
+
+
+Section "tubslatex" SecTubslatex
+
+  ;; enables install logging
+  ;LogSet on ; not working, NSIS_CONFIG_LOG not defined
+
+  ;; files to copy
+  SetOutPath "$INSTDIR"
+	FILE /r data\tex
+
+	;; run file db update script
+	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --update-fndb"'
+
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -246,14 +255,30 @@ Section "tubslatex" SecTubslatex
 SectionEnd
 
 
+Section "-postinst" SecPostInstall
+  Call getMiktexInstallPath
+  Call addLocaltexmf  
+SectionEnd
+
 ;--------------------------------
 ;Installer Functions
 
 Var userrights ;stores user rights, either "admin" or "user"
+Var miktexVersion
+
+;; Tries to get Version number of MiKTeX
+;; Aborts installation if no version was found
+Function analyzeMiktex
+  EnumRegKey $miktexVersion HKLM Software\MiKTeX.org\MiKTeX 0
+  StrCmp $miktexVersion "" 0 +3
+  MessageBox MB_OK "MiKTeX not installed, cancelling installation"
+  Abort "MiKTeX not installed, cancelling installation"
+  MessageBox MB_OK "Found Version: $miktexVersion"
+FunctionEnd
 
 Function .onInit
-
   ;!insertmacro MUI_LANGDLL_DISPLAY
+  Call analyzeMiktex
 
   # call userInfo plugin to get user info.
   userInfo::getAccountType
@@ -275,6 +300,9 @@ FunctionEnd
   LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
   LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
 
+  LangString DESC_AbortInstallation ${LANG_ENGLISH} "MiKTeX not installed. Canceling installation"
+  LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. Installation wird abgebrochen."
+  
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
     !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
