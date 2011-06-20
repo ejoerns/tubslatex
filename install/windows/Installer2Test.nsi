@@ -362,9 +362,15 @@ Section "Uninstall"
 
   Delete "$INSTDIR\Uninstall.exe"
 
-  RMDir "$INSTDIR"
+  RMDir /r "$INSTDIR"
 
+	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
+	Push "NexusProSans.map"
   Call un.disableUpdmaps
+	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
+	Push "NexusProSerif.map"
+  Call un.disableUpdmaps
+  
   ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
 
   DeleteRegKey /ifempty HKCU "Software\tubslatex"
