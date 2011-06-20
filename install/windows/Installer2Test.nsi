@@ -1,6 +1,8 @@
 ;; Tubslatex Installer
 ;; Written by Enrico Joerns
 
+!define VERSION 0.2.4
+
 ;--------------------------------
 ;Include Modern UI
 
@@ -14,7 +16,7 @@
 
   ;; Name and file
   Name "tubslatex"
-  OutFile "Installer2Test.exe"
+  OutFile "tubslatexSetup_${VERSION}.exe"
 
   ;; Default installation folder
   InstallDir "$PROGRAMFILES\tubslatex"
@@ -60,6 +62,19 @@
 
 ;--------------------------------
 ;Functions
+
+Var miktexVersion
+
+;; Tries to get Version number of MiKTeX
+;; Aborts installation if no version was found
+Function analyzeMiktex
+  EnumRegKey $miktexVersion HKLM Software\MiKTeX.org\MiKTeX 0
+  StrCmp $miktexVersion "" 0 +3
+  MessageBox MB_OK "MiKTeX not installed, cancelling installation"
+  Abort "MiKTeX not installed, cancelling installation"
+  MessageBox MB_OK "Found Version: $miktexVersion"
+FunctionEnd
+
 
 ; StrContains
 ; This function does a case sensitive searches for an occurrence of a substring in a string. 
@@ -112,9 +127,9 @@ FunctionEnd
 ;; Looks for the MiKTeX installation path and stores it under ${MiktexInstallPath}
 Function getMiktexInstallPath
   ;; Check if common directory was selected
-  ReadRegStr $R0 HKLM "Software\MiKTeX.org\MiKTeX\2.9\Core" "CommonInstall"
+  ReadRegStr $R0 HKLM "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "CommonInstall"
   StrCmp $R0 "" 0 installDirReady
-  StrCpy $R0 "$PROGRAMFILES\MiKTeX 2.9"
+  StrCpy $R0 "$PROGRAMFILES\MiKTeX $miktexVersion"
   InstallDirReady:
 ;  messageBox MB_OK " Ok, MiKTeX is installed in $R0"
   !define MiktexInstallPath $R0
@@ -126,12 +141,12 @@ Function addLocaltexmf
   StrCmp ${MiktexInstallPath} $INSTDIR skipRootsUpdate
   ;; This part backs up already existing local texmf root paths and adds the new one
   ;; But it is not very flexible yet
-  ReadRegStr $R0 HKCU "Software\MiKTeX.org\MiKTeX\2.9\Core" "UserRoots"
+  ReadRegStr $R0 HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "UserRoots"
   ;; Test if directory ist already listed in UserRoots, skip if true
   ${StrContains} $R1 $INSTDIR $R0
   StrCmp $R1 "" 0 skipRootsUpdate
 ;  messageBox MB_OK "Updating UserRoots..."
-  WriteRegStr HKCU "Software\MiKTeX.org\MiKTeX\2.9\Core" "UserRoots" "$INSTDIR;$R0"
+  WriteRegStr HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "UserRoots" "$INSTDIR;$R0"
   skipRootsUpdate:
 FunctionEnd
 
@@ -204,7 +219,7 @@ FunctionEnd
 
 Section "Nexus" SecNexus
 	;; Make sure that updmap.cfg exists
-	SetOutPath "$APPDATA\MiKTeX\2.9\miktex\config\"
+	SetOutPath "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
 	FileOpen $9 "updmap.cfg" w
 	FileClose $9
 
@@ -212,10 +227,10 @@ Section "Nexus" SecNexus
 	FILE /r data\fonts
 
 	;; enable updmaps
-	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
+	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
 	Push "NexusProSans.map"
 		Call enableUpdmaps
-	Push "$APPDATA\MiKTeX\2.9\miktex\config\updmap.cfg"
+	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
 	Push "NexusProSerif.map"
 		Call enableUpdmaps
 
@@ -264,17 +279,7 @@ SectionEnd
 ;Installer Functions
 
 Var userrights ;stores user rights, either "admin" or "user"
-Var miktexVersion
 
-;; Tries to get Version number of MiKTeX
-;; Aborts installation if no version was found
-Function analyzeMiktex
-  EnumRegKey $miktexVersion HKLM Software\MiKTeX.org\MiKTeX 0
-  StrCmp $miktexVersion "" 0 +3
-  MessageBox MB_OK "MiKTeX not installed, cancelling installation"
-  Abort "MiKTeX not installed, cancelling installation"
-  MessageBox MB_OK "Found Version: $miktexVersion"
-FunctionEnd
 
 Function .onInit
   ;!insertmacro MUI_LANGDLL_DISPLAY
