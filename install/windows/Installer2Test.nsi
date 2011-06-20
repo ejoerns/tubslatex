@@ -72,7 +72,7 @@ Function analyzeMiktex
   StrCmp $miktexVersion "" 0 +3
   MessageBox MB_OK "MiKTeX not installed, cancelling installation"
   Abort "MiKTeX not installed, cancelling installation"
-  MessageBox MB_OK "Found Version: $miktexVersion"
+  ;MessageBox MB_OK "Found Version: $miktexVersion"
 FunctionEnd
 
 
@@ -91,7 +91,8 @@ Var STR_CONTAINS_VAR_3
 Var STR_CONTAINS_VAR_4
 Var STR_RETURN_VAR
  
-Function StrContains
+!macro StrContainsMacro un
+Function ${un}StrContains
   Exch $STR_NEEDLE
   Exch 1
   Exch $STR_HAYSTACK
@@ -114,15 +115,27 @@ Function StrContains
    Pop $STR_NEEDLE ;Prevent "invalid opcode" errors and keep the
    Exch $STR_RETURN_VAR  
 FunctionEnd
- 
+!macroend
+
+!insertmacro StrContainsMacro ""
+!insertmacro StrContainsMacro "un."
+
 !macro _StrContainsConstructor OUT NEEDLE HAYSTACK
   Push "${HAYSTACK}"
   Push "${NEEDLE}"
   Call StrContains
   Pop "${OUT}"
 !macroend
+
+!macro un_StrContainsConstructor OUT NEEDLE HAYSTACK
+  Push "${HAYSTACK}"
+  Push "${NEEDLE}"
+  Call un.StrContains
+  Pop "${OUT}"
+!macroend
  
 !define StrContains '!insertmacro "_StrContainsConstructor"'
+!define un.StrContains '!insertmacro "un_StrContainsConstructor"'
 
 ;; Looks for the MiKTeX installation path and stores it under ${MiktexInstallPath}
 Function getMiktexInstallPath
@@ -214,6 +227,33 @@ Function enableUpdmaps
 FunctionEnd
 
 
+Function un.disableUpdmaps
+	;; search for map an delete if found
+	Exch $R0 ;map name
+	Exch
+	Exch $R1 ;updmap config file
+	ClearErrors
+	;messageBox MB_OK "File: $R1, Content: $R0"
+	FileOpen $0 $R1 "r"                     ; open target file for reading
+	GetTempFileName $R9                           ; get new temp file name
+	FileOpen $1 $R9 "w"                           ; open temp file for writing
+	loop:
+		FileRead $0 $2                              ; read line from target file
+		IfErrors done                               ; check if end of file reached
+		${un.StrContains} $R2 $R0 $2
+		StrCmp $R2 "" 0 loop
+		;StrCmp $2 $R0 loop 0
+		FileWrite $1 $2                             ; write changed or unchanged line to temp file
+		Goto loop
+	done:
+		FileClose $0                                ; close target file
+		FileClose $1                                ; close temp file
+		Delete "file.txt"                           ; delete target file
+		CopyFiles /SILENT $R9 $R1            				; copy temp file to target file
+		Delete $R9                                  ; delete temp file
+	;; add map
+FunctionEnd
+
 ;--------------------------------
 ;Installer Sections
 
@@ -237,7 +277,7 @@ Section "Nexus" SecNexus
 	;; run font update
 	;ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
 	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --mkmaps"'
-	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
 SectionEnd
 
 
@@ -260,12 +300,8 @@ Section "tubslatex" SecTubslatex
 	FILE /r data\tex
 
 	;; run file db update script
-	ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
 	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --update-fndb"'
-
-
-  ;Create uninstaller
-  WriteUninstaller "$INSTDIR\Uninstall.exe"
 
 SectionEnd
 
@@ -273,6 +309,12 @@ SectionEnd
 Section "-postinst" SecPostInstall
   Call getMiktexInstallPath
   Call addLocaltexmf  
+
+  WriteRegStr HKCU "Software\tubslatex" "" $INSTDIR
+
+  ;Create uninstaller
+  WriteUninstaller "$INSTDIR\Uninstall.exe"
+
 SectionEnd
 
 ;--------------------------------
@@ -318,12 +360,13 @@ FunctionEnd
 
 Section "Uninstall"
 
-  ;ADD YOUR OWN FILES HERE...
-
   Delete "$INSTDIR\Uninstall.exe"
 
   RMDir "$INSTDIR"
 
-  DeleteRegKey /ifempty HKCU "Software\Modern UI Test"
+  Call un.disableUpdmaps
+  ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+
+  DeleteRegKey /ifempty HKCU "Software\tubslatex"
 
 SectionEnd
