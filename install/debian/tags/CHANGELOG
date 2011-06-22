@@ -8,3 +8,14 @@ V 0.2.3:
     - erweiterte Dokumentation
   nexus:
     - Italic-Schnitte hinzugefuegt
+
+V 0.2.4
+  install:
+    - postrm hinzugefuegt
+  beamer:
+    - 
+  cd-base:
+    - tubscolors um tuGrays erweitert
+  doc:
+    - diverse Ueberarbeitungen
+
