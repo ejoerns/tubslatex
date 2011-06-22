@@ -1,0 +1,8 @@
+NSIS-Skript zu Erzeugung von Windows-Installer für MikTeX.
+
+Benötigt:
+  NSIS - http://nsis.sourceforge.net/Main_Page
+
+  Plugins:
+    - registry  - http://nsis.sourceforge.net/Registry_plug-in
+    - ExecCmd   - http://nsis.sourceforge.net/ExecCmd_plug-in

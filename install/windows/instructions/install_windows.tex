@@ -1,0 +1,99 @@
+\documentclass[12pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[LY1]{fontenc}
+\usepackage{nexus}
+\usepackage[a4paper]{tubstypearea}
+\usepackage{tubslayout}
+\usepackage{scrpage2}
+\usepackage{enumerate}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
+
+\cfoot{}
+\ohead{\thepage}
+\pagestyle{scrheadings}
+
+\title{tubslatex -- Manuelle Installation}
+\subtitle{Anleitung für MiKTeX 2.9}
+\author{Enrico Jörns}
+
+
+\begin{document}
+
+
+\maketitle
+
+Die folgende Installationsbeschreibung ist für MiKTeX in der Version 2.9
+geschrieben. Für die Unterstützung von Vorgänger- oder Folgeversionen gibt
+es keine Garantie.
+
+Folgende Vorgehensweise wird zur manuellen Installation von tubslatex unter
+MiKTeX empfohlen. Es wird vom Vorhandensein der benötigten Dateistruktur in
+einer entsprechenden zip-Datei ausgegangen.
+
+\begin{enumerate}
+  \item {\bfseries Dateien kopieren}
+  
+    Alle zu installierende Dateien sollten entweder in ein bestehendes lokales
+    texmf-Verzeichnis kopiert werden oder in ein neu angelegtes Verzeichnis
+    (z.\,B. \lstinline{C:\tubslatex}).
+    
+    In dieses sind die Ordner \lstinline{tex}, \lstinline{doc} und 
+    \lstinline{fonts} zu kopieren.
+    
+    \begin{enumerate}[a)]
+      \item {\bfseries }
+        
+        Für den Fall, dass ein neues Verzeichnis angelegt wurde,
+        muss dies MiKTeX noch bekannt gemacht werden.
+        Dazu sind die MiKTeX-Einstellungen (Start$\to$Programme$\to$MiKTeX 2.8 
+        $\to$Maintenance$\to$Settings) aufzurufen.
+        Im Reiter \glqq Roots\grqq\ kann der neue Pfad hinzugefügt werden.
+    \end{enumerate}
+  \item {\bfseries Datenbank aktualisieren}
+    
+    Anschließend ist es noch ratsam den Button \glqq Refresh FNDB\grqq\
+    zu drücken, um die Dateidatenbank zu aktualisieren. Alternativ kann auch 
+    der Konsolenbefehl \lstinline{initexmf -u} verwendet werden.
+    
+  \item {\bfseries Font-Installation}
+    Um die Schrift Nexus benutzen zu können, sind zunächst wie oben beschrieben
+    die benötigten Dateien zu kopieren.
+    
+    \begin{enumerate}
+
+      \item {\bfseries map-Dateien bekannt machen}
+
+      Mit dem Konsolen-Befehl \lstinline{initexmf --edit-config-file updmap}
+      wird ein Editor geöffnet in den folgender Text einzutragen ist:
+
+      \begin{lstlisting}
+Map NexusProSans.map
+Map NexusProSerif.map
+      \end{lstlisting}
+
+      \item {\bfseries Font maps updaten}
+
+        Danach ist ein Update der Font-Datenbank erforderlich. Dies geschieht
+        mittels\\ \lstinline{initexmf --admin --mkmaps}. Die Konsole muss dazu
+        mit Administratorrechten gestartet werden.
+        
+        \paragraph{Hinweis:} Es ist auch möglich, die Datenbank im 
+          Nicht-Administrator-Modus zu erneu\-ern. Dies ist jedoch nur bei einer
+          Einzelbenutzer-Installation von MiKTeX sinnvoll. Wird
+          \lstinline{initexmf} ohne die Option \lstinline{--admin} aufgerufen,
+          so wird eine lokale map-Liste angelegt, auf die MiKTeX anschließen für
+          den aktuellen Benutzer ausschließlich zugreift.
+          Eine benutzerweite Installation von Fonts ist dann noch 
+          möglich, jedoch muss jedes mal manuell \lstinline{initexmf --mkmaps}
+          aufgerufen werden.
+%           Welche map-Liste aktuell verwendet wird, lässt sich mit dem Befehl
+    \end{enumerate}
+    
+    Danach sollte die Installation abgeschlossen sein und alle Pakete verwendbar 
+    sein.
+\end{enumerate}
+
+
+\end{document}

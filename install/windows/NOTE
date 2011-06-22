@@ -1,0 +1,12 @@
+Installationsalternativen anbieten!?:
+
+- User install
+- System wide install
+
+
+Die Roots für die user-texmf's liegen im registy-eintrag
+'HKEY_CURRENT_USER/Software/MiKTeX.org/MiKTeX/2.9/Core/UserRoots' vom Typ REG_SZ
+
+
+MiKTeX standard install path:
+C:\Programme\MiKTeX 2.9

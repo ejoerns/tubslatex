@@ -1,6 +1,6 @@
 all: clean structure fetch build
 
-VERSION = 0.2.3
+VERSION = 0.2.4
 DIST = debian
 
 REPODIR = /home/enrico/CD-LaTeX
@@ -16,7 +16,7 @@ structure:
 
 fetch:
 	. ../rawtree/fetch
-	cp control postinst texlive-tubs/DEBIAN/.
+	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
 	mv tex texlive-tubs/$(INSTALLPATH)/.
 	mv doc texlive-tubs/$(INSTALLPATH)/.
 	mv fonts texlive-tubs/$(INSTALLPATH)/.
