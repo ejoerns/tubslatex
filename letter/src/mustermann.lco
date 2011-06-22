@@ -1,0 +1,11 @@
+\LoadLetterOption{musterinstitut}
+
+%\setkomavar{fromdepartment}{Flugsimulation}
+
+\setkomavar{fromphonedirect}{[Durchwahl]}
+\setkomavar{fromemail}{[Mailadresse]}
+
+\setkomavar{fromtitle}{[Titel]}
+\setkomavar{fromname}{[Name]}
+
+\setkomavar{signature}{[Name]}
