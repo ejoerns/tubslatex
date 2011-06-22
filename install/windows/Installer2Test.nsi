@@ -315,6 +315,9 @@ Section "-postinst" SecPostInstall
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
+	;; register uninstall for windows uninstall manager
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"                  "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"                 "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 SectionEnd
 
 ;--------------------------------
@@ -374,5 +377,8 @@ Section "Uninstall"
   ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
 
   DeleteRegKey /ifempty HKCU "Software\tubslatex"
+  
+  ;; Delete from windows uninstall list
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
 
 SectionEnd
