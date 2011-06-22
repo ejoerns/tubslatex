@@ -20,9 +20,9 @@
 \@setplength{backaddrheight}{21pt}
 
 %Positionierung des Locationfeldes (Informationen auf der rechten Seite)
-\@setplength{lochpos}{-15.75cm}
+\@setplength{lochpos}{-15.5cm}
 \@setplength{locvpos}{4.7cm}
-\@setplength{locwidth}{4.75cm}
+\@setplength{locwidth}{5.25cm}
 \@setplength{locheight}{316pt}
 
 %Positionierung der Gesch‰ftszeile, bzw. da nicht vorhanden des Briefanfangs
@@ -45,6 +45,11 @@
 \newkomavar{fromfaxdirect}
 %%Referenzfeld Unser Schreiben vom:
 \newkomavar{mymail}
+%%Bank- und Steuerdaten
+\newkomavar{fromIBAN}
+\newkomavar{fromBIC}
+\newkomavar{fromUStID}
+\newkomavar{fromSteuernummer}
 
 %Setzen der Schriftattribute
 \setkomafont{addressee}{\sffamily}
@@ -91,17 +96,13 @@ Datum: \usekomavar{date}\\
 \ifkomavarempty{myref}{\relax}{Unser Zeichen: \usekomavar{myref}\\}
 \ifkomavarempty{mymail}{\relax}{Unsere Nachricht vom: \usekomavar{mymail}\\}
 ~\\
+\ifkomavarempty{frombank}{\relax}{\usekomavar{frombank}\\~\\}
+\ifkomavarempty{fromIBAN}{\relax}{IBAN: \usekomavar{fromIBAN}\\}
+\ifkomavarempty{fromBIC}{\relax}{BIC (Swift Code): \usekomavar{fromBIC}\\}
+\ifkomavarempty{fromUStID}{\relax}{USt.-ID-Nr.: \usekomavar{fromUStID}\\}
+\ifkomavarempty{fromSteuernummer}{\relax}{Steuer-Nr.: \usekomavar{fromSteuernummer}}
 \end{flushleft}
 }
-
-
-
-
-
-
-
-
-
 
 %Es werden Kopf- und Fuﬂzeilen auf Folgeseiten gesetzt
 \pagestyle{headings}
@@ -120,6 +121,5 @@ Technische Universit‰t Braunschweig\\
 \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
 \end{tabular}
 }
-
 
 \renewcommand*{\raggedsignature}{\raggedright}
