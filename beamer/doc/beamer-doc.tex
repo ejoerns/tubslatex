@@ -7,12 +7,15 @@
 %% V 0.2.2:
 %%  - Footline fuer mehrzeiligen Autor angepasst
 %%  - pdftitle benutzt short title, wenn verfuegbar
-%% V 0.2.X:
+%% V 0.2.4:
 %%  - author-Fontsize auf \footnotesize korrigiert
 %%  - Titelleite neu programmiert (etwas größer, Alignment-Probleme behoben)
 %%  - Benutze tuGrey60, falls Option colorhead gesetzt
 %%  - Abstand zwischen section und subection im toc um 0.5mm reduziert
 %%  - Option tinytocinheader funktioniert (wieder)
+%% V 0.2.X:
+%%  - Encodingprobleme bei eulervm behoben.
+%%  - Hinweis zu [plain] für Titelseite, chead gefixt, Bäker als Autor genannt
 \documentclass[cmyk,a4paper,colorscheme=green,TUBStitlepage=picture]{tubsreprt}
 
 \usepackage[utf8x]{inputenc}
@@ -25,10 +28,12 @@
 \usepackage{tikz} % TODO: should be RequirePackage
 \usepackage{booktabs}
 
+\chead{}  % quickfix
+
 \input{beamerug-macros}
 
 
-\author{Enrico Jörns}
+\author{Enrico Jörns, Martin Bäker}
 \title{LaTeX-Präsentationen im Corporate Design}
 \institute{TU-Braunschweig}
 \subject{Anleitung und Dokumentation}
@@ -164,6 +169,9 @@ Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
 \end{frame}
 \end{lstlisting}
 
+\emph{Wichtig:} Der \lstinline{frame}-Umgebung muss die Option
+\lstinline{[plain]} übergeben werden,
+sonst kommt es zu einer falschen Darstellung!
 
 \subsection{Titelgrafik}
 
