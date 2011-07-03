@@ -13,6 +13,8 @@
 \RequirePackage[a4paper]{tubstypearea}
 \RequirePackage{nexus}
 
+\RequirePackage{layouts}
+
 
 %% HINWEIS: marginleft verschiebt logo!!!
 
@@ -193,17 +195,20 @@
 % 1 (opt.)  - page selection
 % 2         - placement (left, right), default=left
 \newcommand{\tubslayout@setlogo}[2][1]{%
+% compute typeblock distance from page border
+\computeleftedgeodd{\tubslayout@logooffset}
 % process placement (left/right)
 \ifthenelse{\equal{#2}{right}}{%
-  \setlength{\tubslayout@logooffset}{\paperwidth-\tubslogoWidth}
+  \addtolength{\tubslayout@logooffset}{\paperwidth-\tubslogoWidth}
 }{%
-  \setlength{\tubslayout@logooffset}{0mm}
+  \addtolength{\tubslayout@logooffset}{0mm}
 }
+% \computeleftedgeodd{\tubslayout@logopageoffset}
 % create dynamic frame
 \edef\@p@sel{#1}
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
   {\tubslogoWidth}{\tubslogoHeight}%
-  {-2\tubspage@borderwidth+\tubslayout@logooffset}%
+  {\tubslayout@logooffset}%
   {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
 }
