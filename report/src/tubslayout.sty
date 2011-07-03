@@ -14,6 +14,8 @@
 \RequirePackage{nexus}
 
 
+%% HINWEIS: marginleft verschiebt logo!!!
+
 \newcounter{temp@calca}
 \newcounter{temp@calcb}
 
@@ -268,7 +270,7 @@
 % calc temp@width
 \setlength\temp@width{\tubspage@columnwidth*(#6)}
 % adjust xpos and width for columnsep
-\ifnum#4=1
+\ifnum#5=1
 \else
 \addtolength\temp@xpos{0.5\tubspage@columnsep}
 \addtolength\temp@width{-0.5\tubspage@columnsep}
