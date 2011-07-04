@@ -19,8 +19,12 @@
 % height of sender area (top of the page
 % until borderwidth above communication area
 \newlength{\tubspage@senderheight}
+% senderheight without borders
+\newlength{\tubspage@headheight}
 % height of communication area (TODO: not neccesair?)
 \newlength{\tubspage@communicationheight}
+% width of area
+\newlength{\tubspage@contentwidth}
 % Nr of horizontal segments for box layout
 \def\tubspage@xsegments{6}
 % Nr of vertical segments for gaussian layout system
@@ -59,6 +63,8 @@
     (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
+  \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  \setlength{\tubspage@contentwidth}{\paperwidth-2\tubspage@borderwidth}
   %
   \ifthenelse{\boolean{tubspage@marginleft}}{%
     \geometry{%
