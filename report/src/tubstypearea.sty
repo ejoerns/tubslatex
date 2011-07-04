@@ -41,6 +41,8 @@
 \newlength{\tubspage@gaussheight}
 %
 \newlength{\tubspage@columnwidth}
+%
+\newboolean{tubspage@twosided}\setboolean{tubspage@twosided}{false}
 
 % calculates dimensions for LaTeXs page layout
 \newcommand{\tubspage@calclayout}{%
@@ -83,6 +85,9 @@
       marginparsep=\tubspage@columnsep,
       marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
   }{}
+  \ifthenelse{\boolean{tubspage@twosided}}{%
+    \geometry{twoside}
+  }
 %   \setlength{\marginparwidth}{\TPHorizModule}
 }
 
@@ -191,6 +196,9 @@
   \setlength{\tubspage@bcor}{#1}
 }
 
+\DeclareOptionX{twosided}{%
+  \setboolean{tubspage@twosided}{true}
+}
 %
 % \ExecuteOptions{anypaper}
 % \ProcessOptions\relax

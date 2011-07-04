@@ -12,6 +12,7 @@
 \RequirePackage[a4paper]{tubslogo}
 \RequirePackage[a4paper]{tubstypearea}
 \RequirePackage{nexus}
+\RequirePackage[strict]{changepage}
 
 \RequirePackage{layouts}
 
@@ -41,6 +42,9 @@
 
 \makedfheader
 
+
+\newlength{\pos@frame@left@odd}% used to place a frame at the left page border
+\computeleftedgeodd{\pos@frame@left@odd}
 
 
 % places an image in the background
@@ -184,15 +188,22 @@
     \@test@height@VII\@test@color@VII\@test@id@VII%
     \@test@height@VIII\@test@color@VIII\@test@id@VIII%
   % left white border
-  \edef\@lborder@name{lborder\the@bg@frames@cnt}
-  \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@name}%
+  \edef\@lborder@odd@name{lborderodd\the@bg@frames@cnt}
+  \edef\@lborder@even@name{lbordereven\the@bg@frames@cnt}
+  \edef\@rborder@even@name{rbordereven\the@bg@frames@cnt}
+  \vNtonetop[odd]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%
+  \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
+  \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
 }
+
+
 
 %-------------------------------------
 %---------- logo placements ----------
 %-------------------------------------
 
 \newlength{\tubslayout@logooffset}
+\newlength{\tubslayout@temp}
 % sets the tu logo frame (but not the content)
 % params:
 % 1 (opt.)  - page selection
@@ -209,8 +220,9 @@
 % \computeleftedgeodd{\tubslayout@logopageoffset}
 % create dynamic frame
 \edef\@p@sel{#1}
+\setlength{\tubslayout@temp}{\tubslogoWidth+\tubspage@bcor}
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
-  {\tubslogoWidth}{\tubslogoHeight}%
+  {\tubslayout@temp}{\tubslogoHeight}%
   {\tubslayout@logooffset}%
   {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
@@ -226,7 +238,8 @@
   \ifthenelse{\equal{#1}{plain}}{
     \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
   }{%
-    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{\tubslogo}
+    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
+    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{\hfill\tubslogo}
   }
 }
 
@@ -265,8 +278,7 @@
 %-------------- topline --------------
 %-------------------------------------
 
-\newlength{\pos@frame@left@odd}% used to place a frame at the left page border
-\computeleftedgeodd{\pos@frame@left@odd}
+
 %
 \newcommand{\tubslayout@settopline}[1][1]{%
   % create dynamic frame
