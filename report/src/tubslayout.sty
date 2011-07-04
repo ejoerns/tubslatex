@@ -188,13 +188,16 @@
   \vNtonetop[all]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@name}%
 }
 
+%-------------------------------------
+%---------- logo placements ----------
+%-------------------------------------
 
 \newlength{\tubslayout@logooffset}
 % sets the tu logo frame (but not the content)
 % params:
 % 1 (opt.)  - page selection
 % 2         - placement (left, right), default=left
-\newcommand{\tubslayout@setlogo}[2][1]{%
+\newcommand{\tubslayout@settubslogo}[2][1]{%
 % compute typeblock distance from page border
 \computeleftedgeodd{\tubslayout@logooffset}
 % process placement (left/right)
@@ -209,22 +212,53 @@
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
   {\tubslogoWidth}{\tubslogoHeight}%
   {\tubslayout@logooffset}%
-  {-\tubspage@borderwidth-0.5em+36\tubspage@gaussheight-0.25\tubslogoHeight}%
+  {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
 }
 
-% place the logo
+% place the tubs logo
 % params
 % 1 (opt.)  - [plain] = only background
 % 2         - left/right
-\newcommand{\placelogo}[2][\relax]{%
+\newcommand{\placetubslogo}[2][\relax]{%
 % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
-  \tubslayout@setlogo[\@page@select]{#2}
+  \tubslayout@settubslogo[\@page@select]{#2}
   \ifthenelse{\equal{#1}{plain}}{
     \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
   }{%
     \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{\tubslogo}
   }
+}
+
+\newlength{\tubslayout@tmp@logoheight}
+\newcommand{\tubslayout@setlogo}[2][1]{%
+  % compute typeblock distance from page border
+  \computeleftedgeodd{\tubslayout@logooffset}
+  % process placement (left/right)
+  \addtolength{\tubslayout@logooffset}{0.5\paperwidth}
+  \setlength{\tubslayout@tmp@logoheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  % \computeleftedgeodd{\tubslayout@logopageoffset}
+  % create dynamic frame
+  \edef\@p@sel{#1}
+  \expandafter\newdynamicframe\expandafter[\@p@sel]%
+    {0.5\tubspage@contentwidth}{\tubspage@headheight}%
+    {\tubslayout@logooffset}%
+    {36\tubspage@gaussheight}%
+    [logo\the@bg@frames@cnt]
+}
+
+% place individual logo
+% params
+% 1 (opt.)  - bgcolor
+% 2         - logo
+\newcommand{\placelogo}[2][tuWhite]{%
+% place \the@bg@frames@cnt at \@page@select with opt: #1, #2
+  \tubslayout@setlogo[\@page@select]{#2}
+%   \ifthenelse{\equal{#1}{plain}}{
+  \setdynamicframe*{logo\the@bg@frames@cnt}{backcolor=#1}
+%   }{%
+  \setdynamiccontents*{logo\the@bg@frames@cnt}{\hfill #2}
+%   }
 }
 
 % \newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
