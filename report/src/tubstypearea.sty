@@ -5,6 +5,8 @@
 \RequirePackage{geometry}
 \RequirePackage[absolute]{textpos}
 \RequirePackage{calc}
+\RequirePackage{xkeyval}
+
 
 %%%%%%% Pre definitions %%%%%%%%
 
@@ -14,6 +16,8 @@
 \newboolean{tubspage@marginleft}
 % Boolean to check if right margin is used
 \newboolean{tubspage@marginright}
+% BCOR
+\newlength{\tubspage@bcor}
 % width of outer white border
 \newlength{\tubspage@borderwidth}
 % height of sender area (top of the page
@@ -48,7 +52,8 @@
     top=\tubspage@senderheight+\tubspage@borderwidth,
     left=2\tubspage@borderwidth,
     right=2\tubspage@borderwidth,
-    bottom=2\tubspage@borderwidth}
+    bottom=2\tubspage@borderwidth,
+    bindingoffset=\tubspage@bcor}
   % inner geometry
   \setcounter{tubspage@gausssum}{%
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
@@ -84,19 +89,19 @@
 %%%%%%% options section %%%%%%%%
 
 % margin left
-\DeclareOption{marginleft}{%
+\DeclareOptionX{marginleft}{%
   \setboolean{tubspage@marginleft}{true}
 }
 % margin right
-\DeclareOption{marginright}{%
+\DeclareOptionX{marginright}{%
   \setboolean{tubspage@marginright}{true}
 }
 % landscape
-\DeclareOption{landscape}{%
+\DeclareOptionX{landscape}{%
   \setboolean{tubspage@landscape}{true}
 }
 % A0
-\DeclareOption{a0paper}{%
+\DeclareOptionX{a0paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{649mm}%
     \def\tubspage@ysegments{6}%
@@ -106,10 +111,9 @@
   }
   \setlength{\tubspage@borderwidth}{32mm}%
   \setlength{\tubspage@senderheight}{160mm}%
-  \tubspage@calclayout
 }
 % A1
-\DeclareOption{a1paper}{%
+\DeclareOptionX{a1paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{649mm}%
     \def\tubspage@ysegments{6}%
@@ -119,10 +123,9 @@
   }
   \setlength{\tubspage@borderwidth}{22mm}%
   \setlength{\tubspage@senderheight}{120mm}%
-  \tubspage@calclayout
 }
 % A2
-\DeclareOption{a2paper}{%
+\DeclareOptionX{a2paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{324mm}%
     \def\tubspage@ysegments{6}%
@@ -132,10 +135,9 @@
   }
   \setlength{\tubspage@borderwidth}{16mm}%
   \setlength{\tubspage@senderheight}{80mm}%
-  \tubspage@calclayout
 }
 % A3
-\DeclareOption{a3paper}{%
+\DeclareOptionX{a3paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{226mm}%
     \def\tubspage@ysegments{6}%
@@ -145,10 +147,9 @@
   }
   \setlength{\tubspage@borderwidth}{11mm}%
   \setlength{\tubspage@senderheight}{60mm}%
-  \tubspage@calclayout
 }
 % A4
-\DeclareOption{a4paper}{%
+\DeclareOptionX{a4paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{162mm}%
     \def\tubspage@ysegments{6}%
@@ -158,10 +159,9 @@
   }
   \setlength{\tubspage@borderwidth}{8mm}%
   \setlength{\tubspage@senderheight}{40mm}%
-  \tubspage@calclayout
 }
 % A5
-\DeclareOption{a5paper}{%
+\DeclareOptionX{a5paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{112.5mm}%
   }{%
@@ -169,10 +169,9 @@
   }
   \setlength{\tubspage@borderwidth}{5.5mm}%
   \setlength{\tubspage@senderheight}{30mm}%
-  \tubspage@calclayout
 }
 % A6
-\DeclareOption{a6paper}{%
+\DeclareOptionX{a6paper}{%
   \ifthenelse{\boolean{tubspage@landscape}}{%
     \setlength{\tubspage@communicationheight}{75mm}%
   }{%
@@ -180,19 +179,23 @@
   }
   \setlength{\tubspage@borderwidth}{5mm}%
   \setlength{\tubspage@senderheight}{25mm}%
-  \tubspage@calclayout
 }
 % any
-\DeclareOption{anypaper}{%
+\DeclareOptionX{anypaper}{%
   % calculate dimensions
   % ...
 %   \tubspage@calclayout
 }
+%%%
+\DeclareOptionX{bcor}{%
+  \setlength{\tubspage@bcor}{#1}
+}
 
 %
 % \ExecuteOptions{anypaper}
-\ProcessOptions\relax
-
+% \ProcessOptions\relax
+\ProcessOptionsX\relax
+\tubspage@calclayout
 
 
 
