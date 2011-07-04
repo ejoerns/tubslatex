@@ -261,6 +261,29 @@
 %   }
 }
 
+%-------------------------------------
+%-------------- topline --------------
+%-------------------------------------
+
+\newlength{\pos@frame@left@odd}% used to place a frame at the left page border
+\computeleftedgeodd{\pos@frame@left@odd}
+%
+\newcommand{\tubslayout@settopline}[1][1]{%
+  % create dynamic frame
+  \edef\@p@sel{#1}
+  \expandafter\newdynamicframe\expandafter[\@p@sel]%
+    {\tubspage@contentwidth}{0.5pt}%
+    {\pos@frame@left@odd+\tubspage@borderwidth}%
+    {-\tubspage@borderwidth+36\tubspage@gaussheight}
+    [topline\the@bg@frames@cnt]
+}
+
+
+\newcommand{\topline}[1][1]{%
+  \tubslayout@settopline[\@page@select]
+  \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=tuRed}
+}
+
 % \newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
 
 % \setdynamiccontents*{author}{%
