@@ -45,7 +45,8 @@
 
 \newlength{\pos@frame@left@odd}% used to place a frame at the left page border
 \computeleftedgeodd{\pos@frame@left@odd}
-
+\newlength{\pos@frame@left@even}% used to place a frame at the left page border
+\computeleftedgeeven{\pos@frame@left@even}
 
 % places an image in the background
 % params:
@@ -210,12 +211,12 @@
 % 2         - placement (left, right), default=left
 \newcommand{\tubslayout@settubslogo}[2][1]{%
 % compute typeblock distance from page border
-\computeleftedgeodd{\tubslayout@logooffset}
+% \computeleftedgeodd{\tubslayout@logooffset}
 % process placement (left/right)
 \ifthenelse{\equal{#2}{right}}{%
-  \addtolength{\tubslayout@logooffset}{\paperwidth-\tubslogoWidth}
+  \setlength{\tubslayout@logooffset}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
 }{%
-  \addtolength{\tubslayout@logooffset}{0mm}
+  \setlength{\tubslayout@logooffset}{0mm}
 }
 % \computeleftedgeodd{\tubslayout@logopageoffset}
 % create dynamic frame
@@ -223,9 +224,14 @@
 \setlength{\tubslayout@temp}{\tubslogoWidth+\tubspage@bcor}
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
   {\tubslayout@temp}{\tubslogoHeight}%
-  {\tubslayout@logooffset}%
+  {\pos@frame@left@odd+\tubslayout@logooffset}%
   {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
+  % set x pos for twosided layout
+  \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
+    evenx=\pos@frame@left@even+\tubslayout@logooffset}
+  \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
+    oddx=\pos@frame@left@odd+\tubslayout@logooffset}
 }
 
 % place the tubs logo
@@ -235,11 +241,12 @@
 \newcommand{\placetubslogo}[2][\relax]{%
 % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
   \tubslayout@settubslogo[\@page@select]{#2}
-  \ifthenelse{\equal{#1}{plain}}{
+  \ifthenelse{\equal{#1}{plain}}{%
     \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
   }{%
     \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
-    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{\hfill\tubslogo}
+    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{%
+      \checkoddpage\ifoddpage\hfill\fi\tubslogo}
   }
 }
 
@@ -288,6 +295,11 @@
     {\pos@frame@left@odd+\tubspage@borderwidth}%
     {-\tubspage@borderwidth+36\tubspage@gaussheight}
     [topline\the@bg@frames@cnt]
+  % set x pos for twosided layout
+  \setdynamicframe*{topline\the@bg@frames@cnt}{%
+    evenx=\pos@frame@left@even+\tubspage@borderwidth}
+  \setdynamicframe*{topline\the@bg@frames@cnt}{%
+    oddx=\pos@frame@left@odd+\tubspage@borderwidth+\tubspage@bcor}
 }
 
 

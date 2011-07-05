@@ -71,7 +71,8 @@
   \textblockorigin{2\tubspage@borderwidth}{%
     \tubspage@senderheight+\tubspage@borderwidth}
   \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
-  \setlength{\tubspage@contentwidth}{\paperwidth-2\tubspage@borderwidth}
+  \setlength{\tubspage@contentwidth}{%
+    \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
   %
   \ifthenelse{\boolean{tubspage@marginleft}}{%
     \geometry{%
