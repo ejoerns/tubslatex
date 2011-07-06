@@ -7,17 +7,26 @@
 \RequirePackage{environ}
 \usepackage{flowfram}
 \RequirePackage{multicol}
+\RequirePackage[strict]{changepage}
 % cd packages
 \RequirePackage{tubscolors}
-\RequirePackage[a4paper]{tubslogo}
-\RequirePackage[a4paper]{tubstypearea}
+\RequirePackage{tubslogo}
+\RequirePackage{tubstypearea}
 \RequirePackage{nexus}
-\RequirePackage[strict]{changepage}
 
+% helper
 \RequirePackage{layouts}
 
+% This is the fg color for the structural elements.
+% This is defined to be able to switch between colored and mono version.
+\colorlet{fgcolor}{tuRed}
 
-%% HINWEIS: marginleft verschiebt logo!!!
+% Sets the fg color to mono, i.e. black
+\DeclareOption{mono}{%
+  \colorlet{fgcolor}{tuBlack}
+}
+
+\ProcessOptions\relax
 
 \newcounter{temp@calca}
 \newcounter{temp@calcb}
@@ -204,7 +213,7 @@
 %-------------------------------------
 
 \newlength{\tubslayout@logooffset}
-\newlength{\tubslayout@temp}
+% \newlength{\tubslayout@temp}
 % sets the tu logo frame (but not the content)
 % params:
 % 1 (opt.)  - page selection
@@ -221,17 +230,17 @@
 % \computeleftedgeodd{\tubslayout@logopageoffset}
 % create dynamic frame
 \edef\@p@sel{#1}
-\setlength{\tubslayout@temp}{\tubslogoWidth+\tubspage@bcor}
+% \setlength{\tubslayout@temp}{\tubslogoWidth+\tubspage@bcor}
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
-  {\tubslayout@temp}{\tubslogoHeight}%
-  {\pos@frame@left@odd+\tubslayout@logooffset}%
+  {\tubslogoWidth}{\tubslogoHeight}%
+  {\pos@frame@left@odd+\tubslayout@logooffset+\tubspage@bcor}%
   {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
   % set x pos for twosided layout
   \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
     evenx=\pos@frame@left@even+\tubslayout@logooffset}
   \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
-    oddx=\pos@frame@left@odd+\tubslayout@logooffset}
+    oddx=\pos@frame@left@odd+\tubslayout@logooffset+\tubspage@bcor}
 }
 
 % place the tubs logo
@@ -242,9 +251,9 @@
 % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
   \tubslayout@settubslogo[\@page@select]{#2}
   \ifthenelse{\equal{#1}{plain}}{%
-    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
+    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
   }{%
-    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=tuRed}
+    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
     \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{%
       \checkoddpage\ifoddpage\hfill\fi\tubslogo}
   }
@@ -305,7 +314,7 @@
 
 \newcommand{\topline}[1][1]{%
   \tubslayout@settopline[\@page@select]
-  \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=tuRed}
+  \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
 }
 
 % \newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
