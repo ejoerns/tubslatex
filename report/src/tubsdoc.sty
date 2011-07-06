@@ -1,0 +1,56 @@
+\ProvidesPackage{tubsdoc}
+
+\RequirePackage{xkeyval}
+
+% This is the standard binding correction for printing text documents.
+% It reduces the test width and allows non-borderless printing.
+\def\tubsdoc@std@bcor{15mm}
+
+\DeclareOptionX{mono}{%
+  \PassOptionsToPackage{mono}{tubslogo}
+  \PassOptionsToPackage{mono}{tubslayout}
+}
+
+\DeclareOptionX{cmyk}{%
+  \PassOptionsToPackage{cmyk}{tubscolors}
+  \PassOptionsToPackage{cmyk}{tubslogo}
+}
+
+\DeclareOptionX{twosided}{%
+  \PassOptionsToPackage{twosided}{tubstypearea}
+}
+
+\DeclareOptionX{a6paper}{%
+  \PassOptionsToPackage{a6paper}{tubstypearea}%TODO required? (loaded by layout?)
+%   \PassOptionsToPackage{apaper}{tubslayout}
+  \PassOptionsToPackage{a6paper}{tubslogo}
+}
+
+\DeclareOptionX{a5paper}{%
+  \PassOptionsToPackage{a5paper}{tubstypearea}
+%   \PassOptionsToPackage{a5paper}{tubslayout}
+  \PassOptionsToPackage{a5paper}{tubslogo}
+}
+
+\DeclareOptionX{a4paper}{%
+  \PassOptionsToPackage{a4paper}{tubstypearea}
+%   \PassOptionsToPackage{a4paper}{tubslayout}
+  \PassOptionsToPackage{a4paper}{tubslogo}
+}
+
+\DeclareOptionX{bcor}{
+  \PassOptionsToPackage{bcor=#1}{tubstypearea}
+}
+
+\DeclareOptionX{stdbcor}{
+  \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}
+}
+
+\ExecuteOptionsX{a4paper}
+\ProcessOptionsX\relax
+\RequirePackage{tubscolors}
+\RequirePackage{tubslogo}
+\RequirePackage{tubstypearea}
+\RequirePackage{tubslayout}
+\RequirePackage{nexus}
+\RequirePackage{tubslogo}
