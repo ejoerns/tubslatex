@@ -43,7 +43,11 @@
 }
 
 \DeclareOptionX{stdbcor}{
-  \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}
+  \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}{tubstypearea}
+}
+
+\DeclareOptionX{titlestyle}{
+  \PassOptionsToPackage{backstyle=#1}{tubstitlepage}
 }
 
 \ExecuteOptionsX{a4paper}
@@ -51,6 +55,9 @@
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}
+%% You may choose another backend here!!!
 \RequirePackage{tubslayout}
+
 \RequirePackage{nexus}
 \RequirePackage{tubslogo}
+\RequirePackage{tubstitlepage}
