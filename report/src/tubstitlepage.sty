@@ -1,0 +1,74 @@
+\ProvidesPackage{tubstitlepage}
+
+\RequirePackage{xkeyval}
+\RequirePackage{tubslayout}
+\RequirePackage{tubscolors}
+
+% Allow to choose default style
+\def\style@select{plain}
+\DeclareOptionX{backstyle}{%
+  \def\style@select{#1}
+}
+
+\ProcessOptionsX\relax
+
+
+
+% This package offers functionality to create titlepages in the
+% CorporateDesign of the TU Braunschweig.
+
+\let\oldmaketitle\maketitle
+
+
+\newcommand{\titlestyle}[1]{%
+  \csname tubs@style@#1\endcsname
+}
+
+% Redefine maketitle, provide additional optional arguments
+\renewcommand{\maketitle}[1][plain]{%
+%   \csname tubs@style@#1\endcsname
+}
+
+% Redefine environment titlepage, provide additional optional arguments
+\renewenvironment{titlepage}[1][\relax]{%
+}{%
+}
+
+% Allows to set a logo
+\newcommand{\logo}[1]{%
+  
+}
+
+% Creates new title style
+% produces command of type \tubs@style@stylename
+% args:
+% 1 - style name
+% 2 - style content
+\newcommand{\new@title@style}[2]{%
+  \expandafter\def\csname tubs@style@#1\endcsname{
+    #2
+  }
+}
+
+
+%%% styles defenitions %%%
+
+\new@title@style{plain}{%
+  \defbgtemplate[1]{1}{%
+    \topline
+    \emptyframe{8}
+    \placetubslogo{left}
+  }
+}
+
+\new@title@style{color}{%
+  \defbgtemplate[1]{3}{%
+    \colorframe{3}{tuSecondary60}
+    \colorframe{4}{tuSecondary80}
+    \colorframe{1}{tuRed}
+    \placetubslogo{left}
+  }
+}
+
+% finally, load selected style
+\expandafter\csname tubs@style@\style@select\endcsname
