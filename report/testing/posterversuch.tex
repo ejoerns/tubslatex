@@ -8,7 +8,7 @@
 \usepackage{calc}
 \usepackage{scrpage2}
 \usepackage{nexus}
-\usepackage[a4paper,marginleft]{tubstypearea}
+\usepackage[a4paper,marginleft,bcor=15mm,twosided]{tubstypearea}
 \usepackage[a4paper]{tubslogo}
 \usepackage[green]{tubscolors}
 \usepackage[compact]{titlesec}
@@ -96,15 +96,15 @@
 %     \end{tubsbox}
   \end{minipage}%
 }}%
-\vspace*{-0.75\tulogoHeight}\vspace{-\textheight}\vspace*{-2\tubspage@borderwidth}\\%
+\vspace*{-0.75\tubslogoHeight}\vspace{-\textheight}\vspace*{-2\tubspage@borderwidth}\\%
 \hspace*{-2\tubspage@borderwidth}%
 \ifthenelse{\boolean{tubspage@marginleft}}{%
   \hspace*{-\marginparwidth}%
   \hspace*{-\marginparsep}%
 }{}%
 \colorbox{tuRed}{%
-\hbox to \tulogoWidth{\vbox to \tulogoHeight{\tubslogo}}%
-}\vspace*{-0.25\tulogoHeight}%
+\hbox to \tubslogoWidth{\vbox to \tubslogoHeight{\tubslogo}}%
+}\vspace*{-0.25\tubslogoHeight}%
 }
 
 
@@ -116,19 +116,124 @@
 ~
 }}}}
 
+\makeatletter
+
+\newboolean{tubs@twoside}\setboolean{tubs@twoside}{false}
+
+% switch to define commands that work different for even and odd pages.
+% is only active if option twosided is set true
+\newcommand{\if@tubs@oddpage}[2]{%
+  \ifthenelse{\boolean{tubs@twoside}}{%
+    \ifthispageodd{#1}{#2}%
+  }{#1}%
+}
+
+\newlength{\tmp@posx}
+\newlength{\tmp@posy}
+% this command allows to add a top line to the background
+\newcommand\tubs@topline{%
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+  }{
+    \setlength{\tmp@posx}{\tubspage@borderwidth}
+  }
+  \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy})
+    {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.2ex}}}
+}
+
+% this command allow to add the tubs logo to the background
+\newcommand\tubs@tubslogo{%
+  \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@bcor}
+  }{%
+    \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+  }
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy})
+    {\tubslogo}
+}
+
+% args:
+% 1 - first element (top down)
+% 2 - nr of elements
+\newcounter{tmp@calc@bgpos}
+\newcounter{tmpb@calc@bgpos}
+\newcommand\tubs@background[3]{%
+  % calculate and set y pos
+  \calc@gauss@elementpos{tmp@calc@bgpos}{#2}
+%   \setcounter{tmp@calc@bgpos}{\thetubspage@gausssum-\thetmp@calc@bgpos}
+  \setlength{\tmp@posy}{%
+    \tubspage@borderwidth+\thetmp@calc@bgpos\tubspage@gaussheight%
+    -\thetmp@calc@bgpos\tubspage@gaussheight-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
+  }
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+  }{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth}
+  }
+  % calculate and set height
+  \calc@gauss@elementpos{tmpb@calc@bgpos}{#2+#3}
+
+%   \setcounter{tmpb@calc@bgpos}{\thetubspage@gausssum-\thetmpb@calc@bgpos}
+  % additional fixment hack because of inverted y orientation
+  \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
+  \addtolength{\tmp@posy}{%
+    -\thetmp@calc@bgpos\tubspage@gaussheight+36\tubspage@gaussheight}
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy})
+    {{\setlength\fboxsep{0mm}\colorbox{#1}{\parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}}}
+}
+
+% \AddToShipoutPicture{\tubs@background{tuBlue}{1}{1}}
+\AddToShipoutPicture{\tubs@background{tuBlue80}{1}{2}}
+% \AddToShipoutPicture{\tubs@background{tuBlue60}{3}{1}}
+% \AddToShipoutPicture{\tubs@background{tuBlue40}{4}{1}}
+\AddToShipoutPicture{\tubs@topline}
+\AddToShipoutPicture{\tubs@tubslogo}
 
 \makeatother
+
+\makeatother
+
+
 
 \pagestyle{scrheadings}
 
 \begin{document}
-\AddToShipoutPicture{\BackgroundPic}
+% \AddToShipoutPicture{\BackgroundPic}
+
 
 \author{Enrico Jörns}
 \title{The infinite way to LaTeX}
 
-\maketitle
+% \maketitle
+\makeatletter
+\newcounter{test}
+~also: \calc@gauss@elementpos{test}{8}
+\thetest
+\makeatother
 
+\newpage
+
+\begin{tubsbox}[tuBlue100]{0}{1}{6}{2}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlue80]{0}{3}{6}{2}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlue60]{0}{5}{6}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuBlue40]{0}{6}{6}{3}
+~
+\end{tubsbox}
+~
 \newpage
 
 \fbox{\parbox{\oddsidemargin}{a}}
