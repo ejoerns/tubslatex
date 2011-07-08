@@ -6,8 +6,13 @@
 %refline=nodate In der Geschäftszeile erscheint kein Datum
 \LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}
 
+%Anpassung des Datumsformats
+\PassOptionsToPackage{ngerman, num}{isodate}
+\RequirePackage{isodate}
+\monthyearsepgerman{}{}
+
 %Die Basispakete des Corporate Design werden geladen
-\RequirePackage{Nexus}
+\RequirePackage{nexus}
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 
