@@ -210,6 +210,30 @@
 }
 
 
+% calculates gaussum and returns as plain number
+% parameters:
+% 1 - counter to set
+% 2 - value to calc sum of
+\newcommand{\calc@gaussum}[2]{%
+\setcounter{#1}{%
+  (#2*(#2+1))/2}%
+}
+
+% This makro allows to calculate the gauss sum for segments for current setup
+% counting is done top down
+% input is the element that should be setted
+% output is the number of element that have to be skipped before
+% Thus parameter 3 should result in output 15 with 8 segments
+% params:
+% 1 (opt) - ??
+% 2       - counter to store result in
+% 3       - segment number (counted 1 to 8)
+\newcounter{tmp@calc}
+\newcommand{\calc@gauss@elementpos}[3][]{%
+  \calc@gaussum{tmp@calc}{(\tubspage@ysegments-(#3-1))}%
+  \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
+}
+
 \newlength{\tubsbox@leftmargin}
 \newlength{\tubsbox@rightmargin}
 \newlength{\tubsbox@leftsep}
@@ -232,36 +256,40 @@
 \setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
 \setlength{\tubsbox@rightmargin}{0mm}
 \setlength{\tubsbox@leftsep}{0mm}
-\setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+% \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
 \else
+\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\fi
 \setcounter{tubsbox@lastelement}{#2}\addtocounter{tubsbox@lastelement}{#4}
 \ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
-\setlength{\tubsbox@leftmargin}{0mm}
+% \setlength{\tubsbox@leftmargin}{0mm}
 \setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
-\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+% \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
 \setlength{\tubsbox@rightsep}{0mm}
 \else
-\setlength{\tubsbox@leftmargin}{0mm}
+% \setlength{\tubsbox@leftmargin}{0mm}
 \setlength{\tubsbox@rightmargin}{0mm}
 \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
-\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+% \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
 \fi
-\fi
+% \fi
 % calculate top and bottom marings and seps
 \ifnum#3=1
 \setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
 \setlength{\tubsbox@bottommargin}{0mm}
 \else
-\setcounter{tubsbox@lastelement}{#3}
-\addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
+
+% \addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
+\fi
+\setcounter{tubsbox@lastelement}{#3+#5-1}
 \ifnum\value{tubsbox@lastelement}=\tubspage@ysegments
-\setlength{\tubsbox@topmargin}{0mm}
+% \setlength{\tubsbox@topmargin}{0mm}
 \setlength{\tubsbox@bottommargin}{\tubspage@borderwidth}
 \else
-\setlength{\tubsbox@topmargin}{0mm}
+% \setlength{\tubsbox@topmargin}{0mm}
 \setlength{\tubsbox@bottommargin}{0mm}
 \fi
-\fi
+% \fi
 %
 \def\bgcolor{#1}
 \def\tubsbox@xpos{#2}
