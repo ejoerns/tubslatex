@@ -57,17 +57,10 @@
 \newlength{\pos@frame@left@even}% used to place a frame at the left page border
 \computeleftedgeeven{\pos@frame@left@even}
 
-% places an image in the background
-% params:
-% 1 - row number
-% 2 - row span
-% 3 - images
-\newcommand{\tubsSetBackgroundImage}[3]{%
-  \setstaticcontents*{bg8}{%
-    \includegraphics[width=\paperwidth-2\tubspage@borderwidth]{#3}}
-}
 
-
+%
+%---------- Frame definitions ----------
+%
 %%%%
 \newcounter{@bg@cnt}
 \newcounter{@bg@y}
@@ -281,13 +274,9 @@
 % 1 (opt.)  - bgcolor
 % 2         - logo
 \newcommand{\placelogo}[2][tuWhite]{%
-% place \the@bg@frames@cnt at \@page@select with opt: #1, #2
   \tubslayout@setlogo[\@page@select]{#2}
-%   \ifthenelse{\equal{#1}{plain}}{
   \setdynamicframe*{logo\the@bg@frames@cnt}{backcolor=#1}
-%   }{%
   \setdynamiccontents*{logo\the@bg@frames@cnt}{\hfill #2}
-%   }
 }
 
 %-------------------------------------
@@ -317,21 +306,7 @@
   \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
 }
 
-% \newdynamicframe[1]{\textwidth}{\tubspage@gaussheight}{0pt}{0pt}[author]
 
-% \setdynamiccontents*{author}{%
-%   \sffamily\Huge Enrico Jörns
-% }
-
-
-% calculates gaussum and returns as plain number
-% parameters:
-% 1 - counter to set
-% 2 - value to calc sum of
-\newcommand{\calc@gaussum}[2]{%
-\setcounter{#1}{%
-  (#2*(#2+1))/2}%
-}
 
 \newlength{\temp@xpos}
 \newlength{\temp@ypos}
@@ -388,19 +363,5 @@
 \fi
 % create dynamic frame ...
 \newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
-}
-
-
-\setlength{\temp@ypos}{-\tubspage@borderwidth+16\tubspage@gaussheight-0.5em}
-\setlength{\temp@width}{\textwidth+2\tubspage@borderwidth}
-\newdynamicframe[1]{\temp@width}{\temp@ypos}{-\tubspage@borderwidth}{%
-20\tubspage@gaussheight}[image]
-
-\setdynamicframe*{image}{%
-%   x=\tubspage@borderwidth
-}
-\setdynamiccontents*{image}{%
-% \includegraphics[width=\textwidth+2\tubspage@borderwidth]{%
-% ../../beamer/doc/titlepicture.jpg}
 }
 
