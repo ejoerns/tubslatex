@@ -13,7 +13,7 @@
 
 This is a generated file.
 
-Copyright (C) 2011 by Enrico JÖrns
+Copyright (C) 2011 by Enrico Jörns
 
 This file may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either
@@ -29,6 +29,21 @@ LaTeX version 1999/12/01 or later.
 
 % --- File generation ---
 
-\generate{\file{tubsartcl.cls}{%
-  \from{tubsdoc.dtx}
+\generate{\file{tubsbook.cls}{%
+  \from{tubsdoc.dtx}{class,book,option}
 }}
+
+\generate{\file{tubsreprt.cls}{%
+  \from{tubsdoc.dtx}{class,report,option}
+}}
+
+\generate{\file{tubsartcl.cls}{%
+  \from{tubsdoc.dtx}{class,article,option}
+}}
+
+
+\generate{\file{tubsdoc.sty}{%
+  \from{tubsdoc.dtx}{package,option}
+}}
+
+\endbatchfile
