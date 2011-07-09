@@ -128,41 +128,74 @@
 %<*option>
 %    \end{macrocode}
 %
-%  The option |mono| switches to black and white style for the standard elements
+% \subsection{Paket-Optionen}
+% 
+% \subsubsection{Farb-Optionen}
+% \paragraph{mono}
+% Die Option |mono| erzeugt eine Schwarzweiß-Darstellung des Siegelband-Logos
+% und der sonst roten Trennlinie zwischen Absender- und 
+% Kommunikationsbereich (falls verwendet).
 %    \begin{macrocode}
 \DeclareOptionX{mono}{%
   \PassOptionsToPackage{mono}{tubslogo}
   \PassOptionsToPackage{mono}{tubslayout}
 }
 %    \end{macrocode}
-% 
+%
+% \paragraph{cmyk}
+% Die Option |cmyk| schaltet alle verwendeten CD-Elemente auf cmyk-Farbschema
+% um. Dies ist wird meist für den Druck benötigt.
+%    \begin{macrocode}
 \DeclareOptionX{cmyk}{%
   \PassOptionsToPackage{cmyk}{tubscolors}
   \PassOptionsToPackage{cmyk}{tubslogo}
 }
-% 
-%  The option |twosided| adjusts page for twosided printing
+%    \end{macrocode}
+%
+% \subsubsection{Satz-Optionen}
+% \paragraph{twosided}
+% Die Option |twosided| setzt die Seiten als zweiseitiges Layout, was vor
+% allem bei verwendung der Marginalen und der Bindungskorrektur zu Tragen
+% kommt.
 %    \begin{macrocode}
 \DeclareOptionX{twosided}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
 }
 %    \end{macrocode}
 % 
-% 
+% \paragraph{marginleft}
+% Die Option |marginleft| setzt eine Marginale am linken Rand des Textbereich.
+% Sie entspricht der Breite einer Spalte im Satzraster, das formatabhängig
+% in insgesamt 6, 4, oder 2 Spalten angelegt ist.
 %    \begin{macrocode}
 \DeclareOptionX{marginleft}{%
   \PassOptionsToPackage{marginleft}{tubstypearea}
 }
 %    \end{macrocode}
 % 
-% 
+% \paragraph{marginright}
+% Die Option |marginright| entspricht der Option |marginleft|, setzt
+% aber eine Marginale am rechten Bildrand.
+% Beide Optionen können auch kombiniert werden.
 %    \begin{macrocode}
 \DeclareOptionX{marginright}{%
   \PassOptionsToPackage{marginright}{tubstypearea}
 }
 %    \end{macrocode}
 % 
+% \paragraph{bcor}
+% Die Option |bcor| erlaubt das Setzen einer Bindekorrektur.
+% |bcor=5mm| setzt beispielsweise eine Bindekorrektur von 5mm.
+%    \begin{macrocode}
+\DeclareOptionX{bcor}{%
+  \PassOptionsToPackage{bcor=#1}{tubstypearea}
+}
+%    \end{macrocode}
 % 
+% \subsubsection{Papierformat}
+% \paragraph{a6paper}
+% Die Papierformat-Option |a6paper| zum Erzeugen von Dokumenten im
+% Format DIN A6.
 %    \begin{macrocode}
 \DeclareOptionX{a6paper}{%
   \PassOptionsToPackage{a6paper}{tubstypearea}%TODO required? (loaded by layout?)
@@ -171,7 +204,9 @@
 }
 %    \end{macrocode}
 % 
-% 
+% \paragraph{a5paper}
+% Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
+% Format DIN A5.
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
   \PassOptionsToPackage{a5paper}{tubstypearea}
@@ -180,7 +215,10 @@
 }
 %    \end{macrocode}
 % 
-% 
+% \paragraph{a4paper}
+% Die Papierformat-Option |a4paper| zum Erzeugen von Dokumenten im
+% Format DIN A4. Alle Dimensionen werden entsprechend den CD-Vorgaben
+% gesetzt und auch das Siegelband-Logo entsprechend skaliert.
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
   \PassOptionsToPackage{a4paper}{tubstypearea}
@@ -190,22 +228,16 @@
 %    \end{macrocode}
 % 
 % 
-%    \begin{macrocode}
-\DeclareOptionX{bcor}{
-  \PassOptionsToPackage{bcor=#1}{tubstypearea}
-}
-%    \end{macrocode}
-% 
 % 
 %    \begin{macrocode}
-\DeclareOptionX{stdbcor}{
+\DeclareOptionX{stdbcor}{%
   \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}{tubstypearea}
 }
 %    \end{macrocode}
 % 
 % 
 %    \begin{macrocode}
-\DeclareOptionX{titlestyle}{
+\DeclareOptionX{titlestyle}{%
   \PassOptionsToPackage{backstyle=#1}{tubstitlepage}
 }
 %    \end{macrocode}
