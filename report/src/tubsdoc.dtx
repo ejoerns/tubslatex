@@ -15,40 +15,49 @@
 %
 % \fi
 %
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
 % \iffalse
-%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<package>\ProvidesPackage{ package }
+%<*class>
+\newcommand*{\tubsClassName}{%
+%<article>  tubsartcl%
+%<report>  tubsreprt%
+%<book>  tubsbook%
+}
+%</class>
+%<package|class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<package>\ProvidesPackage{tubsdoc}
+%<class>\ProvidesClass{\tubsClassName}[tubstex document class]
 %<package>  [2011/07/09 vTesting TU Braunschweig CD Templates]
 %
 %<*driver>
 \documentclass{ltxdoc}
-\usepackage{tubsdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
 \begin{document}
-% \DocInput{package.dtx}
+  \DocInput{tubsdoc.dtx}
 \end{document}
 %</driver>
 % \fi
-%
-% \CheckSum{0}
-%
-% \CharacterTable
-% {Upper-case     \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%  Lower-case     \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%  Digits         \0\1\2\3\4\5\6\7\8\9
-%  Exclamation    \!    Double quote  \"    Hash (number) \#
-%  Dollar         \$    Percent       \%    Ampersand     \&
-%  Acute accent   \’    Left paren    \(    Right paren   \)
-%  Asterisk       \*    Plus          \+    Comma         \,
-%  Minus          \-    Point         \.    Solidus       \/
-%  Colon          \:    Semicolon     \;    Less than     \<
-%  Equals         \=    Greater than  \>    Question mark \?
-%  Commercial at  \@    Left bracket  \[    Backslash     \\
-%  Right bracket  \]    Circumflex    \^    Underscore    \_
-%  Grave accent   \‘    Left brace    \{    Vertical bar  \|
-%  Right brace    \}    Tilde         \~}
 %
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
@@ -84,19 +93,33 @@
 %
 % \section{Implementation}
 %
-% \begin{macro}{\YOURMACRO}
-% Put explanation of |\YOURMACRO|’s implementation here.
-%   \begin{macrocode}
-\newcommand{\YOURMACRO}{}
-%   \end{macrocode}
-% \end{macro}
+%  \begin{macro}{\KOMAClassName}
+%    \changes{v2.95}{2004/11/04}{Neu}
+% Für KOMAScript-Klassen wird hier einmalig der Name der Klasse definiert und
+% und die Klasse der Klasse angegeben.
+%    \begin{macrocode}
+\newcommand*{\TESTClassName}{%
+%<article>  scrartcl%
+%<report>  scrreprt%
+%<book>  scrbook%
+%<letter>  scrlttr2%
+}
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\YOURMACRO}
+%    \changes{v2.95}{2004/11/04}{Neu}
+% Für KOMAScript-Klassen wird hier einmalig der Name der Klasse definiert und
+% und die Klasse der Klasse angegeben.
+%    \begin{macrocode}
+\newcommand*{\YOURMACRO}{asdf}
+%    \end{macrocode}
+%   \end{macro}
 %
-% \begin{environment}{YOURENV}
-% Put explanation of |YOURENV|’s implementation here.
-%   \begin{macrocode}
-\newenvironment{YOURENV}{}{}
-%   \end{macrocode}
-% \end{environment}
-%
+
+2
+
+
+
+
 % \Finale
 \endinput
