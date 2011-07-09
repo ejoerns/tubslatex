@@ -184,16 +184,16 @@
   % additional fixment hack because of inverted y orientation
   \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
   \addtolength{\tmp@posy}{%
-    -\thetmp@calc@bgpos\tubspage@gaussheight+36\tubspage@gaussheight}
+    -\thetmp@calc@bgpos\tubspage@gaussheight+\thetubspage@gausssum\tubspage@gaussheight}
   \put(\LenToUnit{\tmp@posx},%
     \LenToUnit{\tmp@posy})
     {{\setlength\fboxsep{0mm}\colorbox{#1}{\parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}}}
 }
 
-% \AddToShipoutPicture{\tubs@background{tuBlue}{1}{1}}
-\AddToShipoutPicture{\tubs@background{tuBlue80}{1}{2}}
-% \AddToShipoutPicture{\tubs@background{tuBlue60}{3}{1}}
-% \AddToShipoutPicture{\tubs@background{tuBlue40}{4}{1}}
+\AddToShipoutPicture{\tubs@background{tuBlue}{1}{2}}
+\AddToShipoutPicture{\tubs@background{tuBlue80}{3}{2}}
+\AddToShipoutPicture{\tubs@background{tuBlue60}{5}{1}}
+\AddToShipoutPicture{\tubs@background{tuBlue40}{6}{3}}
 \AddToShipoutPicture{\tubs@topline}
 \AddToShipoutPicture{\tubs@tubslogo}
 
@@ -213,24 +213,34 @@
 \title{The infinite way to LaTeX}
 
 % \maketitle
-\makeatletter
-\newcounter{test}
-~also: \calc@gauss@elementpos{test}{8}
-\thetest
-\makeatother
+Well, it is quite simple to write something here, because this page has an easy
+layout.
 
+~
 \newpage
 
-\begin{tubsbox}[tuBlue100]{0}{1}{6}{2}
+\begin{tubsbox}[tuBlue100]{0}{1}{6}{1}
 ~
 \end{tubsbox}
-\begin{tubsbox}[tuBlue80]{0}{3}{6}{2}
+\begin{tubsbox}[tuBlue80]{0}{2}{6}{1}
 ~
 \end{tubsbox}
-\begin{tubsbox}[tuBlue60]{0}{5}{6}{1}
+\begin{tubsbox}[tuBlue60]{0}{3}{6}{1}
 ~
 \end{tubsbox}
-\begin{tubsbox}[tuBlue40]{0}{6}{6}{3}
+\begin{tubsbox}[tuBlue40]{0}{4}{6}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuGreen60]{0}{5}{6}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuGreen40]{0}{6}{6}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuGreen20]{0}{7}{6}{1}
+~
+\end{tubsbox}
+\begin{tubsbox}[tuRed]{0}{8}{6}{1}
 ~
 \end{tubsbox}
 ~
