@@ -50,6 +50,8 @@
 \documentclass{ltxdoc}
 \usepackage[ngerman,english]{babel}
 \usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -93,6 +95,12 @@
 %
 % \section{Implementation}
 %
+% This package requires the following package:
+% \textsf{xkeyval}
+% \begin{macrocode}
+\RequirePackage{xkeyval}%
+%    \end{macrocode}
+%
 %  \begin{macro}{\KOMAClassName}
 %    \changes{v2.95}{2004/11/04}{Neu}
 % Für KOMAScript-Klassen wird hier einmalig der Name der Klasse definiert und
@@ -114,12 +122,49 @@
 \newcommand*{\YOURMACRO}{asdf}
 %    \end{macrocode}
 %   \end{macro}
+% 
+% Option section
+%    \begin{macrocode}
+%<*option>
+%    \end{macrocode}
 %
-
-2
-
-
-
-
+%  The option |mono| switches to black and white style for the standard elements
+%    \begin{macrocode}
+\DeclareOptionX{mono}{%
+  \PassOptionsToPackage{mono}{tubslogo}
+  \PassOptionsToPackage{mono}{tubslayout}
+}
+%    \end{macrocode}
+% 
+\DeclareOptionX{cmyk}{%
+  \PassOptionsToPackage{cmyk}{tubscolors}
+  \PassOptionsToPackage{cmyk}{tubslogo}
+}
+% 
+%  The option |twosided| ajusts page for twosided printing
+%    \begin{macrocode}
+\DeclareOptionX{twosided}{%
+  \PassOptionsToPackage{twosided}{tubstypearea}
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</option>
+%    \end{macrocode}
+%
+% Finally execute default options and load the tubstex packages
+%    \begin{macrocode}
+\ExecuteOptionsX{a4paper}
+\ProcessOptionsX\relax
+\RequirePackage{tubscolors}
+\RequirePackage{tubslogo}
+\RequirePackage{tubstypearea}
+%% You may choose another backend here!!!
+\RequirePackage{tubslayout}
+%
+\RequirePackage{nexus}
+\RequirePackage{tubslogo}
+\RequirePackage{tubstitlepage}
+%    \end{macrocode}
+%
 % \Finale
 \endinput
