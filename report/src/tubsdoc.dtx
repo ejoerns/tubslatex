@@ -141,12 +141,75 @@
   \PassOptionsToPackage{cmyk}{tubslogo}
 }
 % 
-%  The option |twosided| ajusts page for twosided printing
+%  The option |twosided| adjusts page for twosided printing
 %    \begin{macrocode}
 \DeclareOptionX{twosided}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
 }
 %    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{marginleft}{%
+  \PassOptionsToPackage{marginleft}{tubstypearea}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{marginright}{%
+  \PassOptionsToPackage{marginright}{tubstypearea}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{a6paper}{%
+  \PassOptionsToPackage{a6paper}{tubstypearea}%TODO required? (loaded by layout?)
+%   \PassOptionsToPackage{apaper}{tubslayout}
+  \PassOptionsToPackage{a6paper}{tubslogo}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{a5paper}{%
+  \PassOptionsToPackage{a5paper}{tubstypearea}
+%   \PassOptionsToPackage{a5paper}{tubslayout}
+  \PassOptionsToPackage{a5paper}{tubslogo}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{a4paper}{%
+  \PassOptionsToPackage{a4paper}{tubstypearea}
+%   \PassOptionsToPackage{a4paper}{tubslayout}
+  \PassOptionsToPackage{a4paper}{tubslogo}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{bcor}{
+  \PassOptionsToPackage{bcor=#1}{tubstypearea}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{stdbcor}{
+  \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}{tubstypearea}
+}
+%    \end{macrocode}
+% 
+% 
+%    \begin{macrocode}
+\DeclareOptionX{titlestyle}{
+  \PassOptionsToPackage{backstyle=#1}{tubstitlepage}
+}
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</option>
 %    \end{macrocode}
