@@ -33,15 +33,30 @@ LaTeX version 1999/12/01 or later.
 % --- File generation ---
 
 \generate{\file{tubsbook.cls}{%
+  \from{tubsdoc.dtx}{class,book,head}
   \from{tubsdoc.dtx}{class,book,option}
+  \from{tubshead.dtx}{class,book,option}
+  \from{tubsdoc.dtx}{class,book,execoption}
+  \from{tubsdoc.dtx}{class,book,body}
+  \from{tubshead.dtx}{class,book,body}
 }}
 
 \generate{\file{tubsreprt.cls}{%
+  \from{tubsdoc.dtx}{class,report,head}
   \from{tubsdoc.dtx}{class,report,option}
+  \from{tubshead.dtx}{class,report,option}
+  \from{tubsdoc.dtx}{class,report,execoption}
+  \from{tubsdoc.dtx}{class,report,body}
+  \from{tubshead.dtx}{class,report,body}
 }}
 
 \generate{\file{tubsartcl.cls}{%
+  \from{tubsdoc.dtx}{class,article,head}
   \from{tubsdoc.dtx}{class,article,option}
+  \from{tubshead.dtx}{class,article,option}
+  \from{tubsdoc.dtx}{class,article,execoption}
+  \from{tubsdoc.dtx}{class,article,body}
+  \from{tubshead.dtx}{class,article,body}
 }}
 
 

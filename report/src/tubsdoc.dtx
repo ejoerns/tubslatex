@@ -85,6 +85,7 @@
 % \section{Implementation}
 %
 %    \begin{macrocode}
+%<*head>
 %<*class>
 %    \end{macrocode}
 % Definition des zu verwendenden Klassennamens
@@ -115,6 +116,9 @@
 \RequirePackage{xkeyval}%
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%</head>
+%    \end{macrocode}
 % 
 % Option section
 %    \begin{macrocode}
@@ -245,12 +249,25 @@
 %</option>
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+%<*execoption>
+%    \end{macrocode}
+% 
 % Finally execute default options and load the tubstex packages
 %    \begin{macrocode}
 \ExecuteOptionsX{a4paper}
 \ProcessOptionsX\relax
+%    \end{macrocode}
+% 
+%    \begin{macrocode}
+%</execoption>
+%    \end{macrocode}
+% 
+%    \begin{macrocode}
+%<*body>
+%    \end{macrocode}
 %
-%
+%    \begin{macrocode}
 \LoadClass{\BaseClass}
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
@@ -261,6 +278,9 @@
 \RequirePackage{nexus}
 \RequirePackage{tubslogo}
 \RequirePackage{tubstitlepage}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</body>
 %    \end{macrocode}
 %
 % \Finale
