@@ -9,6 +9,7 @@
 %Anpassung des Datumsformats
 \PassOptionsToPackage{ngerman, num}{isodate}
 \RequirePackage{isodate}
+\daymonthsepgerman{}
 \monthyearsepgerman{}{}
 
 %Die Basispakete des Corporate Design werden geladen
