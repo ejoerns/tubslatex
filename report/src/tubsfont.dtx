@@ -1,0 +1,176 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass[11pt]{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{tubsfont.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+%
+% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+%
+% \GetFileInfo{tubsodc.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{tubsfont} -- 
+%   font definitions for tubslatex\thanks{This document
+%   corresponds to \textsf{tubsfont}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   Put text here.
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% Put text here.
+%
+% \section{Usage}
+%
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% 
+%
+% \subsection{Options}
+% Es werden zur Zeit keine Optionen zur Verfügung gestellt
+%    \begin{macrocode}
+%<*option>
+%    \end{macrocode}
+%    \begin{macrocode}
+%</option>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*body>
+%    \end{macrocode}
+% 
+% Lade Nexus-Schrift
+%    \begin{macrocode}
+\RequirePackage{nexus}
+%    \end{macrocode}
+% Eliminiert den standardmäßigen Abstand über |\chapter|, das dieser aufgrund
+% des tief hängenden Textbereichs überflüssig ist.
+%    \begin{macrocode}
+\RequirePackage[compact]{titlesec}
+\titleformat{\chapter}[block]
+{\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+%    \end{macrocode}
+% 
+%    \begin{macrocode}
+%</body>
+%    \end{macrocode}
+% 
+% Font-Definitionen teilweise aus memoir geklaut.
+% Schriftgrößen sind an den im CD festgelegten orientiert.
+% Die genau definierten sind dasbei |Huge|, |huge|, |Large|, |large|, 
+% |normalsize| und |footnotesize|.
+% Die verbleibenden Zwischengrößen sind linear interpoliert.
+% 
+% Definition der Größen nach Vorgabe
+%    \begin{macrocode}
+%<*clo>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*a4>
+\renewcommand{\normalsize}{%
+   \@setfontsize\normalsize\@ixpt\@xiipt
+   \abovedisplayskip 9\p@ \@plus 2\p@ \@minus 4.5\p@
+   \abovedisplayshortskip \z@ \@plus 3\p@
+   \belowdisplayshortskip 5.5\p@ \@plus 2.5\p@ \@minus 3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+% 
+\renewcommand{\footnotesize}{%
+    \@setfontsize\footnotesize\@viipt{10}%
+    \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
+    \abovedisplayshortskip \z@ \@plus 2\p@
+    \belowdisplayshortskip 4\p@ \@plus 2\p@ \@minus 2\p@
+    \def\@listi{\leftmargin\leftmargini
+                \topsep 2\p@ \@plus 2\p@ \@minus 2\p@
+                \parsep 1\p@ \@plus\p@ \@minus\p@
+                \itemsep \parsep
+%%                \itemindent\z@
+               }%
+   \belowdisplayskip \abovedisplayskip
+}
+% 
+\def\large{\@setfontsize\large{14pt}{18}}
+\def\Large{\@setfontsize\Large{18pt}{23}}
+\def\huge{\@setfontsize\huge{36pt}{43}}
+\def\Huge{\@setfontsize\Huge{45pt}{54}}
+%    \end{macrocode}
+% Definition der interpolierten Größen
+%    \begin{macrocode}
+\def\LARGE{\@setfontsize\LARGE{27pt}{35}}
+\def\tiny{\@setfontsize\tiny\@vpt{6}}
+\def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
+%</a4>
+%    \end{macrocode}
+%    \begin{macrocode}
+%</clo>
+%    \end{macrocode}
+% 
+
+% 
+% \Finale
+\endinput
