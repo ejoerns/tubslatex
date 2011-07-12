@@ -326,7 +326,7 @@
 % calc temp@ypos
 \calc@gaussum{temp@calca}{(\tubspage@ysegments-(#3)-(#4-1))}%
 \addtocounter{temp@calca}{-1}
-\setlength\temp@ypos{-\tubspage@borderwidth-0.5em+\tubspage@gaussheight%
+\setlength\temp@ypos{-\tubspage@borderwidth+\tubspage@gaussheight%
   +\value{temp@calca}\tubspage@gaussheight}
 % calc temp@height
 \calc@gaussum{temp@calcb}{(\tubspage@ysegments-(#3-1))}
@@ -350,6 +350,8 @@
 \fi
 % adjust ypos and height for columnsep
 \ifnum#3=1
+% This produces a border at a box placed in first row!
+\addtolength\temp@height{-\tubspage@borderwidth}
 \else
 \addtolength\temp@height{-0.5\tubspage@columnsep}
 \fi
