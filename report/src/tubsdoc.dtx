@@ -135,7 +135,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{mono}{%
   \PassOptionsToPackage{mono}{tubslogo}
-  \PassOptionsToPackage{mono}{tubslayout}
+  \PassOptionsToPackage{mono}{tubsflowfram}
 }
 %    \end{macrocode}
 %
@@ -196,7 +196,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a6paper}{%
   \PassOptionsToPackage{a6paper}{tubstypearea}%TODO required? (loaded by layout?)
-%   \PassOptionsToPackage{apaper}{tubslayout}
+%   \PassOptionsToPackage{apaper}{tubsflowfram}
   \PassOptionsToPackage{a6paper}{tubslogo}
 }
 %    \end{macrocode}
@@ -207,7 +207,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
   \PassOptionsToPackage{a5paper}{tubstypearea}
-%   \PassOptionsToPackage{a5paper}{tubslayout}
+%   \PassOptionsToPackage{a5paper}{tubsflowfram}
   \PassOptionsToPackage{a5paper}{tubslogo}
 }
 %    \end{macrocode}
@@ -219,7 +219,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
   \PassOptionsToPackage{a4paper}{tubstypearea}
-%   \PassOptionsToPackage{a4paper}{tubslayout}
+%   \PassOptionsToPackage{a4paper}{tubsflowfram}
   \PassOptionsToPackage{a4paper}{tubslogo}
 }
 %    \end{macrocode}
@@ -232,6 +232,16 @@
 }
 %    \end{macrocode}
 % 
+%    \begin{macrocode}
+\DeclareOptionX{backend}{%
+  \ifx#1{flow}
+    \def\tubs@backend{flowfram}
+  \fi
+  \ifx#1{pgf}
+    \def\tubs@backend{pgf}
+  \fi
+}
+%    \end{macrocode}
 % 
 %    \begin{macrocode}
 \DeclareOptionX{titlestyle}{%
@@ -273,7 +283,7 @@
 \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}
 %% You may choose another backend here!!!
-\RequirePackage{tubslayout}
+\RequirePackage{tubsflowfram}
 %
 \RequirePackage{nexus}
 \RequirePackage{tubslogo}
