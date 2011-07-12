@@ -1,4 +1,4 @@
-\ProvidesPackage{tubslayout}
+\ProvidesPackage{tubsflowfram}
 % sys packages
 \RequirePackage{ifthen}
 \RequirePackage{calc}
@@ -10,12 +10,10 @@
 \RequirePackage[strict]{changepage}
 % cd packages
 \RequirePackage{tubscolors}
-\RequirePackage{tubslogo}
+% \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}
 \RequirePackage{nexus}
 
-% helper
-\RequirePackage{layouts}
 
 % This is the fg color for the structural elements.
 % This is defined to be able to switch between colored and mono version.
@@ -152,7 +150,7 @@
 \newcommand{\defbgtemplate}[3][all]{
   % test values
   \ifnum#2>\tubspage@ysegments
-    \PackageError{tubslayout}%
+    \PackageError{tubsflowfram}%
       {Exceeded max number of segmens!}%
       {Reduce segment quantity}%
   \fi
@@ -170,12 +168,12 @@
   #3
   %
   \ifnum\the@bg@cnt>0
-    \PackageError{tubslayout}%
+    \PackageError{tubsflowfram}%
       {You have to set all your segments! (\@page@div)}
       {Set missing segments (\the@bg@cnt)}
   \fi
   \ifnum\the@bg@y<\tubspage@ysegments
-    \PackageWarning{tubslayout}%
+    \PackageWarning{tubsflowfram}%
       {Your segments do not fill the whole page!}
       {}
   \fi
@@ -205,35 +203,35 @@
 %---------- logo placements ----------
 %-------------------------------------
 
-\newlength{\tubslayout@logooffset}
-% \newlength{\tubslayout@temp}
+\newlength{\tubsff@logooffset}
+% \newlength{\tubsff@temp}
 % sets the tu logo frame (but not the content)
 % params:
 % 1 (opt.)  - page selection
 % 2         - placement (left, right), default=left
-\newcommand{\tubslayout@settubslogo}[2][1]{%
+\newcommand{\tubsff@settubslogo}[2][1]{%
 % compute typeblock distance from page border
-% \computeleftedgeodd{\tubslayout@logooffset}
+% \computeleftedgeodd{\tubsff@logooffset}
 % process placement (left/right)
 \ifthenelse{\equal{#2}{right}}{%
-  \setlength{\tubslayout@logooffset}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+  \setlength{\tubsff@logooffset}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
 }{%
-  \setlength{\tubslayout@logooffset}{0mm}
+  \setlength{\tubsff@logooffset}{0mm}
 }
-% \computeleftedgeodd{\tubslayout@logopageoffset}
+% \computeleftedgeodd{\tubsff@logopageoffset}
 % create dynamic frame
 \edef\@p@sel{#1}
-% \setlength{\tubslayout@temp}{\tubslogoWidth+\tubspage@bcor}
+% \setlength{\tubsff@temp}{\tubslogoWidth+\tubspage@bcor}
 \expandafter\newdynamicframe\expandafter[\@p@sel]%
   {\tubslogoWidth}{\tubslogoHeight}%
-  {\pos@frame@left@odd+\tubslayout@logooffset+\tubspage@bcor}%
+  {\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}%
   {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
   % set x pos for twosided layout
   \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
-    evenx=\pos@frame@left@even+\tubslayout@logooffset}
+    evenx=\pos@frame@left@even+\tubsff@logooffset}
   \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
-    oddx=\pos@frame@left@odd+\tubslayout@logooffset+\tubspage@bcor}
+    oddx=\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}
 }
 
 % place the tubs logo
@@ -242,7 +240,7 @@
 % 2         - left/right
 \newcommand{\placetubslogo}[2][\relax]{%
 % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
-  \tubslayout@settubslogo[\@page@select]{#2}
+  \tubsff@settubslogo[\@page@select]{#2}
   \ifthenelse{\equal{#1}{plain}}{%
     \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
   }{%
@@ -252,19 +250,19 @@
   }
 }
 
-\newlength{\tubslayout@tmp@logoheight}
-\newcommand{\tubslayout@setlogo}[2][1]{%
+\newlength{\tubsff@tmp@logoheight}
+\newcommand{\tubsff@setlogo}[2][1]{%
   % compute typeblock distance from page border
-  \computeleftedgeodd{\tubslayout@logooffset}
+  \computeleftedgeodd{\tubsff@logooffset}
   % process placement (left/right)
-  \addtolength{\tubslayout@logooffset}{0.5\paperwidth}
-  \setlength{\tubslayout@tmp@logoheight}{\tubspage@senderheight-2\tubspage@borderwidth}
-  % \computeleftedgeodd{\tubslayout@logopageoffset}
+  \addtolength{\tubsff@logooffset}{0.5\paperwidth}
+  \setlength{\tubsff@tmp@logoheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  % \computeleftedgeodd{\tubsff@logopageoffset}
   % create dynamic frame
   \edef\@p@sel{#1}
   \expandafter\newdynamicframe\expandafter[\@p@sel]%
     {0.5\tubspage@contentwidth}{\tubspage@headheight}%
-    {\tubslayout@logooffset}%
+    {\tubsff@logooffset}%
     {36\tubspage@gaussheight}%
     [logo\the@bg@frames@cnt]
 }
@@ -274,7 +272,7 @@
 % 1 (opt.)  - bgcolor
 % 2         - logo
 \newcommand{\placelogo}[2][tuWhite]{%
-  \tubslayout@setlogo[\@page@select]{#2}
+  \tubsff@setlogo[\@page@select]{#2}
   \setdynamicframe*{logo\the@bg@frames@cnt}{backcolor=#1}
   \setdynamiccontents*{logo\the@bg@frames@cnt}{\hfill #2}
 }
@@ -285,7 +283,7 @@
 
 
 %
-\newcommand{\tubslayout@settopline}[1][1]{%
+\newcommand{\tubsff@settopline}[1][1]{%
   % create dynamic frame
   \edef\@p@sel{#1}
   \expandafter\newdynamicframe\expandafter[\@p@sel]%
@@ -302,19 +300,11 @@
 
 
 \newcommand{\topline}[1][1]{%
-  \tubslayout@settopline[\@page@select]
+  \tubsff@settopline[\@page@select]
   \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
 }
 
 
-% calculates gaussum and returns as plain number
-% parameters:
-% 1 - counter to set
-% 2 - value to calc sum of
-\newcommand{\calc@gaussum}[2]{%
-\setcounter{#1}{%
-  (#2*(#2+1))/2}%
-}
 
 \newlength{\temp@xpos}
 \newlength{\temp@ypos}
@@ -372,3 +362,4 @@
 % create dynamic frame ...
 \newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
+
