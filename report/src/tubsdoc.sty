@@ -1,71 +1,121 @@
+%%
+%% This is file `tubsdoc.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% tubsdoc.dtx  (with options: `package,head')
+%% tubsdoc.dtx  (with options: `package,option')
+%% tubshead.dtx  (with options: `package,option')
+%% tubsfont.dtx  (with options: `package,option')
+%% tubsdoc.dtx  (with options: `package,execoption')
+%% tubsdoc.dtx  (with options: `package,body')
+%% tubshead.dtx  (with options: `package,body')
+%% tubsfont.dtx  (with options: `package,body')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2011 by Enrico Jörns
+%% 
+%% This file may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.2 of this license or (at your option) any later
+%% version. The latest version of this license is in:
+%% 
+%%   http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.2 or later is part of all distributions of
+%% LaTeX version 1999/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesPackage{tubsdoc}
-
-\RequirePackage{xkeyval}
-
-% This is the standard binding correction for printing text documents.
-% It reduces the test width and allows non-borderless printing.
-\def\tubsdoc@std@bcor{15mm}
-
+  [2011/07/09 vTesting TU Braunschweig CD Templates]
+\RequirePackage{xkeyval}%
 \DeclareOptionX{mono}{%
   \PassOptionsToPackage{mono}{tubslogo}
-  \PassOptionsToPackage{mono}{tubslayout}
+  \PassOptionsToPackage{mono}{tubsflowfram}
 }
-
 \DeclareOptionX{cmyk}{%
   \PassOptionsToPackage{cmyk}{tubscolors}
   \PassOptionsToPackage{cmyk}{tubslogo}
 }
-
 \DeclareOptionX{twosided}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
 }
-
 \DeclareOptionX{marginleft}{%
   \PassOptionsToPackage{marginleft}{tubstypearea}
 }
-
 \DeclareOptionX{marginright}{%
   \PassOptionsToPackage{marginright}{tubstypearea}
 }
-
-\DeclareOptionX{a6paper}{%
-  \PassOptionsToPackage{a6paper}{tubstypearea}%TODO required? (loaded by layout?)
-%   \PassOptionsToPackage{apaper}{tubslayout}
-  \PassOptionsToPackage{a6paper}{tubslogo}
-}
-
-\DeclareOptionX{a5paper}{%
-  \PassOptionsToPackage{a5paper}{tubstypearea}
-%   \PassOptionsToPackage{a5paper}{tubslayout}
-  \PassOptionsToPackage{a5paper}{tubslogo}
-}
-
-\DeclareOptionX{a4paper}{%
-  \PassOptionsToPackage{a4paper}{tubstypearea}
-%   \PassOptionsToPackage{a4paper}{tubslayout}
-  \PassOptionsToPackage{a4paper}{tubslogo}
-}
-
-\DeclareOptionX{bcor}{
+\DeclareOptionX{bcor}{%
   \PassOptionsToPackage{bcor=#1}{tubstypearea}
 }
-
-\DeclareOptionX{stdbcor}{
+\def\tubs@opt@paper{}
+\DeclareOptionX{a6paper}{%
+  \def\tubs@opt@paper{a6paper}
+}
+\DeclareOptionX{a5paper}{%
+  \def\tubs@opt@paper{a5paper}
+}
+\DeclareOptionX{a4paper}{%
+  \def\tubs@opt@paper{a4paper}
+}
+\DeclareOptionX{stdbcor}{%
   \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}{tubstypearea}
 }
-
-\DeclareOptionX{titlestyle}{
+\DeclareOptionX{backend}{%
+  \if#1{flow}
+    \def\tubs@opt@backend{flowfram}
+  \fi
+  \ifx#1{pgf}
+    \def\tubs@opt@backend{pgf}
+  \fi
+  \ifthenelse{\equal{#1}{base}}{%
+    \def\tubs@opt@backend{base}
+  }{}
+  \ifthenelse{\equal{#1}{flow}}{%
+    \def\tubs@opt@backend{flowfram}
+  }{}
+  \ifthenelse{\equal{#1}{pgf}}{%
+    \def\tubs@opt@backend{pgf}
+  }{}
+}
+\DeclareOptionX{titlestyle}{%
   \PassOptionsToPackage{backstyle=#1}{tubstitlepage}
 }
+\DeclareOptionX*{%
+  \PassOptionsToClass{\CurrentOption}{\BaseClass}
+}
+\DeclareOptionX{fontsize}{%
+  \ifx#1{tubs}
+    \def\@fontsizefilebase{tubsa4}
+  \fi
+}
 
-\ExecuteOptionsX{a4paper}
-\ProcessOptionsX\relax
+\ProcessOptionsX*\relax
+\PassOptionsToPackage{\tubs@opt@paper}{tubstypearea}
+\PassOptionsToPackage{\tubs@opt@paper}{tubslogo}
+
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}
 %% You may choose another backend here!!!
-\RequirePackage{tubslayout}
-
+\RequirePackage{tubsflowfram}
 \RequirePackage{nexus}
 \RequirePackage{tubslogo}
 \RequirePackage{tubstitlepage}
+\RequirePackage{scrpage2}
+\clearscrheadings
+\automark[chapter]{chapter}
+\ihead{\scshape\headmark}
+\ohead{\mdseries\pagemark}
+\RequirePackage{nexus}
+\RequirePackage[compact]{titlesec}
+\titleformat{\chapter}[block]
+{\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+
+\endinput
+%%
+%% End of file `tubsdoc.sty'.

@@ -90,10 +90,12 @@
 %    \end{macrocode}
 % Definition des zu verwendenden Klassennamens
 %    \begin{macrocode}
+\RequirePackage{ifthen}
 \newcommand*{\tubsClassName}{%
 %<article>  tubsartcl%
 %<report>  tubsreprt%
 %<book>  tubsbook%
+%<poster>  tubsposter%
 }
 %    \end{macrocode}
 % Definition der zu verwendenden Mutterklasse
@@ -101,7 +103,8 @@
 \newcommand*{\BaseClass}{%
 %<article>  scrartcl%
 %<report>  scrreprt%
-%<book>  scrbook$
+%<book>  scrbook%
+%<poster>  scrartcl%
 }
 %</class>
 %<package|class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
@@ -155,9 +158,11 @@
 % allem bei verwendung der Marginalen und der Bindungskorrektur zu Tragen
 % kommt.
 %    \begin{macrocode}
+%<*book|report|article|package>
 \DeclareOptionX{twosided}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
 }
+%</book|report|article|package>
 %    \end{macrocode}
 % 
 % \paragraph{marginleft}
@@ -194,10 +199,9 @@
 % Die Papierformat-Option |a6paper| zum Erzeugen von Dokumenten im
 % Format DIN A6.
 %    \begin{macrocode}
+\def\tubs@opt@paper{}
 \DeclareOptionX{a6paper}{%
-  \PassOptionsToPackage{a6paper}{tubstypearea}%TODO required? (loaded by layout?)
-%   \PassOptionsToPackage{apaper}{tubsflowfram}
-  \PassOptionsToPackage{a6paper}{tubslogo}
+  \def\tubs@opt@paper{a6paper}
 }
 %    \end{macrocode}
 % 
@@ -206,9 +210,7 @@
 % Format DIN A5.
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
-  \PassOptionsToPackage{a5paper}{tubstypearea}
-%   \PassOptionsToPackage{a5paper}{tubsflowfram}
-  \PassOptionsToPackage{a5paper}{tubslogo}
+  \def\tubs@opt@paper{a5paper}
 }
 %    \end{macrocode}
 % 
@@ -218,9 +220,7 @@
 % gesetzt und auch das Siegelband-Logo entsprechend skaliert.
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
-  \PassOptionsToPackage{a4paper}{tubstypearea}
-%   \PassOptionsToPackage{a4paper}{tubsflowfram}
-  \PassOptionsToPackage{a4paper}{tubslogo}
+  \def\tubs@opt@paper{a4paper}
 }
 %    \end{macrocode}
 % 
@@ -234,12 +234,21 @@
 % 
 %    \begin{macrocode}
 \DeclareOptionX{backend}{%
-  \ifx#1{flow}
-    \def\tubs@backend{flowfram}
+  \if#1{flow}
+    \def\tubs@opt@backend{flowfram}
   \fi
   \ifx#1{pgf}
-    \def\tubs@backend{pgf}
+    \def\tubs@opt@backend{pgf}
   \fi
+  \ifthenelse{\equal{#1}{base}}{%
+    \def\tubs@opt@backend{base}
+  }{}
+  \ifthenelse{\equal{#1}{flow}}{%
+    \def\tubs@opt@backend{flowfram}
+  }{}
+  \ifthenelse{\equal{#1}{pgf}}{%
+    \def\tubs@opt@backend{pgf}
+  }{}
 }
 %    \end{macrocode}
 % 
@@ -265,8 +274,12 @@
 % 
 % Finally execute default options and load the tubstex packages
 %    \begin{macrocode}
-\ExecuteOptionsX{a4paper}
-\ProcessOptionsX\relax
+%<report>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
+%<article>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
+\ProcessOptionsX*\relax
+\PassOptionsToPackage{\tubs@opt@paper}{tubstypearea}
+\PassOptionsToPackage{\tubs@opt@paper}{tubslogo}
+
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
@@ -278,7 +291,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\LoadClass{\BaseClass}
+%<class>\LoadClass{\BaseClass}
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}

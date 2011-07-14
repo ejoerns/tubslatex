@@ -37,6 +37,7 @@
 %
 %<*driver>
 \documentclass[11pt]{ltxdoc}
+\usepackage[a4paper,marginleft]{tubsdoc}
 \usepackage[ngerman,english]{babel}
 \usepackage[utf8]{inputenc}
 \RequirePackage{xkeyval}
@@ -95,6 +96,13 @@
 %    \begin{macrocode}
 %<*option>
 %    \end{macrocode}
+\DeclareOptionX{fontsize}{%
+  \ifx#1{tubs}
+    \def\@fontsizefilebase{tubsa4}
+%     \def\@fontsizefilebase{tubsa5}
+%     \def\@fontsizefilebase{tubsdin}
+  \fi
+}
 %    \begin{macrocode}
 %</option>
 %    \end{macrocode}
@@ -107,7 +115,7 @@
 %    \begin{macrocode}
 \RequirePackage{nexus}
 %    \end{macrocode}
-% Eliminiert den standardmäßigen Abstand über |\chapter|, das dieser aufgrund
+% Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund
 % des tief hängenden Textbereichs überflüssig ist.
 %    \begin{macrocode}
 \RequirePackage[compact]{titlesec}
@@ -133,15 +141,29 @@
 % Definition der Größen nach Vorgabe
 %    \begin{macrocode}
 %<*a4|a5|din>
-\renewcommand{\normalsize}{%
+\def\normalsize{%
    \@setfontsize\normalsize\@ixpt\@xiipt
    \abovedisplayskip 9\p@ \@plus 2\p@ \@minus 4.5\p@
    \abovedisplayshortskip \z@ \@plus 3\p@
    \belowdisplayshortskip 5.5\p@ \@plus 2.5\p@ \@minus 3\p@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
+\normalsize
 % 
-\renewcommand{\footnotesize}{%
+\def\small{%
+    \@setfontsize\small\@viiipt{9.5}%
+    \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
+    \abovedisplayshortskip \z@ \@plus 2\p@
+    \belowdisplayshortskip 4\p@ \@plus 2\p@ \@minus 2\p@
+    \def\@listi{\leftmargin\leftmargini
+                \topsep 2\p@ \@plus 2\p@ \@minus 2\p@
+                \parsep 1\p@ \@plus\p@ \@minus\p@
+                \itemsep \parsep
+                }%
+   \belowdisplayskip \abovedisplayskip
+}
+% 
+\def\footnotesize{%
     \@setfontsize\footnotesize\@viipt{10}%
     \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
     \abovedisplayshortskip \z@ \@plus 2\p@
@@ -150,7 +172,6 @@
                 \topsep 2\p@ \@plus 2\p@ \@minus 2\p@
                 \parsep 1\p@ \@plus\p@ \@minus\p@
                 \itemsep \parsep
-%%                \itemindent\z@
                }%
    \belowdisplayskip \abovedisplayskip
 }
@@ -170,6 +191,7 @@
 %</a4>
 %    \end{macrocode}
 %
+%
 % Definition der Papierformatabhänigen Größen (A5/DIN lang)
 %    \begin{macrocode}
 %<*a5|din>
@@ -185,6 +207,67 @@
 \def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
 %</a5|din>
 %    \end{macrocode}
+% This code is currently mainly copied from scrsize10pt.clo and not
+% fulle adapted to 9pt yet
+%    \begin{macrocode}
+%<*a4|a5|din>
+\setlength\footnotesep    {6.65\p@}
+\setlength{\skip\footins} {9\p@ \@plus 4\p@ \@minus 2\p@}
+\setlength\floatsep       {12\p@ \@plus 2\p@ \@minus 2\p@}
+\setlength\textfloatsep   {20\p@ \@plus 2\p@ \@minus 4\p@}
+\setlength\intextsep      {12\p@ \@plus 2\p@ \@minus 2\p@}
+\setlength\dblfloatsep    {12\p@ \@plus 2\p@ \@minus 2\p@}
+\setlength\dbltextfloatsep{20\p@ \@plus 2\p@ \@minus 4\p@}
+\setlength\@fptop         {0\p@ \@plus 1fil}
+\setlength\@fpsep         {8\p@ \@plus 2fil}
+\setlength\@fpbot         {0\p@ \@plus 1fil}
+\setlength\@dblfptop      {0\p@ \@plus 1fil}
+\setlength\@dblfpsep      {8\p@ \@plus 2fil}
+\setlength\@dblfpbot      {0\p@ \@plus 1fil}
+\setlength\partopsep      {2\p@ \@plus 1\p@ \@minus 1\p@}
+\def\@listi{\leftmargin\leftmargini
+            \parsep 4\p@ \@plus2\p@ \@minus\p@
+            \topsep 8\p@ \@plus2\p@ \@minus4\p@
+            \itemsep4\p@ \@plus2\p@ \@minus\p@}
+\let\@listI\@listi
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \topsep    4\p@ \@plus2\p@ \@minus\p@
+              \parsep    2\p@ \@plus\p@  \@minus\p@
+              \itemsep   \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+              \labelwidth\leftmarginiii
+               \advance\labelwidth-\labelsep
+              \topsep    2\p@ \@plus\p@\@minus\p@
+              \parsep    \z@
+              \partopsep \p@ \@plus\z@ \@minus\p@
+              \itemsep   \topsep}
+\def\@listiv {\leftmargin\leftmarginiv
+              \labelwidth\leftmarginiv
+              \advance\labelwidth-\labelsep}
+\def\@listv  {\leftmargin\leftmarginv
+              \labelwidth\leftmarginv
+              \advance\labelwidth-\labelsep}
+\def\@listvi {\leftmargin\leftmarginvi
+              \labelwidth\leftmarginvi
+              \advance\labelwidth-\labelsep}
+%%% From File: scrkpar.dtx
+\@ifundefined{@list@extra}{}{%
+  \l@addto@macro{\@listi}{\@list@extra}%
+  \let\@listI=\@listi
+  \l@addto@macro{\@listii}{\@list@extra}%
+  \l@addto@macro{\@listiii}{\@list@extra}%
+  \l@addto@macro{\footnotesize}{\protect\add@extra@listi{ftns}}%
+  \l@addto@macro{\small}{\protect\add@extra@listi{sml}}%
+}
+\@listi
+%</a4|a5|din>
+%<*a3>
+
+%</a3>
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</clo>
 %    \end{macrocode}
