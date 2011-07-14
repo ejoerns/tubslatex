@@ -1,0 +1,58 @@
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage{ae}
+\usepackage[a4paper]{tubsdoc}
+
+\usepackage{scrpage2}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[ngerman]{babel}
+
+%opening
+\title{tubsdoc -- Dokumentation}
+\author{Enrico Jörns}
+\publishers{Institut fuer Lorem Ipsum} % to logo?
+\subtitle{Another approach}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+  Das Paket \lstinline{tubsdoc} stellt umfangreiche Möglichkeiten zum Erstellen
+  von Dokumenten im CorporateDesign der TU Braunschweig zur Verfügung.
+\end{abstract}
+
+\newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
+
+\section{Schnellstart}
+
+Die schnellste Methode ein Dokument im CorporateDesign zu erstellen ist
+das Laden einer der zur Verfügung stehenden Dokumentenklassen.
+Für die Erstellung von Textdokumenten sind dies \newdocumentclass{tubsartcl},
+\newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook}.
+Die Klasse \newdocumentclass{tubsposter} kann zum Erstellen von Postern verwendet werden.
+% tubsflyer?
+
+
+Die Poster-Klasse verwendet ein anderes Backend, dies kann aber durch Angabe
+dier Options xy auch in jedem anderen Dokument verwendet werden.
+
+\section{Titelseite}
+
+\section{Format}
+
+\section{Farben}
+
+\section{Befehle}
+
+\section{Optionen}
+
+
+\end{document}
