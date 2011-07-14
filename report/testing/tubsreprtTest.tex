@@ -1,0 +1,42 @@
+\documentclass[a4paper]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+%opening
+\title{Lorem ipsum dolor sit amet}
+\author{Enrico Jörns}
+\logo{asdf}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\pagestyle{scrheadings}
+
+\getbackend
+
+\chapter{Ut purus elit}
+
+\lipsum[1]
+
+\section{Phasellus eu tellus sit amet}
+{\renewcommand*{\sfdefault}{NexusProSans}
+\sffamily
+\lipsum[2-5]
+}
+\section{Pellentesque habitant}
+
+\lipsum[8-11]
+
+\chapter{Nulla malesuada porttitor diam}
+
+\lipsum[1-3]
+
+\section{Donec felis erat}
+
+\lipsum[4-7]
+
+\end{document}
