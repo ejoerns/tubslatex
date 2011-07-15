@@ -89,6 +89,7 @@
 %<*package>
 %    \end{macrocode}
 %
+% Veröffentliche Paketnamen und lade alle benötigten Pakete
 %    \begin{macrocode}
 \ProvidesPackage{tubsflowfram}
 % sys packages
@@ -105,24 +106,33 @@
 % \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}
 \RequirePackage{nexus}
-
-
-% This is the fg color for the structural elements.
-% This is defined to be able to switch between colored and mono version.
+%    \end{macrocode}
+%
+% Vordergrundfarbe für strukturelle Elemente.
+% Definiert, um zwischen farbiger und Mono-Variante umschalten zu können.
+%    \begin{macrocode}
 \colorlet{fgcolor}{tuRed}
+%    \end{macrocode}
 
-% Sets the fg color to mono, i.e. black
+% Die Option |mono| erlaubt eine S/W-Darstellung der strukturellen Elemente
+% (Logo, Titellinie, ...)
+%    \begin{macrocode}
 \DeclareOption{mono}{%
   \colorlet{fgcolor}{tuBlack}
 }
 
 \ProcessOptions\relax
-
+%    \end{macrocode}
+% 
+% Definiere ein paar temporäre counter für Berechnungen.
+%    \begin{macrocode}
 \newcounter{temp@calca}
 \newcounter{temp@calcb}
-
-
-% HACK for scrheadings (mbox wrapping @thehead)
+%    \end{macrocode}
+% 
+% Hack, um Verwendung von scrheadings zu ermöglichen
+% (mbox-wrapping für @thehead).
+%    \begin{macrocode}
 \newcommand*{\makedfheader}{%
 \setlength{\@ff@tmp@y}{\textheight}%
 \addtolength{\@ff@tmp@y}{\headsep}%
@@ -138,24 +148,42 @@
 \mbox{\@thehead}\vfill}% HACK for scrheadings (mbox wrapping @thehead)
 }%
 }
-
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
 \makedfheader
-
-
+%    \end{macrocode}
+%
+% Vorberechnung von Längen, um pseudo-absolutes Platzieren von frames an
+% Seitengrenzen zu ermöglichen.
+%    \begin{macrocode}
 \newlength{\pos@frame@left@odd}% used to place a frame at the left page border
 \computeleftedgeodd{\pos@frame@left@odd}
 \newlength{\pos@frame@left@even}% used to place a frame at the left page border
 \computeleftedgeeven{\pos@frame@left@even}
-
-
+%    \end{macrocode}
 %
-%---------- Frame definitions ----------
+%
+%
+% \subsection{Hintergrund-Frame Definitionen}
+%
+% Hier werden die einzelnen im Hintergrund verwendbaren Frames definiert.
+% Diese benutzen die \emph{backdrop effects} von tubsflowfram.
+%
+% Die Frames werden dabei in der Reihenfolge ihrer Definition in den Hintergrund
+% eingefügt und erhalten die ihnen zugewiesene Höhe im Gauß-Raster.
 %
 %%%%
+% Zuerst ein paar counter...
+%    \begin{macrocode}
 \newcounter{@bg@cnt}
 \newcounter{@bg@y}
 \newcounter{@bg@frames@cnt}
-
+%    \end{macrocode}
+%
+% Frame-Typ \emph{emtpy} erzeugt ein leeres Frame angegebener Höhe.
+%    \begin{macrocode}
 \newcommand{\emptyframe}[1]{%
   % calc and store number of gauss elements
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
@@ -172,7 +200,10 @@
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
-
+%    \end{macrocode}
+%
+% Frame-Typ \emph{color} erzeugt ein farbiges Hintergrund-Frame angegebener Höhe.
+%    \begin{macrocode}
 \newcommand{\colorframe}[2]{%
   % calc and store number of gauss elements
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
@@ -190,7 +221,11 @@
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
-
+%    \end{macrocode}
+%
+% Frame-Typ \emph{image} erzeugt ein Hintergrund-Frame, das ein Bild darstellt und
+% die angegebene Höhe hat.
+%    \begin{macrocode}
 \newcommand{\imageframe}[2]{%
   % calc and store number of gauss eleme
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
@@ -207,7 +242,10 @@
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
-
+%    \end{macrocode}
+%
+% Löscht alle Hintergrund-Segmente
+%    \begin{macrocode}
 \def\@clear@segemnts{
   \def\@test@height@I{\relax}
   \def\@test@color@I{\relax}
@@ -234,11 +272,16 @@
   \def\@test@color@VIII{\relax}
   \def\@test@id@VIII{\relax}
 }
-
-% arguments:
-% 1 - page set
-% 2 - nr of segments
-% 3 - segment definitions
+%    \end{macrocode}
+%
+% Definition von Hintergrundframes.
+% Argumente:
+% \begin{enumerate}
+%   \item[1]  page set
+%   \item[2]  nr of segments
+%   \item[3]  segment definitions
+% \end{enumerate}
+%    \begin{macrocode}
 \newcommand{\defbgtemplate}[3][all]{
   % test values
   \ifnum#2>\tubspage@ysegments
@@ -288,13 +331,13 @@
   \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
 }
-
-
-
-%-------------------------------------
-%---------- logo placements ----------
-%-------------------------------------
-
+%    \end{macrocode}
+%
+%
+%
+% \subsection{Logo-Platzierungen}
+%
+%    \begin{macrocode}
 \newlength{\tubsff@logooffset}
 % \newlength{\tubsff@temp}
 % sets the tu logo frame (but not the content)
@@ -397,13 +440,62 @@
 }
 
 
-
+%    \end{macrocode}
+%
+% Berechnet Dimensionen, um ein Frame im Gauß-Raster erstellen zu können und
+% speichert sie in den hier aufgeführten Längen.
+%
+% Die Argumente geben an :
+%   [1] row number,
+%   [2] row span,
+%   [3] column number,
+%   [4] columns span
+%    \begin{macrocode}
 \newlength{\temp@xpos}
 \newlength{\temp@ypos}
 \newlength{\temp@width}
 \newlength{\temp@height}
-
-
+%
+\newcommand{\tubsff@calc@frame}[4]{%
+% calc temp@ypos
+\calc@gaussum{temp@calca}{(\tubspage@ysegments-(#1)-(#2-1))}%
+\addtocounter{temp@calca}{-1}
+\setlength\temp@ypos{-\tubspage@borderwidth+\tubspage@gaussheight%
+  +\value{temp@calca}\tubspage@gaussheight}
+% calc temp@height
+\calc@gaussum{temp@calcb}{(\tubspage@ysegments-(#1-1))}
+\addtocounter{temp@calcb}{-1}
+\addtocounter{temp@calcb}{-\thetemp@calca}
+\setlength\temp@height{\thetemp@calcb\tubspage@gaussheight}
+% calc temp@xpos
+\setlength\temp@xpos{\tubspage@columnwidth*(#3-1)}
+% calc temp@width
+\setlength\temp@width{\tubspage@columnwidth*(#4)}
+% adjust xpos and width for columnsep
+\ifnum#3=1
+\else
+\addtolength\temp@xpos{0.5\tubspage@columnsep}
+\addtolength\temp@width{-0.5\tubspage@columnsep}
+\fi
+\setcounter{temp@calca}{#3+#4-1}
+\ifnum\value{temp@calca}=\tubspage@xsegments
+\else
+\addtolength\temp@width{-0.5\tubspage@columnsep}
+\fi
+% adjust ypos and height for columnsep
+\ifnum#1=1
+% This produces a border at a box placed in first row!
+\addtolength\temp@height{-\tubspage@borderwidth}
+\else
+\addtolength\temp@height{-0.5\tubspage@columnsep}
+\fi
+\setcounter{temp@calca}{#1+#2-1}
+\ifnum\value{temp@calca}=\tubspage@ysegments
+\else
+\addtolength\temp@ypos{0.5\tubspage@columnsep}
+\addtolength\temp@height{-0.5\tubspage@columnsep}
+\fi
+}
 
 \newboolean{imageframe}
 % params:
@@ -415,47 +507,13 @@
 % 6         - column span
 \newcommand{\newdynamictubsframe}[6][all]{%
 \def\mk@frameId{title}% new frame id
-% calc temp@ypos
-\calc@gaussum{temp@calca}{(\tubspage@ysegments-(#3)-(#4-1))}%
-\addtocounter{temp@calca}{-1}
-\setlength\temp@ypos{-\tubspage@borderwidth+\tubspage@gaussheight%
-  +\value{temp@calca}\tubspage@gaussheight}
-% calc temp@height
-\calc@gaussum{temp@calcb}{(\tubspage@ysegments-(#3-1))}
-\addtocounter{temp@calcb}{-1}
-\addtocounter{temp@calcb}{-\thetemp@calca}
-\setlength\temp@height{\thetemp@calcb\tubspage@gaussheight}
-% calc temp@xpos
-\setlength\temp@xpos{\tubspage@columnwidth*(#5-1)}
-% calc temp@width
-\setlength\temp@width{\tubspage@columnwidth*(#6)}
-% adjust xpos and width for columnsep
-\ifnum#5=1
-\else
-\addtolength\temp@xpos{0.5\tubspage@columnsep}
-\addtolength\temp@width{-0.5\tubspage@columnsep}
-\fi
-\setcounter{temp@calca}{#5+#6-1}
-\ifnum\value{temp@calca}=\tubspage@xsegments
-\else
-\addtolength\temp@width{-0.5\tubspage@columnsep}
-\fi
-% adjust ypos and height for columnsep
-\ifnum#3=1
-% This produces a border at a box placed in first row!
-\addtolength\temp@height{-\tubspage@borderwidth}
-\else
-\addtolength\temp@height{-0.5\tubspage@columnsep}
-\fi
-\setcounter{temp@calca}{#3+#4-1}
-\ifnum\value{temp@calca}=\tubspage@ysegments
-\else
-\addtolength\temp@ypos{0.5\tubspage@columnsep}
-\addtolength\temp@height{-0.5\tubspage@columnsep}
-\fi
+\tubsff@calc@frame{#3}{#4}{#5}{#6}
 % create dynamic frame ...
 \newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
+%    \end{macrocode}
+%    \begin{macrocode}
+%
 %    \end{macrocode}
 %    \begin{macrocode}
 %</package>
