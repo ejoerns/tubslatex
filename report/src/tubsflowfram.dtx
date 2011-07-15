@@ -1,0 +1,465 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{tubsflowfram.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+%
+% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+%
+% \GetFileInfo{tubsflowfram.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{tubsflowfram} -- 
+%   flowfram interface for tubslatex\thanks{This document
+%   corresponds to \textsf{tubsflowfram}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   Put text here.
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% Put text here.
+%
+% \section{Usage}
+%
+% \DescribeMacro{\YOURMACRO}
+% Put description of |\YOURMACRO| here.
+%
+% \DescribeEnv{YOURENV}
+% Put description of |YOURENV| here.
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ProvidesPackage{tubsflowfram}
+% sys packages
+\RequirePackage{ifthen}
+\RequirePackage{calc}
+\RequirePackage{xkeyval}
+\RequirePackage{forloop}
+\RequirePackage{environ}
+\usepackage{flowfram}
+\RequirePackage{multicol}
+\RequirePackage[strict]{changepage}
+% cd packages
+\RequirePackage{tubscolors}
+% \RequirePackage{tubslogo}
+\RequirePackage{tubstypearea}
+\RequirePackage{nexus}
+
+
+% This is the fg color for the structural elements.
+% This is defined to be able to switch between colored and mono version.
+\colorlet{fgcolor}{tuRed}
+
+% Sets the fg color to mono, i.e. black
+\DeclareOption{mono}{%
+  \colorlet{fgcolor}{tuBlack}
+}
+
+\ProcessOptions\relax
+
+\newcounter{temp@calca}
+\newcounter{temp@calcb}
+
+
+% HACK for scrheadings (mbox wrapping @thehead)
+\newcommand*{\makedfheader}{%
+\setlength{\@ff@tmp@y}{\textheight}%
+\addtolength{\@ff@tmp@y}{\headsep}%
+\newdynamicframe{\textwidth}{\headheight}{0pt}{\@ff@tmp@y}[header]%
+\newdynamicframe{\textwidth}{\headheight}{0pt}{-\footskip}[footer]%
+\renewcommand{\@dothehead}{}%
+\renewcommand{\@dothefoot}{}%
+\renewcommand{\@dodynamicthehead}{%
+\@dynamicframeid{header}%
+\expandafter
+\def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
+% \vspace*{-\baselineskip}% NOTE: a hack, no idea if thats the best to do...
+\mbox{\@thehead}\vfill}% HACK for scrheadings (mbox wrapping @thehead)
+}%
+}
+
+\makedfheader
+
+
+\newlength{\pos@frame@left@odd}% used to place a frame at the left page border
+\computeleftedgeodd{\pos@frame@left@odd}
+\newlength{\pos@frame@left@even}% used to place a frame at the left page border
+\computeleftedgeeven{\pos@frame@left@even}
+
+
+%
+%---------- Frame definitions ----------
+%
+%%%%
+\newcounter{@bg@cnt}
+\newcounter{@bg@y}
+\newcounter{@bg@frames@cnt}
+
+\newcommand{\emptyframe}[1]{%
+  % calc and store number of gauss elements
+  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+  \addtocounter{temp@calca}{-\thetemp@calcb}
+  %
+  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuWhite}
+  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
+    \thetemp@calca\tubspage@gaussheight
+  }
+  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+    bgF\the@bg@frames@cnt E\the@bg@cnt
+  }
+  \addtocounter{@bg@cnt}{-1}
+  \addtocounter{@bg@y}{#1}
+}
+
+\newcommand{\colorframe}[2]{%
+  % calc and store number of gauss elements
+  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+  \addtocounter{temp@calca}{-\thetemp@calcb}
+  %
+  \def\bg@color@I{tuGreen}
+  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{#2}
+  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\expandafter\endcsname{%
+    \thetemp@calca\tubspage@gaussheight
+  }
+  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+    bgF\the@bg@frames@cnt E\the@bg@cnt
+  }
+  \addtocounter{@bg@cnt}{-1}
+  \addtocounter{@bg@y}{#1}
+}
+
+\newcommand{\imageframe}[2]{%
+  % calc and store number of gauss eleme
+  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+  \addtocounter{temp@calca}{-\thetemp@calcb}
+  %
+  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuYellow}
+  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
+    \thetemp@calca\tubspage@gaussheight
+  }
+  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+    bgF\the@bg@frames@cnt E\the@bg@cnt
+  }
+  \addtocounter{@bg@cnt}{-1}
+  \addtocounter{@bg@y}{#1}
+}
+
+\def\@clear@segemnts{
+  \def\@test@height@I{\relax}
+  \def\@test@color@I{\relax}
+  \def\@test@id@I{\relax}
+  \def\@test@height@II{\relax}
+  \def\@test@color@II{\relax}
+  \def\@test@id@II{\relax}
+  \def\@test@height@III{\relax}
+  \def\@test@color@III{\relax}
+  \def\@test@id@III{\relax}
+  \def\@test@height@IV{\relax}
+  \def\@test@color@IV{\relax}
+  \def\@test@id@IV{\relax}
+  \def\@test@height@V{\relax}
+  \def\@test@color@V{\relax}
+  \def\@test@id@V{\relax}
+  \def\@test@height@VI{\relax}
+  \def\@test@color@VI{\relax}
+  \def\@test@id@VI{\relax}
+  \def\@test@height@VII{\relax}
+  \def\@test@color@VII{\relax}
+  \def\@test@id@VII{\relax}
+  \def\@test@height@VIII{\relax}
+  \def\@test@color@VIII{\relax}
+  \def\@test@id@VIII{\relax}
+}
+
+% arguments:
+% 1 - page set
+% 2 - nr of segments
+% 3 - segment definitions
+\newcommand{\defbgtemplate}[3][all]{
+  % test values
+  \ifnum#2>\tubspage@ysegments
+    \PackageError{tubsflowfram}%
+      {Exceeded max number of segmens!}%
+      {Reduce segment quantity}%
+  \fi
+  %
+  \addtocounter{@bg@frames@cnt}{1}
+  \def\@page@select{#1}
+  \def\@page@div{#2}% nr of segments the page is splitted into
+  \@clear@segemnts% clear all segments
+  \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
+    \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
+  }
+  \setcounter{@bg@cnt}{\@page@div}%TODO
+  \setcounter{@bg@y}{0}%
+  %
+  #3
+  %
+  \ifnum\the@bg@cnt>0
+    \PackageError{tubsflowfram}%
+      {You have to set all your segments! (\@page@div)}
+      {Set missing segments (\the@bg@cnt)}
+  \fi
+  \ifnum\the@bg@y<\tubspage@ysegments
+    \PackageWarning{tubsflowfram}%
+      {Your segments do not fill the whole page!}
+      {}
+  \fi
+  %
+  \hNtoneleft[#1][\tubspage@borderwidth]%
+    {\@page@div}{\paperwidth-\tubspage@borderwidth}%
+    \@test@height@I\@test@color@I\@test@id@I%
+    \@test@height@II\@test@color@II\@test@id@II%
+    \@test@height@III\@test@color@III\@test@id@III%
+    \@test@height@IV\@test@color@IV\@test@id@IV%
+    \@test@height@V\@test@color@V\@test@id@V%
+    \@test@height@VI\@test@color@VI\@test@id@VI%
+    \@test@height@VII\@test@color@VII\@test@id@VII%
+    \@test@height@VIII\@test@color@VIII\@test@id@VIII%
+  % left white border
+  \edef\@lborder@odd@name{lborderodd\the@bg@frames@cnt}
+  \edef\@lborder@even@name{lbordereven\the@bg@frames@cnt}
+  \edef\@rborder@even@name{rbordereven\the@bg@frames@cnt}
+  \vNtonetop[odd]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%
+  \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
+  \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
+}
+
+
+
+%-------------------------------------
+%---------- logo placements ----------
+%-------------------------------------
+
+\newlength{\tubsff@logooffset}
+% \newlength{\tubsff@temp}
+% sets the tu logo frame (but not the content)
+% params:
+% 1 (opt.)  - page selection
+% 2         - placement (left, right), default=left
+\newcommand{\tubsff@settubslogo}[2][1]{%
+% compute typeblock distance from page border
+% \computeleftedgeodd{\tubsff@logooffset}
+% process placement (left/right)
+\ifthenelse{\equal{#2}{right}}{%
+  \setlength{\tubsff@logooffset}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+}{%
+  \setlength{\tubsff@logooffset}{0mm}
+}
+% \computeleftedgeodd{\tubsff@logopageoffset}
+% create dynamic frame
+\edef\@p@sel{#1}
+% \setlength{\tubsff@temp}{\tubslogoWidth+\tubspage@bcor}
+\expandafter\newdynamicframe\expandafter[\@p@sel]%
+  {\tubslogoWidth}{\tubslogoHeight}%
+  {\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}%
+  {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
+  [tubslogo\the@bg@frames@cnt]
+  % set x pos for twosided layout
+  \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
+    evenx=\pos@frame@left@even+\tubsff@logooffset}
+  \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
+    oddx=\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}
+}
+
+% place the tubs logo
+% params
+% 1 (opt.)  - [plain] = only background
+% 2         - left/right
+\newcommand{\placetubslogo}[2][\relax]{%
+% place \the@bg@frames@cnt at \@page@select with opt: #1, #2
+  \tubsff@settubslogo[\@page@select]{#2}
+  \ifthenelse{\equal{#1}{plain}}{%
+    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
+  }{%
+    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
+    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{%
+      \checkoddpage\ifoddpage\hfill\fi\tubslogo}
+  }
+}
+
+\newlength{\tubsff@tmp@logoheight}
+\newcommand{\tubsff@setlogo}[2][1]{%
+  % compute typeblock distance from page border
+  \computeleftedgeodd{\tubsff@logooffset}
+  % process placement (left/right)
+  \addtolength{\tubsff@logooffset}{0.5\paperwidth}
+  \setlength{\tubsff@tmp@logoheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  % \computeleftedgeodd{\tubsff@logopageoffset}
+  % create dynamic frame
+  \edef\@p@sel{#1}
+  \expandafter\newdynamicframe\expandafter[\@p@sel]%
+    {0.5\tubspage@contentwidth}{\tubspage@headheight}%
+    {\tubsff@logooffset}%
+    {36\tubspage@gaussheight}%
+    [logo\the@bg@frames@cnt]
+}
+
+% place individual logo
+% params
+% 1 (opt.)  - bgcolor
+% 2         - logo
+\newcommand{\placelogo}[2][tuWhite]{%
+  \tubsff@setlogo[\@page@select]{#2}
+  \setdynamicframe*{logo\the@bg@frames@cnt}{backcolor=#1}
+  \setdynamiccontents*{logo\the@bg@frames@cnt}{\hfill #2}
+}
+
+%-------------------------------------
+%-------------- topline --------------
+%-------------------------------------
+
+
+%
+\newcommand{\tubsff@settopline}[1][1]{%
+  % create dynamic frame
+  \edef\@p@sel{#1}
+  \expandafter\newdynamicframe\expandafter[\@p@sel]%
+    {\tubspage@contentwidth}{0.5pt}%
+    {\pos@frame@left@odd+\tubspage@borderwidth}%
+    {-\tubspage@borderwidth+36\tubspage@gaussheight}
+    [topline\the@bg@frames@cnt]
+  % set x pos for twosided layout
+  \setdynamicframe*{topline\the@bg@frames@cnt}{%
+    evenx=\pos@frame@left@even+\tubspage@borderwidth}
+  \setdynamicframe*{topline\the@bg@frames@cnt}{%
+    oddx=\pos@frame@left@odd+\tubspage@borderwidth+\tubspage@bcor}
+}
+
+
+\newcommand{\topline}[1][1]{%
+  \tubsff@settopline[\@page@select]
+  \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
+}
+
+
+
+\newlength{\temp@xpos}
+\newlength{\temp@ypos}
+\newlength{\temp@width}
+\newlength{\temp@height}
+
+
+
+\newboolean{imageframe}
+% params:
+% 1 (opt.)  - page set
+% 2         - name
+% 3         - row number
+% 4         - row span
+% 5         - column number
+% 6         - column span
+\newcommand{\newdynamictubsframe}[6][all]{%
+\def\mk@frameId{title}% new frame id
+% calc temp@ypos
+\calc@gaussum{temp@calca}{(\tubspage@ysegments-(#3)-(#4-1))}%
+\addtocounter{temp@calca}{-1}
+\setlength\temp@ypos{-\tubspage@borderwidth+\tubspage@gaussheight%
+  +\value{temp@calca}\tubspage@gaussheight}
+% calc temp@height
+\calc@gaussum{temp@calcb}{(\tubspage@ysegments-(#3-1))}
+\addtocounter{temp@calcb}{-1}
+\addtocounter{temp@calcb}{-\thetemp@calca}
+\setlength\temp@height{\thetemp@calcb\tubspage@gaussheight}
+% calc temp@xpos
+\setlength\temp@xpos{\tubspage@columnwidth*(#5-1)}
+% calc temp@width
+\setlength\temp@width{\tubspage@columnwidth*(#6)}
+% adjust xpos and width for columnsep
+\ifnum#5=1
+\else
+\addtolength\temp@xpos{0.5\tubspage@columnsep}
+\addtolength\temp@width{-0.5\tubspage@columnsep}
+\fi
+\setcounter{temp@calca}{#5+#6-1}
+\ifnum\value{temp@calca}=\tubspage@xsegments
+\else
+\addtolength\temp@width{-0.5\tubspage@columnsep}
+\fi
+% adjust ypos and height for columnsep
+\ifnum#3=1
+% This produces a border at a box placed in first row!
+\addtolength\temp@height{-\tubspage@borderwidth}
+\else
+\addtolength\temp@height{-0.5\tubspage@columnsep}
+\fi
+\setcounter{temp@calca}{#3+#4-1}
+\ifnum\value{temp@calca}=\tubspage@ysegments
+\else
+\addtolength\temp@ypos{0.5\tubspage@columnsep}
+\addtolength\temp@height{-0.5\tubspage@columnsep}
+\fi
+% create dynamic frame ...
+\newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+% 
+% \Finale
+\endinput
