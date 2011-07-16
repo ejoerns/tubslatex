@@ -178,9 +178,16 @@
 %
 %%%%
 % Zuerst ein paar counter...
+%
+% Zähler für das Hintergrund-Element, wird auf jeder Seite neu gezählt
 %    \begin{macrocode}
 \newcounter{@bg@cnt}
+%    \end{macrocode}
+%    \begin{macrocode}
 \newcounter{@bg@y}
+%    \end{macrocode}
+% Globaler Zähler für das Hintergrund-Element
+%    \begin{macrocode}
 \newcounter{@bg@frames@cnt}
 %    \end{macrocode}
 %
@@ -192,11 +199,11 @@
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
   %
-  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuWhite}
-  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
+  \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuWhite}
+  \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
     \thetemp@calca\tubspage@gaussheight
   }
-  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+  \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     bgF\the@bg@frames@cnt E\the@bg@cnt
   }
   \addtocounter{@bg@cnt}{-1}
@@ -213,11 +220,11 @@
   \addtocounter{temp@calca}{-\thetemp@calcb}
   %
   \def\bg@color@I{tuGreen}
-  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{#2}
-  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\expandafter\endcsname{%
+  \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{#2}
+  \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\expandafter\endcsname{%
     \thetemp@calca\tubspage@gaussheight
   }
-  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+  \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     bgF\the@bg@frames@cnt E\the@bg@cnt
   }
   \addtocounter{@bg@cnt}{-1}
@@ -234,11 +241,11 @@
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
   %
-  \expandafter\def\csname @test@color@\Roman{@bg@cnt}\endcsname{tuYellow}
-  \expandafter\edef\csname @test@height@\Roman{@bg@cnt}\endcsname{%
+  \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuYellow}
+  \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
     \thetemp@calca\tubspage@gaussheight
   }
-  \expandafter\edef\csname @test@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+  \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     bgF\the@bg@frames@cnt E\the@bg@cnt
   }
   \addtocounter{@bg@cnt}{-1}
@@ -250,30 +257,30 @@
 % Löscht alle Hintergrund-Segmente
 %    \begin{macrocode}
 \def\tubsff@clear@segments{
-  \def\@test@height@I{\relax}
-  \def\@test@color@I{\relax}
-  \def\@test@id@I{\relax}
-  \def\@test@height@II{\relax}
-  \def\@test@color@II{\relax}
-  \def\@test@id@II{\relax}
-  \def\@test@height@III{\relax}
-  \def\@test@color@III{\relax}
-  \def\@test@id@III{\relax}
-  \def\@test@height@IV{\relax}
-  \def\@test@color@IV{\relax}
-  \def\@test@id@IV{\relax}
-  \def\@test@height@V{\relax}
-  \def\@test@color@V{\relax}
-  \def\@test@id@V{\relax}
-  \def\@test@height@VI{\relax}
-  \def\@test@color@VI{\relax}
-  \def\@test@id@VI{\relax}
-  \def\@test@height@VII{\relax}
-  \def\@test@color@VII{\relax}
-  \def\@test@id@VII{\relax}
-  \def\@test@height@VIII{\relax}
-  \def\@test@color@VIII{\relax}
-  \def\@test@id@VIII{\relax}
+  \def\tubsff@bg@height@I{\relax}
+  \def\tubsff@bg@color@I{\relax}
+  \def\tubsff@bg@id@I{\relax}
+  \def\tubsff@bg@height@II{\relax}
+  \def\tubsff@bg@color@II{\relax}
+  \def\tubsff@bg@id@II{\relax}
+  \def\tubsff@bg@height@III{\relax}
+  \def\tubsff@bg@color@III{\relax}
+  \def\tubsff@bg@id@III{\relax}
+  \def\tubsff@bg@height@IV{\relax}
+  \def\tubsff@bg@color@IV{\relax}
+  \def\tubsff@bg@id@IV{\relax}
+  \def\tubsff@bg@height@V{\relax}
+  \def\tubsff@bg@color@V{\relax}
+  \def\tubsff@bg@id@V{\relax}
+  \def\tubsff@bg@height@VI{\relax}
+  \def\tubsff@bg@color@VI{\relax}
+  \def\tubsff@bg@id@VI{\relax}
+  \def\tubsff@bg@height@VII{\relax}
+  \def\tubsff@bg@color@VII{\relax}
+  \def\tubsff@bg@id@VII{\relax}
+  \def\tubsff@bg@height@VIII{\relax}
+  \def\tubsff@bg@color@VIII{\relax}
+  \def\tubsff@bg@id@VIII{\relax}
 }
 %    \end{macrocode}
 %
@@ -284,6 +291,7 @@
 %   \item[1]  page set
 %   \item[2]  nr of segments
 %   \item[3]  segment definitions
+%   \item[4]  template name
 % \end{enumerate}
 %    \begin{macrocode}
 \newcommand{\defbgtemplate}[3][all]{
@@ -319,14 +327,14 @@
   %
   \hNtoneleft[#1][\tubspage@borderwidth]%
     {\@page@div}{\paperwidth-\tubspage@borderwidth}%
-    \@test@height@I\@test@color@I\@test@id@I%
-    \@test@height@II\@test@color@II\@test@id@II%
-    \@test@height@III\@test@color@III\@test@id@III%
-    \@test@height@IV\@test@color@IV\@test@id@IV%
-    \@test@height@V\@test@color@V\@test@id@V%
-    \@test@height@VI\@test@color@VI\@test@id@VI%
-    \@test@height@VII\@test@color@VII\@test@id@VII%
-    \@test@height@VIII\@test@color@VIII\@test@id@VIII%
+    \tubsff@bg@height@I\tubsff@bg@color@I\tubsff@bg@id@I%
+    \tubsff@bg@height@II\tubsff@bg@color@II\tubsff@bg@id@II%
+    \tubsff@bg@height@III\tubsff@bg@color@III\tubsff@bg@id@III%
+    \tubsff@bg@height@IV\tubsff@bg@color@IV\tubsff@bg@id@IV%
+    \tubsff@bg@height@V\tubsff@bg@color@V\tubsff@bg@id@V%
+    \tubsff@bg@height@VI\tubsff@bg@color@VI\tubsff@bg@id@VI%
+    \tubsff@bg@height@VII\tubsff@bg@color@VII\tubsff@bg@id@VII%
+    \tubsff@bg@height@VIII\tubsff@bg@color@VIII\tubsff@bg@id@VIII%
   % left white border
   \edef\@lborder@odd@name{lborderodd\the@bg@frames@cnt}
   \edef\@lborder@even@name{lbordereven\the@bg@frames@cnt}
@@ -388,7 +396,11 @@
       \checkoddpage\ifoddpage\hfill\fi\tubslogo}
   }
 }
-
+%
+%    \end{macrocode}
+%
+% \DescribeMacro{\tubsff@tmp@logoheight}
+%    \begin{macrocode}
 \newlength{\tubsff@tmp@logoheight}
 \newcommand{\tubsff@setlogo}[2][1]{%
   % compute typeblock distance from page border
