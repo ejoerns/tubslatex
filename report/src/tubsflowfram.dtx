@@ -379,31 +379,32 @@
 % args: 1 - bg-frame id
 %    \begin{macrocode}
 \newcommand{\setbgframe}[2]{%
+  \edef\@param@one{#2}
   \expandafter\expandafter\expandafter\@read@list\csname set@bg@template@#1\endcsname%{#2}
 %   \csname set@bg@template@#1\endcsname
 }
 %
 \def\@read@list{
-  \let\@read@cmd\@read@lista
+  \let\@read@cmd\@read@list@next
   \@read@cmd
 }
-\def\@read@lista#1,{%
-  \expandafter\def\expandafter\@found\expandafter{#1}
-  found:'\@found'!
-%   \show#1
-%   found:'#1'!
-%   \setstaticframe*{#1}{pages=2}
-%   \setstaticframe*{myfirsttemplatebgF1E1}{pages=2}
+%    \end{macrocode}
+%
+% \DescribeMacro{\@read@list@next}
+% Liest Element bis zum nächsten Komma, bei Auffinden eines ';' wird Kommando
+% |\@read@list@new| geladen und ausgeführt, sonst ruft sich die Funktion
+% rekursive selbst auf.
+%    \begin{macrocode}
+\def\@read@list@next#1,{%
   \ifx#1;
-    Terminate! 
     \let\@read@cmd\@read@list@new
   \else
-    \setstaticframe*{#1}{pages=2}
+    \setstaticframe*{#1}{pages=\@param@one}
   \fi
     \@read@cmd%
 }
 \def\@read@list@new{
-  \let\@read@cmd\@read@lista
+  \let\@read@cmd\@read@list@next
 }
 %    \end{macrocode}
 %
