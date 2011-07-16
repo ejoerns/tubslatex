@@ -369,7 +369,7 @@
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
   % Terminiere Template-Frame-Liste
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    ;%
+    ;,%
   }
 }
 %    \end{macrocode}
@@ -383,21 +383,27 @@
 %   \csname set@bg@template@#1\endcsname
 }
 %
-\def\@read@list#1,#2{%
+\def\@read@list{
+  \let\@read@cmd\@read@lista
+  \@read@cmd
+}
+\def\@read@lista#1,{%
   \expandafter\def\expandafter\@found\expandafter{#1}
   found:'\@found'!
 %   \show#1
 %   found:'#1'!
-%   \setstaticframe*{\@found}{pages=2}
+%   \setstaticframe*{#1}{pages=2}
 %   \setstaticframe*{myfirsttemplatebgF1E1}{pages=2}
-%   \setstaticframe*{myfirsttemplatebgF1E2}{pages=2}
-%   \setstaticframe*{mysecondtemplatebgF2E1}{pages=2}
-%   \setstaticframe*{mysecondtemplatebgF2E2}{pages=2}
-%   \setstaticframe*{mysecondtemplatebgF2E3}{pages=2}
-%   \setstaticframe*{mysecondtemplatebgF2E4}{pages=2}
-  \ifx#2;
-    Terminate!
-  \else\@read@list{#2}\fi
+  \ifx#1;
+    Terminate! 
+    \let\@read@cmd\@read@list@new
+  \else
+    \setstaticframe*{#1}{pages=2}
+  \fi
+    \@read@cmd%
+}
+\def\@read@list@new{
+  \let\@read@cmd\@read@lista
 }
 %    \end{macrocode}
 %
