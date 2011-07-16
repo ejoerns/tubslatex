@@ -506,14 +506,18 @@
 % 5         - column number
 % 6         - column span
 \newcommand{\newdynamictubsframe}[6][all]{%
-\def\mk@frameId{title}% new frame id
-\tubsff@calc@frame{#3}{#4}{#5}{#6}
-% create dynamic frame ...
-\newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
+  \tubsff@calc@frame{#3}{#4}{#5}{#6}
+  % create dynamic frame ...
+  \newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
 %    \end{macrocode}
-%    \begin{macrocode}
 %
+% Erstellt flow frame im Gauß-Raster
+%    \begin{macrocode}
+\newcommand{\newtubslowframe}[6][all]{%
+  \tubsff@calc@frame{#3}{#4}{#5}{#6}
+  \newflowframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
+}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</package>
