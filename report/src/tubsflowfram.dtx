@@ -233,20 +233,25 @@
     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
   }
   \edef\@curr@rn{\Roman{@bg@cnt}}
-  \edef\@fuckyou{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
-  \edef\@curr@template{\csname set@bg@template@\tubsff@bg@current@label\endcsname}
+  % This is the id of the currently created frame!
+  \expandafter\let\expandafter\@curr@id\csname tubsff@bg@id@\@curr@rn\endcsname
+  % This is the expanded name name of the frame that should hold information
+  \edef\name@of@frame@to@add{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
+%   \edef\@fuckyou{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
+%   \edef\@curr@template{\csname set@bg@template@\tubsff@bg@current@label\endcsname}
   %
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \expandafter\setstaticframe\expandafter*\expandafter{\@fuckyou}{pages=2}
+    \expandafter\setstaticframe\expandafter*\expandafter{\name@of@frame@to@add}{pages=2}
 %     setstaticframe \@fuckyou pages=2
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
 
-\newcommand*{\@add@to@list}[2]{%
-}
-\@add@to@list{\csname set@bg@template@\tubsff@bg@current@label\endcsname}{}
+% \newcommand*{\@add@to@list}[2]{%
+%   \setstaticframe*{#1}{#2}
+% }
+% \@add@to@list{\csname set@bg@template@\tubsff@bg@current@label\endcsname}{\@fuckyou}
 
 %    \end{macrocode}
 %
