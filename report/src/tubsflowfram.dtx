@@ -240,9 +240,9 @@
 %   \edef\@fuckyou{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
 %   \edef\@curr@template{\csname set@bg@template@\tubsff@bg@current@label\endcsname}
   %
+  % Füge Namen des erzeugten Frames in Liste des Templates ein
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \expandafter\setstaticframe\expandafter*\expandafter{\name@of@frame@to@add}{pages=2}
-%     setstaticframe \@fuckyou pages=2
+    \name@of@frame@to@add,
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
@@ -338,7 +338,7 @@
   % init element list
   \expandafter\newcommand\expandafter{%
     \csname set@bg@template@\tubsff@bg@current@label\endcsname}[1]{%
-      \def\@param@one{pages=3}}
+      \edef\@param@one{pages=3}}
   %
   #3
   %
