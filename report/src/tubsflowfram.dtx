@@ -191,6 +191,10 @@
 \newcounter{@bg@frames@cnt}
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\def\tubsff@bg@current@label{}
+%    \end{macrocode}
+%
 % Frame-Typ \emph{emtpy} erzeugt ein leeres Frame angegebener Höhe.
 %    \begin{macrocode}
 \newcommand{\emptyframe}[1]{%
@@ -204,7 +208,7 @@
     \thetemp@calca\tubspage@gaussheight
   }
   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-    bgF\the@bg@frames@cnt E\the@bg@cnt
+    \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
@@ -224,11 +228,30 @@
   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\expandafter\endcsname{%
     \thetemp@calca\tubspage@gaussheight
   }
+  %
   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-    bgF\the@bg@frames@cnt E\the@bg@cnt
+    \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
+  }
+  \edef\@curr@rn{\Roman{@bg@cnt}}
+  \edef\@fuckyou{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
+  %
+  \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+    \expandafter\setstaticframe\expandafter*\expandafter{\@fuckyou}{pages=3}
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
+%   \tubs
+  % register at frame list
+%   \expandafter\let\expandafter\oldlist\csname set@bg@template@\tubsff@bg@current@label\endcsname
+%   \expandafter\edef\csname set@bg@template@\tubsff@bg@current@label\endcsname ##1{%
+%     \oldlist{##1}%
+%     LABEL: \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt ARG:{##1}
+%     \setstaticframe*{blub}{pages=3}
+%   }
+
+%   \let\oldlist\set@bg@template@test
+%   \edef\set@bg@template@test{\oldlist Und das noch dazu.}
+%   \let\oldtlist\relax
 }
 %    \end{macrocode}
 %
@@ -246,7 +269,7 @@
     \thetemp@calca\tubspage@gaussheight
   }
   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-    bgF\the@bg@frames@cnt E\the@bg@cnt
+    \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
@@ -294,7 +317,7 @@
 %   \item[4]  template name
 % \end{enumerate}
 %    \begin{macrocode}
-\newcommand{\defbgtemplate}[3][all]{
+\newcommand{\defbgtemplate}[4][all]{%
   % test values
   \ifnum#2>\tubspage@ysegments
     \PackageError{tubsflowfram}%
@@ -305,12 +328,17 @@
   \addtocounter{@bg@frames@cnt}{1}
   \def\@page@select{#1}
   \def\@page@div{#2}% nr of segments the page is splitted into
+  \edef\tubsff@bg@current@label{#4}%template name
   \tubsff@clear@segments% clear all segments
   \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
     \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
   }
   \setcounter{@bg@cnt}{\@page@div}%TODO
   \setcounter{@bg@y}{0}%
+  % init element list
+  \expandafter\newcommand\expandafter{%
+    \csname set@bg@template@\tubsff@bg@current@label\endcsname}{Initial content}
+%   \newcommand{\set@bg@template@test}{Initialer Inhalt.}
   %
   #3
   %
@@ -343,8 +371,21 @@
   \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
 }
+%
+% args: 1 - bg-frame id
+\newcommand{\setbgframe}[2]{%
+%   Executing: set@bg@template@#1
+  \csname set@bg@template@#1\endcsname{#2}
+%   \set@bg@template@test
+}
+%
 %    \end{macrocode}
 %
+% Schaltet auf Verwendung des unter dem Namen im Arguemnt definierten Templates
+%    \begin{macrocode}
+\newcommand{\usebgtemplate}[1]{%
+}
+%    \end{macrocode}
 %
 %
 % \subsubsection{Logo-Platzierungen}
