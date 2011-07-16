@@ -234,25 +234,20 @@
   }
   \edef\@curr@rn{\Roman{@bg@cnt}}
   \edef\@fuckyou{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
+  \edef\@curr@template{\csname set@bg@template@\tubsff@bg@current@label\endcsname}
   %
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \expandafter\setstaticframe\expandafter*\expandafter{\@fuckyou}{pages=3}
+    \expandafter\setstaticframe\expandafter*\expandafter{\@fuckyou}{pages=2}
+%     setstaticframe \@fuckyou pages=2
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
-%   \tubs
-  % register at frame list
-%   \expandafter\let\expandafter\oldlist\csname set@bg@template@\tubsff@bg@current@label\endcsname
-%   \expandafter\edef\csname set@bg@template@\tubsff@bg@current@label\endcsname ##1{%
-%     \oldlist{##1}%
-%     LABEL: \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt ARG:{##1}
-%     \setstaticframe*{blub}{pages=3}
-%   }
-
-%   \let\oldlist\set@bg@template@test
-%   \edef\set@bg@template@test{\oldlist Und das noch dazu.}
-%   \let\oldtlist\relax
 }
+
+\newcommand*{\@add@to@list}[2]{%
+}
+\@add@to@list{\csname set@bg@template@\tubsff@bg@current@label\endcsname}{}
+
 %    \end{macrocode}
 %
 % Frame-Typ \emph{image} erzeugt ein Hintergrund-Frame, das ein Bild darstellt und
@@ -337,8 +332,8 @@
   \setcounter{@bg@y}{0}%
   % init element list
   \expandafter\newcommand\expandafter{%
-    \csname set@bg@template@\tubsff@bg@current@label\endcsname}{Initial content}
-%   \newcommand{\set@bg@template@test}{Initialer Inhalt.}
+    \csname set@bg@template@\tubsff@bg@current@label\endcsname}[1]{%
+      \def\@param@one{pages=3}}
   %
   #3
   %
@@ -371,12 +366,14 @@
   \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
 }
+%    \end{macrocode}
 %
+% \DescribeMacro{\setbgframe}
+% Set options for background frames
 % args: 1 - bg-frame id
+%    \begin{macrocode}
 \newcommand{\setbgframe}[2]{%
-%   Executing: set@bg@template@#1
-  \csname set@bg@template@#1\endcsname{#2}
-%   \set@bg@template@test
+  \csname set@bg@template@#1\endcsname%{#2}
 }
 %
 %    \end{macrocode}
