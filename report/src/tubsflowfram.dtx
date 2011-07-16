@@ -315,7 +315,7 @@
 %   \item[4]  template name
 % \end{enumerate}
 %    \begin{macrocode}
-\newcommand{\defbgtemplate}[4][all]{%
+\newcommand{\defbgtemplate}[4][none]{%
   % test values
   \ifnum#2>\tubspage@ysegments
     \PackageError{tubsflowfram}%
@@ -410,7 +410,8 @@
 %
 % Schaltet auf Verwendung des unter dem Namen im Arguemnt definierten Templates
 %    \begin{macrocode}
-\newcommand{\usebgtemplate}[1]{%
+\newcommand{\usebgtemplate}[2][all]{%
+  \setbgframe{#2}{#1}
 }
 %    \end{macrocode}
 %
