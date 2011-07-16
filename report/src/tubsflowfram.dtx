@@ -240,7 +240,7 @@
   %
   % Füge Namen des erzeugten Frames in Liste des Templates ein
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \name@of@frame@to@add,
+    \name@of@frame@to@add,%
   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
@@ -335,8 +335,7 @@
   \setcounter{@bg@y}{0}%
   % init element list
   \expandafter\newcommand\expandafter{%
-    \csname set@bg@template@\tubsff@bg@current@label\endcsname}[1]{%
-      \edef\@param@one{pages=3}}
+    \csname set@bg@template@\tubsff@bg@current@label\endcsname}{}
   %
   #3
   %
@@ -370,7 +369,7 @@
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
   % Terminiere Template-Frame-Liste
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \relax
+    ;%
   }
 }
 %    \end{macrocode}
@@ -381,13 +380,24 @@
 %    \begin{macrocode}
 \newcommand{\setbgframe}[2]{%
   \expandafter\expandafter\expandafter\@read@list\csname set@bg@template@#1\endcsname%{#2}
+%   \csname set@bg@template@#1\endcsname
 }
 %
 \def\@read@list#1,#2{%
-  found: #1!
-  \ifx#2\relax
+  \expandafter\def\expandafter\@found\expandafter{#1}
+  found:'\@found'!
+%   \show#1
+%   found:'#1'!
+%   \setstaticframe*{\@found}{pages=2}
+%   \setstaticframe*{myfirsttemplatebgF1E1}{pages=2}
+%   \setstaticframe*{myfirsttemplatebgF1E2}{pages=2}
+%   \setstaticframe*{mysecondtemplatebgF2E1}{pages=2}
+%   \setstaticframe*{mysecondtemplatebgF2E2}{pages=2}
+%   \setstaticframe*{mysecondtemplatebgF2E3}{pages=2}
+%   \setstaticframe*{mysecondtemplatebgF2E4}{pages=2}
+  \ifx#2;
     Terminate!
-  \else\@read@list\fi
+  \else\@read@list{#2}\fi
 }
 %    \end{macrocode}
 %
