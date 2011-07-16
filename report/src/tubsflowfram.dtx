@@ -237,8 +237,6 @@
   \expandafter\let\expandafter\@curr@id\csname tubsff@bg@id@\@curr@rn\endcsname
   % This is the expanded name name of the frame that should hold information
   \edef\name@of@frame@to@add{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
-%   \edef\@fuckyou{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
-%   \edef\@curr@template{\csname set@bg@template@\tubsff@bg@current@label\endcsname}
   %
   % Füge Namen des erzeugten Frames in Liste des Templates ein
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
@@ -370,6 +368,10 @@
   \vNtonetop[odd]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%
   \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
+  % Terminiere Template-Frame-Liste
+  \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+    \relax
+  }
 }
 %    \end{macrocode}
 %
@@ -378,9 +380,15 @@
 % args: 1 - bg-frame id
 %    \begin{macrocode}
 \newcommand{\setbgframe}[2]{%
-  \csname set@bg@template@#1\endcsname%{#2}
+  \expandafter\expandafter\expandafter\@read@list\csname set@bg@template@#1\endcsname%{#2}
 }
 %
+\def\@read@list#1,#2{%
+  found: #1!
+  \ifx#2\relax
+    Terminate!
+  \else\@read@list\fi
+}
 %    \end{macrocode}
 %
 % Schaltet auf Verwendung des unter dem Namen im Arguemnt definierten Templates
