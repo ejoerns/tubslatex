@@ -65,6 +65,8 @@
 %
 % \maketitle
 %
+% \tableofcontents
+%
 % \begin{abstract}
 %   Put text here.
 % \end{abstract}
@@ -244,9 +246,10 @@
 }
 %    \end{macrocode}
 %
+% \DescribeMacro{\tubsff@clear@segments}
 % Löscht alle Hintergrund-Segmente
 %    \begin{macrocode}
-\def\@clear@segemnts{
+\def\tubsff@clear@segments{
   \def\@test@height@I{\relax}
   \def\@test@color@I{\relax}
   \def\@test@id@I{\relax}
@@ -274,6 +277,7 @@
 }
 %    \end{macrocode}
 %
+% \DescribeMacro{\defbgtemplate}
 % Definition von Hintergrundframes.
 % Argumente:
 % \begin{enumerate}
@@ -293,7 +297,7 @@
   \addtocounter{@bg@frames@cnt}{1}
   \def\@page@select{#1}
   \def\@page@div{#2}% nr of segments the page is splitted into
-  \@clear@segemnts% clear all segments
+  \tubsff@clear@segments% clear all segments
   \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
     \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
   }
@@ -335,7 +339,7 @@
 %
 %
 %
-% \subsection{Logo-Platzierungen}
+% \subsubsection{Logo-Platzierungen}
 %
 %    \begin{macrocode}
 \newlength{\tubsff@logooffset}
@@ -401,23 +405,27 @@
     {36\tubspage@gaussheight}%
     [logo\the@bg@frames@cnt]
 }
-
+%    \end{macrocode}
+%
+% \DescribeMacro{\placelogo}
 % place individual logo
 % params
 % 1 (opt.)  - bgcolor
 % 2         - logo
+%    \begin{macrocode}
 \newcommand{\placelogo}[2][tuWhite]{%
   \tubsff@setlogo[\@page@select]{#2}
   \setdynamicframe*{logo\the@bg@frames@cnt}{backcolor=#1}
   \setdynamiccontents*{logo\the@bg@frames@cnt}{\hfill #2}
 }
-
-%-------------------------------------
-%-------------- topline --------------
-%-------------------------------------
-
-
+%    \end{macrocode}
 %
+%
+%\subsubsection{Topline}
+%
+%
+% \DescribeMacro{\tubsff@settopline}
+%    \begin{macrocode}
 \newcommand{\tubsff@settopline}[1][1]{%
   % create dynamic frame
   \edef\@p@sel{#1}
@@ -432,16 +440,19 @@
   \setdynamicframe*{topline\the@bg@frames@cnt}{%
     oddx=\pos@frame@left@odd+\tubspage@borderwidth+\tubspage@bcor}
 }
-
-
+%    \end{macrocode}
+%
+% \DescribeMacro{\topline}
+%    \begin{macrocode}
 \newcommand{\topline}[1][1]{%
   \tubsff@settopline[\@page@select]
   \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
 }
-
-
 %    \end{macrocode}
 %
+% \subsection{Vordergrund-Frame Definitionen}
+% 
+% \DescribeMacro{\tubsff@calc@frame}
 % Berechnet Dimensionen, um ein Frame im Gauß-Raster erstellen zu können und
 % speichert sie in den hier aufgeführten Längen.
 %
@@ -497,7 +508,8 @@
 \fi
 }
 
-\newboolean{imageframe}
+\newboolean{imageframe}%@TODO: currently unused
+% Erstellt ein 'dynamic frame' im Gauß-Raster
 % params:
 % 1 (opt.)  - page set
 % 2         - name
@@ -512,9 +524,10 @@
 }
 %    \end{macrocode}
 %
+% \DescribeMacro{\newtubsflowframe}
 % Erstellt flow frame im Gauß-Raster
 %    \begin{macrocode}
-\newcommand{\newtubslowframe}[6][all]{%
+\newcommand{\newtubsflowframe}[6][all]{%
   \tubsff@calc@frame{#3}{#4}{#5}{#6}
   \newflowframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
