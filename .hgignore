@@ -8,6 +8,15 @@ install/rawtree/fonts/*
 install/rawtree/tex/*
 install/debian/texlive-tubs/*
 install/release/*
+#ignore tex generated classes and packages
+report/src/tubsa49pt.clo
+report/src/tubsa59pt.clo
+report/src/tubsartcl.cls
+report/src/tubsbook.cls
+report/src/tubsdin9pt.clo
+report/src/tubsflowfram.sty
+report/src/tubsposter.cls
+report/src/tubsreprt.cls
 
 # no autosave
 *~
