@@ -37,7 +37,7 @@
 %
 %<*driver>
 \documentclass{ltxdoc}
-\usepackage[ngerman,english]{babel}
+\usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \RequirePackage{xkeyval}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
@@ -85,7 +85,7 @@
 %
 % \StopEventually{\PrintIndex}
 %
-% \section{Implementation}
+% \section{Implementatierung}
 %
 %    \begin{macrocode}
 %<*package>
@@ -110,6 +110,8 @@
 \RequirePackage{nexus}
 %    \end{macrocode}
 %
+% \subsection{Optionen}
+%
 % Vordergrundfarbe für strukturelle Elemente.
 % Definiert, um zwischen farbiger und Mono-Variante umschalten zu können.
 %    \begin{macrocode}
@@ -126,6 +128,8 @@
 \ProcessOptions\relax
 %    \end{macrocode}
 % 
+% \subsection{Allgemeine Definitionen}
+%
 % Definiere ein paar temporäre counter für Berechnungen.
 %    \begin{macrocode}
 \newcounter{temp@calca}
@@ -222,18 +226,7 @@
 %    \begin{macrocode}
 \newcommand{\emptyframe}[1]{%
   \@any@frame{#1}{tuWhite}
-  % calc and store number of gauss elements
-%   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
-%   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
-%   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   %
-%   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuWhite}
-%   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
-%     \thetemp@calca\tubspage@gaussheight
-%   }
-%   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-%     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
-%   }
+  %
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
@@ -246,20 +239,6 @@
 %    \begin{macrocode}
 \newcommand{\colorframe}[2]{%
   \@any@frame{#1}{#2}
-%   % calc and store number of gauss elements
-%   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
-%   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
-%   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   %
-% %   \def\bg@color@I{tuGreen}
-%   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{#2}
-%   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\expandafter\endcsname{%
-%     \thetemp@calca\tubspage@gaussheight
-%   }
-%   %
-%   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-%     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
-%   }
   % This is the expanded name name of the frame that should hold information
   \edef\name@of@frame@to@add{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
   %
@@ -280,18 +259,7 @@
 %    \begin{macrocode}
 \newcommand{\imageframe}[2]{%
   \@any@frame{#1}{tuGray20}
-%   % calc and store number of gauss eleme
-%   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
-%   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
-%   \addtocounter{temp@calca}{-\thetemp@calcb}
-%   %
-%   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuYellow}
-%   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
-%     \thetemp@calca\tubspage@gaussheight
-%   }
-%   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-%     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
-%   }
+%
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
@@ -585,6 +553,7 @@
 %    \end{macrocode}
 %
 % \DescribeMacro{\topline}
+% Syntax: |\topline|\oarg{todo}
 %    \begin{macrocode}
 \newcommand{\topline}[1][1]{%
   \tubsff@settopline[\@page@select]
@@ -649,22 +618,21 @@
 \addtolength\temp@height{-0.5\tubspage@columnsep}
 \fi
 }
-
+%    \end{macrocode}
+%
+%    \begin{macro}{\newdynamictubsframe}
+% Erstellt ein 'dynamic frame' im Gauß-Raster\\
+% Syntax: |\newdynamictubsframe|\oarg{pages}\marg{name}\marg{row number}\marg{row span}\marg{column number}\marg{column span}
+%    \begin{macrocode}
 \newboolean{imageframe}%@TODO: currently unused
-% Erstellt ein 'dynamic frame' im Gauß-Raster
-% params:
-% 1 (opt.)  - page set
-% 2         - name
-% 3         - row number
-% 4         - row span
-% 5         - column number
-% 6         - column span
 \newcommand{\newdynamictubsframe}[6][all]{%
   \tubsff@calc@frame{#3}{#4}{#5}{#6}
   % create dynamic frame ...
   \newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
+\let\newtubsdynamicframe\newdynamictubsframe
 %    \end{macrocode}
+%    \end{macro}
 %
 % \DescribeMacro{\newtubsflowframe}
 % Erstellt flow frame im Gauß-Raster
