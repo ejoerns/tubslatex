@@ -152,7 +152,7 @@
 }
 %    \end{macrocode}
 %
-%
+% Lade Header in dynamic Frame
 %    \begin{macrocode}
 \makedfheader
 %    \end{macrocode}
@@ -195,35 +195,16 @@
 \def\tubsff@bg@current@label{}
 %    \end{macrocode}
 %
-% Frame-Typ \emph{emtpy} erzeugt ein leeres Frame angegebener Höhe.
-%    \begin{macrocode}
-\newcommand{\emptyframe}[1]{%
-  % calc and store number of gauss elements
-  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
-  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
-  \addtocounter{temp@calca}{-\thetemp@calcb}
-  %
-  \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuWhite}
-  \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
-    \thetemp@calca\tubspage@gaussheight
-  }
-  \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-    \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
-  }
-  \addtocounter{@bg@cnt}{-1}
-  \addtocounter{@bg@y}{#1}
-}
-%    \end{macrocode}
 %
-% Frame-Typ \emph{color} erzeugt ein farbiges Hintergrund-Frame angegebener Höhe.
+% \begin{macro}{\@any@frame}
+% Args:|\@any@frame|\marg{height}\marg{color}
 %    \begin{macrocode}
-\newcommand{\colorframe}[2]{%
-  % calc and store number of gauss elements
+\newcommand{\@any@frame}[2]{%
+ % calc and store number of gauss elements
   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
   \addtocounter{temp@calca}{-\thetemp@calcb}
   %
-  \def\bg@color@I{tuGreen}
   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{#2}
   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\expandafter\endcsname{%
     \thetemp@calca\tubspage@gaussheight
@@ -232,9 +213,53 @@
   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
   }
-  \edef\@curr@rn{\Roman{@bg@cnt}}
-  % This is the id of the currently created frame!
-  \expandafter\let\expandafter\@curr@id\csname tubsff@bg@id@\@curr@rn\endcsname
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% \begin{macro}{\emptyframe}
+% Frame-Typ \emph{emtpy} erzeugt ein leeres Frame angegebener Höhe.
+%    \begin{macrocode}
+\newcommand{\emptyframe}[1]{%
+  \@any@frame{#1}{tuWhite}
+  % calc and store number of gauss elements
+%   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+%   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+%   \addtocounter{temp@calca}{-\thetemp@calcb}
+%   %
+%   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuWhite}
+%   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
+%     \thetemp@calca\tubspage@gaussheight
+%   }
+%   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+%     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
+%   }
+  \addtocounter{@bg@cnt}{-1}
+  \addtocounter{@bg@y}{#1}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+%    \begin{macro}{\colorframe}
+% Frame-Typ \emph{color} erzeugt ein farbiges Hintergrund-Frame angegebener Höhe.
+%    \begin{macrocode}
+\newcommand{\colorframe}[2]{%
+  \@any@frame{#1}{#2}
+%   % calc and store number of gauss elements
+%   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+%   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+%   \addtocounter{temp@calca}{-\thetemp@calcb}
+%   %
+% %   \def\bg@color@I{tuGreen}
+%   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{#2}
+%   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\expandafter\endcsname{%
+%     \thetemp@calca\tubspage@gaussheight
+%   }
+%   %
+%   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+%     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
+%   }
   % This is the expanded name name of the frame that should hold information
   \edef\name@of@frame@to@add{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
   %
@@ -245,34 +270,33 @@
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
-
-% \newcommand*{\@add@to@list}[2]{%
-%   \setstaticframe*{#1}{#2}
-% }
-% \@add@to@list{\csname set@bg@template@\tubsff@bg@current@label\endcsname}{\@fuckyou}
-
 %    \end{macrocode}
+%    \end{macro}
 %
+%
+%    \begin{macro}{\imageframe}
 % Frame-Typ \emph{image} erzeugt ein Hintergrund-Frame, das ein Bild darstellt und
 % die angegebene Höhe hat.
 %    \begin{macrocode}
 \newcommand{\imageframe}[2]{%
-  % calc and store number of gauss eleme
-  \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
-  \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
-  \addtocounter{temp@calca}{-\thetemp@calcb}
-  %
-  \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuYellow}
-  \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
-    \thetemp@calca\tubspage@gaussheight
-  }
-  \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
-    \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
-  }
+  \@any@frame{#1}{tuGray20}
+%   % calc and store number of gauss eleme
+%   \calc@gaussum{temp@calca}{(\tubspage@ysegments-\value{@bg@y})}%
+%   \calc@gaussum{temp@calcb}{(\tubspage@ysegments-\value{@bg@y}-#1)}
+%   \addtocounter{temp@calca}{-\thetemp@calcb}
+%   %
+%   \expandafter\def\csname tubsff@bg@color@\Roman{@bg@cnt}\endcsname{tuYellow}
+%   \expandafter\edef\csname tubsff@bg@height@\Roman{@bg@cnt}\endcsname{%
+%     \thetemp@calca\tubspage@gaussheight
+%   }
+%   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
+%     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
+%   }
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 % \DescribeMacro{\tubsff@clear@segments}
 % Löscht alle Hintergrund-Segmente
