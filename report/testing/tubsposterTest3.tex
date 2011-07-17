@@ -1,0 +1,60 @@
+\documentclass[a4paper,11pt]{tubsposter}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae}
+
+\usepackage{scrpage2}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+\usepackage{setspace}
+
+\defbgtemplate{2}{%
+  \colorframe{7}{tuBlueLight80}
+  \colorframe{1}{tuBlueDark}
+%   \placetubslogo{left}
+}{myfirsttemplate}
+
+\defbgtemplate{4}{%
+  \colorframe{2}{tuGreenLight80}
+  \colorframe{2}{tuGreenLight60}
+  \colorframe{2}{tuGreenLight40}
+  \colorframe{2}{tuBlueDark}
+% %   \placetubslogo{left}
+}{mysecondtemplate}
+
+\begin{document}
+
+\makeatletter
+% \getstaticlabel{1}
+% \getstaticlabel{2}
+% \getstaticlabel{3}
+% \getstaticlabel{4}
+% \getstaticlabel{5}
+% \getstaticlabel{6}
+% \getstaticlabel{7}
+% \getstaticlabel{8}
+% \getstaticlabel{9}
+% \setstaticframe*{myfirsttemplatebgF2E1}{pages=2}
+% \setstaticframe*{myfirsttemplatebgF2E1}{pages=2}
+\makeatother
+
+% \setbgframe{myfirsttemplate}{2}
+% \usebgtemplate{myfirsttemplate}
+\usebgtemplate[1,2]{mysecondtemplate}
+-------
+
+% \setbgframe{mysecondtemplate}{2}
+~
+\newpage
+~
+\usebgtemplate[3]{myfirsttemplate}
+\newpage
+~
+\newpage
+\end{document}
