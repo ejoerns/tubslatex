@@ -305,40 +305,53 @@
 }
 %    \end{macrocode}
 %
-% \DescribeMacro{\defbgtemplate}
-% Definition von Hintergrundframes.
-% Argumente:
-% \begin{enumerate}
-%   \item[1]  page set
-%   \item[2]  nr of segments
-%   \item[3]  segment definitions
-%   \item[4]  template name
-% \end{enumerate}
+%    \begin{macro}{\defbgtemplate}
+% Definition von Hintergrundframes.\\
+% Syntax: |\defbgtemplate|\oarg{pages}\marg{segments}\marg{definitions}\marg{name}\\
+% Ordnet Frames einem unter |name| angegebenen Hintergrund-Template zu.
+% |segments| bestimmt die Anzahl an Hintergrundframes im Gauß-Raster.
+% In |definitions| werden die einzelnen Hintergrund-Elemente eingefügt
+% (|\colorframe|, |\imageframe|, |\emptyframe|, |\placetubslogo|, |\placelogo|).
 %    \begin{macrocode}
 \newcommand{\defbgtemplate}[4][none]{%
-  % test values
+%    \end{macrocode}
+% Es wird überprüft, ob übergebene Segmentzahl maximal verfügbare Segmentzahl
+% übertrifft und wenn ja, eine Fehlermeldung ausgegeben
+%    \begin{macrocode}
   \ifnum#2>\tubspage@ysegments
     \PackageError{tubsflowfram}%
       {Exceeded max number of segmens!}%
       {Reduce segment quantity}%
   \fi
-  %
+%    \end{macrocode}
+% Zähler werden gesetzt und Argumente in Makros gesichert
+%    \begin{macrocode}
   \addtocounter{@bg@frames@cnt}{1}
   \def\@page@select{#1}
   \def\@page@div{#2}% nr of segments the page is splitted into
   \edef\tubsff@bg@current@label{#4}%template name
   \tubsff@clear@segments% clear all segments
+%    \end{macrocode}
+% ??
+%    \begin{macrocode}
   \forloop{@bg@cnt}{1}{\value{@bg@cnt} < \tubspage@ysegments}{%
     \expandafter\def\csname bg@color@\Roman{@bg@cnt}\endcsname {tuBlue}
   }
   \setcounter{@bg@cnt}{\@page@div}%TODO
   \setcounter{@bg@y}{0}%
-  % init element list
+%    \end{macrocode}
+% Initilisiere Frame-Elementliste für dieses Template
+%    \begin{macrocode}
   \expandafter\newcommand\expandafter{%
     \csname set@bg@template@\tubsff@bg@current@label\endcsname}{}
-  %
+%    \end{macrocode}
+% Hier werden die Frame-Definitionen eingefügt und abgearbeitet
+%    \begin{macrocode}
   #3
-  %
+%    \end{macrocode}
+% Prüfung, ob alle angegebenen Segmente gesetzt wurden und ob sie die gesamte
+% Seite ausfüllen.
+%    \begin{macrocode}
   \ifnum\the@bg@cnt>0
     \PackageError{tubsflowfram}%
       {You have to set all your segments! (\@page@div)}
@@ -349,7 +362,9 @@
       {Your segments do not fill the whole page!}
       {}
   \fi
-  %
+%    \end{macrocode}
+% Zeichnen aller Hintergrund-Objekte
+%    \begin{macrocode}
   \hNtoneleft[#1][\tubspage@borderwidth]%
     {\@page@div}{\paperwidth-\tubspage@borderwidth}%
     \tubsff@bg@height@I\tubsff@bg@color@I\tubsff@bg@id@I%
@@ -367,33 +382,42 @@
   \vNtonetop[odd]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%
   \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
-  % Terminiere Template-Frame-Liste
+%    \end{macrocode}
+% Terminiere Template-Frame-Liste
+%    \begin{macrocode}
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
     ;,%
   }
 }
 %    \end{macrocode}
+%    \end{macro}
 %
-% \DescribeMacro{\setbgframe}
-% Set options for background frames
-% args: 1 - bg-frame id
+%    \begin{macro}{\setbgframe}
+% Setzt Optionen für Hintergrund-Frames, indem die übergebene Frame-Liste abgearbeitet
+% wird.
+% Syntax: |\setbgframe|\oarg{pages}\marg{name}
 %    \begin{macrocode}
 \newcommand{\setbgframe}[2]{%
   \edef\@param@one{#2}
   \expandafter\expandafter\expandafter\@read@list\csname set@bg@template@#1\endcsname%{#2}
 %   \csname set@bg@template@#1\endcsname
 }
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\@read@list}
+%    \begin{macrocode}
 \def\@read@list{
   \let\@read@cmd\@read@list@next
   \@read@cmd
 }
 %    \end{macrocode}
+%    \end{macro}
 %
-% \DescribeMacro{\@read@list@next}
+%    \begin{macro}{\@read@list@next}
 % Liest Element bis zum nächsten Komma, bei Auffinden eines ';' wird Kommando
 % |\@read@list@new| geladen und ausgeführt, sonst ruft sich die Funktion
-% rekursive selbst auf.
+% rekursiv selbst auf.
 %    \begin{macrocode}
 \def\@read@list@next#1,{%
   \ifx#1;
@@ -403,17 +427,30 @@
   \fi
     \@read@cmd%
 }
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\@read@list@new}
+% Makro zum Rücksetzen von |\@read@cm|, benötigt von |\@read@list@next|.
+%    \begin{macrocode}
 \def\@read@list@new{
   \let\@read@cmd\@read@list@next
 }
 %    \end{macrocode}
+%    \end{macro}
 %
-% Schaltet auf Verwendung des unter dem Namen im Arguemnt definierten Templates
+%    \begin{macro}{\usebgtemplate}
+% Syntax: \cs{usebgtemplate}\oarg{pages}\marg{name}
+% Schaltet auf Verwendung des unter dem Namen im Arguemnt definierten Templates.
+% Optional auswahl der Seiten, standardmäßig wird das Template auf allen Seiten
+% gesetzt.
+% Ruft zur Zeit direkt |\setbgframe| auf.
 %    \begin{macrocode}
 \newcommand{\usebgtemplate}[2][all]{%
   \setbgframe{#2}{#1}
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %
 % \subsubsection{Logo-Platzierungen}
