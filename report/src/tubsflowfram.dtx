@@ -311,6 +311,11 @@
 %    \begin{macrocode}
 \newcommand{\defbgtemplate}[4][none]{%
 %    \end{macrocode}
+% Definiere Makros für Setzten von Vordergrund-Objekten (Logos)
+%    \begin{macrocode}
+  \let\set@tubslogo\relax
+  \let\set@logo\relax
+%      \end{macrocode}
 % Es wird überprüft, ob übergebene Segmentzahl maximal verfügbare Segmentzahl
 % übertrifft und wenn ja, eine Fehlermeldung ausgegeben
 %    \begin{macrocode}
@@ -371,14 +376,31 @@
     \tubsff@bg@height@VI\tubsff@bg@color@VI\tubsff@bg@id@VI%
     \tubsff@bg@height@VII\tubsff@bg@color@VII\tubsff@bg@id@VII%
     \tubsff@bg@height@VIII\tubsff@bg@color@VIII\tubsff@bg@id@VIII%
-  % left white border
+  % left and right white border
   \edef\@lborder@odd@name{lborderodd\the@bg@frames@cnt}
   \edef\@lborder@even@name{lbordereven\the@bg@frames@cnt}
   \edef\@rborder@even@name{rbordereven\the@bg@frames@cnt}
   \vNtonetop[odd]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%
   \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
   \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
+  \expandafter\l@addto@macro\csname% 
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+    \@lborder@odd@name,%
+  }
+  \expandafter\l@addto@macro\csname% 
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+    \@lborder@even@name,%
+  }
+  \expandafter\l@addto@macro\csname% 
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+    \@rborder@even@name,%
+  }% TODO: check if twosided works for this!
 %    \end{macrocode}
+% Setze alle Vordergrund-Objekte des Hintergrunds (Logos)
+%    \begin{macrocode}
+  \set@tubslogo
+  \set@logo
+%      \end{macrocode}
 % Terminiere Template-Frame-Liste
 %    \begin{macrocode}
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
@@ -471,16 +493,23 @@
 % create dynamic frame
 \edef\@p@sel{#1}
 % \setlength{\tubsff@temp}{\tubslogoWidth+\tubspage@bcor}
-\expandafter\newdynamicframe\expandafter[\@p@sel]%
+\expandafter\newstaticframe\expandafter[\@p@sel]%
   {\tubslogoWidth}{\tubslogoHeight}%
   {\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}%
   {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
   [tubslogo\the@bg@frames@cnt]
   % set x pos for twosided layout
-  \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
+  \setstaticframe*{tubslogo\the@bg@frames@cnt}{%
     evenx=\pos@frame@left@even+\tubsff@logooffset}
-  \setdynamicframe*{tubslogo\the@bg@frames@cnt}{%
+  \setstaticframe*{tubslogo\the@bg@frames@cnt}{%
     oddx=\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}
+  % Füge Namen des erzeugten Frames in Liste des Templates ein
+  \edef\name@of@frame@to@add{%
+    tubslogo\the@bg@frames@cnt}
+  \expandafter\l@addto@macro\csname%
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+      \name@of@frame@to@add,%
+    }
 }
 
 % place the tubs logo
@@ -488,14 +517,16 @@
 % 1 (opt.)  - [plain] = only background
 % 2         - left/right
 \newcommand{\placetubslogo}[2][\relax]{%
-% place \the@bg@frames@cnt at \@page@select with opt: #1, #2
-  \tubsff@settubslogo[\@page@select]{#2}
-  \ifthenelse{\equal{#1}{plain}}{%
-    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
-  }{%
-    \setdynamicframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
-    \setdynamiccontents*{tubslogo\the@bg@frames@cnt}{%
-      \checkoddpage\ifoddpage\hfill\fi\tubslogo}
+  \def\set@tubslogo{%
+  % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
+    \tubsff@settubslogo[\@page@select]{#2}
+    \ifthenelse{\equal{#1}{plain}}{%
+      \setstaticframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
+    }{%
+      \setstaticframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
+      \setstaticcontents*{tubslogo\the@bg@frames@cnt}{%
+        \checkoddpage\ifoddpage\hfill\fi\tubslogo}
+    }
   }
 }
 %
