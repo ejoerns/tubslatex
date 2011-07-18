@@ -217,6 +217,13 @@
   \expandafter\edef\csname tubsff@bg@id@\Roman{@bg@cnt}\expandafter\endcsname{%
     \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt
   }
+  % Füge Namen des erzeugten Frames in Liste des Templates ein
+  \edef\name@of@frame@to@add{%
+    \tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
+  \expandafter\l@addto@macro\csname%
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+      \name@of@frame@to@add,%
+    }
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -240,12 +247,9 @@
 \newcommand{\colorframe}[2]{%
   \@any@frame{#1}{#2}
   % This is the expanded name name of the frame that should hold information
-  \edef\name@of@frame@to@add{\tubsff@bg@current@label bgF\the@bg@frames@cnt E\the@bg@cnt}
+
   %
-  % Füge Namen des erzeugten Frames in Liste des Templates ein
-  \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \name@of@frame@to@add,%
-  }
+
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
