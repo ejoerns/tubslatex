@@ -15,54 +15,57 @@
 %
 % \fi
 %
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
 % \iffalse
-%<package>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<package>\ProvidesPackage{package}
-%<package>  [2011/07/09 vTesting TU Braunschweig CD Templates]
 %
 %<*driver>
 \documentclass{ltxdoc}
-\usepackage{tubstypearea}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
 \begin{document}
-% \DocInput{package.dtx}
+  \DocInput{tubstypearea.dtx}
 \end{document}
 %</driver>
 % \fi
 %
-% \CheckSum{0}
-%
-% \CharacterTable
-% {Upper-case     \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%  Lower-case     \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%  Digits         \0\1\2\3\4\5\6\7\8\9
-%  Exclamation    \!    Double quote  \"    Hash (number) \#
-%  Dollar         \$    Percent       \%    Ampersand     \&
-%  Acute accent   \’    Left paren    \(    Right paren   \)
-%  Asterisk       \*    Plus          \+    Comma         \,
-%  Minus          \-    Point         \.    Solidus       \/
-%  Colon          \:    Semicolon     \;    Less than     \<
-%  Equals         \=    Greater than  \>    Question mark \?
-%  Commercial at  \@    Left bracket  \[    Backslash     \\
-%  Right bracket  \]    Circumflex    \^    Underscore    \_
-%  Grave accent   \‘    Left brace    \{    Vertical bar  \|
-%  Right brace    \}    Tilde         \~}
-%
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
 %
-% \GetFileInfo{tubsodc.sty}
+% \GetFileInfo{tubstypearea.sty}
 %
 % \DoNotIndex{ list of control sequences }
 %
-% \title{The \textsf{tubstypearea} package\thanks{This document
+% \title{\textsf{tubstypearea} -- 
+%   typeare settings for tubslatex\thanks{This document
 %   corresponds to \textsf{tubstypearea}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
 %
 % \maketitle
+%
+% \tableofcontents
 %
 % \begin{abstract}
 %   Put text here.
@@ -82,21 +85,478 @@
 %
 % \StopEventually{\PrintIndex}
 %
-% \section{Implementation}
+% \section{Implementatierung}
 %
-% \begin{macro}{\YOURMACRO}
-% Put explanation of |\YOURMACRO|’s implementation here.
-%   \begin{macrocode}
-\newcommand{\YOURMACRO}{}
-%   \end{macrocode}
-% \end{macro}
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
 %
-% \begin{environment}{YOURENV}
-% Put explanation of |YOURENV|’s implementation here.
-%   \begin{macrocode}
-\newenvironment{YOURENV}{}{}
-%   \end{macrocode}
-% \end{environment}
+% \subsection{Kopf}
+% Pakete Laden...
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tubstypearea}% 'tubslayout'?
+
+\RequirePackage{ifthen}
+\RequirePackage{geometry}
+\RequirePackage[absolute]{textpos}
+\RequirePackage{calc}
+\RequirePackage{xkeyval}
+%    \end{macrocode}
+%
+% \subsection{Definitionen}
+%
+% Boolean to check if landscape mode is used
+%    \begin{macrocode}
+\newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
+%    \end{macrocode}
+% Boolean to check if left margin is used
+%    \begin{macrocode}
+\newboolean{tubspage@marginleft}
+%    \end{macrocode}
+% Boolean to check if right margin is used
+%    \begin{macrocode}
+\newboolean{tubspage@marginright}
+%    \end{macrocode}
+% BCOR
+%    \begin{macrocode}
+\newlength{\tubspage@bcor}
+%    \end{macrocode}
+% width of outer white border
+%    \begin{macrocode}
+\newlength{\tubspage@borderwidth}
+%    \end{macrocode}
+% height of sender area (top of the page
+% until borderwidth above communication area
+%    \begin{macrocode}
+\newlength{\tubspage@senderheight}
+%    \end{macrocode}
+% senderheight without borders
+%    \begin{macrocode}
+\newlength{\tubspage@headheight}
+%    \end{macrocode}
+% height of communication area (TODO: not neccesair?)
+%    \begin{macrocode}
+\newlength{\tubspage@communicationheight}
+%    \end{macrocode}
+% width of area
+%    \begin{macrocode}
+\newlength{\tubspage@contentwidth}
+%    \end{macrocode}
+% Nr of horizontal segments for box layout
+%    \begin{macrocode}
+\def\tubspage@xsegments{6}
+%    \end{macrocode}
+% Nr of vertical segments for gaussian layout system
+%    \begin{macrocode}
+\def\tubspage@ysegments{8}
+%    \end{macrocode}
+% Counter to store the gaussian sum of |\tubspage@ysegments|
+%    \begin{macrocode}
+\newcounter{tubspage@gausssum}
+%    \end{macrocode}
+% space between boxes (columns) in layout. It is independent from papersize
+%    \begin{macrocode}
+\newlength{\tubspage@columnsep}
+%    \end{macrocode}
+% height of a single gauss element for vertical layout
+%    \begin{macrocode}
+\newlength{\tubspage@gaussheight}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newlength{\tubspage@columnwidth}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newboolean{tubspage@twosided}\setboolean{tubspage@twosided}{false}
+%    \end{macrocode}
+%
+% Makro zur Speicherung des ausgewählten Papierformats.
+% Standardwert: |anypaper|
+%    \begin{macrocode}
+\def\tubspage@paper{anypaper}
+%    \end{macrocode}
+%
+%
+% calculates dimensions for LaTeXs page layout
+%    \begin{macro}{\tubspage@calclayout}
+%    \begin{macrocode}
+\newcommand{\tubspage@calclayout}{%
+  \setlength{\tubspage@columnsep}{5mm}
+  % outer geometry
+  \geometry{%
+    headheight=\tubspage@senderheight-\tubspage@borderwidth,
+    headsep=\tubspage@borderwidth,
+    top=\tubspage@senderheight+\tubspage@borderwidth,
+    left=2\tubspage@borderwidth,
+    right=2\tubspage@borderwidth,
+    bottom=2\tubspage@borderwidth,
+    bindingoffset=\tubspage@bcor}
+  % inner geometry
+  \setcounter{tubspage@gausssum}{%
+    \tubspage@ysegments*(\tubspage@ysegments+1)/2}
+  % dimension is a hack..
+  \setlength{\TPHorizModule}{%
+    (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
+  \setlength{\tubspage@columnwidth}{%
+    (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
+  \setlength{\TPVertModule}{%
+    (\textheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+  \setlength{\tubspage@gaussheight}{%
+    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+  \textblockorigin{2\tubspage@borderwidth}{%
+    \tubspage@senderheight+\tubspage@borderwidth}
+  \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  \setlength{\tubspage@contentwidth}{%
+    \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
+  %
+  \ifthenelse{\boolean{tubspage@marginleft}}{%
+    \geometry{%
+      lmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+      marginparsep=\tubspage@columnsep,
+      marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
+  }{}
+  \ifthenelse{\boolean{tubspage@marginright}}{%
+    \geometry{%
+      rmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+      marginparsep=\tubspage@columnsep,
+      marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
+  }{}
+  \ifthenelse{\boolean{tubspage@twosided}}{%
+    \geometry{twoside}
+  }
+%   \setlength{\marginparwidth}{\TPHorizModule}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% \subsection{Optionen}
+%
+% margin left
+%    \begin{macrocode}
+\DeclareOptionX{marginleft}{%
+  \setboolean{tubspage@marginleft}{true}
+}
+%    \end{macrocode}
+% margin right
+%    \begin{macrocode}
+\DeclareOptionX{marginright}{%
+  \setboolean{tubspage@marginright}{true}
+}
+%    \end{macrocode}
+% landscape
+%    \begin{macrocode}
+\DeclareOptionX{landscape}{%
+  \setboolean{tubspage@landscape}{true}
+}
+%    \end{macrocode}
+%
+% \subsubsection{Papierformate}
+%
+% A0
+%    \begin{macrocode}
+\DeclareOptionX{a0paper}{%
+  \def\tubspage@paper{a0paper}
+}
+%    \end{macrocode}
+% A1
+%    \begin{macrocode}
+\DeclareOptionX{a1paper}{%
+  \def\tubspage@paper{a1paper}
+}
+%    \end{macrocode}
+% A2
+%    \begin{macrocode}
+\DeclareOptionX{a2paper}{%
+  \def\tubspage@paper{a2paper}
+}
+%    \end{macrocode}
+% A3
+%    \begin{macrocode}
+\DeclareOptionX{a3paper}{%
+  \def\tubspage@paper{a3paper}
+}
+% A4
+\DeclareOptionX{a4paper}{%
+  \def\tubspage@paper{a4paper}
+}
+% A5
+\DeclareOptionX{a5paper}{%
+  \def\tubspage@paper{a5paper}
+}
+% A6
+\DeclareOptionX{a6paper}{%
+  \def\tubspage@paper{a6paper}
+}
+% any
+\DeclareOptionX{anypaper}{%
+  \def\tubspage@paper{anypaper}
+}
+%%%
+\DeclareOptionX{bcor}{%
+  \setlength{\tubspage@bcor}{#1}
+}
+%
+\DeclareOptionX{twosided}{%
+  \setboolean{tubspage@twosided}{true}
+}
+%
+\DeclareOptionX{scifiposter}{%
+  %
+}
+%
+% \ExecuteOptions{anypaper}
+% \ProcessOptions\relax
+\ProcessOptionsX\relax
+\tubspage@process@paper
+\tubspage@calclayout
+
+\newcommand{\tubsgeometry}[1]{%
+}
+%    \end{macrocode}
+%
+%
+%    \begin{macro}{\tubspage@process@paper}
+%    \begin{macrocode}
+\newcommand{\tubspage@process@paper}{%
+  \ifthenelse{\equal{\tubspage@paper}{anypaper}}{%
+    % anypaper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{0.2\paperheight}% 1/5
+      \setlength{\tubspage@borderwidth}{0.038\paperheight}
+    }{%
+      \setlength{\tubspage@communicationheight}{0.14286\paperheight}% ~1/7
+      \setlength{\tubspage@borderwidth}{0.038\paperwidth}
+    }
+  \setlength{\tubspage@senderheight}{\paperheight-\tubspage@communicationheight}
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a6paper}}{%
+    % a6paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{75mm}%
+    }{%
+      \setlength{\tubspage@communicationheight}{118mm}%
+    }
+    \setlength{\tubspage@borderwidth}{5mm}%
+    \setlength{\tubspage@senderheight}{25mm}%
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a5paper}}{%
+    % a5paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{112.5mm}%
+    }{%
+      \setlength{\tubspage@communicationheight}{174.5mm}%
+    }
+    \setlength{\tubspage@borderwidth}{5.5mm}%
+    \setlength{\tubspage@senderheight}{30mm}%
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a4paper}}{%
+    % a4paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{162mm}%
+      \def\tubspage@ysegments{6}%
+    }{%
+      \setlength{\tubspage@communicationheight}{249mm}%
+      \def\tubspage@ysegments{8}%
+    }
+    \setlength{\tubspage@borderwidth}{8mm}%
+    \setlength{\tubspage@senderheight}{40mm}%
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a30paper}}{%
+    % a3paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{226mm}%
+      \def\tubspage@ysegments{6}%
+    }{%
+      \setlength{\tubspage@communicationheight}{349mm}%
+      \def\tubspage@ysegments{8}%
+    }
+    \setlength{\tubspage@borderwidth}{11mm}%
+    \setlength{\tubspage@senderheight}{60mm}%
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a2paper}}{%
+    % a2paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{324mm}%
+      \def\tubspage@ysegments{6}%
+    }{%
+      \setlength{\tubspage@communicationheight}{498mm}%
+      \def\tubspage@ysegments{8}%
+    }
+    \setlength{\tubspage@borderwidth}{16mm}%
+    \setlength{\tubspage@senderheight}{80mm}%
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a1paper}}{%
+    % a1paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{649mm}%
+      \def\tubspage@ysegments{6}%
+    }{%
+      \setlength{\tubspage@communicationheight}{699mm}%
+      \def\tubspage@ysegments{8}%
+    }
+    \setlength{\tubspage@borderwidth}{22mm}%
+    \setlength{\tubspage@senderheight}{120mm}%
+  }{%
+  \ifthenelse{\equal{\tubspage@paper}{a0paper}}{%
+    % a0paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{649mm}%
+      \def\tubspage@ysegments{6}%
+    }{%
+      \setlength{\tubspage@communicationheight}{997mm}%
+      \def\tubspage@ysegments{8}%
+    }
+    \setlength{\tubspage@borderwidth}{32mm}%
+    \setlength{\tubspage@senderheight}{160mm}%
+  }{}}}}}}}}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+% calculates gaussum and returns as plain number
+% parameters:
+% 1 - counter to set
+% 2 - value to calc sum of
+%    \begin{macrocode}
+\newcommand{\calc@gaussum}[2]{%
+\setcounter{#1}{%
+  (#2*(#2+1))/2}%
+}
+%    \end{macrocode}
+%
+%
+% This makro allows to calculate the gauss sum for segments for current setup
+% counting is done top down
+% input is the element that should be setted
+% output is the number of element that have to be skipped before
+% Thus parameter 3 should result in output 15 with 8 segments
+% Syntax: |\tmp@calc|\oarg{??}\marg{counter}\marg{segment}
+% 1 (opt) - ??
+% 2       - counter to store result in
+% 3       - segment number (counted 1 to 8)
+%    \begin{macrocode}
+\newcounter{tmp@calc}
+\newcommand{\calc@gauss@elementpos}[3][]{%
+  \calc@gaussum{tmp@calc}{(\tubspage@ysegments-(#3-1))}%
+  \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
+}
+
+\newlength{\tubsbox@leftmargin}
+\newlength{\tubsbox@rightmargin}
+\newlength{\tubsbox@leftsep}
+\newlength{\tubsbox@rightsep}
+\newlength{\tubsbox@topmargin}
+\newlength{\tubsbox@bottommargin}
+\newsavebox{\storebox}
+\newcounter{tubsbox@lastelement}
+\newcounter{tubsbox@calcypos}
+\newcounter{tubsbox@calcheight}
+% params:
+% 1 - color
+% 2 - xpos
+% 3 - ypos
+% 4 - width [1-6]
+% 5 - height [1-6] / [1-8]
+\newenvironment{tubsbox}[5][tuWhite]{%
+% calculate left and right margins and seps
+\ifnum#2=0
+\setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@rightmargin}{0mm}
+\setlength{\tubsbox@leftsep}{0mm}
+% \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+\else
+\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\fi
+\setcounter{tubsbox@lastelement}{#2}\addtocounter{tubsbox@lastelement}{#4}
+\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
+% \setlength{\tubsbox@leftmargin}{0mm}
+\setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
+% \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\setlength{\tubsbox@rightsep}{0mm}
+\else
+% \setlength{\tubsbox@leftmargin}{0mm}
+\setlength{\tubsbox@rightmargin}{0mm}
+\setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+% \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\fi
+% \fi
+% calculate top and bottom marings and seps
+\ifnum#3=1
+\setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@bottommargin}{0mm}
+\else
+
+% \addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
+\fi
+\setcounter{tubsbox@lastelement}{#3+#5-1}
+\ifnum\value{tubsbox@lastelement}=\tubspage@ysegments
+% \setlength{\tubsbox@topmargin}{0mm}
+\setlength{\tubsbox@bottommargin}{\tubspage@borderwidth}
+\else
+% \setlength{\tubsbox@topmargin}{0mm}
+\setlength{\tubsbox@bottommargin}{0mm}
+\fi
+% \fi
+%
+\def\bgcolor{#1}
+\def\tubsbox@xpos{#2}
+\setcounter{tubsbox@calcypos}{%
+  \value{tubspage@gausssum}-((\tubspage@ysegments+1-#3)*(\tubspage@ysegments-#3+2))/2}
+\def\tubsbox@ypos{\thetubsbox@calcypos}
+% 
+\setcounter{tubsbox@calcheight}{%
+  \value{tubspage@gausssum}-((\tubspage@ysegments+1-#3-#5)*(\tubspage@ysegments-#3-#5+2))/2}
+\addtocounter{tubsbox@calcheight}{%
+-\value{tubspage@gausssum}+((\tubspage@ysegments+1-#3)*(\tubspage@ysegments-#3+2))/2}
+% 
+\def\tubsbox@width{#4}
+\def\tubsbox@height{\thetubsbox@calcheight}
+\begin{lrbox}{\storebox}
+\begin{minipage}[t]%
+  [\tubsbox@height\TPVertModule+\tubsbox@topmargin+\tubsbox@bottommargin]%
+  {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
+  \vspace*{\tubsbox@topmargin}%
+}{%
+\vspace*{\tubsbox@bottommargin}%
+\end{minipage}
+\end{lrbox}
+\setlength{\fboxsep}{0cm}%
+\begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
+\hspace*{\tubsbox@leftsep}%
+\hspace*{-\tubsbox@leftmargin}%
+% \vspace*{\tubsbox@topmargin}%
+\raisebox{\tubsbox@topmargin}[0cm]{%
+\colorbox{\bgcolor}{%
+\hspace*{\tubsbox@leftmargin}%
+\usebox{\storebox}%
+\hspace*{\tubsbox@rightmargin}%
+}%
+}%
+\hspace*{\tubsbox@rightsep}%
+\end{textblock}
+}
+
+
+% y segments
+% x
+% border
+% senderheight
+% communicationheight
+
+% portrait:
+%   senderheight = 1/7 paperheight
+% landscape:
+%   senderheight = 1/5 paperheight
+
+% missing formats can be added by simple style file...
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
 %
 % \Finale
 \endinput
