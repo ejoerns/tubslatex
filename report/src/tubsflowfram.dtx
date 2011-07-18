@@ -315,6 +315,7 @@
 %    \begin{macrocode}
   \let\set@tubslogo\relax
   \let\set@logo\relax
+  \let\set@topline\relax
 %      \end{macrocode}
 % Es wird überprüft, ob übergebene Segmentzahl maximal verfügbare Segmentzahl
 % übertrifft und wenn ja, eine Fehlermeldung ausgegeben
@@ -398,6 +399,7 @@
 %    \end{macrocode}
 % Setze alle Vordergrund-Objekte des Hintergrunds (Logos)
 %    \begin{macrocode}
+  \set@topline
   \set@tubslogo
   \set@logo
 %      \end{macrocode}
@@ -542,13 +544,19 @@
   \addtolength{\tubsff@logooffset}{0.5\paperwidth}
   \setlength{\tubsff@tmp@logoheight}{\tubspage@senderheight-2\tubspage@borderwidth}
   % \computeleftedgeodd{\tubsff@logopageoffset}
-  % create dynamic frame
+  % create static frame
   \edef\@p@sel{#1}
-  \expandafter\newdynamicframe\expandafter[\@p@sel]%
+  \expandafter\newstaticframe\expandafter[\@p@sel]%
     {0.5\tubspage@contentwidth}{\tubspage@headheight}%
     {\tubsff@logooffset}%
     {36\tubspage@gaussheight}%
     [logo\the@bg@frames@cnt]
+  \edef\name@of@frame@to@add{%
+    logo\the@bg@frames@cnt}
+  \expandafter\l@addto@macro\csname%
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+      \name@of@frame@to@add,%
+    }
 }
 %    \end{macrocode}
 %
@@ -560,8 +568,8 @@
 %    \begin{macrocode}
 \newcommand{\placelogo}[2][tuWhite]{%
   \tubsff@setlogo[\@page@select]{#2}
-  \setdynamicframe*{logo\the@bg@frames@cnt}{backcolor=#1}
-  \setdynamiccontents*{logo\the@bg@frames@cnt}{\hfill #2}
+  \setstaticframe*{logo\the@bg@frames@cnt}{backcolor=#1}
+  \setstaticcontents*{logo\the@bg@frames@cnt}{\hfill #2}
 }
 %    \end{macrocode}
 %
@@ -572,18 +580,24 @@
 % \DescribeMacro{\tubsff@settopline}
 %    \begin{macrocode}
 \newcommand{\tubsff@settopline}[1][1]{%
-  % create dynamic frame
+  % create static frame
   \edef\@p@sel{#1}
-  \expandafter\newdynamicframe\expandafter[\@p@sel]%
+  \expandafter\newstaticframe\expandafter[\@p@sel]%
     {\tubspage@contentwidth}{0.5pt}%
     {\pos@frame@left@odd+\tubspage@borderwidth}%
     {-\tubspage@borderwidth+36\tubspage@gaussheight}
     [topline\the@bg@frames@cnt]
   % set x pos for twosided layout
-  \setdynamicframe*{topline\the@bg@frames@cnt}{%
+  \setstaticframe*{topline\the@bg@frames@cnt}{%
     evenx=\pos@frame@left@even+\tubspage@borderwidth}
-  \setdynamicframe*{topline\the@bg@frames@cnt}{%
+  \setstaticframe*{topline\the@bg@frames@cnt}{%
     oddx=\pos@frame@left@odd+\tubspage@borderwidth+\tubspage@bcor}
+  \edef\name@of@frame@to@add{%
+    topline\the@bg@frames@cnt}
+  \expandafter\l@addto@macro\csname%
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+      \name@of@frame@to@add,%
+    }
 }
 %    \end{macrocode}
 %
@@ -591,8 +605,10 @@
 % Syntax: |\topline|\oarg{todo}
 %    \begin{macrocode}
 \newcommand{\topline}[1][1]{%
-  \tubsff@settopline[\@page@select]
-  \setdynamicframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
+  \def\set@topline{%
+    \tubsff@settopline[\@page@select]
+    \setstaticframe*{topline\the@bg@frames@cnt}{backcolor=fgcolor}
+  }
 }
 %    \end{macrocode}
 %
