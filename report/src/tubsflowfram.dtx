@@ -192,7 +192,7 @@
 %    \end{macrocode}
 % Globaler Zähler für das Hintergrund-Element
 %    \begin{macrocode}
-\newcounter{@bg@frames@cnt}
+\newcounter{@bg@frames@cnt}%TODO: Check if it can be replaced by template name!
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -378,24 +378,12 @@
     \tubsff@bg@height@VII\tubsff@bg@color@VII\tubsff@bg@id@VII%
     \tubsff@bg@height@VIII\tubsff@bg@color@VIII\tubsff@bg@id@VIII%
   % left and right white border
-  \edef\@lborder@odd@name{lborderodd\the@bg@frames@cnt}
-  \edef\@lborder@even@name{lbordereven\the@bg@frames@cnt}
-  \edef\@rborder@even@name{rbordereven\the@bg@frames@cnt}
-  \vNtonetop[odd]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%
-  \vNtonetop[even]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%
-  \vNtonetop[even][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
-  \expandafter\l@addto@macro\csname% 
-    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \@lborder@odd@name,%
-  }
-  \expandafter\l@addto@macro\csname% 
-    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \@lborder@even@name,%
-  }
-  \expandafter\l@addto@macro\csname% 
-    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
-    \@rborder@even@name,%
-  }% TODO: check if twosided works for this!
+  \edef\@lborder@odd@name{lborderodd\tubsff@bg@current@label}
+  \edef\@lborder@even@name{lbordereven\tubsff@bg@current@label}
+  \edef\@rborder@even@name{rbordereven\tubsff@bg@current@label}
+  \vNtonetop[none]{1}{\paperheight}{\tubspage@borderwidth+\tubspage@bcor}{tuWhite}{\@lborder@odd@name}%%TODO: was: 'odd'
+  \vNtonetop[none]{1}{\paperheight}{\tubspage@borderwidth}{tuWhite}{\@lborder@even@name}%%TODO: was: 'even'
+  \vNtonetop[none][\textwidth+3\tubspage@borderwidth]{1}{\paperheight}{\tubspage@bcor+0.1mm}{tuWhite}{\@rborder@even@name}%
 %    \end{macrocode}
 % Setze alle Vordergrund-Objekte des Hintergrunds (Logos)
 %    \begin{macrocode}
@@ -467,7 +455,11 @@
 % Ruft zur Zeit direkt |\setbgframe| auf.
 %    \begin{macrocode}
 \newcommand{\usebgtemplate}[2][all]{%
+  \def\foo{#1}
   \setbgframe{#2}{#1}
+  \expandafter\setstaticframe\expandafter*\expandafter{lborderodd#2}{pages=\foo}
+  \expandafter\setstaticframe\expandafter*\expandafter{lbordereven#2}{pages=\foo}
+  \expandafter\setstaticframe\expandafter*\expandafter{rbordereven#2}{pages=\foo}
 }
 %    \end{macrocode}
 %    \end{macro}
