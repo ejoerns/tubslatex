@@ -136,6 +136,10 @@
 \newlength{\tubspage@headheight}
 %    \end{macrocode}
 % height of communication area (TODO: not neccesair?)
+% HINWEIS: Die auf der CD-Website beschriebenen Höhen für den Kommunikations-
+%   bereicht entspricht nicht der auf der Website definiterten Höhe des
+%   Kommunikationsbereichs, sondern nur der Höhe nach Abzug des unteren
+%   Rahmens!
 %    \begin{macrocode}
 \newlength{\tubspage@communicationheight}
 %    \end{macrocode}
@@ -176,6 +180,13 @@
 % Standardwert: |anypaper|
 %    \begin{macrocode}
 \def\tubspage@paper{anypaper}
+%    \end{macrocode}
+%
+% Makro in dem Veränderungen am Layout abgespeichert werden können, die
+% \emph{nach} |\tubspage@process@paper| und \emph{vor}
+% |\tubspage@calclayout| ausgeführt werden sollen.
+%    \begin{macrocode}
+\def\tubspage@modifications{}
 %    \end{macrocode}
 %
 %
@@ -301,16 +312,20 @@
 \DeclareOptionX{twosided}{%
   \setboolean{tubspage@twosided}{true}
 }
-%
+% Für wissenschaftliche Poster werden der Absenderbereich und die Ränder 
 \DeclareOptionX{scifiposter}{%
-  %
+  \let\tubspage@old@modifications\tubspage@modifications
+  \renewcommand*{\tubspage@modifications}{%
+    \tubspage@old@modifications%
+    \setlength{\tubspage@senderheight}{0.095\paperheight}% ~1/11?
+    \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
+  }
 }
 %
 % \ExecuteOptions{anypaper}
 % \ProcessOptions\relax
 \ProcessOptionsX\relax
-\tubspage@process@paper
-\tubspage@calclayout
+
 
 \newcommand{\tubsgeometry}[1]{%
 }
@@ -323,13 +338,13 @@
   \ifthenelse{\equal{\tubspage@paper}{anypaper}}{%
     % anypaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{0.2\paperheight}% 1/5
       \setlength{\tubspage@borderwidth}{0.038\paperheight}
+      \setlength{\tubspage@senderheight}{0.2\paperheight}% 1/5
     }{%
-      \setlength{\tubspage@communicationheight}{0.14286\paperheight}% ~1/7
       \setlength{\tubspage@borderwidth}{0.038\paperwidth}
+      \setlength{\tubspage@senderheight}{0.14286\paperheight}% ~1/7
     }
-  \setlength{\tubspage@senderheight}{\paperheight-\tubspage@communicationheight}
+  \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a6paper}}{%
     % a6paper
@@ -363,7 +378,7 @@
     \setlength{\tubspage@borderwidth}{8mm}%
     \setlength{\tubspage@senderheight}{40mm}%
   }{%
-  \ifthenelse{\equal{\tubspage@paper}{a30paper}}{%
+  \ifthenelse{\equal{\tubspage@paper}{a3paper}}{%
     % a3paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{226mm}%
@@ -415,6 +430,11 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macrocode}
+\tubspage@process@paper
+\tubspage@modifications
+\tubspage@calclayout
+%    \end{macrocode}
 %
 % calculates gaussum and returns as plain number
 % parameters:
