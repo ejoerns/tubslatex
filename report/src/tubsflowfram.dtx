@@ -246,14 +246,20 @@
 %    \begin{macrocode}
 \newcommand{\fullback}[1]{%
   \def\set@fullback{%
-    \hNtone[all][0mm]{1}{\tubspage@communicationheight+\tubspage@borderwidth}%
+    \hNtone[none][0mm]{1}{\tubspage@communicationheight+\tubspage@borderwidth}%
       {#1}%
       {background\tubsff@bg@current@label}
     %
   }
   % Just says that all segments are set
-  \setcounter{@bg@cnt}{0}
-  \setcounter{@bg@y}{\tubspage@ysegments}
+  \emptyframe{\tubspage@ysegments}
+  % Füge Namen des erzeugten Frames in Liste des Templates ein
+  \edef\name@of@frame@to@add{%
+    background\tubsff@bg@current@label}
+  \expandafter\l@addto@macro\csname%
+    set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
+      \name@of@frame@to@add,%
+    }
 }
 %    \end{macrocode}
 %    \end{macro}
