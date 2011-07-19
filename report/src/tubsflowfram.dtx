@@ -329,7 +329,7 @@
 % Zähler werden gesetzt und Argumente in Makros gesichert
 %    \begin{macrocode}
   \addtocounter{@bg@frames@cnt}{1}
-  \def\@page@select{#1}
+  \def\@page@select{none}
   \def\@page@div{#2}% nr of segments the page is splitted into
   \edef\tubsff@bg@current@label{#4}%template name
   \tubsff@clear@segments% clear all segments
@@ -395,6 +395,9 @@
 %    \begin{macrocode}
   \expandafter\l@addto@macro\csname set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
     ;,%
+  }
+  \ifthenelse{\equal{#1}{none}}{}{%
+    \usebgtemplate[#1]{\tubsff@bg@current@label}
   }
 }
 %    \end{macrocode}
