@@ -5,6 +5,7 @@
 \ProvidesPackage{tubslogo}[2011/05/27  v1.01 CD-Logo der TU Braunschweig]
 \RequirePackage{graphicx}
 \RequirePackage{ifthen}
+\RequirePackage{xkeyval}
 %
 % color vars
 \newboolean{hksLogo}\setboolean{hksLogo}{false}
@@ -12,30 +13,35 @@
 \newboolean{monoLogo}\setboolean{monoLogo}{false}
 % papersize vars
 \def\logo@papersize{}
+\def\tubslogo@relscale{}
 %
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color options
-\DeclareOption{rgb}{\relax}
-\DeclareOption{hks}{\setboolean{hksLogo}{true}}
-\DeclareOption{cmyk}{\setboolean{cmykLogo}{true}}
-\DeclareOption{mono}{\setboolean{monoLogo}{true}}
+\DeclareOptionX{rgb}{\relax}
+\DeclareOptionX{hks}{\setboolean{hksLogo}{true}}
+\DeclareOptionX{cmyk}{\setboolean{cmykLogo}{true}}
+\DeclareOptionX{mono}{\setboolean{monoLogo}{true}}
 % papersize options
-\DeclareOption{a6paper}{\def\logo@papersize{6}}
-\DeclareOption{a5paper}{\def\logo@papersize{5}}
-\DeclareOption{a4paper}{\def\logo@papersize{4}}
-\DeclareOption{a3paper}{\def\logo@papersize{3}}
-\DeclareOption{a2paper}{\def\logo@papersize{2}}
-\DeclareOption{a1paper}{\def\logo@papersize{1}}
-\DeclareOption{a0paper}{\def\logo@papersize{0}}
-\DeclareOption*{%
+\DeclareOptionX{a6paper}{\def\logo@papersize{6}}
+\DeclareOptionX{a5paper}{\def\logo@papersize{5}}
+\DeclareOptionX{a4paper}{\def\logo@papersize{4}}
+\DeclareOptionX{a3paper}{\def\logo@papersize{3}}
+\DeclareOptionX{a2paper}{\def\logo@papersize{2}}
+\DeclareOptionX{a1paper}{\def\logo@papersize{1}}
+\DeclareOptionX{a0paper}{\def\logo@papersize{0}}
+\DeclareOptionX{relscale}[1.0]{%
+  \def\tubslogo@relscale{#1}
+}
+\DeclareOptionX*{%
   \PackageWarning{tubslogo}{Unknown option `\CurrentOption'}%
 }
 %
-\ExecuteOptions{rgb}%
-\ProcessOptions\relax
+\ExecuteOptionsX{rgb}%
+\ProcessOptionsX\relax
 %
 %
 % logo dimensions
+\newlength{\tubslogo@width}
 \newlength{\tubslogoBaseWidth}
 \setlength{\tubslogoBaseWidth}{70mm}
 \newlength{\tubslogoBaseHeight}
@@ -52,26 +58,38 @@
 \ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{4.0}}{% 400%
 \def\tubslogo@scale{1.0}% default
 }}}}}}}
+% paper format scale
 \setlength{\tubslogoWidth}{\tubslogo@scale\tubslogoBaseWidth}
 \setlength{\tubslogoHeight}{\tubslogo@scale\tubslogoBaseHeight}
+% relative scale
+\setlength{\tubslogoWidth}{\tubslogo@relscale\tubslogoWidth}
+\setlength{\tubslogoHeight}{\tubslogo@relscale\tubslogoHeight}
 %
 %
 \ifthenelse{\boolean{cmykLogo}}{%% CMYK
-\newcommand{\tubslogo}[1][\tubslogo@scale]{%
-\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig_4C}}
+\newcommand{\tubslogo}[1][\relax]{%
+\ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+\else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+\includegraphics[width=\tubslogo@width]{TUBraunschweig_4C}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_4C}}
 }{%% RGB-print
 \ifthenelse{\boolean{hksLogo}}{%
-\newcommand{\tubslogo}[1][\tubslogo@scale]{%
-\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig_SC}}
+\newcommand{\tubslogo}[1][\relax]{%
+\ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+\else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+\includegraphics[width=\tubslogo@width]{TUBraunschweig_SC}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_SC}}
 }{%% Monochrome
 \ifthenelse{\boolean{monoLogo}}{%
-\newcommand{\tubslogo}[1][\tubslogo@scale]{%
-\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig_B}}
+\newcommand{\tubslogo}[1][\relax]{%
+\ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+\else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+\includegraphics[width=\tubslogo@width]{TUBraunschweig_B}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_B}}
 }{%% RGB
-\newcommand{\tubslogo}[1][\tubslogo@scale]{%
-\includegraphics[width=#1\tubslogoBaseWidth]{TUBraunschweig-rgb}}
+\newcommand{\tubslogo}[1][\relax]{%
+\ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+\else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+\includegraphics[width=\tubslogo@width]{TUBraunschweig-rgb}}
 \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
 }}}
