@@ -73,15 +73,72 @@
 %
 % \section{Introduction}
 %
-% Put text here.
+% Diese Paket baut auf dem |tubsflowfram|-Paket auf.
 %
 % \section{Usage}
 %
-% \DescribeMacro{\YOURMACRO}
-% Put description of |\YOURMACRO| here.
+% \subsection{Hintergrund-Templates}
 %
-% \DescribeEnv{YOURENV}
-% Put description of |YOURENV| here.
+%
+% \DescribeMacro{\defbgtemplate}
+% Mit Hilfe des Befehls |\defbgtemplate|\oarg{pages}\marg{background}\marg{name}
+% können Hintergrund-Frames im Gaußraster definiert werden.
+% Die Hintergrund-Frames werden als Templates mit dem unter |name| angegebenen
+% Namen angelegt. Platzierbare Elemente sind dabei:
+% \begin{itemize}
+%   \item das TU-Logo
+%   \item ein individuelles Logo
+%   \item eine Kopf-Linie
+%   \item Farbflächen
+%   \item Bildflächen
+%   \item leere Flächen
+%   \item Ein komplett eingefärbter Hintergrund
+% \end{itemize}
+%
+%
+% \DescribeMacro{\usebgtemplate}
+% Mit dem Befehl |\usebgtemplate|\oarg{pages}\marg{name} können zuvor definierte 
+% Hintergrund-Templates verwendet werden. Dabei kann mit Hilfe des optionalen
+% Arguments \oarg{pages} eine Seitenauswahl für die Darstellung getroffen werden.
+% Standardmäßig wird das Template sonst auf allen Seiten angezeigt.
+%
+% \subsubsection{Platzierbare Elemente}
+%
+% \DescribeMacro{\placetubslogo}
+%   Mit dem Befehl |\placetubslogo|\marg{adjust} kann das TU-Logo gesetzt
+%   werden. Das Argument |adjust| erlaubt die Werte |left| und |right| für
+%   Platzierung am linken oder rechten Seitenrand.
+%
+% \DescribeMacro{\placelogo}
+%   Mit dem Befehl |\placelogo|\marg{logo} kann ein individuelles Logo
+%   im Kommunikationsbereich platziert werden. Das Argument |logo| kann
+%   dabei sowohl eine Grafik als auch einfacher Text sein.
+%
+% \DescribeMacro{\topline}
+%   Der Befehl |\topline| erzeugt eine (rote) Linie zwischen Kommunikations-
+%   und Absenderbereich, wie sie vor allem in einfachen Dokumenten anstelle
+%   des farbigen Hintergrundes verwendet wird.
+%
+% \DescribeMacro{\colorframe}
+%   Der Befehl |\colorframe|\marg{segements}\marg{color} Füllt die angegebene Anzahl
+%   Segmente mit der angegebenen Farbe. Welche Gauß-Segmente dabei gefüllt werden
+%   hängt von der Reihenfolge der Platzierung im Zusammenspiel mit anderen
+%   colorframes, imagesframes und emptyframes ab.
+%
+% \DescribeMacro{\imageframe}
+%   Der Befehl |\imageframe|\marg{segments}\marg{image} funktioniert wie
+%   der Befehl |\colorframe|, nur dass ein angegebenes Bild anstatt einer Farbe
+%   gesetzt wird.
+%
+% \DescribeMacro{\emptyframe}
+%   Der Befehl |\emptyframe|\marg{segments} erzeugt einen leeren Bereich,
+%   der sich über |segement| Anzhal Bereiche erstreckt.
+%
+% \DescribeMacro{\fullback}
+%   Der Befehl |\fullback| füllt alle Hintergrundsegmente mit einer einzigen
+%   Farbe und färbt ebenfalls die linken, rechten und unteren Seitenränder mit
+%   ein. Dies entspricht dem Layout für wissenschaftliche Plakate.
+%
 %
 % \StopEventually{\PrintIndex}
 %
@@ -110,14 +167,17 @@
 \RequirePackage{nexus}
 %    \end{macrocode}
 %
+%
 % \subsection{Optionen}
+%
 %
 % Vordergrundfarbe für strukturelle Elemente.
 % Definiert, um zwischen farbiger und Mono-Variante umschalten zu können.
 %    \begin{macrocode}
 \colorlet{fgcolor}{tuRed}
 %    \end{macrocode}
-
+%
+%
 % Die Option |mono| erlaubt eine s/w-Darstellung der strukturellen Elemente
 % (Logo, Titellinie, ...)
 %    \begin{macrocode}
@@ -125,18 +185,21 @@
   \colorlet{fgcolor}{tuBlack}
 }
 %    \end{macrocode}
-
+%
+%
 % Die Option |bgcolor| erlaubt das Setzen einer Hintergrundfarbe für den 
 % Kommunikationsbereich.
 %    \begin{macrocode}
 \DeclareOptionX{bgcolor}{%
   \bgcolor{#1}
 }
-
+%
 \ProcessOptionsX\relax
 %    \end{macrocode}
-% 
+%
+%
 % \subsection{Allgemeine Definitionen}
+%
 %
 % Definiere ein paar temporäre counter für Berechnungen.
 %    \begin{macrocode}
@@ -163,10 +226,12 @@
 }
 %    \end{macrocode}
 %
+%
 % Lade Header in dynamic Frame
 %    \begin{macrocode}
 \makedfheader
 %    \end{macrocode}
+%
 %
 % Vorberechnung von Längen, um pseudo-absolutes Platzieren von frames an
 % Seitengrenzen zu ermöglichen.
@@ -178,8 +243,8 @@
 %    \end{macrocode}
 %
 %
-%
 % \subsection{Hintergrund-Frame Definitionen}
+%
 %
 % Hier werden die einzelnen im Hintergrund verwendbaren Frames definiert.
 % Diese benutzen die \emph{backdrop effects} von tubsflowfram.
@@ -233,7 +298,8 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% \begin{macro}{\fullback}
+%
+%    \begin{macro}{\fullback}
 % Erzeugt ein einziges farbiges Hintergrund-Frame, dass den gesamten
 % Kommunikationsbereich abdeckt.
 %    \begin{macrocode}
@@ -262,7 +328,6 @@
 %    \begin{macrocode}
 \newcommand{\emptyframe}[1]{%
   \@any@frame{#1}{tuWhite}
-  %
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
@@ -325,6 +390,7 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 %    \begin{macro}{\defbgtemplate}
 % Definition von Hintergrundframes.\\
@@ -439,7 +505,6 @@
 \newcommand{\setbgframe}[2]{%
   \edef\@param@one{#2}
   \expandafter\expandafter\expandafter\@read@list\csname set@bg@template@#1\endcsname%{#2}
-%   \csname set@bg@template@#1\endcsname
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -502,24 +567,21 @@
 %
 % \subsubsection{Logo-Platzierungen}
 %
-%    \begin{macro}{\tubsff@settubslogo}
 %
-%    \begin{macrocode}
-\newlength{\tubsff@logooffset}
+%    \begin{macro}{\tubsff@settubslogo}
 % sets the tu logo frame (but not the content)
 % Syntax: |\tubsff@logooffset|\oarg{pages}\marg{adjust}
 % 1 (opt.)  - page selection
 % \emph{adjust} ist eine der Optionen |left| oder |right|.
+%    \begin{macrocode}
+\newlength{\tubsff@logooffset}
 \newcommand{\tubsff@settubslogo}[2][1]{%
-% compute typeblock distance from page border
-% \computeleftedgeodd{\tubsff@logooffset}
 % process placement (left/right)
 \ifthenelse{\equal{#2}{right}}{%
   \setlength{\tubsff@logooffset}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
 }{%
   \setlength{\tubsff@logooffset}{0mm}
 }
-% \computeleftedgeodd{\tubsff@logopageoffset}
 % create dynamic frame
 \edef\@p@sel{#1}
 % \setlength{\tubsff@temp}{\tubslogoWidth+\tubspage@bcor}
@@ -686,26 +748,25 @@
 % adjust xpos and width for columnsep
 \ifnum#3=1
 \else
-\addtolength\temp@xpos{0.5\tubspage@columnsep}
-\addtolength\temp@width{-0.5\tubspage@columnsep}
+  \addtolength\temp@xpos{0.5\tubspage@columnsep}
+  \addtolength\temp@width{-0.5\tubspage@columnsep}
 \fi
 \setcounter{temp@calca}{#3+#4-1}
 \ifnum\value{temp@calca}=\tubspage@xsegments
-\else
-\addtolength\temp@width{-0.5\tubspage@columnsep}
+\else\addtolength\temp@width{-0.5\tubspage@columnsep}
 \fi
 % adjust ypos and height for columnsep
 \ifnum#1=1
 % This produces a border at a box placed in first row!
-\addtolength\temp@height{-\tubspage@borderwidth}
+  \addtolength\temp@height{-\tubspage@borderwidth}
 \else
-\addtolength\temp@height{-0.5\tubspage@columnsep}
+  \addtolength\temp@height{-0.5\tubspage@columnsep}
 \fi
 \setcounter{temp@calca}{#1+#2-1}
 \ifnum\value{temp@calca}=\tubspage@ysegments
-\else
-\addtolength\temp@ypos{0.5\tubspage@columnsep}
-\addtolength\temp@height{-0.5\tubspage@columnsep}
+\else%
+  \addtolength\temp@ypos{0.5\tubspage@columnsep}
+  \addtolength\temp@height{-0.5\tubspage@columnsep}
 \fi
 }
 %    \end{macrocode}
