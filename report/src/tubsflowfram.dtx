@@ -118,22 +118,17 @@
 \colorlet{fgcolor}{tuRed}
 %    \end{macrocode}
 
-% Die Option |mono| erlaubt eine S/W-Darstellung der strukturellen Elemente
+% Die Option |mono| erlaubt eine s/w-Darstellung der strukturellen Elemente
 % (Logo, Titellinie, ...)
 %    \begin{macrocode}
-% Background-Frame für wissenschaftliche Poster
-%    \begin{macrocode}
-% \hNtone[all][0mm]{1}{\tubspage@communicationheight+\tubspage@borderwidth}{tuWhite}{background}
-\newcommand{\bgcolor}[1]{%
-%   \setstaticframe*{background}{backcolor=#1}
-}
-%    \end{macrocode}
 \DeclareOptionX{mono}{%
   \colorlet{fgcolor}{tuBlack}
 }
+%    \end{macrocode}
 
 % Die Option |bgcolor| erlaubt das Setzen einer Hintergrundfarbe für den 
 % Kommunikationsbereich.
+%    \begin{macrocode}
 \DeclareOptionX{bgcolor}{%
   \bgcolor{#1}
 }
@@ -153,19 +148,18 @@
 % (mbox-wrapping für @thehead).
 %    \begin{macrocode}
 \newcommand*{\makedfheader}{%
-\setlength{\@ff@tmp@y}{\textheight}%
-\addtolength{\@ff@tmp@y}{\headsep}%
-\newdynamicframe{\textwidth}{\headheight}{0pt}{\@ff@tmp@y}[header]%
-\newdynamicframe{\textwidth}{\headheight}{0pt}{-\footskip}[footer]%
-\renewcommand{\@dothehead}{}%
-\renewcommand{\@dothefoot}{}%
-\renewcommand{\@dodynamicthehead}{%
-\@dynamicframeid{header}%
-\expandafter
-\def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
-% \vspace*{-\baselineskip}% NOTE: a hack, no idea if thats the best to do...
-\mbox{\@thehead}\vfill}% HACK for scrheadings (mbox wrapping @thehead)
-}%
+  \setlength{\@ff@tmp@y}{\textheight}%
+  \addtolength{\@ff@tmp@y}{\headsep}%
+  \newdynamicframe{\textwidth}{\headheight}{0pt}{\@ff@tmp@y}[header]%
+  \newdynamicframe{\textwidth}{\headheight}{0pt}{-\footskip}[footer]%
+  \renewcommand{\@dothehead}{}%
+  \renewcommand{\@dothefoot}{}%
+  \renewcommand{\@dodynamicthehead}{%
+  \@dynamicframeid{header}%
+  \expandafter
+  \def\csname @dynamicframe@\romannumeral\ff@id\endcsname{%
+  \mbox{\@thehead}\vfill}
+  }%
 }
 %    \end{macrocode}
 %
@@ -193,7 +187,6 @@
 % Die Frames werden dabei in der Reihenfolge ihrer Definition in den Hintergrund
 % eingefügt und erhalten die ihnen zugewiesene Höhe im Gauß-Raster.
 %
-%%%%
 % Zuerst ein paar counter...
 %
 % Zähler für das Hintergrund-Element, wird auf jeder Seite neu gezählt
@@ -240,16 +233,15 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% \begin{macro}{\emptyframe}
-% Erzeugt ein einziges farbiges Hintergrund-Frame, dass den gesamten Kommunikationsbereich
-% abdeckt.
+% \begin{macro}{\fullback}
+% Erzeugt ein einziges farbiges Hintergrund-Frame, dass den gesamten
+% Kommunikationsbereich abdeckt.
 %    \begin{macrocode}
 \newcommand{\fullback}[1]{%
   \def\set@fullback{%
     \hNtone[none][0mm]{1}{\tubspage@communicationheight+\tubspage@borderwidth}%
       {#1}%
-      {background\tubsff@bg@current@label}
-    %
+      {background\tubsff@bg@current@label}%
   }
   % Just says that all segments are set
   \emptyframe{\tubspage@ysegments}
@@ -265,7 +257,7 @@
 %    \end{macro}
 %
 %
-% \begin{macro}{\emptyframe}
+%    \begin{macro}{\emptyframe}
 % Frame-Typ \emph{emtpy} erzeugt ein leeres Frame angegebener Höhe.
 %    \begin{macrocode}
 \newcommand{\emptyframe}[1]{%
@@ -283,10 +275,6 @@
 %    \begin{macrocode}
 \newcommand{\colorframe}[2]{%
   \@any@frame{#1}{#2}
-  % This is the expanded name name of the frame that should hold information
-
-  %
-
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
@@ -300,14 +288,13 @@
 %    \begin{macrocode}
 \newcommand{\imageframe}[2]{%
   \@any@frame{#1}{tuGray20}
-%
   \addtocounter{@bg@cnt}{-1}
   \addtocounter{@bg@y}{#1}
 }
 %    \end{macrocode}
 %    \end{macro}
 %
-% \DescribeMacro{\tubsff@clear@segments}
+%    \begin{macro}{\tubsff@clear@segments}
 % Löscht alle Hintergrund-Segmente
 %    \begin{macrocode}
 \def\tubsff@clear@segments{
@@ -337,6 +324,7 @@
   \def\tubsff@bg@id@VIII{\relax}
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macro}{\defbgtemplate}
 % Definition von Hintergrundframes.\\
@@ -442,6 +430,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\setbgframe}
 % Setzt Optionen für Hintergrund-Frames, indem die übergebene Frame-Liste abgearbeitet
 % wird.
@@ -533,15 +522,15 @@
   {\tubslogoWidth}{\tubslogoHeight}%
   {\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}%
   {-\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
-  [tubslogo\the@bg@frames@cnt]
+  [tubslogo\tubsff@bg@current@label]
   % set x pos for twosided layout
-  \setstaticframe*{tubslogo\the@bg@frames@cnt}{%
+  \setstaticframe*{tubslogo\tubsff@bg@current@label}{%
     evenx=\pos@frame@left@even+\tubsff@logooffset}
-  \setstaticframe*{tubslogo\the@bg@frames@cnt}{%
+  \setstaticframe*{tubslogo\tubsff@bg@current@label}{%
     oddx=\pos@frame@left@odd+\tubsff@logooffset+\tubspage@bcor}
   % Füge Namen des erzeugten Frames in Liste des Templates ein
   \edef\name@of@frame@to@add{%
-    tubslogo\the@bg@frames@cnt}
+    tubslogo\tubsff@bg@current@label}
   \expandafter\l@addto@macro\csname%
     set@bg@template@\tubsff@bg@current@label\expandafter\endcsname\expandafter{%
       \name@of@frame@to@add,%
@@ -557,10 +546,10 @@
   % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
     \tubsff@settubslogo[\@page@select]{#2}
     \ifthenelse{\equal{#1}{plain}}{%
-      \setstaticframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
+      \setstaticframe*{tubslogo\tubsff@bg@current@label}{backcolor=fgcolor}
     }{%
-      \setstaticframe*{tubslogo\the@bg@frames@cnt}{backcolor=fgcolor}
-      \setstaticcontents*{tubslogo\the@bg@frames@cnt}{%
+      \setstaticframe*{tubslogo\tubsff@bg@current@label}{backcolor=fgcolor}
+      \setstaticcontents*{tubslogo\tubsff@bg@current@label}{%
         \checkoddpage\ifoddpage\hfill\fi\tubslogo}
     }
   }
