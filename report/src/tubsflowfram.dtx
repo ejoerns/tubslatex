@@ -444,6 +444,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\@read@list}
 %    \begin{macrocode}
 \def\@read@list{
@@ -452,6 +453,7 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 %    \begin{macro}{\@read@list@next}
 % Liest Element bis zum nächsten Komma, bei Auffinden eines ';' wird Kommando
@@ -469,6 +471,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\@read@list@new}
 % Makro zum Rücksetzen von |\@read@cm|, benötigt von |\@read@list@next|.
 %    \begin{macrocode}
@@ -477,6 +480,7 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 %    \begin{macro}{\usebgtemplate}
 % Syntax: \cs{usebgtemplate}\oarg{pages}\marg{name}
@@ -498,13 +502,14 @@
 %
 % \subsubsection{Logo-Platzierungen}
 %
+%    \begin{macro}{\tubsff@settubslogo}
+%
 %    \begin{macrocode}
 \newlength{\tubsff@logooffset}
-% \newlength{\tubsff@temp}
 % sets the tu logo frame (but not the content)
-% params:
+% Syntax: |\tubsff@logooffset|\oarg{pages}\marg{adjust}
 % 1 (opt.)  - page selection
-% 2         - placement (left, right), default=left
+% \emph{adjust} ist eine der Optionen |left| oder |right|.
 \newcommand{\tubsff@settubslogo}[2][1]{%
 % compute typeblock distance from page border
 % \computeleftedgeodd{\tubsff@logooffset}
@@ -536,14 +541,18 @@
       \name@of@frame@to@add,%
     }
 }
-
-% place the tubs logo
-% params
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+%    \begin{macro}{\placetubslogo}
+% Platzierung des TU-Logos.
+% Syntax: |\placetubslogo|\oarg{plain}\marg{adjust}
 % 1 (opt.)  - [plain] = only background
 % 2         - left/right
+%    \begin{macrocode}
 \newcommand{\placetubslogo}[2][\relax]{%
   \def\set@tubslogo{%
-  % place \the@bg@frames@cnt at \@page@select with opt: #1, #2
     \tubsff@settubslogo[\@page@select]{#2}
     \ifthenelse{\equal{#1}{plain}}{%
       \setstaticframe*{tubslogo\tubsff@bg@current@label}{backcolor=fgcolor}
@@ -554,10 +563,11 @@
     }
   }
 }
-%
 %    \end{macrocode}
+%    \end{macro}
 %
-% \DescribeMacro{\tubsff@tmp@logoheight}
+%
+%    \begin{macro}{\tubsff@tmp@logoheight}
 %    \begin{macrocode}
 \newlength{\tubsff@tmp@logoheight}
 \newcommand{\tubsff@setlogo}[2][1]{%
@@ -566,7 +576,6 @@
   % process placement (left/right)
   \addtolength{\tubsff@logooffset}{0.5\paperwidth}
   \setlength{\tubsff@tmp@logoheight}{\tubspage@senderheight-2\tubspage@borderwidth}
-  % \computeleftedgeodd{\tubsff@logopageoffset}
   % create static frame
   \edef\@p@sel{#1}
   \expandafter\newstaticframe\expandafter[\@p@sel]%
@@ -582,12 +591,12 @@
     }
 }
 %    \end{macrocode}
+%    \end{macro}
 %
-% \DescribeMacro{\placelogo}
-% place individual logo
-% params
-% 1 (opt.)  - bgcolor
-% 2         - logo
+%
+%    \begin{macro}{\placelogo}
+% Platziere individuelles Logo.
+% Syntax: |\placelogo|\oarg{bgcolor}\marg{logofile}
 %    \begin{macrocode}
 \newcommand{\placelogo}[2][tuWhite]{%
   \tubsff@setlogo[\@page@select]{#2}
@@ -595,12 +604,13 @@
   \setstaticcontents*{logo\the@bg@frames@cnt}{\hfill #2}
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %
 %\subsubsection{Topline}
 %
 %
-% \DescribeMacro{\tubsff@settopline}
+%    \begin{macro}{\tubsff@settopline}
 %    \begin{macrocode}
 \newcommand{\tubsff@settopline}[1][1]{%
   % create static frame
@@ -623,8 +633,10 @@
     }
 }
 %    \end{macrocode}
+%    \end{macro}
 %
-% \DescribeMacro{\topline}
+%
+%    \begin{macro}{\topline}
 % Syntax: |\topline|\oarg{todo}
 %    \begin{macrocode}
 \newcommand{\topline}[1][1]{%
@@ -634,12 +646,16 @@
   }
 }
 %    \end{macrocode}
+%    \end{macro}
+%
 %
 % \subsection{Vordergrund-Frame Definitionen}
-% 
-% \DescribeMacro{\tubsff@calc@frame}
+%
+%
+%    \begin{macro}{\tubsff@calc@frame}
 % Berechnet Dimensionen, um ein Frame im Gauß-Raster erstellen zu können und
 % speichert sie in den hier aufgeführten Längen.
+% Syntax: |\tubsff@calc@frame|\marg{row}\marg{rowspan}\marg{columns}\marg{columnspan}
 %
 % Die Argumente geben an :
 %   [1] row number,
@@ -693,22 +709,26 @@
 \fi
 }
 %    \end{macrocode}
+%    \end{macro}
+%
 %
 %    \begin{macro}{\newdynamictubsframe}
 % Erstellt ein 'dynamic frame' im Gauß-Raster\\
-% Syntax: |\newdynamictubsframe|\oarg{pages}\marg{name}\marg{row number}\marg{row span}\marg{column number}\marg{column span}
+% Syntax: |\newdynamictubsframe|\oarg{pages}%
+% \marg{name}\marg{row number}\marg{row span}%
+% \marg{column number}\marg{column span}
 %    \begin{macrocode}
 \newboolean{imageframe}%@TODO: currently unused
 \newcommand{\newdynamictubsframe}[6][all]{%
   \tubsff@calc@frame{#3}{#4}{#5}{#6}
-  % create dynamic frame ...
   \newdynamicframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
 \let\newtubsdynamicframe\newdynamictubsframe
 %    \end{macrocode}
 %    \end{macro}
 %
-% \DescribeMacro{\newtubsflowframe}
+%
+%    \begin{macro}{\newtubsflowframe}
 % Erstellt flow frame im Gauß-Raster
 %    \begin{macrocode}
 \newcommand{\newtubsflowframe}[6][all]{%
@@ -716,9 +736,11 @@
   \newflowframe[#1]{\temp@width}{\temp@height}{\temp@xpos}{\temp@ypos}[#2]
 }
 %    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
-% 
+%
 % \Finale
 \endinput
