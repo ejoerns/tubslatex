@@ -187,6 +187,7 @@
 % |\tubspage@calclayout| ausgeführt werden sollen.
 %    \begin{macrocode}
 \def\tubspage@modifications{}
+\newboolean{scifiposter}\setboolean{scifiposter}{false}
 %    \end{macrocode}
 %
 %
@@ -204,6 +205,12 @@
     right=2\tubspage@borderwidth,
     bottom=2\tubspage@borderwidth,
     bindingoffset=\tubspage@bcor}
+  % Reduzierte Ränder für wissenschaftliche Poster % TODO: nötig?
+  \ifthenelse{\boolean{scifiposter}}{
+    \geometry{%
+      left=\tubspage@borderwidth,
+      right=\tubspage@borderwidth}
+  }{}
   % inner geometry
   \setcounter{tubspage@gausssum}{%
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
@@ -314,6 +321,7 @@
 }
 % Für wissenschaftliche Poster werden der Absenderbereich und die Ränder 
 \DeclareOptionX{scifiposter}{%
+  \setboolean{scifiposter}{true}
   \let\tubspage@old@modifications\tubspage@modifications
   \renewcommand*{\tubspage@modifications}{%
     \tubspage@old@modifications%
