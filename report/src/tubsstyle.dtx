@@ -1,0 +1,227 @@
+
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{tubsstyle.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+%
+% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+%
+% \GetFileInfo{tubshead.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{tubsstyle} -- 
+%   background and box definitions for tubslatex\thanks{This document
+%   corresponds to \textsf{tubsstyle}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   Put text here.
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% Put text here.
+%
+% \section{Usage}
+%
+% \DescribeMacro{\YOURMACRO}
+% Put description of |\YOURMACRO| here.
+%
+% \DescribeEnv{YOURENV}
+% Put description of |YOURENV| here.
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% 
+%
+% \subsection{Options}
+% Es werden zur Zeit keine Optionen zur Verfügung gestellt
+%    \begin{macrocode}
+%<*option>
+%    \end{macrocode}
+%    \begin{macrocode}
+%</option>
+%    \end{macrocode}
+%
+% 
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ProvidesPackage{tubsstyle}
+\RequirePackage{eso-pic}
+%    \end{macrocode}
+%
+% Temporäre Längen
+%    \begin{macrocode}
+\newlength{\tmp@posx}
+\newlength{\tmp@posy}
+%    \end{macrocode}
+%
+% Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
+% unterschiedlich arbeiten.
+% Ist nur aktiv, wenn Option |twosided| benutzt wird.
+%    \begin{macro}{\if@tubs@oddpage}
+%    \begin{macrocode}
+\newboolean{tubs@twoside}\setboolean{tubs@twoside}{false}
+\newcommand{\if@tubs@oddpage}[2]{%
+  \ifthenelse{\boolean{tubs@twoside}}{%
+    \ifthispageodd{#1}{#2}%
+  }{#1}%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% this command allows to add a top line to the background
+%    \begin{macro}{\tubs@topline}
+%    \begin{macrocode}
+\newcommand\tubs@topline{%
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+  }{
+    \setlength{\tmp@posx}{\tubspage@borderwidth}
+  }
+  \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy})
+    {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.2ex}}}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% this command allow to add the tubs logo to the background
+%    \begin{macro}{\tubs@tubslogo}
+%    \begin{macrocode}
+\newcommand\tubs@tubslogo{%
+  \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@bcor}
+  }{%
+    \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+  }
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy})
+    {\tubslogo}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% args:
+% 1 - first element (top down)
+% 2 - nr of elements
+%    \begin{macro}{\tubs@background}
+%    \begin{macrocode}
+\newcounter{tmp@calc@bgpos}
+\newcounter{tmpb@calc@bgpos}
+\newcommand\tubs@background[3]{%
+  % calculate and set y pos
+  \calc@gauss@elementpos{tmp@calc@bgpos}{#2}
+%   \setcounter{tmp@calc@bgpos}{\thetubspage@gausssum-\thetmp@calc@bgpos}
+  \setlength{\tmp@posy}{%
+    \tubspage@borderwidth+\thetmp@calc@bgpos\tubspage@gaussheight%
+    -\thetmp@calc@bgpos\tubspage@gaussheight-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
+  }
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+  }{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth}
+  }
+  % calculate and set height
+  \calc@gauss@elementpos{tmpb@calc@bgpos}{#2+#3}
+
+%   \setcounter{tmpb@calc@bgpos}{\thetubspage@gausssum-\thetmpb@calc@bgpos}
+  % additional fixment hack because of inverted y orientation
+  \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
+  \addtolength{\tmp@posy}{%
+    -\thetmp@calc@bgpos\tubspage@gaussheight+\thetubspage@gausssum\tubspage@gaussheight}
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy})
+    {{\setlength\fboxsep{0mm}\colorbox{#1}{\parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}}}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
+\AddToShipoutPicture{\tubs@background{tuBlue}{1}{2}}
+\AddToShipoutPicture{\tubs@background{tuBlue80}{3}{2}}
+\AddToShipoutPicture{\tubs@background{tuBlue60}{5}{1}}
+\AddToShipoutPicture{\tubs@background{tuBlue40}{6}{3}}
+\AddToShipoutPicture{\tubs@topline}
+\AddToShipoutPicture{\tubs@tubslogo}
+%    \end{macrocode}
+% 
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+% 
+% \Finale
+\endinput
+
+
+
