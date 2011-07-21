@@ -123,6 +123,12 @@
 {\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
 %    \end{macrocode}
+%
+% Aufzählungszeichen werden als Quadrate dargestellt
+%    \begin{macrocode}
+\renewcommand{\labelitemi}{\rule[0.1em]{0.4em}{0.4em}}
+\renewcommand{\labelitemii}{\rule[0.1em]{0.3em}{0.3em}}
+%    \end{macrocode}
 % 
 %    \begin{macrocode}
 %</body>
