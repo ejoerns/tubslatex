@@ -115,6 +115,18 @@
 %    \begin{macrocode}
 \RequirePackage{nexus}
 %    \end{macrocode}
+%
+% Definiere KOMA-Fontthemes
+%    \begin{macrocode}
+\newkomafont{headline}{\Huge\bfseries}
+\newkomafont{subheadline}{\huge}
+\newkomafont{institute}{\large}
+\newkomafont{infotext}{\large}
+\newkomafont{infotextitem}{\large}
+\newkomafont{copytext}{\normalsize}
+%    \end{macrocode}
+%
+%
 % Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund
 % des tief hängenden Textbereichs überflüssig ist.
 %    \begin{macrocode}
@@ -129,7 +141,15 @@
 \renewcommand{\labelitemi}{\rule[0.1em]{0.4em}{0.4em}}
 \renewcommand{\labelitemii}{\rule[0.1em]{0.3em}{0.3em}}
 %    \end{macrocode}
-% 
+%
+% Standardeinstellung für Poster: kein Absatzeinzung, dafür
+% Zeilenabstand
+%    \begin{macrocode}
+%<*poster> 
+\parindent0mm
+\parskip\medskipamount
+%</poster>
+%    \end{macrocode}
 %    \begin{macrocode}
 %</body>
 %    \end{macrocode}
