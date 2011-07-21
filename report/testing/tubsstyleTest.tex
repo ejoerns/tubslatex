@@ -1,4 +1,5 @@
-\documentclass[a3paper]{tubsposter}
+\makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
+\documentclass[a3paper,13pt]{tubsposter}
 \usepackage[utf8]{inputenc}
 
 \usepackage{lipsum}
@@ -9,6 +10,8 @@
 \parskip\medskipamount
 
 \makeatletter
+
+\renewcommand{\labelitemi}{\rule[0.1em]{0.4em}{0.4em}}
 
 
 % Zähler für das aktuelle y-Segment im Gaußraster, dass bearbeitet
@@ -23,6 +26,7 @@
 %    \begin{macrocode}
 \newcommand{\tubs@draw@topline}{}
 \newcommand{\tubs@draw@tubslogo}{}
+\newcommand{\tubs@draw@logo}{}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -45,6 +49,14 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% Ermöglicht das Darstellen des TU-Logos
+% Setzt das Makro |\tubs@draw@tubslogo|.
+%    \begin{macrocode}
+\newcommand{\showlogo}[1]{\renewcommand{\tubs@draw@logo}{%
+  \AddToShipoutPicture{\tubs@logo{#1}}}}
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{environment}{tubsposter}
 % Erzeugt eine neue Poster-Seite.
 %    \begin{macrocode}
@@ -54,6 +66,7 @@
 }{%
   \tubs@draw@topline
   \tubs@draw@tubslogo
+  \tubs@draw@logo
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -88,17 +101,36 @@
 
 \begin{document}
 \begin{tubsposter}
-  \showtopline
+%   \showtopline
   \showtubslogo
-  \begin{posterrow}[bgcolor=tuGray20]{3}
-      \Huge Dies ist der Titel
+  \showlogo{Institutslogo einfügen oder Institutsname/\\
+    zentrale Einrichtung als Text eingeben}
+  \begin{posterrow}[bgcolor=tuRed100]{2}
+      \color{tuWhite}
+      {\Huge\bfseries Headline xxpt\bigskip}
+      
+      \Large Subheadline\\
+      Mitant dur Wolche to illemit drusi puzen, um brackl jaun utten
+      \vfill
+      \large
+      \begin{itemize}
+        \item Item 1
+        \item Item 2
+        \item Item 3
+      \end{itemize}
   \end{posterrow}
-  \begin{posterrow}[bgcolor=tuRed80]{2}
+  \begin{posterrow}[bgcolor=tuGray20]{3}
 %     \begin{tubsbox}[tuOrange60]{0}{4}{6}{2}
       \Large Dies ist der Titel
 %     \end{tubsbox}
   \end{posterrow}
-  \begin{posterrow}[bgcolor=tuRed100]{3}
+  \begin{posterrow}[bgcolor=tuRed40]{3}
+    Copy 12 pt\\
+    Kisuali antux e weimi Kameran.\\
+    Quol damnarin Tropi zu klenne perdi Utilira regau socht mol sunt.\\
+    Her mitant dur Wolche to illemit drusi puzen, um brackl jaun utten. Rumber olst gumme Placke on ofen heiritate us.
+    \vfill
+    \textbf{www.tu-braunschweig.de}
   \end{posterrow}
 \end{tubsposter}
 
