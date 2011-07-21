@@ -1,4 +1,4 @@
-\documentclass[a4paper]{tubsposter}
+\documentclass[a3paper]{tubsposter}
 \usepackage[utf8]{inputenc}
 
 \usepackage{lipsum}
@@ -49,6 +49,7 @@
 % Erzeugt eine neue Poster-Seite.
 %    \begin{macrocode}
 \newenvironment{tubsposter}{%
+  \sffamily
   \setcounter{tubs@yseg@cnt}{1}
 }{%
   \tubs@draw@topline
@@ -73,26 +74,31 @@
 %   \expandafter\edef\csname @ysegments\thetubs@yseg@cnt\endcsname{#2}
   \def\@current@height{#2}
   \setkeys{posterrow}{#1}
-
+  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
+  \edef\@arg@I{{0}}
+  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}{6}{#2}}
   \addtocounter{tubs@yseg@cnt}{#2}
-}{}
+  % Erzeuge tubsbox
+  \expandafter\tubsbox\@arg@II
+}{%
+  \endtubsbox
+}
 
 
 
 \begin{document}
-\newcommand{\test}[3]{1:'#1', 2:'#2', 3:'#3'}
-\test A B C
 \begin{tubsposter}
   \showtopline
   \showtubslogo
-  \begin{posterrow}[bgcolor=tuRed]{3}
-    Dies ist der Titel
+  \begin{posterrow}[bgcolor=tuGray20]{3}
+      \Huge Dies ist der Titel
   \end{posterrow}
-  \begin{posterrow}[bgcolor=tuBlue]{2}
-    \lipsum[1-2]
+  \begin{posterrow}[bgcolor=tuRed80]{2}
+%     \begin{tubsbox}[tuOrange60]{0}{4}{6}{2}
+      \Large Dies ist der Titel
+%     \end{tubsbox}
   \end{posterrow}
-  \begin{posterrow}[bgcolor=tuGreen]{3}
-    \lipsum[3]
+  \begin{posterrow}[bgcolor=tuRed100]{3}
   \end{posterrow}
 \end{tubsposter}
 

@@ -220,7 +220,7 @@
   \setlength{\tubspage@columnwidth}{%
     (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
   \setlength{\TPVertModule}{%
-    (\textheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \setlength{\tubspage@gaussheight}{%
     (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \textblockorigin{2\tubspage@borderwidth}{%
@@ -477,6 +477,7 @@
 \newlength{\tubsbox@leftsep}
 \newlength{\tubsbox@rightsep}
 \newlength{\tubsbox@topmargin}
+\newlength{\tubsbox@toppadding}
 \newlength{\tubsbox@bottommargin}
 \newsavebox{\storebox}
 \newcounter{tubsbox@lastelement}
@@ -489,6 +490,7 @@
 % 4 - width [1-6]
 % 5 - height [1-6] / [1-8]
 \newenvironment{tubsbox}[5][tuWhite]{%
+% \tubspage@columnsep\tubspage@borderwidth
 % calculate left and right margins and seps
 \ifnum#2=0
 \setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
@@ -514,9 +516,10 @@
 % calculate top and bottom marings and seps
 \ifnum#3=1
 \setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@toppadding}{3\tubspage@borderwidth}
 \setlength{\tubsbox@bottommargin}{0mm}
 \else
-
+\setlength{\tubsbox@toppadding}{\tubspage@borderwidth}
 % \addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
 \fi
 \setcounter{tubsbox@lastelement}{#3+#5-1}
@@ -544,9 +547,9 @@
 \def\tubsbox@height{\thetubsbox@calcheight}
 \begin{lrbox}{\storebox}
 \begin{minipage}[t]%
-  [\tubsbox@height\TPVertModule+\tubsbox@topmargin+\tubsbox@bottommargin]%
+  [\tubsbox@height\TPVertModule]%
   {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
-  \vspace*{\tubsbox@topmargin}%
+  \vspace*{\tubsbox@toppadding}%
 }{%
 \vspace*{\tubsbox@bottommargin}%
 \end{minipage}
@@ -556,12 +559,12 @@
 \hspace*{\tubsbox@leftsep}%
 \hspace*{-\tubsbox@leftmargin}%
 % \vspace*{\tubsbox@topmargin}%
-\raisebox{\tubsbox@topmargin}[0cm]{%
-\colorbox{\bgcolor}{%
+\raisebox{\tubspage@borderwidth}[0cm]{%
+% \colorbox{\bgcolor}{%
 \hspace*{\tubsbox@leftmargin}%
 \usebox{\storebox}%
 \hspace*{\tubsbox@rightmargin}%
-}%
+% }%
 }%
 \hspace*{\tubsbox@rightsep}%
 \end{textblock}
