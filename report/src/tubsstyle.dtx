@@ -185,11 +185,12 @@
   }
   \put(\LenToUnit{\tmp@posx},%
     \LenToUnit{\tmp@posy}){%
-    \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth]{%
-      0.5\paperwidth-\tubspage@borderwidth}{%
-      \vfill%
-      {\sffamily\hfill\raggedleft\color{tuRed}\large #1}%
-      \vfill}}
+    \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
+      {0.5\paperwidth-\tubspage@borderwidth}{%
+%       \vfill%
+      \sffamily\large\raggedleft\color{tuRed} #1%
+%       \vfill%
+}}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -230,13 +231,89 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% Zähler für das aktuelle y-Segment im Gaußraster, dass bearbeitet
+% werden kann, bzw. mit |tubsrow| erzeugt.
 %    \begin{macrocode}
-% \AddToShipoutPicture{\tubs@background{tuBlue}{1}{2}}
-% \AddToShipoutPicture{\tubs@background{tuBlue80}{3}{2}}
-% \AddToShipoutPicture{\tubs@background{tuBlue60}{5}{1}}
-% \AddToShipoutPicture{\tubs@background{tuBlue40}{6}{3}}
-% \AddToShipoutPicture{\tubs@topline}
-% \AddToShipoutPicture{\tubs@tubslogo}
+\newcounter{tubs@yseg@cnt}
+%    \end{macrocode}
+%
+% Die Befehle |\tubs@draw@topline| und |\tubs@draw@tubslogo| dienen zum
+% Schedulen der Darstellung von Logo und Toplinie, um die Hintergrundreihenfolge
+% korrekt zu gewährleisten.
+%    \begin{macrocode}
+\newcommand{\tubs@draw@topline}{}
+\newcommand{\tubs@draw@tubslogo}{}
+\newcommand{\tubs@draw@logo}{}
+%    \end{macrocode}
+%
+%    \begin{macro}{\showtopline}
+% Ermöglicht das Darstellen einer Linie zwischen Kommunikations- und
+% Absenderbereich.
+% Setzt das Makro |\tubs@draw@topline|.
+%    \begin{macrocode}
+\newcommand{\showtopline}{\renewcommand{\tubs@draw@topline}{%
+  \AddToShipoutPicture{\tubs@topline}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\showtopline}
+% Ermöglicht das Darstellen des TU-Logos
+% Setzt das Makro |\tubs@draw@tubslogo|.
+%    \begin{macrocode}
+\newcommand{\showtubslogo}{\renewcommand{\tubs@draw@tubslogo}{%
+  \AddToShipoutPicture{\tubs@tubslogo}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\showlogo}
+% Ermöglicht das Darstellen des TU-Logos
+% Setzt das Makro |\tubs@draw@tubslogo|.
+%    \begin{macrocode}
+\newcommand{\showlogo}[1]{\renewcommand{\tubs@draw@logo}{%
+  \AddToShipoutPicture{\tubs@logo{#1}}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+% Erzeugt eine neue Poster-Seite.
+%    \begin{macrocode}
+\newenvironment{tubsposter}{%
+  \sffamily
+  \setcounter{tubs@yseg@cnt}{1}
+}{%
+  \tubs@draw@topline
+  \tubs@draw@tubslogo
+  \tubs@draw@logo
+}
+%    \end{macrocode}
+%
+% Optionen für Umgebung |posterrow|
+%    \begin{macrocode}
+\define@key{posterrow}{bgcolor}{%
+  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
+  \edef\@arg@I{{#1}}
+  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
+  \edef\@arg@III{\@arg@II{\@current@height}}
+ 
+  \expandafter\AddToShipoutPicture\expandafter{%
+    \expandafter\tubs@background\@arg@III}
+}
+%    \end{macrocode}
+%
+% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}
+%    \begin{macrocode}
+\newenvironment{posterrow}[2][]{%
+%   \expandafter\edef\csname @ysegments\thetubs@yseg@cnt\endcsname{#2}
+  \def\@current@height{#2}
+  \setkeys{posterrow}{#1}
+  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
+  \edef\@arg@I{{0}}
+  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}{6}{#2}}
+  \addtocounter{tubs@yseg@cnt}{#2}
+  % Erzeuge tubsbox
+  \expandafter\tubsbox\@arg@II
+}{%
+  \endtubsbox
+}
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
