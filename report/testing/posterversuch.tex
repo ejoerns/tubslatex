@@ -8,9 +8,10 @@
 \usepackage{calc}
 \usepackage{scrpage2}
 \usepackage{nexus}
-\usepackage[a4paper,marginleft,bcor=15mm,twosided]{tubstypearea}
+\usepackage[a4paper]{tubstypearea}
+\usepackage{tubsflowfram}
 \usepackage[a4paper]{tubslogo}
-\usepackage[green]{tubscolors}
+% \usepackage[green]{tubscolors}
 \usepackage[compact]{titlesec}
 \usepackage{multicol}
 % \usepackage{typearea}
@@ -22,7 +23,13 @@
 {\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{40pt}
 
-
+% \defbgtemplate{3}{%
+%   \colorframe{2}{tuRed100}
+%   \colorframe{3}{tuGray20}
+%   \colorframe{3}{tuRed40}
+%   \placetubslogo{left}
+% }{defaultRedTwo}
+% \usebgtemplate[3]{defaultRedTwo}
 % \titleformat{\chapter}[display]
 % {}
 % {%\titlerule[1pt]%

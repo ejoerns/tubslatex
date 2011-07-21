@@ -1,7 +1,6 @@
 \documentclass[a4paper,11pt]{tubsposter}
+% \usepackage[scifiposter]{tubstypearea}
 \usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{ae}
 
 \usepackage{scrpage2}
 \usepackage{amsmath}
@@ -13,11 +12,13 @@
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
 \usepackage{setspace}
+\usepackage{etex}
 
 \defbgtemplate{2}{%
   \colorframe{7}{tuBlueLight80}
   \colorframe{1}{tuBlueDark}
-%   \placetubslogo{left}
+  \placetubslogo{left}
+  \placelogo{\includegraphics{dummy_institut.jpg}}
 }{myfirsttemplate}
 
 \defbgtemplate{4}{%
@@ -25,35 +26,86 @@
   \colorframe{2}{tuGreenLight60}
   \colorframe{2}{tuGreenLight40}
   \colorframe{2}{tuBlueDark}
-% %   \placetubslogo{left}
+%   \placetubslogo{left}
 }{mysecondtemplate}
+
+\defbgtemplate{3}{%
+  \colorframe{2}{tuSecondary100}
+  \colorframe{3}{tuSecondary80}
+  \colorframe{3}{tuSecondary60}
+}{defaultBlue}
+
+\defbgtemplate{1}{%
+  \emptyframe{8}
+  \topline
+  \placetubslogo{left}
+}{defaultPlain}
+
+\defbgtemplate{3}{%
+  \colorframe{3}{tuGray20}
+  \colorframe{2}{tuRed80}
+  \colorframe{3}{tuRed100}
+  \placetubslogo{left}
+}{defaultRedOne}
+
+\defbgtemplate{3}{%
+  \colorframe{2}{tuRed100}
+  \colorframe{3}{tuGray20}
+  \colorframe{3}{tuRed40}
+  \placetubslogo{left}
+}{defaultRedTwo}
+
+
+
+\newenvironment{posterpage}{%
+%   \stepcounter{posterpagecount}
+}{}
+
+
+\newcounter{posterpagecount}\setcounter{posterpagecount}{0}
+\newcounter{posterrowcount}\setcounter{posterrowcount}{0}
+
+
+% \newenvironment{posterrow}[1]{%
+%   \stepcounter{posterrowcount}
+%   \edef\framename{mynameP\theposterpagecount F\theposterrowcount x}
+%   \framename
+%   \expandafter\newdynamictubsframe\expandafter{\framename}{1}{2}{1}{6}
+% }{}
+\def\posterrow{}
+% \def\endposterrow{}
+
 
 \begin{document}
 
-\makeatletter
-% \getstaticlabel{1}
-% \getstaticlabel{2}
-% \getstaticlabel{3}
-% \getstaticlabel{4}
-% \getstaticlabel{5}
-% \getstaticlabel{6}
-% \getstaticlabel{7}
-% \getstaticlabel{8}
-% \getstaticlabel{9}
-% \setstaticframe*{myfirsttemplatebgF2E1}{pages=2}
-% \setstaticframe*{myfirsttemplatebgF2E1}{pages=2}
-\makeatother
+% \usebgtemplate[1]{defaultPlain}
+\usebgtemplate[2]{defaultRedOne}
+\usebgtemplate[3]{defaultRedTwo}
+\usebgtemplate[4]{myfirsttemplate}
+\usebgtemplate[5]{mysecondtemplate}
+\begin{tubsbox}[tuBlueLight]{0}{1}{6}{1}
+~ Dies ist der Inhatl
+\end{tubsbox}
+% \begin{posterpage}
+%   \begin{posterrow}{3}
+% 
+%   \end{posterrow}
+%   \begin{posterrow}{2}
+%     \large \lipsum[1]
+%   \end{posterrow}
+%   \begin{posterrow}{3}
+% %     \newdynamicframe{1cm}{2cm}{3cm}{4cm}
+%   \end{posterrow}
+% \end{posterpage}
 
-% \setbgframe{myfirsttemplate}{2}
-% \usebgtemplate{myfirsttemplate}
-\usebgtemplate[1,2]{mysecondtemplate}
--------
 
-% \setbgframe{mysecondtemplate}{2}
 ~
 \newpage
 ~
-\usebgtemplate[3]{myfirsttemplate}
+\newpage
+~
+\newpage
+~
 \newpage
 ~
 \newpage
