@@ -224,8 +224,44 @@
 }
 %    \end{macrocode}
 % 
+% \paragraph{a3paper}
+% Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
+% Format DIN A§.
+%    \begin{macrocode}
+\DeclareOptionX{a3paper}{%
+  \def\tubs@opt@paper{a3paper}
+}
+%    \end{macrocode}
 % 
+% \paragraph{a2paper}
+% Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
+% Format DIN A2.
+%    \begin{macrocode}
+\DeclareOptionX{a2paper}{%
+  \def\tubs@opt@paper{a2paper}
+}
+%    \end{macrocode}
 % 
+% \paragraph{a1paper}
+% Die Papierformat-Option |a1paper| zum Erzeugen von Dokumenten im
+% Format DIN A1.
+%    \begin{macrocode}
+\DeclareOptionX{a1paper}{%
+  \def\tubs@opt@paper{a1paper}
+}
+%    \end{macrocode}
+%
+%
+% \paragraph{a0paper}
+% Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
+% Format DIN A0.
+%    \begin{macrocode}
+\DeclareOptionX{a0paper}{%
+  \def\tubs@opt@paper{a0paper}
+}
+%    \end{macrocode}
+%
+%
 %    \begin{macrocode}
 \DeclareOptionX{stdbcor}{%
   \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}{tubstypearea}
@@ -257,6 +293,17 @@
   \PassOptionsToPackage{backstyle=#1}{tubstitlepage}
 }
 %    \end{macrocode}
+%
+%<*poster>
+% Diese Option erzeugt Formatierung entsprechend der Konventionen für
+% wissenschaftliche Plakate
+%    \begin{macrocode}
+\DeclareOptionX{scifiposter}{%
+  \PassOptionsToPackage{scifiposter}{tubstypearea}
+  \PassOptionsToPackage{bgcolor=tuSecondary40}{tubsflowfram}
+}
+%    \end{macrocode}
+%</poster>
 %
 %    \begin{macrocode}
 \DeclareOptionX*{%
