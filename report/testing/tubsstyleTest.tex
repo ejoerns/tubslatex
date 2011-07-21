@@ -1,0 +1,100 @@
+\documentclass[a4paper]{tubsposter}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\usepackage{tubsstyle}
+
+\parindent0mm
+\parskip\medskipamount
+
+\makeatletter
+
+
+% Zähler für das aktuelle y-Segment im Gaußraster, dass bearbeitet
+% werden kann, bzw. mit |tubsrow| erzeugt.
+%    \begin{macrocode}
+\newcounter{tubs@yseg@cnt}
+%    \end{macrocode}
+%
+% Die Befehle |\tubs@draw@topline| und |\tubs@draw@tubslogo| dienen zum
+% Schedulen der Darstellung von Logo und Toplinie, um die Hintergrundreihenfolge
+% korrekt zu gewährleisten.
+%    \begin{macrocode}
+\newcommand{\tubs@draw@topline}{}
+\newcommand{\tubs@draw@tubslogo}{}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\showtopline}
+% Ermöglicht das Darstellen einer Linie zwischen Kommunikations- und
+% Absenderbereich.
+% Setzt das Makro |\tubs@draw@topline|.
+%    \begin{macrocode}
+\newcommand{\showtopline}{\renewcommand{\tubs@draw@topline}{%
+  \AddToShipoutPicture{\tubs@topline}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\showtopline}
+% Ermöglicht das Darstellen des TU-Logos
+% Setzt das Makro |\tubs@draw@tubslogo|.
+%    \begin{macrocode}
+\newcommand{\showtubslogo}{\renewcommand{\tubs@draw@tubslogo}{%
+  \AddToShipoutPicture{\tubs@tubslogo}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{environment}{tubsposter}
+% Erzeugt eine neue Poster-Seite.
+%    \begin{macrocode}
+\newenvironment{tubsposter}{%
+  \setcounter{tubs@yseg@cnt}{1}
+}{%
+  \tubs@draw@topline
+  \tubs@draw@tubslogo
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+% Optionen für Umgebung |posterrow|
+%    \begin{macrocode}
+\define@key{posterrow}{bgcolor}{%
+  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
+  \edef\@arg@I{{#1}}
+  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
+  \edef\@arg@III{\@arg@II{\@current@height}}
+  \expandafter\AddToShipoutPicture\expandafter{\expandafter\tubs@background\@arg@III}
+}
+%    \end{macrocode}
+%
+% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}
+\newenvironment{posterrow}[2][]{%
+%   \expandafter\edef\csname @ysegments\thetubs@yseg@cnt\endcsname{#2}
+  \def\@current@height{#2}
+  \setkeys{posterrow}{#1}
+
+  \addtocounter{tubs@yseg@cnt}{#2}
+}{}
+
+
+
+\begin{document}
+\newcommand{\test}[3]{1:'#1', 2:'#2', 3:'#3'}
+\test A B C
+\begin{tubsposter}
+  \showtopline
+  \showtubslogo
+  \begin{posterrow}[bgcolor=tuRed]{3}
+    Dies ist der Titel
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tuBlue]{2}
+    \lipsum[1-2]
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tuGreen]{3}
+    \lipsum[3]
+  \end{posterrow}
+\end{tubsposter}
+
+\end{document}
+\makeatother
