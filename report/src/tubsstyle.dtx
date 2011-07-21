@@ -113,6 +113,7 @@
 %    \begin{macrocode}
 \ProvidesPackage{tubsstyle}
 \RequirePackage{eso-pic}
+\RequirePackage{xkeyval}
 %    \end{macrocode}
 %
 % Temporäre Längen
@@ -171,6 +172,28 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% this command allow to add the tubs logo to the background
+%    \begin{macro}{\tubs@tubslogo}
+%    \begin{macrocode}
+\newcommand\tubs@logo[1]{%
+  \setlength{\tmp@posy}{2\tubspage@borderwidth+36\tubspage@gaussheight}
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{0.5\paperwidth}
+  }{%
+    \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+  }
+  \put(\LenToUnit{\tmp@posx},%
+    \LenToUnit{\tmp@posy}){%
+    \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth]{%
+      0.5\paperwidth-\tubspage@borderwidth}{%
+      \vfill%
+      {\sffamily\hfill\raggedleft\color{tuRed}\large #1}%
+      \vfill}}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
 % args:
 % 1 - first element (top down)
 % 2 - nr of elements
@@ -208,12 +231,12 @@
 %    \end{macro}
 %
 %    \begin{macrocode}
-\AddToShipoutPicture{\tubs@background{tuBlue}{1}{2}}
-\AddToShipoutPicture{\tubs@background{tuBlue80}{3}{2}}
-\AddToShipoutPicture{\tubs@background{tuBlue60}{5}{1}}
-\AddToShipoutPicture{\tubs@background{tuBlue40}{6}{3}}
-\AddToShipoutPicture{\tubs@topline}
-\AddToShipoutPicture{\tubs@tubslogo}
+% \AddToShipoutPicture{\tubs@background{tuBlue}{1}{2}}
+% \AddToShipoutPicture{\tubs@background{tuBlue80}{3}{2}}
+% \AddToShipoutPicture{\tubs@background{tuBlue60}{5}{1}}
+% \AddToShipoutPicture{\tubs@background{tuBlue40}{6}{3}}
+% \AddToShipoutPicture{\tubs@topline}
+% \AddToShipoutPicture{\tubs@tubslogo}
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
