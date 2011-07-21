@@ -79,6 +79,10 @@ LaTeX version 1999/12/01 or later.
 
 % --- Generate fontsize informations
 
+\generate{\file{tubsa313pt.clo}{%
+  \from{tubsfont.dtx}{clo,a3}
+}}
+
 \generate{\file{tubsa49pt.clo}{%
   \from{tubsfont.dtx}{clo,a4}
 }}
@@ -107,5 +111,16 @@ LaTeX version 1999/12/01 or later.
 \generate{\file{tubsflowfram.sty}{%
   \from{tubsflowfram.dtx}{package}
 }}
+
+
+\generate{\file{tubstypearea.sty}{%
+  \from{tubstypearea.dtx}{package}
+}}
+
+
+\generate{\file{tubsstyle.sty}{%
+  \from{tubsstyle.dtx}{package}
+}}
+
 
 \endbatchfile
