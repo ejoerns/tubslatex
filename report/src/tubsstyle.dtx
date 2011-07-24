@@ -212,14 +212,12 @@
       \def\@ragged{\raggedright}
     }
   }
-  \put(\LenToUnit{\tmp@posx},%
-    \LenToUnit{\tmp@posy}){%
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
     \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
       {0.5\paperwidth-\tubspage@borderwidth}{%
-%       \vfill%
       \usekomafont{institute}\@ragged #1%
-%       \vfill%
-}}
+    }
+  }
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -327,6 +325,13 @@
     \expandafter\tubs@background\@arg@III}
 }
 %    \end{macrocode}
+%
+%
+% Option Hintergrundbild
+%    \begin{macrocode}
+\define@key{posterrow}{bgimage}{%
+  % TODO
+}
 %
 % Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}
 %    \begin{macrocode}
