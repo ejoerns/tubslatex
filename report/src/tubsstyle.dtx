@@ -122,6 +122,10 @@
 \newlength{\tmp@posy}
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
+%    \end{macrocode}
+%
 % Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
 % unterschiedlich arbeiten.
 % Ist nur aktiv, wenn Option |twosided| benutzt wird.
@@ -155,15 +159,29 @@
 %    \end{macro}
 %
 % this command allow to add the tubs logo to the background
+% Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
+% def Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
+% Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
+% Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
+% entgegengesetzten Papierseite platziert.
 %    \begin{macro}{\tubs@tubslogo}
 %    \begin{macrocode}
-\newcommand\tubs@tubslogo{%
+\newcommand\tubs@tubslogo[1][left]{%
   \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
-    \setlength{\tmp@posx}{\tubspage@bcor}
+    \ifthenelse{\equal{#1}{left}}{%
+      \setlength{\tmp@posx}{\tubspage@bcor}
+    }{%
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+      \setboolean{tubsstyle@logoright}{true}
+    }
   }{%
-    \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+    \ifthenelse{\equal{#1}{left}}{%
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+    }{%
+      \setlength{\tmp@posx}{\tubspage@bcor}
+    }
   }
   \put(\LenToUnit{\tmp@posx},%
     \LenToUnit{\tmp@posy})
@@ -173,22 +191,33 @@
 %    \end{macro}
 %
 % this command allow to add the tubs logo to the background
-%    \begin{macro}{\tubs@tubslogo}
+%    \begin{macro}{\tubs@logo}
 %    \begin{macrocode}
 \newcommand\tubs@logo[1]{%
+  \def\@ragged{\raggedleft}
   \setlength{\tmp@posy}{2\tubspage@borderwidth+36\tubspage@gaussheight}
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
-    \setlength{\tmp@posx}{0.5\paperwidth}
+    \ifthenelse{\boolean{tubsstyle@logoright}}{%
+      \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+      \def\@ragged{\raggedright}
+    }{%
+      \setlength{\tmp@posx}{0.5\paperwidth}
+    }
   }{%
-    \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+    \ifthenelse{\boolean{tubsstyle@logoright}}{%
+      \setlength{\tmp@posx}{0.5\paperwidth}
+    }{%
+      \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+      \def\@ragged{\raggedright}
+    }
   }
   \put(\LenToUnit{\tmp@posx},%
     \LenToUnit{\tmp@posy}){%
     \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
       {0.5\paperwidth-\tubspage@borderwidth}{%
 %       \vfill%
-      \sffamily\large\raggedleft\color{tuRed} #1%
+      \usekomafont{institute}\@ragged #1%
 %       \vfill%
 }}
 }
@@ -260,8 +289,8 @@
 % Ermöglicht das Darstellen des TU-Logos
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
-\newcommand{\showtubslogo}{\renewcommand{\tubs@draw@tubslogo}{%
-  \AddToShipoutPicture{\tubs@tubslogo}}}
+\newcommand{\showtubslogo}[1][left]{\renewcommand{\tubs@draw@tubslogo}{%
+  \AddToShipoutPicture{\tubs@tubslogo[#1]}}}
 %    \end{macrocode}
 %    \end{macro}
 %
