@@ -29,14 +29,14 @@
 \@setplength{lochpos}{-15.5cm}
 \@setplength{locvpos}{4.7cm}
 \@setplength{locwidth}{5.25cm}
-\@setplength{locheight}{316pt}
+\@setplength{locheight}{352pt}
 
 %Positionierung der Geschäftszeile, bzw. da nicht vorhanden des Briefanfangs
 \@setplength{refhpos}{2.4cm}
 \@setplength{refwidth}{12.5cm}
 
 %Anpassung der Textbreite
-\setlength{\textwidth}{12.5cm}
+\setlength{\textwidth}{12.0cm}
 
 %Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
 %%Institutsdaten
@@ -65,7 +65,7 @@
 \AtBeginLetter{\sffamily}
 
 %Siegelband und rote Linie im Kopf des Briefs
-\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]\tubslogo[0.9]}
+\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]\tubslogo[0.9]\\[-1.3\tubslogoHeight]\parbox{0cm}{}\hfill\usekomavar{fromlogo}}
 
 %Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
 \setkomavar{location}{%

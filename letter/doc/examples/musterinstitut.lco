@@ -1,3 +1,5 @@
+\setkomavar{fromlogo}{\includegraphics[height=0.9\tubslogoHeight]{institut}}
+
 \setkomavar{frominstitute}{[Institut]}
 
 \setkomavar{fromstreet}{[Straﬂe]}
