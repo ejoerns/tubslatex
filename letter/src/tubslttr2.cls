@@ -20,7 +20,7 @@
 %Positionierung des Seitenkopfs (Logo und rote Linie)
 \@setplength{firstheadhpos}{1.75cm}
 \@setplength{firstheadvpos}{1.75cm}
-\@setplength{firstheadwidth}{17.6cm}
+\@setplength{firstheadwidth}{18.5cm}
 
 %Vergrößerung der Rückaddresszeile (da zweizeilig)
 \@setplength{backaddrheight}{21pt}
@@ -36,7 +36,7 @@
 \@setplength{refwidth}{12.5cm}
 
 %Anpassung der Textbreite
-\setlength{\textwidth}{12.0cm}
+\setlength{\textwidth}{12.5cm}
 
 %Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
 %%Institutsdaten
@@ -62,10 +62,11 @@
 \setkomafont{subject}{\sffamily}
 \setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
+\setkomafont{foldmark}{\color{tuRed}}
 \AtBeginLetter{\sffamily}
 
 %Siegelband und rote Linie im Kopf des Briefs
-\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{17.6cm}{1pt}\\[-1.75cm]\tubslogo[0.9]\\[-1.3\tubslogoHeight]\parbox{0cm}{}\hfill\usekomavar{fromlogo}}
+\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{18.5cm}{1pt}\\[-1.75cm]\tubslogo[0.9]\\[-1.3\tubslogoHeight]\parbox{0cm}{}\hfill\usekomavar{fromlogo}}
 
 %Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
 \setkomavar{location}{%
