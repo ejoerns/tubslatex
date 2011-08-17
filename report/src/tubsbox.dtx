@@ -130,7 +130,32 @@
     \setboolean{tubsbox@bottomsender}{false}
   }
 }
+%    \end{macrocode}
 %
+%    \begin{macrocode}
+\def\tubsbox@box{\relax}
+\define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}{%
+  \ifcase\nr\relax
+    \def\tubsbox@box{\relax}
+  \or
+    \def\tubsbox@box{\fbox}
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\define@key{tubsbox.sty}{bgcolor}{%
+  \ifthenelse{\equal{#1}{none}}{%
+    \def\tubsbox@colorbox{\relax}
+  }{%
+    \def\bgcolor{#1}
+    \def\tubsbox@colorbox{\colorbox{\bgcolor}}
+  }
+}
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
 \ProcessOptionsX\relax
 %    \end{macrocode}
 %
@@ -188,7 +213,8 @@
 % 3 - ypos
 % 4 - width [1-6]
 % 5 - height [1-6] / [1-8]
-\newenvironment{tubsbox}[5][tuWhite]{%
+\newenvironment{tubsbox}[5][bgcolor=none]{%
+\setkeys{tubsbox.sty}{#1}
 % \tubspage@columnsep\tubspage@borderwidth
 % Berechnung der linken und rechten Ränder
 \ifnum#2=0
@@ -233,7 +259,7 @@
 \fi
 % \fi
 %
-\def\bgcolor{#1}
+% \def\bgcolor{#1}
 \def\tubsbox@xpos{#2}
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
 % |calc@gauss@elementpos| zu übergeben, falls bottomsender-Layout gewählt wurde.
@@ -270,11 +296,11 @@
   \hspace*{-\tubsbox@leftmargin}%
   % \vspace*{\tubsbox@topmargin}%
   \raisebox{\tubspage@borderwidth}[0cm]{%
-    \fbox{%
+    \tubsbox@box{\tubsbox@colorbox{%
       \hspace*{\tubsbox@leftmargin}%
       \usebox{\storebox}%
       \hspace*{\tubsbox@rightmargin}%
-      }%
+      }}%
     }%
   \hspace*{\tubsbox@rightsep}%
 \end{textblock}
