@@ -125,8 +125,7 @@
 %
 %    \begin{macrocode}
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
-\newboolean{tubsstyle@bottomup}\setboolean{tubsstyle@bottomup}{true}
-
+\newboolean{tubsstyle@bottomup}\setboolean{tubsstyle@bottomup}{false}
 %    \end{macrocode}
 %
 %
@@ -272,11 +271,20 @@
     }}%
 }
 \newcommand\tubs@background[3]{%
+  % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
+  % |calc@gauss@elementpos| zu übergeben, falls bottomup-Layout gewählt wurde.
+  \def\@inv@arg{\relax}
+  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+    \def\@inv@arg{inverted}%
+  }{}
   % calculate and set y pos (origin: lower left corner)
-  \calc@gauss@elementpos{tmp@calc@bgpos}{8-#2+2}
-  \setcounter{tmp@calc@bgpos}{36-\thetmp@calc@bgpos}
-  \setlength{\tmp@posy}{%
-    \tubspage@senderheight-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
+  \calc@gauss@elementpos[\@inv@arg]{tmp@calc@bgpos}{#2}
+  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+    \setlength{\tmp@posy}{%
+      \tubspage@senderheight-\thetmp@calc@bgpos\tubspage@gaussheight}% pos hack
+  }{%
+    \setlength{\tmp@posy}{%
+      \tubspage@borderwidth-\thetmp@calc@bgpos\tubspage@gaussheight}% pos hack
   }
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
@@ -285,8 +293,7 @@
     \setlength{\tmp@posx}{\tubspage@borderwidth}
   }
   % calculate and set height
-  \calc@gauss@elementpos{tmpb@calc@bgpos}{8-(#2+#3)+2}
-  \setcounter{tmpb@calc@bgpos}{36-\thetmpb@calc@bgpos}
+  \calc@gauss@elementpos[\@inv@arg]{tmpb@calc@bgpos}{#2+#3}
   % additional fixment hack because of inverted y orientation
   \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
   \addtolength{\tmp@posy}{%
@@ -358,6 +365,8 @@
 }
 \define@key{tubsposter}{bottomup}[]{%
   \setboolean{tubsstyle@bottomup}{true}
+  % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
+  \AddToShipoutPicture{\setboolean{tubsstyle@bottomup}{true}}
 }
 %    \end{macrocode}
 %
@@ -392,7 +401,7 @@
   \edef\@arg@I{{#1}}
   \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
   \edef\@arg@III{\@arg@II{\@current@height}}
- 
+
   \expandafter\AddToShipoutPicture\expandafter{%
     \expandafter\tubs@background\@arg@III}
 }
