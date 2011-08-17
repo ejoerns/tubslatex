@@ -190,7 +190,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\newboolean{tubspage@bottomup}\setboolean{tubspage@bottomup}{false}
+\newboolean{tubspage@bottomsender}\setboolean{tubspage@bottomsender}{false}
 %    \end{macrocode}
 %
 % Makro zur Speicherung des ausgewählten Papierformats.
@@ -214,7 +214,7 @@
 \newcommand{\tubspage@calclayout}{%
   \setlength{\tubspage@columnsep}{5mm}
   % outer geometry
-  \ifthenelse{\boolean{tubspage@bottomup}}{%
+  \ifthenelse{\boolean{tubspage@bottomsender}}{%
     \geometry{%
       headheight=0mm,
       headsep=\tubspage@borderwidth,
@@ -357,8 +357,8 @@
     \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }
 }
-\DeclareOptionX{bottomup}{%
-  \setboolean{tubspage@bottomup}{true}
+\DeclareOptionX{bottomsender}{%
+  \setboolean{tubspage@bottomsender}{true}
 }
 %
 % \ExecuteOptions{anypaper}
@@ -499,8 +499,9 @@
 %    \begin{macrocode}
 \newcounter{tmp@calc}
 \newcommand{\calc@gauss@elementpos}[3][]{%
-  % Invertierte Berechnung berechnet die Elementanzahlen für das bottomup-Layout,
+  % Invertierte Berechnung berechnet die Elementanzahlen für das bottomsender-Layout,
   % ansonsten wird es für topdown berechnet (standard).
+  % TODO: evtl. mit Option bottomsender kombinieren?
   \ifthenelse{\equal{#1}{inverted}}{%
     \calc@gaussum{tmp@calc}{(\tubspage@ysegments-(\tubspage@ysegments-(#3)+1))}%
     \setcounter{#2}{\thetubspage@gausssum-(\thetubspage@gausssum-\thetmp@calc)}

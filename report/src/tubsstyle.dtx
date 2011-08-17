@@ -125,7 +125,7 @@
 %
 %    \begin{macrocode}
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
-\newboolean{tubsstyle@bottomup}\setboolean{tubsstyle@bottomup}{false}
+\newboolean{tubsstyle@bottomsender}\setboolean{tubsstyle@bottomsender}{false}
 %    \end{macrocode}
 %
 %
@@ -173,8 +173,8 @@
 %    \begin{macro}{\tubs@tubslogo}
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo[1][left]{%
-  % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomup)
-  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+  % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
       \paperheight
       -(\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight)
@@ -211,8 +211,8 @@
 %    \begin{macrocode}
 \newcommand\tubs@logo[1]{%
   \def\@ragged{\raggedleft}
-  % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomup)
-  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+  % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
       \paperheight
       -(2\tubspage@borderwidth+36\tubspage@gaussheight)
@@ -257,14 +257,14 @@
 \newcounter{tmpb@calc@bgpos}
 \newcommand\tubs@background[3]{%
   % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
-  % |calc@gauss@elementpos| zu übergeben, falls bottomup-Layout gewählt wurde.
+  % |calc@gauss@elementpos| zu übergeben, falls bottomsender-Layout gewählt wurde.
   \def\@inv@arg{\relax}
-  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \def\@inv@arg{inverted}%
   }{}
   % calculate and set y pos (origin: lower left corner)
   \calc@gauss@elementpos[\@inv@arg]{tmp@calc@bgpos}{#2}
-  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
       \tubspage@senderheight-\thetmp@calc@bgpos\tubspage@gaussheight}% pos hack
   }{%
@@ -348,10 +348,10 @@
 \define@key{tubsposter}{topdown}[]{%
   % default
 }
-\define@key{tubsposter}{bottomup}[]{%
-  \setboolean{tubsstyle@bottomup}{true}
+\define@key{tubsposter}{bottomsender}[]{%
+  \setboolean{tubsstyle@bottomsender}{true}
   % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
-  \AddToShipoutPicture{\setboolean{tubsstyle@bottomup}{true}}
+  \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{true}}
 }
 %    \end{macrocode}
 %
