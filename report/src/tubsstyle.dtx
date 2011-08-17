@@ -114,6 +114,7 @@
 \ProvidesPackage{tubsstyle}
 \RequirePackage{eso-pic}
 \RequirePackage{xkeyval}
+\RequirePackage{tubsbox}
 %    \end{macrocode}
 %
 %
@@ -348,10 +349,24 @@
 \define@key{tubsposter}{topdown}[]{%
   % default
 }
-\define@key{tubsposter}{bottomsender}[]{%
-  \setboolean{tubsstyle@bottomsender}{true}
-  % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
-  \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{true}}
+\define@key{tubsposter}{sender}{%
+  \ifthenelse{\equal{#1}{bottom}}{%
+    \setboolean{tubsstyle@bottomsender}{true}
+    % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
+    \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{true}}
+  }{%
+    \ifthenelse{\equal{#1}{top}}{%
+      \setboolean{tubsstyle@bottomsender}{false}
+      % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
+      \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{false}}
+    }{%
+      \PackageError{tubsstyle}{%
+        Value '#1' unknown for option 'sender'.
+      }{%
+        Allowed values are: top, bottom
+      }
+    }
+  }
 }
 %    \end{macrocode}
 %

@@ -1,0 +1,278 @@
+
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{tubsbox.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+%
+% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+%
+% \GetFileInfo{tubshead.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{tubsbox} -- 
+%   box definitions for tubslatex\thanks{This document
+%   corresponds to \textsf{tubsbox}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   Put text here.
+% \end{abstract}
+%
+% \section{Introduction}
+%
+% Put text here.
+%
+% \section{Usage}
+%
+% \DescribeMacro{\YOURMACRO}
+% Put description of |\YOURMACRO| here.
+%
+% \DescribeEnv{YOURENV}
+% Put description of |YOURENV| here.
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% 
+%
+% \subsection{Options}
+% Es werden zur Zeit keine Optionen zur Verfügung gestellt
+%    \begin{macrocode}
+%<*option>
+%    \end{macrocode}
+%    \begin{macrocode}
+%</option>
+%    \end{macrocode}
+%
+% 
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+\RequirePackage{ifthen}
+\RequirePackage{xkeyval}
+\RequirePackage{tubstypearea}
+\RequirePackage[absolute]{textpos}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newboolean{tubsbox@bottomsender}\setboolean{tubsbox@bottomsender}{false}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareOptionX{sender}{%
+  \ifthenelse{\equal{#1}{sender}}{%
+    \setboolean{tubsbox@bottomsender}{true}
+  }{%
+    \setboolean{tubsbox@bottomsender}{false}
+  }
+}
+\ProcessOptionsX\relax
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+  % TODO: this seems to be a bug, only one borderwidth should be needed
+  \ifthenelse{\boolean{tubsbox@bottomsender}}{%
+    \textblockorigin{2\tubspage@borderwidth}{%
+      2\tubspage@borderwidth}
+  }{%
+    \textblockorigin{2\tubspage@borderwidth}{%
+      \tubspage@senderheight+\tubspage@borderwidth}
+  }
+%    \end{macrocode}
+%
+% Lege Rastermaße fest.
+%    \begin{macrocode}
+\setlength{\TPHorizModule}{%
+  (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
+\setlength{\TPVertModule}{%
+  (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newlength{\tubsbox@leftmargin}
+\newlength{\tubsbox@rightmargin}
+\newlength{\tubsbox@leftsep}
+\newlength{\tubsbox@rightsep}
+\newlength{\tubsbox@topmargin}
+\newlength{\tubsbox@toppadding}
+\newlength{\tubsbox@bottommargin}
+\newsavebox{\storebox}
+\newcounter{tubsbox@lastelement}
+\newcounter{tubsbox@calcypos}
+\newcounter{tubsbox@calcheight}
+%    \end{macrocode}
+%
+%    \begin{macro}{tubsbox}
+%    \begin{macrocode}
+% params:
+% 1 - color
+% 2 - xpos
+% 3 - ypos
+% 4 - width [1-6]
+% 5 - height [1-6] / [1-8]
+\newenvironment{tubsbox}[5][tuWhite]{%
+% \tubspage@columnsep\tubspage@borderwidth
+% Berechnung der linken und rechten Ränder
+\ifnum#2=0
+\setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
+\setlength{\tubsbox@rightmargin}{0mm}
+\setlength{\tubsbox@leftsep}{0mm}
+% \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+\else
+\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\fi
+%
+\setcounter{tubsbox@lastelement}{#2}\addtocounter{tubsbox@lastelement}{#4}
+\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
+  % \setlength{\tubsbox@leftmargin}{0mm}
+  \setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
+  % \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+  \setlength{\tubsbox@rightsep}{0mm}
+\else
+  % \setlength{\tubsbox@leftmargin}{0mm}
+  \setlength{\tubsbox@rightmargin}{0mm}
+  \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+  % \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\fi
+% \fi
+%
+% Berechnung der oberen und unteren Ränder
+\ifnum#3=1
+  \setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
+  \setlength{\tubsbox@toppadding}{3\tubspage@borderwidth}
+  \setlength{\tubsbox@bottommargin}{0mm}
+\else
+  \setlength{\tubsbox@toppadding}{\tubspage@borderwidth}
+  % \addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
+\fi
+\setcounter{tubsbox@lastelement}{#3+#5-1}
+\ifnum\value{tubsbox@lastelement}=\tubspage@ysegments
+  % \setlength{\tubsbox@topmargin}{0mm}
+  \setlength{\tubsbox@bottommargin}{\tubspage@borderwidth}
+\else
+  % \setlength{\tubsbox@topmargin}{0mm}
+  \setlength{\tubsbox@bottommargin}{0mm}
+\fi
+% \fi
+%
+\def\bgcolor{#1}
+\def\tubsbox@xpos{#2}
+% Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
+% |calc@gauss@elementpos| zu übergeben, falls bottomsender-Layout gewählt wurde.
+\def\@inv@arg{\relax}
+\ifthenelse{\boolean{tubsbox@bottomsender}}{%
+  \def\@inv@arg{inverted}%
+}{}
+% \setcounter{tubsbox@calcypos}{%
+%   \value{tubspage@gausssum}-((\tubspage@ysegments+1-#3)*(\tubspage@ysegments-#3+2))/2}
+\calc@gauss@elementpos[\@inv@arg]{tubsbox@calcypos}{#3}
+\def\tubsbox@ypos{\thetubsbox@calcypos}
+% 
+% \setcounter{tubsbox@calcheight}{%
+%   \value{tubspage@gausssum}-((\tubspage@ysegments+1-#3-#5)*(\tubspage@ysegments-#3-#5+2))/2}
+\calc@gauss@elementpos[\@inv@arg]{tubsbox@calcheight}{#3+#5}
+\addtocounter{tubsbox@calcheight}{%
+% -\value{tubspage@gausssum}+((\tubspage@ysegments+1-#3)*(\tubspage@ysegments-#3+2))/2}
+  -\thetubsbox@calcypos}
+% 
+\def\tubsbox@width{#4}
+\def\tubsbox@height{\thetubsbox@calcheight}
+\begin{lrbox}{\storebox}
+\begin{minipage}[t]%
+  [\tubsbox@height\TPVertModule]%
+  {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
+  \vspace*{\tubsbox@toppadding}%
+}{%
+\vspace*{\tubspage@borderwidth}%
+\end{minipage}
+\end{lrbox}
+\setlength{\fboxsep}{0cm}%
+\begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
+  \hspace*{\tubsbox@leftsep}%
+  \hspace*{-\tubsbox@leftmargin}%
+  % \vspace*{\tubsbox@topmargin}%
+  \raisebox{\tubspage@borderwidth}[0cm]{%
+    \fbox{%
+      \hspace*{\tubsbox@leftmargin}%
+      \usebox{\storebox}%
+      \hspace*{\tubsbox@rightmargin}%
+      }%
+    }%
+  \hspace*{\tubsbox@rightsep}%
+\end{textblock}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%
+% \Finale
+\endinput
