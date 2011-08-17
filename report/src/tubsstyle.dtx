@@ -159,7 +159,11 @@
   }{
     \setlength{\tmp@posx}{\tubspage@borderwidth}
   }
-  \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+    \setlength{\tmp@posy}{\paperheight-(\tubspage@borderwidth+36\tubspage@gaussheight)}
+  }{%
+    \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}
+  }
   \put(\LenToUnit{\tmp@posx},%
     \LenToUnit{\tmp@posy})
     {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.2ex}}}
