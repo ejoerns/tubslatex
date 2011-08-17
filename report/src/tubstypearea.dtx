@@ -110,32 +110,39 @@
 %    \begin{macrocode}
 \newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
 %    \end{macrocode}
+%
 % Boolean to check if left margin is used
 %    \begin{macrocode}
 \newboolean{tubspage@marginleft}
 %    \end{macrocode}
+%
 % Boolean to check if right margin is used
 %    \begin{macrocode}
 \newboolean{tubspage@marginright}
 %    \end{macrocode}
+%
 % BCOR
 %    \begin{macrocode}
 \newlength{\tubspage@bcor}
 %    \end{macrocode}
+%
 % width of outer white border
 %    \begin{macrocode}
 \newlength{\tubspage@borderwidth}
 %    \end{macrocode}
-% height of sender area (top of the page
-% until borderwidth above communication area
+%
+% Höhe des Absenderbereichs (Seitenrand bis Anfang
+% Kommunikationsbereich, abzüglich |borderwidth|.
 %    \begin{macrocode}
 \newlength{\tubspage@senderheight}
 %    \end{macrocode}
+%
 % senderheight without borders
 %    \begin{macrocode}
 \newlength{\tubspage@headheight}
 %    \end{macrocode}
-% height of communication area (TODO: not neccesair?)
+%
+% Höhe des Kommunikationsbereichs (TODO: not neccesair?)
 % HINWEIS: Die auf der CD-Website beschriebenen Höhen für den Kommunikations-
 %   bereicht entspricht nicht der auf der Website definiterten Höhe des
 %   Kommunikationsbereichs, sondern nur der Höhe nach Abzug des unteren
@@ -143,26 +150,32 @@
 %    \begin{macrocode}
 \newlength{\tubspage@communicationheight}
 %    \end{macrocode}
+%
 % width of area
 %    \begin{macrocode}
 \newlength{\tubspage@contentwidth}
 %    \end{macrocode}
+%
 % Nr of horizontal segments for box layout
 %    \begin{macrocode}
 \def\tubspage@xsegments{6}
 %    \end{macrocode}
+%
 % Nr of vertical segments for gaussian layout system
 %    \begin{macrocode}
 \def\tubspage@ysegments{8}
 %    \end{macrocode}
+%
 % Counter to store the gaussian sum of |\tubspage@ysegments|
 %    \begin{macrocode}
 \newcounter{tubspage@gausssum}
 %    \end{macrocode}
+%
 % space between boxes (columns) in layout. It is independent from papersize
 %    \begin{macrocode}
 \newlength{\tubspage@columnsep}
 %    \end{macrocode}
+%
 % height of a single gauss element for vertical layout
 %    \begin{macrocode}
 \newlength{\tubspage@gaussheight}
@@ -174,6 +187,10 @@
 %
 %    \begin{macrocode}
 \newboolean{tubspage@twosided}\setboolean{tubspage@twosided}{false}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newboolean{tubspage@bottomup}\setboolean{tubspage@bottomup}{false}
 %    \end{macrocode}
 %
 % Makro zur Speicherung des ausgewählten Papierformats.
@@ -197,14 +214,25 @@
 \newcommand{\tubspage@calclayout}{%
   \setlength{\tubspage@columnsep}{5mm}
   % outer geometry
-  \geometry{%
-    headheight=\tubspage@senderheight-\tubspage@borderwidth,
-    headsep=\tubspage@borderwidth,
-    top=\tubspage@senderheight+\tubspage@borderwidth,
-    left=2\tubspage@borderwidth,
-    right=2\tubspage@borderwidth,
-    bottom=2\tubspage@borderwidth,
-    bindingoffset=\tubspage@bcor}
+  \ifthenelse{\boolean{tubspage@bottomup}}{%
+    \geometry{%
+      headheight=0mm,
+      headsep=\tubspage@borderwidth,
+      top=\tubspage@borderwidth,
+      left=2\tubspage@borderwidth,
+      right=2\tubspage@borderwidth,
+      bottom=2\tubspage@borderwidth,
+      bindingoffset=\tubspage@bcor}
+  }{%
+    \geometry{%
+      headheight=\tubspage@senderheight-\tubspage@borderwidth,
+      headsep=\tubspage@borderwidth,
+      top=\tubspage@senderheight+\tubspage@borderwidth,
+      left=2\tubspage@borderwidth,
+      right=2\tubspage@borderwidth,
+      bottom=2\tubspage@borderwidth,
+      bindingoffset=\tubspage@bcor}
+  }
   % Reduzierte Ränder für wissenschaftliche Poster % TODO: nötig?
   \ifthenelse{\boolean{scifiposter}}{
     \geometry{%
@@ -328,6 +356,9 @@
     \setlength{\tubspage@senderheight}{0.095\paperheight}% ~1/11?
     \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }
+}
+\DeclareOptionX{bottomup}{%
+  \setboolean{tubspage@bottomup}{true}
 }
 %
 % \ExecuteOptions{anypaper}
@@ -462,14 +493,21 @@
 % output is the number of element that have to be skipped before
 % Thus parameter 3 should result in output 15 with 8 segments
 % Syntax: |\tmp@calc|\oarg{??}\marg{counter}\marg{segment}
-% 1 (opt) - ??
+% 1 (opt) - inverted: calculate for bottom up layout
 % 2       - counter to store result in
 % 3       - segment number (counted 1 to 8)
 %    \begin{macrocode}
 \newcounter{tmp@calc}
 \newcommand{\calc@gauss@elementpos}[3][]{%
-  \calc@gaussum{tmp@calc}{(\tubspage@ysegments-(#3-1))}%
-  \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
+  % Invertierte Berechnung berechnet die Elementanzahlen für das bottomup-Layout,
+  % ansonsten wird es für topdown berechnet (standard).
+  \ifthenelse{\equal{#1}{inverted}}{%
+    \calc@gaussum{tmp@calc}{(\tubspage@ysegments-(\tubspage@ysegments-(#3)+1))}%
+    \setcounter{#2}{\thetubspage@gausssum-(\thetubspage@gausssum-\thetmp@calc)}
+  }{%
+    \calc@gaussum{tmp@calc}{(\tubspage@ysegments-((#3)-1))}%
+    \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
+  }
 }
 
 \newlength{\tubsbox@leftmargin}
