@@ -5,16 +5,18 @@
 
 \usepackage{lipsum}
 
-\makeatletter
-
-
 \begin{document}
 \begin{tubsposter}
-%   \showtopline
+  %% aktiviert die horizontale Linie am oberen Ende des Kommunikationsbereichs.
+  %   \showtopline
+  %% Stellt das TU-Logo an der gewünschten Seite (links/rechts) dar.
   \showtubslogo[right]
+  %% Stellt das Institutslogo im Absenderbereich dar.
   \showlogo{Institutslogo einfügen oder Institutsname/\\
     zentrale Einrichtung als Text eingeben}
-%   \showlogo{\includegraphics{dummy_institut.jpg}}
+  %% Alternative Version des Logos mit Bild statt Text.
+  %   \showlogo{\includegraphics{dummy_institut.jpg}}
+  %% Beginnt eine neuen Bereich mit der angegebenen Höhe im Gaußraster.
   \begin{posterrow}[bgcolor=tuRed100]{2}
       \color{tuWhite}
       {\usekomafont{headline} Headline xxpt\bigskip}
@@ -43,4 +45,3 @@
 \end{tubsposter}
 
 \end{document}
-\makeatother

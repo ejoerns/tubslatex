@@ -126,10 +126,10 @@
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
 %    \end{macrocode}
 %
+%    \begin{macro}{\if@tubs@oddpage}
 % Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
 % unterschiedlich arbeiten.
 % Ist nur aktiv, wenn Option |twosided| benutzt wird.
-%    \begin{macro}{\if@tubs@oddpage}
 %    \begin{macrocode}
 \newboolean{tubs@twoside}\setboolean{tubs@twoside}{false}
 \newcommand{\if@tubs@oddpage}[2]{%
@@ -140,8 +140,9 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% this command allows to add a top line to the background
 %    \begin{macro}{\tubs@topline}
+% Kommando, um eine Horizontale linie am oberen Rade des Kommunikationsbereichs
+% zu platzieren.
 %    \begin{macrocode}
 \newcommand\tubs@topline{%
   % calculate x pos of logo and line depending on oddness
@@ -158,9 +159,9 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% this command allow to add the tubs logo to the background
+% Dieses Kommando fügt das TU-Logo in den Hintergrund ein.
 % Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
-% def Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
+% des Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
 % Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
 % Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
 % entgegengesetzten Papierseite platziert.
@@ -190,8 +191,10 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% this command allow to add the tubs logo to the background
 %    \begin{macro}{\tubs@logo}
+% Makro, um das Institutslogo zum Seitenlayout hinzuzufügen.
+% Dabei werden auch zweiseitige Layouts beachtet.
+% Syntax: |\tubs@logo|\marg{logos}
 %    \begin{macrocode}
 \newcommand\tubs@logo[1]{%
   \def\@ragged{\raggedleft}
@@ -222,10 +225,10 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\tubs@background}
 % args:
 % 1 - first element (top down)
 % 2 - nr of elements
-%    \begin{macro}{\tubs@background}
 %    \begin{macrocode}
 \newcounter{tmp@calc@bgpos}
 \newcounter{tmpb@calc@bgpos}
@@ -258,7 +261,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% Zähler für das aktuelle y-Segment im Gaußraster, dass bearbeitet
+% Zähler für das aktuelle y-Segment im Gaußraster, das bearbeitet
 % werden kann, bzw. mit |tubsrow| erzeugt.
 %    \begin{macrocode}
 \newcounter{tubs@yseg@cnt}
@@ -274,8 +277,8 @@
 %    \end{macrocode}
 %
 %    \begin{macro}{\showtopline}
-% Ermöglicht das Darstellen einer Linie zwischen Kommunikations- und
-% Absenderbereich.
+% Benutzer-Kommand: Ermöglicht das Darstellen einer Linie zwischen
+% Kommunikations- und Absenderbereich.
 % Setzt das Makro |\tubs@draw@topline|.
 %    \begin{macrocode}
 \newcommand{\showtopline}{\renewcommand{\tubs@draw@topline}{%
@@ -301,7 +304,12 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{environment}{tubsposter}
 % Erzeugt eine neue Poster-Seite.
+% Steuert die Aufbaureihenfolge des Hintergrundes, in dem die
+% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
+% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
+% sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 \newenvironment{tubsposter}{%
   \sffamily
@@ -312,8 +320,11 @@
   \tubs@draw@logo
 }
 %    \end{macrocode}
+%    \end{environment}
 %
-% Optionen für Umgebung |posterrow|
+% \subsection{Optionen für Umgebung posterrow}
+%
+% Option |bgcolor| zum Setzen der Hintergrundfarbe eines Elements
 %    \begin{macrocode}
 \define@key{posterrow}{bgcolor}{%
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
@@ -356,6 +367,3 @@
 % 
 % \Finale
 \endinput
-
-
-
