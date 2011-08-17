@@ -116,6 +116,7 @@
 \RequirePackage{xkeyval}
 %    \end{macrocode}
 %
+%
 % Temporäre Längen
 %    \begin{macrocode}
 \newlength{\tmp@posx}
@@ -124,7 +125,10 @@
 %
 %    \begin{macrocode}
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
+\newboolean{tubsstyle@bottomup}\setboolean{tubsstyle@bottomup}{true}
+
 %    \end{macrocode}
+%
 %
 %    \begin{macro}{\if@tubs@oddpage}
 % Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
@@ -139,6 +143,7 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 %    \begin{macro}{\tubs@topline}
 % Kommando, um eine Horizontale linie am oberen Rade des Kommunikationsbereichs
@@ -159,6 +164,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 % Dieses Kommando fügt das TU-Logo in den Hintergrund ein.
 % Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
 % des Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
@@ -168,8 +174,17 @@
 %    \begin{macro}{\tubs@tubslogo}
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo[1][left]{%
-  \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}
-  % calculate x pos of logo and line depending on oddness
+  % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomup)
+  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+    \setlength{\tmp@posy}{%
+      \paperheight
+      -(\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight)
+      -\tubslogoHeight}
+  }{%
+    \setlength{\tmp@posy}{%
+      \tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}
+  }
+  % Berechne x-Position, abhängig von oddness
   \if@tubs@oddpage{%
     \ifthenelse{\equal{#1}{left}}{%
       \setlength{\tmp@posx}{\tubspage@bcor}
@@ -184,12 +199,11 @@
       \setlength{\tmp@posx}{\tubspage@bcor}
     }
   }
-  \put(\LenToUnit{\tmp@posx},%
-    \LenToUnit{\tmp@posy})
-    {\tubslogo}
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 %    \begin{macro}{\tubs@logo}
 % Makro, um das Institutslogo zum Seitenlayout hinzuzufügen.
@@ -225,20 +239,18 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\tubs@background}
-% args:
-% 1 - first element (top down)
-% 2 - nr of elements
+% Syntax: |\tubs@background|\marg{color}\marg{first}\marg{height}.
+% first: Erstes Element (von oben nach unten), height: Anzahl Elemente
 %    \begin{macrocode}
 \newcounter{tmp@calc@bgpos}
 \newcounter{tmpb@calc@bgpos}
-\newcommand\tubs@background[3]{%
-  % calculate and set y pos
+\newcommand\tubs@backgroundorig[3]{%
+  % calculate and set y pos (origin: lower left corner)
   \calc@gauss@elementpos{tmp@calc@bgpos}{#2}
-%   \setcounter{tmp@calc@bgpos}{\thetubspage@gausssum-\thetmp@calc@bgpos}
   \setlength{\tmp@posy}{%
-    \tubspage@borderwidth+\thetmp@calc@bgpos\tubspage@gaussheight%
-    -\thetmp@calc@bgpos\tubspage@gaussheight-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
+    \tubspage@borderwidth-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
   }
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
@@ -248,24 +260,54 @@
   }
   % calculate and set height
   \calc@gauss@elementpos{tmpb@calc@bgpos}{#2+#3}
-
-%   \setcounter{tmpb@calc@bgpos}{\thetubspage@gausssum-\thetmpb@calc@bgpos}
   % additional fixment hack because of inverted y orientation
   \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
   \addtolength{\tmp@posy}{%
-    -\thetmp@calc@bgpos\tubspage@gaussheight+\thetubspage@gausssum\tubspage@gaussheight}
-  \put(\LenToUnit{\tmp@posx},%
-    \LenToUnit{\tmp@posy})
-    {{\setlength\fboxsep{0mm}\colorbox{#1}{\parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}}}
+    -\thetmp@calc@bgpos\tubspage@gaussheight%
+    +\thetubspage@gausssum\tubspage@gaussheight}
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
+    {{\setlength\fboxsep{0mm}\colorbox{#1}{%
+      \parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]%
+        {\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}%
+    }}%
+}
+\newcommand\tubs@background[3]{%
+  % calculate and set y pos (origin: lower left corner)
+  \calc@gauss@elementpos{tmp@calc@bgpos}{8-#2+2}
+  \setcounter{tmp@calc@bgpos}{36-\thetmp@calc@bgpos}
+  \setlength{\tmp@posy}{%
+    \tubspage@senderheight-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
+  }
+  % calculate x pos of logo and line depending on oddness
+  \if@tubs@oddpage{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+  }{%
+    \setlength{\tmp@posx}{\tubspage@borderwidth}
+  }
+  % calculate and set height
+  \calc@gauss@elementpos{tmpb@calc@bgpos}{8-(#2+#3)+2}
+  \setcounter{tmpb@calc@bgpos}{36-\thetmpb@calc@bgpos}
+  % additional fixment hack because of inverted y orientation
+  \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
+  \addtolength{\tmp@posy}{%
+    -\thetmp@calc@bgpos\tubspage@gaussheight%
+    +\thetubspage@gausssum\tubspage@gaussheight}
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
+    {{\setlength\fboxsep{0mm}\colorbox{#1}{%
+      \parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]%
+        {\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}%
+    }}%
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 % Zähler für das aktuelle y-Segment im Gaußraster, das bearbeitet
 % werden kann, bzw. mit |tubsrow| erzeugt.
 %    \begin{macrocode}
 \newcounter{tubs@yseg@cnt}
 %    \end{macrocode}
+%
 %
 % Die Befehle |\tubs@draw@topline| und |\tubs@draw@tubslogo| dienen zum
 % Schedulen der Darstellung von Logo und Toplinie, um die Hintergrundreihenfolge
@@ -276,8 +318,9 @@
 \newcommand{\tubs@draw@logo}{}
 %    \end{macrocode}
 %
+%
 %    \begin{macro}{\showtopline}
-% Benutzer-Kommand: Ermöglicht das Darstellen einer Linie zwischen
+% Benutzer-Kommando: Ermöglicht das Darstellen einer Linie zwischen
 % Kommunikations- und Absenderbereich.
 % Setzt das Makro |\tubs@draw@topline|.
 %    \begin{macrocode}
@@ -286,8 +329,9 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\showtopline}
-% Ermöglicht das Darstellen des TU-Logos
+% Benutzer-Kommando: Ermöglicht das Darstellen des TU-Logos.
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
 \newcommand{\showtubslogo}[1][left]{\renewcommand{\tubs@draw@tubslogo}{%
@@ -295,8 +339,9 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\showlogo}
-% Ermöglicht das Darstellen des TU-Logos
+% Benutzer-Kommando: Ermöglicht das Darstellen des Initituts-Logos.
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
 \newcommand{\showlogo}[1]{\renewcommand{\tubs@draw@logo}{%
@@ -304,14 +349,28 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
+% Optionen sollen Position des Kommunikationsbereichs und Orientierung
+% des Rasters bestimmen.
+%    \begin{macrocode}
+\define@key{tubsposter}{topdown}[]{%
+  % default
+}
+\define@key{tubsposter}{bottomup}[]{%
+  \setboolean{tubsstyle@bottomup}{true}
+}
+%    \end{macrocode}
+%
+%
 %    \begin{environment}{tubsposter}
 % Erzeugt eine neue Poster-Seite.
-% Steuert die Aufbaureihenfolge des Hintergrundes, in dem die
+% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
 % Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
 % |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
-\newenvironment{tubsposter}{%
+\newenvironment{tubsposter}[1][]{%
+  \setkeys{tubsposter}{#1}
   \sffamily
   \setcounter{tubs@yseg@cnt}{1}
 }{%
@@ -322,9 +381,11 @@
 %    \end{macrocode}
 %    \end{environment}
 %
+%
 % \subsection{Optionen für Umgebung posterrow}
 %
-% Option |bgcolor| zum Setzen der Hintergrundfarbe eines Elements
+%
+% Option |bgcolor| zum Setzen der Hintergrundfarbe eines Elements.
 %    \begin{macrocode}
 \define@key{posterrow}{bgcolor}{%
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
@@ -343,11 +404,24 @@
 \define@key{posterrow}{bgimage}{%
   % TODO
 }
+%    \end{macrocode}
 %
-% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}
+%
+%    \begin{environment}{posterrow}
+% Erzeugt einen neuen Inhalts-Bereich.\\
+% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}\\
+% |options|: Mögliche Optionen,
+% |ysegments|: Anzahl Gauß-Elemente für Höhe.
+% Mögliche Optionen:
+% \begin{description}
+%   \item[|bgcolor|] Hintergrundfarbe
+%   \item[|bgimage|] Hintergrundbild
+% \end{description}
+% Erzeugt eine |tubsbox| mit voller Seitenbreite und angegebener Höhe.
+% Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
+% gestetzten Boxen bzw. ihren Höhen berechnet.
 %    \begin{macrocode}
 \newenvironment{posterrow}[2][]{%
-%   \expandafter\edef\csname @ysegments\thetubs@yseg@cnt\endcsname{#2}
   \def\@current@height{#2}
   \setkeys{posterrow}{#1}
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
@@ -360,10 +434,11 @@
   \endtubsbox
 }
 %    \end{macrocode}
-% 
+%    \end{environment}
+%
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
-% 
+%
 % \Finale
 \endinput
