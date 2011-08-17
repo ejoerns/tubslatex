@@ -123,18 +123,19 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\DeclareOptionX{sender}{%
-  \ifthenelse{\equal{#1}{sender}}{%
+\define@key{tubsbox.sty}{sender}{%
+  \ifthenelse{\equal{#1}{bottom}}{%
     \setboolean{tubsbox@bottomsender}{true}
   }{%
     \setboolean{tubsbox@bottomsender}{false}
   }
 }
+%
 \ProcessOptionsX\relax
 %    \end{macrocode}
 %
-%
 %    \begin{macrocode}
+\newcommand\tubsbox@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \textblockorigin{2\tubspage@borderwidth}{%
@@ -143,6 +144,18 @@
     \textblockorigin{2\tubspage@borderwidth}{%
       \tubspage@senderheight+\tubspage@borderwidth}
   }
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newcommand{\tubsboxsetup}[1][]{%
+  \setkeys{tubsbox.sty}{#1}
+  \tubsbox@setorig
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\tubsboxsetup % call once to init
 %    \end{macrocode}
 %
 % Lege Rastermaße fest.
