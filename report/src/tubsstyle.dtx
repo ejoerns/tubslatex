@@ -38,9 +38,9 @@
 %
 %<*driver>
 \documentclass{ltxdoc}
-\usepackage[ngerman,english]{babel}
+\usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
-\RequirePackage{xkeyval}
+\usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
 \EnableCrossrefs
 \CodelineIndex
@@ -59,7 +59,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{tubsstyle} -- 
-%   background and box definitions for tubslatex\thanks{This document
+%   Hintergrundelemente und Poster-Definitionen für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{tubsstyle}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -67,24 +67,27 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Put text here.
+%   Diese Datei stellt Befehle zur Verfügung, um die Basiselemente des
+%   Corporate-Design im Hintergrund des Seite darzustellen. Dies geschieht
+%   unter Verwendung des Paketes |eso-pic|.
 % \end{abstract}
 %
-% \section{Introduction}
+% \section{Einleitung}
 %
 % Put text here.
 %
-% \section{Usage}
+% \section{Benutzung}
 %
-% \DescribeMacro{\YOURMACRO}
-% Put description of |\YOURMACRO| here.
+% \DescribeMacro{\showtopline}
+% \DescribeMacro{\showtubslogo}
+% \DescribeMacro{\showlogo}
 %
 % \DescribeEnv{YOURENV}
 % Put description of |YOURENV| here.
 %
 % \StopEventually{\PrintIndex}
 %
-% \section{Implementation}
+% \section{Implementierung}
 %
 %    \begin{macrocode}
 %<*class>
@@ -96,7 +99,7 @@
 %    \end{macrocode}
 % 
 %
-% \subsection{Options}
+% \subsection{Optionen}
 % Es werden zur Zeit keine Optionen zur Verfügung gestellt
 %    \begin{macrocode}
 %<*option>
@@ -165,13 +168,13 @@
 %    \end{macro}
 %
 %
+%    \begin{macro}{\tubs@tubslogo}
 % Dieses Kommando fügt das TU-Logo in den Hintergrund ein.
 % Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
 % des Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
 % Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
 % Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
 % entgegengesetzten Papierseite platziert.
-%    \begin{macro}{\tubs@tubslogo}
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo[1][left]{%
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
@@ -323,7 +326,7 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\showtopline}
+%    \begin{macro}{\showtubslogo}
 % Benutzer-Kommando: Ermöglicht das Darstellen des TU-Logos.
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
@@ -343,16 +346,15 @@
 %    \end{macro}
 %
 %
+% \subsection{Poster-Befehle}
+%
 % Optionen sollen Position des Kommunikationsbereichs und Orientierung
 % des Rasters bestimmen.
 %    \begin{macrocode}
-\define@key{tubsposter}{topdown}[]{%
-  % default
-}
 \define@key{tubsposter}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
     \setboolean{tubsstyle@bottomsender}{true}
-    % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
+    % Füge zu Hintergrund-Makro hinzu, sonst funktioniert es nicht!
     \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{true}}
   }{%
     \ifthenelse{\equal{#1}{top}}{%
@@ -408,6 +410,29 @@
 }
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\newcommand{\layout}[2][]{%
+  \setcounter{tubs@yseg@cnt}{1}
+  \setkeys{tubsposter}{#1}
+  #2
+  \tubs@draw@topline
+  \tubs@draw@tubslogo
+  \tubs@draw@logo
+}
+\newcommand{\bgelement}[2][]{
+  \def\@current@height{#2}
+  \setkeys{posterrow}{#1}
+  \addtocounter{tubs@yseg@cnt}{#2}
+}
+\newcommand{\deflayout}[2]{%
+  \expandafter\newcommand\csname @bg@layout@#1\endcsname{%
+    #2
+  }
+}
+\newcommand{\uselayout}[1]{%
+  \layout{\csname @bg@layout@#1\endcsname}
+}
+%    \end{macrocode}
 %
 % Option Hintergrundbild
 %    \begin{macrocode}
