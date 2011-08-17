@@ -99,7 +99,6 @@
 
 \RequirePackage{ifthen}
 \RequirePackage{geometry}
-\RequirePackage[absolute]{textpos}
 \RequirePackage{calc}
 \RequirePackage{xkeyval}
 %    \end{macrocode}
@@ -243,16 +242,10 @@
   \setcounter{tubspage@gausssum}{%
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
   % dimension is a hack..
-  \setlength{\TPHorizModule}{%
-    (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
   \setlength{\tubspage@columnwidth}{%
     (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
-  \setlength{\TPVertModule}{%
-    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \setlength{\tubspage@gaussheight}{%
     (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
-  \textblockorigin{2\tubspage@borderwidth}{%
-    \tubspage@senderheight+\tubspage@borderwidth}
   \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
   \setlength{\tubspage@contentwidth}{%
     \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
@@ -510,106 +503,8 @@
     \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
   }
 }
-
-\newlength{\tubsbox@leftmargin}
-\newlength{\tubsbox@rightmargin}
-\newlength{\tubsbox@leftsep}
-\newlength{\tubsbox@rightsep}
-\newlength{\tubsbox@topmargin}
-\newlength{\tubsbox@toppadding}
-\newlength{\tubsbox@bottommargin}
-\newsavebox{\storebox}
-\newcounter{tubsbox@lastelement}
-\newcounter{tubsbox@calcypos}
-\newcounter{tubsbox@calcheight}
-% params:
-% 1 - color
-% 2 - xpos
-% 3 - ypos
-% 4 - width [1-6]
-% 5 - height [1-6] / [1-8]
-\newenvironment{tubsbox}[5][tuWhite]{%
-% \tubspage@columnsep\tubspage@borderwidth
-% calculate left and right margins and seps
-\ifnum#2=0
-\setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
-\setlength{\tubsbox@rightmargin}{0mm}
-\setlength{\tubsbox@leftsep}{0mm}
-% \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
-\else
-\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
-\fi
-\setcounter{tubsbox@lastelement}{#2}\addtocounter{tubsbox@lastelement}{#4}
-\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
-% \setlength{\tubsbox@leftmargin}{0mm}
-\setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
-% \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
-\setlength{\tubsbox@rightsep}{0mm}
-\else
-% \setlength{\tubsbox@leftmargin}{0mm}
-\setlength{\tubsbox@rightmargin}{0mm}
-\setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
-% \setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
-\fi
-% \fi
-% calculate top and bottom marings and seps
-\ifnum#3=1
-\setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
-\setlength{\tubsbox@toppadding}{3\tubspage@borderwidth}
-\setlength{\tubsbox@bottommargin}{0mm}
-\else
-\setlength{\tubsbox@toppadding}{\tubspage@borderwidth}
-% \addtocounter{tubsbox@lastelement}{#5}\addtocounter{tubsbox@lastelement}{-1}
-\fi
-\setcounter{tubsbox@lastelement}{#3+#5-1}
-\ifnum\value{tubsbox@lastelement}=\tubspage@ysegments
-% \setlength{\tubsbox@topmargin}{0mm}
-\setlength{\tubsbox@bottommargin}{\tubspage@borderwidth}
-\else
-% \setlength{\tubsbox@topmargin}{0mm}
-\setlength{\tubsbox@bottommargin}{0mm}
-\fi
-% \fi
 %
-\def\bgcolor{#1}
-\def\tubsbox@xpos{#2}
-\setcounter{tubsbox@calcypos}{%
-  \value{tubspage@gausssum}-((\tubspage@ysegments+1-#3)*(\tubspage@ysegments-#3+2))/2}
-\def\tubsbox@ypos{\thetubsbox@calcypos}
-% 
-\setcounter{tubsbox@calcheight}{%
-  \value{tubspage@gausssum}-((\tubspage@ysegments+1-#3-#5)*(\tubspage@ysegments-#3-#5+2))/2}
-\addtocounter{tubsbox@calcheight}{%
--\value{tubspage@gausssum}+((\tubspage@ysegments+1-#3)*(\tubspage@ysegments-#3+2))/2}
-% 
-\def\tubsbox@width{#4}
-\def\tubsbox@height{\thetubsbox@calcheight}
-\begin{lrbox}{\storebox}
-\begin{minipage}[t]%
-  [\tubsbox@height\TPVertModule]%
-  {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
-  \vspace*{\tubsbox@toppadding}%
-}{%
-\vspace*{\tubspage@borderwidth}%
-\end{minipage}
-\end{lrbox}
-\setlength{\fboxsep}{0cm}%
-\begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
-\hspace*{\tubsbox@leftsep}%
-\hspace*{-\tubsbox@leftmargin}%
-% \vspace*{\tubsbox@topmargin}%
-\raisebox{\tubspage@borderwidth}[0cm]{%
-% \colorbox{\bgcolor}{%
-\hspace*{\tubsbox@leftmargin}%
-\usebox{\storebox}%
-\hspace*{\tubsbox@rightmargin}%
-% }%
-}%
-\hspace*{\tubsbox@rightsep}%
-\end{textblock}
-}
-
-
+%
 % y segments
 % x
 % border
