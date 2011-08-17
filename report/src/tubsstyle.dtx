@@ -211,7 +211,17 @@
 %    \begin{macrocode}
 \newcommand\tubs@logo[1]{%
   \def\@ragged{\raggedleft}
-  \setlength{\tmp@posy}{2\tubspage@borderwidth+36\tubspage@gaussheight}
+  % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomup)
+  \ifthenelse{\boolean{tubsstyle@bottomup}}{%
+    \setlength{\tmp@posy}{%
+      \paperheight
+      -(2\tubspage@borderwidth+36\tubspage@gaussheight)
+      -(\tubspage@senderheight-2\tubspage@borderwidth)}
+  }{%
+    \setlength{\tmp@posy}{%
+      2\tubspage@borderwidth+36\tubspage@gaussheight}
+  }
+%   \setlength{\tmp@posy}{2\tubspage@borderwidth+36\tubspage@gaussheight}
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
     \ifthenelse{\boolean{tubsstyle@logoright}}{%
@@ -245,31 +255,6 @@
 %    \begin{macrocode}
 \newcounter{tmp@calc@bgpos}
 \newcounter{tmpb@calc@bgpos}
-\newcommand\tubs@backgroundorig[3]{%
-  % calculate and set y pos (origin: lower left corner)
-  \calc@gauss@elementpos{tmp@calc@bgpos}{#2}
-  \setlength{\tmp@posy}{%
-    \tubspage@borderwidth-\thetmp@calc@bgpos\tubspage@gaussheight% pos hack
-  }
-  % calculate x pos of logo and line depending on oddness
-  \if@tubs@oddpage{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
-  }{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth}
-  }
-  % calculate and set height
-  \calc@gauss@elementpos{tmpb@calc@bgpos}{#2+#3}
-  % additional fixment hack because of inverted y orientation
-  \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
-  \addtolength{\tmp@posy}{%
-    -\thetmp@calc@bgpos\tubspage@gaussheight%
-    +\thetubspage@gausssum\tubspage@gaussheight}
-  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
-    {{\setlength\fboxsep{0mm}\colorbox{#1}{%
-      \parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]%
-        {\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}%
-    }}%
-}
 \newcommand\tubs@background[3]{%
   % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
   % |calc@gauss@elementpos| zu übergeben, falls bottomup-Layout gewählt wurde.
