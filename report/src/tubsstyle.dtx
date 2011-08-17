@@ -318,7 +318,7 @@
 % Setzt das Makro |\tubs@draw@topline|.
 %    \begin{macrocode}
 \newcommand{\showtopline}{\renewcommand{\tubs@draw@topline}{%
-  \AddToShipoutPicture{\tubs@topline}}}
+  \AddToShipoutPicture*{\tubs@topline}}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -328,7 +328,7 @@
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
 \newcommand{\showtubslogo}[1][left]{\renewcommand{\tubs@draw@tubslogo}{%
-  \AddToShipoutPicture{\tubs@tubslogo[#1]}}}
+  \AddToShipoutPicture*{\tubs@tubslogo[#1]}}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -338,7 +338,7 @@
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
 \newcommand{\showlogo}[1]{\renewcommand{\tubs@draw@logo}{%
-  \AddToShipoutPicture{\tubs@logo{#1}}}}
+  \AddToShipoutPicture*{\tubs@logo{#1}}}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -386,6 +386,7 @@
   \tubs@draw@topline
   \tubs@draw@tubslogo
   \tubs@draw@logo
+  ~\newpage
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -402,7 +403,7 @@
   \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
   \edef\@arg@III{\@arg@II{\@current@height}}
 
-  \expandafter\AddToShipoutPicture\expandafter{%
+  \expandafter\AddToShipoutPicture\expandafter*\expandafter{%
     \expandafter\tubs@background\@arg@III}
 }
 %    \end{macrocode}
