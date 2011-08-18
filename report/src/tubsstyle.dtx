@@ -130,6 +130,7 @@
 %    \begin{macrocode}
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
 \newboolean{tubsstyle@bottomsender}\setboolean{tubsstyle@bottomsender}{false}
+\newboolean{tubsstyle@singlepage}\setboolean{tubsstyle@singlepage}{false}
 %    \end{macrocode}
 %
 %
@@ -325,7 +326,7 @@
 % Setzt das Makro |\tubs@draw@topline|.
 %    \begin{macrocode}
 \newcommand{\showtopline}{\renewcommand{\tubs@draw@topline}{%
-  \AddToShipoutPicture*{\tubs@topline}}}
+  \g@addto@macro{\@next@shipout}{\tubs@topline}}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -335,7 +336,7 @@
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
 \newcommand{\showtubslogo}[1][left]{\renewcommand{\tubs@draw@tubslogo}{%
-  \AddToShipoutPicture*{\tubs@tubslogo[#1]}}}
+  \g@addto@macro{\@next@shipout}{\tubs@tubslogo[#1]}}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -345,7 +346,7 @@
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
 \newcommand{\showlogo}[1]{\renewcommand{\tubs@draw@logo}{%
-  \AddToShipoutPicture*{\tubs@logo{#1}}}}
+  \g@addto@macro{\@next@shipout}{\tubs@logo{#1}}}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -359,12 +360,12 @@
   \ifthenelse{\equal{#1}{bottom}}{%
     \setboolean{tubsstyle@bottomsender}{true}
     % Füge zu Hintergrund-Makro hinzu, sonst funktioniert es nicht!
-    \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{true}}
+    \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{true}}
   }{%
     \ifthenelse{\equal{#1}{top}}{%
       \setboolean{tubsstyle@bottomsender}{false}
       % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
-      \AddToShipoutPicture{\setboolean{tubsstyle@bottomsender}{false}}
+      \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{false}}
     }{%
       \PackageError{tubsstyle}{%
         Value '#1' unknown for option 'sender'.
@@ -372,6 +373,17 @@
         Allowed values are: top, bottom
       }
     }
+  }
+}
+%    \end{macrocode}
+%
+% Option |pages|
+%    \begin{macrocode}
+\define@key{tubsposter}{pages}[all]{%
+  \ifthenelse{\equal{#1}{single}}{%
+    \setboolean{tubsstyle@singlepage}{true}
+  }{%
+    \setboolean{tubsstyle@singlepage}{false}
   }
 }
 %    \end{macrocode}
@@ -385,6 +397,7 @@
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 \newenvironment{tubsposter}[1][]{%
+  \setkeys{tubsposter}{pages=all,sender=top}
   \setkeys{tubsposter}{#1}
   \sffamily
   \setcounter{tubs@yseg@cnt}{1}
@@ -409,34 +422,65 @@
   \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
   \edef\@arg@III{\@arg@II{\@current@height}}
 
-  \expandafter\AddToShipoutPicture\expandafter*\expandafter{%
+  \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
     \expandafter\tubs@background\@arg@III}
 }
 %    \end{macrocode}
 %
+%    \begin{macro}{\layout}
 %    \begin{macrocode}
 \newcommand{\layout}[2][]{%
+  \def\@next@shipout{}
   \setcounter{tubs@yseg@cnt}{1}
+  \setkeys{tubsposter}{pages=all,sender=top}
   \setkeys{tubsposter}{#1}
   #2
   \tubs@draw@topline
   \tubs@draw@tubslogo
   \tubs@draw@logo
+  \ClearShipoutPicture
+  \ifthenelse{\boolean{tubsstyle@singlepage}}{%
+    \AddToShipoutPicture*{\@next@shipout}
+  }{%
+    \AddToShipoutPicture{\@next@shipout}
+  }
 }
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+%    \begin{macro}{\bgelement}
+%    \begin{macrocode}
 \newcommand{\bgelement}[2][]{
   \def\@current@height{#2}
   \setkeys{posterrow}{#1}
   \addtocounter{tubs@yseg@cnt}{#2}
 }
-\newcommand{\deflayout}[2]{%
-  \expandafter\newcommand\csname @bg@layout@#1\endcsname{%
-    #2
-  }
-}
-\newcommand{\uselayout}[1]{%
-  \layout{\csname @bg@layout@#1\endcsname}
+%    \end{macrocode}
+%    \end{macro}
+%
+% \begin{macro}{\deflayout}
+% Erstellen eines Layouts.
+% Speichert Layout und Optionen unter den Makros
+% |\@bg@layout@options@|\emph{name} und |\@bg@layout@|\emph{name}
+%    \begin{macrocode}
+\newcommand{\deflayout}[3][]{%
+  \expandafter\newcommand\csname @bg@layout@options@#2\endcsname{#1}
+  \expandafter\newcommand\csname @bg@layout@#2\endcsname{#3}
 }
 %    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\uselayout}
+%    \begin{macrocode}
+\newcommand{\uselayout}[1]{%
+  \expandafter\edef\expandafter\@curr@opts\expandafter{%
+    \expandafter\csname @bg@layout@options@#1\endcsname}
+  \def\@key@to@set{tubsposter}
+  \expandafter\layout\expandafter[\@curr@opts]{\csname @bg@layout@#1\endcsname}
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 % Option Hintergrundbild
 %    \begin{macrocode}
