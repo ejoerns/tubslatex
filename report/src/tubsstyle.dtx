@@ -461,6 +461,7 @@
 %    \begin{macrocode}
 \newcommand{\bgelement}[2][]{
   \def\@current@height{#2}
+  \setkeys{posterrow}{imagefit=default}
   \setkeys{posterrow}{#1}
   \addtocounter{tubs@yseg@cnt}{#2}
 }
@@ -468,7 +469,7 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\layout}
+%    \begin{macro}{\laryout}
 % \oarg{options}\marg{layout}
 %    \begin{macrocode}
 \newcommand{\layout}[2][]{%
@@ -565,14 +566,22 @@
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 \newenvironment{tubsposter}[1][]{%
+  \def\@next@shipout{}
+  \setcounter{tubs@yseg@cnt}{1}
   \setkeys{tubsposter}{pages=all,sender=top}
   \setkeys{tubsposter}{#1}
   \sffamily
-  \setcounter{tubs@yseg@cnt}{1}
 }{%
+  % TODO: use \layout?
   \tubs@draw@topline
   \tubs@draw@tubslogo
   \tubs@draw@logo
+  \ClearShipoutPicture
+  \ifthenelse{\boolean{tubsstyle@singlepage}}{%
+    \AddToShipoutPicture*{\@next@shipout}
+  }{%
+    \AddToShipoutPicture{\@next@shipout}
+  }
   ~\newpage
 }
 %    \end{macrocode}
@@ -629,10 +638,16 @@
 % \end{tabularx}
 %
 %    \begin{macrocode}
-\newcommand{\tubstyle@imagefit}{}
+\newcommand{\tubstyle@imagefit}{\relax}
 %
-\define@choicekey{posterrow}{imagefit}[\val\nr]{scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
+\define@choicekey{posterrow}{imagefit}[\val\nr]{default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
+    % default
+%     \PackageWarning{tubsstyle}{%
+%       Option 'imagefit' not set. Using standard value 'cropped'.
+%     }
+    \renewcommand{\tubstyle@imagefit}{cropped}
+  \or
     % scaled
     \renewcommand{\tubstyle@imagefit}{scaled}
   \or
