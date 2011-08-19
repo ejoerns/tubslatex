@@ -42,6 +42,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
+\usepackage{tabularx}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -334,6 +335,7 @@
 %
 %    \begin{macro}{\tubs@background@image}
 %    \begin{macrocode}
+\newlength{\@image@xorig}
 \newlength{\@image@xcalc}
 \newlength{\@image@yorig}
 \newlength{\@image@ycalc}
@@ -348,6 +350,20 @@
         width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}
     }
   }{\ifthenelse{\equal{\tubstyle@imageset}{cropped}}{%
+      % Ermittelt, ob das Bild an den Seiten oder oben und unten beschnitten
+      % werden muss, um in den Darstellungsbereich zu passen
+      % Dazu wird die Höhe des auf korrekte Breite skalierten Bildes
+      % mit der Höhe des Darstellungsbereichs verglichen und entsprechend
+      % eine crop-Option gesetzt.
+      \settoheight{\@image@ycalc}{%
+        \includegraphics*[width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}}
+      \ifthenelse{\lengthtest{\@image@ycalc>\thetmp@calc@bgpos\tubspage@gaussheight}}{%
+        \renewcommand{\tubstyle@imageset}{cropy}
+      }{%
+        \renewcommand{\tubstyle@imageset}{cropx}
+      }
+    }{}
+    \ifthenelse{\equal{\tubstyle@imageset}{cropy}}{%
     % Berechne abzuschneidende Ränder (oben+unten)
     % Dazu wird die Differenz zwischen Darstellungsbereich und Höhe des
     % korrekt auf die Breite skalierten Bildes berechnet und mit dem
@@ -365,7 +381,19 @@
         width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor,
         trim=0pt {\@image@ycalc} 0pt {\@image@ycalc}]{#1}
     }
-  }{%
+    }{\ifthenelse{\equal{\tubstyle@imageset}{cropx}}{%
+      \settowidth{\@image@xorig}{%
+        \includegraphics*{#1}}
+      \settowidth{\@image@xcalc}{%
+        \includegraphics*[height=\thetmp@calc@bgpos\tubspage@gaussheight]{#1}}
+      \setlength{\@image@xcalc}{(\@image@xcalc-(\paperwidth-2\tubspage@borderwidth-\tubspage@bcor))*\ratio{\@image@xorig}{\@image@xcalc}}
+      \setlength{\@image@xcalc}{0.5\@image@xcalc}
+      \def\@img@to@insert{%
+        \includegraphics*[%
+          height=\thetmp@calc@bgpos\tubspage@gaussheight,
+          trim={\@image@xcalc} 0pt {\@image@xcalc} 0pt]{#1}
+      }
+    }{}
   }}
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
     {{%
@@ -581,11 +609,15 @@
 }
 %    \end{macrocode}
 %
+% Option |imageset|: Skalierungsoptionen
+% \begin{tabularx}{\textwidth}{lX}
+%   
+% \end{tabularx}
 %
 %    \begin{macrocode}
 \newcommand{\tubstyle@imageset}{}
 %
-\define@choicekey{posterrow}{imageset}[\val\nr]{scaled,cropped,fitwidth,fitheight}{%
+\define@choicekey{posterrow}{imageset}[\val\nr]{scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
     % scaled
     \renewcommand{\tubstyle@imageset}{scaled}
@@ -593,6 +625,17 @@
     % cropped
     \renewcommand{\tubstyle@imageset}{cropped}
   \or
+    % cropx
+    \renewcommand{\tubstyle@imageset}{cropx}
+  \or
+    % cropy
+    \renewcommand{\tubstyle@imageset}{cropy}
+  \or
+    % fitheight
+    \renewcommand{\tubstyle@imageset}{cropx}
+  \or
+    % fitwidth
+    \renewcommand{\tubstyle@imageset}{cropy}
   \fi
 }
 %    \end{macrocode}
