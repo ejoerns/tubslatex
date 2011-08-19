@@ -455,150 +455,14 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\bgelement}
-% \oarg{options}\marg{height}\par
-% Hintergrund-Element,
-%    \begin{macrocode}
-\newcommand{\bgelement}[2][]{
-  \def\@current@height{#2}
-  \setkeys{posterrow}{imagefit=default}
-  \setkeys{posterrow}{#1}
-  \addtocounter{tubs@yseg@cnt}{#2}
-}
-%    \end{macrocode}
-%    \end{macro}
-%
-%
-%    \begin{macro}{\laryout}
-% \oarg{options}\marg{layout}
-%    \begin{macrocode}
-\newcommand{\layout}[2][]{%
-  \def\@next@shipout{}
-  \setcounter{tubs@yseg@cnt}{1}
-  \setkeys{tubsposter}{pages=all,sender=top}
-  \setkeys{tubsposter}{#1}
-  #2
-  \tubs@draw@topline
-  \tubs@draw@tubslogo
-  \tubs@draw@logo
-  \ClearShipoutPicture
-  \ifthenelse{\boolean{tubsstyle@singlepage}}{%
-    \AddToShipoutPicture*{\@next@shipout}
-  }{%
-    \AddToShipoutPicture{\@next@shipout}
-  }
-}
-%    \end{macrocode}
-%    \end{macro}
-%
-%
-
-%
-% \begin{macro}{\deflayout}
-% \oarg{options}\marg{name}\marg{layout}\par
-% Erstellen eines Layouts.
-% Speichert Layout und Optionen unter den Makros
-% |\@bg@layout@options@|\emph{name} und |\@bg@layout@|\emph{name}
-%    \begin{macrocode}
-\newcommand{\deflayout}[3][]{%
-  \expandafter\newcommand\csname @bg@layout@options@#2\endcsname{#1}
-  \expandafter\newcommand\csname @bg@layout@#2\endcsname{#3}
-}
-%    \end{macrocode}
-%    \end{macro}
-%
-%    \begin{macro}{\uselayout}
-% \marg{name}\par
-%    \begin{macrocode}
-\newcommand{\uselayout}[1]{%
-  \expandafter\edef\expandafter\@curr@opts\expandafter{%
-    \expandafter\csname @bg@layout@options@#1\endcsname}
-  \def\@key@to@set{tubsposter}
-  \expandafter\layout\expandafter[\@curr@opts]{\csname @bg@layout@#1\endcsname}
-}
-%    \end{macrocode}
-%    \end{macro}
-%
-%
-% \subsection{Poster-Befehle}
-%
-% Optionen sollen Position des Kommunikationsbereichs und Orientierung
-% des Rasters bestimmen.
-%    \begin{macrocode}
-\define@key{tubsposter}{sender}{%
-  \ifthenelse{\equal{#1}{bottom}}{%
-    \setboolean{tubsstyle@bottomsender}{true}
-    % Füge zu Hintergrund-Makro hinzu, sonst funktioniert es nicht!
-    \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{true}}
-  }{%
-    \ifthenelse{\equal{#1}{top}}{%
-      \setboolean{tubsstyle@bottomsender}{false}
-      % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
-      \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{false}}
-    }{%
-      \PackageError{tubsstyle}{%
-        Value '#1' unknown for option 'sender'.
-      }{%
-        Allowed values are: top, bottom
-      }
-    }
-  }
-}
-%    \end{macrocode}
-%
-% Option |pages|
-%    \begin{macrocode}
-\define@key{tubsposter}{pages}[all]{%
-  \ifthenelse{\equal{#1}{single}}{%
-    \setboolean{tubsstyle@singlepage}{true}
-  }{%
-    \setboolean{tubsstyle@singlepage}{false}
-  }
-}
-%    \end{macrocode}
-%
-%
-%    \begin{environment}{tubsposter}
-% Erzeugt eine neue Poster-Seite.
-% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
-% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
-% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
-% sind, zuletzt in den Hintergrund gezeichnet werden.
-%    \begin{macrocode}
-\newenvironment{tubsposter}[1][]{%
-  \def\@next@shipout{}
-  \setcounter{tubs@yseg@cnt}{1}
-  \setkeys{tubsposter}{pages=all,sender=top}
-  \setkeys{tubsposter}{#1}
-  \sffamily
-}{%
-  % TODO: use \layout?
-  \tubs@draw@topline
-  \tubs@draw@tubslogo
-  \tubs@draw@logo
-  \ClearShipoutPicture
-  \ifthenelse{\boolean{tubsstyle@singlepage}}{%
-    \AddToShipoutPicture*{\@next@shipout}
-  }{%
-    \AddToShipoutPicture{\@next@shipout}
-  }
-  ~\newpage
-}
-%    \end{macrocode}
-%    \end{environment}
-%
-%
 % \subsection{Optionen für Umgebung posterrow}
 %
 %
 % Option |bgcolor| zum Setzen der Hintergrundfarbe eines Elements.
 %    \begin{macrocode}
-\define@key{posterrow}{bgcolor}{%
+\define@key{bgelement}{bgcolor}{%
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  \edef\@arg@I{{#1}}
-  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
-  \edef\@arg@III{\@arg@II{\@current@height}}
-
+  \edef\@arg@III{{#1}{\thetubs@yseg@cnt}{\@current@height}}
   \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
     \expandafter\tubs@background@colored\@arg@III}
 }
@@ -607,12 +471,9 @@
 %
 % Option Hintergrundbild
 %    \begin{macrocode}
-\define@key{posterrow}{bgimage}{%
+\define@key{bgelement}{bgimage}{%
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  \edef\@arg@I{{#1}}
-  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}}
-  \edef\@arg@III{\@arg@II{\@current@height}}
-
+  \edef\@arg@III{{#1}{\thetubs@yseg@cnt}{\@current@height}}
   \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
     \expandafter\tubs@background@image\@arg@III}
 }
@@ -640,7 +501,7 @@
 %    \begin{macrocode}
 \newcommand{\tubstyle@imagefit}{\relax}
 %
-\define@choicekey{posterrow}{imagefit}[\val\nr]{default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
+\define@choicekey{bgelement}{imagefit}[\val\nr]{default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
     % default
 %     \PackageWarning{tubsstyle}{%
@@ -670,6 +531,150 @@
 %    \end{macrocode}
 %
 %
+%    \begin{macro}{\bgelement}
+% \oarg{options}\marg{height}\par
+% Hintergrund-Element,
+%    \begin{macrocode}
+\newcommand{\bgelement}[2][]{
+  \def\@current@height{#2}
+  \setkeys{bgelement}{imagefit=default}
+  \setkeys{bgelement}{#1}
+  \addtocounter{tubs@yseg@cnt}{#2}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+% Optionen sollen Position des Kommunikationsbereichs und Orientierung
+% des Rasters bestimmen.
+%    \begin{macrocode}
+\define@key{layout}{sender}{%
+  \ifthenelse{\equal{#1}{bottom}}{%
+    \setboolean{tubsstyle@bottomsender}{true}
+    % Füge zu Hintergrund-Makro hinzu, sonst funktioniert es nicht!
+    \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{true}}
+  }{%
+    \ifthenelse{\equal{#1}{top}}{%
+      \setboolean{tubsstyle@bottomsender}{false}
+      % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
+      \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{false}}
+    }{%
+      \PackageError{tubsstyle}{%
+        Value '#1' unknown for option 'sender'.
+      }{%
+        Allowed values are: top, bottom
+      }
+    }
+  }
+}
+%    \end{macrocode}
+%
+% Option |pages|
+%    \begin{macrocode}
+\define@key{layout}{pages}[all]{%
+  \ifthenelse{\equal{#1}{single}}{%
+    \setboolean{tubsstyle@singlepage}{true}
+  }{%
+    \setboolean{tubsstyle@singlepage}{false}
+  }
+}
+%    \end{macrocode}
+%
+%
+%    \begin{macro}{\@layout@pre}
+% Layout-Voreinstellungen, Optionen, etc.
+%    \begin{macrocode}
+\newcommand{\@layout@pre}[1]{%
+  \def\@next@shipout{}
+  \setcounter{tubs@yseg@cnt}{1}
+  \setkeys{layout}{pages=all,sender=top}
+  \setkeys{layout}{#1}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\@layout@post}
+% Layout-Postprocessing, Setzen des Bildes, Zusicherung der Reihenfolge
+%    \begin{macrocode}
+\newcommand{\@layout@post}{%
+  \tubs@draw@topline
+  \tubs@draw@tubslogo
+  \tubs@draw@logo
+  \ClearShipoutPicture
+  \ifthenelse{\boolean{tubsstyle@singlepage}}{%
+    \AddToShipoutPicture*{\@next@shipout}
+  }{%
+    \AddToShipoutPicture{\@next@shipout}
+  }
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\layout}
+% \oarg{options}\marg{layout}
+% Legt das darzustellende Layout mit den übergebenen Optionen (|options|)
+% und dem übergebenem Inhalt (|layout|) fest.
+%    \begin{macrocode}
+\newcommand{\layout}[2][]{%
+  \@layout@pre{#1}
+  #2
+  \@layout@post
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+% \begin{macro}{\deflayout}
+% \oarg{options}\marg{name}\marg{layout}\par
+% Erstellt ein neues Layouts.
+% Layout und Optionen werden unter den Makros
+% |\@bg@layout@options@|\emph{name} und |\@bg@layout@|\emph{name}
+% gespeichert.
+%    \begin{macrocode}
+\newcommand{\deflayout}[3][]{%
+  \expandafter\newcommand\csname @bg@layout@options@#2\endcsname{#1}
+  \expandafter\newcommand\csname @bg@layout@#2\endcsname{#3}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\uselayout}
+% \marg{name}\par
+% Benutzung von vordefinierten Layouts.
+% Führt |\layout| mit den unter dem Layoutnamen und dem Präfix
+% |\@bg@layout@options@| bzw. |\@bg@layout@| gespeicherten Optionen
+% und Layout-Definitionen aus.
+%    \begin{macrocode}
+\newcommand{\uselayout}[1]{%
+  \expandafter\edef\expandafter\@curr@opts\expandafter{%
+    \expandafter\csname @bg@layout@options@#1\endcsname}
+  \expandafter\layout\expandafter[\@curr@opts]{\csname @bg@layout@#1\endcsname}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+% \subsection{Poster-Befehle}
+%
+%
+%    \begin{environment}{tubsposter}
+% Erzeugt eine neue Poster-Seite.
+% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
+% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
+% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
+% sind, zuletzt in den Hintergrund gezeichnet werden.
+%    \begin{macrocode}
+\newenvironment{tubsposter}[1][]{%
+  \@layout@pre{#1}
+  \sffamily
+}{%
+  \@layout@post
+  ~\newpage
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%
 %    \begin{environment}{posterrow}
 % Erzeugt einen neuen Inhalts-Bereich.\\
 % Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}\\
@@ -682,15 +687,12 @@
 % \end{description}
 % Erzeugt eine |tubsbox| mit voller Seitenbreite und angegebener Höhe.
 % Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
-% gestetzten Boxen bzw. ihren Höhen berechnet.
+% gesetzten Boxen bzw. ihren Höhen berechnet.
 %    \begin{macrocode}
 \newenvironment{posterrow}[2][]{%
-  \def\@current@height{#2}
-  \setkeys{posterrow}{#1}
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  \edef\@arg@I{{0}}
-  \edef\@arg@II{\@arg@I{\thetubs@yseg@cnt}{6}{#2}}
-  \addtocounter{tubs@yseg@cnt}{#2}
+  \edef\@arg@II{{0}{\thetubs@yseg@cnt}{6}{#2}}
+  \bgelement[#1]{#2}
   % Erzeuge tubsbox
   \expandafter\tubsbox\@arg@II
 }{%
