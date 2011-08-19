@@ -334,10 +334,42 @@
 %
 %    \begin{macro}{\tubs@background@image}
 %    \begin{macrocode}
+\newlength{\@image@xcalc}
+\newlength{\@image@yorig}
+\newlength{\@image@ycalc}
+%
 \newcommand\tubs@background@image[3]{%
+  \def\@img@to@insert{}
   \tubs@background{#1}{#2}{#3}
+  \ifthenelse{\equal{\tubstyle@imageset}{scaled}}{%
+    \def\@img@to@insert{%
+      \includegraphics*[%
+        height=\thetmp@calc@bgpos\tubspage@gaussheight,
+        width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}
+    }
+  }{\ifthenelse{\equal{\tubstyle@imageset}{cropped}}{%
+    % Berechne abzuschneidende Ränder (oben+unten)
+    % Dazu wird die Differenz zwischen Darstellungsbereich und Höhe des
+    % korrekt auf die Breite skalierten Bildes berechnet und mit dem
+    % ermittelten Skalierungsfaktor multipliziert, sowie durch 2 geteilt.
+    % Das Ergebnis wir dann einmal am oberen und einmal am unteren Teil
+    % des (Original-)Bildes mit Hilfe der 'trim'-Option abgeschnitten.
+    \settoheight{\@image@yorig}{%
+      \includegraphics*{#1}}
+    \settoheight{\@image@ycalc}{%
+      \includegraphics*[width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}}
+    \setlength{\@image@ycalc}{(\@image@ycalc-(\thetmp@calc@bgpos\tubspage@gaussheight))*\ratio{\@image@yorig}{\@image@ycalc}}
+    \setlength{\@image@ycalc}{0.5\@image@ycalc}
+    \def\@img@to@insert{%
+      \includegraphics*[%
+        width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor,
+        trim=0pt {\@image@ycalc} 0pt {\@image@ycalc}]{#1}
+    }
+  }{%
+  }}
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
-    {{\includegraphics*[height=\thetmp@calc@bgpos\tubspage@gaussheight,width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}
+    {{%
+      \@img@to@insert
     }}%
 }
 %    \end{macrocode}
@@ -546,6 +578,22 @@
 
   \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
     \expandafter\tubs@background@image\@arg@III}
+}
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+\newcommand{\tubstyle@imageset}{}
+%
+\define@choicekey{posterrow}{imageset}[\val\nr]{scaled,cropped,fitwidth,fitheight}{%
+  \ifcase\nr\relax
+    % scaled
+    \renewcommand{\tubstyle@imageset}{scaled}
+  \or
+    % cropped
+    \renewcommand{\tubstyle@imageset}{cropped}
+  \or
+  \fi
 }
 %    \end{macrocode}
 %
