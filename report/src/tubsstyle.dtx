@@ -343,13 +343,13 @@
 \newcommand\tubs@background@image[3]{%
   \def\@img@to@insert{}
   \tubs@background{#1}{#2}{#3}
-  \ifthenelse{\equal{\tubstyle@imageset}{scaled}}{%
+  \ifthenelse{\equal{\tubstyle@imagefit}{scaled}}{%
     \def\@img@to@insert{%
       \includegraphics*[%
         height=\thetmp@calc@bgpos\tubspage@gaussheight,
         width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}
     }
-  }{\ifthenelse{\equal{\tubstyle@imageset}{cropped}}{%
+  }{\ifthenelse{\equal{\tubstyle@imagefit}{cropped}}{%
       % Ermittelt, ob das Bild an den Seiten oder oben und unten beschnitten
       % werden muss, um in den Darstellungsbereich zu passen
       % Dazu wird die Höhe des auf korrekte Breite skalierten Bildes
@@ -358,12 +358,12 @@
       \settoheight{\@image@ycalc}{%
         \includegraphics*[width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}}
       \ifthenelse{\lengthtest{\@image@ycalc>\thetmp@calc@bgpos\tubspage@gaussheight}}{%
-        \renewcommand{\tubstyle@imageset}{cropy}
+        \renewcommand{\tubstyle@imagefit}{cropy}
       }{%
-        \renewcommand{\tubstyle@imageset}{cropx}
+        \renewcommand{\tubstyle@imagefit}{cropx}
       }
     }{}
-    \ifthenelse{\equal{\tubstyle@imageset}{cropy}}{%
+    \ifthenelse{\equal{\tubstyle@imagefit}{cropy}}{%
     % Berechne abzuschneidende Ränder (oben+unten)
     % Dazu wird die Differenz zwischen Darstellungsbereich und Höhe des
     % korrekt auf die Breite skalierten Bildes berechnet und mit dem
@@ -381,7 +381,7 @@
         width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor,
         trim=0pt {\@image@ycalc} 0pt {\@image@ycalc}]{#1}
     }
-    }{\ifthenelse{\equal{\tubstyle@imageset}{cropx}}{%
+    }{\ifthenelse{\equal{\tubstyle@imagefit}{cropx}}{%
       \settowidth{\@image@xorig}{%
         \includegraphics*{#1}}
       \settowidth{\@image@xcalc}{%
@@ -609,33 +609,47 @@
 }
 %    \end{macrocode}
 %
-% Option |imageset|: Skalierungsoptionen
+% Option |imagefit|: Skalierungsoptionen
+%
 % \begin{tabularx}{\textwidth}{lX}
-%   
+%   |scaled|  & Das Bild wird sowohl horizontal als auch vertikal so skaliert,
+%               dass es in den vorgegebenen Bereich passt.
+%               Da dabei das Seitenverhältnis nicht berücksichtigt wird, kann
+%               es zu starken Verzerrungen führen und sollte daher nur für
+%               Bilder eingesetz werden, deren Seitenverhältnis in etwa dem des
+%               Darstellungsbereichs entspricht.\\
+%   |cropped| & Das Bild wird so in den Darstellungsbereich eingepasst, dass
+%               es entweder horizontal oder vertikal passend skaliert wird
+%               und in anderer Richtng (vertikal/horizontal) auf den Bereich
+%               zugeschnitten wird. \\
+%   |cropy|   & Ähnlich wie |cropped|, nur dass das Bild auf jeden Fall
+%               horizontal skaliert und vertikal beschnitten wird.  \\
+%   |cropx|   & Wie |cropx|, nur dass das Bild vertikal skaliert und horizontal
+%               beschnitten wird.
 % \end{tabularx}
 %
 %    \begin{macrocode}
-\newcommand{\tubstyle@imageset}{}
+\newcommand{\tubstyle@imagefit}{}
 %
-\define@choicekey{posterrow}{imageset}[\val\nr]{scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
+\define@choicekey{posterrow}{imagefit}[\val\nr]{scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
     % scaled
-    \renewcommand{\tubstyle@imageset}{scaled}
+    \renewcommand{\tubstyle@imagefit}{scaled}
   \or
     % cropped
-    \renewcommand{\tubstyle@imageset}{cropped}
+    \renewcommand{\tubstyle@imagefit}{cropped}
   \or
     % cropx
-    \renewcommand{\tubstyle@imageset}{cropx}
+    \renewcommand{\tubstyle@imagefit}{cropx}
   \or
     % cropy
-    \renewcommand{\tubstyle@imageset}{cropy}
+    \renewcommand{\tubstyle@imagefit}{cropy}
   \or
     % fitheight
-    \renewcommand{\tubstyle@imageset}{cropx}
+    \renewcommand{\tubstyle@imagefit}{cropx}
   \or
     % fitwidth
-    \renewcommand{\tubstyle@imageset}{cropy}
+    \renewcommand{\tubstyle@imagefit}{cropy}
   \fi
 }
 %    \end{macrocode}
