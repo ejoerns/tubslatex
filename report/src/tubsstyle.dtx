@@ -593,6 +593,21 @@
 }
 %    \end{macrocode}
 %
+% Option |bgcolor|.
+% Mit dieser Optione kann der komplette Kommunikationsbereich mit einer
+% gewünschten Hintergrundfarbe gefüllt werden. Wird kein Wert mit übergeben,
+% so wird die Farbe tuBlueLight benutzt.
+%    \begin{macrocode}
+\define@key{layout}{bgcolor}[tuBlueLight]{%
+  \g@addto@macro{\@next@shipout}{%
+  \put(0,0)%
+    {{\setlength\fboxsep{0mm}\colorbox{#1}{%
+      \parbox[b][\paperheight-\tubspage@senderheight]%
+        {\paperwidth}{~}}%
+    }}%
+  }
+}
+%    \end{macrocode}
 %
 %    \begin{macro}{\@layout@pre}
 % Layout-Voreinstellungen, Optionen, etc.
