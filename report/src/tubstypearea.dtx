@@ -39,7 +39,7 @@
 \documentclass{ltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
-\RequirePackage{xkeyval}
+\usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
 \EnableCrossrefs
 \CodelineIndex
@@ -125,7 +125,7 @@
 \newlength{\tubspage@bcor}
 %    \end{macrocode}
 %
-% width of outer white border
+% Breite des äußeren weißen Randes.
 %    \begin{macrocode}
 \newlength{\tubspage@borderwidth}
 %    \end{macrocode}
@@ -136,7 +136,7 @@
 \newlength{\tubspage@senderheight}
 %    \end{macrocode}
 %
-% senderheight without borders
+% Absenderhöhe, abzüglich Ränder.
 %    \begin{macrocode}
 \newlength{\tubspage@headheight}
 %    \end{macrocode}
@@ -150,50 +150,57 @@
 \newlength{\tubspage@communicationheight}
 %    \end{macrocode}
 %
-% width of area
+% Breite des Inhaltsbereichs. Entspricht Papierbreite abzüglich Ränder (2) und
+% Bindungskorrektur.
 %    \begin{macrocode}
 \newlength{\tubspage@contentwidth}
 %    \end{macrocode}
 %
-% Nr of horizontal segments for box layout
+% Anzahl horizontaler Elemente für Spalten-Layout.
 %    \begin{macrocode}
 \def\tubspage@xsegments{6}
 %    \end{macrocode}
 %
-% Nr of vertical segments for gaussian layout system
+% Anzahl vertikaler Elemente für Gauß-Layout.
 %    \begin{macrocode}
 \def\tubspage@ysegments{8}
 %    \end{macrocode}
 %
-% Counter to store the gaussian sum of |\tubspage@ysegments|
+% Zähler, um die Gauß-Summe des Zählers |\tubspage@ysegments| zu Speichern.
 %    \begin{macrocode}
 \newcounter{tubspage@gausssum}
 %    \end{macrocode}
 %
-% space between boxes (columns) in layout. It is independent from papersize
+% Platz zwischen Spalten im Spalten-Layout.
+% Dieser ist unabhängig von der verwendeten Papiergröße
 %    \begin{macrocode}
 \newlength{\tubspage@columnsep}
 %    \end{macrocode}
 %
-% height of a single gauss element for vertical layout
+% Höhe des kleinsten Elementes im Gaußlayout (Ausgangswert für alle Elemente).
 %    \begin{macrocode}
 \newlength{\tubspage@gaussheight}
 %    \end{macrocode}
 %
+% Breite einer Spalte im Spaltenlayout.
 %    \begin{macrocode}
 \newlength{\tubspage@columnwidth}
 %    \end{macrocode}
 %
+% Merker für Option |twosided|.
+% Wird \emph{true} gesetzt, wenn Option gewählt wurde.
 %    \begin{macrocode}
 \newboolean{tubspage@twosided}\setboolean{tubspage@twosided}{false}
 %    \end{macrocode}
 %
+% Merker Für Option |sender|.
+% Wird gesetzt, wenn Optionswert \emph{bottom} gesetzt wurde.
 %    \begin{macrocode}
 \newboolean{tubspage@bottomsender}\setboolean{tubspage@bottomsender}{false}
 %    \end{macrocode}
 %
 % Makro zur Speicherung des ausgewählten Papierformats.
-% Standardwert: |anypaper|
+% Standardwert: |anypaper|.
 %    \begin{macrocode}
 \def\tubspage@paper{anypaper}
 %    \end{macrocode}
@@ -318,23 +325,33 @@
 \DeclareOptionX{a3paper}{%
   \def\tubspage@paper{a3paper}
 }
+%    \end{macrocode}
 % A4
+%    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
   \def\tubspage@paper{a4paper}
 }
+%    \end{macrocode}
 % A5
+%    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
   \def\tubspage@paper{a5paper}
 }
+%    \end{macrocode}
 % A6
+%    \begin{macrocode}
 \DeclareOptionX{a6paper}{%
   \def\tubspage@paper{a6paper}
 }
+%    \end{macrocode}
 % any
+%    \begin{macrocode}
 \DeclareOptionX{anypaper}{%
   \def\tubspage@paper{anypaper}
 }
+%    \end{macrocode}
 %%%
+%    \begin{macrocode}
 \DeclareOptionX{bcor}{%
   \setlength{\tubspage@bcor}{#1}
 }
@@ -358,8 +375,7 @@
   \setboolean{tubspage@bottomsender}{true}
 }
 %
-% \ExecuteOptions{anypaper}
-% \ProcessOptions\relax
+% \ExecuteOptionsX{anypaper}
 \ProcessOptionsX\relax
 
 
@@ -369,6 +385,9 @@
 %
 %
 %    \begin{macro}{\tubspage@process@paper}
+% Setzt die Ränderbreiten und Absender- bzw. Kommunikationsbereichshöhen
+% abhängig vom gewählten Papierformat (unter Beachtung, ob \emph{landscape}
+% gewählt wurde).
 %    \begin{macrocode}
 \newcommand{\tubspage@process@paper}{%
   \ifthenelse{\equal{\tubspage@paper}{anypaper}}{%
@@ -466,33 +485,32 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% Führe initial alle nötigen Berechnungen durch.
 %    \begin{macrocode}
 \tubspage@process@paper
 \tubspage@modifications
 \tubspage@calclayout
 %    \end{macrocode}
 %
-% calculates gaussum and returns as plain number
-% parameters:
-% 1 - counter to set
-% 2 - value to calc sum of
+%    \begin{macro}{\calc@gaussum}
+% \marg{counter}\marg{value}\par
+% Berechnet die Gauß-Summe des übergebenen Wertes \emph{value}
+% und speichert das Ergebnis im übergebenen Zähler \emph{counter}.
 %    \begin{macrocode}
 \newcommand{\calc@gaussum}[2]{%
 \setcounter{#1}{%
   (#2*(#2+1))/2}%
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %
-% This makro allows to calculate the gauss sum for segments for current setup
-% counting is done top down
-% input is the element that should be setted
-% output is the number of element that have to be skipped before
-% Thus parameter 3 should result in output 15 with 8 segments
-% Syntax: |\tmp@calc|\oarg{??}\marg{counter}\marg{segment}
-% 1 (opt) - inverted: calculate for bottom up layout
-% 2       - counter to store result in
-% 3       - segment number (counted 1 to 8)
+%    \begin{macro}{\calc@gauss@elementpos}
+% \oarg{invert}\marg{counter}\marg{segment}\par
+% Berechnet die Gaußssumme für Segmente für die aktuellen Einstellungen.
+% Es wird von Oben nach unten gezählt.
+% Ausgabe ist die Anzhal der Elemente, die ausgelassen werden müssen.
+% Thus parameter 3 should result in output 15 with 8 segments.
 %    \begin{macrocode}
 \newcounter{tmp@calc}
 \newcommand{\calc@gauss@elementpos}[3][]{%
@@ -507,21 +525,15 @@
     \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
   }
 }
+%    \end{macrocode}
+%    \end{macro}
 %
-%
-% y segments
-% x
-% border
-% senderheight
-% communicationheight
-
 % portrait:
 %   senderheight = 1/7 paperheight
 % landscape:
 %   senderheight = 1/5 paperheight
-
+%
 % missing formats can be added by simple style file...
-%    \end{macrocode}
 %
 %    \begin{macrocode}
 %</package>
