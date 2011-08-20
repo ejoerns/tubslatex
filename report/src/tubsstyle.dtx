@@ -283,11 +283,12 @@
 %
 %    \begin{macro}{\tubs@background}
 % \marg{color}\marg{first}\marg{height}\par
+% Berechnet Längen für die Positionierung eines Hintergrundelementes vor.
 % first: Erstes Element (von oben nach unten), height: Anzahl Elemente
 %    \begin{macrocode}
 \newcounter{tmp@calc@bgpos}
 \newcounter{tmpb@calc@bgpos}
-\newcommand\tubs@background[3]{%
+\newcommand\tubs@background[2]{%
   % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
   % |calc@gauss@elementpos| zu übergeben, falls bottomsender-Layout gewählt wurde.
   \def\@inv@arg{\relax}
@@ -295,7 +296,7 @@
     \def\@inv@arg{inverted}%
   }{}
   % calculate and set y pos (origin: lower left corner)
-  \calc@gauss@elementpos[\@inv@arg]{tmp@calc@bgpos}{#2}
+  \calc@gauss@elementpos[\@inv@arg]{tmp@calc@bgpos}{#1}
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
       \tubspage@senderheight-\thetmp@calc@bgpos\tubspage@gaussheight}% pos hack
@@ -310,7 +311,7 @@
     \setlength{\tmp@posx}{\tubspage@borderwidth}
   }
   % calculate and set height
-  \calc@gauss@elementpos[\@inv@arg]{tmpb@calc@bgpos}{#2+#3}
+  \calc@gauss@elementpos[\@inv@arg]{tmpb@calc@bgpos}{#1+#2}
   % additional fixment hack because of inverted y orientation
   \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
   \addtolength{\tmp@posy}{%
@@ -321,9 +322,10 @@
 %    \end{macro}
 %
 %    \begin{macro}{\tubs@background@colored}
+% Fügt ein farbiges Hintergrund-Element im Gaußraster ein.
 %    \begin{macrocode}
 \newcommand\tubs@background@colored[3]{%
-  \tubs@background{#1}{#2}{#3}
+  \tubs@background{#2}{#3}
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
     {{\setlength\fboxsep{0mm}\colorbox{#1}{%
       \parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]%
@@ -334,6 +336,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\tubs@background@image}
+% Fügt ein Bild-Hintergrund-Element im Gaußraster ein.
 %    \begin{macrocode}
 \newlength{\@image@xorig}
 \newlength{\@image@xcalc}
@@ -342,7 +345,7 @@
 %
 \newcommand\tubs@background@image[3]{%
   \def\@img@to@insert{}
-  \tubs@background{#1}{#2}{#3}
+  \tubs@background{#2}{#3}
   \ifthenelse{\equal{\tubstyle@imagefit}{scaled}}{%
     \def\@img@to@insert{%
       \includegraphics*[%
@@ -458,13 +461,17 @@
 % \subsection{Optionen für Umgebung posterrow}
 %
 %
+%    \begin{macrocode}
+\def\tubs@bg@cmd{}% Kommando, dass für Erstellung des Hintergrundes verwendet wird
+\newcommand{\tubstyle@imagefit}{\relax}
+%    \end{macrocode}
+%
 % Option |bgcolor| zum Setzen der Hintergrundfarbe eines Elements.
 %    \begin{macrocode}
 \define@key{bgelement}{bgcolor}{%
-  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  \edef\@arg@III{{#1}{\thetubs@yseg@cnt}{\@current@height}}
-  \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
-    \expandafter\tubs@background@colored\@arg@III}
+  \edef\tubs@bg@cmd@args{{#1}{\thetubs@yseg@cnt}{\@current@height}}
+  \expandafter\def\expandafter\tubs@bg@cmd\expandafter{%
+    \expandafter\tubs@background@colored\tubs@bg@cmd@args}
 }
 %    \end{macrocode}
 %
@@ -472,10 +479,9 @@
 % Option Hintergrundbild
 %    \begin{macrocode}
 \define@key{bgelement}{bgimage}{%
-  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  \edef\@arg@III{{#1}{\thetubs@yseg@cnt}{\@current@height}}
-  \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
-    \expandafter\tubs@background@image\@arg@III}
+  \edef\tubs@bg@cmd@args{{#1}{\thetubs@yseg@cnt}{\@current@height}}
+  \expandafter\def\expandafter\tubs@bg@cmd\expandafter{%
+    \expandafter\tubs@background@image\tubs@bg@cmd@args}
 }
 %    \end{macrocode}
 %
@@ -499,7 +505,6 @@
 % \end{tabularx}
 %
 %    \begin{macrocode}
-\newcommand{\tubstyle@imagefit}{\relax}
 %
 \define@choicekey{bgelement}{imagefit}[\val\nr]{default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
@@ -539,6 +544,12 @@
   \def\@current@height{#2}
   \setkeys{bgelement}{imagefit=default}
   \setkeys{bgelement}{#1}
+  % Führt das gespeicherte Hintergrund-Kommando mit den gespeicherten Argumenten aus.
+  \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
+    \expandafter\renewcommand\expandafter\tubstyle@imagefit\expandafter{%
+      \tubstyle@imagefit}}
+  \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
+    \tubs@bg@cmd}
   \addtocounter{tubs@yseg@cnt}{#2}
 }
 %    \end{macrocode}
@@ -569,7 +580,9 @@
 }
 %    \end{macrocode}
 %
-% Option |pages|
+% Option |pages|, legt fest auf welchen Seiten das definierte Layout zu sehen
+% sein soll. Mögliche Werte sind |all| für alle folgenden Seiten oder |single|
+% für Darstellung nur auf der aktuellen Seite.
 %    \begin{macrocode}
 \define@key{layout}{pages}[all]{%
   \ifthenelse{\equal{#1}{single}}{%
