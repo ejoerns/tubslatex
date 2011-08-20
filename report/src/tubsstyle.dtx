@@ -398,10 +398,7 @@
       }
     }{}
   }}
-  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
-    {{%
-      \@img@to@insert
-    }}%
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\@img@to@insert}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -460,9 +457,12 @@
 %
 % \subsection{Optionen für Umgebung posterrow}
 %
-%
+% Speicher fuer den Befehl zu Erstellung des Hintergrundes
 %    \begin{macrocode}
-\def\tubs@bg@cmd{}% Kommando, dass für Erstellung des Hintergrundes verwendet wird
+\def\tubs@bg@cmd{}
+%    \end{macrocode}
+% Speicher fuer die imagefit-Option
+%    \begin{macrocode}
 \newcommand{\tubstyle@imagefit}{\relax}
 %    \end{macrocode}
 %
@@ -607,7 +607,9 @@
 %    \end{macro}
 %
 %    \begin{macro}{\@layout@post}
-% Layout-Postprocessing, Setzen des Bildes, Zusicherung der Reihenfolge
+% Layout-Postprocessing, Setzen des Bildes, Zusicherung der Reihenfolge.
+% Die unter dem Makro |\@next@shipout| gespeicherten Kommandos für den
+% Aufbau des Hintergrundbildes werden in ein neues ShipoutPicture geschrieben.
 %    \begin{macrocode}
 \newcommand{\@layout@post}{%
   \tubs@draw@topline
@@ -704,10 +706,15 @@
 %    \begin{macrocode}
 \newenvironment{posterrow}[2][]{%
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  \edef\@arg@II{{0}{\thetubs@yseg@cnt}{6}{#2}}
+  % TODO...
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+    \edef\@tubs@arg{[sender=bottom]{0}{\thetubs@yseg@cnt}{6}{#2}}
+  }{%
+    \edef\@tubs@arg{{0}{\thetubs@yseg@cnt}{6}{#2}}
+  }
   \bgelement[#1]{#2}
   % Erzeuge tubsbox
-  \expandafter\tubsbox\@arg@II
+  \expandafter\tubsbox\@tubs@arg
 }{%
   \endtubsbox
 }
