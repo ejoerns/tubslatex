@@ -207,7 +207,7 @@
 %    \end{macrocode}
 %
 %
-% calculates dimensions for LaTeXs page layout
+% Berechnet die Diemensionen für LaTeXs Seitenlayout.
 %    \begin{macro}{\tubspage@calclayout}
 %    \begin{macrocode}
 \newcommand{\tubspage@calclayout}{%
@@ -243,29 +243,31 @@
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
   % dimension is a hack..
   \setlength{\tubspage@columnwidth}{%
-    (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
+%     (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
+% \setlength{\tubspage@columnwidth}{%
+    (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}%TODO: might cause problems
   \setlength{\tubspage@gaussheight}{%
     (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
   \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
   \setlength{\tubspage@contentwidth}{%
     \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
-  %
+  % Wenn margin auf linker Seite gewünscht ist, 
   \ifthenelse{\boolean{tubspage@marginleft}}{%
     \geometry{%
-      lmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+      lmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
       marginparsep=\tubspage@columnsep,
-      marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
+      marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
   }{}
   \ifthenelse{\boolean{tubspage@marginright}}{%
     \geometry{%
-      rmargin=\TPHorizModule+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+      rmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
       marginparsep=\tubspage@columnsep,
-      marginparwidth=\TPHorizModule-0.5\tubspage@columnsep}
+      marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
   }{}
   \ifthenelse{\boolean{tubspage@twosided}}{%
     \geometry{twoside}
   }
-%   \setlength{\marginparwidth}{\TPHorizModule}
+%   \setlength{\marginparwidth}{\tubspage@columnwidth}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -340,7 +342,9 @@
 \DeclareOptionX{twosided}{%
   \setboolean{tubspage@twosided}{true}
 }
-% Für wissenschaftliche Poster werden der Absenderbereich und die Ränder 
+% Darstellungsbereich für wissenschaftliche Poster
+% Dabei werden die Seitenränder halbiert und der Absenderbereich
+% auf 1/11 der Papierhöhe verkleinert.
 \DeclareOptionX{scifiposter}{%
   \setboolean{scifiposter}{true}
   \let\tubspage@old@modifications\tubspage@modifications
