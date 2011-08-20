@@ -135,12 +135,13 @@
 %   Mögliche werte sind |none|, sowie die jeweilige gewünschte Farbe.
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
+\newcommand{\tubsbox@colorbox}{\relax}
 \define@key{tubsbox.sty}{bgcolor}[none]{%
   \ifthenelse{\equal{#1}{none}}{%
-    \def\tubsbox@colorbox{\relax}
+    \renewcommand\tubsbox@colorbox{\relax}
   }{%
     \def\bgcolor{#1}
-    \def\tubsbox@colorbox{\colorbox{\bgcolor}}
+    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
   }
 }
 %    \end{macrocode}
