@@ -68,24 +68,26 @@
 % \tableofcontents
 %
 % \begin{abstract}
-%   Put text here.
+%   In dieser Datei sind die grundlegenden Längen, die für den Einheitlichen
+%   Aufbau eines Dokumentes im Corporate Design der TU Braunschweig
+%   benötigt werden. Darüber hinaus wird das Seitenlayout entsprechend den
+%   Richtlinien gesetzt.
 % \end{abstract}
 %
 % \section{Introduction}
 %
 % Put text here.
 %
-% \section{Usage}
+% \section{Benutzung}
 %
-% \DescribeMacro{\YOURMACRO}
-% Put description of |\YOURMACRO| here.
+% Alle grundlegenden Einstellungen können als Argumente übergeben werden.
 %
 % \DescribeEnv{YOURENV}
 % Put description of |YOURENV| here.
 %
 % \StopEventually{\PrintIndex}
 %
-% \section{Implementatierung}
+% \section{Implementierung}
 %
 %    \begin{macrocode}
 %<*package>
@@ -377,11 +379,24 @@
 %
 % \ExecuteOptionsX{anypaper}
 \ProcessOptionsX\relax
-
-
+%    \end{macrocode}
+%
+%
+%    \begin{macro}{\tubsgeometry}
+% \marg{settings}\par
+% Mit Hilfe dieses Makros können nachträglich Einstellungen am Layout
+% vorgenommen werden. Es können die selben Optionen angegeben werden wie
+% für das Paket.\par
+% \emph{Experimentelles Kommando!}
+%    \begin{macrocode}
 \newcommand{\tubsgeometry}[1]{%
+  \setkeys{tubstypearea.sty}{#1}
+  \tubspage@process@paper
+  \tubspage@modifications
+  \tubspage@calclayout  
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %
 %    \begin{macro}{\tubspage@process@paper}
@@ -485,13 +500,6 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% Führe initial alle nötigen Berechnungen durch.
-%    \begin{macrocode}
-\tubspage@process@paper
-\tubspage@modifications
-\tubspage@calclayout
-%    \end{macrocode}
-%
 %    \begin{macro}{\calc@gaussum}
 % \marg{counter}\marg{value}\par
 % Berechnet die Gauß-Summe des übergebenen Wertes \emph{value}
@@ -527,6 +535,14 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
+%
+% Führe initial alle nötigen Berechnungen durch.
+%    \begin{macrocode}
+\tubspage@process@paper
+\tubspage@modifications
+\tubspage@calclayout
+%    \end{macrocode}
 %
 % portrait:
 %   senderheight = 1/7 paperheight
