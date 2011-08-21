@@ -177,7 +177,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\tubspage@contentwidth}
-% Breite des Inhaltsbereichs. Entspricht Papierbreite abzüglich Ränder (2) und
+% Breite des Inhaltsbereichs. Entspricht Formatbreite abzüglich Ränder (2) und
 % Bindungskorrektur.
 %    \begin{macrocode}
 \newlength{\tubspage@contentwidth}
@@ -199,7 +199,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{tubspage@gausssum}
-% Zähler, um die Gauß-Summe des Zählers |\tubspage@ysegments| zu Speichern.
+% Zähler, um die Gauß-Summe des Zählers |\tubspage@ysegments| zu speichern.
 %    \begin{macrocode}
 \newcounter{tubspage@gausssum}
 %    \end{macrocode}
@@ -253,13 +253,17 @@
 % |\tubspage@calclayout| ausgeführt werden sollen.
 %    \begin{macrocode}
 \def\tubspage@modifications{}
-\newboolean{scifiposter}\setboolean{scifiposter}{false}
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macrocode}
+\newboolean{scifiposter}\setboolean{scifiposter}{false}
+%    \end{macrocode}
 %
 %    \begin{macro}{\tubspage@calclayout}
-% Berechnet die Diemensionen für LaTeXs Seitenlayout.
+% Berechnet die Dimensionen für LaTeXs Seitenlayout.
+% Der resultierende Textbereich entspricht dem wirklich beschreibbaren
+% Bereich, ist also nicht mit der Kommunikationsfläche identisch!
 %    \begin{macrocode}
 \newcommand{\tubspage@calclayout}{%
   \setlength{\tubspage@columnsep}{5mm}
@@ -268,10 +272,10 @@
     \geometry{%
       headheight=0mm,
       headsep=\tubspage@borderwidth,
-      top=\tubspage@borderwidth,
+      top=2\tubspage@borderwidth,
       left=2\tubspage@borderwidth,
       right=2\tubspage@borderwidth,
-      bottom=2\tubspage@borderwidth,
+      bottom=\tubspage@senderheight+\tubspage@borderwidth,
       bindingoffset=\tubspage@bcor}
   }{%
     \geometry{%
@@ -283,11 +287,13 @@
       bottom=2\tubspage@borderwidth,
       bindingoffset=\tubspage@bcor}
   }
-  % Reduzierte Ränder für wissenschaftliche Poster % TODO: nötig?
+  % TODO: scifiposter bottomsender
   \ifthenelse{\boolean{scifiposter}}{
     \geometry{%
-      left=\tubspage@borderwidth,
-      right=\tubspage@borderwidth}
+      top=0.14\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5!
+      bottom=1.5\tubspage@borderwidth,
+      left=1.5\tubspage@borderwidth,
+      right=1.5\tubspage@borderwidth}
   }{}
   % inner geometry
   \setcounter{tubspage@gausssum}{%
@@ -447,6 +453,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{scifiposter}{%
   \setboolean{scifiposter}{true}
+  % TODO: replace by g@addto@macro?
   \let\tubspage@old@modifications\tubspage@modifications
   \renewcommand*{\tubspage@modifications}{%
     \tubspage@old@modifications%
@@ -458,6 +465,8 @@
 %    \end{key}
 %
 %    \begin{key}{tubstypearea.sty}{bottomsender}
+% Bestimmt, ob Absenderbereich oben oder unten auf der Seite platziert wird.
+% Damit ändert sich der komplette Darstellungsbereich.
 %    \begin{macrocode}
 \DeclareOptionX{bottomsender}{%
   \setboolean{tubspage@bottomsender}{true}
@@ -503,7 +512,8 @@
       \setlength{\tubspage@borderwidth}{0.038\paperwidth}
       \setlength{\tubspage@senderheight}{0.14286\paperheight}% ~1/7
     }
-  \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
+  \setlength{\tubspage@communicationheight}{%
+    \paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a6paper}}{%
     % a6paper

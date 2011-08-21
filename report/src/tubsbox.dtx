@@ -201,6 +201,7 @@
 \newlength{\tubsbox@toppadding}
 \newlength{\tubsbox@bottommargin}
 \newsavebox{\storebox}
+\newsavebox{\scifistorebox}
 \newcounter{tubsbox@lastelement}
 \newcounter{tubsbox@calcypos}
 \newcounter{tubsbox@calcheight}
@@ -302,6 +303,41 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{scifibox}
+% \oarg{}\marg{height}\par
+% Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
+% und hat schmalere Ränder als die tubsbox.
+%    \begin{macrocode}
+\newlength{\tubs@heightfilled}
+\newenvironment{scifibox}[2]{%
+  \ifthenelse{\lengthtest{\tubs@heightfilled>0mm}}{%
+    \setlength\tubsbox@topmargin{-\tubspage@borderwidth}
+    \addtolength\tubs@heightfilled{5cm+0.5\tubspage@borderwidth}%TODO...
+  }{%
+    \setlength\tubsbox@topmargin{0.5\tubspage@borderwidth}
+    \addtolength\tubs@heightfilled{5cm+0.5\tubspage@borderwidth}%TODO...
+  }
+  \begin{lrbox}{\scifistorebox}%
+    \begin{minipage}[t][5cm]{\textwidth}%
+      \vspace*{0.5\tubspage@borderwidth}%
+}{%
+      \vspace*{0.5\tubspage@borderwidth}%
+    \end{minipage}%
+  \end{lrbox}%
+%
+  \setlength\fboxsep{0mm}%
+  \hspace*{-0.5\tubspage@borderwidth}%
+  \raisebox{\tubsbox@topmargin}[0cm]{%
+%   \raisebox{-0.5\tubspage@borderwidth}[0cm]{%
+    \colorbox{tuWhite}{%
+      \hspace{0.5\tubspage@borderwidth}%
+      \usebox{\scifistorebox}%
+      \hspace{0.5\tubspage@borderwidth}%
+    }%
+  }%
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macrocode}
 %</package>
