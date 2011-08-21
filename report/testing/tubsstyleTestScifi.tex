@@ -1,17 +1,17 @@
 \makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
-\documentclass[a3paper,13pt]{tubsposter}
+\documentclass[a3paper,13pt,scifiposter]{tubsposter}
 \usepackage{tubsstyle}
 \usepackage[utf8]{inputenc}
 
 \usepackage{lipsum}
 
 \begin{document}
-\layout[sender=top]{%
+\layout[sender=top,bgcolor,scifiposter]{%
   \showtubslogo
-  \showtopline
-  \bgelement[bgimage=infozentrum.jpg,imagefit=scaled]{2}
-  \bgelement[bgcolor=tuBlue80]{3}
-  \bgelement[bgcolor=tuBlue60]{3}
+%   \showtopline
+%   \bgelement[bgimage=infozentrum.jpg,imagefit=scaled]{2}
+%   \bgelement[bgcolor=tuBlue80]{3}
+%   \bgelement[bgcolor=tuBlue60]{3}
 }
 \deflayout[pages=single]{mylayout}{%
   \showtubslogo[right]
@@ -27,6 +27,15 @@
   \bgelement[bgcolor=tuOrangeDark60]{2}
   \bgelement[bgcolor=tuBlue80]{3}
 }
+\begin{scifibox}
+Dies ist ein Testtext, der absolut keinen Sinn hat.
+\end{scifibox}
+\begin{scifibox}
+Dies ist ein Testtext, der absolut keinen Sinn hat.
+\end{scifibox}
+\begin{scifibox}
+Dies ist ein Testtext, der absolut keinen Sinn hat.
+\end{scifibox}
 ~
 \newpage
 \uselayout{mylayout}
