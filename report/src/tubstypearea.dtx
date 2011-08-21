@@ -41,6 +41,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
+\parindent0mm
+\parskip\medskipamount
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -49,6 +51,18 @@
 \end{document}
 %</driver>
 % \fi
+%
+%
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
 %
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
@@ -122,72 +136,96 @@
 \newboolean{tubspage@marginright}
 %    \end{macrocode}
 %
-% BCOR
+%    \begin{macro}{\tubspage@bcor}
+% Breite der Bindungskorrektur.
 %    \begin{macrocode}
 \newlength{\tubspage@bcor}
 %    \end{macrocode}
+%    \end{macro}
 %
-% Breite des äußeren weißen Randes.
+%    \begin{macro}{\tubspage@borderwidth}
+% Breite des äußeren weißen Rahmens.
 %    \begin{macrocode}
 \newlength{\tubspage@borderwidth}
 %    \end{macrocode}
+%    \end{macro}
 %
-% Höhe des Absenderbereichs (Seitenrand bis Anfang
-% Kommunikationsbereich, abzüglich |borderwidth|.
+%    \begin{macro}{\tubspage@senderheight}
+% Höhe des Absenderbereichs (Formatrand bis Anfang
+% Kommunikationsbereich).
 %    \begin{macrocode}
 \newlength{\tubspage@senderheight}
 %    \end{macrocode}
+%    \end{macro}
 %
-% Absenderhöhe, abzüglich Ränder.
+%    \begin{macro}{\tubspage@headheight}
+% Höhe des nutzbaren Absenderbereichs (Absenderhöhe, abzüglich Ränder).
 %    \begin{macrocode}
 \newlength{\tubspage@headheight}
 %    \end{macrocode}
+%    \end{macro}
 %
-% Höhe des Kommunikationsbereichs (TODO: not neccesair?)
+%    \begin{macro}{\tubspage@communicationheight}
+% Höhe des Kommunikationsbereichs (Formathöhe abzüglich Absenderhöhe).\par
 % HINWEIS: Die auf der CD-Website beschriebenen Höhen für den Kommunikations-
 %   bereicht entspricht nicht der auf der Website definiterten Höhe des
 %   Kommunikationsbereichs, sondern nur der Höhe nach Abzug des unteren
-%   Rahmens!
+%   Rahmens! (Also eigentlich der Kommunikations\emph{fläche}).
 %    \begin{macrocode}
 \newlength{\tubspage@communicationheight}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@contentwidth}
 % Breite des Inhaltsbereichs. Entspricht Papierbreite abzüglich Ränder (2) und
 % Bindungskorrektur.
 %    \begin{macrocode}
 \newlength{\tubspage@contentwidth}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@xsegments}
 % Anzahl horizontaler Elemente für Spalten-Layout.
 %    \begin{macrocode}
 \def\tubspage@xsegments{6}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@ysegments}
 % Anzahl vertikaler Elemente für Gauß-Layout.
 %    \begin{macrocode}
 \def\tubspage@ysegments{8}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{tubspage@gausssum}
 % Zähler, um die Gauß-Summe des Zählers |\tubspage@ysegments| zu Speichern.
 %    \begin{macrocode}
 \newcounter{tubspage@gausssum}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@columnsep}
 % Platz zwischen Spalten im Spalten-Layout.
 % Dieser ist unabhängig von der verwendeten Papiergröße
 %    \begin{macrocode}
 \newlength{\tubspage@columnsep}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@gaussheight}
 % Höhe des kleinsten Elementes im Gaußlayout (Ausgangswert für alle Elemente).
 %    \begin{macrocode}
 \newlength{\tubspage@gaussheight}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@columnwidth}
 % Breite einer Spalte im Spaltenlayout.
 %    \begin{macrocode}
 \newlength{\tubspage@columnwidth}
 %    \end{macrocode}
+%    \end{macro}
 %
 % Merker für Option |twosided|.
 % Wird \emph{true} gesetzt, wenn Option gewählt wurde.
@@ -201,12 +239,15 @@
 \newboolean{tubspage@bottomsender}\setboolean{tubspage@bottomsender}{false}
 %    \end{macrocode}
 %
+%    \begin{macro}{\tubspage@paper}
 % Makro zur Speicherung des ausgewählten Papierformats.
 % Standardwert: |anypaper|.
 %    \begin{macrocode}
 \def\tubspage@paper{anypaper}
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\tubspage@modifications}
 % Makro in dem Veränderungen am Layout abgespeichert werden können, die
 % \emph{nach} |\tubspage@process@paper| und \emph{vor}
 % |\tubspage@calclayout| ausgeführt werden sollen.
@@ -214,10 +255,11 @@
 \def\tubspage@modifications{}
 \newboolean{scifiposter}\setboolean{scifiposter}{false}
 %    \end{macrocode}
+%    \end{macro}
 %
 %
-% Berechnet die Diemensionen für LaTeXs Seitenlayout.
 %    \begin{macro}{\tubspage@calclayout}
+% Berechnet die Diemensionen für LaTeXs Seitenlayout.
 %    \begin{macrocode}
 \newcommand{\tubspage@calclayout}{%
   \setlength{\tubspage@columnsep}{5mm}
@@ -283,87 +325,126 @@
 %
 % \subsection{Optionen}
 %
-% margin left
+%    \begin{key}{tubstypearea.sty}{marginleft}
 %    \begin{macrocode}
 \DeclareOptionX{marginleft}{%
   \setboolean{tubspage@marginleft}{true}
 }
 %    \end{macrocode}
-% margin right
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{marginright}
 %    \begin{macrocode}
 \DeclareOptionX{marginright}{%
   \setboolean{tubspage@marginright}{true}
 }
 %    \end{macrocode}
-% landscape
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{landscape}
 %    \begin{macrocode}
 \DeclareOptionX{landscape}{%
   \setboolean{tubspage@landscape}{true}
 }
 %    \end{macrocode}
+%    \end{key}
+%
 %
 % \subsubsection{Papierformate}
 %
+%    \begin{key}{tubstypearea.sty}{a0paper}
 % A0
 %    \begin{macrocode}
 \DeclareOptionX{a0paper}{%
   \def\tubspage@paper{a0paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{a1paper}
 % A1
 %    \begin{macrocode}
 \DeclareOptionX{a1paper}{%
   \def\tubspage@paper{a1paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{a2paper}
 % A2
 %    \begin{macrocode}
 \DeclareOptionX{a2paper}{%
   \def\tubspage@paper{a2paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{a3paper}
 % A3
 %    \begin{macrocode}
 \DeclareOptionX{a3paper}{%
   \def\tubspage@paper{a3paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{a4paper}
 % A4
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
   \def\tubspage@paper{a4paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{a5paper}
 % A5
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
   \def\tubspage@paper{a5paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{a6paper}
 % A6
 %    \begin{macrocode}
 \DeclareOptionX{a6paper}{%
   \def\tubspage@paper{a6paper}
 }
 %    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{anypaper}
 % any
 %    \begin{macrocode}
 \DeclareOptionX{anypaper}{%
   \def\tubspage@paper{anypaper}
 }
 %    \end{macrocode}
-%%%
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{bcor}
 %    \begin{macrocode}
 \DeclareOptionX{bcor}{%
   \setlength{\tubspage@bcor}{#1}
 }
+%    \end{macrocode}
+%    \end{key}
 %
+%    \begin{key}{tubstypearea.sty}{twosided}
+%    \begin{macrocode}
 \DeclareOptionX{twosided}{%
   \setboolean{tubspage@twosided}{true}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{scifiposter}
 % Darstellungsbereich für wissenschaftliche Poster
 % Dabei werden die Seitenränder halbiert und der Absenderbereich
 % auf 1/11 der Papierhöhe verkleinert.
+%    \begin{macrocode}
 \DeclareOptionX{scifiposter}{%
   \setboolean{scifiposter}{true}
   \let\tubspage@old@modifications\tubspage@modifications
@@ -373,10 +454,18 @@
     \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{bottomsender}
+%    \begin{macrocode}
 \DeclareOptionX{bottomsender}{%
   \setboolean{tubspage@bottomsender}{true}
 }
+%    \end{macrocode}
+%    \end{key}
 %
+%    \begin{macrocode}
 % \ExecuteOptionsX{anypaper}
 \ProcessOptionsX\relax
 %    \end{macrocode}
