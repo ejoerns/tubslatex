@@ -308,15 +308,25 @@
 % Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
 % und hat schmalere Ränder als die tubsbox.
 %    \begin{macrocode}
-\newlength{\tubs@heightfilled}
+\newlength{\@test}
+\newcommand{\testit}{%
+  \showthe\@test
+  \addtolength\@test{1mm}
+}
+\newlength{\tubs@heightfilled}\setlength{\tubs@heightfilled}{0mm}
 \newenvironment{scifibox}[2]{%
+  \testit
+  \showthe\tubs@heightfilled
   \ifthenelse{\lengthtest{\tubs@heightfilled>0mm}}{%
-    \setlength\tubsbox@topmargin{-\tubspage@borderwidth}
-    \addtolength\tubs@heightfilled{5cm+0.5\tubspage@borderwidth}%TODO...
+    a
+    \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
+    \addtolength{\tubs@heightfilled}{5cm+0.5\tubspage@borderwidth}%TODO...
   }{%
-    \setlength\tubsbox@topmargin{0.5\tubspage@borderwidth}
-    \addtolength\tubs@heightfilled{5cm+0.5\tubspage@borderwidth}%TODO...
+    b
+    \setlength{\tubsbox@topmargin}{-\tubspage@borderwidth}%
+    \addtolength{\tubs@heightfilled}{5cm+0.5\tubspage@borderwidth}%TODO...
   }
+  \global\setlength{\tubs@heightfilled}{5cm}%TODO...
   \begin{lrbox}{\scifistorebox}%
     \begin{minipage}[t][5cm]{\textwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
