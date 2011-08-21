@@ -43,6 +43,7 @@
 \usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
 \usepackage{tabularx}
+\usepackage{xkeyval}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -52,6 +53,16 @@
 %</driver>
 % \fi
 %
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
 %
@@ -411,6 +422,9 @@
 %    \end{macrocode}
 %
 %
+%    \begin{macro}{\tubs@draw@topline}
+%    \begin{macro}{\tubs@draw@tubslogo}
+%    \begin{macro}{\tubs@draw@logo}
 % Die Befehle |\tubs@draw@topline| und |\tubs@draw@tubslogo| dienen zum
 % Schedulen der Darstellung von Logo und Toplinie, um die Hintergrundreihenfolge
 % korrekt zu gewährleisten.
@@ -419,6 +433,7 @@
 \newcommand{\tubs@draw@tubslogo}{}
 \newcommand{\tubs@draw@logo}{}
 %    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
 %
 % \subsection{Elemente -- Benuzter-Befehle}
 %
@@ -457,16 +472,21 @@
 %
 % \subsection{Optionen für Umgebung posterrow}
 %
+%    \begin{macro}{\tubs@bg@cmd}
 % Speicher fuer den Befehl zu Erstellung des Hintergrundes
 %    \begin{macrocode}
 \def\tubs@bg@cmd{}
 %    \end{macrocode}
+%    \end{macro}
+%    \begin{macro}{\tubstyle@imagefit}
 % Speicher fuer die imagefit-Option
 %    \begin{macrocode}
 \newcommand{\tubstyle@imagefit}{\relax}
 %    \end{macrocode}
+%    \end{macro}
 %
-% Option |bgcolor| zum Setzen der Hintergrundfarbe eines Elements.
+%    \begin{key}{bgelement}{bgcolor}
+% Option zum Setzen der Hintergrundfarbe eines Elements.
 %    \begin{macrocode}
 \define@key{bgelement}{bgcolor}{%
   \edef\tubs@bg@cmd@args{{#1}{\thetubs@yseg@cnt}{\@current@height}}
@@ -474,9 +494,10 @@
     \expandafter\tubs@background@colored\tubs@bg@cmd@args}
 }
 %    \end{macrocode}
+%    \end{key}
 %
-%
-% Option Hintergrundbild
+%    \begin{key}{bgelement}{bgimage}
+% Option zum Einfügen eines Hintergrundbildes in ein Element.
 %    \begin{macrocode}
 \define@key{bgelement}{bgimage}{%
   \edef\tubs@bg@cmd@args{{#1}{\thetubs@yseg@cnt}{\@current@height}}
@@ -484,8 +505,10 @@
     \expandafter\tubs@background@image\tubs@bg@cmd@args}
 }
 %    \end{macrocode}
+%    \end{key}
 %
-% Option |imagefit|: Skalierungsoptionen
+%    \begin{key}{bgelement}{imagefit}
+% Option gibt an, wie dargestelltes Bild skaliert bzw. beschnitten werden soll.
 %
 % \begin{tabularx}{\textwidth}{lX}
 %   |scaled|  & Das Bild wird sowohl horizontal als auch vertikal so skaliert,
@@ -534,6 +557,7 @@
   \fi
 }
 %    \end{macrocode}
+%    \end{key}
 %
 %
 %    \begin{macro}{\bgelement}
@@ -556,8 +580,9 @@
 %    \end{macro}
 %
 %
-% Optionen sollen Position des Kommunikationsbereichs und Orientierung
-% des Rasters bestimmen.
+%    \begin{key}{layout}{sender}
+% Option bestimmt Position des Kommunikationsbereichs und Orientierung
+% des Rasters.
 %    \begin{macrocode}
 \define@key{layout}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
@@ -579,8 +604,10 @@
   }
 }
 %    \end{macrocode}
+%    \end{key}
 %
-% Option |pages|, legt fest auf welchen Seiten das definierte Layout zu sehen
+%    \begin{key}{layout}{pages}
+% Option legt fest auf welchen Seiten das definierte Layout zu sehen
 % sein soll. Mögliche Werte sind |all| für alle folgenden Seiten oder |single|
 % für Darstellung nur auf der aktuellen Seite.
 %    \begin{macrocode}
@@ -592,22 +619,24 @@
   }
 }
 %    \end{macrocode}
+%    \end{key}
 %
-% Option |bgcolor|.
-% Mit dieser Optione kann der komplette Kommunikationsbereich mit einer
+% \begin{key}{layout}{bgcolor}
+% Mit dieser Option kann der komplette Kommunikationsbereich mit einer
 % gewünschten Hintergrundfarbe gefüllt werden. Wird kein Wert mit übergeben,
 % so wird die Farbe tuBlueLight benutzt.
 %    \begin{macrocode}
 \define@key{layout}{bgcolor}[tuBlueLight]{%
   \g@addto@macro{\@next@shipout}{%
-  \put(0,0)%
-    {{\setlength\fboxsep{0mm}\colorbox{#1}{%
-      \parbox[b][\paperheight-\tubspage@senderheight]%
-        {\paperwidth}{~}}%
+    \put(0,0){{%
+      \setlength\fboxsep{0mm}\colorbox{#1}{%
+        \parbox[b][\paperheight-\tubspage@senderheight]%
+          {\paperwidth}{~}}%
     }}%
   }
 }
 %    \end{macrocode}
+%    \end{key}
 %
 %    \begin{macro}{\@layout@pre}
 % Layout-Voreinstellungen, Optionen, etc.
@@ -641,7 +670,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\layout}
-% \oarg{options}\marg{layout}
+% \oarg{options}\marg{layout}\par
 % Legt das darzustellende Layout mit den übergebenen Optionen (|options|)
 % und dem übergebenem Inhalt (|layout|) fest.
 %    \begin{macrocode}
