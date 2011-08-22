@@ -417,27 +417,34 @@
 %    \end{macrocode}
 %    \end{environment}
 %
+%    \begin{macrocode}
+\newcounter{tubs@current@col} % aktuelle Spalte
+\newcounter{tubs@current@row} % aktuelle Zeile
+%    \end{macrocode}
+%
 %    \begin{environment}{scifirow}
 % \marg{rows}\par
 % Extra-Zeilen-Umgebung für wissenschaftliche Poster.
 %    \begin{macrocode}
 \newenvironment{scifirow}[1]{%
-%   \tubs@bs@setelements{#1}
-}{%
-}
-%    \end{macrocode}
-%    \end{environment}
-%
-%    \begin{macro}{scifibox}
-%    \begin{macrocode}
-\newcounter{tubs@current@row} % aktuelle Zeile
-\newenvironment{scifibox}[1]{%
+  % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@collength@'
+  \tubs@bs@setelements{#1}{tubs@bs@collength@}
   \stepcounter{tubs@current@row}
   \expandafter\edef\expandafter\@argI\expandafter{%
     \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
   \@scifibox{\@argI}{#1}
 }{%
   \end@scifibox
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{macro}{scifibox}
+%    \begin{macrocode}
+\newenvironment{scifibox}[1]{%
+
+}{%
+
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -447,24 +454,10 @@
 % Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
 % und hat schmalere Ränder als die tubsbox.
 %    \begin{macrocode}
-\newlength{\tubs@heightfilled}\setlength{\tubs@heightfilled}{0mm}
-\newlength{\tubs@box@ypos}
+\newlength{\tubs@box@xpos}% x-Position
+\newlength{\tubs@box@ypos}% y-Position
 \newenvironment{@scifibox}[3][]{%
-%   \def\@current@height{0.5\textheight}
   \def\@current@height{(#2)}%
-  \ifthenelse{\lengthtest{\tubs@heightfilled>0mm}}{%
-    \ifthenelse{\lengthtest{\tubs@heightfilled>0.6\textheight}}{%
-      \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
-    }{%
-      \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
-%       \addtolength{\tubs@heightfilled}{#2+0.5\tubspage@borderwidth}%TODO...
-%       \global\tubs@heightfilled=\tubs@heightfilled%
-    }%
-  }{% erste Zeile
-    \setlength{\tubsbox@topmargin}{-\tubspage@borderwidth}%
-%     \addtolength{\tubs@heightfilled}{#2-0.5\tubspage@borderwidth}%TODO...
-%     \global\tubs@heightfilled=\tubs@heightfilled%
-  }
   \begin{lrbox}{\scifistorebox}%
     \begin{minipage}[t][\@current@height]{\textwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
