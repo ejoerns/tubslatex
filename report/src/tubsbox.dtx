@@ -354,8 +354,7 @@
 %    \begin{macrocode}
 \newcommand\tubs@bs@setelements[2]{%
   \setcounter{tubs@bs@elementcount}{0}
-  %TODO: length is just a very diry hack, fix this!
-  \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm-\tubspage@borderwidth}
+  \setcounter{tubs@bs@xcount}{0}
   % Iteriere über Liste
   \let\do\tubs@bs@parsenext
   \docsvlist{#1}
@@ -411,6 +410,8 @@
 % Extra-Umgebung für wissenschaftliche Poster mit Zeilen-Setup.
 %    \begin{macrocode}
 \newenvironment{scifiposter}[1]{%
+  %TODO: length is just a very diry hack, fix this!
+  \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm-\tubspage@borderwidth}
   \tubs@bs@setelements{#1}{tubs@bs@rowlength@}
 }{%
 }
@@ -427,24 +428,31 @@
 % Extra-Zeilen-Umgebung für wissenschaftliche Poster.
 %    \begin{macrocode}
 \newenvironment{scifirow}[1]{%
+  %TODO: length is just a very diry hack?, fix this?
+  \setlength{\tubs@bs@xfreespace}{\textwidth}
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@collength@'
   \tubs@bs@setelements{#1}{tubs@bs@collength@}
   \stepcounter{tubs@current@row}
   \expandafter\edef\expandafter\@argI\expandafter{%
     \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
-  \@scifibox{\@argI}{#1}
+%   \@scifibox{\@argI}{9cm}
 }{%
-  \end@scifibox
+%   \end@scifibox
 }
 %    \end{macrocode}
 %    \end{environment}
 %
 %    \begin{macro}{scifibox}
 %    \begin{macrocode}
-\newenvironment{scifibox}[1]{%
-
+\newenvironment{scificol}{%
+  \stepcounter{tubs@current@col}
+  \expandafter\edef\expandafter\@argI\expandafter{%
+    \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
+  \expandafter\edef\expandafter\@argII\expandafter{%
+    \csname tubs@bs@collength@\thetubs@current@col\endcsname}
+  \@scifibox{\@argI}{\@argII}
 }{%
-
+  \end@scifibox
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -458,8 +466,9 @@
 \newlength{\tubs@box@ypos}% y-Position
 \newenvironment{@scifibox}[3][]{%
   \def\@current@height{(#2)}%
+  \def\@current@width{(#3)}%
   \begin{lrbox}{\scifistorebox}%
-    \begin{minipage}[t][\@current@height]{\textwidth}%
+    \begin{minipage}[t][\@current@height]{\@current@width-\tubspage@borderwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
 }{%
       \vspace*{0.5\tubspage@borderwidth}%
@@ -468,7 +477,7 @@
 %
   \setlength\fboxsep{0mm}%
 \begin{textblock*}{\textwidth}(%
-  -0.5\tubspage@borderwidth,%
+  -0.5\tubspage@borderwidth+\tubs@box@xpos,%
   -1\tubspage@borderwidth+0.05195\paperheight+\tubs@box@ypos)%
   \hspace*{-0.5\tubspage@borderwidth}%
     \colorbox{tuWhite}{%
@@ -477,7 +486,13 @@
       \hspace{0.5\tubspage@borderwidth}%
     }%
 \end{textblock*}%
-  \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+  \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+  % Wenn Zeile gefüllt ist, springen in nächste Zeile
+  \ifthenelse{\lengthtest{\tubs@box@xpos > \textwidth}}{%
+    \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+    \setlength\tubs@box@xpos{0mm}%
+  }{}
+  \global\tubs@box@xpos=\tubs@box@xpos%
   \global\tubs@box@ypos=\tubs@box@ypos%
 }
 %    \end{macrocode}
