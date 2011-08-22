@@ -306,60 +306,99 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubs@sb@setrows}
+%
+% \subsection{Scientific-Poster-Box}
+%
+%
+%    \begin{macro}{tubs@bs@elementcount}
+% Counter zählt Anzahl Zeilen für Box-Layout.
+%    \begin{macrocode}
+\newcounter{tubs@bs@elementcount}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{tubs@bs@xcount}
+% Counter zählt Anzahl Xen
+%    \begin{macrocode}
+\newcounter{tubs@bs@xcount}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubs@bs@xfreespace}
+% Länge speichert aktuellen freien Platz für Xe
+%    \begin{macrocode}
+\newlength{\tubs@bs@xfreespace}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubs@bs@xlength}
+% Länge eines X-Elements
+%    \begin{macrocode}
+\newlength{\tubs@bs@xlength}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{tubs@cnt}
+% Counter für forloop-Schleife
+%    \begin{macrocode}
+\newcounter{tubs@cnt}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubs@bs@setelements}
 % \marg{list}\par
 % Erwartet als Parameter eine komma-getrennte Liste, deren Elemente
 % entweder Längen oder der Buchstabe X ist.
 % Elemente mit Buchstaben X teilen den restlichen zur Verfügung stehenden Platz
 % gleichmäßig untereinander auf.
 %    \begin{macrocode}
-\newcounter{tubs@bs@rowcount}% Zählt Anzahl Zeilen
-\newcounter{tubs@bs@xcount} % Zählt Anzahl Xen
-\newlength{\tubs@bs@xfreespace}% Speichert aktuellen freien Platz für Xe
-\newlength{\tubs@bs@xlength}% Länge eines X-Elements
-\newcounter{tubs@cnt}% forloop-counter
-\newcommand\tubs@bs@setrows[1]{%
-  \setcounter{tubs@bs@rowcount}{0}
+\newcommand\tubs@bs@setelements[2]{%
+  \setcounter{tubs@bs@elementcount}{0}
   %TODO: length is just a very diry hack, fix this!
   \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm-\tubspage@borderwidth}
+  % Iteriere über Liste
   \let\do\tubs@bs@parsenext
   \docsvlist{#1}
   % X-Länge setzen
   \setlength\tubs@bs@xlength{\tubs@bs@xfreespace/\thetubs@bs@xcount}
   % Iteriere über alle Zeilen und ersetze X-Zeilen durch die entsprechende Länge
-  \stepcounter{tubs@bs@rowcount}% only for forloop!
-  \forloop[1]{tubs@cnt}{1}{\value{tubs@cnt}<\thetubs@bs@rowcount}{%
+  \stepcounter{tubs@bs@elementcount}% only for forloop!
+  \forloop[1]{tubs@cnt}{1}{\value{tubs@cnt}<\thetubs@bs@elementcount}{%
     \expandafter\def\expandafter\tubs@current@row\expandafter{%
-      \csname tubs@bs@rowlength@\thetubs@cnt\endcsname%
+      \csname tubs@bs@tmplength@\thetubs@cnt\endcsname%
     }
-    % Schreibe nun in alle übrigen Xen die X-Länge
+    % Schreibe nun gespeicherte Längen und X-Längen in endgültiges Makro
     \ifthenelse{\equal{\tubs@current@row}{X}}{%
-      \expandafter\edef\csname tubs@bs@rowlength@\thetubs@cnt\endcsname{%
+      \expandafter\edef\csname #2\thetubs@cnt\endcsname{%
         \the\tubs@bs@xlength%
       }%
-    }{}
+    }{%
+      \expandafter\edef\csname #2\thetubs@cnt\endcsname{%
+        \tubs@current@row%
+      }%
+    }
   }
-  \addtocounter{tubs@bs@rowcount}{-1}% only for forloop!
+  \addtocounter{tubs@bs@elementcount}{-1}% only for forloop!
 }
 %    \end{macrocode}
 %    \end{macro}
 %
 %    \begin{macro}{\tubs@sb@setrows}
 % \marg{element}\par
-% Prüft das übergebene element, ob es ein X ist, ansonsten wird davon
+% Prüft, ob das übergebene Element ein X ist, ansonsten wird davon
 % ausgegangen, dass es sich um eine Länge handelt und es wird versucht
 % diese zu speichern.
 %    \begin{macrocode}
 \newcommand*{\tubs@bs@parsenext}[1]{%
   % Teste, ob X oder Längeneinheit übergeben wurde
-  \stepcounter{tubs@bs@rowcount}
+  \stepcounter{tubs@bs@elementcount}
   \ifthenelse{\equal{#1}{X}}{% X
     \stepcounter{tubs@bs@xcount}%
-    \expandafter\def\csname tubs@bs@rowlength@\thetubs@bs@rowcount\endcsname{X}
+    \expandafter\def\csname tubs@bs@tmplength@\thetubs@bs@elementcount\endcsname{X}
   }{% Laenge
     % Ziehe Länge von xfreespace ab und speichere sie.
     \addtolength\tubs@bs@xfreespace{-#1}
-    \expandafter\def\csname tubs@bs@rowlength@\thetubs@bs@rowcount\endcsname{%
+    \expandafter\def\csname tubs@bs@tmplength@\thetubs@bs@elementcount\endcsname{%
       #1%
     }
   }
@@ -372,7 +411,18 @@
 % Extra-Umgebung für wissenschaftliche Poster mit Zeilen-Setup.
 %    \begin{macrocode}
 \newenvironment{scifiposter}[1]{%
-  \tubs@bs@setrows{#1}
+  \tubs@bs@setelements{#1}{tubs@bs@rowlength@}
+}{%
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{environment}{scifirow}
+% \marg{rows}\par
+% Extra-Zeilen-Umgebung für wissenschaftliche Poster.
+%    \begin{macrocode}
+\newenvironment{scifirow}[1]{%
+%   \tubs@bs@setelements{#1}
 }{%
 }
 %    \end{macrocode}
