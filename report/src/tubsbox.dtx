@@ -320,7 +320,8 @@
 \newcounter{tubs@cnt}% forloop-counter
 \newcommand\tubs@bs@setrows[1]{%
   \setcounter{tubs@bs@rowcount}{0}
-  \setlength{\tubs@bs@xfreespace}{\textheight}
+  %TODO: length is just a very diry hack, fix this!
+  \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm-\tubspage@borderwidth}
   \let\do\tubs@bs@parsenext
   \docsvlist{#1}
   % X-Länge setzen
