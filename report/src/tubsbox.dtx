@@ -431,7 +431,7 @@
 % \marg{rows}\par
 % Extra-Zeilen-Umgebung für wissenschaftliche Poster.
 %    \begin{macrocode}
-\newenvironment{scifirow}[1]{%
+\newenvironment{scifirow}[1][X]{%
   % reset scificol counter
   \setcounter{tubs@current@col}{0}
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
@@ -439,11 +439,22 @@
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@collength@'
   \tubs@bs@setelements{#1}{tubs@bs@collength@}
   \stepcounter{tubs@current@row}
-  \expandafter\edef\expandafter\@argI\expandafter{%
-    \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
-%   \@scifibox{\@argI}{9cm}
+  % Wenn nur eine Spalte, dann direkt scifibox setzen
+  \ifthenelse{\equal{#1}{X}}{%
+    \stepcounter{tubs@current@col}
+    \expandafter\edef\expandafter\@argI\expandafter{%
+      \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
+    \expandafter\edef\expandafter\@argII\expandafter{%
+      \csname tubs@bs@collength@\thetubs@current@col\endcsname}
+    \def\tubs@box@cmd{\@scifibox{\@argI}{\@argII}}
+    \def\tubs@box@endcmd{\end@scifibox}
+  }{%
+    \def\tubs@box@cmd{\relax}
+    \def\tubs@box@endcmd{\relax}
+  }
+  \tubs@box@cmd%
 }{%
-%   \end@scifibox
+  \tubs@box@endcmd%
 }
 %    \end{macrocode}
 %    \end{environment}
