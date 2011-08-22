@@ -410,6 +410,8 @@
 % Extra-Umgebung für wissenschaftliche Poster mit Zeilen-Setup.
 %    \begin{macrocode}
 \newenvironment{scifiposter}[1]{%
+  % reset scifirow counter
+  \setcounter{tubs@current@row}{0}
   %TODO: length is just a very diry hack, fix this!
   \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm-\tubspage@borderwidth}
   \tubs@bs@setelements{#1}{tubs@bs@rowlength@}
@@ -478,10 +480,10 @@
   \end{lrbox}%
 %
   \setlength\fboxsep{0mm}%
-\begin{textblock*}{\textwidth}(%
-  -0.5\tubspage@borderwidth+\tubs@box@xpos,%
+\begin{textblock*}{\@current@width}(%
+  -1\tubspage@borderwidth+\tubs@box@xpos,%
   -1\tubspage@borderwidth+0.05195\paperheight+\tubs@box@ypos)%
-  \hspace*{-0.5\tubspage@borderwidth}%
+%   \hspace*{-0.5\tubspage@borderwidth}%
     \colorbox{tuWhite}{%
       \hspace{0.5\tubspage@borderwidth}%
       \usebox{\scifistorebox}%
@@ -493,6 +495,10 @@
   \ifthenelse{\lengthtest{\tubs@box@xpos > \textwidth}}{%
     \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
     \setlength\tubs@box@xpos{0mm}%
+    % Wenn darüber hinaus Seite gefüllt ist, fange neue an!
+    \ifthenelse{\lengthtest{\tubs@box@ypos > \textheight}}{%
+      \setlength\tubs@box@ypos{0mm}
+    }{}
   }{}
   \global\tubs@box@xpos=\tubs@box@xpos%
   \global\tubs@box@ypos=\tubs@box@ypos%
