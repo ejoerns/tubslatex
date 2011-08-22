@@ -428,6 +428,8 @@
 % Extra-Zeilen-Umgebung für wissenschaftliche Poster.
 %    \begin{macrocode}
 \newenvironment{scifirow}[1]{%
+  % reset scificol counter
+  \setcounter{tubs@current@col}{0}
   %TODO: length is just a very diry hack?, fix this?
   \setlength{\tubs@bs@xfreespace}{\textwidth}
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@collength@'
