@@ -95,6 +95,8 @@
 \RequirePackage{xkeyval}
 \RequirePackage{tubstypearea}
 \RequirePackage[absolute]{textpos}
+\RequirePackage{etoolbox}
+\RequirePackage{forloop}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -154,6 +156,7 @@
 %    \begin{macro}{\tubsbox@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
 %    \begin{macrocode}
+% TODO: usage?...
 \newcommand\tubsbox@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
@@ -303,32 +306,116 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\tubs@sb@setrows}
+% \marg{list}\par
+% Erwartet als Parameter eine komma-getrennte Liste, deren Elemente
+% entweder Längen oder der Buchstabe X ist.
+% Elemente mit Buchstaben X teilen den restlichen zur Verfügung stehenden Platz
+% gleichmäßig untereinander auf.
+%    \begin{macrocode}
+\newcounter{tubs@bs@rowcount}% Zählt Anzahl Zeilen
+\newcounter{tubs@bs@xcount} % Zählt Anzahl Xen
+\newlength{\tubs@bs@xfreespace}% Speichert aktuellen freien Platz für Xe
+\newlength{\tubs@bs@xlength}% Länge eines X-Elements
+\newcounter{tubs@cnt}% forloop-counter
+\newcommand\tubs@bs@setrows[1]{%
+  \setcounter{tubs@bs@rowcount}{0}
+  \setlength{\tubs@bs@xfreespace}{\textheight}
+  \let\do\tubs@bs@parsenext
+  \docsvlist{#1}
+  % X-Länge setzen
+  \setlength\tubs@bs@xlength{\tubs@bs@xfreespace/\thetubs@bs@xcount}
+  % Iteriere über alle Zeilen und ersetze X-Zeilen durch die entsprechende Länge
+  \stepcounter{tubs@bs@rowcount}% only for forloop!
+  \forloop[1]{tubs@cnt}{1}{\value{tubs@cnt}<\thetubs@bs@rowcount}{%
+    \expandafter\def\expandafter\tubs@current@row\expandafter{%
+      \csname tubs@bs@rowlength@\thetubs@cnt\endcsname%
+    }
+    % Schreibe nun in alle übrigen Xen die X-Länge
+    \ifthenelse{\equal{\tubs@current@row}{X}}{%
+      \expandafter\edef\csname tubs@bs@rowlength@\thetubs@cnt\endcsname{%
+        \the\tubs@bs@xfreespace%
+      }%
+    }{}
+  }
+  \addtocounter{tubs@bs@rowcount}{-1}% only for forloop!
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubs@sb@setrows}
+% \marg{element}\par
+% Prüft das übergebene element, ob es ein X ist, ansonsten wird davon
+% ausgegangen, dass es sich um eine Länge handelt und es wird versucht
+% diese zu speichern.
+%    \begin{macrocode}
+\newcommand*{\tubs@bs@parsenext}[1]{%
+  % Teste, ob X oder Längeneinheit übergeben wurde
+  \stepcounter{tubs@bs@rowcount}
+  \ifthenelse{\equal{#1}{X}}{% X
+    \stepcounter{tubs@bs@xcount}%
+    \expandafter\def\csname tubs@bs@rowlength@\thetubs@bs@rowcount\endcsname{X}
+  }{% Laenge
+    % Ziehe Länge von xfreespace ab und speichere sie.
+    \addtolength\tubs@bs@xfreespace{-#1}
+    \expandafter\def\csname tubs@bs@rowlength@\thetubs@bs@rowcount\endcsname{%
+      #1%
+    }
+  }
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubs@sb@setrows}
+%    \begin{macrocode}
+\newenvironment{scifiposter}[1]{%
+  \tubs@bs@setrows{#1}
+  xcount:\thetubs@bs@xcount\\
+  rowcount:\thetubs@bs@rowcount
+}{%
+}
+%    \end{macrocode}
+%    \end{macro}
+%    \begin{macro}{\tubs@sb@setrows}
+%    \begin{macrocode}
+\newcounter{tubs@current@row} % aktuelle Zeile
+\newenvironment{scifibox}[1]{%
+  \stepcounter{tubs@current@row}
+  \expandafter\edef\expandafter\@argI\expandafter{%
+    \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
+  Height: \@argI \\
+  \edef\@args{{\@argI}{#1}}
+  args: \@args \\
+%   \expandafter\@scifibox\@args
+}{%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macro}{scifibox}
-% \oarg{}\marg{height}\par
+% \oarg{height}\marg{width}\par
 % Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
 % und hat schmalere Ränder als die tubsbox.
 %    \begin{macrocode}
-\newlength{\@test}
-\newcommand{\testit}{%
-  \showthe\@test
-  \addtolength\@test{1mm}
-}
 \newlength{\tubs@heightfilled}\setlength{\tubs@heightfilled}{0mm}
-\newenvironment{scifibox}[2]{%
-  \testit
-  \showthe\tubs@heightfilled
+\newlength{\tubs@box@ypos}
+\newenvironment{@scifibox}[3][]{%
+  \def\@current@height{#2}
   \ifthenelse{\lengthtest{\tubs@heightfilled>0mm}}{%
-    a
-    \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
-    \addtolength{\tubs@heightfilled}{5cm+0.5\tubspage@borderwidth}%TODO...
-  }{%
-    b
+    \ifthenelse{\lengthtest{\tubs@heightfilled>0.6\textheight}}{%
+      \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
+    }{%
+      \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
+%       \addtolength{\tubs@heightfilled}{#2+0.5\tubspage@borderwidth}%TODO...
+%       \global\tubs@heightfilled=\tubs@heightfilled%
+    }%
+  }{% erste Zeile
     \setlength{\tubsbox@topmargin}{-\tubspage@borderwidth}%
-    \addtolength{\tubs@heightfilled}{5cm+0.5\tubspage@borderwidth}%TODO...
+%     \addtolength{\tubs@heightfilled}{#2-0.5\tubspage@borderwidth}%TODO...
+%     \global\tubs@heightfilled=\tubs@heightfilled%
   }
-  \global\setlength{\tubs@heightfilled}{5cm}%TODO...
   \begin{lrbox}{\scifistorebox}%
-    \begin{minipage}[t][5cm]{\textwidth}%
+    \begin{minipage}[t][#2]{\textwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
 }{%
       \vspace*{0.5\tubspage@borderwidth}%
@@ -336,15 +423,18 @@
   \end{lrbox}%
 %
   \setlength\fboxsep{0mm}%
+\begin{textblock*}{\textwidth}(%
+  -0.5\tubspage@borderwidth,%
+  -1\tubspage@borderwidth+0.05195\paperheight+\tubs@box@ypos)%
   \hspace*{-0.5\tubspage@borderwidth}%
-  \raisebox{\tubsbox@topmargin}[0cm]{%
-%   \raisebox{-0.5\tubspage@borderwidth}[0cm]{%
     \colorbox{tuWhite}{%
       \hspace{0.5\tubspage@borderwidth}%
       \usebox{\scifistorebox}%
       \hspace{0.5\tubspage@borderwidth}%
     }%
-  }%
+\end{textblock*}%
+  \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+  \global\tubs@box@ypos=\tubs@box@ypos%
 }
 %    \end{macrocode}
 %    \end{macro}
