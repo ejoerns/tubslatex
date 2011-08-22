@@ -367,34 +367,32 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubs@sb@setrows}
+%    \begin{environment}{scifiposter}
+% \marg{rows}\par
+% Extra-Umgebung für wissenschaftliche Poster mit Zeilen-Setup.
 %    \begin{macrocode}
 \newenvironment{scifiposter}[1]{%
   \tubs@bs@setrows{#1}
-  xcount:\thetubs@bs@xcount\\
-  rowcount:\thetubs@bs@rowcount
 }{%
 }
 %    \end{macrocode}
-%    \end{macro}
-%    \begin{macro}{\tubs@sb@setrows}
+%    \end{environment}
+%
+%    \begin{macro}{scifibox}
 %    \begin{macrocode}
 \newcounter{tubs@current@row} % aktuelle Zeile
 \newenvironment{scifibox}[1]{%
   \stepcounter{tubs@current@row}
   \expandafter\edef\expandafter\@argI\expandafter{%
     \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
-  Height: \@argI \\
-  \def\@args{{\@argI}{#1}}
-  args: \@args \\
-  \@scifibox{\@argI}{1cm}
+  \@scifibox{\@argI}{#1}
 }{%
   \end@scifibox
 }
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{scifibox}
+%    \begin{macro}{@scifibox}
 % \oarg{height}\marg{width}\par
 % Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
 % und hat schmalere Ränder als die tubsbox.
