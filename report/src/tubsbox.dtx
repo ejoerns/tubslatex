@@ -334,7 +334,7 @@
     % Schreibe nun in alle übrigen Xen die X-Länge
     \ifthenelse{\equal{\tubs@current@row}{X}}{%
       \expandafter\edef\csname tubs@bs@rowlength@\thetubs@cnt\endcsname{%
-        \the\tubs@bs@xfreespace%
+        \the\tubs@bs@xlength%
       }%
     }{}
   }
@@ -384,10 +384,11 @@
   \expandafter\edef\expandafter\@argI\expandafter{%
     \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
   Height: \@argI \\
-  \edef\@args{{\@argI}{#1}}
+  \def\@args{{\@argI}{#1}}
   args: \@args \\
-%   \expandafter\@scifibox\@args
+  \@scifibox{\@argI}{1cm}
 }{%
+  \end@scifibox
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -400,7 +401,8 @@
 \newlength{\tubs@heightfilled}\setlength{\tubs@heightfilled}{0mm}
 \newlength{\tubs@box@ypos}
 \newenvironment{@scifibox}[3][]{%
-  \def\@current@height{#2}
+%   \def\@current@height{0.5\textheight}
+  \def\@current@height{(#2)}%
   \ifthenelse{\lengthtest{\tubs@heightfilled>0mm}}{%
     \ifthenelse{\lengthtest{\tubs@heightfilled>0.6\textheight}}{%
       \setlength{\tubsbox@topmargin}{0.5\tubspage@borderwidth}%
@@ -415,7 +417,7 @@
 %     \global\tubs@heightfilled=\tubs@heightfilled%
   }
   \begin{lrbox}{\scifistorebox}%
-    \begin{minipage}[t][#2]{\textwidth}%
+    \begin{minipage}[t][\@current@height]{\textwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
 }{%
       \vspace*{0.5\tubspage@borderwidth}%
