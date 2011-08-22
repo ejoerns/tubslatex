@@ -401,6 +401,8 @@
       #1%
     }
   }
+  % Ziehe zusätzlich Stegbreite ab.
+  \addtolength{\tubs@bs@xfreespace}{-0.5\tubspage@borderwidth}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -413,7 +415,7 @@
   % reset scifirow counter
   \setcounter{tubs@current@row}{0}
   %TODO: length is just a very diry hack, fix this!
-  \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm-\tubspage@borderwidth}
+  \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm+\tubspage@borderwidth}
   \tubs@bs@setelements{#1}{tubs@bs@rowlength@}
 }{%
 }
@@ -432,8 +434,8 @@
 \newenvironment{scifirow}[1]{%
   % reset scificol counter
   \setcounter{tubs@current@col}{0}
-  %TODO: length is just a very diry hack?, fix this?
-  \setlength{\tubs@bs@xfreespace}{\textwidth}
+  % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
+  \setlength{\tubs@bs@xfreespace}{\textwidth+1.5\tubspage@borderwidth}
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@collength@'
   \tubs@bs@setelements{#1}{tubs@bs@collength@}
   \stepcounter{tubs@current@row}
@@ -470,7 +472,7 @@
 \newlength{\tubs@box@ypos}% y-Position
 \newenvironment{@scifibox}[3][]{%
   \def\@current@height{(#2)}%
-  \def\@current@width{(#3)}%
+  \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
   \begin{lrbox}{\scifistorebox}%
     \begin{minipage}[t][\@current@height]{\@current@width-\tubspage@borderwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
