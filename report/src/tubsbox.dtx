@@ -507,7 +507,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{environment}{scifiposter}
+%    \begin{environment}{modulepage}
 % \marg{rows}\par
 % Extra-Umgebung für wissenschaftliche Poster mit Modulsystem.
 % Als Argument ist die gewünschte Anzahl an Modul-Zeilen anzugeben.
@@ -519,14 +519,14 @@
 % Die Verwendung von mindestens einem 'X' pro Layout ist sinnvoll, da sonst
 % der Darstellungsraum mühsam von Hand auf die richtige Größe gebracht werden 
 % muss.\par
-% Jede angelegte Modul-Zeile muss dann mit der Umgebung |scifirow| mit Inhalt
+% Jede angelegte Modul-Zeile muss dann mit der Umgebung |modrow| mit Inhalt
 % gefüllt werden.\par
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros mit Präfix
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
-\newenvironment{scifiposter}[2][]{%
+\newenvironment{modulepage}[2][]{%
   \setkeys{tubsbox.sty}{#1}
-  % reset scifirow counter
+  % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}
   %TODO: length is just a very diry hack, fix this!
   \setlength{\tubs@sb@xfreespace}{\textheight+2.5mm+\tubspage@borderwidth}
@@ -551,45 +551,45 @@
 \newboolean{tubs@sb@borderless}\setboolean{tubs@sb@borderless}{false}
 %    \end{macrocode}
 %
-%    \begin{environment}{scifirow}
-%    \begin{environment}{scifirow*}
+%    \begin{environment}{modrow}
+%    \begin{environment}{modrow*}
 % \oarg{cols}\par
 % Umgebung mit der Modulzeilen mit Inhalt gefüllt oder
 % zusätzliche Spaltenbereiche angelegt werden können.
 % Das optionale Argument \emph{rows} hat dabei dieselbe Funktion wie
-% in |scifiposter| beschrieben, allerdings definiert sie nun
+% in |modulepage| beschrieben, allerdings definiert sie nun
 % \emph{Spalten}breiten.\par
 % Wenn nur eine einzelne (X)-Spalte definiert wurde, kann der Inhalt
 % direkt in die Umgebung geschrieben werden,
 % ansonsten müssen die einzelnen Spalteninhalte mittels der Umgebung
-% |scificol| definiert werden.\par
+% |modcol| definiert werden.\par
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros
 % mit Präfix |tubs@sb@collength@|. Wenn nur eine einzelne (X)-Spalte
 % definiert wurde, bzw. das optionale Argument leer gelassen, so wird
 % direkt eine scifibox erstellt.
 %    \begin{macrocode}
-\newenvironment{scifirow}[1][X]{%
+\newenvironment{modrow}[1][X]{%
   \setboolean{tubs@sb@borderless}{false}%
-  \@scifirow[#1]%
+  \@modrow[#1]%
 }{%
-  \end@scifirow
+  \end@modrow
 }
 %    \end{macrocode}
 %    \begin{macrocode}
-\newenvironment{scifirow*}[1][X]{%
+\newenvironment{modrow*}[1][X]{%
   \setboolean{tubs@sb@borderless}{true}%
-  \@scifirow[#1]%
+  \@modrow[#1]%
 }{%
-  \end@scifirow
+  \end@modrow
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
 %
-%    \begin{environment}{@scifirow}
-% Implementierung von |scifirow|.
+%    \begin{environment}{@modrow}
+% Implementierung von |modrow|.
 %    \begin{macrocode}
-\newenvironment{@scifirow}[1][X]{%
-  % reset scificol counter
+\newenvironment{@modrow}[1][X]{%
+  % reset modcol counter
   \setcounter{tubs@sb@current@col}{0}
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
   \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubspage@borderwidth}
@@ -616,36 +616,36 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{environment}{scificol}
-%    \begin{environment}{scificol*}
+%    \begin{environment}{modcol}
+%    \begin{environment}{modcol*}
 % \oarg{subrows}\par
 % Umgebung mit der Modulspalten mit Inhalt gefüllt oder
 % zusätzliche Unterzeilen angelegt werden können.\par
 % Die Sternchen-Version sorgt dafür, dass der innere Rand weggelassen
 % wird, wie dies zum Beispiel für das Einfügen von Grafiken sinnvoll ist.
 %    \begin{macrocode}
-\newenvironment{scificol}[1][X]{%
+\newenvironment{modcol}[1][X]{%
   \setboolean{tubs@sb@borderless}{false}%
-  \@scificol[#1]%
+  \@modcol[#1]%
 }{%
-  \end@scificol
+  \end@modcol
 }
 %    \end{macrocode}
 %    \begin{macrocode}
-\newenvironment{scificol*}[1][X]{%
+\newenvironment{modcol*}[1][X]{%
   \setboolean{tubs@sb@borderless}{true}%
-  \@scificol[#1]%
+  \@modcol[#1]%
 }{%
-  \end@scificol
+  \end@modcol
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
 %
-%    \begin{environment}{@scificol}
-% Implementierung von |scificol|.
+%    \begin{environment}{@modcol}
+% Implementierung von |modcol|.
 %    \begin{macrocode}
-\newenvironment{@scificol}[1][X]{%
-  % reset scifisubrow counter
+\newenvironment{@modcol}[1][X]{%
+  % reset modsubrow counter
   \setcounter{tubs@sb@current@subrow}{0}
   % Setze Länge auf Zeilenhöhe + Trennstrich
   \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubspage@borderwidth}
@@ -672,31 +672,31 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{environment}{scifisubrow}
-%    \begin{environment}{scifisubrow*}
+%    \begin{environment}{modsubrow}
+%    \begin{environment}{modsubrow*}
 % Umgebung mit der Modul-Unterzeilen mit Inhalt gefüllt werden können.
 %    \begin{macrocode}
-\newenvironment{scifisubrow}{%
+\newenvironment{modsubrow}{%
   \setboolean{tubs@sb@borderless}{false}%
-  \@scifisubrow%
+  \@modsubrow%
 }{%
-  \end@scifisubrow
+  \end@modsubrow
 }
 %    \end{macrocode}
 %    \begin{macrocode}
-\newenvironment{scifisubrow*}{%
+\newenvironment{modsubrow*}{%
   \setboolean{tubs@sb@borderless}{true}%
-  \@scifisubrow%
+  \@modsubrow%
 }{%
-  \end@scifisubrow
+  \end@modsubrow
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
 %
-%    \begin{environment}{@scifisubrow}
-% Implementierung von |scifisubrow|.
+%    \begin{environment}{@modsubrow}
+% Implementierung von |modsubrow|.
 %    \begin{macrocode}
-\newenvironment{@scifisubrow}{%
+\newenvironment{@modsubrow}{%
   \stepcounter{tubs@sb@current@subrow}
   \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
