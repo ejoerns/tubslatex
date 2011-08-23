@@ -52,6 +52,16 @@
 %</driver>
 % \fi
 %
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
 %
@@ -68,18 +78,25 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Diese Datei stellt die Umgebung |\tubsbox| zur Verfügung mit dem
-%   eine Box im Gaußraster erstellt werden kann. Für die Breite der Box wird
-%   das Spalten-Raster verwendet. Der Textbereich der Boxen wird jeweils korrekt
-%   eingerückt.
+%   Diese Datei stellt die Umgebung |\gaussbox| für Darstellungen im Gaußraster 
+%   und Umgebungen für Darstellungen im Modulraster zur Verfügung.
 % \end{abstract}
 %
 % \section{Benutzung}
 %
-% \DescribeEnv{tubsbox} Box im Gauß-Raster
+% \subsection{Gaußraster}
 %
-% Syntax: |\tubsbox|\oarg{options}\marg{}
+% Das Gaußraster wird zur Inhalts-Darstellung auf Postern und Titelseiten 
+% verwendet.
 %
+% \DescribeEnv{gaussbox} Box im Gauß-Raster
+%
+% Syntax: |\gaussbox|\oarg{options}\marg{}
+%
+%
+% \subsection{Modulraster}
+%
+% Das Modulraster wird ausschließlich für wissenschaftliche Plakate verwendet.
 %
 % \StopEventually{\PrintIndex}
 %
@@ -99,15 +116,16 @@
 \RequirePackage{forloop}
 %    \end{macrocode}
 %
-% TODO: gaussbox=gaussbox!?
+% Merker für Option '|sender|'.
 %    \begin{macrocode}
 \newboolean{tubs@gb@bottomsender}\setboolean{tubs@gb@bottomsender}{false}
 %    \end{macrocode}
 %
 %
-% \subsection{Optionen}\label{sec:options}
+% \subsection{Gaußraster-Box}\label{sec:options}
 %
-% \paragraph{\ttfamily sender} Mögliche Werte: |bottom| oder |top|.
+% \begin{key}{gaussbox.sty}{sender}
+% Mögliche Werte: |bottom| oder |top|.
 % Schaltet zwischen den beiden Layoutvarianten mit Absenderbereich oben
 % und unten auf der Seite um, damit die Boxen korrekt platziert werden.
 %    \begin{macrocode}
@@ -119,8 +137,10 @@
   }
 }
 %    \end{macrocode}
+%    \end{key}
 %
-% \paragraph{\ttfamily frame} Zeichnet wenn gewünscht einen Rahmen um
+% \begin{key}{gaussbox.sty}{frame}
+%   Zeichnet wenn gewünscht einen Rahmen um
 %   die Box. Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.
 %   Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
@@ -133,8 +153,10 @@
   \fi
 }
 %    \end{macrocode}
+%    \end{key}
 %
-% \paragraph{\ttfamily bgcolor} Hintergrundfarbe der Boxen festlegen.
+% \begin{key}{gaussbox.sty}{bgcolor}
+%   Hintergrundfarbe der Boxen festlegen.
 %   Mögliche werte sind |none|, sowie die jeweilige gewünschte Farbe.
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
@@ -148,6 +170,7 @@
   }
 }
 %    \end{macrocode}
+%    \end{key}
 %
 %
 %    \begin{macrocode}
@@ -195,6 +218,12 @@
   (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
 %    \end{macrocode}
 %
+%    \begin{macro}{\tubs@gb@leftmargin}
+%    \begin{macro}{\tubs@gb@rightmargin}
+%    \begin{macro}{\tubs@gb@leftsep}
+%    \begin{macro}{\tubs@gb@rightsep}
+%    \begin{macro}{\tubs@gb@topmargin}
+%    \begin{macro}{\tubs@gb@toppadding}
 % Definition einiger benötigter Längen
 %    \begin{macrocode}
 \newlength{\tubs@gb@leftmargin}
@@ -204,8 +233,10 @@
 \newlength{\tubs@gb@topmargin}
 \newlength{\tubs@gb@toppadding}
 \newlength{\tubs@gb@bottommargin}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%    \begin{macrocode}
 \newsavebox{\tubs@gb@storebox}
-\newsavebox{\tubs@sb@storebox}
 \newcounter{tubs@gb@lastelement}
 \newcounter{tubs@gb@calcypos}
 \newcounter{tubs@gb@calcheight}
@@ -318,6 +349,9 @@
 %
 % \subsection{Scientific-Poster-Box}
 %
+%    \begin{macrocode}
+\newsavebox{\tubs@sb@storebox}
+%    \end{macrocode}
 %
 %    \begin{macro}{tubs@sb@elementcount}
 % Counter zählt Anzahl Zeilen für Box-Layout.
@@ -391,6 +425,16 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% Merker, ob gebrüftes Element eine key-Option war.
+%    \begin{macrocode}
+\newboolean{tubs@sb@waskeyopt}\setboolean{tubs@sb@waskeyopt}{false}
+%    \end{macrocode}
+%    \begin{macrocode}
+\define@key{scifi}{bgcolor}{%
+  \setboolean{tubs@sb@waskeyopt}{true}
+}
+%    \end{macrocode}
+%
 %    \begin{macro}{\tubs@sb@setrows}
 % \marg{element}\par
 % Prüft, ob das übergebene Element ein X ist, ansonsten wird davon
@@ -398,20 +442,23 @@
 % diese zu speichern.
 %    \begin{macrocode}
 \newcommand*{\tubs@sb@parsenext}[1]{%
-  % Teste, ob X oder Längeneinheit übergeben wurde
-  \stepcounter{tubs@sb@elementcount}
-  \ifthenelse{\equal{#1}{X}}{% X
-    \stepcounter{tubs@sb@xcount}%
-    \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{X}
-  }{% Laenge
-    % Ziehe Länge von xfreespace ab und speichere sie.
-    \addtolength\tubs@sb@xfreespace{-#1}
-    \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{%
-      #1%
+  % Prüfen, ob Argument, Key oder X ist, ansonsten Länge annehmen.
+  \setboolean{tubs@sb@waskeyopt}{false}%
+  \setkeys*{scifi}{#1}%
+  \ifthenelse{\boolean{tubs@sb@waskeyopt}}{}{%
+    \stepcounter{tubs@sb@elementcount}
+    \ifthenelse{\equal{#1}{X}}{% X
+      \stepcounter{tubs@sb@xcount}%
+      \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{X}
+    }{% Laenge
+      % Ziehe Länge von xfreespace ab und speichere sie.
+      \addtolength\tubs@sb@xfreespace{-#1}
+      \expandafter\def\csname% 
+        tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{#1}%
     }
+    % Ziehe zusätzlich Stegbreite ab.
+    \addtolength{\tubs@sb@xfreespace}{-0.5\tubspage@borderwidth}
   }
-  % Ziehe zusätzlich Stegbreite ab.
-  \addtolength{\tubs@sb@xfreespace}{-0.5\tubspage@borderwidth}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -458,7 +505,6 @@
 %    \begin{macrocode}
 \newboolean{tubs@sb@borderless}\setboolean{tubs@sb@borderless}{false}
 %    \end{macrocode}
-%
 %
 %    \begin{environment}{scifirow}
 %    \begin{environment}{scifirow*}
