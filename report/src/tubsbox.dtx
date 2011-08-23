@@ -99,6 +99,7 @@
 \RequirePackage{forloop}
 %    \end{macrocode}
 %
+% TODO: tubsbox=gaussbox!?
 %    \begin{macrocode}
 \newboolean{tubsbox@bottomsender}\setboolean{tubsbox@bottomsender}{false}
 %    \end{macrocode}
@@ -409,7 +410,20 @@
 %
 %    \begin{environment}{scifiposter}
 % \marg{rows}\par
-% Extra-Umgebung für wissenschaftliche Poster mit Zeilen-Setup.
+% Extra-Umgebung für wissenschaftliche Poster mit Modulsystem.
+% Als Argument ist die gewünschte Anzahl an Modul-Zeilen anzugeben.
+% Dies geschieht mit einer durch Kommas getrennten Liste.
+% Jedes Element muss dabei entweder eine Längenangabe oder der Buchstabe 'X'
+% sein. Jedes Element steht für eine Modul-Zeile und legt gleichzeitig deren
+% Höhe fest. Der Buchstabe 'X' sorgt dabei dafür, dass der restliche zur
+% Verfügung stehende Platz gleichmäßig auf X-Elemente aufgeteilt wird.
+% Die Verwendung von mindestens einem 'X' pro Layout ist sinnvoll, da sonst
+% der Darstellungsraum mühsam von Hand auf die richtige Größe gebracht werden 
+% muss.\par
+% Jede angelegte Modul-Zeile muss dann mit der Umgebung |scifirow| mit Inhalt
+% gefüllt werden.\par
+% Wertet Argument-Liste aus und speichert ermittelte Längen in Makros mit Präfix
+% |tubs@bs@rowlength|.
 %    \begin{macrocode}
 \newenvironment{scifiposter}[1]{%
   % reset scifirow counter
@@ -422,15 +436,32 @@
 %    \end{macrocode}
 %    \end{environment}
 %
+%    \begin{macro}{tubs@current@col}
+%    \begin{macro}{tubs@current@row}
+%    \begin{macro}{tubs@current@subrow}
+% Zähler für die jeweils aktuell gesetzte Modul-Zeile/-Spalte.
 %    \begin{macrocode}
 \newcounter{tubs@current@col} % aktuelle Spalte
 \newcounter{tubs@current@row} % aktuelle Zeile
 \newcounter{tubs@current@subrow}  % aktuelle Subspalte
 %    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
 %
 %    \begin{environment}{scifirow}
-% \marg{rows}\par
-% Extra-Zeilen-Umgebung für wissenschaftliche Poster.
+% \oarg{cols}\par
+% Umgebung mit der Modulzeilen mit Inhalt gefüllt oder
+% zusätzliche Spaltenbereiche angelegt werden können.
+% Das optionale Argument \emph{rows} hat dabei dieselbe Funktion wie
+% in |scifiposter| beschrieben, allerdings definiert sie nun
+% \emph{Spalten}breiten.\par
+% Wenn nur eine einzelne (X)-Spalte definiert wurde, kann der Inhalt
+% direkt in die Umgebung geschrieben werden,
+% ansonsten müssen die einzelnen Spalteninhalte mittels der Umgebung
+% |scificol| definiert werden.\par
+% Wertet Argument-Liste aus und speichert ermittelte Längen in Makros
+% mit Präfix |tubs@bs@collength@|. Wenn nur eine einzelne (X)-Spalte
+% definiert wurde, bzw. das optionale Argument leer gelassen, so wird
+% direkt eine scifibox erstellt.
 %    \begin{macrocode}
 \newenvironment{scifirow}[1][X]{%
   % reset scificol counter
@@ -460,7 +491,10 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{macro}{scifibox}
+%    \begin{environment}{scificol}
+% \oarg{subrows}\par
+% Umgebung mit der Modulspalten mit Inhalt gefüllt oder
+% zusätzliche Unterzeilen angelegt werden können.
 %    \begin{macrocode}
 \newenvironment{scificol}[1][X]{%
   % reset scifisubrow counter
@@ -488,9 +522,10 @@
   \tubs@box@endcmd%
 }
 %    \end{macrocode}
-%    \end{macro}
+%    \end{environment}
 %
-%    \begin{macro}{scifibox}
+%    \begin{environment}{scifisubrow}
+% Umgebung mit der Modul-Unterzeilen mit Inhalt gefüllt werden können.
 %    \begin{macrocode}
 \newenvironment{scifisubrow}{%
   \stepcounter{tubs@current@subrow}
@@ -505,7 +540,7 @@
   \end@scifibox%
 }
 %    \end{macrocode}
-%    \end{macro}
+%    \end{environment}
 %
 %    \begin{macro}{@scifibox}
 % \oarg{rowheight}\marg{height}\marg{width}\par
