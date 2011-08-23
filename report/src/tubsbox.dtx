@@ -121,7 +121,7 @@
 \RequirePackage[absolute]{textpos}
 %    \end{macrocode}
 %
-% \subsection{Allgemeine Optionen}
+% \subsection{Allgemeine Optionen}\label{sec:options}
 %
 %    \begin{macro}{tubsbox@bottomsender}
 % Merker für Option '|sender|'.
@@ -147,20 +147,18 @@
 %    \end{macro}
 %
 %
-% \subsection{Gaußraster-Box}\label{sec:options}
-%
 % \begin{key}{tubsbox.sty}{sender}
 % Mögliche Werte: |bottom| oder |top|.
 % Schaltet zwischen den beiden Layoutvarianten mit Absenderbereich oben
 % und unten auf der Seite um, damit die Boxen korrekt platziert werden.\par
 % Standardmäßig ist der Absenderbereich oben.
 %    \begin{macrocode}
-\define@key{tubsbox.sty}{sender}{%
-  \ifthenelse{\equal{#1}{bottom}}{%
-    \setboolean{tubsbox@bottomsender}{true}
-  }{%
+\define@choicekey{tubsbox.sty}{sender}[\var\nr]{top,bottom}{%
+  \ifcase\nr\relax
     \setboolean{tubsbox@bottomsender}{false}
-  }
+  \or
+    \setboolean{tubsbox@bottomsender}{true}
+  \fi
 }
 %    \end{macrocode}
 %    \end{key}
@@ -171,7 +169,7 @@
 %   Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.\par
 %   Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
-\define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
+\define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}{%
   \ifcase\nr\relax
     \def\tubsbox@framebox{\relax}
   \or
@@ -186,7 +184,7 @@
 %   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\par
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
-\define@key{tubsbox.sty}{bgcolor}[none]{%
+\define@key{tubsbox.sty}{bgcolor}{%
   \ifthenelse{\equal{#1}{none}}{%
     \renewcommand\tubsbox@colorbox{\relax}
   }{%
@@ -198,16 +196,12 @@
 %    \end{key}
 %
 %
-%    \begin{macrocode}
-\ProcessOptionsX\relax
-%    \end{macrocode}
-%
 %    \begin{macro}{\tubs@gb@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
 %    \begin{macrocode}
-% TODO: usage?...
 \newcommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
+  % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \textblockorigin{2\tubspage@borderwidth}{%
       2\tubspage@borderwidth}
@@ -220,20 +214,35 @@
 %    \end{macro}
 %
 %
+%    \begin{macro}{\tubsboxsetup}
 %    \begin{macro}{\gaussboxsetup}
+%    \begin{macro}{\scifiboxsetup}
+% \oarg{option}\par
 % Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
+% Die Namen sind jeweils Aliase.
 %    \begin{macrocode}
-\newcommand{\gaussboxsetup}[1][]{%
+\newcommand{\tubsboxsetup}[1][]{%
   \setkeys{tubsbox.sty}{#1}
   \tubs@gb@setorig
 }
+\let\gaussboxsetup=\tubsboxsetup%
+\let\scifiboxsetup=\tubsboxsetup%
 %    \end{macrocode}
-%    \end{macro}
+%    \end{macro}\end{macro}\end{macro}
 %
+%
+% Paket-Optionen auswerten,
 % Initialisierung mit Werten der Paket-Optionen.
 %    \begin{macrocode}
-\gaussboxsetup % call once to init
-%    \end{macrocode}
+\ProcessOptionsX\relax%
+\gaussboxsetup
+%    \end{macrocode}%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Gaußraster-Box}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %
 % Lege Rastermaße fest.
 %    \begin{macrocode}
@@ -260,16 +269,27 @@
 \newlength{\tubs@gb@bottommargin}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%
+%    \begin{macro}{\tubs@gb@storebox}
+% Savebox zum Speichern der Box-Inhalte.
 %    \begin{macrocode}
 \newsavebox{\tubs@gb@storebox}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{tubs@gb@lastelement}
+%    \begin{macro}{tubs@gb@calcypos}
+%    \begin{macro}{tubs@gb@calcheight}
+% Definition einiger benötigter Counter.
+%    \begin{macrocode}
 \newcounter{tubs@gb@lastelement}
 \newcounter{tubs@gb@calcypos}
 \newcounter{tubs@gb@calcheight}
 %    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
 %
 %    \begin{macro}{gaussbox}
-% \oarg{options}\marg{xpos}\marg{ypos}\marg{widht}\marg{height}
-%
+% \oarg{options}\marg{xpos}\marg{ypos}\marg{widht}\marg{height}\par
 % \begin{tabularx}{\textwidth}{lX}
 %   |options| & Siehe Abschnit \ref{sec:options}  \\
 %   |xpos|    & Horizontaler Startpunt der Box,
@@ -368,7 +388,6 @@
 %    \begin{macrocode}
 \let\tubsbox=\gaussbox
 \let\endtubsbox=\endgaussbox
-\let\tubsboxsetup=\gaussboxsetup
 %    \end{macrocode}
 %
 %
