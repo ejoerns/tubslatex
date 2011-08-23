@@ -306,7 +306,7 @@
 % TODO: check if this is needed!!!
 % \paragraph{A4, A5, DIN, A3, A2, A1}
 %    \begin{macrocode}
-%<*a4|a5|din|a3|a2|a1>
+%<*a4|a5|din|a3|a2|a1|a0>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -361,7 +361,7 @@
   \l@addto@macro{\small}{\protect\add@extra@listi{sml}}%
 }
 \@listi
-%</a4|a5|din|a3|a2|a1>
+%</a4|a5|din|a3|a2|a1|a0>
 %    \end{macrocode}
 %
 % \paragraph{A3}
@@ -622,6 +622,93 @@
 %
 %    \begin{macrocode}
 %</a1>
+%    \end{macrocode}
+%
+% \paragraph{A0}
+% Definitionen für A0. Basisschriftgröße: 40pt\par
+% \begin{tabular}{ll}
+%   Huge        & 270pt \\
+%   huge        & 180pt \\
+%   Large       & 90pt  \\
+%   large       & 60pt  \\
+%   normalsize  & 40pt  \\
+% \end{tabular}
+%
+%    \begin{macrocode}
+%<*a0>
+%    \end{macrocode}
+%
+%    \begin{macro}{\normalsize}
+%    \begin{macrocode}
+\def\normalsize{%
+   \@setfontsize\normalsize{40}{56}%
+   \abovedisplayskip 36\p@ \@plus8\p@ \@minus12\p@
+   \abovedisplayshortskip \z@ \@plus8\p@
+   \belowdisplayshortskip 22\p@ \@plus11\p@ \@minus5\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+\normalsize
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\small}
+%    \begin{macrocode}
+\newcommand{\small}{%
+   \@setfontsize\small\@xxxpt{37}%
+   \abovedisplayskip 30\p@ \@plus7\p@ \@minus11\p@
+   \abovedisplayshortskip \z@ \@plus7\p@
+   \belowdisplayshortskip 18\p@ \@plus9\p@ \@minus4\p@
+   \def\@listi{\leftmargin\leftmargini
+               \topsep 24\p@ \@plus8\p@ \@minus12\p@
+               \parsep 12\p@ \@plus4\p@ \@minus6\p@
+               \itemsep \parsep}%
+   \belowdisplayskip \abovedisplayskip
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\footnotesize}
+%    \begin{macrocode}
+\newcommand{\footnotesize}{%
+   \@setfontsize\footnotesize\@xxvpt{30}%
+   \abovedisplayskip 25\p@ \@plus6\p@ \@minus10\p@
+   \abovedisplayshortskip \z@ \@plus6\p@
+   \belowdisplayshortskip 15\p@ \@plus7.5\p@ \@minus4\p@
+   \def\@listi{\leftmargin\leftmargini
+               \topsep 20\p@ \@plus7\p@ \@minus10\p@
+               \parsep 10\p@ \@plus4\p@ \@minus5\p@
+               \itemsep \parsep}%
+   \belowdisplayskip \abovedisplayskip
+}% copied from mem36.clo
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\large}
+%    \begin{macro}{\Large}
+%    \begin{macro}{\huge}
+%    \begin{macro}{\Huge}
+% Definition der papierformatabhänigen Größen (A0)
+%    \begin{macrocode}
+\def\large{\@setfontsize\large{60pt}{78}}
+\def\Large{\@setfontsize\Large{90pt}{108}}
+\def\huge{\@setfontsize\huge{180pt}{198}}
+\def\Huge{\@setfontsize\Huge{270pt}{297}}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}
+%
+%    \begin{macro}{\tiny}
+%    \begin{macro}{\scriptsize}
+%    \begin{macro}{\LARGE}
+% Definition der interpolierten Größen (A0)
+%    \begin{macrocode}
+\def\tiny{\@setfontsize\tiny\@xxipt{26}}
+\def\scriptsize{\@setfontsize\scriptsize\@xxvipt{31}}
+\def\LARGE{\@setfontsize\LARGE{135pt}{203}}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
+%    \begin{macrocode}
+%
+%</a0>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
