@@ -425,6 +425,7 @@
 %    \begin{macrocode}
 \newcounter{tubs@current@col} % aktuelle Spalte
 \newcounter{tubs@current@row} % aktuelle Zeile
+\newcounter{tubs@current@subrow}  % aktuelle Subspalte
 %    \end{macrocode}
 %
 %    \begin{environment}{scifirow}
@@ -461,13 +462,47 @@
 %
 %    \begin{macro}{scifibox}
 %    \begin{macrocode}
-\newenvironment{scificol}{%
+\newenvironment{scificol}[1][X]{%
+  % reset scifisubrow counter
+  \setcounter{tubs@current@subrow}{0}
+  % Setze Länge auf Zeilenhöhe + Trennstrich
+  \expandafter\setlength\expandafter\tubs@bs@xfreespace\expandafter{\csname tubs@bs@rowlength@\thetubs@current@row\endcsname+0.5\tubspage@borderwidth}
+  % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@subrowlength@'
+  \tubs@bs@setelements{#1}{tubs@bs@subrowlength@}
   \stepcounter{tubs@current@col}
-  \expandafter\edef\expandafter\@argI\expandafter{%
+  % Wenn nur eine Spalte, dann direkt scifibox setzen
+  \ifthenelse{\equal{#1}{X}}{%
+    \stepcounter{tubs@current@subrow}
+    \expandafter\edef\expandafter\@argI\expandafter{%
+      \csname tubs@bs@subrowlength@\thetubs@current@subrow\endcsname}
+    \expandafter\edef\expandafter\@argII\expandafter{%
+      \csname tubs@bs@collength@\thetubs@current@col\endcsname}
+    \def\tubs@box@cmd{\@scifibox{\@argI}{\@argII}}
+    \def\tubs@box@endcmd{\end@scifibox}
+  }{%
+    \def\tubs@box@cmd{\relax}
+    \def\tubs@box@endcmd{\relax}
+  }
+  \tubs@box@cmd%
+}{%
+  \tubs@box@endcmd%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{scifibox}
+%    \begin{macrocode}
+\newenvironment{scifisubrow}{%
+  \stepcounter{tubs@current@subrow}
+  \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
+  \expandafter\edef\expandafter\@argI\expandafter{%
+    \csname tubs@bs@subrowlength@\thetubs@current@subrow\endcsname}
   \expandafter\edef\expandafter\@argII\expandafter{%
     \csname tubs@bs@collength@\thetubs@current@col\endcsname}
-  \@scifibox{\@argI}{\@argII}
+  \@scifibox[\@oarg]{\@argI}{\@argII}
+  sr: \thetubs@current@subrow\par
+  argI: \@argI, argII: \@argII\par
 }{%
   \end@scifibox
 }
@@ -475,13 +510,18 @@
 %    \end{macro}
 %
 %    \begin{macro}{@scifibox}
-% \oarg{height}\marg{width}\par
+% \oarg{rowheight}\marg{height}\marg{width}\par
 % Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
 % und hat schmalere Ränder als die tubsbox.
+% Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
 \newlength{\tubs@box@xpos}% x-Position
 \newlength{\tubs@box@ypos}% y-Position
-\newenvironment{@scifibox}[3][]{%
+\newlength{\tubs@box@rowheight}% Höhe einer Zeile, sofern als opt. Arg. gegeben
+\newlength{\tubs@box@splitrow}% Speichert benutze Länge von Splitrow für späteren Reset
+\newenvironment{@scifibox}[3][\relax]{%
+  begin: \the\tubs@box@xpos\par%
+  \def\@current@rowheight{#1}
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
   \begin{lrbox}{\scifistorebox}%
@@ -503,7 +543,20 @@
       \hspace{0.5\tubspage@borderwidth}%
     }%
 \end{textblock*}%
-  \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+  % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
+  \ifthenelse{\equal{\@current@rowheight}{\relax}}{%
+    \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+  }{%
+    \setlength\tubs@box@rowheight{\@current@rowheight}
+    \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@box@splitrow{\@current@height+0.5\tubspage@borderwidth}%
+    % Wenn Zeilenhöhe ausgefüllt, normal weiter machen...
+    \ifthenelse{\lengthtest{\tubs@box@splitrow > \tubs@box@rowheight}}{%
+      \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+      \addtolength\tubs@box@ypos{-\tubs@box@splitrow}
+      \setlength\tubs@box@splitrow{0mm}
+    }{}
+  }
   % Wenn Zeile gefüllt ist, springen in nächste Zeile
   \ifthenelse{\lengthtest{\tubs@box@xpos > \textwidth}}{%
     \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
@@ -513,8 +566,11 @@
       \setlength\tubs@box@ypos{0mm}
     }{}
   }{}
+  % speichere global!
   \global\tubs@box@xpos=\tubs@box@xpos%
   \global\tubs@box@ypos=\tubs@box@ypos%
+  \global\tubs@box@splitrow=\tubs@box@splitrow%
+  end: \the\tubs@box@xpos\par%
 }
 %    \end{macrocode}
 %    \end{macro}
