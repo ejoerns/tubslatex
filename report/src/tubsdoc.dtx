@@ -106,6 +106,10 @@
 %<book>  scrbook%
 %<poster>  scrartcl%
 }
+%    \end{macrocode}
+% Sub-Präfix für fontsizefilebase-Namen
+%    \begin{macrocode}
+\newcommand*{\@fsfbs@sub}{}
 %</class>
 %<package|class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{tubsdoc}
@@ -195,6 +199,10 @@
 %    \end{macrocode}
 % 
 % \subsubsection{Papierformat}
+%
+% Es wird jeweils das gewählte Format im Makro |\tubs@opt@paper| gespeichert
+% und das richtige Font-File-Präfix samt passender Schriftgröße eingestellt.
+%
 % \paragraph{a6paper}
 % Die Papierformat-Option |a6paper| zum Erzeugen von Dokumenten im
 % Format DIN A6.
@@ -210,6 +218,8 @@
 % Format DIN A5.
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
+  \newcommand{\@fsfb@prefix}{tubsa5}
+  \PassOptionsToClass{9pt}{\BaseClass}
   \def\tubs@opt@paper{a5paper}
 }
 %    \end{macrocode}
@@ -220,6 +230,8 @@
 % gesetzt und auch das Siegelband-Logo entsprechend skaliert.
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
+  \newcommand{\@fsfb@prefix}{tubsa4}
+  \PassOptionsToClass{9pt}{\BaseClass}
   \def\tubs@opt@paper{a4paper}
 }
 %    \end{macrocode}
@@ -229,6 +241,8 @@
 % Format DIN A§.
 %    \begin{macrocode}
 \DeclareOptionX{a3paper}{%
+  \newcommand{\@fsfb@prefix}{tubsa3}
+  \PassOptionsToClass{13pt}{\BaseClass}
   \def\tubs@opt@paper{a3paper}
 }
 %    \end{macrocode}
@@ -238,6 +252,8 @@
 % Format DIN A2.
 %    \begin{macrocode}
 \DeclareOptionX{a2paper}{%
+  \newcommand{\@fsfb@prefix}{tubsa2}
+  \PassOptionsToClass{13pt}{\BaseClass}
   \def\tubs@opt@paper{a2paper}
 }
 %    \end{macrocode}
@@ -247,6 +263,8 @@
 % Format DIN A1.
 %    \begin{macrocode}
 \DeclareOptionX{a1paper}{%
+  \newcommand{\@fsfb@prefix}{tubsa1}
+  \PassOptionsToClass{13pt}{\BaseClass}
   \def\tubs@opt@paper{a1paper}
 }
 %    \end{macrocode}
@@ -257,6 +275,8 @@
 % Format DIN A0.
 %    \begin{macrocode}
 \DeclareOptionX{a0paper}{%
+  \newcommand{\@fsfb@prefix}{tubsa0}
+  \PassOptionsToClass{13pt}{\BaseClass}
   \def\tubs@opt@paper{a0paper}
 }
 %    \end{macrocode}
@@ -302,13 +322,15 @@
   \PassOptionsToPackage{scifiposter}{tubstypearea}
   \PassOptionsToPackage{bgcolor=tuSecondary40}{tubsflowfram}
   \PassOptionsToPackage{relscale=0.9}{tubslogo}
+  % Scifiposter haben eigene Schrift-Definitionen!
+  \renewcommand*{\@fsfbs@sub}{scifi}
 }
 %    \end{macrocode}
 %</poster>
 %
 %    \begin{macrocode}
-\DeclareOptionX{bottomsender}{%
-  \PassOptionsToPackage{bottomsender}{tubstypearea}
+\DeclareOptionX{sender}{%
+  \PassOptionsToPackage{sender=#1}{tubstypearea}
 }
 %    \end{macrocode}
 %
@@ -331,6 +353,9 @@
 %<report>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
 %<article>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
 \ProcessOptionsX*\relax
+% Namen für Fontsize-Dateien festlegen
+\newcommand{\@fontsizefilebase}{\@fsfb@prefix\@fsfbs@sub}
+
 \PassOptionsToPackage{\tubs@opt@paper}{tubstypearea}
 \PassOptionsToPackage{\tubs@opt@paper}{tubslogo}
 
