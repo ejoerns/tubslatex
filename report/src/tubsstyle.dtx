@@ -638,16 +638,14 @@
 % so wird die Farbe tuBlueLight benutzt.
 %    \begin{macrocode}
 \define@key{layout}{bgcolor}[tuBlueLight]{%
-  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \g@addto@macro{\@next@shipout}{%
+  \g@addto@macro{\@@next@shipout}{%
+    \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
       \put(0,\LenToUnit{\tubspage@senderheight}){{%
         \setlength\fboxsep{0mm}\colorbox{#1}{%
           \parbox[b][\paperheight-\tubspage@senderheight]%
             {\paperwidth}{~}}%
       }}%
-    }
-  }{%
-    \g@addto@macro{\@next@shipout}{%
+    }{%
       \put(0,0){{%
         \setlength\fboxsep{0mm}\colorbox{#1}{%
           \parbox[b][\paperheight-\tubspage@senderheight]%
@@ -676,9 +674,11 @@
 %    \begin{macrocode}
 \newcommand{\@layout@pre}[1]{%
   \def\@next@shipout{}
+  \def\@@next@shipout{}
   \setcounter{tubs@yseg@cnt}{1}
   \setkeys{layout}{pages=all,sender=top}
   \setkeys{layout}{#1}
+  \g@addto@macro{\@next@shipout}{\@@next@shipout}
 }
 %    \end{macrocode}
 %    \end{macro}
