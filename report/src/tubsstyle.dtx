@@ -627,12 +627,22 @@
 % so wird die Farbe tuBlueLight benutzt.
 %    \begin{macrocode}
 \define@key{layout}{bgcolor}[tuBlueLight]{%
-  \g@addto@macro{\@next@shipout}{%
-    \put(0,0){{%
-      \setlength\fboxsep{0mm}\colorbox{#1}{%
-        \parbox[b][\paperheight-\tubspage@senderheight]%
-          {\paperwidth}{~}}%
-    }}%
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+    \g@addto@macro{\@next@shipout}{%
+      \put(0,\LenToUnit{\tubspage@senderheight}){{%
+        \setlength\fboxsep{0mm}\colorbox{#1}{%
+          \parbox[b][\paperheight-\tubspage@senderheight]%
+            {\paperwidth}{~}}%
+      }}%
+    }
+  }{%
+    \g@addto@macro{\@next@shipout}{%
+      \put(0,0){{%
+        \setlength\fboxsep{0mm}\colorbox{#1}{%
+          \parbox[b][\paperheight-\tubspage@senderheight]%
+            {\paperwidth}{~}}%
+      }}%
+    }
   }
 }
 %    \end{macrocode}
