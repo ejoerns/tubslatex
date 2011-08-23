@@ -70,7 +70,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{tubsposter} -- 
-%   Box-Definitionen für \emph{tubslatex}\thanks{This document
+%   Poster-Definitionen für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{tubsposter}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -112,6 +112,18 @@
 %<*option>
 %    \end{macrocode}
 %    \begin{macrocode}
+\newcommand{\tubs@poster@style}{poster}
+\DeclareOptionX{style}{%
+  \ifthenelse{\equal{#1}{scifi}}{%
+    \renewcommand{\tubs@poster@style}{scifi}
+  }{\ifthenelse{\equal{#1}{notes}}{%
+    \renewcommand{\tubs@poster@style}{notes}
+  }{%
+    \renewcommand{\tubs@poster@style}{poster}
+  }}
+}
+%    \end{macrocode}
+%    \begin{macrocode}
 %</option>
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -122,6 +134,110 @@
 \RequirePackage{xkeyval}
 \RequirePackage{tubsbox}
 \RequirePackage{tubsstyle}
+%    \end{macrocode}
+%
+%
+% \subsection{Poster-Befehle}
+%
+%
+%
+%    \begin{macrocode}
+\newenvironment{tubsposter}{\relax}{\relax}
+\newenvironment{posterrow}{\relax}{\relax}
+\newenvironment{postercol}{\relax}{\relax}
+\newenvironment{postersubrow}{\relax}{\relax}
+%    \end{macrocode}
+%    \begin{environment}{tubsposter}
+% Erzeugt eine neue Poster-Seite.
+% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
+% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
+% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
+% sind, zuletzt in den Hintergrund gezeichnet werden.
+%    \begin{macrocode}
+\newenvironment{@tubsposter}[1][]{%
+  \@layout@pre{#1}
+  \sffamily
+}{%
+  \@layout@post
+  ~\newpage
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{macrocode}
+\newenvironment{@scifiposter}[2][]{%
+  % Setze Hintergrundlayout, setzt Standar-bgcolor
+  \@layout@pre{bgcolor=tuSecondaryLight,#1}
+  \sffamily
+  \showtubslogo
+  % Erstelle Modulseite
+  \modulepage[#1]{#2}
+}{%
+  \endmodulepage
+  \@layout@post
+  ~\newpage
+}
+%    \end{macrocode}
+%
+%    \begin{environment}{posterrow}
+% Erzeugt einen neuen Inhalts-Bereich.\\
+% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}\\
+% |options|: Mögliche Optionen,
+% |ysegments|: Anzahl Gauß-Elemente für Höhe.
+% Mögliche Optionen:
+% \begin{description}
+%   \item[|bgcolor|] Hintergrundfarbe
+%   \item[|bgimage|] Hintergrundbild
+% \end{description}
+% Erzeugt eine |tubsbox| mit voller Seitenbreite und angegebener Höhe.
+% Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
+% gesetzten Boxen bzw. ihren Höhen berechnet.
+%    \begin{macrocode}
+\newenvironment{@posterrow}[2][]{%
+  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
+  % TODO...
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+    \edef\@tubs@arg{[sender=bottom]{0}{\thetubs@yseg@cnt}{6}{#2}}
+  }{%
+    \edef\@tubs@arg{{0}{\thetubs@yseg@cnt}{6}{#2}}
+  }
+  \bgelement[#1]{#2}
+  % Erzeuge tubsbox
+  \expandafter\tubsbox\@tubs@arg
+}{%
+  \endtubsbox
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+% Definiere Kommandos entsprechend gewählte Poster-Art.
+%    \begin{macrocode}
+\ifthenelse{\equal{\tubs@poster@style}{scifi}}{%
+  \let\tubsposter=\@scifiposter
+  \let\endtubsposter=\end@scifiposter
+  \let\posterrow=\modrow
+  \let\endposterrow=\endmodrow
+  \let\postercol=\modcol
+  \let\endpostercol=\endmodcol
+  \let\postersubrow=\modsubrow
+  \let\endpostersubrow=\endmodsubrow
+}{\ifthenelse{\equal{\tubs@poster@style}{notes}}{%
+}{%
+  \let\tubsposter=\@tubsposter
+  \let\endtubsposter=\end@tubsposter
+  \let\posterrow=\@posterrow
+  \let\endposterrow=\end@posterrow
+  \def\postercol{\ClassError{tubsposter}{%
+    Command is not supported in standard poster style!}{%
+    Maybe you should choose another style with option 'style='}%
+  }
+  \let\endpostercol=\relax
+  \def\postersubrow{\ClassError{tubsposter}{%
+    Command is not supported in standard poster style!}{%
+    Maybe you should choose another style with option 'style='}%
+  }
+  \let\endpostersubrow=\relax
+}}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</body>
