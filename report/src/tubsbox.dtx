@@ -124,12 +124,12 @@
 %
 % \subsection{Gaußraster-Box}\label{sec:options}
 %
-% \begin{key}{gaussbox.sty}{sender}
+% \begin{key}{tubsbox.sty}{sender}
 % Mögliche Werte: |bottom| oder |top|.
 % Schaltet zwischen den beiden Layoutvarianten mit Absenderbereich oben
 % und unten auf der Seite um, damit die Boxen korrekt platziert werden.
 %    \begin{macrocode}
-\define@key{gaussbox.sty}{sender}{%
+\define@key{tubsbox.sty}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
     \setboolean{tubs@gb@bottomsender}{true}
   }{%
@@ -139,13 +139,13 @@
 %    \end{macrocode}
 %    \end{key}
 %
-% \begin{key}{gaussbox.sty}{frame}
+% \begin{key}{tubsbox.sty}{frame}
 %   Zeichnet wenn gewünscht einen Rahmen um
 %   die Box. Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.
 %   Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
 \def\tubs@gb@box{\relax}
-\define@choicekey{gaussbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
+\define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
   \ifcase\nr\relax
     \def\tubs@gb@box{\relax}
   \or
@@ -155,13 +155,13 @@
 %    \end{macrocode}
 %    \end{key}
 %
-% \begin{key}{gaussbox.sty}{bgcolor}
+% \begin{key}{tubsbox.sty}{bgcolor}
 %   Hintergrundfarbe der Boxen festlegen.
 %   Mögliche werte sind |none|, sowie die jeweilige gewünschte Farbe.
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
 \newcommand{\tubs@gb@colorbox}{\relax}
-\define@key{gaussbox.sty}{bgcolor}[none]{%
+\define@key{tubsbox.sty}{bgcolor}[none]{%
   \ifthenelse{\equal{#1}{none}}{%
     \renewcommand\tubs@gb@colorbox{\relax}
   }{%
@@ -199,7 +199,7 @@
 % Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
 %    \begin{macrocode}
 \newcommand{\gaussboxsetup}[1][]{%
-  \setkeys{gaussbox.sty}{#1}
+  \setkeys{tubsbox.sty}{#1}
   \tubs@gb@setorig
 }
 %    \end{macrocode}
@@ -260,7 +260,7 @@
 % \end{tabularx}
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][bgcolor=none]{%
-\setkeys{gaussbox.sty}{#1}
+\setkeys{tubsbox.sty}{#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
@@ -480,12 +480,13 @@
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros mit Präfix
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
-\newenvironment{scifiposter}[1]{%
+\newenvironment{scifiposter}[2][]{%
+  \setkeys{tubsbox.sty}{#1}
   % reset scifirow counter
   \setcounter{tubs@sb@current@row}{0}
   %TODO: length is just a very diry hack, fix this!
   \setlength{\tubs@sb@xfreespace}{\textheight+2.5mm+\tubspage@borderwidth}
-  \tubs@sb@setelements{#1}{tubs@sb@rowlength@}
+  \tubs@sb@setelements{#2}{tubs@sb@rowlength@}
 }{%
 }
 %    \end{macrocode}
@@ -705,16 +706,29 @@
     \end{minipage}%
   \end{lrbox}%
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
-  \begin{textblock*}{\@current@width}(%
-    -1\tubspage@borderwidth+\tubs@sb@box@xpos,%
-    -1\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
-      \setlength\fboxsep{0mm}%
-      \colorbox{tuWhite}{%
-        \hspace{0.5\tubs@sb@padding}%
-        \usebox{\tubs@sb@storebox}%
-        \hspace{0.5\tubs@sb@padding}%
-      }%
-  \end{textblock*}%
+  \ifthenelse{\boolean{tubs@gb@bottomsender}}{%
+    \begin{textblock*}{\@current@width}(%
+      -1\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      -\tubspage@senderheight+\tubs@sb@box@ypos)%
+        \setlength\fboxsep{0mm}%
+        \colorbox{tuWhite}{%
+          \hspace{0.5\tubs@sb@padding}%
+          \usebox{\tubs@sb@storebox}%
+          \hspace{0.5\tubs@sb@padding}%
+        }%
+    \end{textblock*}%
+  }{%
+    \begin{textblock*}{\@current@width}(%
+      -1\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      -1\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
+        \setlength\fboxsep{0mm}%
+        \colorbox{tuWhite}{%
+          \hspace{0.5\tubs@sb@padding}%
+          \usebox{\tubs@sb@storebox}%
+          \hspace{0.5\tubs@sb@padding}%
+        }%
+    \end{textblock*}%
+  }
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
   \ifthenelse{\equal{\@current@rowheight}{\relax}}{%
     \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
