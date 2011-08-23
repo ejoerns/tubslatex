@@ -99,9 +99,9 @@
 \RequirePackage{forloop}
 %    \end{macrocode}
 %
-% TODO: tubsbox=gaussbox!?
+% TODO: gaussbox=gaussbox!?
 %    \begin{macrocode}
-\newboolean{tubsbox@bottomsender}\setboolean{tubsbox@bottomsender}{false}
+\newboolean{gaussbox@bottomsender}\setboolean{gaussbox@bottomsender}{false}
 %    \end{macrocode}
 %
 %
@@ -111,11 +111,11 @@
 % Schaltet zwischen den beiden Layoutvarianten mit Absenderbereich oben
 % und unten auf der Seite um, damit die Boxen korrekt platziert werden.
 %    \begin{macrocode}
-\define@key{tubsbox.sty}{sender}{%
+\define@key{gaussbox.sty}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
-    \setboolean{tubsbox@bottomsender}{true}
+    \setboolean{gaussbox@bottomsender}{true}
   }{%
-    \setboolean{tubsbox@bottomsender}{false}
+    \setboolean{gaussbox@bottomsender}{false}
   }
 }
 %    \end{macrocode}
@@ -124,12 +124,12 @@
 %   die Box. Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.
 %   Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
-\def\tubsbox@box{\relax}
-\define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
+\def\gaussbox@box{\relax}
+\define@choicekey{gaussbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
   \ifcase\nr\relax
-    \def\tubsbox@box{\relax}
+    \def\gaussbox@box{\relax}
   \or
-    \def\tubsbox@box{\fbox}
+    \def\gaussbox@box{\fbox}
   \fi
 }
 %    \end{macrocode}
@@ -138,13 +138,13 @@
 %   Mögliche werte sind |none|, sowie die jeweilige gewünschte Farbe.
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
-\newcommand{\tubsbox@colorbox}{\relax}
-\define@key{tubsbox.sty}{bgcolor}[none]{%
+\newcommand{\gaussbox@colorbox}{\relax}
+\define@key{gaussbox.sty}{bgcolor}[none]{%
   \ifthenelse{\equal{#1}{none}}{%
-    \renewcommand\tubsbox@colorbox{\relax}
+    \renewcommand\gaussbox@colorbox{\relax}
   }{%
     \def\bgcolor{#1}
-    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
+    \renewcommand\gaussbox@colorbox{\colorbox{\bgcolor}}
   }
 }
 %    \end{macrocode}
@@ -154,13 +154,13 @@
 \ProcessOptionsX\relax
 %    \end{macrocode}
 %
-%    \begin{macro}{\tubsbox@setorig}
+%    \begin{macro}{\gaussbox@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
 %    \begin{macrocode}
 % TODO: usage?...
-\newcommand\tubsbox@setorig{%
+\newcommand\gaussbox@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
-  \ifthenelse{\boolean{tubsbox@bottomsender}}{%
+  \ifthenelse{\boolean{gaussbox@bottomsender}}{%
     \textblockorigin{2\tubspage@borderwidth}{%
       2\tubspage@borderwidth}
   }{%
@@ -172,19 +172,19 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\tubsboxsetup}
+%    \begin{macro}{\gaussboxsetup}
 % Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
 %    \begin{macrocode}
-\newcommand{\tubsboxsetup}[1][]{%
-  \setkeys{tubsbox.sty}{#1}
-  \tubsbox@setorig
+\newcommand{\gaussboxsetup}[1][]{%
+  \setkeys{gaussbox.sty}{#1}
+  \gaussbox@setorig
 }
 %    \end{macrocode}
 %    \end{macro}
 %
 % Initialisierung mit Wertden der Paket-Optionen.
 %    \begin{macrocode}
-\tubsboxsetup % call once to init
+\gaussboxsetup % call once to init
 %    \end{macrocode}
 %
 % Lege Rastermaße fest.
@@ -197,21 +197,21 @@
 %
 % Definition einiger benötigter Längen
 %    \begin{macrocode}
-\newlength{\tubsbox@leftmargin}
-\newlength{\tubsbox@rightmargin}
-\newlength{\tubsbox@leftsep}
-\newlength{\tubsbox@rightsep}
-\newlength{\tubsbox@topmargin}
-\newlength{\tubsbox@toppadding}
-\newlength{\tubsbox@bottommargin}
+\newlength{\gaussbox@leftmargin}
+\newlength{\gaussbox@rightmargin}
+\newlength{\gaussbox@leftsep}
+\newlength{\gaussbox@rightsep}
+\newlength{\gaussbox@topmargin}
+\newlength{\gaussbox@toppadding}
+\newlength{\gaussbox@bottommargin}
 \newsavebox{\storebox}
 \newsavebox{\scifistorebox}
-\newcounter{tubsbox@lastelement}
-\newcounter{tubsbox@calcypos}
-\newcounter{tubsbox@calcheight}
+\newcounter{gaussbox@lastelement}
+\newcounter{gaussbox@calcypos}
+\newcounter{gaussbox@calcheight}
 %    \end{macrocode}
 %
-%    \begin{macro}{tubsbox}
+%    \begin{macro}{gaussbox}
 % \oarg{options}\marg{xpos}\marg{ypos}\marg{widht}\marg{height}
 %
 % \begin{tabularx}{\textwidth}{lX}
@@ -228,84 +228,92 @@
 %               Wertebereich: [1-6] / [1-8]
 % \end{tabularx}
 %    \begin{macrocode}
-\newenvironment{tubsbox}[5][bgcolor=none]{%
-\setkeys{tubsbox.sty}{#1}
+\newenvironment{gaussbox}[5][bgcolor=none]{%
+\setkeys{gaussbox.sty}{#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
 \ifnum#2=0
-\setlength{\tubsbox@leftmargin}{\tubspage@borderwidth}
-\setlength{\tubsbox@rightmargin}{0mm}
-\setlength{\tubsbox@leftsep}{0mm}
+\setlength{\gaussbox@leftmargin}{\tubspage@borderwidth}
+\setlength{\gaussbox@rightmargin}{0mm}
+\setlength{\gaussbox@leftsep}{0mm}
 \else
-\setlength{\tubsbox@leftsep}{0.5\tubspage@columnsep}
+\setlength{\gaussbox@leftsep}{0.5\tubspage@columnsep}
 \fi
 %
-\setcounter{tubsbox@lastelement}{#2}\addtocounter{tubsbox@lastelement}{#4}
-\ifnum\value{tubsbox@lastelement}=\tubspage@xsegments
-  \setlength{\tubsbox@rightmargin}{\tubspage@borderwidth}
-  \setlength{\tubsbox@rightsep}{0mm}
+\setcounter{gaussbox@lastelement}{#2}\addtocounter{gaussbox@lastelement}{#4}
+\ifnum\value{gaussbox@lastelement}=\tubspage@xsegments
+  \setlength{\gaussbox@rightmargin}{\tubspage@borderwidth}
+  \setlength{\gaussbox@rightsep}{0mm}
 \else
-  \setlength{\tubsbox@rightmargin}{0mm}
-  \setlength{\tubsbox@rightsep}{0.5\tubspage@columnsep}
+  \setlength{\gaussbox@rightmargin}{0mm}
+  \setlength{\gaussbox@rightsep}{0.5\tubspage@columnsep}
 \fi
 %    \end{macrocode}
 % Berechnung der oberen und unteren Ränder
 %    \begin{macrocode}
 \ifnum#3=1
-  \setlength{\tubsbox@topmargin}{\tubspage@borderwidth}
-  \setlength{\tubsbox@toppadding}{3\tubspage@borderwidth}
-  \setlength{\tubsbox@bottommargin}{0mm}
+  \setlength{\gaussbox@topmargin}{\tubspage@borderwidth}
+  \setlength{\gaussbox@toppadding}{3\tubspage@borderwidth}
+  \setlength{\gaussbox@bottommargin}{0mm}
 \else
-  \setlength{\tubsbox@toppadding}{\tubspage@borderwidth}
+  \setlength{\gaussbox@toppadding}{\tubspage@borderwidth}
 \fi
-\setcounter{tubsbox@lastelement}{#3+#5-1}
-\ifnum\value{tubsbox@lastelement}=\tubspage@ysegments
-  \setlength{\tubsbox@bottommargin}{\tubspage@borderwidth}
+\setcounter{gaussbox@lastelement}{#3+#5-1}
+\ifnum\value{gaussbox@lastelement}=\tubspage@ysegments
+  \setlength{\gaussbox@bottommargin}{\tubspage@borderwidth}
 \else
-  \setlength{\tubsbox@bottommargin}{0mm}
+  \setlength{\gaussbox@bottommargin}{0mm}
 \fi
 %
-\def\tubsbox@xpos{#2}
+\def\gaussbox@xpos{#2}
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}
-\ifthenelse{\boolean{tubsbox@bottomsender}}{%
+\ifthenelse{\boolean{gaussbox@bottomsender}}{%
   \def\@inv@arg{inverted}%
 }{}
-\calc@gauss@elementpos[\@inv@arg]{tubsbox@calcypos}{#3}
-\def\tubsbox@ypos{\thetubsbox@calcypos}
+\calc@gauss@elementpos[\@inv@arg]{gaussbox@calcypos}{#3}
+\def\gaussbox@ypos{\thegaussbox@calcypos}
 % 
-\calc@gauss@elementpos[\@inv@arg]{tubsbox@calcheight}{#3+#5}
-\addtocounter{tubsbox@calcheight}{%
-  -\thetubsbox@calcypos}
+\calc@gauss@elementpos[\@inv@arg]{gaussbox@calcheight}{#3+#5}
+\addtocounter{gaussbox@calcheight}{%
+  -\thegaussbox@calcypos}
 % 
-\def\tubsbox@width{#4}
-\def\tubsbox@height{\thetubsbox@calcheight}
+\def\gaussbox@width{#4}
+\def\gaussbox@height{\thegaussbox@calcheight}
 \begin{lrbox}{\storebox}
 \begin{minipage}[t]%
-  [\tubsbox@height\TPVertModule]%
-  {\tubsbox@width\TPHorizModule-\tubsbox@leftsep-\tubsbox@rightsep}%
-  \vspace*{\tubsbox@toppadding}%
+  [\gaussbox@height\TPVertModule]%
+  {\gaussbox@width\TPHorizModule-\gaussbox@leftsep-\gaussbox@rightsep}%
+  \vspace*{\gaussbox@toppadding}%
 }{%
 \vspace*{\tubspage@borderwidth}%
 \end{minipage}
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
-\begin{textblock}{\tubsbox@width}(\tubsbox@xpos,\tubsbox@ypos)%
-  \hspace*{\tubsbox@leftsep}%
-  \hspace*{-\tubsbox@leftmargin}%
+\begin{textblock}{\gaussbox@width}(\gaussbox@xpos,\gaussbox@ypos)%
+  \hspace*{\gaussbox@leftsep}%
+  \hspace*{-\gaussbox@leftmargin}%
   \raisebox{\tubspage@borderwidth}[0cm]{%
-    \tubsbox@box{\tubsbox@colorbox{%
-      \hspace*{\tubsbox@leftmargin}%
+    \gaussbox@box{\gaussbox@colorbox{%
+      \hspace*{\gaussbox@leftmargin}%
       \usebox{\storebox}%
-      \hspace*{\tubsbox@rightmargin}%
+      \hspace*{\gaussbox@rightmargin}%
       }}%
     }%
-  \hspace*{\tubsbox@rightsep}%
+  \hspace*{\gaussbox@rightsep}%
 \end{textblock}
 }
 %    \end{macrocode}
 %    \end{macro}
+%
+% NOTE: Nur aus Kompatibilitaetsgründen definiert!
+% Sobald wie möglich entfernen!
+%    \begin{macrocode}
+\let\tubsbox=\gaussbox
+\let\endtubsbox=\endgaussbox
+\let\tubsboxsetup=\gaussboxsetup
+%    \end{macrocode}
 %
 %
 % \subsection{Scientific-Poster-Box}
@@ -542,20 +550,31 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{macro}{@scifibox}
-% \oarg{rowheight}\marg{height}\marg{width}\par
-% Box für Inhalt auf wissenschaftlichen Postern. Diese ist unabhängig vom Gaußraster
-% und hat schmalere Ränder als die tubsbox.
-% Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
+%    \begin{macro}{\tubs@box@xpos}
+%    \begin{macro}{\tubs@box@ypos}
+%    \begin{macro}{\tubs@box@rowheight}
+%    \begin{macro}{\tubs@box@splitrow}
+% Von |@scifibox| verwendete Längen.
 %    \begin{macrocode}
 \newlength{\tubs@box@xpos}% x-Position
 \newlength{\tubs@box@ypos}% y-Position
 \newlength{\tubs@box@rowheight}% Höhe einer Zeile, sofern als opt. Arg. gegeben
 \newlength{\tubs@box@splitrow}% Speichert benutze Länge von Splitrow für späteren Reset
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}
+%
+%    \begin{macro}{@scifibox}
+% \oarg{rowheight}\marg{height}\marg{width}\par
+% Box für Inhalt auf wissenschaftlichen Postern (Modulsystem).
+% Dies ist unabhängig vom Gaußraster und hat schmalere Ränder als die gaussbox.
+% Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
+%    \begin{macrocode}
 \newenvironment{@scifibox}[3][\relax]{%
+  % Argumente sichern
   \def\@current@rowheight{#1}
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
+  % Speichere Inhalt in minipage-Box.
   \begin{lrbox}{\scifistorebox}%
     \begin{minipage}[t][\@current@height]{\@current@width-\tubspage@borderwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
@@ -563,18 +582,17 @@
       \vspace*{0.5\tubspage@borderwidth}%
     \end{minipage}%
   \end{lrbox}%
-%
-  \setlength\fboxsep{0mm}%
-\begin{textblock*}{\@current@width}(%
-  -1\tubspage@borderwidth+\tubs@box@xpos,%
-  -1\tubspage@borderwidth+0.05195\paperheight+\tubs@box@ypos)%
-%   \hspace*{-0.5\tubspage@borderwidth}%
-    \colorbox{tuWhite}{%
-      \hspace{0.5\tubspage@borderwidth}%
-      \usebox{\scifistorebox}%
-      \hspace{0.5\tubspage@borderwidth}%
-    }%
-\end{textblock*}%
+% Definiere und platziere Textblock mit gespeichertem Inhalt.
+  \begin{textblock*}{\@current@width}(%
+    -1\tubspage@borderwidth+\tubs@box@xpos,%
+    -1\tubspage@borderwidth+0.05195\paperheight+\tubs@box@ypos)%
+      \setlength\fboxsep{0mm}%
+      \colorbox{tuWhite}{%
+        \hspace{0.5\tubspage@borderwidth}%
+        \usebox{\scifistorebox}%
+        \hspace{0.5\tubspage@borderwidth}%
+      }%
+  \end{textblock*}%
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
   \ifthenelse{\equal{\@current@rowheight}{\relax}}{%
     \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
