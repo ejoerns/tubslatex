@@ -1,112 +1,119 @@
 \makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
-\documentclass[a3paper,13pt,scifiposter]{tubsposter}
-\usepackage{tubsstyle}
+\documentclass[a3paper,13pt,scifiposter,style=scifi]{tubsposter}
 \usepackage[utf8]{inputenc}
 
 \usepackage{lipsum}
 
 \begin{document}
-\layout[sender=top,bgcolor,scifiposter]{%
-  \showtubslogo
-}
-% asdf
-\begin{scifiposter}{5cm,5cm,X,X}
-  \begin{scifirow}{X,X}
-    \begin{scificol}
+  \begin{tubsposter}{5cm,5cm,X,X}
+  \begin{posterrow}
+    \bfseries\sffamily{\LARGE Das Corporate Design mit \LaTeX}\\[1em]
+    von Enrico Jörns
+  \end{posterrow}
+  \begin{posterrow}[X,3cm,X]
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-  \begin{scifirow}{X,3cm,X}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+  \end{posterrow}
+  \begin{posterrow}[X,X,X]
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-  \begin{scifirow}{X,X,X}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+  \end{posterrow}
+  \begin{posterrow}[5cm,X,5cm]
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-  \begin{scifirow}{5cm,X,5cm}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-\end{scifiposter}
+    \end{postercol}
+  \end{posterrow}
+\end{tubsposter}
 ~
 \newpage
-\begin{scifiposter}{X,5cm,X}
-  \begin{scifirow}{X}
-    \begin{scificol}
+\begin{modulepage}[sender=bottom]{X,5cm,X}
+  \begin{posterrow}
+    Dies ist ein Testtext, der absolut keinen Sinn hat.
+  \end{posterrow}
+  \begin{posterrow}[X,3cm,X]
+    \begin{postercol}[X,X]
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+    \end{postercol}
+    \begin{postercol}[X,X]
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-  \begin{scifirow}{X,3cm,X}
-    \begin{scificol}
+    \end{postercol}
+  \end{posterrow}
+  \begin{posterrow}[X,X,X,X]
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}[2cm,X,X]
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-  \begin{scifirow}{X,X,X,X}
-    \begin{scificol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-\end{scifiposter}
+    \end{postercol}
+  \end{posterrow}
+\end{modulepage}
 ~
 \newpage
-\begin{scifiposter}{X,X}
-  \begin{scifirow}{X,X}
-    \begin{scificol}
+\begin{modulepage}{X,X}
+  \begin{posterrow}[5cm,X]
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-  \begin{scifirow}{X,X}
-    \begin{scificol}
+    \end{postercol}
+  \end{posterrow}
+  \begin{posterrow}[5cm,X]
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-    \begin{scificol}
+    \end{postercol}
+    \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{scificol}
-  \end{scifirow}
-\end{scifiposter}
+    \end{postercol}
+  \end{posterrow}
+\end{modulepage}
 ~
 \newpage
 \end{document}
