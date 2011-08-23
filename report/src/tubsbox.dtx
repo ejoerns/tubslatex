@@ -182,7 +182,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% Initialisierung mit Wertden der Paket-Optionen.
+% Initialisierung mit Werten der Paket-Optionen.
 %    \begin{macrocode}
 \gaussboxsetup % call once to init
 %    \end{macrocode}
@@ -455,7 +455,13 @@
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
+%    \begin{macrocode}
+\newboolean{tubs@sb@borderless}\setboolean{tubs@sb@borderless}{false}
+%    \end{macrocode}
+%
+%
 %    \begin{environment}{scifirow}
+%    \begin{environment}{scifirow*}
 % \oarg{cols}\par
 % Umgebung mit der Modulzeilen mit Inhalt gefüllt oder
 % zusätzliche Spaltenbereiche angelegt werden können.
@@ -472,6 +478,26 @@
 % direkt eine scifibox erstellt.
 %    \begin{macrocode}
 \newenvironment{scifirow}[1][X]{%
+  \setboolean{tubs@sb@borderless}{false}%
+  \@scifirow[#1]%
+}{%
+  \end@scifirow
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newenvironment{scifirow*}[1][X]{%
+  \setboolean{tubs@sb@borderless}{true}%
+  \@scifirow[#1]%
+}{%
+  \end@scifirow
+}
+%    \end{macrocode}
+%    \end{environment}\end{environment}
+%
+%    \begin{environment}{@scifirow}
+% Implementierung von |scifirow|.
+%    \begin{macrocode}
+\newenvironment{@scifirow}[1][X]{%
   % reset scificol counter
   \setcounter{tubs@sb@current@col}{0}
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
@@ -500,11 +526,34 @@
 %    \end{environment}
 %
 %    \begin{environment}{scificol}
+%    \begin{environment}{scificol*}
 % \oarg{subrows}\par
 % Umgebung mit der Modulspalten mit Inhalt gefüllt oder
-% zusätzliche Unterzeilen angelegt werden können.
+% zusätzliche Unterzeilen angelegt werden können.\par
+% Die Sternchen-Version sorgt dafür, dass der innere Rand weggelassen
+% wird, wie dies zum Beispiel für das Einfügen von Grafiken sinnvoll ist.
 %    \begin{macrocode}
 \newenvironment{scificol}[1][X]{%
+  \setboolean{tubs@sb@borderless}{false}%
+  \@scificol[#1]%
+}{%
+  \end@scificol
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newenvironment{scificol*}[1][X]{%
+  \setboolean{tubs@sb@borderless}{true}%
+  \@scificol[#1]%
+}{%
+  \end@scificol
+}
+%    \end{macrocode}
+%    \end{environment}\end{environment}
+%
+%    \begin{environment}{@scificol}
+% Implementierung von |scificol|.
+%    \begin{macrocode}
+\newenvironment{@scificol}[1][X]{%
   % reset scifisubrow counter
   \setcounter{tubs@sb@current@subrow}{0}
   % Setze Länge auf Zeilenhöhe + Trennstrich
@@ -533,9 +582,30 @@
 %    \end{environment}
 %
 %    \begin{environment}{scifisubrow}
+%    \begin{environment}{scifisubrow*}
 % Umgebung mit der Modul-Unterzeilen mit Inhalt gefüllt werden können.
 %    \begin{macrocode}
 \newenvironment{scifisubrow}{%
+  \setboolean{tubs@sb@borderless}{false}%
+  \@scifisubrow%
+}{%
+  \end@scifisubrow
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newenvironment{scifisubrow*}{%
+  \setboolean{tubs@sb@borderless}{true}%
+  \@scifisubrow%
+}{%
+  \end@scifisubrow
+}
+%    \end{macrocode}
+%    \end{environment}\end{environment}
+%
+%    \begin{environment}{@scifisubrow}
+% Implementierung von |scifisubrow|.
+%    \begin{macrocode}
+\newenvironment{@scifisubrow}{%
   \stepcounter{tubs@sb@current@subrow}
   \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
@@ -560,6 +630,7 @@
 \newlength{\tubs@sb@box@ypos}% y-Position
 \newlength{\tubs@sb@box@rowheight}% Höhe einer Zeile, sofern als opt. Arg. gegeben
 \newlength{\tubs@sb@box@splitrow}% Speichert benutze Länge von Splitrow für späteren Reset
+\newlength{\tubs@sb@padding}% Abstand Text zu Boxrand
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -574,12 +645,17 @@
   \def\@current@rowheight{#1}
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
+  \ifthenelse{\boolean{tubs@sb@borderless}}{%
+    \setlength\tubs@sb@padding{0mm}
+  }{
+    \setlength\tubs@sb@padding{\tubspage@borderwidth}
+  }
   % Speichere Inhalt in minipage-Box.
   \begin{lrbox}{\tubs@sb@storebox}%
-    \begin{minipage}[t][\@current@height]{\@current@width-\tubspage@borderwidth}%
-      \vspace*{0.5\tubspage@borderwidth}%
+    \begin{minipage}[t][\@current@height]{\@current@width-\tubs@sb@padding}%
+      \vspace*{0.5\tubs@sb@padding}%
 }{%
-      \vspace*{0.5\tubspage@borderwidth}%
+      \vspace*{0.5\tubs@sb@padding}%
     \end{minipage}%
   \end{lrbox}%
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
@@ -588,9 +664,9 @@
     -1\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
       \setlength\fboxsep{0mm}%
       \colorbox{tuWhite}{%
-        \hspace{0.5\tubspage@borderwidth}%
+        \hspace{0.5\tubs@sb@padding}%
         \usebox{\tubs@sb@storebox}%
-        \hspace{0.5\tubspage@borderwidth}%
+        \hspace{0.5\tubs@sb@padding}%
       }%
   \end{textblock*}%
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
