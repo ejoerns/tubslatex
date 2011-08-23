@@ -101,7 +101,7 @@
 %
 % TODO: gaussbox=gaussbox!?
 %    \begin{macrocode}
-\newboolean{gaussbox@bottomsender}\setboolean{gaussbox@bottomsender}{false}
+\newboolean{tubs@gb@bottomsender}\setboolean{tubs@gb@bottomsender}{false}
 %    \end{macrocode}
 %
 %
@@ -113,9 +113,9 @@
 %    \begin{macrocode}
 \define@key{gaussbox.sty}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
-    \setboolean{gaussbox@bottomsender}{true}
+    \setboolean{tubs@gb@bottomsender}{true}
   }{%
-    \setboolean{gaussbox@bottomsender}{false}
+    \setboolean{tubs@gb@bottomsender}{false}
   }
 }
 %    \end{macrocode}
@@ -124,12 +124,12 @@
 %   die Box. Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.
 %   Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
-\def\gaussbox@box{\relax}
+\def\tubs@gb@box{\relax}
 \define@choicekey{gaussbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
   \ifcase\nr\relax
-    \def\gaussbox@box{\relax}
+    \def\tubs@gb@box{\relax}
   \or
-    \def\gaussbox@box{\fbox}
+    \def\tubs@gb@box{\fbox}
   \fi
 }
 %    \end{macrocode}
@@ -138,13 +138,13 @@
 %   Mögliche werte sind |none|, sowie die jeweilige gewünschte Farbe.
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
-\newcommand{\gaussbox@colorbox}{\relax}
+\newcommand{\tubs@gb@colorbox}{\relax}
 \define@key{gaussbox.sty}{bgcolor}[none]{%
   \ifthenelse{\equal{#1}{none}}{%
-    \renewcommand\gaussbox@colorbox{\relax}
+    \renewcommand\tubs@gb@colorbox{\relax}
   }{%
     \def\bgcolor{#1}
-    \renewcommand\gaussbox@colorbox{\colorbox{\bgcolor}}
+    \renewcommand\tubs@gb@colorbox{\colorbox{\bgcolor}}
   }
 }
 %    \end{macrocode}
@@ -154,13 +154,13 @@
 \ProcessOptionsX\relax
 %    \end{macrocode}
 %
-%    \begin{macro}{\gaussbox@setorig}
+%    \begin{macro}{\tubs@gb@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
 %    \begin{macrocode}
 % TODO: usage?...
-\newcommand\gaussbox@setorig{%
+\newcommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
-  \ifthenelse{\boolean{gaussbox@bottomsender}}{%
+  \ifthenelse{\boolean{tubs@gb@bottomsender}}{%
     \textblockorigin{2\tubspage@borderwidth}{%
       2\tubspage@borderwidth}
   }{%
@@ -177,7 +177,7 @@
 %    \begin{macrocode}
 \newcommand{\gaussboxsetup}[1][]{%
   \setkeys{gaussbox.sty}{#1}
-  \gaussbox@setorig
+  \tubs@gb@setorig
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -197,18 +197,18 @@
 %
 % Definition einiger benötigter Längen
 %    \begin{macrocode}
-\newlength{\gaussbox@leftmargin}
-\newlength{\gaussbox@rightmargin}
-\newlength{\gaussbox@leftsep}
-\newlength{\gaussbox@rightsep}
-\newlength{\gaussbox@topmargin}
-\newlength{\gaussbox@toppadding}
-\newlength{\gaussbox@bottommargin}
-\newsavebox{\storebox}
-\newsavebox{\scifistorebox}
-\newcounter{gaussbox@lastelement}
-\newcounter{gaussbox@calcypos}
-\newcounter{gaussbox@calcheight}
+\newlength{\tubs@gb@leftmargin}
+\newlength{\tubs@gb@rightmargin}
+\newlength{\tubs@gb@leftsep}
+\newlength{\tubs@gb@rightsep}
+\newlength{\tubs@gb@topmargin}
+\newlength{\tubs@gb@toppadding}
+\newlength{\tubs@gb@bottommargin}
+\newsavebox{\tubs@gb@storebox}
+\newsavebox{\tubs@sb@storebox}
+\newcounter{tubs@gb@lastelement}
+\newcounter{tubs@gb@calcypos}
+\newcounter{tubs@gb@calcheight}
 %    \end{macrocode}
 %
 %    \begin{macro}{gaussbox}
@@ -234,74 +234,74 @@
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
 \ifnum#2=0
-\setlength{\gaussbox@leftmargin}{\tubspage@borderwidth}
-\setlength{\gaussbox@rightmargin}{0mm}
-\setlength{\gaussbox@leftsep}{0mm}
+\setlength{\tubs@gb@leftmargin}{\tubspage@borderwidth}
+\setlength{\tubs@gb@rightmargin}{0mm}
+\setlength{\tubs@gb@leftsep}{0mm}
 \else
-\setlength{\gaussbox@leftsep}{0.5\tubspage@columnsep}
+\setlength{\tubs@gb@leftsep}{0.5\tubspage@columnsep}
 \fi
 %
-\setcounter{gaussbox@lastelement}{#2}\addtocounter{gaussbox@lastelement}{#4}
-\ifnum\value{gaussbox@lastelement}=\tubspage@xsegments
-  \setlength{\gaussbox@rightmargin}{\tubspage@borderwidth}
-  \setlength{\gaussbox@rightsep}{0mm}
+\setcounter{tubs@gb@lastelement}{#2}\addtocounter{tubs@gb@lastelement}{#4}
+\ifnum\value{tubs@gb@lastelement}=\tubspage@xsegments
+  \setlength{\tubs@gb@rightmargin}{\tubspage@borderwidth}
+  \setlength{\tubs@gb@rightsep}{0mm}
 \else
-  \setlength{\gaussbox@rightmargin}{0mm}
-  \setlength{\gaussbox@rightsep}{0.5\tubspage@columnsep}
+  \setlength{\tubs@gb@rightmargin}{0mm}
+  \setlength{\tubs@gb@rightsep}{0.5\tubspage@columnsep}
 \fi
 %    \end{macrocode}
 % Berechnung der oberen und unteren Ränder
 %    \begin{macrocode}
 \ifnum#3=1
-  \setlength{\gaussbox@topmargin}{\tubspage@borderwidth}
-  \setlength{\gaussbox@toppadding}{3\tubspage@borderwidth}
-  \setlength{\gaussbox@bottommargin}{0mm}
+  \setlength{\tubs@gb@topmargin}{\tubspage@borderwidth}
+  \setlength{\tubs@gb@toppadding}{3\tubspage@borderwidth}
+  \setlength{\tubs@gb@bottommargin}{0mm}
 \else
-  \setlength{\gaussbox@toppadding}{\tubspage@borderwidth}
+  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
 \fi
-\setcounter{gaussbox@lastelement}{#3+#5-1}
-\ifnum\value{gaussbox@lastelement}=\tubspage@ysegments
-  \setlength{\gaussbox@bottommargin}{\tubspage@borderwidth}
+\setcounter{tubs@gb@lastelement}{#3+#5-1}
+\ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments
+  \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}
 \else
-  \setlength{\gaussbox@bottommargin}{0mm}
+  \setlength{\tubs@gb@bottommargin}{0mm}
 \fi
 %
-\def\gaussbox@xpos{#2}
+\def\tubs@gb@xpos{#2}
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}
-\ifthenelse{\boolean{gaussbox@bottomsender}}{%
+\ifthenelse{\boolean{tubs@gb@bottomsender}}{%
   \def\@inv@arg{inverted}%
 }{}
-\calc@gauss@elementpos[\@inv@arg]{gaussbox@calcypos}{#3}
-\def\gaussbox@ypos{\thegaussbox@calcypos}
+\calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcypos}{#3}
+\def\tubs@gb@ypos{\thetubs@gb@calcypos}
 % 
-\calc@gauss@elementpos[\@inv@arg]{gaussbox@calcheight}{#3+#5}
-\addtocounter{gaussbox@calcheight}{%
-  -\thegaussbox@calcypos}
+\calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcheight}{#3+#5}
+\addtocounter{tubs@gb@calcheight}{%
+  -\thetubs@gb@calcypos}
 % 
-\def\gaussbox@width{#4}
-\def\gaussbox@height{\thegaussbox@calcheight}
-\begin{lrbox}{\storebox}
+\def\tubs@gb@width{#4}
+\def\tubs@gb@height{\thetubs@gb@calcheight}
+\begin{lrbox}{\tubs@gb@storebox}
 \begin{minipage}[t]%
-  [\gaussbox@height\TPVertModule]%
-  {\gaussbox@width\TPHorizModule-\gaussbox@leftsep-\gaussbox@rightsep}%
-  \vspace*{\gaussbox@toppadding}%
+  [\tubs@gb@height\TPVertModule]%
+  {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep}%
+  \vspace*{\tubs@gb@toppadding}%
 }{%
 \vspace*{\tubspage@borderwidth}%
 \end{minipage}
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
-\begin{textblock}{\gaussbox@width}(\gaussbox@xpos,\gaussbox@ypos)%
-  \hspace*{\gaussbox@leftsep}%
-  \hspace*{-\gaussbox@leftmargin}%
+\begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
+  \hspace*{\tubs@gb@leftsep}%
+  \hspace*{-\tubs@gb@leftmargin}%
   \raisebox{\tubspage@borderwidth}[0cm]{%
-    \gaussbox@box{\gaussbox@colorbox{%
-      \hspace*{\gaussbox@leftmargin}%
-      \usebox{\storebox}%
-      \hspace*{\gaussbox@rightmargin}%
+    \tubs@gb@box{\tubs@gb@colorbox{%
+      \hspace*{\tubs@gb@leftmargin}%
+      \usebox{\tubs@gb@storebox}%
+      \hspace*{\tubs@gb@rightmargin}%
       }}%
     }%
-  \hspace*{\gaussbox@rightsep}%
+  \hspace*{\tubs@gb@rightsep}%
 \end{textblock}
 }
 %    \end{macrocode}
@@ -575,7 +575,7 @@
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
   % Speichere Inhalt in minipage-Box.
-  \begin{lrbox}{\scifistorebox}%
+  \begin{lrbox}{\tubs@sb@storebox}%
     \begin{minipage}[t][\@current@height]{\@current@width-\tubspage@borderwidth}%
       \vspace*{0.5\tubspage@borderwidth}%
 }{%
@@ -589,7 +589,7 @@
       \setlength\fboxsep{0mm}%
       \colorbox{tuWhite}{%
         \hspace{0.5\tubspage@borderwidth}%
-        \usebox{\scifistorebox}%
+        \usebox{\tubs@sb@storebox}%
         \hspace{0.5\tubspage@borderwidth}%
       }%
   \end{textblock*}%
