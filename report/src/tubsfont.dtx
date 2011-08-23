@@ -239,6 +239,7 @@
 %</a4|a5|din>
 %    \end{macrocode}
 %
+% \paragraph{A4}
 %    \begin{macrocode}
 %<*a4>
 %    \end{macrocode}
@@ -268,6 +269,7 @@
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
+% \paragraph{A5, DIN}
 %    \begin{macrocode}
 %<*a5|din>
 %    \end{macrocode}
@@ -301,8 +303,12 @@
 %
 % NOTE: This code is currently mainly copied from scrsize10pt.clo and not
 % fulle adapted to 9pt yet
+% \paragraph{A4, A5, DIN, A3}
 %    \begin{macrocode}
 %<*a4|a5|din|a3>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \setlength\footnotesep    {6.65\p@}
 \setlength{\skip\footins} {9\p@ \@plus 4\p@ \@minus 2\p@}
 \setlength\floatsep       {12\p@ \@plus 2\p@ \@minus 2\p@}
@@ -357,9 +363,14 @@
 %</a4|a5|din|a3>
 %    \end{macrocode}
 %
+% \paragraph{A3}
 % Definitionen für A3. Basisschriftgröße: 13pt
 %    \begin{macrocode}
 %<*a3>
+%    \end{macrocode}
+%
+%    \begin{macro}{\normalsize}
+%    \begin{macrocode}
 \def\normalsize{%
    \@setfontsize\normalsize\@xivpt{17.5}% TODO!
    \abovedisplayskip 13\p@ \@plus3\p@ \@minus8\p@
@@ -368,6 +379,11 @@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}% copied and modified from mem14.clo
 \normalsize
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\small}
+%    \begin{macrocode}
 \newcommand{\small}{%
    \@setfontsize\small\@xiipt{14.5}%
    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
@@ -381,6 +397,11 @@
               }%
    \belowdisplayskip \abovedisplayskip
 }
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\footnotesize}
+%    \begin{macrocode}
 \newcommand{\footnotesize}{%
    \@setfontsize\footnotesize\@xipt{13.6}%
    \abovedisplayskip 11\p@ \@plus3\p@ \@minus6\p@
@@ -394,17 +415,36 @@
               }%
    \belowdisplayskip \abovedisplayskip
 }% copied from mem14.clo
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\large}
+%    \begin{macro}{\Large}
+%    \begin{macro}{\huge}
+%    \begin{macro}{\Huge}
+%    \begin{macrocode}
 \def\large{\@setfontsize\large{20pt}{24}}
 \def\Large{\@setfontsize\Large{30pt}{36}}
 \def\huge{\@setfontsize\huge{60pt}{66}}
 \def\Huge{\@setfontsize\Huge{90pt}{99}}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}
 %
+%    \begin{macro}{\tiny}
+%    \begin{macro}{\scriptsize}
+%    \begin{macro}{\LARGE}
+%    \begin{macrocode}
 \def\tiny{\@setfontsize\tiny\@vpt{6}}
 \def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
 \def\LARGE{\@setfontsize\huge{45pt}{83}}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
+%
+%    \begin{macrocode}
 %</a3>
 %    \end{macrocode}
 %
+% \paragraph{A2}
 % Definitionen für A2. Basisschriftgröße: 18pt
 %    \begin{macrocode}
 %<*a2>
