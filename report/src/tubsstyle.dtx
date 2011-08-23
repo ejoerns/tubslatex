@@ -123,7 +123,10 @@
 %    \end{macrocode}
 % 
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Optionen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Es werden zur Zeit keine Optionen zur Verfügung gestellt
 %    \begin{macrocode}
 %<*option>
@@ -159,7 +162,9 @@
 %    \end{macrocode}
 %
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Hilfsbefehle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %    \begin{macro}{\if@tubs@oddpage}
@@ -178,7 +183,9 @@
 %    \end{macro}
 %
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Elemente -- Interne Befehle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %    \begin{macro}{\tubs@topline}
@@ -435,7 +442,9 @@
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Elemente -- Benuzter-Befehle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macro}{\showtopline}
 % Benutzer-Kommando: Ermöglicht das Darstellen einer Linie zwischen
@@ -470,7 +479,9 @@
 %    \end{macro}
 %
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Optionen für Umgebung posterrow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macro}{\tubs@bg@cmd}
 % Speicher fuer den Befehl zu Erstellung des Hintergrundes
@@ -696,7 +707,7 @@
 % Legt das darzustellende Layout mit den übergebenen Optionen (|options|)
 % und dem übergebenem Inhalt (|layout|) fest.
 %    \begin{macrocode}
-\newcommand{\layout}[2][]{%
+\newcommand{\bglayout}[2][]{%
   \@layout@pre{#1}
   #2
   \@layout@post
@@ -712,7 +723,7 @@
 % |\@bg@layout@options@|\emph{name} und |\@bg@layout@|\emph{name}
 % gespeichert.
 %    \begin{macrocode}
-\newcommand{\deflayout}[3][]{%
+\newcommand{\defbglayout}[3][]{%
   \expandafter\newcommand\csname @bg@layout@options@#2\endcsname{#1}
   \expandafter\newcommand\csname @bg@layout@#2\endcsname{#3}
 }
@@ -726,66 +737,13 @@
 % |\@bg@layout@options@| bzw. |\@bg@layout@| gespeicherten Optionen
 % und Layout-Definitionen aus.
 %    \begin{macrocode}
-\newcommand{\uselayout}[1]{%
+\newcommand{\usebglayout}[1]{%
   \expandafter\edef\expandafter\@curr@opts\expandafter{%
     \expandafter\csname @bg@layout@options@#1\endcsname}
   \expandafter\layout\expandafter[\@curr@opts]{\csname @bg@layout@#1\endcsname}
 }
 %    \end{macrocode}
 %    \end{macro}
-%
-%
-% \subsection{Poster-Befehle}
-%
-%
-%    \begin{environment}{tubsposter}
-% Erzeugt eine neue Poster-Seite.
-% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
-% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
-% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
-% sind, zuletzt in den Hintergrund gezeichnet werden.
-%    \begin{macrocode}
-\newenvironment{tubsposter}[1][]{%
-  \@layout@pre{#1}
-  \sffamily
-}{%
-  \@layout@post
-  ~\newpage
-}
-%    \end{macrocode}
-%    \end{environment}
-%
-%
-%    \begin{environment}{posterrow}
-% Erzeugt einen neuen Inhalts-Bereich.\\
-% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}\\
-% |options|: Mögliche Optionen,
-% |ysegments|: Anzahl Gauß-Elemente für Höhe.
-% Mögliche Optionen:
-% \begin{description}
-%   \item[|bgcolor|] Hintergrundfarbe
-%   \item[|bgimage|] Hintergrundbild
-% \end{description}
-% Erzeugt eine |tubsbox| mit voller Seitenbreite und angegebener Höhe.
-% Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
-% gesetzten Boxen bzw. ihren Höhen berechnet.
-%    \begin{macrocode}
-\newenvironment{posterrow}[2][]{%
-  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  % TODO...
-  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \edef\@tubs@arg{[sender=bottom]{0}{\thetubs@yseg@cnt}{6}{#2}}
-  }{%
-    \edef\@tubs@arg{{0}{\thetubs@yseg@cnt}{6}{#2}}
-  }
-  \bgelement[#1]{#2}
-  % Erzeuge tubsbox
-  \expandafter\tubsbox\@tubs@arg
-}{%
-  \endtubsbox
-}
-%    \end{macrocode}
-%    \end{environment}
 %
 %    \begin{macrocode}
 %</package>
