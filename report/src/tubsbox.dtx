@@ -107,19 +107,44 @@
 %<*package>
 %    \end{macrocode}
 %
+% Es werden die folgenden Pakete geladen: |ifthen| und |xkeyval| werden
+% allgemein zum Definieren und Auswerten von Optionen etc. benötigt.
+% |etoolbox| und |forloop| werden für die Auswertung von kommagetrennten
+% Listen benutzt. Aus |tubstypearea| werden alle benötigten Längen entnommen,
+% um die Boxen mit |texpos| korrekt positionieren zu können.
 %    \begin{macrocode}
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
-\RequirePackage{tubstypearea}
-\RequirePackage[absolute]{textpos}
 \RequirePackage{etoolbox}
 \RequirePackage{forloop}
+\RequirePackage{tubstypearea}
+\RequirePackage[absolute]{textpos}
 %    \end{macrocode}
 %
+% \subsection{Allgemeine Optionen}
+%
+%    \begin{macro}{tubsbox@bottomsender}
 % Merker für Option '|sender|'.
 %    \begin{macrocode}
-\newboolean{tubs@gb@bottomsender}\setboolean{tubs@gb@bottomsender}{false}
+\newboolean{tubsbox@bottomsender}\setboolean{tubsbox@bottomsender}{false}
 %    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubsbox@framebox}
+% Speichert ggf. Kommando mit dem ein Rahmen um die jeweilige Box
+% gezeichnet werden soll.
+%    \begin{macrocode}
+\def\tubsbox@framebox{\relax}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubsbox@colorbox}
+% Speichert ggf. colorbox-Kommand mit dem die Hintergrundfarbe der jeweiligen
+% Box gezeichnet werden soll.
+%    \begin{macrocode}
+\newcommand{\tubsbox@colorbox}{\relax}
+%    \end{macrocode}
+%    \end{macro}
 %
 %
 % \subsection{Gaußraster-Box}\label{sec:options}
@@ -127,13 +152,14 @@
 % \begin{key}{tubsbox.sty}{sender}
 % Mögliche Werte: |bottom| oder |top|.
 % Schaltet zwischen den beiden Layoutvarianten mit Absenderbereich oben
-% und unten auf der Seite um, damit die Boxen korrekt platziert werden.
+% und unten auf der Seite um, damit die Boxen korrekt platziert werden.\par
+% Standardmäßig ist der Absenderbereich oben.
 %    \begin{macrocode}
 \define@key{tubsbox.sty}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
-    \setboolean{tubs@gb@bottomsender}{true}
+    \setboolean{tubsbox@bottomsender}{true}
   }{%
-    \setboolean{tubs@gb@bottomsender}{false}
+    \setboolean{tubsbox@bottomsender}{false}
   }
 }
 %    \end{macrocode}
@@ -141,32 +167,31 @@
 %
 % \begin{key}{tubsbox.sty}{frame}
 %   Zeichnet wenn gewünscht einen Rahmen um
-%   die Box. Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.
+%   die jeweiligen Boxen.
+%   Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.\par
 %   Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
-\def\tubs@gb@box{\relax}
 \define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}[none]{%
   \ifcase\nr\relax
-    \def\tubs@gb@box{\relax}
+    \def\tubsbox@framebox{\relax}
   \or
-    \def\tubs@gb@box{\fbox}
+    \def\tubsbox@framebox{\fbox}
   \fi
 }
 %    \end{macrocode}
 %    \end{key}
 %
 % \begin{key}{tubsbox.sty}{bgcolor}
-%   Hintergrundfarbe der Boxen festlegen.
-%   Mögliche werte sind |none|, sowie die jeweilige gewünschte Farbe.
+%   Standard-Hintergrundfarbe der Boxen festlegen.
+%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\par
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
-\newcommand{\tubs@gb@colorbox}{\relax}
 \define@key{tubsbox.sty}{bgcolor}[none]{%
   \ifthenelse{\equal{#1}{none}}{%
-    \renewcommand\tubs@gb@colorbox{\relax}
+    \renewcommand\tubsbox@colorbox{\relax}
   }{%
     \def\bgcolor{#1}
-    \renewcommand\tubs@gb@colorbox{\colorbox{\bgcolor}}
+    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
   }
 }
 %    \end{macrocode}
@@ -183,7 +208,7 @@
 % TODO: usage?...
 \newcommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
-  \ifthenelse{\boolean{tubs@gb@bottomsender}}{%
+  \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \textblockorigin{2\tubspage@borderwidth}{%
       2\tubspage@borderwidth}
   }{%
@@ -300,7 +325,7 @@
 \def\tubs@gb@xpos{#2}
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}
-\ifthenelse{\boolean{tubs@gb@bottomsender}}{%
+\ifthenelse{\boolean{tubsbox@bottomsender}}{%
   \def\@inv@arg{inverted}%
 }{}
 \calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcypos}{#3}
@@ -326,7 +351,7 @@
   \hspace*{\tubs@gb@leftsep}%
   \hspace*{-\tubs@gb@leftmargin}%
   \raisebox{\tubspage@borderwidth}[0cm]{%
-    \tubs@gb@box{\tubs@gb@colorbox{%
+    \tubsbox@framebox{\tubsbox@colorbox{%
       \hspace*{\tubs@gb@leftmargin}%
       \usebox{\tubs@gb@storebox}%
       \hspace*{\tubs@gb@rightmargin}%
@@ -706,7 +731,7 @@
     \end{minipage}%
   \end{lrbox}%
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
-  \ifthenelse{\boolean{tubs@gb@bottomsender}}{%
+  \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \begin{textblock*}{\@current@width}(%
       -1\tubspage@borderwidth+\tubs@sb@box@xpos,%
       -\tubspage@senderheight+\tubs@sb@box@ypos)%
