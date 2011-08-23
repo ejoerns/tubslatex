@@ -319,31 +319,31 @@
 % \subsection{Scientific-Poster-Box}
 %
 %
-%    \begin{macro}{tubs@bs@elementcount}
+%    \begin{macro}{tubs@sb@elementcount}
 % Counter zählt Anzahl Zeilen für Box-Layout.
 %    \begin{macrocode}
-\newcounter{tubs@bs@elementcount}
+\newcounter{tubs@sb@elementcount}
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{tubs@bs@xcount}
+%    \begin{macro}{tubs@sb@xcount}
 % Counter zählt Anzahl Xen
 %    \begin{macrocode}
-\newcounter{tubs@bs@xcount}
+\newcounter{tubs@sb@xcount}
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubs@bs@xfreespace}
+%    \begin{macro}{\tubs@sb@xfreespace}
 % Länge speichert aktuellen freien Platz für Xe
 %    \begin{macrocode}
-\newlength{\tubs@bs@xfreespace}
+\newlength{\tubs@sb@xfreespace}
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubs@bs@xlength}
+%    \begin{macro}{\tubs@sb@xlength}
 % Länge eines X-Elements
 %    \begin{macrocode}
-\newlength{\tubs@bs@xlength}
+\newlength{\tubs@sb@xlength}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -354,39 +354,39 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubs@bs@setelements}
+%    \begin{macro}{\tubs@sb@setelements}
 % \marg{list}\par
 % Erwartet als Parameter eine komma-getrennte Liste, deren Elemente
 % entweder Längen oder der Buchstabe X ist.
 % Elemente mit Buchstaben X teilen den restlichen zur Verfügung stehenden Platz
 % gleichmäßig untereinander auf.
 %    \begin{macrocode}
-\newcommand\tubs@bs@setelements[2]{%
-  \setcounter{tubs@bs@elementcount}{0}
-  \setcounter{tubs@bs@xcount}{0}
+\newcommand\tubs@sb@setelements[2]{%
+  \setcounter{tubs@sb@elementcount}{0}
+  \setcounter{tubs@sb@xcount}{0}
   % Iteriere über Liste
-  \let\do\tubs@bs@parsenext
+  \let\do\tubs@sb@parsenext
   \docsvlist{#1}
   % X-Länge setzen
-  \setlength\tubs@bs@xlength{\tubs@bs@xfreespace/\thetubs@bs@xcount}
+  \setlength\tubs@sb@xlength{\tubs@sb@xfreespace/\thetubs@sb@xcount}
   % Iteriere über alle Zeilen und ersetze X-Zeilen durch die entsprechende Länge
-  \stepcounter{tubs@bs@elementcount}% only for forloop!
-  \forloop[1]{tubs@cnt}{1}{\value{tubs@cnt}<\thetubs@bs@elementcount}{%
-    \expandafter\def\expandafter\tubs@current@row\expandafter{%
-      \csname tubs@bs@tmplength@\thetubs@cnt\endcsname%
+  \stepcounter{tubs@sb@elementcount}% only for forloop!
+  \forloop[1]{tubs@cnt}{1}{\value{tubs@cnt}<\thetubs@sb@elementcount}{%
+    \expandafter\def\expandafter\tubs@sb@current@row\expandafter{%
+      \csname tubs@sb@tmplength@\thetubs@cnt\endcsname%
     }
     % Schreibe nun gespeicherte Längen und X-Längen in endgültiges Makro
-    \ifthenelse{\equal{\tubs@current@row}{X}}{%
+    \ifthenelse{\equal{\tubs@sb@current@row}{X}}{%
       \expandafter\edef\csname #2\thetubs@cnt\endcsname{%
-        \the\tubs@bs@xlength%
+        \the\tubs@sb@xlength%
       }%
     }{%
       \expandafter\edef\csname #2\thetubs@cnt\endcsname{%
-        \tubs@current@row%
+        \tubs@sb@current@row%
       }%
     }
   }
-  \addtocounter{tubs@bs@elementcount}{-1}% only for forloop!
+  \addtocounter{tubs@sb@elementcount}{-1}% only for forloop!
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -397,21 +397,21 @@
 % ausgegangen, dass es sich um eine Länge handelt und es wird versucht
 % diese zu speichern.
 %    \begin{macrocode}
-\newcommand*{\tubs@bs@parsenext}[1]{%
+\newcommand*{\tubs@sb@parsenext}[1]{%
   % Teste, ob X oder Längeneinheit übergeben wurde
-  \stepcounter{tubs@bs@elementcount}
+  \stepcounter{tubs@sb@elementcount}
   \ifthenelse{\equal{#1}{X}}{% X
-    \stepcounter{tubs@bs@xcount}%
-    \expandafter\def\csname tubs@bs@tmplength@\thetubs@bs@elementcount\endcsname{X}
+    \stepcounter{tubs@sb@xcount}%
+    \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{X}
   }{% Laenge
     % Ziehe Länge von xfreespace ab und speichere sie.
-    \addtolength\tubs@bs@xfreespace{-#1}
-    \expandafter\def\csname tubs@bs@tmplength@\thetubs@bs@elementcount\endcsname{%
+    \addtolength\tubs@sb@xfreespace{-#1}
+    \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{%
       #1%
     }
   }
   % Ziehe zusätzlich Stegbreite ab.
-  \addtolength{\tubs@bs@xfreespace}{-0.5\tubspage@borderwidth}
+  \addtolength{\tubs@sb@xfreespace}{-0.5\tubspage@borderwidth}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -431,27 +431,27 @@
 % Jede angelegte Modul-Zeile muss dann mit der Umgebung |scifirow| mit Inhalt
 % gefüllt werden.\par
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros mit Präfix
-% |tubs@bs@rowlength|.
+% |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{scifiposter}[1]{%
   % reset scifirow counter
-  \setcounter{tubs@current@row}{0}
+  \setcounter{tubs@sb@current@row}{0}
   %TODO: length is just a very diry hack, fix this!
-  \setlength{\tubs@bs@xfreespace}{\textheight+2.5mm+\tubspage@borderwidth}
-  \tubs@bs@setelements{#1}{tubs@bs@rowlength@}
+  \setlength{\tubs@sb@xfreespace}{\textheight+2.5mm+\tubspage@borderwidth}
+  \tubs@sb@setelements{#1}{tubs@sb@rowlength@}
 }{%
 }
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{macro}{tubs@current@col}
-%    \begin{macro}{tubs@current@row}
-%    \begin{macro}{tubs@current@subrow}
+%    \begin{macro}{tubs@sb@current@col}
+%    \begin{macro}{tubs@sb@current@row}
+%    \begin{macro}{tubs@sb@current@subrow}
 % Zähler für die jeweils aktuell gesetzte Modul-Zeile/-Spalte.
 %    \begin{macrocode}
-\newcounter{tubs@current@col} % aktuelle Spalte
-\newcounter{tubs@current@row} % aktuelle Zeile
-\newcounter{tubs@current@subrow}  % aktuelle Subspalte
+\newcounter{tubs@sb@current@col} % aktuelle Spalte
+\newcounter{tubs@sb@current@row} % aktuelle Zeile
+\newcounter{tubs@sb@current@subrow}  % aktuelle Subspalte
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
@@ -467,34 +467,34 @@
 % ansonsten müssen die einzelnen Spalteninhalte mittels der Umgebung
 % |scificol| definiert werden.\par
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros
-% mit Präfix |tubs@bs@collength@|. Wenn nur eine einzelne (X)-Spalte
+% mit Präfix |tubs@sb@collength@|. Wenn nur eine einzelne (X)-Spalte
 % definiert wurde, bzw. das optionale Argument leer gelassen, so wird
 % direkt eine scifibox erstellt.
 %    \begin{macrocode}
 \newenvironment{scifirow}[1][X]{%
   % reset scificol counter
-  \setcounter{tubs@current@col}{0}
+  \setcounter{tubs@sb@current@col}{0}
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
-  \setlength{\tubs@bs@xfreespace}{\textwidth+1.5\tubspage@borderwidth}
-  % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@collength@'
-  \tubs@bs@setelements{#1}{tubs@bs@collength@}
-  \stepcounter{tubs@current@row}
+  \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubspage@borderwidth}
+  % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@collength@'
+  \tubs@sb@setelements{#1}{tubs@sb@collength@}
+  \stepcounter{tubs@sb@current@row}
   % Wenn nur eine Spalte, dann direkt scifibox setzen
   \ifthenelse{\equal{#1}{X}}{%
-    \stepcounter{tubs@current@col}
+    \stepcounter{tubs@sb@current@col}
     \expandafter\edef\expandafter\@argI\expandafter{%
-      \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
+      \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
     \expandafter\edef\expandafter\@argII\expandafter{%
-      \csname tubs@bs@collength@\thetubs@current@col\endcsname}
-    \def\tubs@box@cmd{\@scifibox{\@argI}{\@argII}}
-    \def\tubs@box@endcmd{\end@scifibox}
+      \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
+    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}
+    \def\tubs@sb@box@endcmd{\end@scifibox}
   }{%
-    \def\tubs@box@cmd{\relax}
-    \def\tubs@box@endcmd{\relax}
+    \def\tubs@sb@box@cmd{\relax}
+    \def\tubs@sb@box@endcmd{\relax}
   }
-  \tubs@box@cmd%
+  \tubs@sb@box@cmd%
 }{%
-  \tubs@box@endcmd%
+  \tubs@sb@box@endcmd%
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -506,28 +506,28 @@
 %    \begin{macrocode}
 \newenvironment{scificol}[1][X]{%
   % reset scifisubrow counter
-  \setcounter{tubs@current@subrow}{0}
+  \setcounter{tubs@sb@current@subrow}{0}
   % Setze Länge auf Zeilenhöhe + Trennstrich
-  \expandafter\setlength\expandafter\tubs@bs@xfreespace\expandafter{\csname tubs@bs@rowlength@\thetubs@current@row\endcsname+0.5\tubspage@borderwidth}
-  % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@bs@subrowlength@'
-  \tubs@bs@setelements{#1}{tubs@bs@subrowlength@}
-  \stepcounter{tubs@current@col}
+  \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubspage@borderwidth}
+  % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@subrowlength@'
+  \tubs@sb@setelements{#1}{tubs@sb@subrowlength@}
+  \stepcounter{tubs@sb@current@col}
   % Wenn nur eine Spalte, dann direkt scifibox setzen
   \ifthenelse{\equal{#1}{X}}{%
-    \stepcounter{tubs@current@subrow}
+    \stepcounter{tubs@sb@current@subrow}
     \expandafter\edef\expandafter\@argI\expandafter{%
-      \csname tubs@bs@subrowlength@\thetubs@current@subrow\endcsname}
+      \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}
     \expandafter\edef\expandafter\@argII\expandafter{%
-      \csname tubs@bs@collength@\thetubs@current@col\endcsname}
-    \def\tubs@box@cmd{\@scifibox{\@argI}{\@argII}}
-    \def\tubs@box@endcmd{\end@scifibox}
+      \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
+    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}
+    \def\tubs@sb@box@endcmd{\end@scifibox}
   }{%
-    \def\tubs@box@cmd{\relax}
-    \def\tubs@box@endcmd{\relax}
+    \def\tubs@sb@box@cmd{\relax}
+    \def\tubs@sb@box@endcmd{\relax}
   }
-  \tubs@box@cmd%
+  \tubs@sb@box@cmd%
 }{%
-  \tubs@box@endcmd%
+  \tubs@sb@box@endcmd%
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -536,13 +536,13 @@
 % Umgebung mit der Modul-Unterzeilen mit Inhalt gefüllt werden können.
 %    \begin{macrocode}
 \newenvironment{scifisubrow}{%
-  \stepcounter{tubs@current@subrow}
+  \stepcounter{tubs@sb@current@subrow}
   \expandafter\edef\expandafter\@oarg\expandafter{%
-    \csname tubs@bs@rowlength@\thetubs@current@row\endcsname}
+    \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
   \expandafter\edef\expandafter\@argI\expandafter{%
-    \csname tubs@bs@subrowlength@\thetubs@current@subrow\endcsname}
+    \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}
   \expandafter\edef\expandafter\@argII\expandafter{%
-    \csname tubs@bs@collength@\thetubs@current@col\endcsname}
+    \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
   \@scifibox[\@oarg]{\@argI}{\@argII}%
 }{%
   \end@scifibox%
@@ -550,16 +550,16 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{macro}{\tubs@box@xpos}
-%    \begin{macro}{\tubs@box@ypos}
-%    \begin{macro}{\tubs@box@rowheight}
-%    \begin{macro}{\tubs@box@splitrow}
+%    \begin{macro}{\tubs@sb@box@xpos}
+%    \begin{macro}{\tubs@sb@box@ypos}
+%    \begin{macro}{\tubs@sb@box@rowheight}
+%    \begin{macro}{\tubs@sb@box@splitrow}
 % Von |@scifibox| verwendete Längen.
 %    \begin{macrocode}
-\newlength{\tubs@box@xpos}% x-Position
-\newlength{\tubs@box@ypos}% y-Position
-\newlength{\tubs@box@rowheight}% Höhe einer Zeile, sofern als opt. Arg. gegeben
-\newlength{\tubs@box@splitrow}% Speichert benutze Länge von Splitrow für späteren Reset
+\newlength{\tubs@sb@box@xpos}% x-Position
+\newlength{\tubs@sb@box@ypos}% y-Position
+\newlength{\tubs@sb@box@rowheight}% Höhe einer Zeile, sofern als opt. Arg. gegeben
+\newlength{\tubs@sb@box@splitrow}% Speichert benutze Länge von Splitrow für späteren Reset
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -584,8 +584,8 @@
   \end{lrbox}%
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
   \begin{textblock*}{\@current@width}(%
-    -1\tubspage@borderwidth+\tubs@box@xpos,%
-    -1\tubspage@borderwidth+0.05195\paperheight+\tubs@box@ypos)%
+    -1\tubspage@borderwidth+\tubs@sb@box@xpos,%
+    -1\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
       \setlength\fboxsep{0mm}%
       \colorbox{tuWhite}{%
         \hspace{0.5\tubspage@borderwidth}%
@@ -595,31 +595,31 @@
   \end{textblock*}%
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
   \ifthenelse{\equal{\@current@rowheight}{\relax}}{%
-    \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
   }{%
-    \setlength\tubs@box@rowheight{\@current@rowheight}
-    \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
-    \addtolength\tubs@box@splitrow{\@current@height+0.5\tubspage@borderwidth}%
+    \setlength\tubs@sb@box@rowheight{\@current@rowheight}
+    \addtolength\tubs@sb@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@sb@box@splitrow{\@current@height+0.5\tubspage@borderwidth}%
     % Wenn Zeilenhöhe ausgefüllt, normal weiter machen...
-    \ifthenelse{\lengthtest{\tubs@box@splitrow > \tubs@box@rowheight}}{%
-      \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
-      \addtolength\tubs@box@ypos{-\tubs@box@splitrow}%
-      \setlength\tubs@box@splitrow{0mm}%
+    \ifthenelse{\lengthtest{\tubs@sb@box@splitrow > \tubs@sb@box@rowheight}}{%
+      \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+      \addtolength\tubs@sb@box@ypos{-\tubs@sb@box@splitrow}%
+      \setlength\tubs@sb@box@splitrow{0mm}%
     }{}
   }
   % Wenn Zeile gefüllt ist, springen in nächste Zeile
-  \ifthenelse{\lengthtest{\tubs@box@xpos > \textwidth}}{%
-    \addtolength\tubs@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
-    \setlength\tubs@box@xpos{0mm}%
+  \ifthenelse{\lengthtest{\tubs@sb@box@xpos > \textwidth}}{%
+    \addtolength\tubs@sb@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+    \setlength\tubs@sb@box@xpos{0mm}%
     % Wenn darüber hinaus Seite gefüllt ist, fange neue an!
-    \ifthenelse{\lengthtest{\tubs@box@ypos > \textheight}}{%
-      \setlength\tubs@box@ypos{0mm}%
+    \ifthenelse{\lengthtest{\tubs@sb@box@ypos > \textheight}}{%
+      \setlength\tubs@sb@box@ypos{0mm}%
     }{}
   }{}
   % speichere global!
-  \global\tubs@box@xpos=\tubs@box@xpos%
-  \global\tubs@box@ypos=\tubs@box@ypos%
-  \global\tubs@box@splitrow=\tubs@box@splitrow%
+  \global\tubs@sb@box@xpos=\tubs@sb@box@xpos%
+  \global\tubs@sb@box@ypos=\tubs@sb@box@ypos%
+  \global\tubs@sb@box@splitrow=\tubs@sb@box@splitrow%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -630,3 +630,9 @@
 %
 % \Finale
 \endinput
+%
+% Präfixe:
+% tubs  - allgemeiner Präfix
+% gb    - Präfix für gaussbox
+% sb    - Präfix für scifibox
+%
