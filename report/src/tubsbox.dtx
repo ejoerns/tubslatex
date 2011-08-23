@@ -500,11 +500,9 @@
     \csname tubs@bs@subrowlength@\thetubs@current@subrow\endcsname}
   \expandafter\edef\expandafter\@argII\expandafter{%
     \csname tubs@bs@collength@\thetubs@current@col\endcsname}
-  \@scifibox[\@oarg]{\@argI}{\@argII}
-  sr: \thetubs@current@subrow\par
-  argI: \@argI, argII: \@argII\par
+  \@scifibox[\@oarg]{\@argI}{\@argII}%
 }{%
-  \end@scifibox
+  \end@scifibox%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -520,7 +518,6 @@
 \newlength{\tubs@box@rowheight}% Höhe einer Zeile, sofern als opt. Arg. gegeben
 \newlength{\tubs@box@splitrow}% Speichert benutze Länge von Splitrow für späteren Reset
 \newenvironment{@scifibox}[3][\relax]{%
-  begin: \the\tubs@box@xpos\par%
   \def\@current@rowheight{#1}
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
@@ -553,8 +550,8 @@
     % Wenn Zeilenhöhe ausgefüllt, normal weiter machen...
     \ifthenelse{\lengthtest{\tubs@box@splitrow > \tubs@box@rowheight}}{%
       \addtolength\tubs@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
-      \addtolength\tubs@box@ypos{-\tubs@box@splitrow}
-      \setlength\tubs@box@splitrow{0mm}
+      \addtolength\tubs@box@ypos{-\tubs@box@splitrow}%
+      \setlength\tubs@box@splitrow{0mm}%
     }{}
   }
   % Wenn Zeile gefüllt ist, springen in nächste Zeile
@@ -563,14 +560,13 @@
     \setlength\tubs@box@xpos{0mm}%
     % Wenn darüber hinaus Seite gefüllt ist, fange neue an!
     \ifthenelse{\lengthtest{\tubs@box@ypos > \textheight}}{%
-      \setlength\tubs@box@ypos{0mm}
+      \setlength\tubs@box@ypos{0mm}%
     }{}
   }{}
   % speichere global!
   \global\tubs@box@xpos=\tubs@box@xpos%
   \global\tubs@box@ypos=\tubs@box@ypos%
   \global\tubs@box@splitrow=\tubs@box@splitrow%
-  end: \the\tubs@box@xpos\par%
 }
 %    \end{macrocode}
 %    \end{macro}
