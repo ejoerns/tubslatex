@@ -249,14 +249,16 @@
   \bglayout[pages=single]{%
     \showtopline
     \showtubslogo[left]
+    \showlogo{\tubs@tp@logo}
   }
 }{\oldmaketitle}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\new@title@style{image}{%
+\new@title@style{imagetext}{%
     \bglayout[pages=single]{%
       \showtubslogo[left]
+      \showlogo{\tubs@tp@logo}
     }
   }{%
   \begin{titlepage}
@@ -276,6 +278,32 @@
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary40]{2}
       \tubs@tp@titleabstract
+    \end{titlerow}
+  \end{titlepage}
+  ~\newpage
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\new@title@style{image}{%
+    \bglayout[pages=single]{%
+      \showtubslogo[left]
+      \showlogo{\tubs@tp@logo}
+    }
+  }{%
+  \begin{titlepage}
+    \expandafter\titlerow\tubs@tp@titlepicture{3}
+    \endtitlerow
+    \begin{titlerow}[bgcolor=tuSecondary80]{2}
+      \sffamily%
+      {\bfseries\Huge\@title}\bigskip\\%
+      {\LARGE\@subtitle}%
+      \vfill%
+    \end{titlerow}
+    \begin{titlerow}[bgcolor=tuSecondary60]{3}
+      \sffamily{\huge\@author}%
+      \vfill
+      \@date
     \end{titlerow}
   \end{titlepage}
   ~\newpage
