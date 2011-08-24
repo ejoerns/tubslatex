@@ -85,6 +85,9 @@
 %
 % \section{Einleitung}
 %
+% \section{Bekannte Probleme}
+% Für tubsreprt und tubsartcl werden noch nicht die korrekten Titelseiten
+% im einfachen Stil gesetzt.
 %
 % \section{Benutzung}
 %
@@ -96,24 +99,16 @@
 % \section{Implementierung}
 %
 %    \begin{macrocode}
-%<*package>
+%<*package|class>
 %    \end{macrocode}
 %
 % TODO: direkt einbinden, kein Paket!
 %    \begin{macrocode}
-\ProvidesPackage{tubstitlepage}
+% \ProvidesPackage{tubstitlepage}
 %    \end{macrocode}
 %
-% Lade benötigte Pakete.
-%    \begin{macrocode}
-% \PassOptionsToPackage{frame=fbox}{tubsbox}% TODO: TESTING!!!
-\RequirePackage{xkeyval}
-% \RequirePackage{tubsflowfram}
-\RequirePackage{tubsstyle}
-\RequirePackage{tubsbox}
-\RequirePackage{tubscolors}
-%    \end{macrocode}
 %
+%<*option>
 %    \begin{macro}{\style@select}
 %    \begin{macrocode}
 \def\style@select{plain}
@@ -129,25 +124,39 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%</option>
 %    \begin{macrocode}
-\ProcessOptionsX\relax
+% \ProcessOptionsX\relax
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\let\oldmaketitle\maketitle
+%<*body>
+%    \begin{macrocode}
+%
+% Lade benötigte Pakete.
+%    \begin{macrocode}
+% \PassOptionsToPackage{frame=fbox}{tubsbox}% TODO: TESTING!!!
+\RequirePackage{xkeyval}
+% \RequirePackage{tubsflowfram}
+\RequirePackage{tubsstyle}
+\RequirePackage{tubsbox}
+\RequirePackage{tubscolors}
 %    \end{macrocode}
 %
-\newcommand{\titlestyle}[1]{%
+%    \begin{macrocode}
+\let\oldmaketitle\@maketitle
+%    \end{macrocode}
+%
+\newcommand*{\titlestyle}[1]{%
   \csname tubs@style@bg@#1\endcsname
 }
 %
 %    \begin{macro}{\maketitle}
 % Redefine maketitle, provide additional optional arguments
 %    \begin{macrocode}
-\renewcommand{\maketitle}[1][\style@select]{%
-  \expandafter\csname tubs@style@bg@#1\endcsname
-  \expandafter\csname tubs@style@fg@#1\endcsname
-  \expandafter\csname tubs@style@content@#1\endcsname
+\renewcommand*{\maketitle}[1][\style@select]{%
+   \expandafter\csname tubs@style@bg@#1\endcsname%
+   \expandafter\csname tubs@style@content@#1\endcsname%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -245,13 +254,24 @@
 % Standard-Style, einfaches Logo mit Trennlinie zwischen Absender- und
 % Kommunikationsbereich.
 %    \begin{macrocode}
+%<*article>
 \new@title@style{plain}{%
   \bglayout[pages=single]{%
     \showtopline
     \showtubslogo[left]
     \showlogo{\tubs@tp@logo}
   }
-}{\oldmaketitle}
+}{\pagestyle{empty}\oldmaketitle}
+%</article>
+%<*report>
+\new@title@style{plain}{%
+  \bglayout[pages=single]{%
+    \showtopline
+    \showtubslogo[left]
+    \showlogo{\tubs@tp@logo}
+  }
+}{\pagestyle{empty}\oldmaketitle}
+%</report>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -280,7 +300,6 @@
       \tubs@tp@titleabstract
     \end{titlerow}
   \end{titlepage}
-  ~\newpage
 }
 %    \end{macrocode}
 %
@@ -306,18 +325,15 @@
       \@date
     \end{titlerow}
   \end{titlepage}
-  ~\newpage
 }
 %    \end{macrocode}
 %
-% finally, load selected style
 %    \begin{macrocode}
-% \expandafter\csname tubs@style@bg@\style@select\endcsname
-% \expandafter\csname tubs@style@fg@\style@select\endcsname
-%    \end{macrocode}
+%</body>
+%    \begin{macrocode}
 %
 %    \begin{macrocode}
-%</package>
+%</package|class>
 %    \end{macrocode}
 %
 % \Finale
