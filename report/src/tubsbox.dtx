@@ -63,9 +63,9 @@
 %   \raggedright}
 %  {\end{list}}
 %
-% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+% \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
 %
-% \GetFileInfo{tubshead.sty}
+% \GetFileInfo{tubsbox.sty}
 %
 % \DoNotIndex{ list of control sequences }
 %
@@ -78,7 +78,7 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Diese Datei stellt die Umgebung |\gaussbox| für Darstellungen im Gaußraster 
+%   Diese Datei stellt die Umgebung |gaussbox| für Darstellungen im Gaußraster 
 %   und Umgebungen für Darstellungen im Modulraster zur Verfügung.
 % \end{abstract}
 %
@@ -94,9 +94,9 @@
 % Syntax: |\gaussbox|\oarg{options}\marg{}
 %
 %
-% \subsection{Modulraster}
+% \subsection{Modulsystem}
 %
-% Das Modulraster wird ausschließlich für wissenschaftliche Plakate verwendet.
+% Das Modulsystem wird ausschließlich für wissenschaftliche Plakate verwendet.
 %
 % \StopEventually{\PrintIndex}
 %
@@ -198,15 +198,16 @@
 %
 %    \begin{macro}{\tubs@gb@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
+% |\oddsidemargin|+1in+|\voffst|-3mm ist der Abstand vom linken Rand!
 %    \begin{macrocode}
 \newcommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
   % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
-    \textblockorigin{2\tubspage@borderwidth}{%
+    \textblockorigin{\oddsidemargin+1in+\voffset-3mm}{%
       2\tubspage@borderwidth}
-  }{%
-    \textblockorigin{2\tubspage@borderwidth}{%
+  }{% 
+    \textblockorigin{\oddsidemargin+1in+\voffset-3mm}{%
       \tubspage@senderheight+\tubspage@borderwidth}
   }
 }
@@ -391,7 +392,10 @@
 %    \end{macrocode}
 %
 %
-% \subsection{Scientific-Poster-Box}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Modul-System}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %
 %    \begin{macrocode}
 \newsavebox{\tubs@sb@storebox}
@@ -508,7 +512,7 @@
 %    \end{macro}
 %
 %    \begin{environment}{modulepage}
-% \marg{rows}\par
+% \oarg{options}\marg{rows}\par
 % Extra-Umgebung für wissenschaftliche Poster mit Modulsystem.
 % Als Argument ist die gewünschte Anzahl an Modul-Zeilen anzugeben.
 % Dies geschieht mit einer durch Kommas getrennten Liste.
