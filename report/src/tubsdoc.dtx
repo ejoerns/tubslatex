@@ -111,6 +111,9 @@
 %    \begin{macrocode}
 \newcommand*{\@fsfbs@sub}{}
 %</class>
+%<*package>
+\newcommand{\BaseClass}{\KOMAClassName}
+%</package>
 %<package|class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{tubsdoc}
 %<class>\ProvidesClass{\tubsClassName}[2011/07/09 tubstex document class]
@@ -208,6 +211,7 @@
 % Format DIN A6.
 %    \begin{macrocode}
 \def\tubs@opt@paper{}
+\newcommand{\@fsfb@prefix}{}
 \DeclareOptionX{a6paper}{%
   \def\tubs@opt@paper{a6paper}
 }
@@ -218,7 +222,7 @@
 % Format DIN A5.
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
-  \newcommand{\@fsfb@prefix}{tubsa5}
+  \renewcommand{\@fsfb@prefix}{tubsa5}
   \PassOptionsToClass{9pt}{\BaseClass}
   \def\tubs@opt@paper{a5paper}
 }
@@ -230,7 +234,7 @@
 % gesetzt und auch das Siegelband-Logo entsprechend skaliert.
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
-  \newcommand{\@fsfb@prefix}{tubsa4}
+  \renewcommand{\@fsfb@prefix}{tubsa4}
   \PassOptionsToClass{9pt}{\BaseClass}
   \def\tubs@opt@paper{a4paper}
 }
@@ -241,7 +245,7 @@
 % Format DIN A§.
 %    \begin{macrocode}
 \DeclareOptionX{a3paper}{%
-  \newcommand{\@fsfb@prefix}{tubsa3}
+  \renewcommand{\@fsfb@prefix}{tubsa3}
   \PassOptionsToClass{13pt}{\BaseClass}
   \def\tubs@opt@paper{a3paper}
 }
@@ -252,8 +256,8 @@
 % Format DIN A2.
 %    \begin{macrocode}
 \DeclareOptionX{a2paper}{%
-  \newcommand{\@fsfb@prefix}{tubsa2}
-  \PassOptionsToClass{13pt}{\BaseClass}
+  \renewcommand{\@fsfb@prefix}{tubsa2}
+  \PassOptionsToClass{18pt}{\BaseClass}
   \def\tubs@opt@paper{a2paper}
 }
 %    \end{macrocode}
@@ -263,8 +267,8 @@
 % Format DIN A1.
 %    \begin{macrocode}
 \DeclareOptionX{a1paper}{%
-  \newcommand{\@fsfb@prefix}{tubsa1}
-  \PassOptionsToClass{13pt}{\BaseClass}
+  \renewcommand{\@fsfb@prefix}{tubsa1}
+  \PassOptionsToClass{25pt}{\BaseClass}
   \def\tubs@opt@paper{a1paper}
 }
 %    \end{macrocode}
@@ -275,8 +279,8 @@
 % Format DIN A0.
 %    \begin{macrocode}
 \DeclareOptionX{a0paper}{%
-  \newcommand{\@fsfb@prefix}{tubsa0}
-  \PassOptionsToClass{13pt}{\BaseClass}
+  \renewcommand{\@fsfb@prefix}{tubsa0}
+  \PassOptionsToClass{40pt}{\BaseClass}
   \def\tubs@opt@paper{a0paper}
 }
 %    \end{macrocode}
@@ -354,11 +358,12 @@
 %<article>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
 \ProcessOptionsX*\relax
 % Namen für Fontsize-Dateien festlegen
-\newcommand{\@fontsizefilebase}{\@fsfb@prefix\@fsfbs@sub}
-
+\providecommand{\@fontsizefilebase}{}
+\renewcommand{\@fontsizefilebase}{\@fsfb@prefix\@fsfbs@sub}
+%
 \PassOptionsToPackage{\tubs@opt@paper}{tubstypearea}
 \PassOptionsToPackage{\tubs@opt@paper}{tubslogo}
-
+%
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
