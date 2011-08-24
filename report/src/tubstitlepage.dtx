@@ -1,0 +1,276 @@
+
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{nexus}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\usepackage{tabularx}
+\usepackage{xkeyval}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{tubstitlepage.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
+%
+% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+%
+% \GetFileInfo{tubshead.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{tubstitlepage} -- 
+%  Titelseiten-Definitionen für \emph{tubslatex}\thanks{This document
+%   corresponds to \textsf{tubstitlepage}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   This package offers functionality to create titlepages in the
+%   CorporateDesign of the TU Braunschweig.
+% \end{abstract}
+%
+% \section{Einleitung}
+%
+% Put text here.
+%
+% \section{Benutzung}
+%
+% \parindent0mm
+% \parskip\medskipamount
+%
+% \subsection{Layout-Templates}
+%
+% \subsection{Poster}
+%
+% \DescribeMacro{\showtopline}
+%   bla
+%
+% \DescribeMacro{\showtubslogo}
+%   bla
+%
+% \DescribeMacro{\showlogo}
+%   bla
+%
+% \DescribeEnv{YOURENV}
+% Put description of |YOURENV| here.
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementierung}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Optionen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Es werden zur Zeit keine Optionen zur Verfügung gestellt
+%    \begin{macrocode}
+%<*option>
+%    \end{macrocode}
+%    \begin{macrocode}
+%</option>
+%    \end{macrocode}
+%
+% 
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ProvidesPackage{tubstitlepage}
+%    \end{macrocode}
+%
+% Lade benötigte Pakete.
+%    \begin{macrocode}
+\RequirePackage{xkeyval}
+% \RequirePackage{tubsflowfram}
+\RequirePackage{tubsstyle}
+\RequirePackage{tubscolors}
+%    \end{macrocode}
+%
+%    \begin{macro}{\style@select}
+%    \begin{macrocode}
+\def\style@select{plain}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{key}{tubstitlepage.sty}{backstyle}
+% Allow to choose default style
+%    \begin{macrocode}
+\DeclareOptionX{backstyle}{%
+  \def\style@select{#1}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{macrocode}
+\ProcessOptionsX\relax
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\let\oldmaketitle\maketitle
+%    \end{macrocode}
+%
+\newcommand{\titlestyle}[1]{%
+  \csname tubs@style@bg@#1\endcsname
+}
+%
+%    \begin{macro}{\maketitle}
+% Redefine maketitle, provide additional optional arguments
+%    \begin{macrocode}
+\renewcommand{\maketitle}{%
+  \expandafter\csname tubs@style@content@\style@select\endcsname
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{environment}{titlepage}
+% Redefine environment titlepage, provide additional optional arguments
+%    \begin{macrocode}
+\renewenvironment{titlepage}[1][\relax]{%
+}{%
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{macro}{\logo}
+% Allows to set a logo
+%    \begin{macrocode}
+\newcommand{\logo}[1]{%
+  
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\new@title@style}
+% Creates new title style
+% produces command of type |\tubs@style@bg@stylename|
+% args:
+% 1 - style name
+% 2 - background style
+% 3 - foreground style
+% 4 - content
+%    \begin{macrocode}
+\newcommand{\new@title@style}[4]{%
+  \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
+  \expandafter\def\csname tubs@style@fg@#1\endcsname{#3}
+  \expandafter\def\csname tubs@style@content@#1\endcsname{#4}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%%% styles defenitions %%%
+%
+%    \begin{macrocode}
+\new@title@style{plain}{%
+  \bglayout{%
+    \showtopline
+%     \emptyframe{8}
+    \showtubslogo{left}
+  }
+}{}{\oldmaketitle}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\new@title@style{color}{%
+  \defbgtemplate[1]{4}{%
+    \colorframe{2}{tuSecondary100}
+    \colorframe{2}{tuSecondary80}
+    \colorframe{1}{tuSecondary60}
+    \colorframe{3}{tuSecondary40}
+    \placetubslogo{left}
+  }
+}{%
+  \newdynamictubsframe[1]{tubs@title}{3}{2}{1}{6}
+  \newdynamictubsframe[1]{tubs@author}{5}{1}{1}{6}
+  \newdynamictubsframe[1]{tubs@abstract}{6}{3}{1}{6}
+}{%
+  \setdynamiccontents*{tubs@title}{%
+    \sffamily%
+    {\bfseries\Huge\@title}\bigskip\\%
+    {\LARGE\@subtitle}%
+    \vfill%
+    {\Large\@date}}
+  \setdynamiccontents*{tubs@author}{%
+    \vfill%
+    {\sffamily\Huge\@author}%
+    \vfill}
+  ~\newpage
+}
+%    \end{macrocode}
+%
+% finally, load selected style
+%    \begin{macrocode}
+\expandafter\csname tubs@style@bg@\style@select\endcsname
+\expandafter\csname tubs@style@fg@\style@select\endcsname
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%
+% \Finale
+\endinput
