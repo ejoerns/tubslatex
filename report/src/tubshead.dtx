@@ -58,7 +58,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{tubshead} -- 
-%   headline definitions for tubslatex\thanks{This document
+%   Kopfzeilen-Definitionen für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{tubshead}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -116,6 +116,23 @@
 %    \begin{macrocode}
 % \PassOptionsToPackage{headsepline}{scrpage2}
 \RequirePackage{scrpage2}
+%    \end{macrocode}
+
+%    \begin{macro}{\ihead}
+%    \begin{macrocode}
+\let\@orig@ihead\ihead
+\renewcommand{\ihead}[1]{\@orig@ihead{\vbox to\headheight{\vspace*{1ex}\rule{15pt}{0.2pt}\\#1}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\ihead}
+%    \begin{macrocode}
+\let\@orig@ohead\ohead
+\renewcommand{\ohead}[1]{\@orig@ohead{\vbox to\headheight{\vspace*{1ex}\rule{15pt}{0.2pt}\\#1}}}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
 \clearscrheadings
 \automark[chapter]{chapter}
 \ihead{\scshape\headmark}
