@@ -155,8 +155,9 @@
 % Redefine maketitle, provide additional optional arguments
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][\style@select]{%
-   \expandafter\csname tubs@style@bg@#1\endcsname%
-   \expandafter\csname tubs@style@content@#1\endcsname%
+  \thispagestyle{empty}%
+  \expandafter\csname tubs@style@bg@#1\endcsname%
+  \expandafter\csname tubs@style@content@#1\endcsname%
 }
 %    \end{macrocode}
 %    \end{macro}
