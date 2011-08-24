@@ -468,8 +468,10 @@
 % Bestimmt, ob Absenderbereich oben oder unten auf der Seite platziert wird.
 % Damit ändert sich der komplette Darstellungsbereich.
 %    \begin{macrocode}
-\DeclareOptionX{bottomsender}{%
-  \setboolean{tubspage@bottomsender}{true}
+\DeclareOptionX{sender}{%
+  \ifthenelse{\equal{#1}{bottom}}{%
+    \setboolean{tubspage@bottomsender}{true}
+  }{}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -626,11 +628,11 @@
   % TODO: evtl. mit Option bottomsender kombinieren?
   \ifthenelse{\equal{#1}{inverted}}{%
     \calc@gaussum{tmp@calc}{(\tubspage@ysegments-(\tubspage@ysegments-(#3)+1))}%
-    \setcounter{#2}{\thetubspage@gausssum-(\thetubspage@gausssum-\thetmp@calc)}
+    \setcounter{#2}{\thetubspage@gausssum-(\thetubspage@gausssum-\thetmp@calc)}%
   }{%
     \calc@gaussum{tmp@calc}{(\tubspage@ysegments-((#3)-1))}%
-    \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}
-  }
+    \setcounter{#2}{\thetubspage@gausssum-\thetmp@calc}%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}

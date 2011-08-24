@@ -129,15 +129,15 @@
 %
 % Es werden zur Zeit keine Optionen zur Verfügung gestellt
 %    \begin{macrocode}
-%<*option>
-%    \end{macrocode}
-%    \begin{macrocode}
-%</option>
+\newboolean{tubsstyle@twoside}\setboolean{tubsstyle@twoside}{false}
+\DeclareOptionX{twoside}{%
+  \setboolean{tubsstyle@twoside}{true}
+}
 %    \end{macrocode}
 %
-% 
 %    \begin{macrocode}
 %<*package>
+\ProcessOptionsX\relax
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -173,9 +173,8 @@
 % unterschiedlich arbeiten.
 % Ist nur aktiv, wenn Option |twosided| benutzt wird.
 %    \begin{macrocode}
-\newboolean{tubs@twoside}\setboolean{tubs@twoside}{false}
 \newcommand{\if@tubs@oddpage}[2]{%
-  \ifthenelse{\boolean{tubs@twoside}}{%
+  \ifthenelse{\boolean{tubsstyle@twoside}}{%
     \ifthispageodd{#1}{#2}%
   }{#1}%
 }
@@ -195,18 +194,18 @@
 \newcommand\tubs@topline{%
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
-  }{
-    \setlength{\tmp@posx}{\tubspage@borderwidth}
-  }
-  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \setlength{\tmp@posy}{\paperheight-(\tubspage@borderwidth+36\tubspage@gaussheight)}
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
   }{%
-    \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}
-  }
+    \setlength{\tmp@posx}{\tubspage@borderwidth}%
+  }%
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+    \setlength{\tmp@posy}{\paperheight-(\tubspage@borderwidth+36\tubspage@gaussheight)}%
+  }{%
+    \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}%
+  }%
   \put(\LenToUnit{\tmp@posx},%
-    \LenToUnit{\tmp@posy})
-    {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.2ex}}}
+    \LenToUnit{\tmp@posy})%
+    {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.2ex}}}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -225,29 +224,29 @@
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
-      \paperheight
-      -(\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight)
-      -\tubslogoHeight}
+      \paperheight%
+      -(\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight)%
+      -\tubslogoHeight}%
   }{%
     \setlength{\tmp@posy}{%
-      \tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}
-  }
+      \tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
+  }%
   % Berechne x-Position, abhängig von oddness
   \if@tubs@oddpage{%
     \ifthenelse{\equal{#1}{left}}{%
-      \setlength{\tmp@posx}{\tubspage@bcor}
+      \setlength{\tmp@posx}{\tubspage@bcor}%
     }{%
-      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
-      \setboolean{tubsstyle@logoright}{true}
-    }
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}%
+      \setboolean{tubsstyle@logoright}{true}%
+    }%
   }{%
     \ifthenelse{\equal{#1}{left}}{%
-      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}%
     }{%
-      \setlength{\tmp@posx}{\tubspage@bcor}
-    }
-  }
-  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}
+      \setlength{\tmp@posx}{\tubspage@bcor}%
+    }%
+  }%
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -260,40 +259,40 @@
 % Syntax: |\tubs@logo|\marg{logos}
 %    \begin{macrocode}
 \newcommand\tubs@logo[1]{%
-  \def\@ragged{\raggedleft}
+  \def\@ragged{\raggedleft}%
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
-      \paperheight
-      -(2\tubspage@borderwidth+36\tubspage@gaussheight)
-      -(\tubspage@senderheight-2\tubspage@borderwidth)}
+      \paperheight%
+      -(2\tubspage@borderwidth+36\tubspage@gaussheight)%
+      -(\tubspage@senderheight-2\tubspage@borderwidth)}%
   }{%
     \setlength{\tmp@posy}{%
       2\tubspage@borderwidth+36\tubspage@gaussheight}
-  }
+  }%
 %   \setlength{\tmp@posy}{2\tubspage@borderwidth+36\tubspage@gaussheight}
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
     \ifthenelse{\boolean{tubsstyle@logoright}}{%
-      \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
-      \def\@ragged{\raggedright}
+      \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
+      \def\@ragged{\raggedright}%
     }{%
-      \setlength{\tmp@posx}{0.5\paperwidth}
-    }
+      \setlength{\tmp@posx}{0.5\paperwidth}%
+    }%
   }{%
     \ifthenelse{\boolean{tubsstyle@logoright}}{%
-      \setlength{\tmp@posx}{0.5\paperwidth}
+      \setlength{\tmp@posx}{0.5\paperwidth}%
     }{%
-      \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
-      \def\@ragged{\raggedright}
-    }
-  }
+      \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
+      \def\@ragged{\raggedright}%
+    }%
+  }%
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
     \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
       {0.5\paperwidth-\tubspage@borderwidth}{%
       \usekomafont{institute}\@ragged #1%
-    }
-  }
+    }%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -309,32 +308,32 @@
 \newcommand\tubs@background[2]{%
   % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' an
   % |calc@gauss@elementpos| zu übergeben, falls bottomsender-Layout gewählt wurde.
-  \def\@inv@arg{\relax}
+  \def\@inv@arg{}%
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \def\@inv@arg{inverted}%
-  }{}
+  }{}%
   % calculate and set y pos (origin: lower left corner)
-  \calc@gauss@elementpos[\@inv@arg]{tmp@calc@bgpos}{#1}
+  \calc@gauss@elementpos[\@inv@arg]{tmp@calc@bgpos}{#1}%
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
       \tubspage@senderheight-\thetmp@calc@bgpos\tubspage@gaussheight}% pos hack
   }{%
     \setlength{\tmp@posy}{%
       \tubspage@borderwidth-\thetmp@calc@bgpos\tubspage@gaussheight}% pos hack
-  }
+  }%
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}
+    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
   }{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth}
-  }
+    \setlength{\tmp@posx}{\tubspage@borderwidth}%
+  }%
   % calculate and set height
-  \calc@gauss@elementpos[\@inv@arg]{tmpb@calc@bgpos}{#1+#2}
+  \calc@gauss@elementpos[\@inv@arg]{tmpb@calc@bgpos}{#1+#2}%
   % additional fixment hack because of inverted y orientation
-  \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}
+  \setcounter{tmp@calc@bgpos}{\thetmpb@calc@bgpos-\thetmp@calc@bgpos}%
   \addtolength{\tmp@posy}{%
     -\thetmp@calc@bgpos\tubspage@gaussheight%
-    +\thetubspage@gausssum\tubspage@gaussheight}
+    +\thetubspage@gausssum\tubspage@gaussheight}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -343,7 +342,7 @@
 % Fügt ein farbiges Hintergrund-Element im Gaußraster ein.
 %    \begin{macrocode}
 \newcommand\tubs@background@colored[3]{%
-  \tubs@background{#2}{#3}
+  \tubs@background{#2}{#3}%
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
     {{\setlength\fboxsep{0mm}\colorbox{#1}{%
       \parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]%
