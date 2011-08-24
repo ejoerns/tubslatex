@@ -61,7 +61,7 @@
 %   \raggedright}
 %  {\end{list}}
 %
-% \changes{v1.0}{ YYYY / MM / DD }{Initial version}
+% \changes{v1.0}{ 2011 / 08 / 24 }{Initial version}
 %
 % \GetFileInfo{tubsodc.sty}
 %
@@ -183,6 +183,7 @@
 \DeclareOptionX{twoside}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
   \PassOptionsToClass{twoside}{\BaseClass}
+  \PassOptionsToPackage{twoside}{tubsstyle}
 }
 %</book|report|article|package>
 %    \end{macrocode}
@@ -403,11 +404,7 @@
 \RequirePackage{tubscolors}
 \RequirePackage{tubslogo}
 \RequirePackage{tubstypearea}
-%% You may choose another backend here!!!
-%<article|report|book>\RequirePackage{tubsflowfram}
-%<poster>\RequirePackage{tubsstyle,tubsbox}
-%
-\RequirePackage{nexus}
+% \RequirePackage{nexus}
 \RequirePackage{tubslogo}
 %    \end{macrocode}
 %    \begin{macrocode}
