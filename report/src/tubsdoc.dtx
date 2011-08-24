@@ -50,6 +50,16 @@
 %</driver>
 % \fi
 %
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
 %
@@ -136,9 +146,10 @@
 %    \end{macrocode}
 %
 % \subsection{Paket-Optionen}
-% 
+%
 % \subsubsection{Farb-Optionen}
-% \paragraph{mono}
+%
+%    \begin{key}{tubsdoc.dtx}{mono}
 % Die Option |mono| erzeugt eine Schwarzweiß-Darstellung des Siegelband-Logos
 % und der sonst roten Trennlinie zwischen Absender- und 
 % Kommunikationsbereich (falls verwendet).
@@ -148,8 +159,9 @@
   \PassOptionsToPackage{mono}{tubsflowfram}
 }
 %    \end{macrocode}
+%    \end{key}
 %
-% \paragraph{cmyk}
+%    \begin{key}{tubsdoc.dtx}{cmyk}
 % Die Option |cmyk| schaltet alle verwendeten CD-Elemente auf cmyk-Farbschema
 % um. Dies ist wird meist für den Druck benötigt.
 %    \begin{macrocode}
@@ -158,21 +170,25 @@
   \PassOptionsToPackage{cmyk}{tubslogo}
 }
 %    \end{macrocode}
+%    \end{key}
 %
 % \subsubsection{Satz-Optionen}
-% \paragraph{twosided}
-% Die Option |twosided| setzt die Seiten als zweiseitiges Layout, was vor
+%
+%    \begin{key}{tubsdoc.dtx}{twoside}
+% Die Option |twoside| setzt die Seiten als zweiseitiges Layout, was vor
 % allem bei verwendung der Marginalen und der Bindungskorrektur zu Tragen
 % kommt.
 %    \begin{macrocode}
 %<*book|report|article|package>
-\DeclareOptionX{twosided}{%
+\DeclareOptionX{twoside}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
+  \PassOptionsToClass{twoside}{\BaseClass}
 }
 %</book|report|article|package>
 %    \end{macrocode}
-% 
-% \paragraph{marginleft}
+%    \end{key}
+%
+%    \begin{key}{tubsdoc.dtx}{marginleft}
 % Die Option |marginleft| setzt eine Marginale am linken Rand des Textbereich.
 % Sie entspricht der Breite einer Spalte im Satzraster, das formatabhängig
 % in insgesamt 6, 4, oder 2 Spalten angelegt ist.
@@ -181,8 +197,9 @@
   \PassOptionsToPackage{marginleft}{tubstypearea}
 }
 %    \end{macrocode}
-% 
-% \paragraph{marginright}
+%    \end{key}
+%
+%    \begin{key}{tubsdoc.dtx}{marginright}
 % Die Option |marginright| entspricht der Option |marginleft|, setzt
 % aber eine Marginale am rechten Bildrand.
 % Beide Optionen können auch kombiniert werden.
@@ -191,8 +208,9 @@
   \PassOptionsToPackage{marginright}{tubstypearea}
 }
 %    \end{macrocode}
-% 
-% \paragraph{bcor}
+%    \end{key}
+%
+%    \begin{key}{tubsdoc.dtx}{bcor}
 % Die Option |bcor| erlaubt das Setzen einer Bindekorrektur.
 % |bcor=5mm| setzt beispielsweise eine Bindekorrektur von 5mm.
 %    \begin{macrocode}
@@ -200,13 +218,14 @@
   \PassOptionsToPackage{bcor=#1}{tubstypearea}
 }
 %    \end{macrocode}
-% 
+%    \end{key}
+%
 % \subsubsection{Papierformat}
 %
 % Es wird jeweils das gewählte Format im Makro |\tubs@opt@paper| gespeichert
 % und das richtige Font-File-Präfix samt passender Schriftgröße eingestellt.
 %
-% \paragraph{a6paper}
+%    \begin{key}{tubsdoc.dtx}{a6paper}
 % Die Papierformat-Option |a6paper| zum Erzeugen von Dokumenten im
 % Format DIN A6.
 %    \begin{macrocode}
@@ -216,8 +235,9 @@
   \def\tubs@opt@paper{a6paper}
 }
 %    \end{macrocode}
-% 
-% \paragraph{a5paper}
+%    \end{key}
+%
+% \begin{key}{tubsdoc.dtx}{a5paper}
 % Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
 % Format DIN A5.
 %    \begin{macrocode}
@@ -227,8 +247,9 @@
   \def\tubs@opt@paper{a5paper}
 }
 %    \end{macrocode}
-% 
-% \paragraph{a4paper}
+%    \end{key}
+%
+% \begin{key}{tubsdoc.dtx}{a4paper}
 % Die Papierformat-Option |a4paper| zum Erzeugen von Dokumenten im
 % Format DIN A4. Alle Dimensionen werden entsprechend den CD-Vorgaben
 % gesetzt und auch das Siegelband-Logo entsprechend skaliert.
@@ -239,8 +260,9 @@
   \def\tubs@opt@paper{a4paper}
 }
 %    \end{macrocode}
-% 
-% \paragraph{a3paper}
+%    \end{key}
+%
+% \begin{key}{tubsdoc.dtx}{a3paper}
 % Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
 % Format DIN A§.
 %    \begin{macrocode}
@@ -250,8 +272,9 @@
   \def\tubs@opt@paper{a3paper}
 }
 %    \end{macrocode}
-% 
-% \paragraph{a2paper}
+%    \end{key}
+%
+% \begin{key}{tubsdoc.dtx}{a2paper}
 % Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
 % Format DIN A2.
 %    \begin{macrocode}
@@ -261,8 +284,9 @@
   \def\tubs@opt@paper{a2paper}
 }
 %    \end{macrocode}
-% 
-% \paragraph{a1paper}
+%    \end{key}
+%
+% \begin{key}{tubsdoc.dtx}{a1paper}
 % Die Papierformat-Option |a1paper| zum Erzeugen von Dokumenten im
 % Format DIN A1.
 %    \begin{macrocode}
@@ -272,9 +296,10 @@
   \def\tubs@opt@paper{a1paper}
 }
 %    \end{macrocode}
+%    \end{key}
 %
 %
-% \paragraph{a0paper}
+% \begin{key}{tubsdoc.dtx}{a0paper}
 % Die Papierformat-Option |a5paper| zum Erzeugen von Dokumenten im
 % Format DIN A0.
 %    \begin{macrocode}
@@ -284,14 +309,9 @@
   \def\tubs@opt@paper{a0paper}
 }
 %    \end{macrocode}
+%    \end{key}
 %
-%
-%    \begin{macrocode}
-\DeclareOptionX{stdbcor}{%
-  \PassOptionsToPackage{bcor=\tubsdoc@std@bcor}{tubstypearea}
-}
-%    \end{macrocode}
-% 
+% NOTE: Wird zur Zeit nicht unterstützt!
 %    \begin{macrocode}
 \DeclareOptionX{backend}{%
   \if#1{flow}
@@ -311,14 +331,12 @@
   }{}
 }
 %    \end{macrocode}
-% 
+%
 %    \begin{macrocode}
-\DeclareOptionX{titlestyle}{%
-  \PassOptionsToPackage{backstyle=#1}{tubstitlepage}
-}
+%<*poster>
 %    \end{macrocode}
 %
-%<*poster>
+%    \begin{key}{tubsdoc.dtx}{scifiposter}
 % Diese Option erzeugt Formatierung entsprechend der Konventionen für
 % wissenschaftliche Plakate
 %    \begin{macrocode}
@@ -330,13 +348,19 @@
   \renewcommand*{\@fsfbs@sub}{scifi}
 }
 %    \end{macrocode}
-%</poster>
+%    \end{key}
 %
+%    \begin{macrocode}
+%</poster>
+%    \end{macrocode}
+%
+%    \begin{key}{tubsdoc.dtx}{sender}
 %    \begin{macrocode}
 \DeclareOptionX{sender}{%
   \PassOptionsToPackage{sender=#1}{tubstypearea}
 }
 %    \end{macrocode}
+%    \end{key}
 %
 %    \begin{macrocode}
 \DeclareOptionX*{%
@@ -385,7 +409,6 @@
 %
 \RequirePackage{nexus}
 \RequirePackage{tubslogo}
-%<book|report|article>\RequirePackage{tubstitlepage}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</body>
