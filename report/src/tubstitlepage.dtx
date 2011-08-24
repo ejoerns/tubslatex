@@ -85,69 +85,32 @@
 %
 % \section{Einleitung}
 %
-% Put text here.
 %
 % \section{Benutzung}
 %
 % \parindent0mm
 % \parskip\medskipamount
 %
-% \subsection{Layout-Templates}
-%
-% \subsection{Poster}
-%
-% \DescribeMacro{\showtopline}
-%   bla
-%
-% \DescribeMacro{\showtubslogo}
-%   bla
-%
-% \DescribeMacro{\showlogo}
-%   bla
-%
-% \DescribeEnv{YOURENV}
-% Put description of |YOURENV| here.
-%
 % \StopEventually{\PrintIndex}
 %
 % \section{Implementierung}
 %
 %    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-% 
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Optionen}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Es werden zur Zeit keine Optionen zur Verfügung gestellt
-%    \begin{macrocode}
-%<*option>
-%    \end{macrocode}
-%    \begin{macrocode}
-%</option>
-%    \end{macrocode}
-%
-% 
-%    \begin{macrocode}
 %<*package>
 %    \end{macrocode}
 %
+% TODO: direkt einbinden, kein Paket!
 %    \begin{macrocode}
 \ProvidesPackage{tubstitlepage}
 %    \end{macrocode}
 %
 % Lade benötigte Pakete.
 %    \begin{macrocode}
+% \PassOptionsToPackage{frame=fbox}{tubsbox}% TODO: TESTING!!!
 \RequirePackage{xkeyval}
 % \RequirePackage{tubsflowfram}
 \RequirePackage{tubsstyle}
+\RequirePackage{tubsbox}
 \RequirePackage{tubscolors}
 %    \end{macrocode}
 %
@@ -181,91 +144,148 @@
 %    \begin{macro}{\maketitle}
 % Redefine maketitle, provide additional optional arguments
 %    \begin{macrocode}
-\renewcommand{\maketitle}{%
-  \expandafter\csname tubs@style@content@\style@select\endcsname
+\renewcommand{\maketitle}[1][\style@select]{%
+  \expandafter\csname tubs@style@bg@#1\endcsname
+  \expandafter\csname tubs@style@fg@#1\endcsname
+  \expandafter\csname tubs@style@content@#1\endcsname
 }
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{environment}{titlepage}
-% Redefine environment titlepage, provide additional optional arguments
 %    \begin{macrocode}
-\renewenvironment{titlepage}[1][\relax]{%
+\newcounter{tubs@tp@yseg@cnt}
+%    \end{macrocode}
+%
+%    \begin{environment}{titlerow}
+% Umgebung mit der Innerhalb der |titlepage|-Umgebung Inhalts-Elemente im
+% Gauß-Layout definiert werden können.
+%    \begin{macrocode}
+\newenvironment{titlerow}[2][]{%
+  \bgelement[#1]{#2}%
+  \edef\@tubs@arg{{0}{\thetubs@tp@yseg@cnt}{6}{#2}}%
+  \addtocounter{tubs@tp@yseg@cnt}{#2}%
+  \expandafter\tubsbox\@tubs@arg%
 }{%
+  \endtubsbox%
 }
 %    \end{macrocode}
 %    \end{environment}
 %
+%    \begin{environment}{titlepage}
+% Redefine environment titlepage, provide additional optional arguments
+%    \begin{macrocode}
+\renewenvironment{titlepage}[1][]{%
+  \setcounter{tubs@tp@yseg@cnt}{1}
+  \tubsboxsetup[#1]%TODO...
+  \@layout@pre{pages=single,#1}
+  \sffamily
+}{%
+  \@layout@post
+  ~\newpage
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%
+%    \begin{macrocode}
+\newcommand{\tubs@tp@logo}{}
+\newcommand{\tubs@tp@titlepicture}{}
+\newcommand{\tubs@tp@titleabstract}{}
+%    \end{macrocode}
+%
 %    \begin{macro}{\logo}
-% Allows to set a logo
+% Erlaubt ein Logo zu definieren, dass auf die Titelseite gesetzt werden soll.
 %    \begin{macrocode}
 \newcommand{\logo}[1]{%
-  
+  \renewcommand{\tubs@tp@logo}{#1}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\titlepicture}
+% \oarg{scale option}\marg{picture}\par
+% Erlaubt ein Bild zu definieren, dass auf die Titelseite gesetzt werden soll.
+% Ob es gesetzt wird, ist abhängig vom gewählten Titelstil.
+%    \begin{macrocode}
+\newcommand{\titlepicture}[2][cropped]{%
+  \renewcommand{\tubs@tp@titlepicture}{[bgimage=#2,imagefit=#1]}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\titleabstract}
+% \marg{text}\par
+% Erlaubt einen Text zu definieren, dass auf die Titelseite gesetzt werden soll.
+% Ob er gesetzt wird, ist abhängig vom gewählten Titelstil.
+%    \begin{macrocode}
+\newcommand{\titleabstract}[1]{%
+  \renewcommand{\tubs@tp@titleabstract}{#1}
 }
 %    \end{macrocode}
 %    \end{macro}
 %
 %    \begin{macro}{\new@title@style}
+% \marg{name}\marg{bgstyle}\marg{content}
 % Creates new title style
 % produces command of type |\tubs@style@bg@stylename|
 % args:
 % 1 - style name
 % 2 - background style
-% 3 - foreground style
-% 4 - content
+% 3 - content
 %    \begin{macrocode}
-\newcommand{\new@title@style}[4]{%
+\newcommand{\new@title@style}[3]{%
   \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
-  \expandafter\def\csname tubs@style@fg@#1\endcsname{#3}
-  \expandafter\def\csname tubs@style@content@#1\endcsname{#4}
+  \expandafter\def\csname tubs@style@content@#1\endcsname{#3}
 }
 %    \end{macrocode}
 %    \end{macro}
 %
 %%% styles defenitions %%%
 %
+% Standard-Style, einfaches Logo mit Trennlinie zwischen Absender- und
+% Kommunikationsbereich.
 %    \begin{macrocode}
 \new@title@style{plain}{%
-  \bglayout{%
+  \bglayout[pages=single]{%
     \showtopline
-%     \emptyframe{8}
-    \showtubslogo{left}
+    \showtubslogo[left]
   }
-}{}{\oldmaketitle}
+}{\oldmaketitle}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\new@title@style{color}{%
-  \defbgtemplate[1]{4}{%
-    \colorframe{2}{tuSecondary100}
-    \colorframe{2}{tuSecondary80}
-    \colorframe{1}{tuSecondary60}
-    \colorframe{3}{tuSecondary40}
-    \placetubslogo{left}
-  }
-}{%
-  \newdynamictubsframe[1]{tubs@title}{3}{2}{1}{6}
-  \newdynamictubsframe[1]{tubs@author}{5}{1}{1}{6}
-  \newdynamictubsframe[1]{tubs@abstract}{6}{3}{1}{6}
-}{%
-  \setdynamiccontents*{tubs@title}{%
-    \sffamily%
-    {\bfseries\Huge\@title}\bigskip\\%
-    {\LARGE\@subtitle}%
-    \vfill%
-    {\Large\@date}}
-  \setdynamiccontents*{tubs@author}{%
-    \vfill%
-    {\sffamily\Huge\@author}%
-    \vfill}
+\new@title@style{image}{%
+    \bglayout[pages=single]{%
+      \showtubslogo[left]
+    }
+  }{%
+  \begin{titlepage}
+    \expandafter\titlerow\tubs@tp@titlepicture{2}
+    \endtitlerow
+    \begin{titlerow}[bgcolor=tuSecondary80]{2}
+      \sffamily%
+      {\bfseries\Huge\@title}\bigskip\\%
+      {\LARGE\@subtitle}%
+      \vfill%
+      {\Large\@date}
+    \end{titlerow}
+    \begin{titlerow}[bgcolor=tuSecondary60]{1}
+      \vfill%
+      {\sffamily\Huge\@author}%
+      \vfill
+    \end{titlerow}
+    \begin{titlerow}[bgcolor=tuSecondary40]{2}
+      \tubs@tp@titleabstract
+    \end{titlerow}
+  \end{titlepage}
   ~\newpage
 }
 %    \end{macrocode}
 %
 % finally, load selected style
 %    \begin{macrocode}
-\expandafter\csname tubs@style@bg@\style@select\endcsname
-\expandafter\csname tubs@style@fg@\style@select\endcsname
+% \expandafter\csname tubs@style@bg@\style@select\endcsname
+% \expandafter\csname tubs@style@fg@\style@select\endcsname
 %    \end{macrocode}
 %
 %    \begin{macrocode}
