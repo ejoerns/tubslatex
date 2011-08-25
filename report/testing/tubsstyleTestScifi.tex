@@ -1,5 +1,5 @@
-\makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
-\documentclass[a3paper,13pt,scifiposter,style=scifi]{tubsposter}
+% \makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
+\documentclass[a3paper,scifiposter,style=scifi]{tubsposter}
 \usepackage[utf8]{inputenc}
 
 \usepackage{lipsum}
@@ -44,9 +44,8 @@
     \end{postercol}
   \end{posterrow}
 \end{tubsposter}
-~
-\newpage
-\begin{modulepage}[sender=bottom]{X,5cm,X}
+
+\begin{tubsposter}[sender=bottom]{X,5cm,X}
   \begin{posterrow}
     Dies ist ein Testtext, der absolut keinen Sinn hat.
   \end{posterrow}
@@ -93,10 +92,9 @@
       Dies ist ein Testtext, der absolut keinen Sinn hat.
     \end{postercol}
   \end{posterrow}
-\end{modulepage}
-~
-\newpage
-\begin{modulepage}{X,X}
+\end{tubsposter}
+
+\begin{tubsposter}{X,X}
   \begin{posterrow}[5cm,X]
     \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
@@ -113,7 +111,7 @@
       Dies ist ein Testtext, der absolut keinen Sinn hat.
     \end{postercol}
   \end{posterrow}
-\end{modulepage}
+\end{tubsposter}
 ~
 \newpage
 \end{document}

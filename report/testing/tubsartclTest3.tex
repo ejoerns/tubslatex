@@ -1,4 +1,4 @@
-\documentclass[a5paper,11pt,twoside,bcor=8mm]{tubsartcl}
+\documentclass[a4paper,11pt,twoside]{tubsartcl}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
@@ -21,9 +21,10 @@ Nam lacus libero}
 \begin{document}
 
 \maketitle[image]
-\pagestyle{scrheadings}
+
 \tableofcontents
 
+\pagestyle{scrheadings}
 
 \section{Ut purus elit}
 
@@ -37,20 +38,8 @@ Nam lacus libero}
 
 \lipsum[1-3]
 
-% \bglayout{\bgelement[bgcolor=tuBlue]{8}}
 \subsection{Donec felis erat}
 
 \lipsum[4-7]
-
-\begin{itemize}
-  \item Nam dui ligula
-  \item fringilla a
-    \begin{itemize}
-      \item vitae ornare odio metus a mi
-      \item erat ligula aliquet magna
-    \end{itemize}
-  \item euismod sodales
-\end{itemize}
-
 
 \end{document}
