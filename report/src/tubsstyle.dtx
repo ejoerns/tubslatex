@@ -268,16 +268,15 @@
       -(\tubspage@senderheight-2\tubspage@borderwidth)}%
   }{%
     \setlength{\tmp@posy}{%
-      2\tubspage@borderwidth+36\tubspage@gaussheight}
+      2\tubspage@borderwidth+36\tubspage@gaussheight}%
   }%
-%   \setlength{\tmp@posy}{2\tubspage@borderwidth+36\tubspage@gaussheight}
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
     \ifthenelse{\boolean{tubsstyle@logoright}}{%
       \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
       \def\@ragged{\raggedright}%
     }{%
-      \setlength{\tmp@posx}{0.5\paperwidth}%
+      \setlength{\tmp@posx}{\oddsidemargin+1in+\voffset+0.5\textwidth}%
     }%
   }{%
     \ifthenelse{\boolean{tubsstyle@logoright}}{%
@@ -289,8 +288,9 @@
   }%
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
     \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
-      {0.5\paperwidth-\tubspage@borderwidth}{%
-      \usekomafont{institute}\@ragged #1%
+      {0.5\paperwidth-0.5\tubspage@bcor-\tubspage@borderwidth}{%
+      \usekomafont{institute}\@ragged%
+      #1%
     }%
   }%
 }
