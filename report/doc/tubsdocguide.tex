@@ -1,8 +1,8 @@
-\documentclass[a4paper,11pt]{scrartcl}
+\documentclass[a4paper,11pt]{tubsreprt}
 \usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
+% \usepackage[T1]{fontenc}
 % \usepackage{ae}
-\usepackage[a4paper]{tubsdoc}
+% \usepackage[a4paper]{tubsdoc}
 
 \usepackage{scrpage2}
 \usepackage{amsmath}
@@ -14,37 +14,270 @@
 \usepackage[ngerman]{babel}
 
 %opening
-\title{tubsdoc -- Dokumentation}
+\title{Das CorporateDesign in \LaTeX}
+\subtitle{Anleitung und Dokumentation}
 \author{Enrico Jörns}
 \publishers{Institut fuer Lorem Ipsum} % to logo?
-\subtitle{Another approach}
+
+
+\makeatletter
+\providecommand\marg[1]{%
+  {\ttfamily\char`\{}\meta{#1}{\ttfamily\char`\}}}
+\providecommand\oarg[1]{%
+  {\ttfamily[}\meta{#1}{\ttfamily]}}
+\def\cmd#1{\cs{\expandafter\cmd@to@cs\string#1}}
+\def\cmd@to@cs#1#2{\char\number`#2\relax}
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+
+\newenvironment{Declaration}{%
+%    \end{macrocode}
+% \begin{macro}{\new@element}
+%   Help macro to define new Declaration elements.
+%    \begin{macrocode}
+  \newcommand*{\new@element}[1]{%
+    \expandafter\newcommand\expandafter*\csname X##1\endcsname{}%
+    \expandafter\let\csname X##1\expandafter\endcsname
+    \csname ##1\endcsname
+    \expandafter\newcommand\expandafter*\csname new##1\endcsname[1]{%
+%      \begingroup
+%        \let\ensuremath\@firstofone
+%        \let\textit\@firstofone
+%        \lowercase{\def\@tempa{##1}}%
+%        \pdfstringdef\@tempb{\label@base.\@tempa.####1}%
+%        \xdef\@currentHref{\@tempb}%
+%        \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+%        \label{desc:\label@base.\@tempa.####1}%
+%      \endgroup
+      \csname X##1\endcsname{####1}\ignorespaces
+    }%
+    \expandafter\let\csname ##1\expandafter\endcsname\csname new##1\endcsname
+  }%
+  \newcommand*{\new@xelement}[2]{%
+    \expandafter\newcommand\expandafter*\csname X##1\endcsname{}%
+    \expandafter\let\csname X##1\expandafter\endcsname
+    \csname ##1\endcsname
+    \expandafter\newcommand\expandafter*\csname new##1\endcsname[2]{%
+%      \begingroup
+%        \let\ensuremath\@firstofone
+%        \let\textit\@firstofone
+%        \lowercase{\def\@tempa{##1}}%
+%        \pdfstringdef\@tempb{\label@base.\@tempa.####1.####2}%
+%        \xdef\@currentHref{\@tempb}%
+%        \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+%        \label{desc:\label@base.\@tempa.####1.####2}%
+%      \endgroup
+      \csname X##1\endcsname{####1}{##2{####2}}\ignorespaces
+    }%
+    \expandafter\let\csname ##1\expandafter\endcsname\csname new##1\endcsname
+  }%
+%    \end{macrocode}
+%    \begin{macrocode}
+  \new@element{Option}%
+  \new@element{Macro}%
+  \new@element{Environment}%
+  \new@element{Counter}%
+  \new@element{FloatStyle}%
+  \new@element{PLength}%
+  \new@element{Variable}%
+  \new@xelement{OptionValue}{\PValue}%
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+  \ifvmode\else\par\fi\addvspace{2\baselineskip}%
+  \vspace{-\baselineskip}%
+  \vspace{\z@ plus \baselineskip}%
+  \noindent
+  \start@Declaration
+  \tabular{|l|}\hline\ignorespaces
+}{%
+  \\\hline\endtabular\nobreak\after@Declaration\nobreak\par\nobreak
+  \vspace{1.5\baselineskip}\nobreak\vspace{-\baselineskip}\nobreak%
+  \vspace{0pt minus .5\baselineskip}\nobreak%
+  \aftergroup\@afterindentfalse\aftergroup\@afterheading
+}
+\newcommand*{\start@Declaration}{\hspace{-1em}}
+\newcommand*{\after@Declaration}{}
+% \begin{macro}{\Macro}
+% \begin{macro}{\Option}
+% \begin{macro}{\KOption}
+% \begin{macro}{\OptionValue}
+% \begin{macro}{\Environment}
+% \begin{macro}{\Counter}
+% \begin{macro}{\Length}
+% \begin{macro}{\PLength}
+% \begin{macro}{\FloatStyle}
+% \begin{macro}{\Pagestyle}
+% \begin{macro}{\Variable}
+% \begin{macro}{\FontElement}
+% \begin{macro}{\PName}
+% \begin{macro}{\PValue}
+% \begin{macro}{\Parameter}
+% \begin{macro}{\OParameter}
+% \begin{macro}{\AParameter}
+% \begin{macro}{\PParameter}
+% \begin{macro}{\POParameter}
+%   \begin{description}
+%   \item[\cs{Macro}] \LaTeX{} or \TeX{} macro
+%   \item[\cs{Option}] class or package option
+%   \item[\cs{KOption}] |\KOMAoptions| option
+%   \item[\cs{Environment}] \LaTeX{} environment
+%   \item[\cs{Counter}] \LaTeX{} counter
+%   \item[\cs{Length}] \LaTeX{} length
+%   \item[\cs{PLength}] \KOMAScript{} pseudo length
+%   \item[\cs{Variable}] \KOMAScript{} variable
+%   \item[\cs{FontElement}] \KOMAScript{} element that has its own font
+%     selection
+%   \item[\cs{PName}] name of a parameter of a macro or environment
+%   \item[\cs{PValue}] value of a parameter of a macro or environment
+%   \item[\cs{Parameter}] the mandatory parameter of a macro or environment
+%   \item[\cs{OParameter}] the optional parameter of a macro or environment
+%   \item[\cs{AParameter}] the alternativ parameter of a macro or environment
+%   \item[\cs{PParameter}] the part-of-command parameter of a macro or
+%     environment
+%   \end{description}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\Macro}[1]{\mbox{\texttt{\char`\\#1}}}
+\DeclareRobustCommand*{\Option}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\KOption}[1]{\mbox{\Option{#1}\texttt=}}
+\DeclareRobustCommand*{\OptionValue}[2]{\mbox{\texttt{#1=#2}}}
+\DeclareRobustCommand*{\FloatStyle}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Pagestyle}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Environment}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Counter}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Length}[1]{\mbox{\texttt{\char`\\#1}}}
+\DeclareRobustCommand*{\PLength}[1]{\mbox{\PValue{#1}}}
+\DeclareRobustCommand*{\Variable}[1]{\mbox{\PValue{#1}}}
+\DeclareRobustCommand*{\FontElement}[1]{\PValue{#1}}
+\DeclareRobustCommand*{\PName}[1]{\texttt{\textit{#1}}}
+\DeclareRobustCommand*{\PValue}[1]{\texttt{#1}}
+\DeclareRobustCommand*{\Parameter}[1]{\texttt{\{}\PName{#1}\texttt{\}}}
+\DeclareRobustCommand*{\OParameter}[1]{%
+  \texttt{[%]
+  }\PName{#1}\texttt{%[
+    ]}}
+\DeclareRobustCommand*{\AParameter}[1]{%
+  \texttt{(%)
+  }\PName{#1}\texttt{%(
+    )}}
+\DeclareRobustCommand*{\PParameter}[1]{\texttt{\{#1\}}}
+\DeclareRobustCommand*{\POParameter}[1]{\texttt{[#1]}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% NOTE: taken from scrguide.cls
+\makeatother
+
+\newcommand{\tubslatex}{\emph{tubslatex}}
 
 \begin{document}
 
-\maketitle
+\maketitle[plain]
 
-
-\begin{abstract}
-  Das Paket \lstinline{tubsdoc} stellt umfangreiche Möglichkeiten zum Erstellen
-  von Dokumenten im CorporateDesign der TU Braunschweig zur Verfügung.
-\end{abstract}
+\tableofcontents
+% \begin{abstract}
+%   Das Paket \lstinline{tubsdoc} stellt umfangreiche Möglichkeiten zum Erstellen
+%   von Dokumenten im CorporateDesign der TU Braunschweig zur Verfügung.
+% \end{abstract}
 
 \newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 
-\section{Schnellstart}
+\chapter{Schnellstart}
 
-Die schnellste Methode ein Dokument im CorporateDesign zu erstellen ist
+\paragraph{Dokumente}
+Die schnellste Methode ein Dokument im Corporate Design zu erstellen ist
 das Laden einer der zur Verfügung stehenden Dokumentenklassen.
 Für die Erstellung von Textdokumenten sind dies \newdocumentclass{tubsartcl},
 \newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook}.
+
+\paragraph{Poster}
 Die Klasse \newdocumentclass{tubsposter} kann zum Erstellen von Postern verwendet werden.
 % tubsflyer?
 
+\paragraph{Papierformat}
+Die zu verwendende Papierformat sollte dabei als optionales Argument mit
+übergeben werden. Für ein Dokument in DIN A4 ist dies \texttt{a4paper}.
+Zur Verfügung stehen alle Papierformate A0 bis A6.
 
-Die Poster-Klasse verwendet ein anderes Backend, dies kann aber durch Angabe
-dier Options xy auch in jedem anderen Dokument verwendet werden.
+Standardmäßig wird die Titelseite in Dokumenten einfach mit dem Logo und einer
+roten Trennlinie zwischen Kommunikations- und Absenderbereich versehen.
+
+\paragraph{Präsentationen}
+Um Präsentation zu erstellen existiert ein Style für \LaTeX-Beamer.
+Dieser wird einfach mit \lstinline!\usetheme{tubs}! geladen.
+
+
+\chapter{Dokumente}
+
+Einfache Textdokumente können mit den Klassen \newdocumentclass{tubsartcl},
+\newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook} erstellt werden.
+
+Da Dokumente normalerweise gedruckt werden und ggf. auch gebunden, werden
+sie standardmäßig mit einer kleinen Bindekorrektur gesetzt, sodass das
+Logo beim Drucken oder Abheften nicht abgeschnitten wird.
+Diese Bindekorrektur kann mittels der Paketoption \texttt{bcor} angepasst werden.
+Mit \texttt{bcor=0mm} wird sie beispielsweise deaktiviert.
 
 \section{Titelseite}
+
+Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
+werden; entweder mit Hilfe des Befehls \lstinline{\maketitle} oder mit
+der Umgebung \lstinline{titlepage}. Beide Varianten werden von tubslatex
+unterstützt und leicht modifiziert.
+
+\begin{Declaration}
+  \Macro{maketitle}\OParameter{style}
+\end{Declaration}
+
+Die einfache Verwendung von \lstinline{\maketitle} erzeugt eine Titelseite
+mit dem TU-Logo und einer roten Trennline zwischen Absender- und
+Kommunikationsbereich.
+
+Mit Hilfe des optionalen Arguements \PName{style} kann die Darstellung
+der Titelseite geändert werden, indem aus einer Reihe vordefinierter Styles
+ausgewählt wird.\bigskip
+
+Neben den standardmäßig definierten Elementen für Haupttitelseiten werden
+in \tubslatex noch ein paar zusätzliche Definiert.
+
+\begin{Declaration}
+  \Macro{logo}\Parameter{logo}\\
+  \Macro{titlepicture}\Parameter{file}\\
+  \Macro{titleabstract}\Parameter{text}
+\end{Declaration}
+
+\Macro{logo} dient zur Darstellung eines zusäzlichen Absenders als Schrift
+oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
+TU-Logo gegenüberliegenden Seite dargestellt.
+Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
+Verwendung eines entsprechenden Styles auf der Titelseite dargestellt werden.
+\Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden
+Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
+
+
+% \noindent\hspace*{-\parindent}\fbox{\cmd{\maketitle}\oarg{asdf}\marg{asdf}}
+\chapter{Poster}
+
+Poster werden mit Hilfe der Klasse \newdocumentclass{tubsposter} erstellt.
+Dabei kann Mittels der Option \texttt{style} zwischen der Darstellung als
+normales Poster oder als wissenschaftliches Poster gewählt werden.
+
 
 \section{Format}
 
@@ -54,5 +287,7 @@ dier Options xy auch in jedem anderen Dokument verwendet werden.
 
 \section{Optionen}
 
+
+\chapter{Präsentationen}
 
 \end{document}
