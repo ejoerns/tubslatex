@@ -336,13 +336,10 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\new@title@style{imagetext}{%
-    \bglayout[pages=single]{%
-      \showtubslogo[left]
-      \showlogo{\tubs@tp@logo}
-    }
-  }{%
+\new@title@style{imagetext}{}{%
   \begin{titlepage}
+    \showtubslogo[left]
+    \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{2}
     \endtitlerow
     \begin{titlerow}[bgcolor=tuSecondary80]{2}
@@ -365,13 +362,10 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\new@title@style{image}{%
-    \bglayout[pages=single]{%
-      \showtubslogo[left]
-      \showlogo{\tubs@tp@logo}
-    }
-  }{%
+\new@title@style{image}{}{%
   \begin{titlepage}
+    \showtubslogo[left]
+    \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{3}
     \endtitlerow
     \begin{titlerow}[bgcolor=tuSecondary80]{2}
