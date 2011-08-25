@@ -361,8 +361,8 @@
 \newlength{\@image@ycalc}
 %
 \newcommand\tubs@background@image[3]{%
-  \def\@img@to@insert{}
-  \tubs@background{#2}{#3}
+  \def\@img@to@insert{}%
+  \tubs@background{#2}{#3}%
   \ifthenelse{\equal{\tubstyle@imagefit}{scaled}}{%
     \def\@img@to@insert{%
       \includegraphics*[%

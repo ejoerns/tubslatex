@@ -198,16 +198,16 @@
 %
 %    \begin{macro}{\tubs@gb@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
-% |\oddsidemargin|+1in+|\voffst|-3mm ist der Abstand vom linken Rand!
+% |\oddsidemargin|+1in+|\voffst| ist der Abstand vom linken Rand!
 %    \begin{macrocode}
 \newcommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
   % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
-    \textblockorigin{\oddsidemargin+1in+\voffset-3mm}{%
+    \textblockorigin{\oddsidemargin+1in+\voffset}{%
       2\tubspage@borderwidth}
   }{% 
-    \textblockorigin{\oddsidemargin+1in+\voffset-3mm}{%
+    \textblockorigin{\oddsidemargin+1in+\voffset}{%
       \tubspage@senderheight+\tubspage@borderwidth}
   }
 }
@@ -369,7 +369,7 @@
 \end{lrbox}
 \setlength{\fboxsep}{0cm}%
 \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
-  \hspace*{\tubs@gb@leftsep}%
+  \noindent\hspace*{\tubs@gb@leftsep}%
   \hspace*{-\tubs@gb@leftmargin}%
   \raisebox{\tubspage@borderwidth}[0cm]{%
     \tubsbox@framebox{\tubsbox@colorbox{%
