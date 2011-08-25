@@ -186,15 +186,13 @@
 
 \newcommand{\tubslatex}{\emph{tubslatex}}
 
+
 \begin{document}
 
-\maketitle[plain]
-
+\maketitle
+\pagestyle{scrheadings}
 \tableofcontents
-% \begin{abstract}
-%   Das Paket \lstinline{tubsdoc} stellt umfangreiche Möglichkeiten zum Erstellen
-%   von Dokumenten im CorporateDesign der TU Braunschweig zur Verfügung.
-% \end{abstract}
+
 
 \newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 
@@ -228,11 +226,15 @@ Dieser wird einfach mit \lstinline!\usetheme{tubs}! geladen.
 Einfache Textdokumente können mit den Klassen \newdocumentclass{tubsartcl},
 \newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook} erstellt werden.
 
+% \section{Bindekorrektur und Marginalen}
+
 Da Dokumente normalerweise gedruckt werden und ggf. auch gebunden, werden
 sie standardmäßig mit einer kleinen Bindekorrektur gesetzt, sodass das
 Logo beim Drucken oder Abheften nicht abgeschnitten wird.
 Diese Bindekorrektur kann mittels der Paketoption \texttt{bcor} angepasst werden.
 Mit \texttt{bcor=0mm} wird sie beispielsweise deaktiviert.
+
+
 
 \section{Titelseite}
 
@@ -269,6 +271,83 @@ Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
 Verwendung eines entsprechenden Styles auf der Titelseite dargestellt werden.
 \Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden
 Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{titlepage}}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{titlepage}
+\end{Declaration}
+
+Mit der \Environment{titlepage}-Umgebung können, wie von den Standardklassen
+gewohnt, Titelseiten definiert werden.
+% TODO: \showtubslogo  etc.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{titlerow}}%
+    \OParameter{options}%
+    \Parameter{gaussheight}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{titlerow}
+\end{Declaration}
+
+Die Umgebung \Environment{titlerow} erlaubt es dabei, die Titelelemente im 
+Gaußraster anzulegen. Der Parameter \PName{gaussheight} gibt dabei
+die Höhe des jeweiligen Elements in Segmenten an. Die Position der Elemente
+ergibt sich aus der Reihenfolge der Definition.
+Mit dem optionalen Parameter \PName{options} können Einstellung wie die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
+
+\subsection{Vordefiniert Titel-Styles}
+
+Es sind 3 einfache Styles vordefiniert.
+
+\begin{center}
+  \fboxsep0mm
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/article1.pdf}}
+    [default]
+  \end{minipage}%
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/titlestyle_image.pdf}}
+    [image]
+  \end{minipage}%
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/titlestyle_imagetext.pdf}}
+    [imagetext]
+  \end{minipage}
+
+\end{center}
+
+\section{Kopf-/ Fußzeile}
+
+Standardmäßig wird die Fußzeile komplett leer gelassen und die Kopfzeile
+wird mit Seitennumer rechts und Kapitelname links gesetzt. Bei zweiseitigem
+Layout gilt dies für die ungeraden Seiten, gerade seiten werden entsprechend
+mit Seitennumer linksund Kapitelname rechts gesetzt.
+
+\begin{Declaration}
+  \Macro{ihead}\Parameter{innen}\\
+  \Macro{ohead}\Parameter{außen}
+\end{Declaration}
+
+Bei Bedarf können die Kopfzeilen individuell angepasst werden.
+Dies geschieht mit den Befehlen \Macro{ihead} und \Macro{ohead}, welche
+auf den gleichnamigen Kommandos aus dem Koma-Skript aufbauen und für eine
+korrekte vertikale Positionierung sorgen.
+
+\begin{Declaration}
+  \Macro{headsepline}
+\end{Declaration}
+
+
+Die standardmäßig gesetzten kurzen Linien am jeweils oberen äußeren Ende des
+Kopfbereiches sind im Makro \Macro{headsepline} definiert.
+Dies kann bei Bedarf überschrieben werden.
 
 
 % \noindent\hspace*{-\parindent}\fbox{\cmd{\maketitle}\oarg{asdf}\marg{asdf}}
