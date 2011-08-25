@@ -270,7 +270,7 @@
   % outer geometry
   \ifthenelse{\boolean{tubspage@bottomsender}}{%
     \geometry{%
-      headheight=0mm,
+      headheight=0mm,nohead,
       headsep=\tubspage@borderwidth,
       top=2\tubspage@borderwidth,
       left=2\tubspage@borderwidth,
@@ -279,8 +279,8 @@
       bindingoffset=\tubspage@bcor}
   }{%
     \geometry{%
-      headheight=\tubspage@senderheight-\tubspage@borderwidth,
-      headsep=\tubspage@borderwidth,
+      headheight=\tubspage@senderheight-2\tubspage@borderwidth,
+      headsep=2\tubspage@borderwidth,
       top=\tubspage@senderheight+\tubspage@borderwidth,
       left=2\tubspage@borderwidth,
       right=2\tubspage@borderwidth,
