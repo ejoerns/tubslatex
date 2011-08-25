@@ -117,23 +117,41 @@
 % \PassOptionsToPackage{headsepline}{scrpage2}
 \RequirePackage{scrpage2}
 %    \end{macrocode}
-
+% TODO: Das ganze in den footer für sender=bottom!...
+%
+%    \begin{macrocode}
+\newcommand\headsepline{\rule{15pt}{0.2pt}}
+%    \end{macrocode}
+%
 %    \begin{macro}{\ihead}
 %    \begin{macrocode}
 \let\@orig@ihead\ihead
-\renewcommand{\ihead}[1]{\@orig@ihead{\vbox to\headheight{\vspace*{1ex}\rule{15pt}{0.2pt}\\#1}}}
+\renewcommand{\ihead}[1]{%
+  \@orig@ihead{\vbox to\headheight{%
+    \vspace*{1ex}\strut\headsepline\linebreak#1%
+  }}%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
 %    \begin{macro}{\ihead}
 %    \begin{macrocode}
 \let\@orig@ohead\ohead
-\renewcommand{\ohead}[1]{\@orig@ohead{\vbox to\headheight{\vspace*{1ex}\rule{15pt}{0.2pt}\\#1}}}
+\renewcommand{\ohead}[1]{%
+  \@orig@ohead{\vbox to\headheight{%
+    \vspace*{1ex}\strut\headsepline\linebreak#1%
+  }}%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
+% Lösche Headings und footer bei Stilen scrheadings und plain
 %    \begin{macrocode}
 \clearscrheadings
+\clearscrplain
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \automark[chapter]{chapter}
 \ihead{\scshape\headmark}
 \ohead{\mdseries\pagemark}
