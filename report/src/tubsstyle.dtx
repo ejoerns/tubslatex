@@ -113,6 +113,12 @@
 %
 % \section{Implementierung}
 %
+% Allgemein: Alle zu setzenden Elemente werden in dem Makro @next@shipout
+% gespeichert und am Ende der Layout definition zum Shipout-Picture
+% hinzugefuegt (eso-pic). Abhängig von den Optionen wird dieses dann
+% für das aktuelle shipout oder alle shipouts gesetzt. Alte Shipout-Definitionen
+% werden dann jeweils komplett gelöscht.
+%
 %    \begin{macrocode}
 %<*class>
 %    \end{macrocode}
@@ -199,9 +205,9 @@
     \setlength{\tmp@posx}{\tubspage@borderwidth}%
   }%
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \setlength{\tmp@posy}{\paperheight-(\tubspage@borderwidth+36\tubspage@gaussheight)}%
+    \setlength{\tmp@posy}{\paperheight-(\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight)}%
   }{%
-    \setlength{\tmp@posy}{\tubspage@borderwidth+36\tubspage@gaussheight}%
+    \setlength{\tmp@posy}{\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight}%
   }%
   \put(\LenToUnit{\tmp@posx},%
     \LenToUnit{\tmp@posy})%
@@ -223,13 +229,12 @@
 \newcommand\tubs@tubslogo[1][left]{%
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \setlength{\tmp@posy}{%
-      \paperheight%
-      -(\tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight)%
+    \setlength{\tmp@posy}{\paperheight%
+      -(\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight-0.25\tubslogoHeight)%
       -\tubslogoHeight}%
   }{%
     \setlength{\tmp@posy}{%
-      \tubspage@borderwidth+36\tubspage@gaussheight-0.25\tubslogoHeight}%
+      \tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight-0.25\tubslogoHeight}%
   }%
   % Berechne x-Position, abhängig von oddness
   \if@tubs@oddpage{%
@@ -264,11 +269,11 @@
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{%
       \paperheight%
-      -(2\tubspage@borderwidth+36\tubspage@gaussheight)%
+      -(2\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight)%
       -(\tubspage@senderheight-2\tubspage@borderwidth)}%
   }{%
     \setlength{\tmp@posy}{%
-      2\tubspage@borderwidth+36\tubspage@gaussheight}%
+      2\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight}%
   }%
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
