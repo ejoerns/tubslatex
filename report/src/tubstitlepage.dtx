@@ -174,9 +174,9 @@
   \bgelement[#1]{#2}%
   \edef\@tubs@arg{{0}{\thetubs@tp@yseg@cnt}{6}{#2}}%
   \addtocounter{tubs@tp@yseg@cnt}{#2}%
-  \expandafter\tubsbox\@tubs@arg%
+  \expandafter\gaussbox\@tubs@arg%
 }{%
-  \endtubsbox%
+  \endgaussbox%
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -185,13 +185,13 @@
 % Redefine environment titlepage, provide additional optional arguments
 %    \begin{macrocode}
 \renewenvironment{titlepage}[1][]{%
-  \setcounter{tubs@tp@yseg@cnt}{1}
+  \setcounter{tubs@tp@yseg@cnt}{1}%
   \tubsboxsetup[#1]%TODO...
-  \@layout@pre{pages=single,#1}
-  \sffamily
+  \@layout@pre{pages=single,#1}%
+  \sffamily%
 }{%
-  \@layout@post
-  ~\newpage
+  \@layout@post%
+  ~\newpage%
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -265,13 +265,7 @@
 }{\pagestyle{empty}\oldmaketitle}
 %</article>
 %<*report|book>
-\new@title@style{plain}{%
-%   \bglayout[pages=single]{%
-%     \showtopline
-%     \showtubslogo[left]
-%     \showlogo{\tubs@tp@logo}
-%   }
-}{% NOTE: code from scrreprt.cls
+\new@title@style{plain}{}{% NOTE: code from scrreprt.cls
     \begin{titlepage}
       \showtopline
       \showtubslogo[left]
