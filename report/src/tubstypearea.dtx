@@ -195,6 +195,7 @@
 % Anzahl vertikaler Elemente für Gauß-Layout.
 %    \begin{macrocode}
 \def\tubspage@ysegments{8}
+\newcounter{tubspage@vsegments}\setcounter{tubspage@vsegments}{8}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -510,9 +511,13 @@
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@borderwidth}{0.038\paperheight}
       \setlength{\tubspage@senderheight}{0.2\paperheight}% 1/5
+      \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@borderwidth}{0.038\paperwidth}
       \setlength{\tubspage@senderheight}{0.14286\paperheight}% ~1/7
+      \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
   \setlength{\tubspage@communicationheight}{%
     \paperheight-\tubspage@senderheight-\tubspage@borderwidth}
@@ -521,8 +526,12 @@
     % a6paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{75mm}%
+      \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{118mm}%
+      \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{5mm}%
     \setlength{\tubspage@senderheight}{25mm}%
@@ -531,8 +540,12 @@
     % a5paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{112.5mm}%
+      \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{174.5mm}%
+      \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{5.5mm}%
     \setlength{\tubspage@senderheight}{30mm}%
@@ -542,9 +555,11 @@
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{162mm}%
       \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{249mm}%
       \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{8mm}%
     \setlength{\tubspage@senderheight}{40mm}%
@@ -554,9 +569,11 @@
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{226mm}%
       \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{349mm}%
       \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{11mm}%
     \setlength{\tubspage@senderheight}{60mm}%
@@ -566,9 +583,11 @@
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{324mm}%
       \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{498mm}%
       \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{16mm}%
     \setlength{\tubspage@senderheight}{80mm}%
@@ -578,9 +597,11 @@
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{649mm}%
       \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{699mm}%
       \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{22mm}%
     \setlength{\tubspage@senderheight}{120mm}%
@@ -590,9 +611,11 @@
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{649mm}%
       \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
     }{%
       \setlength{\tubspage@communicationheight}{997mm}%
       \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@borderwidth}{32mm}%
     \setlength{\tubspage@senderheight}{160mm}%
