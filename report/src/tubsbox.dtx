@@ -310,6 +310,7 @@
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
+% Berechne Positionen
 \ifnum#2=0
 \setlength{\tubs@gb@leftmargin}{\tubspage@borderwidth}
 \setlength{\tubs@gb@rightmargin}{0mm}
@@ -337,6 +338,11 @@
   \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
 \fi
 \setcounter{tubs@gb@lastelement}{#3+#5-1}
+% Prüfe, ob Werte korrekt
+Werte: \tubspage@ysegments, \thetubs@gb@lastelement\par
+\ifnum\value{tubs@gb@lastelement}>\tubspage@ysegments%
+  \PackageError{tubstypearea}{Invalid segment number}{}%
+\fi%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments
   \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}
 \else
