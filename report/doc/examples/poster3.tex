@@ -1,0 +1,31 @@
+\documentclass[a3paper,13pt]{tubsposter}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\pagestyle{empty}% TODO: add to class!!!
+
+\begin{document}
+\begin{tubsposter}[sender=bottom]
+  %% aktiviert die horizontale Linie am oberen Ende des Kommunikationsbereichs.
+  %   \showtopline
+  %% Stellt das TU-Logo an der gewünschten Seite (links/rechts) dar.
+  \showtubslogo[left]
+  %% Stellt das Institutslogo im Absenderbereich dar.
+  \showlogo{Institutslogo einfügen oder Institutsname/\\
+    zentrale Einrichtung als Text eingeben}
+  %% Alternative Version des Logos mit Bild statt Text.
+  %   \showlogo{\includegraphics{dummy_institut.jpg}}
+  %% Beginnt eine neuen Bereich mit der angegebenen Höhe im Gaußraster.
+  \begin{posterrow}[bgimage=infozentrum.jpg]{6}
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tuGreenDark80]{2}
+    \color{tuWhite}
+    {\usekomafont{headline} Headline xxpt\bigskip}
+      
+    {\usekomafont{subheadline} Subheadline\\
+    Mitant dur Wolche to illemit drusi puzen, um brackl jaun utten}
+    \vfill
+  \end{posterrow}
+\end{tubsposter}
+\end{document}

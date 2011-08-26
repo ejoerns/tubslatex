@@ -1,0 +1,34 @@
+% \makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
+\documentclass[a3paper,scifiposter,style=scifi]{tubsposter}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\begin{document}
+
+  \begin{tubsposter}{3cm,X,5cm,X}
+  \begin{posterrow}
+    ~
+  \end{posterrow}
+  \begin{posterrow}[X,X]
+    \begin{postercol}
+      Dies ist ein Testtext, der absolut keinen Sinn hat.
+    \end{postercol}
+    \begin{postercol}[3cm,X]
+      \begin{postersubrow}
+        ~
+      \end{postersubrow}
+      \begin{postersubrow}
+        ~
+      \end{postersubrow}
+    \end{postercol}
+  \end{posterrow}
+  \begin{posterrow}
+    ~
+  \end{posterrow}
+  \begin{posterrow}
+    ~
+  \end{posterrow}
+\end{tubsposter}
+
+\end{document}
