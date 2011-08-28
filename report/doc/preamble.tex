@@ -1,0 +1,194 @@
+\usepackage[utf8x]{inputenc}
+\usepackage{xspace}
+% \usepackage[T1]{fontenc}
+% \usepackage{ae}
+% \usepackage[a4paper]{tubsdoc}
+
+\usepackage{scrpage2}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[ngerman]{babel}
+
+
+
+\makeatletter
+\providecommand\marg[1]{%
+  {\ttfamily\char`\{}\meta{#1}{\ttfamily\char`\}}}
+\providecommand\oarg[1]{%
+  {\ttfamily[}\meta{#1}{\ttfamily]}}
+\def\cmd#1{\cs{\expandafter\cmd@to@cs\string#1}}
+\def\cmd@to@cs#1#2{\char\number`#2\relax}
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+
+\newenvironment{Declaration}{%
+%    \end{macrocode}
+% \begin{macro}{\new@element}
+%   Help macro to define new Declaration elements.
+%    \begin{macrocode}
+  \newcommand*{\new@element}[1]{%
+    \expandafter\newcommand\expandafter*\csname X##1\endcsname{}%
+    \expandafter\let\csname X##1\expandafter\endcsname
+    \csname ##1\endcsname
+    \expandafter\newcommand\expandafter*\csname new##1\endcsname[1]{%
+%      \begingroup
+%        \let\ensuremath\@firstofone
+%        \let\textit\@firstofone
+%        \lowercase{\def\@tempa{##1}}%
+%        \pdfstringdef\@tempb{\label@base.\@tempa.####1}%
+%        \xdef\@currentHref{\@tempb}%
+%        \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+%        \label{desc:\label@base.\@tempa.####1}%
+%      \endgroup
+      \csname X##1\endcsname{####1}\ignorespaces
+    }%
+    \expandafter\let\csname ##1\expandafter\endcsname\csname new##1\endcsname
+  }%
+  \newcommand*{\new@xelement}[2]{%
+    \expandafter\newcommand\expandafter*\csname X##1\endcsname{}%
+    \expandafter\let\csname X##1\expandafter\endcsname
+    \csname ##1\endcsname
+    \expandafter\newcommand\expandafter*\csname new##1\endcsname[2]{%
+%      \begingroup
+%        \let\ensuremath\@firstofone
+%        \let\textit\@firstofone
+%        \lowercase{\def\@tempa{##1}}%
+%        \pdfstringdef\@tempb{\label@base.\@tempa.####1.####2}%
+%        \xdef\@currentHref{\@tempb}%
+%        \Hy@raisedlink{\hyper@anchorstart{\@currentHref}\hyper@anchorend}%
+%        \label{desc:\label@base.\@tempa.####1.####2}%
+%      \endgroup
+      \csname X##1\endcsname{####1}{##2{####2}}\ignorespaces
+    }%
+    \expandafter\let\csname ##1\expandafter\endcsname\csname new##1\endcsname
+  }%
+%    \end{macrocode}
+%    \begin{macrocode}
+  \new@element{Option}%
+  \new@element{Macro}%
+  \new@element{Environment}%
+  \new@element{Counter}%
+  \new@element{FloatStyle}%
+  \new@element{PLength}%
+  \new@element{Variable}%
+  \new@xelement{OptionValue}{\PValue}%
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+  \ifvmode\else\par\fi\addvspace{2\baselineskip}%
+  \vspace{-\baselineskip}%
+  \vspace{\z@ plus \baselineskip}%
+  \noindent
+  \start@Declaration
+  \tabular{|l|}\hline\ignorespaces
+}{%
+  \\\hline\endtabular\nobreak\after@Declaration\nobreak\par\nobreak
+  \vspace{1.5\baselineskip}\nobreak\vspace{-\baselineskip}\nobreak%
+  \vspace{0pt minus .5\baselineskip}\nobreak%
+  \aftergroup\@afterindentfalse\aftergroup\@afterheading
+}
+\newcommand*{\start@Declaration}{\hspace{-1em}}
+\newcommand*{\after@Declaration}{}
+% \begin{macro}{\Macro}
+% \begin{macro}{\Option}
+% \begin{macro}{\KOption}
+% \begin{macro}{\OptionValue}
+% \begin{macro}{\Environment}
+% \begin{macro}{\Counter}
+% \begin{macro}{\Length}
+% \begin{macro}{\PLength}
+% \begin{macro}{\FloatStyle}
+% \begin{macro}{\Pagestyle}
+% \begin{macro}{\Variable}
+% \begin{macro}{\FontElement}
+% \begin{macro}{\PName}
+% \begin{macro}{\PValue}
+% \begin{macro}{\Parameter}
+% \begin{macro}{\OParameter}
+% \begin{macro}{\AParameter}
+% \begin{macro}{\PParameter}
+% \begin{macro}{\POParameter}
+%   \begin{description}
+%   \item[\cs{Macro}] \LaTeX{} or \TeX{} macro
+%   \item[\cs{Option}] class or package option
+%   \item[\cs{KOption}] |\KOMAoptions| option
+%   \item[\cs{Environment}] \LaTeX{} environment
+%   \item[\cs{Counter}] \LaTeX{} counter
+%   \item[\cs{Length}] \LaTeX{} length
+%   \item[\cs{PLength}] \KOMAScript{} pseudo length
+%   \item[\cs{Variable}] \KOMAScript{} variable
+%   \item[\cs{FontElement}] \KOMAScript{} element that has its own font
+%     selection
+%   \item[\cs{PName}] name of a parameter of a macro or environment
+%   \item[\cs{PValue}] value of a parameter of a macro or environment
+%   \item[\cs{Parameter}] the mandatory parameter of a macro or environment
+%   \item[\cs{OParameter}] the optional parameter of a macro or environment
+%   \item[\cs{AParameter}] the alternativ parameter of a macro or environment
+%   \item[\cs{PParameter}] the part-of-command parameter of a macro or
+%     environment
+%   \end{description}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\Macro}[1]{\mbox{\texttt{\char`\\#1}}}
+\DeclareRobustCommand*{\Option}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\KOption}[1]{\mbox{\Option{#1}\texttt=}}
+\DeclareRobustCommand*{\OptionValue}[2]{\mbox{\texttt{#1=#2}}}
+\DeclareRobustCommand*{\FloatStyle}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Pagestyle}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Environment}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Counter}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Length}[1]{\mbox{\texttt{\char`\\#1}}}
+\DeclareRobustCommand*{\PLength}[1]{\mbox{\PValue{#1}}}
+\DeclareRobustCommand*{\Variable}[1]{\mbox{\PValue{#1}}}
+\DeclareRobustCommand*{\FontElement}[1]{\PValue{#1}}
+\DeclareRobustCommand*{\PName}[1]{\texttt{\textit{#1}}}
+\DeclareRobustCommand*{\PValue}[1]{\texttt{#1}}
+\DeclareRobustCommand*{\Parameter}[1]{\texttt{\{}\PName{#1}\texttt{\}}}
+\DeclareRobustCommand*{\OParameter}[1]{%
+  \texttt{[%]
+  }\PName{#1}\texttt{%[
+    ]}}
+\DeclareRobustCommand*{\AParameter}[1]{%
+  \texttt{(%)
+  }\PName{#1}\texttt{%(
+    )}}
+\DeclareRobustCommand*{\PParameter}[1]{\texttt{\{#1\}}}
+\DeclareRobustCommand*{\POParameter}[1]{\texttt{[#1]}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% NOTE: taken from scrguide.cls
+\makeatother
+
+\newcommand{\tubslatex}{\emph{tubslatex}\xspace}
+
+\def\example{\par\smallskip\noindent\textit{Beispiel: }}
+
+% Schreibt 'Beispiel vor den folgenden Inhalt und rückt alles nach dem ersten
+% Absatz um 2em ein.
+\newenvironment{Example}{%
+\begingroup
+\leftskip2em
+\par\smallskip\noindent\hspace*{-2em}\textit{Beispiel: }
+}{%
+\par\endgroup
+}
