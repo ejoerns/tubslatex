@@ -17,7 +17,10 @@ report/src/tubsdin9pt.clo
 report/src/tubsflowfram.sty
 report/src/tubsposter.cls
 report/src/tubsreprt.cls
-src/*.clo
+report/src/*.clo
+report/src/tubsdoc.sty
+report/src/tubsstyle.sty
+report/src/tubstypearea.sty
 
 # no autosave
 *~
