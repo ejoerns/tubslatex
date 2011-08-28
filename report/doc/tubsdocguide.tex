@@ -180,16 +180,119 @@ Darstellung des TU-Siegelbandlogos und des Logos eines speziellen Instituts
 oder einer Abteilung verwendet. Im Textteil dient er teilweise als Bereich für
 Inhalte einer Kopf-/Fußzeile.
 
-Je nach Layoutout oben unten bla...
+Der Absenderbereich kann entweder am Anfang oder am Ende der Seite platziert
+werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
+größten Segment am Absenderbereich.
+
+\begin{Declaration}
+  \Option{a0paper}\\
+  \Option{a1paper}\\
+  \Option{a2paper}\\
+  \Option{a3paper}\\
+  \Option{a4paper}\\
+  \Option{a5paper}\\
+  \Option{a6paper}
+\end{Declaration}
+
+Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
+0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
+
+\begin{Declaration}
+  \Option{landscape}
+\end{Declaration}
+
+Schaltet das Dokument in Querformat-Darstellung.
+
+\begin{minipage}{0.45\textwidth}
+  {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
+  Dokument im Querformat
+\end{minipage}
+
+
+\begin{important}
+  Im Querformat hat das Gaußraster eine abweichende
+  Segmentanzahl. Für alle gängigen Formate sind im Querformat \emph{6 Segmente}
+  definiert. Daher lösen Layouts, die für hochformatige Dokumente
+  geschrieben wurden, im Querformat einen Fehler aus.
+\end{important}
+
+
+\begin{Declaration}
+  \KOption{sender}\PName{Position}
+\end{Declaration}
+
+Mit der Option \Option{sender} kann die Position des Absenderbereiches
+festgelegt werden. Mit der Einstellung \OptionValue{sender}{top} wird
+der Absenderbereich am oberen Seitenende dargestellt. Dies ist auch die
+Standardeinstellung. Wählt man dagegen \OptionValue{sender}{bottom}, so
+wird der Absenderbereich am unteren Ende der Seite platziert
+
+\begin{important}
+  Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
+  Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
+  an den Absenderbereich anschließt und alle folgende von absteigender Höhe sind.
+\end{important}
+
+
+
+\begin{Declaration}
+  \KOption{bcor}\PName{Wert}
+\end{Declaration}
+
+Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
+Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
+ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
+
+Sinvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
+wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
+Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
+keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
+Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
+mit \OptionValue{bcor}{0mm} möglich.
+
+\begin{Declaration}
+  \Option{twoside}
+\end{Declaration}
+
+Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
+vorgesehen. Mit ihr wird ovn einseitigem Layout auf zweiseitiges Layout
+umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
+auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
+auf definierte Ränder (Bindungskorrektur, Marginale).
+
+
+\begin{Declaration}
+  \Option{marginleft}\\
+  \Option{marginright}
+\end{Declaration}
+
+Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
+\PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
+bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
+einem Element im Spaltenraster entspricht.
+
+
+\section{Schrift}
+
+Dokumente im Corporate Design werden allgemein mit der Schrift Nexus gesetzt.
+Diese wird standardmäßig bei allen Dokumenten geladen. Auf eine explizite
+Angabe der Schriftgröße in den Dokumentenoptionen sollte nach Möglichkeit
+verzichtet werden, da für die jeweiligen Papierformate spezielle
+Schriftgrößen vordefiniert sind und geladen werden.
+Das Laden anderer Schriftgrößen führt im Vergleich dazu teilweise zu stark abweichenden Ergebnissen.
+
+Für wichtige Standard-Elemente gibt es des weiteren vordefinierte Koma-Fonts.
+
+
 
 % \noindent\hspace*{-\parindent}\fbox{\cmd{\maketitle}\oarg{asdf}\marg{asdf}}
 \chapter{Plakate}
 
 Plakate werden mit Hilfe der Klasse \newdocumentclass{tubsposter} erstellt.
 Dabei kann Mittels der Option \texttt{style} zwischen der Darstellung als
-normales Poster oder als wissenschaftliches Poster gewählt werden.
+normales Plakat oder als wissenschaftliches Plakat gewählt werden.
 
-\section{Veranstaltunplakate}
+\section{Veranstaltungsplakate}
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -323,5 +426,7 @@ Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit
 
 
 \chapter{Präsentationen}
+
+\input{glossary}
 
 \end{document}

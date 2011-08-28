@@ -12,7 +12,7 @@
 \lstset{basicstyle=\ttfamily}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage[ngerman]{babel}
-
+\usepackage{subcaption}
 
 
 \makeatletter
@@ -192,3 +192,13 @@
 }{%
 \par\endgroup
 }
+
+% Umgebung 'Wichtig:' ...
+\newenvironment{important}{%
+  \begin{description}
+    \item[\itshape\mdseries\rmfamily Wichtig:]
+}{%
+  \end{description}
+}
+
+\newcommand{\zB}{\mbox{z.\,B.}\xspace}
