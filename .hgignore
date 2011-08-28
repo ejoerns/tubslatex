@@ -17,6 +17,7 @@ report/src/tubsdin9pt.clo
 report/src/tubsflowfram.sty
 report/src/tubsposter.cls
 report/src/tubsreprt.cls
+src/*.clo
 
 # no autosave
 *~
