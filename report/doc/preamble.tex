@@ -12,7 +12,9 @@
 \lstset{basicstyle=\ttfamily}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage[ngerman]{babel}
+\usepackage{caption}
 \usepackage{subcaption}
+\usepackage{longtable}
 
 
 \makeatletter
@@ -177,6 +179,71 @@
 % \end{macro}
 % \end{macro}
 % NOTE: taken from scrguide.cls
+
+% \begin{environment}{desctable}
+%   This is almost the same like \texttt{desctabular} but it uses a longtable
+%   to allow page breaks.
+%    \begin{macrocode}
+\newenvironment{desctable}[1][2em]{%
+  \onelinecaptionsfalse
+  \start@desctab{#1}%
+  \newcommand{\Endfirsthead}{\toprule\endfirsthead}%
+  \newcommand{\Endhead}{\midrule\endhead}%
+  \newcommand*{\standardfoot}{%
+    \addlinespace[-.5\normalbaselineskip]\midrule
+    \multicolumn{2}{r@{}}{\dots}\\
+    \endfoot
+    \addlinespace[-.5\normalbaselineskip]\bottomrule
+    \endlastfoot
+  }%
+  \longtable{lp{\descwidth}}%
+}{%
+  \endlongtable
+}
+%    \end{macrocode}
+% \end{environment}
+
+% \begin{length}{\descwidth}
+%   I need a length of local usage. I could have used |\@tempdima| or
+%   another local length from kernel. But I've decided not to try to find a
+%   unused length at \texttt{tabular} environment.
+%    \begin{macrocode}
+\newlength{\descwidth}
+%    \end{macrocode}
+% \end{length}
+
+% \begin{macro}{\start@desctab}
+%   This is the \emph{worker} macro of \texttt{desctable} and
+%   \texttt{desctabular}. It does the complete calculations and definition of
+%   the entry (something like |\item|) commands.
+%    \begin{macrocode}
+\newcommand*{\start@desctab}[1]{%
+  \setlength{\descwidth}{\linewidth}%
+  \addtolength{\descwidth}{-4\tabcolsep}%
+  \addtolength{\descwidth}{-#1}%
+  \setlength{\labelwidth}{\linewidth}%
+  \addtolength{\labelwidth}{-2\tabcolsep}%
+  \newcommand{\nentry}[2]{%
+    \multicolumn{2}{p{\labelwidth}}{\raggedright##1}\\*%
+    \hspace*{#1} & ##2\tabularnewline%
+  }%
+  \newcommand{\entry}[2]{\nentry{##1}{##2}[.5\baselineskip]}%
+  \newcommand*{\pentry}[1]{%
+    \entry{\PLength{##1}\IndexPLength[indexmain]{##1}}}%
+  \newcommand*{\pventry}[1]{\entry{\PValue{##1}}}%
+  \newcommand*{\mentry}[1]{\entry{\Macro{##1}}}%
+  \newcommand*{\ventry}[1]{%
+    \entry{\Variable{##1}\IndexVariable[indexmain]{##1}}%
+  }%
+  \newcommand*{\feentry}[1]{%
+    \entry{\FontElement{##1}\IndexFontElement[indexmain]{##1}}%
+  }%
+  \newcommand*{\oentry}[1]{%
+    \entry{\Option{##1}\IndexOption[indexmain]{##1}}%
+  }%
+}
+% \end{macro}
+
 \makeatother
 
 \newcommand{\tubslatex}{\emph{tubslatex}\xspace}
