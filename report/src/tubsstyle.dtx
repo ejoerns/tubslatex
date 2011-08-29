@@ -133,6 +133,11 @@
 % \subsection{Optionen}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+%    \begin{macrocode}
+\RequirePackage{xkeyval}
+\RequirePackage{ifthen}
+%    \end{macrocode}
+%
 % Es werden zur Zeit keine Optionen zur Verfügung gestellt
 %    \begin{macrocode}
 \newboolean{tubsstyle@twoside}\setboolean{tubsstyle@twoside}{false}
@@ -146,11 +151,15 @@
 \ProcessOptionsX\relax
 %    \end{macrocode}
 %
+% Lade benötigte Pakete.
 %    \begin{macrocode}
 \ProvidesPackage{tubsstyle}
+\RequirePackage{tubslogo}
+\RequirePackage{tubscolors}
+\RequirePackage{tubstypearea}
 \RequirePackage{tubsbox}% TODO: Warum Hintergrundfehler, wenn nach eso-pic geladen??
 \RequirePackage{eso-pic}
-\RequirePackage{xkeyval}
+\RequirePackage{transparent}
 %    \end{macrocode}
 %
 %
@@ -216,17 +225,11 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%
-%    \begin{macro}{\tubs@tubslogo}
-% \oarg{pos}\par
-% Dieses Kommando fügt das TU-Logo in den Hintergrund ein.
-% Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
-% des Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
-% Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
-% Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
-% entgegengesetzten Papierseite platziert.
+%    \begin{macro}{\tubs@tubslogo@calcpos}
+% \marg{side}\marg{xlenghtvar}\marg{ylengthvar}\par
+% Berechnet Position des zu platzierenden Siegelbandlogos.
 %    \begin{macrocode}
-\newcommand\tubs@tubslogo[1][left]{%
+\newcommand\tubs@tubslogo@calcpos[3]{%
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{\paperheight%
@@ -252,6 +255,24 @@
       \setlength{\tmp@posx}{\tubspage@bcor}%
     }%
   }%
+  \setlength{#2}{\tmp@posx}%
+  \setlength{#3}{\tmp@posy}%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+%    \begin{macro}{\tubs@tubslogo}
+% \oarg{pos}\par
+% Dieses Kommando fügt das TU-Logo in den Hintergrund ein.
+% Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
+% des Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
+% Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
+% Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
+% entgegengesetzten Papierseite platziert.
+%    \begin{macrocode}
+\newcommand\tubs@tubslogo[1][left]{%
+  \tubs@tubslogo@calcpos{#1}{\tmp@posx}{\tmp@posy}
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}%
 }
 %    \end{macrocode}
@@ -282,7 +303,7 @@
       \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
       \def\@ragged{\raggedright}%
     }{%
-      \setlength{\tmp@posx}{\oddsidemargin+1in+\voffset+0.5\textwidth}%
+      \setlength{\tmp@posx}{\oddsidemargin+1in+\hoffset+0.5\textwidth}%
     }%
   }{%
     \ifthenelse{\boolean{tubsstyle@logoright}}{%
@@ -678,6 +699,7 @@
   \def\tubs@draw@topline{}
   \def\tubs@draw@tubslogo{}
   \def\tubs@draw@logo{}
+  \def\tubs@draw@designhelper{}
   \def\@next@shipout{}
 %   \def\@next@shipout@preset{}
   \def\@@next@shipout{} % Makro to set content after keys
@@ -699,6 +721,7 @@
   \tubs@draw@topline
   \tubs@draw@tubslogo
   \tubs@draw@logo
+  \tubs@draw@designhelper
   \ClearShipoutPicture
   \ifthenelse{\boolean{tubsstyle@singlepage}}{%
     \AddToShipoutPicture*{\@next@shipout}
@@ -722,6 +745,53 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\tubs@background@designhelper}
+% \marg{ypos}\par
+%    \begin{macrocode}
+\newcommand\tubs@background@designhelper[1]{%
+  \tubs@background{#1}{1}%
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
+    {{\setlength\fboxsep{0mm}\fbox{%
+      \parbox[b][\thetmp@calc@bgpos\tubspage@gaussheight]%
+        {\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{~}}%
+    }}%
+}
+%
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\showdesignhelper}
+%    \begin{macrocode}
+\newcommand{\showdesignhelper}{%
+  \def\tubs@draw@designhelper{%
+    \g@addto@macro{\@next@shipout}{%
+      % Rahmen für links und rechts positioniertes TU-Logo
+      \tubs@tubslogo@calcpos{left}{\tmp@posx}{\tmp@posy}%
+      \addtolength{\tmp@posy}{\tubslogoHeight}%
+      \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+        \fboxsep0mm\fbox{\parbox[t][\tubslogoHeight]{\tubslogoWidth}{~}}}%
+      \tubs@tubslogo@calcpos{right}{\tmp@posx}{\tmp@posy}%
+      \addtolength{\tmp@posy}{\tubslogoHeight}%
+      \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+        \fboxsep0mm\fbox{\parbox[t][\tubslogoHeight]{\tubslogoWidth}{~}}}%
+      %
+      \tubs@background@designhelper{1}%
+      \tubs@background@designhelper{2}%
+      \tubs@background@designhelper{3}%
+      \tubs@background@designhelper{4}%
+      \tubs@background@designhelper{5}%
+      \tubs@background@designhelper{6}%
+      \tubs@background@designhelper{7}%
+      \tubs@background@designhelper{8}%
+      %
+      \AtTextUpperLeft{%
+        \fbox{\parbox[t][\textheight]{\textwidth}{~}}%
+      }%
+    }%
+  }%
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 % \begin{macro}{\defbglayout}
 % \oarg{options}\marg{name}\marg{layout}\par
