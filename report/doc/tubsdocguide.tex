@@ -70,10 +70,10 @@ unterstützt und leicht modifiziert.
 \end{Declaration}
 
 Die einfache Verwendung von \lstinline{\maketitle} erzeugt eine Titelseite
-mit dem TU-Logo und einer roten Trennline zwischen Absender- und
+mit dem TU-Logo und einer roten Trennlinie zwischen Absender- und
 Kommunikationsbereich.
 
-Mit Hilfe des optionalen Arguements \PName{style} kann die Darstellung
+Mit Hilfe des optionalen Arguments \PName{style} kann die Darstellung
 der Titelseite geändert werden, indem aus einer Reihe vordefinierter Styles
 ausgewählt wird.\bigskip
 
@@ -86,7 +86,7 @@ in \tubslatex noch ein paar zusätzliche definiert.
   \Macro{titleabstract}\Parameter{text}
 \end{Declaration}
 
-\Macro{logo} dient zur Darstellung eines zusäzlichen Absenders als Schrift
+\Macro{logo} dient zur Darstellung eines zusätzlichen Absenders als Schrift
 oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
 TU-Logo gegenüberliegenden Seite dargestellt.
 Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
@@ -148,9 +148,9 @@ Es sind 3 einfache Styles vordefiniert.
 \section{Kopf-/ Fußzeile}
 
 Standardmäßig wird die Fußzeile komplett leer gelassen und die Kopfzeile
-wird mit Seitennumer rechts und Kapitelname links gesetzt. Bei zweiseitigem
+wird mit Seitennummer rechts und Kapitelname links gesetzt. Bei zweiseitigem
 Layout gilt dies für die ungeraden Seiten, gerade Seiten werden entsprechend
-mit Seitennumer links und Kapitelname rechts gesetzt.
+mit Seitennummer links und Kapitelname rechts gesetzt.
 
 \begin{Declaration}
   \Macro{ihead}\Parameter{innen}\\
@@ -203,7 +203,7 @@ Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
 
 Schaltet das Dokument in Querformat-Darstellung.
 
-\begin{minipage}{0.45\textwidth}
+\begin{minipage}{0.45\textwidth}\sffamily\centering
   {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
   Dokument im Querformat
 \end{minipage}
@@ -243,7 +243,7 @@ Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
 Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
 ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
 
-Sinvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
+Sinnvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
 wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
 Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
 keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
@@ -255,7 +255,7 @@ mit \OptionValue{bcor}{0mm} möglich.
 \end{Declaration}
 
 Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
-vorgesehen. Mit ihr wird ovn einseitigem Layout auf zweiseitiges Layout
+vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
 umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
 auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
 auf definierte Ränder (Bindungskorrektur, Marginale).
@@ -274,7 +274,8 @@ einem Element im Spaltenraster entspricht.
 
 \section{Schrift}
 
-Dokumente im Corporate Design werden allgemein mit der Schrift Nexus gesetzt.
+Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
+gesetzt.
 Diese wird standardmäßig bei allen Dokumenten geladen. Auf eine explizite
 Angabe der Schriftgröße in den Dokumentenoptionen sollte nach Möglichkeit
 verzichtet werden, da für die jeweiligen Papierformate spezielle
@@ -283,6 +284,42 @@ Das Laden anderer Schriftgrößen führt im Vergleich dazu teilweise zu stark ab
 
 Für wichtige Standard-Elemente gibt es des weiteren vordefinierte Koma-Fonts.
 
+
+\begin{desctable}
+\entry{\PValue{headline}}{%
+  Einfache Überschrift (groß)
+}
+\entry{\PValue{subheadline}}{%
+  Unterüberschrift
+}
+\entry{\PValue{institute}}{%
+  Institutsname im Logo-Bereich des Absenders.
+}
+% \entry{\PValue{infotext}}{%
+% }
+% \entry{\PValue{infotextitem}}{%
+% }
+\entry{\PValue{copytext}}{%
+  Mengentext
+}
+\end{desctable}
+
+
+\subsection{Farben}
+
+Für eine Übersicht über die verfügbaren Farben siehe \ref{sec:colors}.%TODO...
+
+\begin{Declaration}
+  \Option{mono}
+\end{Declaration}
+
+Schwarz-Weiß-Darstellung der Standardelemente
+
+\begin{Declaration}
+  \Option{cmyk}
+\end{Declaration}
+
+CMYK-Darstellung der Standardelemente
 
 
 % \noindent\hspace*{-\parindent}\fbox{\cmd{\maketitle}\oarg{asdf}\marg{asdf}}
@@ -329,7 +366,7 @@ erzeugt werden.
   \XMacro{end}\PParameter{tubsposter}
 \end{Declaration}
 
-Für die Erstellung von wissenschafltichen Plakaten wird ebenfalls die Umgebung
+Für die Erstellung von wissenschaftlichen Plakaten wird ebenfalls die Umgebung
 \Environment{tubsposter} verwendet, welche in diesem Fall jedoch einen
 zusätzlichen Parameter \PName{rows} erwartet.
 Damit wird die Anzahl an Modulzeilen bestimmt. Dies geschieht mittels
@@ -337,7 +374,7 @@ einer kommagetrennten Liste, wobei jedes Element entweder eine Länge
 oder der Buchstabe 'X' sein kann. Eine Länge legt die Höhe der jeweiligen
 Modulzeile genau fest, ein X sorgt dafür, dass alle mit X gekennzeichneten
 Zeilen den restlichen zur Verfügung stehenden Platz gleichmäßig untereinander
-auteilen. Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx}
+aufteilen. Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx}
 angelehnt.
 
 \begin{Example}
@@ -366,7 +403,7 @@ Dabei kann entweder direkt der gewünschte Inhalt geschrieben oder das optionale
 Parameter \PName{cols} benutzt werden.
 Dieses erlaubt die Definition zusätzlicher Spalten in der aktuellen Modulzeile.
 Es wird wieder ein kommagetrennte Liste erwartet,
-deren Elemente dieselebe Bedeutung haben wie bereits beschrieben, außer, dass
+deren Elemente dieselbe Bedeutung haben wie bereits beschrieben, außer, dass
 sie die Breite und nicht die Höhe definieren.
 
 Der normale Abstand des Inhalts vom Rand der Modulbox beträgt halbe
@@ -424,8 +461,64 @@ Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit
 
 \chapter{Briefe}
 
+\input{beamer}  % Kapitel: 'Präsentationen'
 
-\chapter{Präsentationen}
+
+\chapter{Hintergrundlayout}
+
+\begin{Declaration}
+  \Macro{showtubslogo}\OParameter{Position}
+\end{Declaration}
+
+\begin{Declaration}
+  \Macro{showlogo}\PParameter{Logo}
+\end{Declaration}
+
+\begin{Declaration}
+  \Macro{showtopline}
+\end{Declaration}
+
+\begin{Declaration}
+  \Macro{bgelement}\OParameter{Darstellung}\PParameter{Höhe}
+\end{Declaration}
+
+Erstellt ein Hintergrundelement im Gaußraster mit angegebener \PName{Höhe}.
+Der Parameter \PName{Darstellung} kann die folgenden Einstellungen verarbeiten:
+
+\begin{Declaration}
+  \KOption{bgcolor}\PName{Farbe}\\
+  \KOption{bgimage}\PName{Bild-Datei}\\
+  \KOption{imagefit}\PName{Darstellungsoption}
+\end{Declaration}
+
+Mit \OptionValue{bgcolor}{Farbe} wird das Hintergrundelement mit der angegebenen
+Farbe gefüllt.
+
+Die Option \OptionValue{bgimage}{Bild-Datei} erlaubt dagegen die Darstellung
+eines Hintergrundbildes im Element.
+Da der Darstellungsbereich fest vorgegeben ist, muss das eingebundene Bild
+in diesen Bereich eingepasst werden. Dies geschieht automatisch, die Art
+der Einpassung lässt sich aber mit der Option \Option{imagefit} kontrollieren.
+Sie erlaubt folgende Einstellungen:
+
+
+\begin{desctable}
+\entry{\PValue{cropped}}{%
+  Automatisches Abschneiden. Dies ist die Standardeinstellung.
+}
+\entry{\PValue{cropx}}{%
+  Abschnitt horizontal.
+}
+\entry{\PValue{cropy}}{%
+  Abschnitt vertikal.
+}
+\entry{\PValue{scaled}}{%
+  Horizontale \emph{und} vertikale Skalierung.
+}
+\end{desctable}
+
+
+\input{colors}  % Kapitel: 'Farben'
 
 \input{glossary}
 

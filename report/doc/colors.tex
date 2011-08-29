@@ -1,0 +1,121 @@
+\chapter{Farben}
+
+Die Farbdefinitionen in \tubslatex werden vom Paket \lstinline{tubscolors}
+zur Verfügung gestellt. Die folgende Beschreibung bezieht sich
+auf den Funktionsumfang des Paketes. Das Paket ist in allen verfügbaren
+Klassen bereits korrekt eingebunden.
+
+\newcommand{\rainbow}[2][\relax]{{\noindent\sffamily\footnotesize%
+\ifx#1\relax\colorlet{fglbg}{black}\else\colorlet{fglbg}{#1}\fi
+\colorbox{#2100}{\hbox to 0.188\textwidth{%
+  \color{fglbg}\vphantom{Fg}#2{}100\hfill}}% 
+\colorbox{#280}{\hbox to 0.188\textwidth{%
+  \color{fglbg}\vphantom{Fg}#2{}80\hfill}}% 
+\colorbox{#260}{\hbox to 0.188\textwidth{\vphantom{Fg}#2{}60\hfill}}% 
+\colorbox{#240}{\hbox to 0.188\textwidth{\vphantom{Fg}#2{}40\hfill}}% 
+\colorbox{#220}{\hbox to 0.188\textwidth{\vphantom{Fg}#2{}20\hfill}}\\% 
+}}
+
+\section{Verfügbare Farben}
+
+Der Farbklang der TU-Braunschweig ist in eine Primär- und einen
+Sekundärfarbbereich aufgeteilt.
+
+Die Primärfarben bilden dabei Rot, Schwarz und Weiß, sowie in
+20-Prozent-Schritten abgestufte Grautöne. Die Primärfarben dienen
+vor allem zur Auszeichnung von Hintergrund, Textfarbe und dem TU-Logo.
+Zur individuellen Gestaltung von Dokumenten ist der Sekundärfarbbereich
+vorgesehen.
+
+Die Sekundärfarben setzen sich aus 12 weiteren aufeinander abgestimmten
+Farben zusammen, die 
+in 4 Farbklänge (Gelb-Orange, Grün, Blau und Violett) mit je 3 Basisfarben
+aufgeteilt sind.
+Alle Sekundärfarben können in 20-Prozent-Schritten aufgehellt werden.
+
+Die Namen über die die einzelnen Farben angesprochen werden können, sind in den
+Beispielfeldern angegeben.
+
+\subsection{Primärfarben}
+
+{\sffamily\footnotesize%
+\colorbox{tuRed}{\hbox to 0.188\textwidth{%
+  \vphantom{Fg}tuRed\hfill}}%
+\colorbox{tuBlack}{\hbox to 0.188\textwidth{%
+  \color{white}\vphantom{Fg}tuBlack\hfill}}%
+\fcolorbox{tuBlack}{tuWhite}{\hbox to 0.188\textwidth{%
+  \vphantom{Fg}tuWhite\hfill}}\\%
+}
+
+\rainbow[tuWhite]{tuGray}
+
+Zur Vereinfachung sind noch die Farben \lstinline{tuGray} und
+\lstinline{tuLightGrey} definiert, die den Farben \lstinline{tuGray60} und
+\lstinline{tuGray20} entsprechen.
+
+Alle Graytöne sind darüber hinaus auch in britischer Schreibweise nutzbar
+(\lstinline{tuGrey}).
+
+\paragraph{Hinweis:}
+\lstinline{tuRed} ist nicht zu verwechseln mit \lstinline{tuRed100} aus dem
+Sekundärfarbbereich. Es handelt sich dabei um eine komplett andere Farbe.
+
+\pagebreak
+\subsection{Sekundärfarben}
+
+\rainbow{tuYellow}
+\rainbow{tuOrange}
+\rainbow{tuRed}
+
+\rainbow{tuGreenLight}
+\rainbow{tuGreen}
+\rainbow{tuGreenDark}
+
+\rainbow{tuBlueLight}
+\rainbow{tuBlue}
+\rainbow{tuBlueDark}
+
+\rainbow{tuVioletLight}
+\rainbow{tuViolet}
+\rainbow{tuVioletDark}
+
+Zusätzlich kann als Paketoption ein Farbklang ausgewählt werden, dessen Farben
+dann über die Werte  \\\lstinline{tuSecondaryLight},
+\lstinline{tuSecondaryMedium}, \lstinline{tuSecondaryDark}, sowie die
+entsprechenden Prozentualwert \\(\lstinline{tuSecondaryLight20},
+\lstinline{tuSecondaryLight40}, \ldots) angesprochen werden können.
+Dies erlaubt eine flexible Verwendung der 4 Sekundärfarbklänge.
+
+In folgendem Beispiel wurde \lstinline{green} als Farbklang ausgewählt:
+
+\rainbow{tuSecondaryLight}
+\rainbow{tuSecondary}
+\rainbow{tuSecondaryDark}
+
+\paragraph{Hinweise:}
+Die Farben des gelb-orange-Farbklangs können entsprechend der anderen
+Farbmodelle auch noch einheitlich über die Alternativnamen
+\lstinline{tuOrangeLight}, \lstinline{tuOrange},
+\lstinline{tuOrangeDark}, sowie de entsprechenden Prozentwerte aufgerufen
+werden.
+
+Außerdem können jeweils die mittleren Farbwerte der Farbklänge auch über den
+Zusatz \lstinline{Medium} angesprochen werden (statt \lstinline{tuGreen100} auch
+\lstinline{tuGreenMedium100}).
+
+Bei allen 100-Prozent-Farben (außer \lstinline{tuRed}) kann die
+Zahl weggelassen werden (statt \lstinline{tuGreenLight100} auch 
+\lstinline{tuGreenLight}).
+
+\subsection{Farbmodelle}
+
+In den Paketoptionen kann zwischen 3 Farbmodellen gewählt werden.
+Das Standardmodell stellt die CD-konformen RGB-Farbwerte zur Verfügung.
+
+Für die Ausgabe in CMYK-Farben steht die Option \lstinline!cmyk! zur Verfügung.
+
+Darüber hinaus gibt es noch ein RGB-Farbschema, das für die Ausgabe auf
+Beamern optimiert ist. Es kann über die Option \lstinline!rgbbeamer! geladen
+werden.
+
+% Für weitere Details zu Verwendung der Argumente siehe folgender Abschnitt.
