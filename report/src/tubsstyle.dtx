@@ -241,12 +241,12 @@
     \ifthenelse{\equal{#1}{left}}{%
       \setlength{\tmp@posx}{\tubspage@bcor}%
     }{%
-      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}%
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth}%
       \setboolean{tubsstyle@logoright}{true}%
     }%
   }{%
     \ifthenelse{\equal{#1}{left}}{%
-      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}%
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth}%
     }{%
       \setlength{\tmp@posx}{\tubspage@bcor}%
     }%
