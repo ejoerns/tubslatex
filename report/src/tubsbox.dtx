@@ -204,10 +204,10 @@
   % TODO: this seems to be a bug, only one borderwidth should be needed
   % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
-    \textblockorigin{\oddsidemargin+1in+\voffset}{%
+    \textblockorigin{\oddsidemargin+1in+\hoffset}{%
       2\tubspage@borderwidth}
   }{% 
-    \textblockorigin{\oddsidemargin+1in+\voffset}{%
+    \textblockorigin{\oddsidemargin+1in+\hoffset}{%
       \tubspage@senderheight+\tubspage@borderwidth}
   }
 }
@@ -761,7 +761,7 @@
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \begin{textblock*}{\@current@width}(%
-      -1\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      -0.5\tubspage@borderwidth+\tubs@sb@box@xpos,%
       -\tubspage@senderheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \colorbox{tuWhite}{%
