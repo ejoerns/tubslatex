@@ -247,6 +247,7 @@
   }{%
     \ifthenelse{\equal{#1}{left}}{%
       \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth}%
+      \setboolean{tubsstyle@logoright}{true}%
     }{%
       \setlength{\tmp@posx}{\tubspage@bcor}%
     }%
@@ -597,18 +598,15 @@
 %
 %    \begin{key}{layout}{sender}
 % Option bestimmt Position des Kommunikationsbereichs und Orientierung
-% des Rasters.
+% des Rasters.\par
+% Diese Information wird im shipout gespeichert!
 %    \begin{macrocode}
 \define@key{layout}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
     \setboolean{tubsstyle@bottomsender}{true}
-    % Füge zu Hintergrund-Makro hinzu, sonst funktioniert es nicht!
-    \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{true}}
   }{%
     \ifthenelse{\equal{#1}{top}}{%
       \setboolean{tubsstyle@bottomsender}{false}
-      % Füge zu Hintergrund-Makro hinzu, sont funktioniert es nicht!
-      \g@addto@macro{\@next@shipout}{\setboolean{tubsstyle@bottomsender}{false}}
     }{%
       \PackageError{tubsstyle}{%
         Value '#1' unknown for option 'sender'.
@@ -681,11 +679,13 @@
   \def\tubs@draw@tubslogo{}
   \def\tubs@draw@logo{}
   \def\@next@shipout{}
-  \def\@@next@shipout{}
+%   \def\@next@shipout@preset{}
+  \def\@@next@shipout{} % Makro to set content after keys
   \setcounter{tubs@yseg@cnt}{1}
   \setkeys{layout}{pages=all,sender=top}
   \setkeys{layout}{#1}
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
+%   \g@addto@macro{\@next@shipout}{\@next@shipout@preset}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -723,9 +723,9 @@
 %    \end{macro}
 %
 %
-% \begin{macro}{\deflayout}
+% \begin{macro}{\defbglayout}
 % \oarg{options}\marg{name}\marg{layout}\par
-% Erstellt ein neues Layouts.
+% Erstellt ein neues Layouts.\par
 % Layout und Optionen werden unter den Makros
 % |\@bg@layout@options@|\emph{name} und |\@bg@layout@|\emph{name}
 % gespeichert.
@@ -737,17 +737,17 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\uselayout}
+%    \begin{macro}{\usebglayout}
 % \marg{name}\par
-% Benutzung von vordefinierten Layouts.
+% Benutzung von vordefinierten Layouts.\par
 % Führt |\layout| mit den unter dem Layoutnamen und dem Präfix
 % |\@bg@layout@options@| bzw. |\@bg@layout@| gespeicherten Optionen
 % und Layout-Definitionen aus.
 %    \begin{macrocode}
-\newcommand{\usebglayout}[1]{%
+\newcommand{\usebglayout}[2][]{%
   \expandafter\edef\expandafter\@curr@opts\expandafter{%
-    \expandafter\csname @bg@layout@options@#1\endcsname}
-  \expandafter\layout\expandafter[\@curr@opts]{\csname @bg@layout@#1\endcsname}
+    \expandafter\csname @bg@layout@options@#2\endcsname}
+  \expandafter\bglayout\expandafter[\@curr@opts]{\csname @bg@layout@#2\endcsname}
 }
 %    \end{macrocode}
 %    \end{macro}
