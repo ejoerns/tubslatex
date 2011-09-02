@@ -106,6 +106,7 @@
 %<report>  tubsreprt%
 %<book>  tubsbook%
 %<poster>  tubsposter%
+%<leaflet> tubsleaflet%
 }
 %    \end{macrocode}
 % Definition der zu verwendenden Mutterklasse
@@ -115,6 +116,7 @@
 %<report>  scrreprt%
 %<book>  scrbook%
 %<poster>  scrartcl%
+%<leaflet> leaflet%
 }
 %    \end{macrocode}
 % Sub-Präfix für fontsizefilebase-Namen
@@ -122,12 +124,11 @@
 \newcommand*{\@fsfbs@sub}{}
 %</class>
 %<*package>
-\newcommand{\BaseClass}{\KOMAClassName}
+% \newcommand{\BaseClass}{\KOMAClassName}
 %</package>
 %<package|class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
-%<package>\ProvidesPackage{tubsdoc}
+%<package>\ProvidesPackage{tubsdoc}%[2011/07/09 vTesting TU Braunschweig CD Templates]
 %<class>\ProvidesClass{\tubsClassName}[2011/07/09 tubstex document class]
-%<package>  [2011/07/09 vTesting TU Braunschweig CD Templates]
 %    \end{macrocode}
 % 
 % This package requires the following package:
@@ -243,6 +244,18 @@
 \newcommand{\@fsfb@prefix}{}
 \DeclareOptionX{a6paper}{%
   \def\tubs@opt@paper{a6paper}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% \begin{key}{tubsdoc.dtx}{langpaper}
+% Die Papierformat-Option |langpaper| zum Erzeugen von Dokumenten im
+% Format DIN lang.
+%    \begin{macrocode}
+\DeclareOptionX{langpaper}{%
+  \renewcommand{\@fsfb@prefix}{tubsa5}
+%<class>  \PassOptionsToClass{9pt}{\BaseClass}
+  \def\tubs@opt@paper{langpaper}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -415,6 +428,7 @@
 \RequirePackage{tubstypearea}
 % \RequirePackage{nexus}
 \RequirePackage{tubslogo}
+\RequirePackage{tubsstyle}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</body>
