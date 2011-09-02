@@ -261,6 +261,39 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macrocode}
+\newif\iftubslogo@right\tubslogo@rightfalse
+\newif\iftubslogo@plain\tubslogo@plainfalse
+%    \end{macrocode}
+%
+%    \begin{key}{tubslogo}{left}
+%    \begin{macrocode}
+\define@key{tubslogo}{left}[true]{%
+  \tubslogo@rightfalse%
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubslogo}{right}
+%    \begin{macrocode}
+\define@key{tubslogo}{right}[true]{%
+  \tubslogo@righttrue%
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubslogo}{plain}
+%    \begin{macrocode}
+\define@boolkey{tubslogo}{plain}[true]{%
+  \ifKV@tubslogo@plain%
+    \tubslogo@plaintrue%
+  \else%
+    \tubslogo@plainfalse%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %
 %    \begin{macro}{\tubs@tubslogo}
 % \oarg{pos}\par
@@ -271,9 +304,18 @@
 % Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
 % entgegengesetzten Papierseite platziert.
 %    \begin{macrocode}
-\newcommand\tubs@tubslogo[1][left]{%
-  \tubs@tubslogo@calcpos{#1}{\tmp@posx}{\tmp@posy}
-  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}%
+\newcommand\tubs@tubslogo[1][]{%
+  \setkeys{tubslogo}{left,plain=false,#1}
+  \iftubslogo@right%
+    \tubs@tubslogo@calcpos{right}{\tmp@posx}{\tmp@posy}%
+  \else%
+    \tubs@tubslogo@calcpos{left}{\tmp@posx}{\tmp@posy}%
+  \fi%
+  \iftubslogo@plain%
+    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\fboxsep0mm\colorbox{tuRed}{\parbox[b][\tubslogoHeight]{\tubslogoWidth}{~}}}%
+  \else%
+    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}%
+  \fi%
 }
 %    \end{macrocode}
 %    \end{macro}
