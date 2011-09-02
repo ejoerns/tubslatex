@@ -105,6 +105,11 @@
 %
 % Definiere KOMA-Fontthemes
 %    \begin{macrocode}
+%<*package>
+\let\sectfont\relax
+\RequirePackage{scrbase}
+\RequirePackage{scrextend}
+%</package>
 \newkomafont{headline}{\sffamily\Huge\bfseries}
 \newkomafont{subheadline}{\sffamily\Large}
 \newkomafont{institute}{\sffamily\large\leavevmode\color{tuRed}}

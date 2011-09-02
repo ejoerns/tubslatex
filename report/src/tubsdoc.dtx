@@ -132,7 +132,7 @@
 % 
 % This package requires the following package:
 % \textsf{xkeyval}
-% \begin{macrocode}
+%    \begin{macrocode}
 \RequirePackage{xkeyval}%
 %    \end{macrocode}
 %
@@ -178,7 +178,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{landscape}{%
   \PassOptionsToPackage{landscape}{tubstypearea}
-  \PassOptionsToClass{landscape}{\BaseClass}
+%<class>  \PassOptionsToClass{landscape}{\BaseClass}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -191,8 +191,8 @@
 %<*book|report|article|package>
 \DeclareOptionX{twoside}{%
   \PassOptionsToPackage{twosided}{tubstypearea}
-  \PassOptionsToClass{twoside}{\BaseClass}
   \PassOptionsToPackage{twoside}{tubsstyle}
+%<class>  \PassOptionsToClass{twoside}{\BaseClass}
 }
 %</book|report|article|package>
 %    \end{macrocode}
@@ -253,7 +253,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a5paper}{%
   \renewcommand{\@fsfb@prefix}{tubsa5}
-  \PassOptionsToClass{9pt}{\BaseClass}
+%<class>  \PassOptionsToClass{9pt}{\BaseClass}
   \def\tubs@opt@paper{a5paper}
 }
 %    \end{macrocode}
@@ -266,7 +266,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a4paper}{%
   \renewcommand{\@fsfb@prefix}{tubsa4}
-  \PassOptionsToClass{9pt}{\BaseClass}
+%<class>  \PassOptionsToClass{9pt}{\BaseClass}
   \def\tubs@opt@paper{a4paper}
 }
 %    \end{macrocode}
@@ -278,7 +278,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a3paper}{%
   \renewcommand{\@fsfb@prefix}{tubsa3}
-  \PassOptionsToClass{13pt}{\BaseClass}
+%<class>  \PassOptionsToClass{13pt}{\BaseClass}
   \def\tubs@opt@paper{a3paper}
 }
 %    \end{macrocode}
@@ -290,7 +290,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a2paper}{%
   \renewcommand{\@fsfb@prefix}{tubsa2}
-  \PassOptionsToClass{18pt}{\BaseClass}
+%<class>  \PassOptionsToClass{18pt}{\BaseClass}
   \def\tubs@opt@paper{a2paper}
 }
 %    \end{macrocode}
@@ -302,7 +302,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a1paper}{%
   \renewcommand{\@fsfb@prefix}{tubsa1}
-  \PassOptionsToClass{25pt}{\BaseClass}
+%<class>  \PassOptionsToClass{25pt}{\BaseClass}
   \def\tubs@opt@paper{a1paper}
 }
 %    \end{macrocode}
@@ -315,7 +315,7 @@
 %    \begin{macrocode}
 \DeclareOptionX{a0paper}{%
   \renewcommand{\@fsfb@prefix}{tubsa0}
-  \PassOptionsToClass{40pt}{\BaseClass}
+%<class>  \PassOptionsToClass{40pt}{\BaseClass}
   \def\tubs@opt@paper{a0paper}
 }
 %    \end{macrocode}
@@ -374,7 +374,7 @@
 %
 %    \begin{macrocode}
 \DeclareOptionX*{%
-  \PassOptionsToClass{\CurrentOption}{\BaseClass}
+%<class>  \PassOptionsToClass{\CurrentOption}{\BaseClass}
 }
 %    \end{macrocode}
 %
