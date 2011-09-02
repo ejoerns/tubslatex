@@ -413,6 +413,15 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{tubstypearea.sty}{langpaper}
+% lang
+%    \begin{macrocode}
+\DeclareOptionX{langpaper}{%
+  \def\tubspage@paper{langpaper}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{key}{tubstypearea.sty}{a6paper}
 % A6
 %    \begin{macrocode}
@@ -536,6 +545,21 @@
     \setlength{\tubspage@borderwidth}{5mm}%
     \setlength{\tubspage@senderheight}{25mm}%
   }{%
+  \ifthenelse{\equal{\tubspage@paper}{langpaper}}{%
+    % a5paper
+    \ifthenelse{\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@communicationheight}{112.5mm}%
+      \setlength{\tubspage@senderheight}{25mm}%
+      \def\tubspage@ysegments{6}%
+      \setcounter{tubspage@vsegments}{6}
+    }{%
+      \setlength{\tubspage@communicationheight}{175mm}%
+      \setlength{\tubspage@senderheight}{30mm}%
+      \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
+    }
+    \setlength{\tubspage@borderwidth}{5.5mm}%
+  }{%
   \ifthenelse{\equal{\tubspage@paper}{a5paper}}{%
     % a5paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
@@ -619,7 +643,7 @@
     }
     \setlength{\tubspage@borderwidth}{32mm}%
     \setlength{\tubspage@senderheight}{160mm}%
-  }{}}}}}}}}
+  }{}}}}}}}}}
 }
 %    \end{macrocode}
 %    \end{macro}
