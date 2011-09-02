@@ -5,8 +5,7 @@
 \input docstrip.tex
 \keepsilent
 
-% --- This option is currently deactivated ---
-% \usedir{tex/latex/tubs}
+% \usedir{./build}
 
 
 \preamble
@@ -32,7 +31,7 @@ LaTeX version 1999/12/01 or later.
 
 % --- File generation ---
 
-\generate{\file{tubsbook.cls}{%
+\generate{\file{build/tubsbook.cls}{%
   \from{tubsdoc.dtx}{class,book,head}
   \from{tubsdoc.dtx}{class,book,option}
   \from{tubshead.dtx}{class,book,option}
@@ -45,7 +44,7 @@ LaTeX version 1999/12/01 or later.
   \from{tubsfont.dtx}{class,book,body}
 }}
 
-\generate{\file{tubsreprt.cls}{%
+\generate{\file{build/tubsreprt.cls}{%
   \from{tubsdoc.dtx}{class,report,head}
   \from{tubsdoc.dtx}{class,report,option}
   \from{tubshead.dtx}{class,report,option}
@@ -58,7 +57,7 @@ LaTeX version 1999/12/01 or later.
   \from{tubsfont.dtx}{class,report,body}
 }}
 
-\generate{\file{tubsartcl.cls}{%
+\generate{\file{build/tubsartcl.cls}{%
   \from{tubsdoc.dtx}{class,article,head}
   \from{tubsdoc.dtx}{class,article,option}
   \from{tubshead.dtx}{class,article,option}
@@ -71,7 +70,7 @@ LaTeX version 1999/12/01 or later.
   \from{tubsfont.dtx}{class,article,body}
 }}
 
-\generate{\file{tubsposter.cls}{%
+\generate{\file{build/tubsposter.cls}{%
   \from{tubsdoc.dtx}{class,poster,head}
   \from{tubsdoc.dtx}{class,poster,option}
   \from{tubshead.dtx}{class,poster,option}
@@ -86,56 +85,56 @@ LaTeX version 1999/12/01 or later.
 
 % --- Generate fontsize informations
 
-\generate{\file{tubsa040pt.clo}{%
+\generate{\file{build/tubsa040pt.clo}{%
   \from{tubsfont.dtx}{clo,a0}
 }}
 
 % TODO: still a hack...
-\generate{\file{tubsa0scifi40pt.clo}{%
+\generate{\file{build/tubsa0scifi40pt.clo}{%
   \from{tubsfont.dtx}{clo,a0}
 }}
 
-\generate{\file{tubsa125pt.clo}{%
+\generate{\file{build/tubsa125pt.clo}{%
   \from{tubsfont.dtx}{clo,a1}
 }}
 
 % TODO: still a hack...
-\generate{\file{tubsa1scifi25pt.clo}{%
+\generate{\file{build/tubsa1scifi25pt.clo}{%
   \from{tubsfont.dtx}{clo,a1}
 }}
 
-\generate{\file{tubsa218pt.clo}{%
+\generate{\file{build/tubsa218pt.clo}{%
   \from{tubsfont.dtx}{clo,a2}
 }}
 
 % TODO: still a hack...
-\generate{\file{tubsa2scifi18pt.clo}{%
+\generate{\file{build/tubsa2scifi18pt.clo}{%
   \from{tubsfont.dtx}{clo,a2}
 }}
 
-\generate{\file{tubsa313pt.clo}{%
+\generate{\file{build/tubsa313pt.clo}{%
   \from{tubsfont.dtx}{clo,a3}
 }}
 
 % TODO: still a hack...
-\generate{\file{tubsa3scifi13pt.clo}{%
+\generate{\file{build/tubsa3scifi13pt.clo}{%
   \from{tubsfont.dtx}{clo,a3}
 }}
 
-\generate{\file{tubsa49pt.clo}{%
+\generate{\file{build/tubsa49pt.clo}{%
   \from{tubsfont.dtx}{clo,a4}
 }}
 
-\generate{\file{tubsa59pt.clo}{%
+\generate{\file{build/tubsa59pt.clo}{%
   \from{tubsfont.dtx}{clo,a5}
 }}
 
-\generate{\file{tubsdin9pt.clo}{%
+\generate{\file{build/tubsdin9pt.clo}{%
   \from{tubsfont.dtx}{clo,din}
 }}
 
 
-\generate{\file{tubsdoc.sty}{%
+\generate{\file{build/tubsdoc.sty}{%
   \from{tubsdoc.dtx}{package,head}
   \from{tubsdoc.dtx}{package,option}
   \from{tubshead.dtx}{package,option}
@@ -149,26 +148,26 @@ LaTeX version 1999/12/01 or later.
 }}
 
 
-\generate{\file{tubsflowfram.sty}{%
+\generate{\file{build/tubsflowfram.sty}{%
   \from{tubsflowfram.dtx}{package}
 }}
 
 
-\generate{\file{tubstypearea.sty}{%
+\generate{\file{build/tubstypearea.sty}{%
   \from{tubstypearea.dtx}{package}
 }}
 
 
-\generate{\file{tubsstyle.sty}{%
+\generate{\file{build/tubsstyle.sty}{%
   \from{tubsstyle.dtx}{package}
 }}
 
 
-\generate{\file{tubsbox.sty}{%
+\generate{\file{build/tubsbox.sty}{%
   \from{tubsbox.dtx}{package}
 }}
 
-% \generate{\file{tubstitlepage.sty}{%
+% \generate{\file{build/tubstitlepage.sty}{%
 %   \from{tubstitlepage.dtx}{package}
 % }}
 
