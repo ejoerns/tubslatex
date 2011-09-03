@@ -112,10 +112,16 @@
 %</package|leaflet>
 \newkomafont{headline}{\sffamily\Huge\bfseries}
 \newkomafont{subheadline}{\sffamily\Large}
-\newkomafont{institute}{\sffamily\large\leavevmode\color{tuRed}}
+%<!leaflet>\newkomafont{institute}{\sffamily\large}
+%<leaflet>\newkomafont{institute}{\sffamily\fontsize{10pt}{12}\selectfont}
+%<leaflet>\newkomafont{intro}{\large}
 \newkomafont{infotext}{\large}
 \newkomafont{infotextitem}{\large}
 \newkomafont{copytext}{\normalsize}
+\newkomafont{caption}{\small}
+\let\newcdfont\newkomafont
+\let\usecdfont\usekomafont
+\let\setcdfont\setkomafont
 %    \end{macrocode}
 %
 %
@@ -177,7 +183,7 @@
 %
 % Für DIN A4 und A5 sind dieselben Grundgrößen definiert.
 %    \begin{macrocode}
-%<*a4|a5|din>
+%<*a4|a5|lang>
 %    \end{macrocode}
 %
 %    \begin{macro}{\normalsize}
@@ -228,7 +234,7 @@
 %    \end{macro}
 %
 %    \begin{macrocode}
-%</a4|a5|din>
+%</a4|a5|lang>
 %    \end{macrocode}
 %
 % \paragraph{A4}
@@ -263,7 +269,7 @@
 %
 % \paragraph{A5, DIN}
 %    \begin{macrocode}
-%<*a5|din>
+%<*a5|lang>
 %    \end{macrocode}
 %    \begin{macro}{\large}
 %    \begin{macro}{\Large}
@@ -272,9 +278,8 @@
 %    \begin{macro}{\Huge}
 % Definition der papierformatabhänigen Größen (A5/DIN lang)
 %    \begin{macrocode}
-\def\large{\@setfontsize\large{10pt}{12}}
-\def\Large{\@setfontsize\Large{13pt}{17}}
-\def\LARGE{\@setfontsize\LARGE{16pt}{21}}
+\def\large{\@setfontsize\large{13pt}{17}}
+\def\Large{\@setfontsize\Large{16pt}{21}}
 \def\huge{\@setfontsize\huge{24pt}{29}}
 \def\Huge{\@setfontsize\Huge{30pt}{36}}
 %    \end{macrocode}
@@ -284,13 +289,14 @@
 %    \begin{macro}{\scriptsize}
 % Definition der interpolierten Größen (A5/DIN lang)
 %    \begin{macrocode}
+\def\LARGE{\@setfontsize\LARGE{20pt}{26}}
 \def\tiny{\@setfontsize\tiny\@vpt{6}}
 \def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
 %    \begin{macrocode}
-%</a5|din>
+%</a5|lang>
 %    \end{macrocode}
 %
 % NOTE: This code is currently mainly copied from scrsize10pt.clo and not
@@ -298,7 +304,7 @@
 % TODO: check if this is needed!!!
 % \paragraph{A4, A5, DIN, A3, A2, A1}
 %    \begin{macrocode}
-%<*a4|a5|din|a3|a2|a1|a0>
+%<*a4|a5|lang|a3|a2|a1|a0>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -353,7 +359,7 @@
   \l@addto@macro{\small}{\protect\add@extra@listi{sml}}%
 }
 \@listi
-%</a4|a5|din|a3|a2|a1|a0>
+%</a4|a5|lang|a3|a2|a1|a0>
 %    \end{macrocode}
 %
 % \paragraph{A3}
