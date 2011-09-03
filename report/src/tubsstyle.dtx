@@ -359,7 +359,7 @@
     \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
       {0.5\paperwidth-0.5\tubspage@bcor-\tubspage@borderwidth}{%
       \usekomafont{institute}\@ragged%
-      #1%
+      \leavevmode\color{tuRed}#1%
     }%
   }%
 }
@@ -548,7 +548,7 @@
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Optionen für Umgebung posterrow}
+% \subsection{Optionen für bgelement
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macro}{\tubs@bg@cmd}
@@ -735,8 +735,10 @@
 %
 %
 %    \begin{macro}{\@layout@pre}
+%\marg{options}\par
 % Layout-Voreinstellungen, Optionen, etc.
 %    \begin{macrocode}
+\newcommand*{\@@next@shipout}{}
 \newcommand{\@layout@pre}[1]{%
   \def\tubs@draw@topline{}
   \def\tubs@draw@tubslogo{}
@@ -867,6 +869,60 @@
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
+%
+%
+%
+%
+%    \begin{environment}{tubsposter}
+% Erzeugt eine neue Poster-Seite.
+% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
+% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
+% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
+% sind, zuletzt in den Hintergrund gezeichnet werden.
+%    \begin{macrocode}
+\newenvironment{gausspage}[1][]{%
+  \tubsboxsetup[#1]%TODO...
+  \@layout@pre{pages=single,#1}
+%   \thispagestyle{empty}%
+  \sffamily
+}{%
+  \@layout@post
+  ~\newpage
+}
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{environment}{segment}
+% \oarg{options}\marg{ysegments}\par
+% Erzeugt einen neuen Inhalts-Bereich.\\
+% |options|: Mögliche Optionen,
+% |ysegments|: Anzahl Gauß-Elemente für Höhe.
+% Mögliche Optionen:
+% \begin{description}
+%   \item[|bgcolor|] Hintergrundfarbe
+%   \item[|bgimage|] Hintergrundbild
+% \end{description}
+% Erzeugt eine |gaussbox| mit voller Seitenbreite und angegebener Höhe.
+% Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
+% gesetzten Boxen bzw. ihren Höhen berechnet.
+%    \begin{macrocode}
+\newenvironment{segment}[2][]{%
+  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
+  % TODO...
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+    \edef\@tubs@arg{[sender=bottom]{0}{\thetubs@yseg@cnt}{6}{#2}}
+  }{%
+    \edef\@tubs@arg{{0}{\thetubs@yseg@cnt}{6}{#2}}
+  }
+  \bgelement[#1]{#2}
+  % Erzeuge gausbox
+  \expandafter\gaussbox\@tubs@arg
+}{%
+  \endgaussbox
+}
+%    \end{macrocode}
+%    \end{environment}
+%
 %
 % \Finale
 \endinput
