@@ -546,19 +546,19 @@
     \setlength{\tubspage@senderheight}{25mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{langpaper}}{%
-    % a5paper
+    % langpaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@communicationheight}{112.5mm}%
       \setlength{\tubspage@senderheight}{25mm}%
-      \def\tubspage@ysegments{6}%
-      \setcounter{tubspage@vsegments}{6}
+      \def\tubspage@ysegments{8}%
+      \setcounter{tubspage@vsegments}{8}
     }{%
       \setlength{\tubspage@communicationheight}{175mm}%
       \setlength{\tubspage@senderheight}{30mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
-    \setlength{\tubspage@borderwidth}{5.5mm}%
+    \setlength{\tubspage@borderwidth}{5mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a5paper}}{%
     % a5paper
