@@ -1,7 +1,5 @@
-all:
-	rm tubsreprt.cls
-	rm tubsartcl.cls
-	rm tubsbook.cls
-	rm tubsdoc.sty
+all: clean
+# 	tex tubs.ins
 
-	tex tubs.ins
+clean:
+	rm *.cls *.sty *.clo *.aux *.log *.glo *.idx *.out

@@ -24,15 +24,14 @@ langpaper]{tubsleaflet}
 
 \usepackage[utf8]{inputenc}
 \usepackage[LY1]{fontenc}
-% \makeatletter
-% \newif\iftubsLL@simplelayout
+\makeatletter
+\newif\iftubsLL@simplelayout
 % % \tubsLL@simplelayouttrue
-% \iftubsLL@simplelayout
-% \AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
-% \AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
-% \fi
-% \makeatother
-% % \bglayout[pages=single]{\showtopline\showtubslogo}
+\iftubsLL@simplelayout
+\AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
+\AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
+\fi
+\makeatother
 
 \usepackage{shortvrb}
 \MakeShortVerb{\|}
@@ -49,39 +48,8 @@ langpaper]{tubsleaflet}
 
 \newcommand*\defaultmarker{\textsuperscript\textasteriskcentered}
 
-% \title{The document class \Lclass{leaflet}}
-% \author{%
-%   Rolf Niepraschk\\
-%   Walter Schmidt\\
-%   Hubert G\"a\ss lein}
-% \date{\today}
-% 
-% \CutLine*{1}% Dotted line without scissors
-% \CutLine{6}%  Dotted line with scissors
-% 
-% \AddToBackground{5}{%  Background of a small page
-%   \put(0,0){\textcolor{tuBlueLight}{\rule{\paperwidth}{\paperheight}}}}
-% 
-% \AddToBackground*{2}{% Background of a large page
-%   \put(\LenToUnit{.5\paperwidth},\LenToUnit{.5\paperheight}){%
-%     \makebox(0,0)[c]{%
-%       \resizebox{.9\paperwidth}{!}{\rotatebox{35.26}{%
-%         \textsf{\textbf{\textcolor{LIGHTGRAY}{BACKGROUND}}}}}}}}
-
 \begin{document}
 
-% \maketitle
-% \thispagestyle{empty}
-
-%%\LARGE
-
-%%\tableofcontents
-% \bglayout{%
-%   \showtubslogo
-%   \bgelement[bgcolor=tuGray20]{3}
-%   \bgelement[bgcolor=tuBlue40]{1}
-%   \bgelement[bgcolor=tuBlue80]{4}
-% }
 
 \begin{gausspage}
   \showtubslogo
@@ -130,7 +98,7 @@ langpaper]{tubsleaflet}
 
 \begin{gausspage}
   \begin{segment}[bgcolor=tuBlue40]{2}
-    \usecdfont{headline} Headline 24pt um brackl jaun\bigskip
+    \usecdfont{headlinesmall} Headline 24pt um brackl jaun\bigskip
     
     \usecdfont{intro} Intro Text (13 pt) Quol damnarin Tropi zu klenne perdi 
       Utilira regau socht mol sunt.

@@ -1,40 +1,40 @@
-\makeatletter\newcommand{\@fontsizefilebase}{tubsa3}\makeatother
 \documentclass[a3paper,13pt]{tubsposter}
-\usepackage{tubsstyle}
 \usepackage[utf8]{inputenc}
 
 \usepackage{lipsum}
 
+%TODO \thspagestyle{empty}
 \begin{document}
-\layout[sender=top]{%
-  \showtubslogo
-  \showtopline
-  \bgelement[bgimage=infozentrum.jpg,imagefit=scaled]{2}
-  \bgelement[bgcolor=tuBlue80]{3}
-  \bgelement[bgcolor=tuBlue60]{3}
+\bglayout[sender=top]{%
+  \showdesignhelper
+%   \showtubslogo
+%   \showtopline
+%   \bgelement[bgimage=infozentrum.jpg,imagefit=scaled]{2}
+%   \bgelement[bgcolor=tuBlue80]{3}
+%   \bgelement[bgcolor=tuBlue60]{3}
 }
-\deflayout[pages=single]{mylayout}{%
+\defbglayout[pages=single]{mylayout}{%
   \showtubslogo[right]
-  \showtopline
-  \bgelement[bgimage=long.jpg,imagefit=scaled]{2}
+%   \showtopline
+  \bgelement[bgimage=infozentrum,imagefit=scaled]{2}
   \bgelement[bgcolor=tuGreenDark20]{3}
   \bgelement[bgcolor=tuBlue80]{3}
 }
-\deflayout[pages=all,sender=top]{otherlayout}{%
+\defbglayout[pages=all,sender=bottom]{otherlayout}{%
   \showtubslogo[right]
-  \showtopline
+%   \showtopline
   \bgelement[bgcolor=tuOrange]{3}
   \bgelement[bgcolor=tuOrangeDark60]{2}
   \bgelement[bgcolor=tuBlue80]{3}
 }
 ~
 \newpage
-\uselayout{mylayout}
+\usebglayout{mylayout}
 ~
 \newpage
 ~
 \newpage
-\uselayout{otherlayout}
+\usebglayout{otherlayout}
 ~
 \newpage
 ~
@@ -48,7 +48,7 @@
 \newpage
 ~
 \newpage
-\uselayout{mylayout}
+\usebglayout{mylayout}
 ~
 \newpage
 ~
