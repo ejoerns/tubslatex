@@ -1,6 +1,6 @@
 all: clean structure fetch build
 
-VERSION = 0.2.4
+VERSION = 0.3_110829_r478
 DIST = debian
 
 REPODIR = /home/enrico/CD-LaTeX
