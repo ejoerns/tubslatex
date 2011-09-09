@@ -27,8 +27,9 @@ echo -e '\t -> beamer'
 cp $REPODIR/beamer/src/*.sty  tex/latex/tubs/beamer/.
 cp $REPODIR/beamer/src/defaulttitlepicture.jpg tex/latex/tubs/beamer/.
 echo -e '\t -> report'
-cp $REPODIR/report/src/*.cls  tex/latex/tubs/report/.
-cp $REPODIR/report/src/*.tex  tex/latex/tubs/report/.
+cp $REPODIR/report/build/*.cls  tex/latex/tubs/report/.
+cp $REPODIR/report/build/*.sty  tex/latex/tubs/report/.
+cp $REPODIR/report/build/*.clo  tex/latex/tubs/report/.
 echo -e '\t -> nexus'
 cp $REPODIR/nexus/src/*.sty   tex/latex/tubs/nexus/.
 cp $REPODIR/nexus/src/*.fd    tex/latex/tubs/nexus/.
