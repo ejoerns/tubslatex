@@ -9,6 +9,7 @@ install/rawtree/tex/*
 install/debian/texlive-tubs/*
 install/release/*
 #ignore tex generated classes and packages
+report/src/build
 report/src/tubsa49pt.clo
 report/src/tubsa59pt.clo
 report/src/tubsartcl.cls
@@ -21,6 +22,8 @@ report/src/*.clo
 report/src/tubsdoc.sty
 report/src/tubsstyle.sty
 report/src/tubstypearea.sty
+report/src/tubsbox.sty
+report/src/tubstitlepage.sty
 
 # no autosave
 *~
