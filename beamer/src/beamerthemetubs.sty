@@ -6,6 +6,7 @@
 % of the GNU Public License, version 2.
 %
 % Modified by Martin Baeker 2010 <martin.baeker@tu-bs.de>
+% Modified by Enrico Jörns 2011 <e.joerns@tu-bs.de>
 %
 % Option nopagenum entfernt die Seitenzahl aus der Fusszeile
 %        nodate tut dasselbe mit dem Datum
@@ -56,11 +57,11 @@
 \DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
 \DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
 %% Needed to fix spacing in the running toc in the header
-\DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerouterthemetubs}}
-\DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerouterthemetubs}}
-\DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerouterthemetubs}}
-\DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerouterthemetubs}}
-\DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerouterthemetubs}}
+\DeclareOptionBeamer{14pt}{\PassOptionsToPackage{14pt}{beamerfontthemetubs}}
+\DeclareOptionBeamer{12pt}{\PassOptionsToPackage{12pt}{beamerfontthemetubs}}
+\DeclareOptionBeamer{11pt}{\PassOptionsToPackage{11pt}{beamerfontthemetubs}}
+\DeclareOptionBeamer{10pt}{\PassOptionsToPackage{10pt}{beamerfontthemetubs}}
+\DeclareOptionBeamer{9pt}{\PassOptionsToPackage{9pt}{beamerfontthemetubs}}
 \DeclareOptionBeamer*{%
   \PassOptionsToPackage{\CurrentOption}{beamercolorthemetubs}%
 }
