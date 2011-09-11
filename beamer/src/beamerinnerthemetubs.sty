@@ -67,7 +67,11 @@
   \begin{beamercolorbox}[
       wd=\beamer@CDcommunicationwidth,ht=4\beamer@CDgaussunit]
       {structure}
-    \raggedleft\insertlogo
+    \vbox to 4\beamer@CDgaussunit{%
+    \vfill
+    \parbox{\beamer@CDcommunicationwidth}{%
+      \usebeamerfont{author}\raggedleft\insertlogo}
+    \vfill}
   \end{beamercolorbox}
   \vspace*{22\beamer@CDgaussunit}
 }
