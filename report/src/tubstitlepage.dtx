@@ -185,6 +185,7 @@
 % Redefine environment titlepage, provide additional optional arguments
 %    \begin{macrocode}
 \renewenvironment{titlepage}[1][]{%
+  \thispagestyle{empty}
   \setcounter{tubs@tp@yseg@cnt}{1}%
   \tubsboxsetup[#1]%TODO...
   \@layout@pre{pages=single,#1}%
