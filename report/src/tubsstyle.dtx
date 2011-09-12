@@ -188,7 +188,7 @@
 % unterschiedlich arbeiten.
 % Ist nur aktiv, wenn Option |twosided| benutzt wird.
 %    \begin{macrocode}
-\newcommand{\if@tubs@oddpage}[2]{%
+\providecommand{\if@tubs@oddpage}[2]{%
   \ifthenelse{\boolean{tubsstyle@twoside}}{%
     \ifthispageodd{#1}{#2}%
   }{#1}%
