@@ -1,0 +1,27 @@
+\documentclass{tubslttr2}
+
+\usepackage[ngerman]{babel}
+\usepackage[latin1]{inputenc}
+
+\LoadLetterOption{mustermann}
+
+\setkomavar{specialmail}{[Postvermerk]}
+\setkomavar{yourmail}{[1.1.2011]}
+\setkomavar{yourref}{[Ref]}
+\setkomavar{myref}{[Ref]}
+\setkomavar{mymail}{[1.1.2011]}
+
+\begin{document}
+
+\begin{letter}{%
+Name\\
+Straﬂe\\
+PLZ Ort
+}
+\setkomavar{subject}{[Betreff]}
+\opening{[Briefbeginn]}
+[Brieftext]
+\closing{[Gruﬂformel]}
+
+\end{letter}
+\end{document}

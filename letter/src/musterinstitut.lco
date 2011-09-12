@@ -1,7 +1,0 @@
-\setkomavar{frominstitute}{[Institut]}
-\setkomavar{fromstreet}{[Straﬂe]}
-\setkomavar{fromzipcode}{[PLZ]}
-\setkomavar{fromtown}{[Stadt]}
-\setkomavar{fromurl}{[URL]}
-
-\setkomavar{fromfaxdirect}{[Faxdurchwahl]}

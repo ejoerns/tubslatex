@@ -1,0 +1,9 @@
+\LoadLetterOption{musterinstitut}
+\setkomavar{fromdepartment}{[Abteilung]}
+
+\setkomavar{fromtitle}{[Titel]}
+\setkomavar{fromname}{[Name]}
+\setkomavar{signature}{[Name]}
+
+\setkomavar{fromphonedirect}{[Durchwahl]}
+\setkomavar{fromemail}{[Mailadresse]}
