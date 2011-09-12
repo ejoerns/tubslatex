@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,twoside]{tubsartcl}
+\documentclass[a4paper,11pt,bcor=10mm,marginright]{tubsartcl}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
@@ -9,29 +9,51 @@
 
 \begin{document}
 
-% \maketitle
-\begin{titlepage}
-  \showtubslogo
-  \begin{titlerow}[bgimage=infozentrum.jpg]{2}
-  \end{titlerow}
-  \begin{titlerow}[bgcolor=tuOrange]{4}
-    \Huge Die Informatik in Braunschweig\\[2em]
-    \huge Eine Geshichte von Nullen
-  \end{titlerow}
-  \begin{titlerow}[bgcolor=tuViolet]{2}
-    \textcolor{white}{\large Enrico Jörns}
-  \end{titlerow}
-\end{titlepage}
+\maketitle[plain]
+% \begin{titlepage}
+%   \showtubslogo
+%   \begin{titlerow}[bgimage=infozentrum.jpg]{2}
+%   \end{titlerow}
+%   \begin{titlerow}[bgcolor=tuOrange]{4}
+%     \Huge Die Informatik in Braunschweig\\[2em]
+%     \huge Eine Geshichte von Nullen
+%   \end{titlerow}
+%   \begin{titlerow}[bgcolor=tuViolet]{2}
+%     \textcolor{white}{\large Enrico Jörns}
+%   \end{titlerow}
+% \end{titlepage}
 
+% % \maketitle
+% \begin{titlepage}
+%   \showtubslogo
+%   \begin{titlerow}[bgimage=infozentrum.jpg]{2}
+%   \end{titlerow}
+%   \begin{titlerow}[bgcolor=tuOrange]{4}
+%     \Huge Die Informatik in Braunschweig\\[2em]
+%     \huge Eine Geshichte von Nullen
+%   \end{titlerow}
+%   \begin{titlerow}[bgcolor=tuViolet]{2}
+%     \textcolor{white}{\large Enrico Jörns}
+%   \end{titlerow}
+% \end{titlepage}
+
+% \pagestyle{scrheadings}
 
 \tableofcontents
 
-\pagestyle{scrheadings}
+\twocolumn
+
 
 \section{Ut purus elit}
 
-\lipsum[1]
+\begin{gaussbox}[frame=fbox]{4}{1}{3}{3}
+asdf
+\end{gaussbox}
 
+\lipsum[1]
+\begin{gaussbox}[frame=fbox]{1}{1}{3}{3}
+sdfgsdfgsdfgd
+\end{gaussbox}
 \section{Phasellus eu tellus sit amet}
 
 \lipsum[2-5]
