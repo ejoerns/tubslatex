@@ -209,6 +209,24 @@
 %    \end{key}
 %
 %
+% \begin{key}{tubsbox.sty}{bgcolor}
+%   Führt dazu, dass \emph{innerhalb} der gaussbox ein zusätzlicher Rand
+%   in Breite der Marginale eingefügt wird.
+%    \begin{macrocode}
+\define@choicekey{gaussbox}{margin}[\val\nr]{left,right,both}{%
+  \PackageError{tubsbox}{Option 'margin' is not yet supported}{}
+  \ifcase\nr\relax
+    %TODO
+  \or
+    %TODO
+  \or
+    %TODO
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%
 %    \begin{macro}{\tubs@gb@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
 % |\oddsidemargin|+1in+|\voffst| ist der Abstand vom linken Rand!
@@ -328,13 +346,13 @@
 % \end{tabularx}
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][bgcolor=none]{%
-\setkeys{tubsbox.sty}{#1}
+\setkeys*{tubsbox.sty}{#1}
 \tubs@gb@setorig
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
 % Berechne Positionen
-\ifnum#2=0
+\ifnum#2=1
 \setlength{\tubs@gb@leftmargin}{\tubspage@borderwidth}
 \setlength{\tubs@gb@rightmargin}{0mm}
 \setlength{\tubs@gb@leftsep}{0mm}
@@ -342,7 +360,9 @@
 \setlength{\tubs@gb@leftsep}{0.5\tubspage@columnsep}
 \fi
 %
-\setcounter{tubs@gb@lastelement}{#2}\addtocounter{tubs@gb@lastelement}{#4}
+\setcounter{tubs@gb@lastelement}{#2-1}
+\edef\tubs@gb@xpos{\thetubs@gb@lastelement}%TODO: etwas unschön...
+\addtocounter{tubs@gb@lastelement}{#4}
 \ifnum\value{tubs@gb@lastelement}=\tubspage@xsegments
   \setlength{\tubs@gb@rightmargin}{\tubspage@borderwidth}
   \setlength{\tubs@gb@rightsep}{0mm}
@@ -369,9 +389,9 @@
   \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}
 \else
   \setlength{\tubs@gb@bottommargin}{0mm}
-\fi
+\fi%
+\setkeys*{gaussbox}{#1}
 %
-\def\tubs@gb@xpos{#2}
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}
 \ifthenelse{\boolean{tubsbox@bottomsender}}{%
