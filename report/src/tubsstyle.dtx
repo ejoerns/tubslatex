@@ -305,7 +305,7 @@
 % entgegengesetzten Papierseite platziert.
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo[1][]{%
-  \setkeys{tubslogo}{left,plain=false,#1}
+  \setkeys{tubslogo}{left,plain=false,#1}%
   \iftubslogo@right%
     \tubs@tubslogo@calcpos{right}{\tmp@posx}{\tmp@posy}%
   \else%
