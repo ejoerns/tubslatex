@@ -172,7 +172,7 @@
 %    \begin{macrocode}
 \newenvironment{titlerow}[2][]{%
   \bgelement[#1]{#2}%
-  \edef\@tubs@arg{{0}{\thetubs@tp@yseg@cnt}{6}{#2}}%
+  \edef\@tubs@arg{{1}{\thetubs@tp@yseg@cnt}{6}{#2}}%
   \addtocounter{tubs@tp@yseg@cnt}{#2}%
   \expandafter\gaussbox\@tubs@arg%
 }{%
@@ -263,7 +263,7 @@
     \showtubslogo[left]
     \showlogo{\tubs@tp@logo}
   }
-}{\pagestyle{empty}\oldmaketitle}
+}{\thispagestyle{empty}\oldmaketitle}
 %</article>
 %<*report|book>
 \new@title@style{plain}{}{% NOTE: code from scrreprt.cls
