@@ -218,19 +218,19 @@
   % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
-      \textblockorigin{\oddsidemargin+1in+\hoffset}{%
-        2\tubspage@borderwidth}
+      \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
+        2\tubspage@borderwidth}%
     }{%
-      \textblockorigin{\evensidemargin+1in+\hoffset}{%
-        2\tubspage@borderwidth}
-    }
+      \textblockorigin{2\tubspage@borderwidth}{%
+        2\tubspage@borderwidth}%
+    }%
   }{% 
     \if@tubs@oddpage{%
-      \textblockorigin{\oddsidemargin+1in+\hoffset}{%
-        \tubspage@senderheight+\tubspage@borderwidth}
+      \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
+        \tubspage@senderheight+\tubspage@borderwidth}%
     }{%
-      \textblockorigin{\evensidemargin+1in+\hoffset}{%
-        \tubspage@senderheight+\tubspage@borderwidth}
+      \textblockorigin{2\tubspage@borderwidth}{%
+        \tubspage@senderheight+\tubspage@borderwidth}%
     }
   }
 }
@@ -270,7 +270,7 @@
 % Lege Rastermaße fest.
 %    \begin{macrocode}
 \setlength{\TPHorizModule}{%
-  (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}
+  (\paperwidth-4\tubspage@borderwidth-\tubspage@bcor)*\ratio{1mm}{\tubspage@xsegments mm}}
 \setlength{\TPVertModule}{%
   (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
 %    \end{macrocode}
