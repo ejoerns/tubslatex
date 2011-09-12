@@ -146,6 +146,19 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\if@tubs@oddpage}
+% \marg{odd cmd}\marg{even cmd}\par
+% Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
+% unterschiedlich arbeiten.
+% Ist nur aktiv, wenn Option |twosided| benutzt wird.
+%    \begin{macrocode}
+\newcommand{\if@tubs@oddpage}[2]{%
+  \ifthenelse{\boolean{tubsstyle@twoside}}{%
+    \ifthispageodd{#1}{#2}%
+  }{#1}%
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 % \begin{key}{tubsbox.sty}{sender}
 % Mögliche Werte: |bottom| oder |top|.
@@ -200,15 +213,25 @@
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
 % |\oddsidemargin|+1in+|\voffst| ist der Abstand vom linken Rand!
 %    \begin{macrocode}
-\newcommand\tubs@gb@setorig{%
+\providecommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
   % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
-    \textblockorigin{\oddsidemargin+1in+\hoffset}{%
-      2\tubspage@borderwidth}
+    \if@tubs@oddpage{%
+      \textblockorigin{\oddsidemargin+1in+\hoffset}{%
+        2\tubspage@borderwidth}
+    }{%
+      \textblockorigin{\evensidemargin+1in+\hoffset}{%
+        2\tubspage@borderwidth}
+    }
   }{% 
-    \textblockorigin{\oddsidemargin+1in+\hoffset}{%
-      \tubspage@senderheight+\tubspage@borderwidth}
+    \if@tubs@oddpage{%
+      \textblockorigin{\oddsidemargin+1in+\hoffset}{%
+        \tubspage@senderheight+\tubspage@borderwidth}
+    }{%
+      \textblockorigin{\evensidemargin+1in+\hoffset}{%
+        \tubspage@senderheight+\tubspage@borderwidth}
+    }
   }
 }
 %    \end{macrocode}
@@ -224,7 +247,6 @@
 %    \begin{macrocode}
 \newcommand{\tubsboxsetup}[1][]{%
   \setkeys{tubsbox.sty}{#1}
-  \tubs@gb@setorig
 }
 \let\gaussboxsetup=\tubsboxsetup%
 \let\scifiboxsetup=\tubsboxsetup%
@@ -307,6 +329,7 @@
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][bgcolor=none]{%
 \setkeys{tubsbox.sty}{#1}
+\tubs@gb@setorig
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
