@@ -110,7 +110,7 @@
 \LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}[2011/06/16]
 
 %Anpassung des Datumsformats
-\PassOptionsToPackage{ngerman, num}{isodate}
+\PassOptionsToPackage{ngerman, orig}{isodate}
 \RequirePackage{isodate}
 \daymonthsepgerman{}
 \monthyearsepgerman{}{}
@@ -129,6 +129,10 @@
 %Vergrößerung der Rückaddresszeile (da zweizeilig)
 \@setplength{backaddrheight}{21pt}
 
+% Abstand des Anschriftfeldes von der linken Papierkante
+\@setplength{toaddrhpos}{2.45cm} % 1.75 + 0.7
+
+
 %Positionierung des Locationfeldes (Informationen auf der rechten Seite)
 \@setplength{lochpos}{-15.5cm}
 \@setplength{locvpos}{4.7cm}
@@ -136,7 +140,7 @@
 \@setplength{locheight}{352pt}
 
 %Positionierung der Geschäftszeile, bzw. da nicht vorhanden des Briefanfangs
-\@setplength{refhpos}{2.4cm}
+\@setplength{refhpos}{2.45cm} % 1.75 + 0.7
 \@setplength{refwidth}{12.5cm}
 
 %Anpassung der Textbreite
@@ -163,7 +167,7 @@
 
 %Setzen der Schriftattribute
 \setkomafont{addressee}{\sffamily}
-\setkomafont{subject}{\sffamily}
+\setkomafont{subject}{\sffamily\bfseries}
 \setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
 \setkomafont{foldmark}{\color{tuRed}}
@@ -176,10 +180,12 @@
 \setkomavar{location}{%
 \begin{flushleft}
 %Wenn eine Durchwahl angegeben wurde, wird diese zusammengesetzt, ansonsten wird das komplette phone/fax Feld genutzt
-\ifkomavarempty{fromphonedirect}{\relax}{\setkomavar{fromphone}{+49\,531\,391-\usekomavar{fromphonedirect}}}%
-\ifkomavarempty{fromfaxdirect}{\relax}{\setkomavar{fromfax}{+49\,531\,391-\usekomavar{fromfaxdirect}}}%
+\ifkomavarempty{fromphonedirect}{\relax}{%
+  \setkomavar{fromphone}{+49\,(0)\,531\,391-\usekomavar{fromphonedirect}}}%
+\ifkomavarempty{fromfaxdirect}{\relax}{%
+  \setkomavar{fromfax}{+49\,(0)\,531\,391-\usekomavar{fromfaxdirect}}}%
 \footnotesize\sffamily
-Technische Universität\\Braunschweig\\
+Technische Universit\"at\\Braunschweig\\
 \textbf{\usekomavar{frominstitute}}\\
 \ifkomavarempty{fromdepartment}
 {\relax}
@@ -221,7 +227,7 @@ Datum: \usekomavar{date}\\
 \removereffields
 
 \setkomavar{backaddress}{\makebox[0pt][l]{\begin{tabular}[t]{@{}l@{}}
-Technische Universität Braunschweig | \usekomavar{frominstitute}\\
+Technische Universit\"at Braunschweig | \usekomavar{frominstitute}\\
 \usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland
 \end{tabular}}}
 
