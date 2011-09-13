@@ -1,13 +1,13 @@
 \setkomavar{fromlogo}{\includegraphics[height=0.9\tubslogoHeight]{institut}}
 
-\setkomavar{frominstitute}{[Institut]}
+\setkomavar{frominstitute}{[Institutsname]}
 
 \setkomavar{fromstreet}{[Straße]}
 \setkomavar{fromzipcode}{[PLZ]}
 \setkomavar{fromtown}{[Stadt]}
 
 \setkomavar{fromfaxdirect}{[Faxdurchwahl]}
-\setkomavar{fromurl}{[URL]}
+\setkomavar{fromurl}{[Internetadresse Institut]}
 
 \setkomavar{frombank}{[Bankname]\newline[Kontonummer~000\,000\,000]\newline[BLZ~000\,000\,00]}
 \setkomavar{fromIBAN}{DE00~00000000~0000000000}

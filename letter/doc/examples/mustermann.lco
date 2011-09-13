@@ -6,4 +6,9 @@
 \setkomavar{signature}{[Name]}
 
 \setkomavar{fromphonedirect}{[Durchwahl]}
-\setkomavar{fromemail}{[Mailadresse]}
+\setkomavar{fromemail}{[E-Mail-Adresse]}
+
+\setkomavar{yourref}{[xxx]}
+\setkomavar{yourmail}{[Datum]}
+\setkomavar{myref}{[xxx]}
+\setkomavar{mymail}{[Datum]}
