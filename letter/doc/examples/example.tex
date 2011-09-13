@@ -1,4 +1,4 @@
-\documentclass{tubslttr2}
+\documentclass[12pt]{tubslttr2}
 
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
@@ -8,10 +8,10 @@
 \LoadLetterOption{mustermann}
 
 % \setkomavar{specialmail}{[Postvermerk]}
-% \setkomavar{yourmail}{[1.1.2011]}
-% \setkomavar{yourref}{[Ref]}
-% \setkomavar{myref}{[Ref]}
-% \setkomavar{mymail}{[1.1.2011]}
+% \setkomavar{yourref}{[xxx]}
+% \setkomavar{yourmail}{[Datum]}
+% \setkomavar{myref}{[xxx]}
+% \setkomavar{mymail}{[Datum]}
 
 \begin{document}
 
@@ -21,9 +21,21 @@ Straße\\
 PLZ Ort
 }
 \setkomavar{subject}{[Betreff]}
-\opening{[Briefbeginn]}
-[Brieftext]
-\closing{[Grußformel]}
+\opening{Sehr geehrte Damen und Herren,}
+
+\lipsum[1]
+
+\lipsum[2]
+
+\newgeometry{textwidth=16cm}
+
+\lipsum[5]
+
+% \restoregeometry
+
+\lipsum[6-8]
+
+\closing{Mit freundlichen Grüßen}
 
 \end{letter}
 \end{document}

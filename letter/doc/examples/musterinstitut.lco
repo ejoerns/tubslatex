@@ -1,4 +1,5 @@
 \setkomavar{fromlogo}{\includegraphics[height=0.9\tubslogoHeight]{institut}}
+%\setkomavar{fromlogo}{Institut für Unkreativität\\ und Schreibschwäche}
 
 \setkomavar{frominstitute}{[Institutsname]}
 
