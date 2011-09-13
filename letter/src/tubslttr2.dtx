@@ -100,14 +100,33 @@
 
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
+%    \end{macrocode}
+%
+%    \begin{key}{}{mono}
+%    \begin{macrocode}
+\DeclareOptionX{mono}{%
+  \PassOptionsToPackage{mono}{tubslogo}
+  \PassOptionsToPackage{mono}{tubscolors}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{macrocode}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{scrlttr2}}
 \ProcessOptionsX
+%    \end{macrocode}
 
 %pagenumber=botleft Seitennummern werden nach unten links gesetzt
 %refline=nodate In der Geschäftszeile erscheint kein Datum
 % NOTE: the option value 'nodate' for 'refline' is supported only in
 %       newer versions of KOMA-Skript.
-\LoadClass[pagenumber=botleft,refline=nodate]{scrlttr2}[2011/06/16]
+%    \begin{macrocode}
+\LoadClass[%
+  BCOR=0cm,
+  pagenumber=botleft,%
+  refline=nodate,%
+  backaddress=plain%  Keine Linie unterhalb Rücksendeadresse
+]{scrlttr2}[2011/06/16]
 
 %Anpassung des Datumsformats
 \PassOptionsToPackage{ngerman, orig}{isodate}
@@ -115,11 +134,27 @@
 \daymonthsepgerman{}
 \monthyearsepgerman{}{}
 
+% Testing for flowfram...
+% \providecommand{\tableofcontents}{}
+% \RequirePackage{flowfram}
+% \newflowframe[none]{\textwidth}{\textwidth}{0pt}{0pt}[first]%
+% \newflowframe[none]{1.5\textwidth}{\textwidth}{0pt}{0pt}[other]%
+
+
 %Die Basispakete des Corporate Design werden geladen
 \RequirePackage{nexus}
 \RequirePackage{tubscolors}
 \PassOptionsToPackage{a4paper, relscale=0.9}{tubslogo}
 \RequirePackage{tubslogo}
+
+\PassOptionsToPackage{left=2.45cm,top=3.3cm,headsep=1cm,headheight=1.2cm}{geometry}
+\RequirePackage{geometry}
+%Anpassung der Textbreite
+\setlength{\textwidth}{12.2cm}
+%Korrektur, um Seitenrad der CD-Vorlage zu treffen
+% \addtolength{\oddsidemargin}{-0.2cm}
+% \setlength{\headheight}{1.5cm}
+
 
 %Positionierung des Seitenkopfs (Logo und rote Linie)
 \@setplength{firstheadhpos}{1.75cm}
@@ -130,21 +165,24 @@
 \@setplength{backaddrheight}{21pt}
 
 % Abstand des Anschriftfeldes von der linken Papierkante
-\@setplength{toaddrhpos}{2.45cm} % 1.75 + 0.7
+\@setplength{toaddrhpos}{\dimexpr \oddsidemargin+1in\relax}
+% \@setplength{toaddrhpos}{2.45cm} % 1.75 + 0.7
+\@setplength{toaddrvpos}{4.8cm} % 1.75 + 0.7
 
 
 %Positionierung des Locationfeldes (Informationen auf der rechten Seite)
 \@setplength{lochpos}{-15.5cm}
 \@setplength{locvpos}{4.7cm}
-\@setplength{locwidth}{5.25cm}
-\@setplength{locheight}{352pt}
+\@setplength{locwidth}{5.2cm}% TODO
+\@setplength{locheight}{14.8cm}
 
 %Positionierung der Geschäftszeile, bzw. da nicht vorhanden des Briefanfangs
-\@setplength{refhpos}{2.45cm} % 1.75 + 0.7
-\@setplength{refwidth}{12.5cm}
+% \@setplength{refwidth}{12.0cm}
+% \@setplength{refhpos}{5.4cm} % 1.75 + 0.7
 
-%Anpassung der Textbreite
-\setlength{\textwidth}{12.5cm}
+
+% Abstand der Falzmakierungen vom Rand
+\@setplength{foldmarkhpos}{0.8cm}
 
 %Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
 %%Institutsdaten
@@ -173,8 +211,12 @@
 \setkomafont{foldmark}{\color{tuRed}}
 \AtBeginLetter{\sffamily}
 
+% Debugging output...
+% \LoadLetterOption{visualize}
+% \showfields{head,address,location,refline}
+
 %Siegelband und rote Linie im Kopf des Briefs
-\setkomavar{firsthead}{\color{tuRed}\rule[-1.75cm]{18.5cm}{1pt}\\[-1.75cm]\tubslogo\\[-1.3\tubslogoHeight]\parbox{0cm}{}\hfill\usekomavar{fromlogo}}
+\setkomavar{firsthead}{\color{tuRed}\rule[-0.75\tubslogoHeight]{18.5cm}{1.2pt}\\[-0.75\tubslogoHeight]\tubslogo\\[-1.4\tubslogoHeight]\parbox[b][2cm]{\textwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}}
 
 %Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
 \setkomavar{location}{%
@@ -187,11 +229,11 @@
 \footnotesize\sffamily
 Technische Universit\"at\\Braunschweig\\
 \textbf{\usekomavar{frominstitute}}\\
-\ifkomavarempty{fromdepartment}
-{\relax}
-{
-~\\
-\usekomavar{fromdepartment}\\
+\ifkomavarempty{fromdepartment}{%
+  \relax%
+}{%
+  ~\\%
+  \usekomavar{fromdepartment}\\%
 }
 ~\\
 \usekomavar{fromstreet}\\
@@ -205,7 +247,7 @@ Deutschland\\
 \usekomavar{fromfax}\\
 \usekomavar{fromemail}\\
 \usekomavar{fromurl}\\
-~\\
+~\\~\\
 Datum: \usekomavar{date}\\
 ~\\
 \ifkomavarempty{yourref}{\relax}{Ihr Zeichen: \usekomavar{yourref}\\}
@@ -226,17 +268,18 @@ Datum: \usekomavar{date}\\
 %Alle Felder werden aus der Geschäfszeile entfernt, damit diese in jedem Fall leer bleibt.
 \removereffields
 
-\setkomavar{backaddress}{\makebox[0pt][l]{\begin{tabular}[t]{@{}l@{}}
-Technische Universit\"at Braunschweig | \usekomavar{frominstitute}\\
-\usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland
-\end{tabular}}}
+\setkomavar{backaddress}{%
+  \parbox{12.2cm}{%
+    Technische Universit\"at Braunschweig | \usekomavar{frominstitute}\\
+    \usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland}
+}
 
-\setkomavar{nexthead}{
-\begin{tabular}{@{}l@{}}
-Technische Universität Braunschweig\\
-\usekomavar{frominstitute}\\
-\ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
-\end{tabular}
+\setkomavar{nexthead}{\footnotesize\sffamily%
+  \vbox to\headheight{\parbox{12.2cm}{\usekomafont{fromaddress}%
+    Technische Universit\"at Braunschweig\\
+    {\bfseries\usekomavar{frominstitute}}\\
+    \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
+  }\vfill}
 }
 
 \renewcommand*{\raggedsignature}{\raggedright}
