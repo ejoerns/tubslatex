@@ -115,12 +115,23 @@
 %    \begin{key}{}{arial}
 %    \begin{macrocode}
 \DeclareOptionX{arial}{%
+  \PassOptionsToClass{fontsize=10pt}{scrlttr2}
   \arialtrue
 }
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{nexus}
 %    \begin{macrocode}
+\DeclareOptionX{nexus}{%
+  \PassOptionsToClass{fontsize=11pt}{scrlttr2}
+  \arialfalse
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{macrocode}
+\ExecuteOptionsX{nexus}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{scrlttr2}}
 \ProcessOptionsX
 %    \end{macrocode}
@@ -206,6 +217,9 @@
 \@setplength{locwidth}{5.2cm}% TODO
 \@setplength{locheight}{14.8cm}
 
+% Platziere so, dass Betreff noch oberhalb der ersten Falzmarke steht
+\@setplength{refvpos}{9.5cm}
+
 %Positionierung der Geschäftszeile, bzw. da nicht vorhanden des Briefanfangs
 % \@setplength{refwidth}{12.0cm}
 % \@setplength{refhpos}{5.4cm} % 1.75 + 0.7
@@ -237,15 +251,29 @@
 \setkomafont{addressee}{\sffamily}
 \setkomafont{subject}{\sffamily\bfseries}
 \setkomafont{pageheadfoot}{\sffamily}
-\setkomafont{backaddress}{\bfseries\sffamily\tiny}
+\setkomafont{backaddress}{\bfseries\sffamily}
 \setkomafont{foldmark}{\color{tuRed}}
 \AtBeginLetter{\sffamily}
 
 \setlength{\parindent}{0mm}
 \setlength{\parskip}{\medskipamount}
 
-% \RequirePackage{setspace}
-% \onehalfspacing
+% vertikaler Abstand zwischen Gruß und Signatur
+\@setplength{sigbeforevskip}{1.4cm}
+
+\RequirePackage{setspace}
+\onehalfspacing
+% a bit less the onehalfspacing.. (quick hack)
+\newcommand{\locationspacing}{%
+  \setstretch{1.15}%  default
+  \ifcase \@ptsize \relax % 10pt
+    \setstretch {1.15}%
+  \or % 11pt
+    \setstretch {1.113}%
+  \or % 12pt
+    \setstretch {1.141}%
+  \fi
+}
 
 % Debugging output...
 % \LoadLetterOption{visualize}
@@ -256,13 +284,13 @@
 
 %Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
 \setkomavar{location}{%
-\begin{flushleft}
+\begin{flushleft}\locationspacing
 %Wenn eine Durchwahl angegeben wurde, wird diese zusammengesetzt, ansonsten wird das komplette phone/fax Feld genutzt
 \ifkomavarempty{fromphonedirect}{\relax}{%
   \setkomavar{fromphone}{Tel. +49\,(0)\,531\,391-\usekomavar{fromphonedirect}}}%
 \ifkomavarempty{fromfaxdirect}{\relax}{%
   \setkomavar{fromfax}{Fax +49\,(0)\,531\,391-\usekomavar{fromfaxdirect}}}%
-\scriptsize\sffamily\baselineskip\bigskipamount
+\footnotesize\sffamily
 Technische Universit\"at\\Braunschweig\\
 \textbf{\usekomavar{frominstitute}}\\
 \ifkomavarempty{fromdepartment}{%
@@ -285,8 +313,8 @@ Deutschland\\
 \usekomavar{fromurl}\\
 ~\\~\\
 Datum: \usekomavar{date}\\
-~\\~\\
-\ifkomavarempty{yourref}{\relax}{Ihr Zeichen: \usekomavar{yourref}\\}
+~\\%TODO: better control for placement of newlines if opts not used
+\ifkomavarempty{yourref}{\relax}{~\\Ihr Zeichen: \usekomavar{yourref}\\}
 \ifkomavarempty{yourmail}{\relax}{Ihre Nachricht vom: \usekomavar{yourmail}\\}
 \ifkomavarempty{myref}{\relax}{Unser Zeichen: \usekomavar{myref}\\}
 \ifkomavarempty{mymail}{\relax}{Unsere Nachricht vom: \usekomavar{mymail}\\}
