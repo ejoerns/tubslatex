@@ -1,5 +1,5 @@
 \LoadLetterOption{musterinstitut}
-\setkomavar{fromdepartment}{[Abteilung]}
+\setkomavar{fromdepartment}{[ggf. Abteilung oder andere Untereinheit des Instituts]}
 
 \setkomavar{fromtitle}{[Titel]}
 \setkomavar{fromname}{[Name]}

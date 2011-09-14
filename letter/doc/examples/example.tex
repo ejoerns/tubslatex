@@ -1,17 +1,24 @@
-\documentclass[12pt]{tubslttr2}
+\documentclass[%
+  arial,%
+% mono,%
+  10pt%
+]{tubslttr2}
 
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
+% \usepackage{uarial}
+% \usepackage[T1]{fontenc}
+\sffamily
 
 \usepackage{lipsum}
 
 \LoadLetterOption{mustermann}
 
 % \setkomavar{specialmail}{[Postvermerk]}
-% \setkomavar{yourref}{[xxx]}
-% \setkomavar{yourmail}{[Datum]}
-% \setkomavar{myref}{[xxx]}
-% \setkomavar{mymail}{[Datum]}
+\setkomavar{yourref}{[xxx]}
+\setkomavar{yourmail}{[Datum]}
+\setkomavar{myref}{[xxx]}
+\setkomavar{mymail}{[Datum]}
 
 \begin{document}
 
@@ -23,11 +30,13 @@ PLZ Ort
 \setkomavar{subject}{[Betreff]}
 \opening{Sehr geehrte Damen und Herren,}
 
+
 \lipsum[1]
 
 \lipsum[2]
 
-\newgeometry{textwidth=16cm}
+\clearpage
+% \newgeometry{textwidth=16cm}
 
 \lipsum[5]
 
