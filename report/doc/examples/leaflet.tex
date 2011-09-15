@@ -1,0 +1,152 @@
+\documentclass[
+notumble,
+%%nofoldmark,
+%%dvipdfm,
+%%portrait,
+%%titlepage,
+%%nocombine,
+%%a3paper,
+%%debug,
+%%nospecialtricks,
+%%draft,
+langpaper]{tubsleaflet}
+
+\usepackage{lipsum}
+
+%TODO
+\parindent0mm
+\parskip\bigskipamount
+
+%\setcounter{secnumdepth}{1}
+
+\renewcommand*\foldmarkrule{.3mm}
+\renewcommand*\foldmarklength{5mm}
+
+\usepackage[utf8]{inputenc}
+\usepackage[LY1]{fontenc}
+\makeatletter
+\newif\iftubsLL@simplelayout
+% % \tubsLL@simplelayouttrue
+\iftubsLL@simplelayout
+\AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
+\AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
+\fi
+\makeatother
+
+\usepackage{shortvrb}
+\MakeShortVerb{\|}
+\usepackage{url}
+\usepackage{graphicx}
+% \usepackage[dvipsnames,usenames]{color}
+\definecolor{LIGHTGRAY}{gray}{.9}
+
+%%%%\renewcommand{\descfont}{\normalfont}
+\newcommand\Lpack[1]{\textsf{#1}}
+\newcommand\Lclass[1]{\textsf{#1}}
+\newcommand\Lopt[1]{\texttt{#1}}
+\newcommand\Lprog[1]{\textit{#1}}
+
+\newcommand*\defaultmarker{\textsuperscript\textasteriskcentered}
+
+\begin{document}
+
+
+\begin{gausspage}
+  \showtubslogo
+  \showlogo{Institutslogo einfügen oder Institutsname/zentrale Einrichtung als Text eingeben}
+  \begin{segment}[bgcolor=tuGray20]{3}
+    
+  \end{segment}
+  \begin{segment}[bgcolor=tuBlue60]{1}
+    \fontsize{28pt}{36}\selectfont\bfseries
+    \textcolor{tuWhite}{Headline 28pt}
+  \end{segment}
+  \begin{segment}[bgcolor=tuBlue]{4}
+    \usecdfont{subheadline}\bfseries
+    \textcolor{tuWhite}{Subheadline 16 pt dur Wolche to illemit drusi}
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlue60]{8}
+    \fontsize{28pt}{36}\selectfont\bfseries\raggedright
+    Headline 28pt perdi Utilira to regau socht\bigskip
+    
+    \usecdfont{copytext}
+    Copy Text (9 pt) Quol damnarin Tropi zu klenne perdi Utilira regau socht mol 
+    sunt. Her mitant dur Wolche to illemit drusi puzen, um brackl jaun utten. 
+    \vspace*{3.5cm}
+    
+    \fboxsep0mm\colorbox{tuGray20}{\parbox[b][4.5cm]{\textwidth}{~}}\\[2ex]
+    \usecdfont{caption} Bildunterschrift 7 pt Kisuali antux e weimi Kameran Quol 
+    damnarin Tropi zu klenne perdi Utilira regau socht mol sunt. 
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlue40]{8}
+%     \usecdfont{copytext}
+    Copy Text 9 pt Kisuali antux e weimi Kameran
+    Quol damnarin Tropi zu klenne perdi Utilira regau socht mol sunt.
+    Her mitant dur Wolche to illemit drusi puzen, um brackl jaun utten.\\[3ex]
+
+    {\bfseries Copy Headline 9 pt fett}\\
+    Rumber olst gumme Placke on ofen heiritate us.
+    Janera als Gastuv lost ette suber, brastet Alstra geratet.
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlue40]{2}
+    \usecdfont{headlinesmall} Headline 24pt um brackl jaun\bigskip
+    
+    \usecdfont{intro} Intro Text (13 pt) Quol damnarin Tropi zu klenne perdi 
+      Utilira regau socht mol sunt.
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray20]{2}
+  \end{segment}
+  \begin{segment}[bgcolor=tuBlue60]{4}
+    \fontsize{8pt}{10}\selectfont\itshape
+    Quellenangabe 8 pt kursiv Kisuali antux e weimi Kameran Quol damnarin Tropi zu klenne perdi Utilira regau socht mol sunt.
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlue60]{3}
+    {\usecdfont{subheadline}\bfseries Subheadline 16pt}\medskip
+    
+    \usecdfont{intro}
+    Intro 13 pt die Farbkombinationen finden Sie als Folien-Farbskalen hinterlegt. Die Textformate übertragen Sie mit dem Format-Pinsel.
+  \end{segment}
+  \begin{segment}[bgcolor=tuBlue40]{5}
+    \begin{itemize}
+      \item Donec vehicula augue eu neque. Pellentesque habitant morbi tristique 
+        senectus et netus et malesuada fames ac turpis egestas. Mauris ut
+        leo. Cras viverra metus rhoncus sem.
+
+      \item Her mitant dur Wolche to illemit drusi puzen, um brackl jaun utten.
+    \end{itemize}
+
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \showtubslogo[right,plain]
+  \begin{segment}[bgcolor=tuBlue60]{4}
+    \usecdfont{institute}
+    Technische Universität Braunschweig\\
+    Istitut XYZ\\
+    Musterstr. 4/5\\
+    38106 Braunschweig\\
+    Tel. +49 531 391-0000\\
+    Fax. +49 531 391-0000\\
+    institut@tu-braunschweig.de\\
+    www.tu-braunschweig.de
+  \end{segment}
+  \begin{segment}[bgcolor=tuBlue]{4}
+  \end{segment}
+\end{gausspage}
+
+
+\end{document}
+%</manual>

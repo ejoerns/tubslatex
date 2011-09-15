@@ -1,7 +1,9 @@
 pdflatex article1.tex
+pdflatex article_landscape.tex
 pdflatex poster1.tex
 pdflatex poster2.tex
 pdflatex poster3.tex
 pdflatex module_example.tex
 pdflatex titlestyle_image.tex
 pdflatex titlestyle_imagetext.tex
+pdflatex leaflet.tex
