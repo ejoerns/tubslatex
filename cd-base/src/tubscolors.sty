@@ -11,6 +11,7 @@
 \newboolean{rgbbeamer}\setboolean{rgbbeamer}{false}
 \newboolean{cmyk}\setboolean{cmyk}{false}
 \def\secondaryColorName{undefined}
+\newif\ifmono\monofalse
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color model
 % 'rgb' is the default color scheme
@@ -27,6 +28,8 @@
 \DeclareOption{Green}{\def\secondaryColorName{Green}}
 \DeclareOption{Blue}{\def\secondaryColorName{Blue}}
 \DeclareOption{Violet}{\def\secondaryColorName{Violet}}
+% mono
+\DeclareOption{mono}{\monotrue}
 %
 \DeclareOption*{%
   \PackageWarning{tubscolors}{Unknown option `\CurrentOption'}%
@@ -39,7 +42,11 @@
 \ifthenelse{\boolean{cmyk}}{%
 %%%%%%%%%%%%%%%%%%%% cmyk %%%%%%%%%%%%%%%%%%%%
 %%%%%% Primary colors %%%%%%
-\definecolor{tuRed}{cmyk}{0.1,1.0,0.8,0.0}
+\ifmono
+  \definecolor{tuRed}{cmyk}{0,0,0,1}
+\else
+  \definecolor{tuRed}{cmyk}{0.1,1.0,0.8,0.0}
+\fi
 \definecolor{tuBlack}{cmyk}{0.0,0.0,0.0,1.0}
 \definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
 %%% Grey
@@ -131,7 +138,11 @@
 %%%%%%%%%%%%%%%%%%%% rgbbeamer %%%%%%%%%%%%%%%%%%%%
 %%% Screen colors from the ppt-template
 %%%%%% Primary colors %%%%%%
-\definecolor{tuRed}{RGB}{190,30,60}
+\ifmono
+  \definecolor{tuRed}{RGB}{8,8,8}
+\else
+  \definecolor{tuRed}{RGB}{190,30,60}
+\fi
 \definecolor{tuBlack}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
 %%% Grey
@@ -220,7 +231,11 @@
 }{% standard rgb
 %%%%%%%%%%%%%%%%%%%% rgb %%%%%%%%%%%%%%%%%%%%
 %%%%%% Primary colors %%%%%%
-\definecolor{tuRed}{RGB}{190,30,60}
+\ifmono
+  \definecolor{tuRed}{RGB}{0,0,0}
+\else
+  \definecolor{tuRed}{RGB}{190,30,60}
+\fi
 \definecolor{tuBlack}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
 %%% Grey
