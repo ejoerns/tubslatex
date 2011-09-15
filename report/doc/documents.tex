@@ -1,0 +1,277 @@
+\chapter{Dokumente}
+
+Einfache Textdokumente können mit den Klassen \newdocumentclass{tubsartcl},
+\newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook} erstellt werden.
+
+% \section{Bindekorrektur und Marginalen}
+
+Da Dokumente normalerweise gedruckt werden und ggf. auch gebunden, werden
+sie standardmäßig mit einer kleinen Bindekorrektur gesetzt, sodass das
+Logo beim Drucken oder Abheften nicht abgeschnitten wird.
+Diese Bindekorrektur kann mittels der Paketoption \texttt{bcor} angepasst werden.
+Mit \texttt{bcor=0mm} wird sie beispielsweise deaktiviert.
+
+
+
+\section{Titelseite}
+
+Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
+werden; entweder mit Hilfe des Befehls \lstinline{\maketitle} oder mit
+der Umgebung \lstinline{titlepage}. Beide Varianten werden von tubslatex
+unterstützt und leicht modifiziert.
+
+\begin{Declaration}
+  \Macro{maketitle}\OParameter{style}
+\end{Declaration}
+
+Die einfache Verwendung von \lstinline{\maketitle} erzeugt eine Titelseite
+mit dem TU-Logo und einer roten Trennlinie zwischen Absender- und
+Kommunikationsbereich.
+
+Mit Hilfe des optionalen Arguments \PName{style} kann die Darstellung
+der Titelseite geändert werden, indem aus einer Reihe vordefinierter Styles
+ausgewählt wird.\bigskip
+
+Neben den standardmäßig definierten Elementen für Haupttitelseiten werden
+in \tubslatex noch ein paar zusätzliche definiert.
+
+\begin{Declaration}
+  \Macro{logo}\Parameter{logo}\\
+  \Macro{titlepicture}\Parameter{file}\\
+  \Macro{titleabstract}\Parameter{text}
+\end{Declaration}
+
+\Macro{logo} dient zur Darstellung eines zusätzlichen Absenders als Schrift
+oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
+TU-Logo gegenüberliegenden Seite dargestellt.
+Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
+Verwendung eines entsprechenden Styles auf der Titelseite dargestellt werden.
+\Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden
+Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{titlepage}}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{titlepage}
+\end{Declaration}
+
+Mit der \Environment{titlepage}-Umgebung können, wie von den Standardklassen
+gewohnt, Titelseiten definiert werden.
+% TODO: \showtubslogo  etc.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{titlerow}}%
+    \OParameter{options}%
+    \Parameter{gaussheight}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{titlerow}
+\end{Declaration}
+
+Die Umgebung \Environment{titlerow} erlaubt es dabei, die Titelelemente im 
+Gaußraster anzulegen. Der Parameter \PName{gaussheight} gibt dabei
+die Höhe des jeweiligen Elements in Segmenten an. Die Position der Elemente
+ergibt sich aus der Reihenfolge der Definition.
+Mit dem optionalen Parameter \PName{options} können Einstellung wie die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
+
+\subsection{Vordefiniert Titel-Styles}
+
+Es sind 3 einfache Styles vordefiniert.
+
+\begin{center}
+  \fboxsep0mm
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/article1.pdf}}
+    [default]
+  \end{minipage}%
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/titlestyle_image.pdf}}
+    [image]
+  \end{minipage}%
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/titlestyle_imagetext.pdf}}
+    [imagetext]
+  \end{minipage}
+
+\end{center}
+
+\section{Kopf-/ Fußzeile}
+
+Standardmäßig wird die Fußzeile komplett leer gelassen und die Kopfzeile
+wird mit Seitennummer rechts und Kapitelname links gesetzt. Bei zweiseitigem
+Layout gilt dies für die ungeraden Seiten, gerade Seiten werden entsprechend
+mit Seitennummer links und Kapitelname rechts gesetzt.
+
+\begin{Declaration}
+  \Macro{ihead}\Parameter{innen}\\
+  \Macro{ohead}\Parameter{außen}
+\end{Declaration}
+
+Bei Bedarf können die Kopfzeilen individuell angepasst werden.
+Dies geschieht mit den Befehlen \Macro{ihead} und \Macro{ohead}, welche
+auf den gleichnamigen Kommandos aus dem Koma-Skript aufbauen und für eine
+korrekte vertikale Positionierung sorgen.
+
+\begin{Declaration}
+  \Macro{headsepline}
+\end{Declaration}
+
+
+Die standardmäßig gesetzten kurzen Linien am jeweils oberen äußeren Ende des
+Kopfbereiches sind im Makro \Macro{headsepline} definiert.
+Dies kann bei Bedarf überschrieben werden.
+
+
+\section{Seitenlayout}
+
+Eine Seite im Corporate Design unterteilt sich grundlegend in 2 Bereiche.
+Der Absenderbereich und der Kommunikationsbereich. Der Absenderbereich wird zur
+Darstellung des TU-Siegelbandlogos und des Logos eines speziellen Instituts
+oder einer Abteilung verwendet. Im Textteil dient er teilweise als Bereich für
+Inhalte einer Kopf-/Fußzeile.
+
+Der Absenderbereich kann entweder am Anfang oder am Ende der Seite platziert
+werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
+größten Segment am Absenderbereich.
+
+\begin{Declaration}
+  \Option{a0paper}\\
+  \Option{a1paper}\\
+  \Option{a2paper}\\
+  \Option{a3paper}\\
+  \Option{a4paper}\\
+  \Option{a5paper}\\
+  \Option{a6paper}
+\end{Declaration}
+
+Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
+0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
+
+\begin{Declaration}
+  \Option{landscape}
+\end{Declaration}
+
+Schaltet das Dokument in Querformat-Darstellung.
+
+\begin{minipage}{0.45\textwidth}\sffamily\centering
+  {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
+  Dokument im Querformat
+\end{minipage}
+
+
+\begin{important}
+  Im Querformat hat das Gaußraster eine abweichende
+  Segmentanzahl. Für alle gängigen Formate sind im Querformat \emph{6 Segmente}
+  definiert. Daher lösen Layouts, die für hochformatige Dokumente
+  geschrieben wurden, im Querformat einen Fehler aus.
+\end{important}
+
+
+\begin{Declaration}
+  \KOption{sender}\PName{Position}
+\end{Declaration}
+
+Mit der Option \Option{sender} kann die Position des Absenderbereiches
+festgelegt werden. Mit der Einstellung \OptionValue{sender}{top} wird
+der Absenderbereich am oberen Seitenende dargestellt. Dies ist auch die
+Standardeinstellung. Wählt man dagegen \OptionValue{sender}{bottom}, so
+wird der Absenderbereich am unteren Ende der Seite platziert
+
+\begin{important}
+  Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
+  Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
+  an den Absenderbereich anschließt und alle folgende von absteigender Höhe sind.
+\end{important}
+
+
+
+\begin{Declaration}
+  \KOption{bcor}\PName{Wert}
+\end{Declaration}
+
+Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
+Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
+ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
+
+Sinnvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
+wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
+Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
+keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
+Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
+mit \OptionValue{bcor}{0mm} möglich.
+
+\begin{Declaration}
+  \Option{twoside}
+\end{Declaration}
+
+Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
+vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
+umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
+auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
+auf definierte Ränder (Bindungskorrektur, Marginale).
+
+
+\begin{Declaration}
+  \Option{marginleft}\\
+  \Option{marginright}
+\end{Declaration}
+
+Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
+\PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
+bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
+einem Element im Spaltenraster entspricht.
+
+
+\section{Schrift}
+
+Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
+gesetzt.
+Diese wird standardmäßig bei allen Dokumenten geladen. Auf eine explizite
+Angabe der Schriftgröße in den Dokumentenoptionen sollte nach Möglichkeit
+verzichtet werden, da für die jeweiligen Papierformate spezielle
+Schriftgrößen vordefiniert sind und geladen werden.
+Das Laden anderer Schriftgrößen führt im Vergleich dazu teilweise zu stark abweichenden Ergebnissen.
+
+Für wichtige Standard-Elemente gibt es des weiteren vordefinierte Koma-Fonts.
+
+
+\begin{desctable}
+\entry{\PValue{headline}}{%
+  Einfache Überschrift (groß)
+}
+\entry{\PValue{subheadline}}{%
+  Unterüberschrift
+}
+\entry{\PValue{institute}}{%
+  Institutsname im Logo-Bereich des Absenders.
+}
+% \entry{\PValue{infotext}}{%
+% }
+% \entry{\PValue{infotextitem}}{%
+% }
+\entry{\PValue{copytext}}{%
+  Mengentext
+}
+\end{desctable}
+
+
+\subsection{Farben}
+
+Für eine Übersicht über die verfügbaren Farben siehe \ref{sec:colors}.%TODO...
+
+\begin{Declaration}
+  \Option{mono}
+\end{Declaration}
+
+Schwarz-Weiß-Darstellung der Standardelemente
+
+\begin{Declaration}
+  \Option{cmyk}
+\end{Declaration}
+
+CMYK-Darstellung der Standardelemente
