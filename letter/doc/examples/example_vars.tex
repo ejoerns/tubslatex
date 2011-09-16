@@ -1,0 +1,59 @@
+\documentclass[%
+  arial,%
+% mono,%
+  10pt%
+]{tubslttr2}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+% \usepackage{uarial}
+% \usepackage[T1]{fontenc}
+\sffamily
+
+\usepackage{lipsum}
+
+
+\let\oldsetkomavar\setkomavar
+
+\renewcommand{\setkomavar}[2]{\oldsetkomavar{#1}{%
+  <{\ttfamily \textcolor{tuGreenDark}{\uppercase{#1}}}>}}
+
+\LoadLetterOption{mustermann}
+
+
+% \setkomavar{specialmail}{[Postvermerk]}
+\setkomavar{yourref}{[xxx]}
+\setkomavar{yourmail}{[Datum]}
+\setkomavar{myref}{[xxx]}
+\setkomavar{mymail}{[Datum]}
+
+\let\setkomavar\oldsetkomavar
+
+\begin{document}
+
+\begin{letter}{%
+Name\\
+Straße\\
+PLZ Ort
+}
+\setkomavar{subject}{[Betreff]}
+\opening{Sehr geehrte Damen und Herren,}
+
+
+\lipsum[1]
+
+\lipsum[2]
+
+\clearpage
+% \newgeometry{textwidth=16cm}
+
+\lipsum[5]
+
+% \restoregeometry
+
+\lipsum[6-8]
+
+\closing{Mit freundlichen Grüßen}
+
+\end{letter}
+\end{document}
