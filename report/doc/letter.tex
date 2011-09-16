@@ -16,7 +16,7 @@ ein.
 Absender-Informationen variieren naturgemäß von Institut zu Institut
 und vor allem von Person zu Person. Innerhalb eines Instituts und insbesondere
 bei gleichem individuellen Absender sind diese Informationene jedoch sehr
-konstant. Daher gibts es die Möglichkeit, die Absender-Informationen in
+konstant. Daher gibt es die Möglichkeit, die Absender-Informationen in
 separaten Dateien als Vorlage vorzudefinieren. Mehr Informationen dazu gibt
 das Kapitel \ref{sec:lco}
 
@@ -53,11 +53,39 @@ in Schwarz statt in Rot dargestellt.
 
 \section{Variablen}\label{sec:lettervars}
 
-Eine Übersicht über alle zu verwendenden Variablen gibt
-Tabelle~\ref{table:lettervars}. Es ist dabei meist nicht nötig zu wissen
+Eine Übersicht über alle zu verwendenden Variablen geben die
+Tabellen \ref{table:lettervars} und \ref{table:lettervars2}.
+Es ist dabei meist nicht nötig zu wissen,
 wo die entsprechenden Werte verwendet werden, da das Design im allgemeinen
 festgelegt ist. Zur besseren Veranschaulichung kann jedoch
 Abbildung~\ref{fig:lettervarpos} zu Rate gezogen werden.
+
+\begin{Declaration}
+  \Macro{setkomavar}\Parameter{Name}\Parameter{Inhalt}
+\end{Declaration}
+
+Variablen werden mit dem Befehl \Macro{sektomavar} gesetzt.
+\PName{Name} ist dabei der Name der zu setzenden Variable, also z.B. einer der in
+Tabelle~\ref{table:lettervars} definierten Namen. \PName{Inhalt} setzt den
+Inhalt der Variablen, was mit Ausnahme des Logos meist ein einfacher
+Text sein sollte.
+
+Die meisten der aufgeführten Variablen müssen nicht für jeden zu erstellenden
+Brief neu gesetzt werden, sondern sollten besser in eine \texttt{.lco}-Datei,
+entprechend der Beschriebung in Kapitel~\ref{sec:lco}, ausgelagert werden.
+Diese Variablen finden sich in Tabelle~\ref{table:lettervars}.
+
+Ein Paar Variablen müssen (wenn sie überhaupt benutzt werden) in jedem Brief
+neu gesetzt werden. Diese sind in Tabelle~\ref{table:lettervars2} aufgezählt.
+
+\begin{example}
+\begin{lstlisting}
+\setkomavar{fromname}{Max Mustermann}
+\end{lstlisting}
+Mit dieser Anweisung wird der Name des Absender auf \glqq Max Mustermann\grqq
+gesetzt.
+\end{example}
+
 
 \begin{desctable}
   \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
@@ -90,7 +118,7 @@ Abbildung~\ref{fig:lettervarpos} zu Rate gezogen werden.
 
 \begin{desctable}
   \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
-    Variablen -- Inhaltsabhängig}\label{table:lettervars}\\
+    Variablen -- Inhaltsabhängig}\label{table:lettervars2}\\
   \Endfirsthead
   \ventry{specialmail}{Spezielle Versandart, wird zwischen Rücksendeadresse
     und Empfängeradresse dargestellt.}
@@ -111,9 +139,49 @@ Abbildung~\ref{fig:lettervarpos} zu Rate gezogen werden.
 
 \section{lco-Dateien}\label{sec:lco}
 
-Vorschlag: Aufteilung nach Institut, Mitarbeiter.
+Eine Reihe von Einstellungen und definierten Variablen für das Erstellen eines
+Briefes sind meist bei allen Briefen, die man erstellt gleichbleibend.
+Während Zieladresse, Anrede, Inhalt und Grußformel meist von Brief zu Brief
+abweichen werden Elemente wie Absenderadresse, Telefon-Durchwahl oder
+Bankverbindung immer dieselben bleiben.
 
-Aufteilung ist nicht immer eindeutig.
+Es ist daher sinnvoll, diese Einstellungen in als Vorlage in seperaten Dateien
+auszulagern, die man dann bei jedem neu zu erstellenden Brief einfach laden
+kann. Bei \texttt{tubslttr2} bzw. \texttt{scrlttr2} sind dafür die sogenannten
+\emph{Letter-Class-Option}-Dateien, kurz \texttt{.lco}-Dateien vorgesehen.
 
-Eine Beispielhafte Aufteilung findet sich im Anhang...
+Im Prinzip kann eine \text{.lco}-Datei alle möglichen Arten von Anweisungen
+enthalten, in Zusammenhang mit den Corporate Design-Vorlagen sollten dort jedoch
+hauptsächlich die im vorigen Kapitel definierten Variablen gesetzt werden.
+
+Aufgrund der Organisationsstruktur an der Universität gibt es meist 3 Ebenen für
+die jeweils ein bestimmter Satz an Informationen immer gleichbleibend ist.
+
+\begin{itemize}
+  \item Die \emph{TU Braunschweig} nimmt dabei die oberste Ebene ein. Alle allgemeinen
+    Einstellung, wie die Nennung des Namens oder die Stadt Braunschweig sind
+    bereits standardmäßig vordefiniert.
+
+  \item Die Zweite Ebene stellen die einzelnen \emph{Institute} bzw.
+    zentralen Einrichtung dar. Auf dieser Ebene sind meist Elemente wie die
+    Anschrift, die Web-Adresse oder die Bankverbindung gleich.
+
+  \item Die unterste Ebene stellt dann der individuelle \emph{Mitarbeiter} dar,
+    für den Elemente wie der Name, die Durchwahl oder die Mail-Adresse konstante
+    Informationen darstellen.
+\end{itemize}
+
+Aufgrund dieser Aufteilung wird empfohlen zwei Arten von \texttt{.lco}-Dateien
+anzulegen. Das jeweilige Institut kann eine institutsspezifische Datei
+bereit stellen, auf die alle Mitarbeiter zugriff haben. Jeder Mitarbeiter kann
+sich dann eine individuelle \texttt{.lco}-Datei erstellen, die seine spezifischen
+Informationen enthalten. Beides sind einmalige Vorgänge und erleichtern die
+weitere Arbeit deutlich.
+
+Im Anhang \ref{appendix:letter} finden sich jeweils ein Beispiel für eine
+Instituts-Datei (\ref{appendix:letter:ilco}) und eine Mitarbeiter-Datei
+(\ref{appendix:letter:mlco}). Da die Aufteilung der Informationen nich immer 
+gleich und eindeutig ist, können individuelle Änderungen des jeweils definierten
+Variablen-Satzes nötig sein.
+
 
