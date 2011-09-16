@@ -233,7 +233,8 @@
   \newcommand*{\pventry}[1]{\entry{\PValue{##1}}}%
   \newcommand*{\mentry}[1]{\entry{\Macro{##1}}}%
   \newcommand*{\ventry}[1]{%
-    \entry{\Variable{##1}\IndexVariable[indexmain]{##1}}%
+    \entry{\Variable{##1}%\IndexVariable[indexmain]{##1}%
+    }%
   }%
   \newcommand*{\feentry}[1]{%
     \entry{\FontElement{##1}\IndexFontElement[indexmain]{##1}}%

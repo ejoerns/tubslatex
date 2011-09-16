@@ -3,3 +3,117 @@
 Briefe können mit der Dokumentenklasse \newdocumentclass{tubslttr2} erstellt
 werden.
 
+Der Aufbau eines Briefes unterscheidet sich zum Teil grundlegend von dem eines
+normalen Dokumentes, weswegen hierfür eine spezielle Klasse vorliegt%
+\footnote{Das etwas spezielle Interface liegt in der zugrunde liegenden 
+KOMA-Skript-Klasse scrlttr2 begründet.}, deren Benutzung sich ein wenig von
+der der anderen unterscheidet.
+
+Die Absender-Informationen eines Briefes können mit Hilfe einer Reihe von
+Variablen festgelegt werden. Näher geht darauf das Kapitel \ref{sec:lettervars}
+ein.
+
+Absender-Informationen variieren naturgemäß von Institut zu Institut
+und vor allem von Person zu Person. Innerhalb eines Instituts und insbesondere
+bei gleichem individuellen Absender sind diese Informationene jedoch sehr
+konstant. Daher gibts es die Möglichkeit, die Absender-Informationen in
+separaten Dateien als Vorlage vorzudefinieren. Mehr Informationen dazu gibt
+das Kapitel \ref{sec:lco}
+
+\section{Paketoptionen}
+
+Generell können die meisten Optionen, die auch die zugrundeliegenden Klasse
+\texttt{scrlttr2} akzeptiert, übergeben werden. Es wird jedoch keine korrekte
+Funktionalität gewährleistet und darauf hingewiesen, dass diese Optionen
+ggf. nich Corporate Design-Konform sind.
+
+Als Schritgröße ist standardmäßig \PValue{10pt} eingestellt.
+
+\begin{Declaration}
+  \Option{arial}\\
+  \Option{nexus}
+\end{Declaration}
+
+Standardmäßig wird ein Brief in der Schriftart \emph{Nexus} gesetzt.
+Ist stattdessen eine Darstellung in der Schriftart \emph{Arial} erwünscht,
+so kann dies mittels der Option \PName{arial} festgelegt werden.
+Die Option \PName{nexus} sorgt für eine Darstellung in \emph{Nexus} und
+kann optional angegeben werden.
+
+\begin{Declaration}
+  \Option{mono}
+\end{Declaration}
+
+Falls ein Brief nur in schwarz-weiß erstellt werden soll, können mit Hilfe
+der Option \PName{mono} alle wesentlichen Elemente der Briefvorlage monochrom
+dargestellt werden. Dazu zählen unter anderem Das Siegelband-Logo und die
+angrenzende Trennlinie.
+Auch sämtliche Elemente, die die Farbe \texttt{tuRed} verwenden, werden
+in Schwarz statt in Rot dargestellt.
+
+\section{Variablen}\label{sec:lettervars}
+
+Eine Übersicht über alle zu verwendenden Variablen gibt
+Tabelle~\ref{table:lettervars}. Es ist dabei meist nicht nötig zu wissen
+wo die entsprechenden Werte verwendet werden, da das Design im allgemeinen
+festgelegt ist. Zur besseren Veranschaulichung kann jedoch
+Abbildung~\ref{fig:lettervarpos} zu Rate gezogen werden.
+
+\begin{desctable}
+  \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
+    Variablen -- Inhaltsunabhängig}\label{table:lettervars}\\
+  \Endfirsthead
+  \caption[]{Von der Klasse \newdocumentclass{tubslttr2} unterstützte Variablen
+    (\emph{Fortsetzung})}\\
+  \Endhead%
+  \standardfoot%
+  \ventry{fromlogo}{Anweisungen zum Setzen des Institutslogos (Text oder Grafik)}%
+  \ventry{frominstitute}{Name des Instituts}%
+  \ventry{fromstreest}{Straßennahme und Hausnummer der Absenders}%
+  \ventry{fromzipcode}{Postleitzahl des Absenders}%
+  \ventry{fromtown}{Absender-Ort}%
+  \ventry{fromfaxdirect}{Fax-Durchwahl}%
+  \ventry{fromurl}{Internetaddresse}%
+  \ventry{frombank}{Bankverbindung des Absenders}%
+  \ventry{fromIBAN}{IBAN des Absender}%
+  \ventry{fromBIC}{BIC-Code des Absenders}%
+  \ventry{fromUStID}{Umsatzsteuer-ID des Absenders}%
+  \ventry{fromSteuernummer}{Steuernummer des Absenders}%
+  %
+  \ventry{fromdepartment}{ggf. Abteilung oder andere Untereinheit des Instituts}%
+  \ventry{fromtitle}{Titel des Absenders (Dr., Prof. Dr., \ldots)}
+  \ventry{fromname}{Vollständiger Name des Absenders}
+  \ventry{signature}{Signatur unter Unterschrift und Grußformel}
+  \ventry{fromphonedirect}{Durchwahl}
+  \ventry{fromemail}{E-Mail-Adresse}
+\end{desctable}
+
+\begin{desctable}
+  \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
+    Variablen -- Inhaltsabhängig}\label{table:lettervars}\\
+  \Endfirsthead
+  \ventry{specialmail}{Spezielle Versandart, wird zwischen Rücksendeadresse
+    und Empfängeradresse dargestellt.}
+  \ventry{yourref}{Feld \glqq Ihr Zeichen:\grqq}
+  \ventry{yourmail}{Feld \glqq Ihre Nachricht vom:\grqq}
+  \ventry{myref}{Feld \glqq Unser Zeichen:\grqq}
+  \ventry{mymail}{Feld \glqq Unsere Nachricht vom:\grqq}
+\end{desctable}
+
+
+\begin{figure}[!ht]
+\centering\fboxsep0mm\fbox{%
+\includegraphics[width=0.9\textwidth]{../../letter/doc/examples/example_vars.pdf}
+}
+\caption{Darstellung der Variablen}
+\label{fig:lettervarpos}
+\end{figure}
+
+\section{lco-Dateien}\label{sec:lco}
+
+Vorschlag: Aufteilung nach Institut, Mitarbeiter.
+
+Aufteilung ist nicht immer eindeutig.
+
+Eine Beispielhafte Aufteilung findet sich im Anhang...
+
