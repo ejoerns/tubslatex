@@ -176,6 +176,8 @@
 \ifarial
   \RequirePackage{uarial}
   \RequirePackage[T1]{fontenc}
+  \renewcommand*{\ttdefault}{txtt}% TODO: Nach besser passenderer suchen
+%   \RequirePackage{courier}
 \else
   \RequirePackage{nexus}
 \fi
@@ -247,6 +249,10 @@
 \newkomavar{fromUStID}
 \newkomavar{fromSteuernummer}
 
+%Setze standardmäßig Braunschweig als Stadt
+\setkomavar{fromtown}{Braunschweig}
+
+
 %Setzen der Schriftattribute
 \setkomafont{addressee}{\sffamily}
 \setkomafont{subject}{\sffamily\bfseries}
@@ -290,6 +296,7 @@
   \setkomavar{fromphone}{Tel. +49\,(0)\,531\,391-\usekomavar{fromphonedirect}}}%
 \ifkomavarempty{fromfaxdirect}{\relax}{%
   \setkomavar{fromfax}{Fax +49\,(0)\,531\,391-\usekomavar{fromfaxdirect}}}%
+%
 \footnotesize\sffamily
 Technische Universit\"at\\Braunschweig\\
 \textbf{\usekomavar{frominstitute}}\\
@@ -299,7 +306,7 @@ Technische Universit\"at\\Braunschweig\\
   ~\\%
   \usekomavar{fromdepartment}\\%
 }
-~\\
+~\\%
 \usekomavar{fromstreet}\\
 \usekomavar{fromzipcode}~\usekomavar{fromtown}\\
 Deutschland\\
