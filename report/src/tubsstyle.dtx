@@ -910,9 +910,9 @@
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
   % TODO...
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \edef\@tubs@arg{[sender=bottom]{0}{\thetubs@yseg@cnt}{6}{#2}}
+    \edef\@tubs@arg{[sender=bottom]{1}{\thetubs@yseg@cnt}{6}{#2}}
   }{%
-    \edef\@tubs@arg{{0}{\thetubs@yseg@cnt}{6}{#2}}
+    \edef\@tubs@arg{{1}{\thetubs@yseg@cnt}{6}{#2}}
   }
   \bgelement[#1]{#2}
   % Erzeuge gausbox
