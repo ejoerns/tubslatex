@@ -74,25 +74,11 @@
 %
 % \maketitle
 %
-% \begin{abstract}
-%   Put text here.
-% \end{abstract}
-%
-% \section{Introduction}
-%
-% Put text here.
-%
-% \section{Usage}
-%
-% \DescribeMacro{\YOURMACRO}
-% Put description of |\YOURMACRO| here.
-%
-% \DescribeEnv{YOURENV}
-% Put description of |YOURENV| here.
-%
 % \StopEventually{\PrintIndex}
 %
-% \section{Implementation}
+% \section{Implementierung}
+%
+% \subsection{Klasse}
 %
 %    \begin{macrocode}
 %<*class>
@@ -161,12 +147,14 @@
 %    \end{macrocode}
 %
 %
+% \subsection{lco-Datei}
+%
 %    \begin{macrocode}
 %<*lco>
 %    \end{macrocode}
 %
 %
-%Anpassung des Datumsformats
+% Anpassung des Datumsformats
 %    \begin{macrocode}
 \PassOptionsToPackage{ngerman, orig}{isodate}
 \RequirePackage{isodate}
@@ -174,19 +162,20 @@
 \monthyearsepgerman{}{}
 %    \end{macrocode}
 %
-\PassOptionsToPackage{%
+% Allgemeine Anpassung der Seitengeometrie, entsprechend der CD-Vorlage
+%    \begin{macrocode}
+\RequirePackage{geometry}
+\geometry{%
   left=2.45cm,%
   top=3.3cm,%
   headsep=1cm,%
-  headheight=1.2cm%
-}{geometry}
-\RequirePackage{geometry}
-%Anpassung der Textbreite
-\setlength{\textwidth}{12.2cm}
-%Korrektur, um Seitenrad der CD-Vorlage zu treffen
-
-
-% change line width on next page
+  headheight=1.2cm,%
+  textwidth=12.2cm
+}
+%    \end{macrocode}
+%
+% Auf Folgeseiten (nach der ersten Seite) muss der Textbereich verbreitert
+% werden, da die Spalte mit den Absenderinformationen wegfällt.
 %    \begin{macrocode}
 \RequirePackage{afterpage}
 \newcommand*{\@newGeo}{%
@@ -196,9 +185,10 @@
     bottom=3.5cm}%
 }
 \afterpage{\aftergroup\@newGeo}
-
-
-%Die Basispakete des Corporate Design werden geladen
+%    \end{macrocode}
+%
+% Die verwendete Schriftart wird entsprechend der Paketoptionen geladen
+%    \begin{macrocode}
 \ifarial
   \RequirePackage{uarial}
   \RequirePackage[T1]{fontenc}
@@ -207,82 +197,124 @@
 \else
   \RequirePackage{nexus}
 \fi
+%    \end{macrocode}
+% Die Basispakete des Corporate Design werden geladen.
+% Das Logo wird mit 90% seiner Originalgröße eingebunden.
+%    \begin{macrocode}
 \RequirePackage{tubscolors}
 \PassOptionsToPackage{a4paper, relscale=0.9}{tubslogo}
 \RequirePackage{tubslogo}
-
-
-%Positionierung des Seitenkopfs (Logo und rote Linie)
+%    \end{macrocode}
+%
+%
+% Positionierung des Seitenkopfs (Logo und rote Linie)
+%    \begin{macrocode}
 \@setplength{firstheadhpos}{1.75cm}
 \@setplength{firstheadvpos}{1.75cm}
 \@setplength{firstheadwidth}{18.5cm}
-
-%Vergrößerung der Rückaddresszeile (da zweizeilig)
+%    \end{macrocode}
+%
+% Vergrößerung der Rückaddresszeile (da zweizeilig)
+%    \begin{macrocode}
 \@setplength{backaddrheight}{21pt}
+%    \end{macrocode}
 
-% Abstand des Anschriftfeldes von der linken Papierkante
+% Positionierung des Anschriftfeldes
+%    \begin{macrocode}
 \@setplength{toaddrhpos}{\dimexpr \oddsidemargin+1in\relax}
-% \@setplength{toaddrhpos}{2.45cm} % 1.75 + 0.7
 \@setplength{toaddrvpos}{4.4cm} % 1.75 + 0.7
-
-
-%Positionierung des Locationfeldes (Informationen auf der rechten Seite)
+%    \end{macrocode}
+%
+% Positionierung des Locationfeldes (Informationen auf der rechten Seite)
+%    \begin{macrocode}
 \@setplength{lochpos}{-15.5cm}
 \@setplength{locvpos}{4.4cm}
 \@setplength{locwidth}{5.2cm}% TODO
 \@setplength{locheight}{14.8cm}
-
+%    \end{macrocode}
+%
+% Positionierung der Fußzeile (erste Seite).
+%    \begin{macrocode}
+\@setplength{firstfoothpos}{2.45cm}
+\@setplength{firstfootvpos}{27.5cm}
+%    \end{macrocode}
+%
 % Platziere so, dass Betreff noch oberhalb der ersten Falzmarke steht
+%    \begin{macrocode}
 \@setplength{refvpos}{9.5cm}
-
-%Positionierung der Geschäftszeile, bzw. da nicht vorhanden des Briefanfangs
-% \@setplength{refwidth}{12.0cm}
-% \@setplength{refhpos}{5.4cm} % 1.75 + 0.7
-
-
+%    \end{macrocode}
+%
 % Abstand der Falzmakierungen vom Rand
+%    \begin{macrocode}
 \@setplength{foldmarkhpos}{0.8cm}
-
-%Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
-%%Institutsdaten
+%    \end{macrocode}
+%
+% Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
+% Instituts-Adresse
+%    \begin{macrocode}
 \newkomavar{frominstitute}
 \newkomavar{fromdepartment}
 \newkomavar{fromstreet}
 \newkomavar{fromtown}
-%%Titel des Absenders
+%    \end{macrocode}
+% Titel des Absenders
+%    \begin{macrocode}
 \newkomavar{fromtitle}
-%%Telefon und Faxdurchwahl
+%    \end{macrocode}
+% Telefon und Faxdurchwahl
+%    \begin{macrocode}
 \newkomavar{fromphonedirect}
 \newkomavar{fromfaxdirect}
-%%Referenzfeld Unser Schreiben vom:
+%    \end{macrocode}
+% Referenzfeld Unser Schreiben vom:
+%    \begin{macrocode}
 \newkomavar{mymail}
-%%Bank- und Steuerdaten
+%    \end{macrocode}
+% Bank- und Steuerdaten
+%    \begin{macrocode}
 \newkomavar{fromIBAN}
 \newkomavar{fromBIC}
 \newkomavar{fromUStID}
 \newkomavar{fromSteuernummer}
-
-%Setze standardmäßig Braunschweig als Stadt
+%    \end{macrocode}
+%
+% Setze standardmäßig Braunschweig als Stadt
+%    \begin{macrocode}
 \setkomavar{fromtown}{Braunschweig}
-
-
-%Setzen der Schriftattribute
+%    \end{macrocode}
+%
+%
+% Setzen der Schriftattribute
+%    \begin{macrocode}
 \setkomafont{addressee}{\sffamily}
 \setkomafont{subject}{\sffamily\bfseries}
 \setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
 \setkomafont{foldmark}{\color{tuRed}}
 \AtBeginLetter{\sffamily}
-
+%    \end{macrocode}
+%
+% Absatzeinstellungen: Keine Einrückung am Absatzbeginn,
+%   dafür vertikaler Abstand zwischen Absätzen.
+%    \begin{macrocode}
 \setlength{\parindent}{0mm}
 \setlength{\parskip}{\medskipamount}
-
-% vertikaler Abstand zwischen Gruß und Signatur
+%    \end{macrocode}
+%
+% Vertikaler Abstand zwischen Gruß und Signatur
+%    \begin{macrocode}
 \@setplength{sigbeforevskip}{1.4cm}
-
+%    \end{macrocode}
+%
+% Einstellungen und Befehl für Zeilenabstand:
+% onehalfspacing für Textteil.
+%    \begin{macrocode}
 \RequirePackage{setspace}
 \onehalfspacing
-% a bit less the onehalfspacing.. (quick hack)
+%    \end{macrocode}
+%    \begin{macro}{\locationspacing}
+% Set a bit less then onehalfspacing.. (quick hack)
+%    \begin{macrocode}
 \newcommand{\locationspacing}{%
   \setstretch{1.15}%  default
   \ifcase \@ptsize \relax % 10pt
@@ -293,15 +325,22 @@
     \setstretch {1.141}%
   \fi
 }
-
-% Debugging output...
-% \LoadLetterOption{visualize}
-% \showfields{head,address,location,refline}
-
-%Siegelband und rote Linie im Kopf des Briefs
-\setkomavar{firsthead}{\color{tuRed}\rule[-0.75\tubslogoHeight]{18.5cm}{1.2pt}\\[-0.75\tubslogoHeight]\tubslogo\\[-1.4\tubslogoHeight]\parbox[b][2cm]{\textwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}}
-
-%Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+% Briefkopf: Siegelband und rote Linie
+%    \begin{macrocode}
+\setkomavar{firsthead}{%
+  \color{tuRed}%
+  \rule[-0.75\tubslogoHeight]{18.5cm}{1.2pt}\\[-0.75\tubslogoHeight]%
+  \tubslogo\\[-1.4\tubslogoHeight]%
+  \parbox[b][2cm]{\textwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}%
+}
+%    \end{macrocode}
+%
+% Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
+%    \begin{macrocode}
 \setkomavar{location}{%
 \begin{flushleft}\locationspacing
 %Wenn eine Durchwahl angegeben wurde, wird diese zusammengesetzt, ansonsten wird das komplette phone/fax Feld genutzt
@@ -346,18 +385,28 @@ Datum: \usekomavar{date}\\
 \ifkomavarempty{fromSteuernummer}{\relax}{Steuer-Nr.: \usekomavar{fromSteuernummer}}
 \end{flushleft}
 }
-
-%Es werden Kopf- und Fußzeilen auf Folgeseiten gesetzt
+%    \end{macrocode}
+%
+% Es werden Kopf- und Fußzeilen auf Folgeseiten gesetzt
+%    \begin{macrocode}
 \pagestyle{headings}
-%Alle Felder werden aus der Geschäfszeile entfernt, damit diese in jedem Fall leer bleibt.
+%    \end{macrocode}
+% Alle Felder werden aus der Geschäfszeile entfernt, damit diese in jedem Fall leer bleibt.
+%    \begin{macrocode}
 \removereffields
-
+%    \end{macrocode}
+%
+% Inhalt des Rücksendeadress-Feldes
+%    \begin{macrocode}
 \setkomavar{backaddress}{%
   \parbox{12.2cm}{%
     Technische Universit\"at Braunschweig | \usekomavar{frominstitute}\\
     \usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland}
 }
-
+%    \end{macrocode}
+%
+% Kopfzeile auf Folgeseiten
+%    \begin{macrocode}
 \setkomavar{nexthead}{\footnotesize\sffamily%
   \vbox to\headheight{\parbox{12.2cm}{\usekomafont{fromaddress}%
     Technische Universit\"at Braunschweig\\
@@ -365,17 +414,26 @@ Datum: \usekomavar{date}\\
     \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
   }\vfill}
 }
-
+%    \end{macrocode}
+%
 % Setze Fußzeilen für erste und Folgeseiten
+%    \begin{macrocode}
 \@setplength{firstfoothpos}{2.45cm}
 \@setplength{firstfootvpos}{27.5cm}
 \RequirePackage{lastpage}
 \firstfoot{Seite \thepage\ von \pageref{LastPage}}
 \nextfoot{Seite \thepage\ von \pageref{LastPage}\hfill}
-
-
-\renewcommand*{\raggedsignature}{\raggedright}
+%    \end{macrocode}
 %
+%    \begin{macrocode}
+\renewcommand*{\raggedsignature}{\raggedright}
+%    \end{macrocode}
+%
+% Debugging output...
+%    \begin{macrocode}
+% \LoadLetterOption{visualize}
+% \showfields{head,address,location,refline}
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 %</lco>
