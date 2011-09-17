@@ -96,11 +96,27 @@
 %
 %    \begin{macrocode}
 %<*class>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{tubslttr2}[2011/09/17 v0.1 tubslttr2]
 %    \end{macrocode}
-
+%
+%
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
 \newif\ifarial\arialfalse
+%    \end{macrocode}
+%pagenumber=botleft Seitennummern werden nach unten links gesetzt
+%refline=nodate In der Geschäftszeile erscheint kein Datum
+% NOTE: the option value 'nodate' for 'refline' is supported only in
+%       newer versions of KOMA-Skript.
+%    \begin{macrocode}
+\PassOptionsToClass{%
+  tubs,%
+  BCOR=0cm,%
+  pagenumber=botleft,%
+  refline=nodate,%
+  backaddress=plain%  Keine Linie unterhalb Rücksendeadresse
+}{scrlttr2}
 %    \end{macrocode}
 %
 %    \begin{key}{}{mono}
@@ -131,37 +147,47 @@
 %    \end{key}
 %
 %    \begin{macrocode}
-\ExecuteOptionsX{nexus}
 \DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{scrlttr2}}
+\ExecuteOptionsX{nexus}
 \ProcessOptionsX
 %    \end{macrocode}
-
-%pagenumber=botleft Seitennummern werden nach unten links gesetzt
-%refline=nodate In der Geschäftszeile erscheint kein Datum
-% NOTE: the option value 'nodate' for 'refline' is supported only in
-%       newer versions of KOMA-Skript.
+%
 %    \begin{macrocode}
-\LoadClass[%
-  BCOR=0cm,%
-  pagenumber=botleft,%
-  refline=nodate,%
-  backaddress=plain%  Keine Linie unterhalb Rücksendeadresse
-]{scrlttr2}[2011/06/16]
-
+\LoadClass{scrlttr2}[2011/06/16]
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%<*lco>
+%    \end{macrocode}
+%
+%
 %Anpassung des Datumsformats
+%    \begin{macrocode}
 \PassOptionsToPackage{ngerman, orig}{isodate}
 \RequirePackage{isodate}
 \daymonthsepgerman{}
 \monthyearsepgerman{}{}
+%    \end{macrocode}
+%
+\PassOptionsToPackage{%
+  left=2.45cm,%
+  top=3.3cm,%
+  headsep=1cm,%
+  headheight=1.2cm%
+}{geometry}
+\RequirePackage{geometry}
+%Anpassung der Textbreite
+\setlength{\textwidth}{12.2cm}
+%Korrektur, um Seitenrad der CD-Vorlage zu treffen
 
-% TODO:... (automatische Textbreitenveränderung?)
-% Testing for flowfram...
-% \providecommand{\tableofcontents}{}
-% \RequirePackage{flowfram}
-% \newflowframe[none]{\textwidth}{\textwidth}{0pt}{0pt}[first]%
-% \newflowframe[none]{1.5\textwidth}{\textwidth}{0pt}{0pt}[other]%
 
 % change line width on next page
+%    \begin{macrocode}
 \RequirePackage{afterpage}
 \newcommand*{\@newGeo}{%
   \clearpage\newgeometry{%
@@ -184,19 +210,6 @@
 \RequirePackage{tubscolors}
 \PassOptionsToPackage{a4paper, relscale=0.9}{tubslogo}
 \RequirePackage{tubslogo}
-
-\PassOptionsToPackage{%
-  left=2.45cm,%
-  top=3.3cm,%
-  headsep=1cm,%
-  headheight=1.2cm%
-}{geometry}
-\RequirePackage{geometry}
-%Anpassung der Textbreite
-\setlength{\textwidth}{12.2cm}
-%Korrektur, um Seitenrad der CD-Vorlage zu treffen
-% \addtolength{\oddsidemargin}{-0.2cm}
-% \setlength{\headheight}{1.5cm}
 
 
 %Positionierung des Seitenkopfs (Logo und rote Linie)
@@ -362,8 +375,9 @@ Datum: \usekomavar{date}\\
 
 
 \renewcommand*{\raggedsignature}{\raggedright}
-%    \end{macrocode}
+%
 %
 %    \begin{macrocode}
-%</class>
+%</lco>
 %    \end{macrocode}
+%
