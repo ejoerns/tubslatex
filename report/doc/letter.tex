@@ -120,6 +120,7 @@ gesetzt.
   \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
     Variablen -- Inhaltsabhängig}\label{table:lettervars2}\\
   \Endfirsthead
+  \ventry{subject}{Inhalt der Betreffzeile}
   \ventry{specialmail}{Spezielle Versandart, wird zwischen Rücksendeadresse
     und Empfängeradresse dargestellt.}
   \ventry{yourref}{Feld \glqq Ihr Zeichen:\grqq}
@@ -135,6 +136,89 @@ gesetzt.
 }
 \caption{Darstellung der Variablen}
 \label{fig:lettervarpos}
+\end{figure}\clearpage
+
+\section{Briefe schreiben}
+
+Die Inhalt eines Briefdokumentes erfordert nur in der Einleitung ein paar
+spezielle Kommandos. 
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{letter}}%
+  \OParameter{Optionen}\Parameter{Empfänger}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{letter}
+\end{Declaration}
+
+Innerhalb von \lstinline!\begin{document}! und \lstinline!\end{document}!
+können mit der Umgebung \lstinline{letter} beliebig viele einzelne Briefe
+erstellt werden. Der grundlegende Aufbau eines solchen Briefes ist in
+Abbildung~\ref{fig:scrlttr2.letter} dargestellt. Die wichtigsten Befehle
+sind im Folgenden aufgelistet.
+
+\begin{Declaration}
+  \Macro{opening}\Parameter{Anrede}\\
+  \Macro{closing}\Parameter{Grußfloskel}\\
+  \Macro{ps}\\
+  \Macro{cc}\Parameter{Verteiler}\\
+  \Macro{encl}\Parameter{Anlagen}
+\end{Declaration}
+
+Die Anweisungen \Macro{opening} und \Macro{closing} sind für das Erstellen
+eines Briefes unerlässlich. Mit \Macro{opening} wird sowohl die Anrede
+festgelegt (z.B. \textit{Seehr geehrte Damen und Herren}) als auch der
+Bereich für den Brieftext begonnen.
+Dieser Bereich wird dann wiederum mit dem Befehl \Macro{closing}, über den
+man zugleich eine Grußfloskel angibt (z.B. \textit{Mit freundlichen Grüßen}),
+beendet.
+
+Der Befehl \Macro{ps} wird ein Absatz für das Postscriptum eingeleitet.
+Mit \Macro{cc} lässt sich ein \PName{Verteiler} Angeben und
+aufzugührende \PName{Anlagen} werden im Makro \Macro{encl} angegeben.
+
+Für weitere Details zum Schreiben von Briefen wird auf die Dokumentation
+der zugrundeliegenden Klasse \lstinline{scrlttr2} verwiesen
+\cite[S.162ff]{koma-skript}.
+
+\begin{important}
+Eine Besonderheit Beim Erstellen des Brieftextes ergibt sich aus dem wechselnden
+Seitenlayout nach der ersten Seite.
+Soll mehr als eine Seite beschrieben werden, so muss nach
+dem Inhalt für die erste Seite ein \lstinline{\clearpage} eingefügt werden.
+Ansonsten kommt es zu fehlerhafter Darstellung der Textbreite des ersten
+Absatzes auf der zweiten Seite
+\end{important}
+
+
+\begin{figure}[!ht]
+  \centering\small
+  \fbox{\parbox{.667\linewidth}{\raggedright%
+      \Macro{begin}\PParameter{letter}%
+      \OParameter{Optionen}\Parameter{Empfänger}\\
+      \dots\\[\dp\strutbox]
+      {\centering\emph{Einstellungen für diesen Brief}\\}
+      \dots\\
+      \Macro{opening}\Parameter{Anrede}\\
+    }}\\[1pt]
+  \fbox{\parbox{.667\linewidth}{\raggedright%
+      \dots\\[\dp\strutbox]
+      {\centering\emph{Brief"|text}\\}
+      \dots\\
+    }}\\[1pt]
+  \fbox{\parbox{.667\linewidth}{\raggedright%
+      \Macro{closing}\Parameter{Grußformel}\\
+      \Macro{ps}\\
+      \dots\\[\dp\strutbox]
+      {\centering\emph{Postscriptum}\\}
+      \dots\\
+      \Macro{encl}\Parameter{Anlagen}\\
+      \Macro{cc}\Parameter{Verteiler}\\
+      \Macro{end}\PParameter{letter}\\
+    }}\\[\dp\strutbox]
+  \caption[Genereller Aufbau eines einzelnen Briefes innerhalb eines
+    Briefdokuments]{Genereller Aufbau eines einzelnen Briefes
+    innerhalb eines Briefdokuments nach \cite[S.171]{koma-skript} }
+  \label{fig:scrlttr2.letter}
 \end{figure}
 
 \section{lco-Dateien}\label{sec:lco}
@@ -197,7 +281,18 @@ Die Zweite besteht in der Benutzung des Befehls \Macro{LoadLetterOption}.
 
 Diese Anweisung nimmt ebenfalls den Namen der Datei ohne Endung als
 Argument und lädt sie an der entsprechenden Stelle.
-Die Anweisung kann vor allem dazu benutzt werden, um 
+Die Anweisung kann vor allem dazu benutzt werden, um Innerhalb von
+\texttt{.lco}-Dateien weitere \texttt{.lco}-Dateien zu laden.
+
+\begin{example}
+  Eine Datei \lstinline{mitarbeiter.lco} könnte mit der Zeile
+\begin{lstlisting}
+\LoadLetterOption{institut}
+\end{lstlisting}
+  die übergeordnete Instituts-Vorlage (\lstinline{institut.lco}) laden.
+\end{example}
+
+
 
 
 % TODO: 
