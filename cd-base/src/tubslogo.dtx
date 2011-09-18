@@ -1,0 +1,264 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\RequirePackage{xkeyval}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{tubslogo.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
+%
+%
+% \changes{v1.02}{ 2011 / 09 / 18 }{Initial version}
+%
+% \GetFileInfo{tubcolors.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{tubslogo} -- Siegelbandlogo für \emph{tubslatex}%
+%   \thanks{This document corresponds to \textsf{tubslogo}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementierung}
+%
+%    \begin{macrocode}
+%<*package>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tubslogo}[2011/09/18  v1.02 CD-Logo der TU Braunschweig]
+%    \end{macrocode}
+%
+% Lade benötigte Pakete
+%    \begin{macrocode}
+\RequirePackage{graphicx}
+\RequirePackage{ifthen}
+\RequirePackage{xkeyval}
+%    \end{macrocode}
+%
+% Farb-Variablen
+%    \begin{macrocode}
+\newboolean{hksLogo}\setboolean{hksLogo}{false}
+\newboolean{cmykLogo}\setboolean{cmykLogo}{false}
+\newboolean{monoLogo}\setboolean{monoLogo}{false}
+%    \end{macrocode}
+%
+%
+%    \begin{macro}{\logo@papersize}
+%    \begin{macro}{\tubslogo@relscale}
+% Speicher-Makros für Papiergrößen und relative Skalierung
+%    \begin{macrocode}
+\def\logo@papersize{}
+\def\tubslogo@relscale{}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
+%
+% \subsection{Optionen}
+%    \begin{key}{}{rgb}
+%    \begin{key}{}{hks}
+%    \begin{key}{}{cmyk}
+%    \begin{key}{}{mono}
+% Farbmodell-Optionen
+%    \begin{macrocode}
+\DeclareOptionX{rgb}{\relax}
+\DeclareOptionX{hks}{\setboolean{hksLogo}{true}}
+\DeclareOptionX{cmyk}{\setboolean{cmykLogo}{true}}
+\DeclareOptionX{mono}{\setboolean{monoLogo}{true}}
+%    \end{macrocode}
+%    \end{key}\end{key}\end{key}\end{key}
+%
+%    \begin{key}{}{a6paper}
+%    \begin{key}{}{langpaper}
+%    \begin{key}{}{a5paper}
+%    \begin{key}{}{a4paper}
+%    \begin{key}{}{a3paper}
+%    \begin{key}{}{a2paper}
+%    \begin{key}{}{a1paper}
+%    \begin{key}{}{a0paper}
+% Papiergrößen-Optionen
+%    \begin{macrocode}
+\DeclareOptionX{a6paper}{\def\logo@papersize{6}}
+\DeclareOptionX{langpaper}{\def\logo@papersize{6}}
+\DeclareOptionX{a5paper}{\def\logo@papersize{5}}
+\DeclareOptionX{a4paper}{\def\logo@papersize{4}}
+\DeclareOptionX{a3paper}{\def\logo@papersize{3}}
+\DeclareOptionX{a2paper}{\def\logo@papersize{2}}
+\DeclareOptionX{a1paper}{\def\logo@papersize{1}}
+\DeclareOptionX{a0paper}{\def\logo@papersize{0}}
+%    \end{macrocode}
+%    \end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}
+%
+%    \begin{key}{}{relscale}
+% Relative Skalierung [0.0 -- 1.0]
+%    \begin{macrocode}
+\DeclareOptionX{relscale}[1.0]{%
+  \def\tubslogo@relscale{#1}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% Fehler bei unbekannter Option
+%    \begin{macrocode}
+\DeclareOptionX*{%
+  \PackageWarning{tubslogo}{Unknown option `\CurrentOption'}{}%
+}
+%    \end{macrocode}
+%
+% Optionen behandlen
+%    \begin{macrocode}
+\ExecuteOptionsX{rgb}%
+\ProcessOptionsX\relax
+%    \end{macrocode}
+%
+% \subsection{Bearbeitung}
+%
+%    \begin{macro}{\tubslogo@width}
+% Logo-Dimensionen
+%    \begin{macrocode}
+\newlength{\tubslogo@width}
+%    \end{macrocode}
+%    \end{macro}
+%    \begin{macro}{\tubslogoBaseWidth}
+%    \begin{macro}{\tubslogoBaseHeight}
+% Grunddimensionen des Siegelbandlogos (A4, unskaliert)
+%    \begin{macrocode}
+\newlength{\tubslogoBaseWidth}
+\setlength{\tubslogoBaseWidth}{70mm}
+\newlength{\tubslogoBaseHeight}
+\setlength{\tubslogoBaseHeight}{26mm}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
+%    \begin{macro}{\tubslogoWidth}
+%    \begin{macro}{\tubslogoHeight}
+% Dimensionen des skalierten Logos
+%    \begin{macrocode}
+\newlength{\tubslogoWidth}
+\newlength{\tubslogoHeight}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
+%
+%    \begin{macrocode}
+\ifthenelse{\equal{\logo@papersize}{6}}{\def\tubslogo@scale{0.6}}{%  60%
+\ifthenelse{\equal{\logo@papersize}{5}}{\def\tubslogo@scale{0.7}}{%  70%
+\ifthenelse{\equal{\logo@papersize}{4}}{\def\tubslogo@scale{1.0}}{% 100%
+\ifthenelse{\equal{\logo@papersize}{3}}{\def\tubslogo@scale{1.4}}{% 140%
+\ifthenelse{\equal{\logo@papersize}{2}}{\def\tubslogo@scale{2.0}}{% 200%
+\ifthenelse{\equal{\logo@papersize}{1}}{\def\tubslogo@scale{2.8}}{% 280%
+\ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{4.0}}{% 400%
+\def\tubslogo@scale{1.0}% default
+}}}}}}}
+%    \end{macrocode}
+%
+% paper format scale
+%    \begin{macrocode}
+\setlength{\tubslogoWidth}{\tubslogo@scale\tubslogoBaseWidth}
+\setlength{\tubslogoHeight}{\tubslogo@scale\tubslogoBaseHeight}
+%    \end{macrocode}
+% relative scale
+%    \begin{macrocode}
+\setlength{\tubslogoWidth}{\tubslogo@relscale\tubslogoWidth}
+\setlength{\tubslogoHeight}{\tubslogo@relscale\tubslogoHeight}
+%    \end{macrocode}
+%
+% CMYK
+%    \begin{macrocode}
+\ifthenelse{\boolean{cmykLogo}}{%
+  \newcommand{\tubslogo}[1][\relax]{%
+    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+    \includegraphics[width=\tubslogo@width]{TUBraunschweig_4C}}
+  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_4C}}
+}{%
+%    \end{macrocode}
+% RGB-print
+%    \begin{macrocode}
+\ifthenelse{\boolean{hksLogo}}{%
+  \newcommand{\tubslogo}[1][\relax]{%
+    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+    \includegraphics[width=\tubslogo@width]{TUBraunschweig_SC}}
+  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_SC}}
+}{%
+%    \end{macrocode}
+% Monochrome
+%    \begin{macrocode}
+\ifthenelse{\boolean{monoLogo}}{%
+  \newcommand{\tubslogo}[1][\relax]{%
+    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+    \includegraphics[width=\tubslogo@width]{TUBraunschweig_B}}
+  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_B}}
+}{%
+%    \end{macrocode}
+% RGB
+%    \begin{macrocode}
+  \newcommand{\tubslogo}[1][\relax]{%
+    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+    \includegraphics[width=\tubslogo@width]{TUBraunschweig-rgb}}
+  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
+}}}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%
+% \Finale
+\endinput
