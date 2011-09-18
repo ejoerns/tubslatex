@@ -61,14 +61,14 @@
 %   \raggedright}
 %  {\end{list}}
 %
-% \changes{v1.0}{ 2011 / 08 / 24 }{Initial version}
+% \changes{v0.4}{ 2011 / 09 / 18 }{Initial version}
 %
-% \GetFileInfo{tubsodc.sty}
+% \GetFileInfo{tubcolors.sty}
 %
 % \DoNotIndex{ list of control sequences }
 %
-% \title{\textsf{tubscolors} -- Farbdefinitionen für \emph{tubslatex}\thanks{This document
-%   corresponds to \textsf{tubscolors}~\fileversion,
+% \title{\textsf{tubscolors} -- Farbdefinitionen für \emph{tubslatex}%
+%   \thanks{This document corresponds to \textsf{tubscolors}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
 %
@@ -81,7 +81,7 @@
 %    \begin{macrocode}
 %<*class>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubscolors}[2011/06/09  v0.3  Color scheme TU-Braunschweig]
+\ProvidesPackage{tubscolors}[2011/09/18  v0.4  Color scheme TU-Braunschweig]
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -103,9 +103,9 @@
 %    \begin{key}{}{rgb}
 %    \begin{key}{}{rgbbeamer}
 %    \begin{key}{}{cmyk}
-% color model
-% 'rgb' is the default color scheme\\
-% 'rgbbeamer' is optimated for beamer output
+% Farbmodell\\
+% 'rgb' ist das Standard-Farbschema\\
+% 'rgbbeamer' ist optimiert für Beamer-Ausgabe
 %    \begin{macrocode}
 \DeclareOption{rgb}{\relax}
 \DeclareOption{rgbbeamer}{\setboolean{rgbbeamer}{true}}
@@ -117,7 +117,7 @@
 %    \begin{key}{}{green}
 %    \begin{key}{}{blue}
 %    \begin{key}{}{violet}
-% design color scheme
+% Sekundär-Farbklangwahl
 %    \begin{macrocode}
 \DeclareOption{orange}{\def\secondaryColorName{Orange}}
 \DeclareOption{green}{\def\secondaryColorName{Green}}
@@ -539,7 +539,7 @@
 }}
 %    \end{macrocode}
 %
-% \subsection{Farbdefinitionen -- Aliasse
+% \subsection{Farbdefinitionen -- Aliasse}
 %
 %% Yellow/red auch als |orangeLight| bzw. |orangeDark| verwendbar
 %    \begin{macrocode}
@@ -637,6 +637,8 @@
 \colorlet{tuGrey20}{tuGray20}
 %    \end{macrocode}
 %
+% \subsection{Befehle}
+%
 %% Define secondary colors
 %% Can be adressed as tuSecondary exactly as the other colors
 %% Defined via |\defineSecondary|
@@ -681,7 +683,11 @@
   \define@Secondary{#1}
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macrocode}
 %</class>
 %    \end{macrocode}
+%
+% \Finale
+\endinput
