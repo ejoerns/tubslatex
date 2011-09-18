@@ -5,9 +5,8 @@
 
 \setkomavar{fromstreet}{[Straße]}
 \setkomavar{fromzipcode}{[PLZ]}
-\setkomavar{fromtown}{[Stadt]}
+%\setkomavar{fromtown}{[Stadt]}
 
-\setkomavar{fromfaxdirect}{[Faxdurchwahl]}
 \setkomavar{fromurl}{[Internetadresse Institut]}
 
 \setkomavar{frombank}{%

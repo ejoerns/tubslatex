@@ -6,4 +6,6 @@
 \setkomavar{signature}{[Name]}
 
 \setkomavar{fromphonedirect}{[Durchwahl]}
+\setkomavar{fromfaxdirect}{[Faxdurchwahl]}
+
 \setkomavar{fromemail}{[E-Mail-Adresse]}
