@@ -20,6 +20,10 @@
 \newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 \newcommand{\newpackage}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 
+\chapter{Einleitung}
+
+\chapter{Installation}
+
 \chapter{Schnellstart}
 
 \paragraph{Dokumente}
@@ -213,9 +217,9 @@ Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit
   \Macro{showtubslogo}\OParameter{Position}
 \end{Declaration}
 
-Bewirkt Darstellung des TU-Logos im aktiven Layout. Die Option \PName{Position}
-erlaubt die Angabe der Darstellungsseite (links/rechts). Standardmäßig
-wird das Logo links bzw. innen dargestellt.
+Bewirkt Darstellung des TU-Siegelbandlogos im aktiven Layout.
+Die Option \PName{Position} erlaubt die Angabe der Darstellungsseite
+(links/rechts). Standardmäßig wird das Logo links bzw. innen dargestellt.
 
 \begin{Declaration}
   \Macro{showlogo}\PParameter{Logo}
@@ -224,6 +228,10 @@ wird das Logo links bzw. innen dargestellt.
 Bewirkt Darstellung eines Individuellen Logos im aktuellen Layout.
 \PName{Logo} kann dabei entweder einfacher Text oder auch ein 
 mit \Macro{includegraphics} eingebundenes Bild sein.
+
+Die Positionierung wird automatisch an die Positionierung des Siegelbandlogos
+angepasst. Wird dies links bzw. innen platziert, so steht das individuelle
+Logo rechts bzw. außen.
 
 \begin{Declaration}
   \Macro{showtopline}
