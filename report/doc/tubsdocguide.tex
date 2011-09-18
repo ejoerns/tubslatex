@@ -8,6 +8,7 @@
 \author{Enrico Jörns}
 \publishers{Institut fuer Lorem Ipsum} % to logo?
 
+\newcommand{\CD}{Corporate Design\xspace}
 
 \begin{document}
 
@@ -17,6 +18,7 @@
 
 
 \newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
+\newcommand{\newpackage}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 
 \chapter{Schnellstart}
 
@@ -269,10 +271,28 @@ Sie erlaubt folgende Einstellungen:
 }
 \end{desctable}
 
-\part{Basis-Elemente}
+\part{Basis-Pakete}
 
+Dieser Abschnitt befasst sich mit den Paketen, die von den jeweiligen
+\tubslatex-Anwenderklassen normalerweise automatisch geladen werden.
+Diese Pakete stellen einige grundlegende Funktionalitäten und Darstellungen
+für das \CD der TU Braunschweig dar. Dazu gehören zum einen das Paket
+\newpackage{tubscolors}, das alle Farben, die im \CD vorgesehen sind,
+definiert. Des weiteren gibt es das Paket \newpackage{tubslogo}, welches
+zur Darstellung des Siegelbandlogos dient. Abschließend ist noch das Paket
+\newpackage{nexus} zu erwähnen, welches die Hausschrift \emph{Nexus}
+lädt.
 
-\input{colors}  % Kapitel: 'Farben'
+All diese Pakete sind so konzipiert, dass sie auch unabhängig von den
+Klassen und Paketen aus \tubslatex eingesetzt werden können, auch wenn dies
+im Allgemeinen nicht erforderlich sein sollte.
+
+\include{colors}  % Kapitel: 'Farben'
+
+\include{logo}    % Kapitel: 'Logo'
+
+\include{nexus}   % Kapitel: 'Nexus'
+
 
 \input{glossary}
 

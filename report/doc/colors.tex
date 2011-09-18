@@ -1,5 +1,12 @@
 \chapter{Farben}
 
+\newcommand{\classoptionitem}[1][ ]{
+  \item[\mdseries{\ttfamily%
+    \textbackslash usepackage%
+    {[{\color{tuRed}#1}]}%
+    \{tubslogo\}}]\hfill\\
+}
+
 Die Farbdefinitionen in \tubslatex werden vom Paket \lstinline{tubscolors}
 zur Verfügung gestellt. Die folgende Beschreibung bezieht sich
 auf den Funktionsumfang des Paketes. Das Paket ist in allen verfügbaren
@@ -117,5 +124,9 @@ Für die Ausgabe in CMYK-Farben steht die Option \lstinline!cmyk! zur Verfügung
 Darüber hinaus gibt es noch ein RGB-Farbschema, das für die Ausgabe auf
 Beamern optimiert ist. Es kann über die Option \lstinline!rgbbeamer! geladen
 werden.
+
+\section{Verwendung als Paket}
+
+
 
 % Für weitere Details zu Verwendung der Argumente siehe folgender Abschnitt.
