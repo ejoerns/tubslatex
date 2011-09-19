@@ -1,0 +1,153 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2011 by Enrico Jörns
+% -----------------------------------
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.2 or later is part of all distributions of LaTeX
+% version 1999/12/01 or later.
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \iffalse
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{nexus}
+\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\usepackage{tabularx}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{beamerfontthemetubs.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
+%
+% \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
+%
+% \GetFileInfo{beamerfontthemetubs.sty}
+%
+% \DoNotIndex{ list of control sequences }
+%
+% \title{\textsf{beamerfontthemetubs} -- 
+%   beamer-Farbschema für \emph{tubslatex}\thanks{This document
+%   corresponds to \textsf{beamerfontthemetubs}~\fileversion,
+%   dated \filedate.}}
+% \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
+%
+% \maketitle
+%
+% \begin{abstract}
+%   Diese Datei stellt das Farbschema für latex-beamer-Präsentationen im
+%   Corporate Design dar.
+% \end{abstract}
+%
+% \StopEventually{\PrintIndex}
+%
+% \section{Implementierung}
+%
+%
+%    \begin{macrocode}
+%<*fonttheme>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ProvidesPackage{beamerfontthemetubs}[2010/05/18 v1.0.1 Font-Theme CD TU-Braunschweig]
+%
+\RequirePackage{ifthen}
+% font packages
+\PassOptionsToPackage{T1}{fontenc}
+\RequirePackage{fontenc}
+\RequirePackage[OT1]{eulervm}% don't know why OT1 is required here, but it is.
+\RequirePackage{uarial}
+\RequirePackage{type1cm}% prevent OT1 font size warnings
+
+\newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
+%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
+\DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
+%
+\ProcessOptionsBeamer\relax
+
+% Smaller fonts
+\newcommand\micro{%
+  \tiny%
+  \@tempdima=\f@size pt%
+  \@tempdima=0.8333333\@tempdima%
+  \@tempdimb=1.2\@tempdima%
+  \@setfontsize\micro{\the\@tempdima}{\the\@tempdimb}%
+}
+\newcommand\nano{%
+  \micro%
+  \@tempdima=\f@size pt%
+  \@tempdima=0.8333333\@tempdima%
+  \@tempdimb=1.2\@tempdima%
+  \@setfontsize\nano{\the\@tempdima}{\the\@tempdimb}%
+}
+
+\setbeamerfont*{page number in sidebar}{size=\small,series=\bfseries}
+\setbeamerfont*{title}{series=\bfseries,size=\large}
+\setbeamerfont*{subtitle}{series=\mdseries,size=\normalsize}
+\setbeamerfont*{author}{series=\mdseries,size=\footnotesize}
+
+\setbeamerfont*{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont*{footline}{series=\mdseries,size=\micro}
+
+
+\setbeamerfont*{section in toc}{series=\bfseries,size=\large}
+\setbeamerfont*{subsection in toc}{series=\mdseries,size=\normalsize}
+
+\setbeamerfont{footlinelogo}{size=\scriptsize}%
+
+% Set the font for the running toc dependig on option tinytocinheader
+\ifthenelse{\boolean{tinytocinheader}}{%
+  \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}%
+}{%
+  \setbeamerfont*{headertoc}{series=\mdseries,size=\micro}%
+}
+%    \begin{macrocode}
+%</fonttheme>
+%    \end{macrocode}
+%
+% \Finale
+\endinput
+%
+
