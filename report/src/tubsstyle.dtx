@@ -564,14 +564,24 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\if@tubs@shologo}
+% If-Abfrage, um testen zu können, ob Logo auf aktuellem Layout gesetzt wurde
+%    \begin{macrocode}
+\newif\if@tubs@showlogo\@tubs@showlogofalse
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macro}{\showtubslogo}
 % \oarg{pos}\par
 % Benutzer-Kommando: Ermöglicht das Darstellen des TU-Logos.
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
-\newcommand{\showtubslogo}[1][left]{\renewcommand{\tubs@draw@tubslogo}{%
-  \g@addto@macro{\@next@shipout}{\tubs@tubslogo[#1]}}}
+\newcommand{\showtubslogo}[1][left]{%
+  \@tubs@showlogotrue%
+  \renewcommand{\tubs@draw@tubslogo}{%
+    \thispagestyle{empty}%
+    \g@addto@macro{\@next@shipout}{\tubs@tubslogo[#1]}}%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -768,20 +778,23 @@
 %\marg{options}\par
 % Layout-Voreinstellungen, Optionen, etc.
 %    \begin{macrocode}
+% Makro für alle Kommandos, die im shipout zwingend als erstes
+% ausgeführt werden müssen
 \newcommand*{\@@next@shipout}{}
+%
 \newcommand{\@layout@pre}[1]{%
+  \@tubs@showlogofalse
   \def\tubs@draw@topline{}
   \def\tubs@draw@tubslogo{}
   \def\tubs@draw@logo{}
   \def\tubs@draw@designhelper{}
   \def\@next@shipout{}
-%   \def\@next@shipout@preset{}
   \def\@@next@shipout{} % Makro to set content after keys
+  \def\@layout@preset{}
   \setcounter{tubs@yseg@cnt}{1}
   \setkeys{bglayout}{pages=all,sender=top}
   \setkeys{bglayout}{#1}
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
-%   \g@addto@macro{\@next@shipout}{\@next@shipout@preset}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -913,7 +926,6 @@
 \newenvironment{gausspage}[1][]{%
   \tubsboxsetup[#1]%TODO...
   \@layout@pre{pages=single,#1}
-%   \thispagestyle{empty}%
   \sffamily
 }{%
   \@layout@post
@@ -940,9 +952,13 @@
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
   % TODO...
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \edef\@tubs@arg{[sender=bottom]{1}{\thetubs@yseg@cnt}{6}{#2}}
+      \edef\@tubs@arg{[sender=bottom]{1}{\thetubs@yseg@cnt}{6}{#2}}
   }{%
-    \edef\@tubs@arg{{1}{\thetubs@yseg@cnt}{6}{#2}}
+    \if@tubs@showlogo%
+      \edef\@tubs@arg{[logosep]{1}{\thetubs@yseg@cnt}{6}{#2}}%
+    \else%
+      \edef\@tubs@arg{{1}{\thetubs@yseg@cnt}{6}{#2}}
+    \fi%
   }
   \bgelement[#1]{#2}
   % Erzeuge gausbox
