@@ -384,6 +384,36 @@
 %</poster>
 %    \end{macrocode}
 %
+%
+%    \begin{macrocode}
+%<*poster>
+%    \end{macrocode}
+%
+%    \begin{key}{tubsdoc.dtx}{style}
+% Diese Option erzeugt Formatierung entsprechend der Konventionen für
+% wissenschaftliche Plakate
+%    \begin{macrocode}
+\DeclareOptionX{style}{%
+  \ifthenelse{\equal{#1}{simple}}{%
+    \AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
+    \AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
+  }{\ifthenelse{\equal{#1}{none}}{%
+    \relax
+  }{%
+    \ClassError{leaflet.cls}{%
+      Invalid parameter for option 'style'
+    }{%
+      Allowed parameters: 'simple', 'none'
+    }
+  }}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{macrocode}
+%</poster>
+%    \end{macrocode}
+%
 %    \begin{key}{tubsdoc.dtx}{sender}
 %    \begin{macrocode}
 \DeclareOptionX{sender}{%
@@ -410,6 +440,7 @@
 %    \begin{macrocode}
 %<report>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
 %<article>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
+%<leaflet>\ExecuteOptionsX{langpaper,cmyk}
 \ProcessOptionsX*\relax
 % Namen für Fontsize-Dateien festlegen
 \providecommand{\@fontsizefilebase}{}
@@ -437,6 +468,14 @@
 \RequirePackage{tubslogo}
 \RequirePackage{tubsstyle}
 %    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*leaflet>
+\renewcommand*\foldmarkrule{.3mm}
+\renewcommand*\foldmarklength{5mm}
+%</leaflet>
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</body>
 %    \end{macrocode}
