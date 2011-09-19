@@ -784,6 +784,7 @@
 % Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
 \newenvironment{@scifibox}[3][\relax]{%
+  \tubs@gb@setorig
   % Argumente sichern
   \def\@current@rowheight{#1}
   \def\@current@height{(#2)}%
@@ -804,8 +805,8 @@
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \begin{textblock*}{\@current@width}(%
-      -0.5\tubspage@borderwidth+\tubs@sb@box@xpos,%
-      -\tubspage@senderheight+\tubs@sb@box@ypos)%
+      -\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      -\tubspage@borderwidth+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \colorbox{tuWhite}{%
           \hspace{0.5\tubs@sb@padding}%
@@ -815,8 +816,8 @@
     \end{textblock*}%
   }{%
     \begin{textblock*}{\@current@width}(%
-      -0.5\tubspage@borderwidth+\tubs@sb@box@xpos,%
-      -1\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
+      -\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \colorbox{tuWhite}{%
           \hspace{0.5\tubs@sb@padding}%
