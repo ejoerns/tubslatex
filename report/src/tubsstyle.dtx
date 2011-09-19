@@ -228,6 +228,9 @@
 %    \begin{macro}{\tubs@tubslogo@calcpos}
 % \marg{side}\marg{xlenghtvar}\marg{ylengthvar}\par
 % Berechnet Position des zu platzierenden Siegelbandlogos.
+% |side| legt die Positionierungsseite fest und sollte einer
+% der Werte 'links' oder 'rechts' sein. Mit |xlengthvar| und |ylengthvar|
+% werden Längen angegeben in die das berechnete Ergebnis gespeichert wird.
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo@calcpos[3]{%
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
@@ -261,12 +264,14 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% Merker für horizontale Positionierung und Plain-Darstellung des Siegelbandlogos
 %    \begin{macrocode}
 \newif\iftubslogo@right\tubslogo@rightfalse
 \newif\iftubslogo@plain\tubslogo@plainfalse
 %    \end{macrocode}
 %
 %    \begin{key}{tubslogo}{left}
+% Logo-Platzierung links bzw. innen bei zweiseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{left}[true]{%
   \tubslogo@rightfalse%
@@ -275,8 +280,27 @@
 %    \end{key}
 %
 %    \begin{key}{tubslogo}{right}
+% Logo-Platzierung rechts bzw. außen bei zweiseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{right}[true]{%
+  \tubslogo@righttrue%
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubslogo}{inside}
+% Logo-Platzierung innen bzw. links bei einseitigem Layout
+%    \begin{macrocode}
+\define@key{tubslogo}{inside}[true]{%
+  \tubslogo@rightfalse%
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubslogo}{outside}
+% Logo-Platzierung außen bzw. rechts bei einseitigem Layout
+%    \begin{macrocode}
+\define@key{tubslogo}{outside}[true]{%
   \tubslogo@righttrue%
 }
 %    \end{macrocode}
