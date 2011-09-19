@@ -138,11 +138,20 @@
 \RequirePackage{ifthen}
 %    \end{macrocode}
 %
+%    \begin{key}{}{twoside}
 % Es werden zur Zeit keine Optionen zur Verfügung gestellt
 %    \begin{macrocode}
 \newboolean{tubsstyle@twoside}\setboolean{tubsstyle@twoside}{false}
 \DeclareOptionX{twoside}{%
   \setboolean{tubsstyle@twoside}{true}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% Fehler bei unbekannter Option
+%    \begin{macrocode}
+\DeclareOption*{%
+  \PackageWarning{tubsstyle}{Unknown option `\CurrentOption'}{}%
 }
 %    \end{macrocode}
 %
@@ -201,6 +210,7 @@
 % \subsection{Elemente -- Interne Befehle}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+% \subsubsection{Trennline}
 %
 %    \begin{macro}{\tubs@topline}
 % Kommando, um eine horizontale Linie am oberen Rade des Kommunikationsbereichs
@@ -224,6 +234,10 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
+%
+% \subsubsection{Siegelbandlogo}
+%
 %
 %    \begin{macro}{\tubs@tubslogo@calcpos}
 % \marg{side}\marg{xlenghtvar}\marg{ylengthvar}\par
@@ -263,6 +277,7 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
 %
 % Merker für horizontale Positionierung und Plain-Darstellung des Siegelbandlogos
 %    \begin{macrocode}
@@ -307,6 +322,7 @@
 %    \end{key}
 %
 %    \begin{key}{tubslogo}{plain}
+% Darstellung des mit einfarbigen Hintergrund, ohne Grafik
 %    \begin{macrocode}
 \define@boolkey{tubslogo}{plain}[true]{%
   \ifKV@tubslogo@plain%
@@ -572,7 +588,7 @@
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Optionen für bgelement
+% \subsection{Optionen für bgelement}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macro}{\tubs@bg@cmd}
@@ -683,12 +699,14 @@
 %    \end{macro}
 %
 %
-%    \begin{key}{layout}{sender}
+% \subsubsection{bglayout-Optionen}
+%
+%    \begin{key}{bglayout}{sender}
 % Option bestimmt Position des Kommunikationsbereichs und Orientierung
 % des Rasters.\par
 % Diese Information wird im shipout gespeichert!
 %    \begin{macrocode}
-\define@key{layout}{sender}{%
+\define@key{bglayout}{sender}{%
   \ifthenelse{\equal{#1}{bottom}}{%
     \setboolean{tubsstyle@bottomsender}{true}
   }{%
@@ -706,12 +724,12 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{layout}{pages}
+%    \begin{key}{bglayout}{pages}
 % Option legt fest auf welchen Seiten das definierte Layout zu sehen
 % sein soll. Mögliche Werte sind |all| für alle folgenden Seiten oder |single|
 % für Darstellung nur auf der aktuellen Seite.
 %    \begin{macrocode}
-\define@key{layout}{pages}[all]{%
+\define@key{bglayout}{pages}[all]{%
   \ifthenelse{\equal{#1}{single}}{%
     \setboolean{tubsstyle@singlepage}{true}
   }{%
@@ -721,12 +739,12 @@
 %    \end{macrocode}
 %    \end{key}
 %
-% \begin{key}{layout}{bgcolor}
+% \begin{key}{bglayout}{bgcolor}
 % Mit dieser Option kann der komplette Kommunikationsbereich mit einer
 % gewünschten Hintergrundfarbe gefüllt werden. Wird kein Wert mit übergeben,
 % so wird die Farbe tuBlueLight benutzt.
 %    \begin{macrocode}
-\define@key{layout}{bgcolor}[tuBlueLight]{%
+\define@key{bglayout}{bgcolor}[tuBlueLight]{%
   \g@addto@macro{\@@next@shipout}{%
     \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
       \put(0,\LenToUnit{\tubspage@senderheight}){{%
@@ -746,18 +764,6 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%%%
-% \begin{key}{layout}{scifiposter}
-% Option ändert das Layout so wie es für wissenschaftliche Poster vorgegeben
-% ist.
-%    \begin{macrocode}
-\define@key{layout}{scifiposter}[]{%
-  \relax
-}
-%    \end{macrocode}
-%    \end{key}
-%
-%
 %    \begin{macro}{\@layout@pre}
 %\marg{options}\par
 % Layout-Voreinstellungen, Optionen, etc.
@@ -772,8 +778,8 @@
 %   \def\@next@shipout@preset{}
   \def\@@next@shipout{} % Makro to set content after keys
   \setcounter{tubs@yseg@cnt}{1}
-  \setkeys{layout}{pages=all,sender=top}
-  \setkeys{layout}{#1}
+  \setkeys{bglayout}{pages=all,sender=top}
+  \setkeys{bglayout}{#1}
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
 %   \g@addto@macro{\@next@shipout}{\@next@shipout@preset}
 }
@@ -801,7 +807,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\layout}
-% \oarg{options}\marg{layout}\par
+% \oarg{options}\marg{bglayout}\par
 % Legt das darzustellende Layout mit den übergebenen Optionen (|options|)
 % und dem übergebenem Inhalt (|layout|) fest.
 %    \begin{macrocode}
@@ -862,7 +868,7 @@
 %    \end{macro}
 %
 % \begin{macro}{\defbglayout}
-% \oarg{options}\marg{name}\marg{layout}\par
+% \oarg{options}\marg{name}\marg{bglayout}\par
 % Erstellt ein neues Layouts.\par
 % Layout und Optionen werden unter den Makros
 % |\@bg@layout@options@|\emph{name} und |\@bg@layout@|\emph{name}
