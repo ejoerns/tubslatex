@@ -1,0 +1,40 @@
+%%
+%% Copyright (C) 2011 by Enrico Jörns
+%%
+
+\input docstrip.tex
+\keepsilent
+
+% \usedir{./build}
+
+
+\preamble
+
+This is a generated file.
+
+Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+Copyright (C) 2011 by Enrico Jörns <e.joerns@tu-bs.de> and Martin Bäker
+
+This file may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.2 of this license or (at your option) any later
+version. The latest version of this license is in:
+
+  http://www.latex-project.org/lppl.txt
+
+and version 1.2 or later is part of all distributions of
+LaTeX version 1999/12/01 or later.
+
+\endpreamble
+
+% --- Prevent overwrite questions ---
+\askforoverwritefalse
+
+% --- File generation ---
+
+\generate{\file{nexus.sty}{%
+  \from{nexus.dtx}{package}
+}}
+
+
+\endbatchfile
