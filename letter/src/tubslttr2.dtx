@@ -95,14 +95,28 @@
 %refline=nodate In der Geschäftszeile erscheint kein Datum
 % NOTE: the option value 'nodate' for 'refline' is supported only in
 %       newer versions of KOMA-Skript.
+% Versionstest, refline=nodate wird nur bei aktueller Version geladen
 %    \begin{macrocode}
-\PassOptionsToClass{%
-  tubs,%
-  BCOR=0cm,%
-  pagenumber=botleft,%
-  refline=nodate,%
-  backaddress=plain%  Keine Linie unterhalb Rücksendeadresse
-}{scrlttr2}
+\RequirePackage{scrbase}
+\newif\if@OldKomaVersion
+\@ifpackagelater{scrbase}{2011/06/16}{%
+  \PassOptionsToClass{%
+    tubs,%
+    BCOR=0cm,%
+    pagenumber=botleft,%
+    refline=nodate,%
+    backaddress=plain%  Keine Linie unterhalb Rücksendeadresse
+  }{scrlttr2}
+  \@OldKomaVersionfalse
+}{%
+  \PassOptionsToClass{%
+    tubs,%
+    BCOR=0cm,%
+    pagenumber=botleft,%
+    backaddress=plain%  Keine Linie unterhalb Rücksendeadresse
+  }{scrlttr2}
+  \@OldKomaVersiontrue
+}
 %    \end{macrocode}
 %
 %    \begin{key}{}{mono}
@@ -138,8 +152,12 @@
 \ProcessOptionsX
 %    \end{macrocode}
 %
+% Lade Klasse, Versionstest und Hack für Datum
 %    \begin{macrocode}
 \LoadClass{scrlttr2}[2011/06/16]
+\@ifpackagelater{scrbase}{2011/06/16}{}{%
+%   \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
+}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -209,9 +227,14 @@
 %
 % Positionierung des Seitenkopfs (Logo und rote Linie)
 %    \begin{macrocode}
-\@setplength{firstheadhpos}{1.75cm}
+\@ifpackagelater{scrbase}{2011/06/16}{%
+  \@setplength{firstheadhpos}{1.75cm}
+  \@setplength{firstheadwidth}{18.5cm}
+}{%
+  \@setplength{firstheadwidth}{\paperwidth}
+  \@addtoplength{firstheadwidth}{-3.5cm}
+}
 \@setplength{firstheadvpos}{1.75cm}
-\@setplength{firstheadwidth}{18.5cm}
 %    \end{macrocode}
 %
 % Vergrößerung der Rückaddresszeile (da zweizeilig)
@@ -235,7 +258,9 @@
 %
 % Positionierung der Fußzeile (erste Seite).
 %    \begin{macrocode}
-\@setplength{firstfoothpos}{2.45cm}
+\@ifpackagelater{scrbase}{2011/06/16}{%
+  \@setplength{firstfoothpos}{2.45cm}
+}{}
 \@setplength{firstfootvpos}{27.5cm}
 %    \end{macrocode}
 %
@@ -283,6 +308,23 @@
 \setkomavar{fromtown}{Braunschweig}
 %    \end{macrocode}
 %
+% Kompatiblitätshack für KOMA-Skript-Version < 3.09a
+% Der Inhalt von date wird bei \opening in eine savebox gespeichert
+% und so invariant in die Koma-Variable fixdate gepackt.
+% Danach wird die Variable date gelöscht.
+%    \begin{macrocode}
+\if@OldKomaVersion%
+  \newkomavar{fixdate}
+  \newsavebox{\@fixdate}
+  \let\oldopening\opening
+  \renewcommand\opening[1]{%
+    \sbox{\@fixdate}{\footnotesize\sffamily\usekomavar{date}}
+    \setkomavar{fixdate}{\usebox{\@fixdate}}
+    \setkomavar{date}{}
+    \oldopening{#1}
+  }
+\else\relax\fi
+%    \end{macrocode}
 %
 % Setzen der Schriftattribute
 %    \begin{macrocode}
@@ -331,11 +373,18 @@
 %
 % Briefkopf: Siegelband und rote Linie
 %    \begin{macrocode}
-\setkomavar{firsthead}{%
+\newlength{\@fheadwidth}
+\firsthead{%
   \color{tuRed}%
   \rule[-0.75\tubslogoHeight]{18.5cm}{1.2pt}\\[-0.75\tubslogoHeight]%
   \tubslogo\\[-1.4\tubslogoHeight]%
-  \parbox[b][2cm]{\textwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}%
+  \if@OldKomaVersion%
+    \setlength{\@fheadwidth}{\textwidth}
+    \addtolength{\@fheadwidth}{1cm}
+    \parbox[b][2cm]{\@fheadwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}%
+  \else%
+    \parbox[b][2cm]{\textwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}%
+  \fi%
 }
 %    \end{macrocode}
 %
@@ -371,7 +420,14 @@ Deutschland\\
 \usekomavar{fromemail}\\
 \usekomavar{fromurl}\\
 ~\\~\\
+% \@ifpackagelater{scrbase}{2011/06/16}{%
+\if@OldKomaVersion%
+Datum: \usekomavar{fixdate}\\
+\else%
 Datum: \usekomavar{date}\\
+\fi%
+% }{%
+% }%
 ~\\%TODO: better control for placement of newlines if opts not used
 \ifkomavarempty{yourref}{\relax}{~\\Ihr Zeichen: \usekomavar{yourref}\\}
 \ifkomavarempty{yourmail}{\relax}{Ihre Nachricht vom: \usekomavar{yourmail}\\}
@@ -407,7 +463,7 @@ Datum: \usekomavar{date}\\
 %
 % Kopfzeile auf Folgeseiten
 %    \begin{macrocode}
-\setkomavar{nexthead}{\footnotesize\sffamily%
+\nexthead{\footnotesize\sffamily%
   \vbox to\headheight{\parbox{12.2cm}{\usekomafont{fromaddress}%
     Technische Universit\"at Braunschweig\\
     {\bfseries\usekomavar{frominstitute}}\\
@@ -418,7 +474,13 @@ Datum: \usekomavar{date}\\
 %
 % Setze Fußzeilen für erste und Folgeseiten
 %    \begin{macrocode}
-\@setplength{firstfoothpos}{2.45cm}
+\@ifpackagelater{scrbase}{2011/06/16}{%
+  \@setplength{firstfoothpos}{2.45cm}
+}{% Hack für alte Klasse:
+  % doppelte Breite des linken Randes von Seitenbreite abziehen
+  \@setplength{firstfootwidth}{\paperwidth}
+  \@addtoplength{firstfootwidth}{-4.9cm}%
+}
 \@setplength{firstfootvpos}{27.5cm}
 \RequirePackage{lastpage}
 \firstfoot{Seite \thepage\ von \pageref{LastPage}}
