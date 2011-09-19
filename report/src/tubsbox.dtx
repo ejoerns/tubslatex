@@ -209,6 +209,23 @@
 %    \end{key}
 %
 %
+% \begin{key}{tubsbox.sty}{addtopsep}
+% Fügt zusätzlichen Top-Innenabstand hinzu. Wenn kein Wert angegeben, wird
+% doppelte Rahmenstärke hinzugefügt. (Dies ist die Standardeinstellung für
+% die erste tubsbox auf einer Seite mit Siegelbandlogo.)
+%    \begin{macrocode}
+\newcommand*\tubs@gb@topsep{0mm}
+\define@boolkey{gaussbox}{logosep}[true]{%
+  \ifKV@gaussbox@logosep%
+    \renewcommand*\tubs@gb@topsep{2\tubspage@borderwidth}
+  \else%
+    \renewcommand*\tubs@gb@topsep{0mm}
+  \fi%
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%
 % \begin{key}{tubsbox.sty}{bgcolor}
 %   Führt dazu, dass \emph{innerhalb} der gaussbox ein zusätzlicher Rand
 %   in Breite der Marginale eingefügt wird.
@@ -348,6 +365,7 @@
 \newenvironment{gaussbox}[5][bgcolor=none]{%
 \setkeys*{tubsbox.sty}{#1}
 \tubs@gb@setorig
+\setkeys*{gaussbox}{logosep=false,#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
@@ -375,7 +393,8 @@
 %    \begin{macrocode}
 \ifnum#3=1
   \setlength{\tubs@gb@topmargin}{\tubspage@borderwidth}
-  \setlength{\tubs@gb@toppadding}{3\tubspage@borderwidth}
+  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
+  \addtolength\tubs@gb@toppadding\tubs@gb@topsep
   \setlength{\tubs@gb@bottommargin}{0mm}
 \else
   \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
@@ -390,7 +409,8 @@
 \else
   \setlength{\tubs@gb@bottommargin}{0mm}
 \fi%
-\setkeys*{gaussbox}{#1}
+
+
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}
