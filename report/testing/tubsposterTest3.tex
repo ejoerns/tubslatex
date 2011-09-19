@@ -14,77 +14,59 @@
 \usepackage{setspace}
 \usepackage{etex}
 
-\defbgtemplate{2}{%
-  \colorframe{7}{tuBlueLight80}
-  \colorframe{1}{tuBlueDark}
-  \placetubslogo{left}
-  \placelogo{\includegraphics{dummy_institut.jpg}}
-}{myfirsttemplate}
+\defbglayout{myfirsttemplate}{%
+  \bgelement[bgcolor=tuBlueLight80]{7}
+  \bgelement[bgcolor=tuBlueDark]{1}
+  \showtubslogo[left]
+  \showlogo{\includegraphics{dummy_institut.jpg}}
+}
 
-\defbgtemplate{4}{%
-  \colorframe{2}{tuGreenLight80}
-  \colorframe{2}{tuGreenLight60}
-  \colorframe{2}{tuGreenLight40}
-  \colorframe{2}{tuBlueDark}
-%   \placetubslogo{left}
-}{mysecondtemplate}
+\defbglayout{mysecondtemplate}{%
+  \bgelement[bgcolor=tuGreenLight80]{2}
+  \bgelement[bgcolor=tuGreenLight60]{2}
+  \bgelement[bgcolor=tuGreenLight40]{2}
+  \bgelement[bgcolor=tuBlueDark]{2}
+%   \showtubslogo{left}
+}
 
-\defbgtemplate{3}{%
-  \colorframe{2}{tuSecondary100}
-  \colorframe{3}{tuSecondary80}
-  \colorframe{3}{tuSecondary60}
-}{defaultBlue}
+\defbglayout{defaultBlue}{%
+  \bgelement[bgcolor=tuSecondary100]{2}
+  \bgelement[bgcolor=tuSecondary80]{3}
+  \bgelement[bgcolor=tuSecondary60]{3}
+}
 
-\defbgtemplate{1}{%
-  \emptyframe{8}
-  \topline
-  \placetubslogo{left}
-}{defaultPlain}
+\defbglayout{defaultPlain}{%
+  \showtopline
+  \showtubslogo[right]
+}
 
-\defbgtemplate{3}{%
-  \colorframe{3}{tuGray20}
-  \colorframe{2}{tuRed80}
-  \colorframe{3}{tuRed100}
-  \placetubslogo{left}
-}{defaultRedOne}
+\defbglayout{defaultRedOne}{%
+  \bgelement[bgcolor=tuGray20]{3}
+  \bgelement[bgcolor=tuRed80]{2}
+  \bgelement[bgcolor=tuRed100]{3}
+  \showtubslogo[left]
+}
 
-\defbgtemplate{3}{%
-  \colorframe{2}{tuRed100}
-  \colorframe{3}{tuGray20}
-  \colorframe{3}{tuRed40}
-  \placetubslogo{left}
-}{defaultRedTwo}
-
-
-
-\newenvironment{posterpage}{%
-%   \stepcounter{posterpagecount}
-}{}
-
-
-\newcounter{posterpagecount}\setcounter{posterpagecount}{0}
-\newcounter{posterrowcount}\setcounter{posterrowcount}{0}
-
-
-% \newenvironment{posterrow}[1]{%
-%   \stepcounter{posterrowcount}
-%   \edef\framename{mynameP\theposterpagecount F\theposterrowcount x}
-%   \framename
-%   \expandafter\newdynamictubsframe\expandafter{\framename}{1}{2}{1}{6}
-% }{}
-\def\posterrow{}
-% \def\endposterrow{}
+\defbglayout{defaultRedTwo}{%
+  \bgelement[bgcolor=tuRed100]{2}
+  \bgelement[bgcolor=tuGray20]{3}
+  \bgelement[bgcolor=tuRed40]{3}
+  \showtubslogo[left]
+}
 
 
 \begin{document}
 
-% \usebgtemplate[1]{defaultPlain}
-\usebgtemplate[2]{defaultRedOne}
-\usebgtemplate[3]{defaultRedTwo}
-\usebgtemplate[4]{myfirsttemplate}
-\usebgtemplate[5]{mysecondtemplate}
-\begin{tubsbox}[tuBlueLight]{0}{1}{6}{1}
-~ Dies ist der Inhatl
+% \usebglayout[1]{defaultPlain}
+
+
+
+\usebglayout{mysecondtemplate}
+\begin{tubsbox}{1}{1}{6}{2}
+~ Dies ist der Inhalt
+\end{tubsbox}
+\begin{tubsbox}{1}{3}{6}{2}
+~ Dies ist der Inhalt
 \end{tubsbox}
 % \begin{posterpage}
 %   \begin{posterrow}{3}
@@ -97,14 +79,19 @@
 % %     \newdynamicframe{1cm}{2cm}{3cm}{4cm}
 %   \end{posterrow}
 % \end{posterpage}
-
-
+\usebglayout{mysecondtemplate}
 ~
 \newpage
+\usebglayout{defaultRedOne}
 ~
 \newpage
+\usebglayout{defaultRedTwo}
 ~
 \newpage
+\usebglayout{myfirsttemplate}
+~
+\newpage
+\usebglayout{defaultPlain}
 ~
 \newpage
 ~

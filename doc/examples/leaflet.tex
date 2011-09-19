@@ -9,47 +9,15 @@ notumble,
 %%debug,
 %%nospecialtricks,
 %%draft,
-langpaper]{tubsleaflet}
-
-\usepackage{lipsum}
-
-%TODO
-\parindent0mm
-\parskip\bigskipamount
-
-%\setcounter{secnumdepth}{1}
-
-\renewcommand*\foldmarkrule{.3mm}
-\renewcommand*\foldmarklength{5mm}
+]{tubsleaflet}
 
 \usepackage[utf8]{inputenc}
 \usepackage[LY1]{fontenc}
-\makeatletter
-\newif\iftubsLL@simplelayout
-% % \tubsLL@simplelayouttrue
-\iftubsLL@simplelayout
-\AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
-\AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
-\fi
-\makeatother
 
-\usepackage{shortvrb}
-\MakeShortVerb{\|}
-\usepackage{url}
-\usepackage{graphicx}
-% \usepackage[dvipsnames,usenames]{color}
-\definecolor{LIGHTGRAY}{gray}{.9}
+\usepackage{lipsum}
 
-%%%%\renewcommand{\descfont}{\normalfont}
-\newcommand\Lpack[1]{\textsf{#1}}
-\newcommand\Lclass[1]{\textsf{#1}}
-\newcommand\Lopt[1]{\texttt{#1}}
-\newcommand\Lprog[1]{\textit{#1}}
-
-\newcommand*\defaultmarker{\textsuperscript\textasteriskcentered}
 
 \begin{document}
-
 
 \begin{gausspage}
   \showtubslogo
@@ -78,7 +46,8 @@ langpaper]{tubsleaflet}
     \vspace*{3.5cm}
     
     \fboxsep0mm\colorbox{tuGray20}{\parbox[b][4.5cm]{\textwidth}{~}}\\[2ex]
-    \usecdfont{caption} Bildunterschrift 7 pt Kisuali antux e weimi Kameran Quol 
+    %\usecdfont{caption}
+    Bildunterschrift 7 pt Kisuali antux e weimi Kameran Quol 
     damnarin Tropi zu klenne perdi Utilira regau socht mol sunt. 
   \end{segment}
 \end{gausspage}
