@@ -195,20 +195,8 @@
 % Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
 % gesetzten Boxen bzw. ihren Höhen berechnet.
 %    \begin{macrocode}
-\newenvironment{@posterrow}[2][]{%
-  % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
-  % TODO...
-  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \edef\@tubs@gbarg{[logosep,sender=bottom]{1}{\thetubs@yseg@cnt}{6}{#2}}
-  }{%
-    \edef\@tubs@gbarg{[logosep]{1}{\thetubs@yseg@cnt}{6}{#2}}
-  }
-  \bgelement[#1]{#2}
-  % Erzeuge tubsbox
-  \expandafter\gaussbox\@tubs@gbarg
-}{%
-  \endgaussbox
-}
+\let\@posterrow\segment
+\let\end@posterrow\endsegment
 %    \end{macrocode}
 %    \end{environment}
 %
