@@ -249,10 +249,10 @@
     }%
   }{%
     \ifthenelse{\equal{#1}{left}}{%
-      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth}%
+      \setlength{\tmp@posx}{\paperwidth-\tubslogoWidth-\tubspage@bcor}%
       \setboolean{tubsstyle@logoright}{true}%
     }{%
-      \setlength{\tmp@posx}{\tubspage@bcor}%
+      \setlength{\tmp@posx}{0cm}%
     }%
   }%
   \setlength{#2}{\tmp@posx}%
