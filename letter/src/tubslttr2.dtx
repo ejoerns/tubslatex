@@ -180,12 +180,21 @@
 \monthyearsepgerman{}{}
 %    \end{macrocode}
 %
-% Allgemeine Anpassung der Seitengeometrie, entsprechend der CD-Vorlage
+% Allgemeine Anpassung der Seitengeometrie, entsprechend der CD-Vorlage.
+% Minimal geometry-Version für |\newgeometry| ist 5.0
 %    \begin{macrocode}
-\RequirePackage{geometry}
+\RequirePackage{geometry}[2010/02/12]
+\newif\if@OldGeometryVersion
+\@OldGeometryVersionfalse
+\@ifpackagelater{geometry}{2010/02/12}{%
+  \@OldGeometryVersionfalse%
+}{%
+  \@OldGeometryVersiontrue%
+}
 \geometry{%
   left=2.45cm,%
   top=3.3cm,%
+  bottom=3.5cm,%
   headsep=1cm,%
   headheight=1.2cm,%
   textwidth=12.2cm
@@ -194,14 +203,22 @@
 %
 % Auf Folgeseiten (nach der ersten Seite) muss der Textbereich verbreitert
 % werden, da die Spalte mit den Absenderinformationen wegfällt.
+% Manueller Hack, wenn geometry-Version < 5.0 ist.
 %    \begin{macrocode}
 \RequirePackage{afterpage}
-\newcommand*{\@newGeo}{%
-  \clearpage\newgeometry{%
-    left=2.45cm,%
-    textwidth=16cm,%
-    bottom=3.5cm}%
-}
+\if@OldGeometryVersion%
+  \newcommand*{\@newGeo}{%
+    \setlength\textwidth{16cm}\onecolumn
+    \onecolumn
+  }
+\else%
+  \newcommand*{\@newGeo}{%
+    \newgeometry{%
+      left=2.45cm,%
+      textwidth=16cm,%
+      bottom=3.5cm}%
+  }
+\fi%
 \afterpage{\aftergroup\@newGeo}
 %    \end{macrocode}
 %
@@ -309,7 +326,7 @@
 %    \end{macrocode}
 %
 % Kompatiblitätshack für KOMA-Skript-Version < 3.09a
-% Der Inhalt von date wird bei \opening in eine savebox gespeichert
+% Der Inhalt von date wird bei |\opening| in eine savebox gespeichert
 % und so invariant in die Koma-Variable fixdate gepackt.
 % Danach wird die Variable date gelöscht.
 %    \begin{macrocode}
