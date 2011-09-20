@@ -1,9 +1,9 @@
 \setkomavar{fromlogo}{\includegraphics[height=0.9\tubslogoHeight]{institut}}
-%\setkomavar{fromlogo}{Institut für Unkreativität\\ und Schreibschwäche}
+%\setkomavar{fromlogo}{Institut f\"ur Unkreativit\"at\\ und Schreibschw\"ache}
 
 \setkomavar{frominstitute}{[Institutsname]}
 
-\setkomavar{fromstreet}{[Straße]}
+\setkomavar{fromstreet}{[Stra\ss e]}
 \setkomavar{fromzipcode}{[PLZ]}
 %\setkomavar{fromtown}{[Stadt]}
 
