@@ -1,4 +1,11 @@
 # This makefile is made to generate  documentation from all .dtx files
+#
+# Benutzung:
+#   Aufruf von 'make' erzeugt Verzeichnisbaum
+#   Aufruf von 'make zip' erzeugt gepackte zipp
+#
+
+VERSION = 0.3-alpha1
 
 BASEDIR=../..
 LATEXGEN = *.aux *.log *.ins *.idx *.out *.glo *.toc
@@ -116,8 +123,13 @@ doc-move:
 	mv *.pdf doc/latex/tubs/.
 
 
+# zippen
+zip:
+	zip -r tubslatex_$(VERSION).zip tex doc fonts
+
 # Aufräumen
 clean:
 	rm -rf tex
 	rm -rf doc
 	rm -rf fonts
+	rm -rf tubslatex_$(VERSION).zip

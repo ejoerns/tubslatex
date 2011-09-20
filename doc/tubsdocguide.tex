@@ -3,16 +3,19 @@
 \input{preamble}
 
 %opening
-\title{Das CorporateDesign in \LaTeX}
+\title{\tubslatex\ -- Das CorporateDesign in \LaTeX}
 \subtitle{Anleitung und Dokumentation}
 \author{Enrico Jörns}
-\publishers{Institut fuer Lorem Ipsum} % to logo?
+\publishers{Presse und Kommunikation} % to logo?
 
 \newcommand{\CD}{Corporate Design\xspace}
 
 \begin{document}
 
 \maketitle
+
+\input{preface}
+
 \pagestyle{scrheadings}
 \tableofcontents
 
@@ -20,11 +23,11 @@
 \newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 \newcommand{\newpackage}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 
-\chapter{Einleitung}
+\include{intro} % Kapitel 'Einleitung'
 
-\chapter{Installation}
+\include{install} % Kapitel 'Installation'
 
-\chapter{Schnellstart}
+\chapter{Schnellstart}\label{chap:rapid}
 
 \paragraph{Dokumente}
 Die schnellste Methode ein Dokument im Corporate Design zu erstellen ist
