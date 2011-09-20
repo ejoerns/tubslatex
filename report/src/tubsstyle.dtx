@@ -134,6 +134,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{tubsstyle}[2011/09/20 v0.1 Hintergrund-Darstellung für tubslatex]
 \RequirePackage{xkeyval}
 \RequirePackage{ifthen}
 %    \end{macrocode}
@@ -162,12 +164,38 @@
 %
 % Lade benötigte Pakete.
 %    \begin{macrocode}
-\ProvidesPackage{tubsstyle}
 \RequirePackage{tubslogo}
 \RequirePackage{tubscolors}
 \RequirePackage{tubstypearea}
-\RequirePackage{tubsbox}% TODO: Warum Hintergrundfehler, wenn nach eso-pic geladen??
+%    \end{macrocode}
+%
+% Prüft, ob alte oder neue Version von eso-pic vorhanden und
+% Passt die Reihenfolge in der tubsbox und eso-pic geladen werden entsprechend
+% an.
+%    \begin{macrocode}
+\begingroup
+\let\OldProvidesPackage\ProvidesPackage
+\def\ProvidesPackage#1[#2]{\OldProvidesPackage{#1}[#2]\endinput}
 \RequirePackage{eso-pic}
+\let\ProvidesPackage\OldProvidesPackage
+\newif\if@OldEsoPicVersion
+\@ifpackagelater{eso-pic}{2010/10/06}{%
+  \global\@OldEsoPicVersionfalse
+}{%
+  \global\@OldEsoPicVersiontrue
+}
+\global\expandafter\let\csname ver@eso-pic.sty\endcsname\relax
+\global\expandafter\let\csname opt@eso-pic.sty\endcsname\relax
+\endgroup
+\if@OldEsoPicVersion%
+  \RequirePackage{tubsbox}
+  \RequirePackage{eso-pic}
+\else%
+  \RequirePackage{eso-pic}
+  \RequirePackage{tubsbox}
+\fi%
+%    \end{macrocode}
+%
 \RequirePackage{transparent}
 %    \end{macrocode}
 %
