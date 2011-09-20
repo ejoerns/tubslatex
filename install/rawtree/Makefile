@@ -106,7 +106,11 @@ font:
 
 
 # generate doc
-doc: $(DTXLIST) $(TUBSDOC) doc-clean doc-move
+doc: $(DTXLIST) tubsdoc doc-clean doc-move
+
+tubsdoc:
+	make -C `dirname $(TUBSDOC)`
+
 # Dokumentation aus dtx-Dateien
 %.dtx:
 	TEXINPUTS=`dirname $@`/:$$TEXINPUTS pdflatex $@
@@ -121,6 +125,7 @@ doc-clean:
 doc-move:
 	mkdir -p doc/latex/tubs
 	mv *.pdf doc/latex/tubs/.
+	cp $(basename $(TUBSDOC)).pdf doc/latex/tubs/.
 
 
 # zippen

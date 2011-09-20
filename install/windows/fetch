@@ -1,7 +1,7 @@
 #!/bin/bash
 mkdir -p data
 rm -r data/*
-. ../rawtree/fetch
+make -B ../rawtree/
 mv doc data/.
 mv tex data/.
 mv fonts data/.
