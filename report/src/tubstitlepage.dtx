@@ -104,7 +104,7 @@
 %
 % TODO: direkt einbinden, kein Paket!
 %    \begin{macrocode}
-% \ProvidesPackage{tubstitlepage}
+%<package> \ProvidesPackage{tubstitlepage}
 %    \end{macrocode}
 %
 %
@@ -159,6 +159,11 @@
   \expandafter\csname tubs@style@bg@#1\endcsname%
   \expandafter\csname tubs@style@content@#1\endcsname%
 }
+\newcommand{\makebackpage}[1][\style@select]{%
+  \thispagestyle{empty}
+  \expandafter\csname tubs@backstyle@bg@#1\endcsname%
+  \expandafter\csname tubs@backstyle@content@#1\endcsname%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -200,6 +205,8 @@
 %
 %    \begin{macrocode}
 \newcommand{\tubs@tp@logo}{}
+\newcommand{\tubs@tp@address}{}
+\newcommand{\tubs@tp@backinfo}{}
 \newcommand{\tubs@tp@titlepicture}{}
 \newcommand{\tubs@tp@titleabstract}{}
 %    \end{macrocode}
@@ -209,6 +216,24 @@
 %    \begin{macrocode}
 \newcommand{\logo}[1]{%
   \renewcommand{\tubs@tp@logo}{#1}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\logo}
+% Erlaubt ein Logo zu definieren, dass auf die Titelseite gesetzt werden soll.
+%    \begin{macrocode}
+\newcommand{\address}[1]{%
+  \renewcommand{\tubs@tp@address}{#1}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\logo}
+% Erlaubt ein Logo zu definieren, dass auf die Titelseite gesetzt werden soll.
+%    \begin{macrocode}
+\newcommand{\backpageinfo}[1]{%
+  \renewcommand{\tubs@tp@backinfo}{#1}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -248,6 +273,10 @@
   \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
   \expandafter\def\csname tubs@style@content@#1\endcsname{#3}
 }
+\newcommand{\new@back@style}[3]{%
+  \expandafter\def\csname tubs@backstyle@bg@#1\endcsname{#2}
+  \expandafter\def\csname tubs@backstyle@content@#1\endcsname{#3}
+}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -264,6 +293,18 @@
     \showlogo{\tubs@tp@logo}
   }
 }{\thispagestyle{empty}\oldmaketitle}
+%
+\new@back@style{plain}{}{%
+  \clearpage
+  \thispagestyle{empty}
+  \begin{gausspage}
+    \showtopline
+    \showtubslogo[left,plain]
+    \begin{segment}{1}
+      \tubs@tp@address
+    \end{segment}
+  \end{gausspage}
+}
 %</article>
 %<*report|book>
 \new@title@style{plain}{}{% NOTE: code from scrreprt.cls
@@ -327,6 +368,17 @@
       \fi
     \end{titlepage}
 }
+%
+\new@back@style{plain}{}{%
+  \thispagestyle{empty}
+  \begin{gausspage}
+    \showtopline
+    \showtubslogo[left,plain]
+    \begin{segment}{1}
+      \tubs@tp@address
+    \end{segment}
+  \end{gausspage}
+}
 %</report|book>
 %    \end{macrocode}
 %
@@ -354,6 +406,18 @@
     \end{titlerow}
   \end{titlepage}
 }
+%
+%
+\new@back@style{info}{}{%
+  \thispagestyle{empty}
+  \begin{gausspage}
+    \showtopline
+    \showtubslogo[left,plain]
+    \begin{segment}[bgcolor=tuSecondary40]{8}
+      \tubs@tp@backinfo
+    \end{segment}
+  \end{gausspage}
+}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -375,6 +439,19 @@
       \@date
     \end{titlerow}
   \end{titlepage}
+}
+%
+\new@back@style{addressinfo}{}{%
+  \thispagestyle{empty}
+  \begin{gausspage}
+    \showtubslogo[left,plain]
+    \begin{segment}[bgcolor=tuSecondary60]{1}
+      \tubs@tp@address
+    \end{segment}
+    \begin{segment}[bgcolor=tuSecondary20]{7}
+      \tubs@tp@backinfo
+    \end{segment}
+  \end{gausspage}
 }
 %    \end{macrocode}
 %
