@@ -83,7 +83,7 @@
 %    \begin{macrocode}
 %<*class>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{tubslttr2}[2011/09/17 v0.1 tubslttr2]
+\ProvidesClass{tubslttr2}[2011/09/22 v0.1a tubslttr2]
 %    \end{macrocode}
 %
 %
@@ -224,6 +224,7 @@
 %
 % Die verwendete Schriftart wird entsprechend der Paketoptionen geladen
 %    \begin{macrocode}
+\providecommand{\ifarial}{\iffalse}
 \ifarial
   \RequirePackage{uarial}
   \RequirePackage[T1]{fontenc}
@@ -330,6 +331,7 @@
 % und so invariant in die Koma-Variable fixdate gepackt.
 % Danach wird die Variable date gelöscht.
 %    \begin{macrocode}
+\providecommand{\if@OldKomaVersion}{\iffalse}
 \if@OldKomaVersion%
   \newkomavar{fixdate}
   \newsavebox{\@fixdate}
