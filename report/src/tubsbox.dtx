@@ -312,21 +312,25 @@
 %
 %    \begin{macro}{\tubs@gb@leftmargin}
 %    \begin{macro}{\tubs@gb@rightmargin}
+% Korrektur der Textränder links und rechts außen.
+%    \begin{macrocode}
+\newlength{\tubs@gb@leftmargin}
+\newlength{\tubs@gb@rightmargin}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
 %    \begin{macro}{\tubs@gb@leftsep}
 %    \begin{macro}{\tubs@gb@rightsep}
 %    \begin{macro}{\tubs@gb@topmargin}
 %    \begin{macro}{\tubs@gb@toppadding}
 % Definition einiger benötigter Längen
 %    \begin{macrocode}
-\newlength{\tubs@gb@leftmargin}
-\newlength{\tubs@gb@rightmargin}
 \newlength{\tubs@gb@leftsep}
 \newlength{\tubs@gb@rightsep}
 \newlength{\tubs@gb@topmargin}
 \newlength{\tubs@gb@toppadding}
 \newlength{\tubs@gb@bottommargin}
 %    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%    \end{macro}\end{macro}\end{macro}\end{macro}
 %
 %    \begin{macro}{\tubs@gb@storebox}
 % Savebox zum Speichern der Box-Inhalte.
@@ -421,33 +425,33 @@
 \def\tubs@gb@ypos{\thetubs@gb@calcypos}
 % 
 \calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcheight}{#3+#5}
-\addtocounter{tubs@gb@calcheight}{%
-  -\thetubs@gb@calcypos}
+\addtocounter{tubs@gb@calcheight}{-\thetubs@gb@calcypos}%
 % 
-\def\tubs@gb@width{#4}
-\def\tubs@gb@height{\thetubs@gb@calcheight}
-\begin{lrbox}{\tubs@gb@storebox}
-\begin{minipage}[t]%
-  [\tubs@gb@height\TPVertModule]%
-  {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep}%
+\def\tubs@gb@width{#4}%
+\def\tubs@gb@height{\thetubs@gb@calcheight}%
+\begin{lrbox}{\tubs@gb@storebox}%
+\begin{minipage}%
+        [t]%
+        [\tubs@gb@height\TPVertModule]%
+        {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep-0.3mm}%
   \vspace*{\tubs@gb@toppadding}%
 }{%
-\vspace*{\tubspage@borderwidth}%
-\end{minipage}
-\end{lrbox}
-\setlength{\fboxsep}{0cm}%
-\begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
-  \noindent\hspace*{\tubs@gb@leftsep}%
-  \hspace*{-\tubs@gb@leftmargin}%
-  \raisebox{\tubspage@borderwidth}[0cm]{%
-    \tubsbox@framebox{\tubsbox@colorbox{%
-      \hspace*{\tubs@gb@leftmargin}%
-      \usebox{\tubs@gb@storebox}%
-      \hspace*{\tubs@gb@rightmargin}%
-      }}%
-    }%
-  \hspace*{\tubs@gb@rightsep}%
-\end{textblock}
+  \vspace*{\tubspage@borderwidth}%
+  \end{minipage}
+  \end{lrbox}
+  \setlength{\fboxsep}{0cm}%
+  \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
+  \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
+    \noindent\hspace*{\tubs@gb@leftsep}%
+    \raisebox{\tubspage@borderwidth}[0cm]{%
+      \fbox{\tubsbox@colorbox{%
+        \hspace*{\tubs@gb@leftmargin}%
+        \usebox{\tubs@gb@storebox}%
+        \hspace*{\tubs@gb@rightmargin}%
+        }}%
+      }%
+  \end{addmargin*}%
+  \end{textblock}
 }
 %    \end{macrocode}
 %    \end{macro}
