@@ -92,11 +92,9 @@
 \RequirePackage{xkeyval}
 %    \end{macrocode}
 %
-% Farb-Variablen
+% Farb-Variable
 %    \begin{macrocode}
-\newboolean{hksLogo}\setboolean{hksLogo}{false}
-\newboolean{cmykLogo}\setboolean{cmykLogo}{false}
-\newboolean{monoLogo}\setboolean{monoLogo}{false}
+\def\tubs@logo@file{TUBraunschweig-rgb}
 %    \end{macrocode}
 %
 %
@@ -116,10 +114,10 @@
 %    \begin{key}{}{mono}
 % Farbmodell-Optionen
 %    \begin{macrocode}
-\DeclareOptionX{rgb}{\relax}
-\DeclareOptionX{hks}{\setboolean{hksLogo}{true}}
-\DeclareOptionX{cmyk}{\setboolean{cmykLogo}{true}}
-\DeclareOptionX{mono}{\setboolean{monoLogo}{true}}
+\DeclareOptionX{rgb}{\def\tubs@logo@file{TUBraunschweig-rgb}}
+\DeclareOptionX{hks}{\def\tubs@logo@file{TUBraunschweig_SC}}
+\DeclareOptionX{cmyk}{\def\tubs@logo@file{TUBraunschweig_4C}}
+\DeclareOptionX{mono}{\def\tubs@logo@file{TUBraunschweig_B}}
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}\end{key}
 %
@@ -216,44 +214,13 @@
 \setlength{\tubslogoHeight}{\tubslogo@relscale\tubslogoHeight}
 %    \end{macrocode}
 %
-% CMYK
 %    \begin{macrocode}
-\ifthenelse{\boolean{cmykLogo}}{%
-  \newcommand{\tubslogo}[1][\relax]{%
-    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
-    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
-    \includegraphics[width=\tubslogo@width]{TUBraunschweig_4C}}
-  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_4C}}
-}{%
-%    \end{macrocode}
-% RGB-print
-%    \begin{macrocode}
-\ifthenelse{\boolean{hksLogo}}{%
-  \newcommand{\tubslogo}[1][\relax]{%
-    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
-    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
-    \includegraphics[width=\tubslogo@width]{TUBraunschweig_SC}}
-  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_SC}}
-}{%
-%    \end{macrocode}
-% Monochrome
-%    \begin{macrocode}
-\ifthenelse{\boolean{monoLogo}}{%
-  \newcommand{\tubslogo}[1][\relax]{%
-    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
-    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
-    \includegraphics[width=\tubslogo@width]{TUBraunschweig_B}}
-  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig_B}}
-}{%
-%    \end{macrocode}
-% RGB
-%    \begin{macrocode}
-  \newcommand{\tubslogo}[1][\relax]{%
-    \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
-    \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
-    \includegraphics[width=\tubslogo@width]{TUBraunschweig-rgb}}
-  \newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{TUBraunschweig-rgb}}
-}}}
+\newcommand{\tubslogo}[1][\relax]{%
+  \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
+  \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
+  \includegraphics[width=\tubslogo@width]{\tubs@logo@file}}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{\tubs@logo@file}}
+% }{%
 %    \end{macrocode}
 %
 %    \begin{macrocode}
