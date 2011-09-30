@@ -64,6 +64,9 @@
 %
 % \changes{v1.02}{ 2011 / 09 / 18 }{Initial version}
 %
+% \changes{v1.02}{ 2011 / 09 / 28 }{%
+%   Optionsverarbeitung für Farbraum komplett überarbeitet}
+%
 % \GetFileInfo{tubcolors.sty}
 %
 % \DoNotIndex{ list of control sequences }
@@ -82,7 +85,7 @@
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubslogo}[2011/09/18  v1.02 CD-Logo der TU Braunschweig]
+\ProvidesPackage{tubslogo}[2011/09/28  v1.03 CD-Logo der TU Braunschweig]
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -214,14 +217,25 @@
 \setlength{\tubslogoHeight}{\tubslogo@relscale\tubslogoHeight}
 %    \end{macrocode}
 %
+%    \begin{macro}{\tubslogo}
+% \oarg{scale}\par
+% Fügt TU-Logo als Grafik ein. Dimensionen ergeben sich aus Paketoptionen.
+% Parameter |scale| erlaubt zusätzliche Skalierung.
 %    \begin{macrocode}
 \newcommand{\tubslogo}[1][\relax]{%
   \ifx#1\relax\setlength\tubslogo@width{\tubslogoWidth}%
   \else\setlength\tubslogo@width{#1\tubslogoBaseWidth}\fi%
   \includegraphics[width=\tubslogo@width]{\tubs@logo@file}}
-\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{\tubs@logo@file}}
-% }{%
 %    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\tubslogoAbs}
+% \marg{width}\par
+% Fügt TU-Logo als Grafik ein. Parameter |width| bestimmt absolute Breite.
+%    \begin{macrocode}
+\newcommand{\tubslogoAbs}[1]{\includegraphics[width=#1]{\tubs@logo@file}}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macrocode}
 %</package>
