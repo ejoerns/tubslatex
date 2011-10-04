@@ -188,6 +188,7 @@
 %
 %    \begin{macro}{\normalsize}
 %    \begin{macrocode}
+%<*9>
 \def\normalsize{%
    \@setfontsize\normalsize\@ixpt\@xiipt
    \abovedisplayskip 9\p@ \@plus 2\p@ \@minus 4.5\p@
@@ -196,6 +197,27 @@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
 \normalsize
+%</9>
+%<*10>
+\def\normalsize{%
+  \@setfontsize\normalsize\@xpt\@xiipt
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+  \belowdisplayskip \abovedisplayskip
+  \let\@listi\@listI
+}% from scrsize10pt
+%</10>
+%<*11>
+\def\normalsize{%
+  \@setfontsize\normalsize\@xipt{13.6}%
+  \abovedisplayskip 11\p@ \@plus3\p@ \@minus6\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
+  \belowdisplayskip \abovedisplayskip
+  \let\@listi\@listI
+}
+%</11>
 %    \end{macrocode}
 %    \end{macro}
 %
