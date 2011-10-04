@@ -223,6 +223,7 @@
 %
 %    \begin{macro}{\small}
 %    \begin{macrocode}
+%<*9|10>
 \def\small{%
     \@setfontsize\small\@viiipt{9.5}%
     \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
@@ -235,6 +236,20 @@
                 }%
    \belowdisplayskip \abovedisplayskip
 }
+%</9|10>
+%<*11>
+\def\small{%
+  \@setfontsize\small\@ixpt{11}%
+  \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus2\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+    \topsep 4\p@ \@plus2\p@ \@minus2\p@
+    \parsep 2\p@ \@plus\p@ \@minus\p@
+    \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip
+}% from file 'scrsize10pt.clo'
+%</11>
 %    \end{macrocode}
 %    \end{macro}
 %
