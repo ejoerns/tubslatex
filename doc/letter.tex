@@ -294,6 +294,25 @@ Die Anweisung kann vor allem dazu benutzt werden, um Innerhalb von
   die übergeordnete Instituts-Vorlage (\lstinline{institut.lco}) laden.
 \end{example}
 
+\section{Weiterführende Themen}
+
+\subsection{Seitenzahl bei einseitigen Briefen}
+
+Standardmäßg wird auf jeder Briefseite die aktuelle Seitenzahl
+im Stil \glqq Seite X von Y\grqq\ angezeigt. Dies ist sowohl bei einseitigen
+als auch bei mehrseitigen Briefen der Fall.
+Diese Darstellung ist zwar meist sinvoll, in Einzelfällen kann jedoch bei
+einseitigen Dokumenten eine Darstellung ohne Seitenzahl gewünscht sein.
+Dies kann einfach durch das Löschen des Inhalts der Variable
+\Variable{firstfoot} erreicht werden: \lstinline!\setkomavar{firstfoot}{}!.
+
+\begin{important}
+  Bei Verwendung einer alten KOMA-Skript-Version ($<$ 3.0) steht die
+  Variable \Variable{firstfoot} noch nicht zur Verfügung.
+  Das selbe Ergebnis kann dort durch Setzen von \lstinline!\firstfoo{}!
+  erreicht werden.
+\end{important}
+
 
 
 

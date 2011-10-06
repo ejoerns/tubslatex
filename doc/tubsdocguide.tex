@@ -15,7 +15,7 @@
 \pagestyle{empty}
 \hfill
 \begin{center}
-\Huge\color{tuRed}
+\huge\color{tuRed}
 Dokument befindet sich im Aufbau!\bigskip
 
 Informationen evtl. unvollständig oder unklar!
@@ -23,8 +23,28 @@ Informationen evtl. unvollständig oder unklar!
 
 \newpage~\newpage
 
-
-\maketitle
+\begin{titlepage}
+  \showtubslogo
+  \showlogo{Presse und Kommunikation}
+  \showtopline
+  \begin{segment}{2}
+    \centering
+    \Huge \tubslatex\\[\medskipamount]
+    \bfseries\huge Das Corporate Design in \LaTeX
+  \end{segment}
+  \begin{segment}{1}
+    \centering
+    \LARGE Anleitung und Dokumentation
+  \end{segment}
+  \begin{segment}{2}
+    \centering
+    \Large Enrico Jörns\\[\bigskipamount]
+    \bfseries\today
+  \end{segment}
+  \begin{segment}{3}
+    \Large \tubslatex-Autoren: Enrico Jörns, Tobias Rad, Martin Bäker et al.
+  \end{segment}
+\end{titlepage}
 
 \input{preface}
 
