@@ -17,7 +17,7 @@ Mit \texttt{bcor=0mm} wird sie beispielsweise deaktiviert.
 
 Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
 werden; entweder mit Hilfe des Befehls \lstinline{\maketitle} oder mit
-der Umgebung \lstinline{titlepage}. Beide Varianten werden von tubslatex
+der Umgebung \lstinline{titlepage}. Beide Varianten werden von \tubslatex
 unterstützt und leicht modifiziert.
 
 \begin{Declaration}
@@ -30,10 +30,11 @@ Kommunikationsbereich.
 
 Mit Hilfe des optionalen Arguments \PName{style} kann die Darstellung
 der Titelseite geändert werden, indem aus einer Reihe vordefinierter Styles
-ausgewählt wird.\bigskip
+ausgewählt wird. Eine weiterführende Erklärung findet
+sich dazu in Kapitel~\ref{sec:titlestyles}.\bigskip
 
-Neben den standardmäßig definierten Elementen für Haupttitelseiten werden
-in \tubslatex noch ein paar zusätzliche definiert.
+Neben den standardmäßig definierten Elementen für Titelseiten wie \Macro{author}
+oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
 
 \begin{Declaration}
   \Macro{logo}\Parameter{logo}\\
@@ -43,11 +44,15 @@ in \tubslatex noch ein paar zusätzliche definiert.
 
 \Macro{logo} dient zur Darstellung eines zusätzlichen Absenders als Schrift
 oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
-TU-Logo gegenüberliegenden Seite dargestellt.
+TU Siegelband-Logo gegenüberliegenden Seite dargestellt. Eingefügte Grafiken
+werden automatisch auf die Höhe des Kopfbereichs skaliert.
+
 Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
-Verwendung eines entsprechenden Styles auf der Titelseite dargestellt werden.
-\Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden
-Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
+Verwendung eines entsprechenden Styles auf der Titelseite dargestellt wird.
+
+Der Befehl \Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
+Weitere Erläuterungen finden sich jeweils auch im Kapitel~\ref{sec:titlestyles}.
+
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{titlepage}}\\
@@ -56,8 +61,28 @@ Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
 \end{Declaration}
 
 Mit der \Environment{titlepage}-Umgebung können, wie von den Standardklassen
-gewohnt, Titelseiten definiert werden.
-% TODO: \showtubslogo  etc.
+gewohnt, Titelseiten definiert werden. Sie bietet aber in \tubslatex noch einige
+zusätzliche Darstellungsmöglichkeiten.
+
+\begin{Declaration}
+  \Macro{showtubslogo}\OParameter{Seite}\\
+  \Macro{showlogo}\Parameter{Inhalt}\\
+  \Macro{showtopline}
+\end{Declaration}
+
+Die Verwendung einer dieser Befehle innerhalb einer Titlepage-Umgebung sorgt
+dafür, dass das entsprechende Element auf der Seite dargestellt wird.
+\Macro{showtubslogo} stellt das Siegelbandlogo dar. Der optionale Parameter
+\PName{Seite} akzeptiert legt dabei fest auf welcher Seite des Blattes
+das Logo gezeigt werden soll. Der Wert \PValue{left} entspricht der Standardeinstellung und stellt das Logo auf der linken Seite,
+% bzw. bei zweiseitigem Layout auf der Innenseite % NOTE: für Titelseite irrelevant!?
+dar.
+Mit dem Wert \PValue{right} wird dagegen eine Darstellung auf der rechten
+% bzw. äußeren
+Seite des Blattes erwirkt. Gleichzeitig hat dies Auswirkungen
+auf die Positionierung des Zweitlogos, das automatisch immer auf der 
+dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
+% TODO: inner, outer?
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{titlerow}}%
@@ -73,16 +98,51 @@ die Höhe des jeweiligen Elements in Segmenten an. Die Position der Elemente
 ergibt sich aus der Reihenfolge der Definition.
 Mit dem optionalen Parameter \PName{options} können Einstellung wie die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
 
-\subsection{Vordefiniert Titel-Styles}
+\subsection{Rückseiten}
 
-Es sind 3 einfache Styles vordefiniert.
+Neben der Möglichkeit Titelseiten zu definieren, gibt es in \tubslatex auch
+einen ähnlichen Mechanismus zur Erstellung von Rückseiten derselbigen, sodass
+ohne Mühe ein komplettes Titelblatt, dass auf die Möglichkeiten des
+Corporate Design abgestimmt ist, erstellt werden kann.
+
+\begin{Declaration}
+  \Macro{makebackpage}\OParameter{Style}
+\end{Declaration}
+
+Dieser Befehl stellst das Gegenstück zu \Macro{maketitle} auf und erstellt eine
+Rückseite. Genau wie bei \Macro{maketitle} kann über den Optionalen Parameter
+\PName{style} wieder ein vordefinierter Stil geladen werden.
+
+Außerdem stehen ein paare Befehle zur Verfügung, mit denen sich der Inhalt
+der Rückseite festlegen lässt. Die konkrete Darstellung ist dabei wieder
+von dem verwendeten Style abhängig. Weiteres findet sich in 
+Kapitel~\ref{sec:backstyles}.
+
+
+\begin{Declaration}
+  \Macro{address}\Parameter{Adressdaten}\\
+  \Macro{backpageinfo}\Parameter{Inhalt}
+\end{Declaration}
+
+Mit \Macro{address} kann eine Herausgeber-Adresse für das Dokument
+dargestellt werden.
+mit \Macro{backpageinfo} Lässt sich ganz allgemein der verbleibende
+Inhalt der Rückseite nach Belieben füllen.
+Siehe hierzu jeweils auch Kapitel~\ref{sec:backstyles}.
+
+\subsection{Vordefinierte Titel-Styles}\label{sec:titlestyles}
+
+Es sind 3 einfache Styles definiert.% vordefiniert
+% TODO: styles selbst definieren.
+% Hinweis zu Farbdarstellung!
+% TODO: Default-Style in Config-Datei speichern
 
 \begin{center}
   \fboxsep0mm
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/article1.pdf}}
+      \includegraphics[width=0.95\textwidth]{examples/titlestyle_plain.pdf}}
     [default]
   \end{minipage}%
   \begin{minipage}[t]{0.33\textwidth}
@@ -97,7 +157,32 @@ Es sind 3 einfache Styles vordefiniert.
       \includegraphics[width=0.95\textwidth]{examples/titlestyle_imagetext.pdf}}
     [imagetext]
   \end{minipage}
+\end{center}
 
+\subsection{Vordefinierte Rückseiten-Styles}\label{sec:backstyles}
+
+Es sind 3 einfache Styles definiert.% vordefiniert
+
+\begin{center}
+  \fboxsep0mm
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/backstyle_plain.pdf}}
+    [plain] (default)
+  \end{minipage}%
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/backstyle_info.pdf}}
+    [info]
+  \end{minipage}%
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth]{examples/backstyle_addressinfo.pdf}}
+    [addressinfo]
+  \end{minipage}
 \end{center}
 
 \section{Kopf-/ Fußzeile}
