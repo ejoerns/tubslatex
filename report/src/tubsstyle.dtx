@@ -954,6 +954,7 @@
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 \newenvironment{gausspage}[1][]{%
+  \clearpage
   \tubsboxsetup[#1]%TODO...
   \@layout@pre{pages=single,#1}
   \sffamily

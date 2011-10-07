@@ -155,12 +155,12 @@
 % Redefine maketitle, provide additional optional arguments
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][\style@select]{%
-  \thispagestyle{empty}%
+%   \thispagestyle{empty}%
   \expandafter\csname tubs@style@bg@#1\endcsname%
   \expandafter\csname tubs@style@content@#1\endcsname%
 }
 \newcommand{\makebackpage}[1][\style@select]{%
-  \thispagestyle{empty}
+%   \thispagestyle{empty}
   \expandafter\csname tubs@backstyle@bg@#1\endcsname%
   \expandafter\csname tubs@backstyle@content@#1\endcsname%
 }
@@ -175,30 +175,34 @@
 % Umgebung mit der Innerhalb der |titlepage|-Umgebung Inhalts-Elemente im
 % Gauß-Layout definiert werden können.
 %    \begin{macrocode}
-\newenvironment{titlerow}[2][]{%
-  \bgelement[#1]{#2}%
-  \edef\@tubs@arg{{1}{\thetubs@tp@yseg@cnt}{6}{#2}}%
-  \addtocounter{tubs@tp@yseg@cnt}{#2}%
-  \expandafter\gaussbox\@tubs@arg%
-}{%
-  \endgaussbox%
-}
+% \newenvironment{titlerow}[2][]{%
+%   \bgelement[#1]{#2}%
+%   \edef\@tubs@arg{{1}{\thetubs@tp@yseg@cnt}{6}{#2}}%
+%   \addtocounter{tubs@tp@yseg@cnt}{#2}%
+%   \expandafter\gaussbox\@tubs@arg%
+% }{%
+%   \endgaussbox%
+% }
+\let\titlerow\segment
+\let\endtitlerow\endsegment
 %    \end{macrocode}
 %    \end{environment}
 %
 %    \begin{environment}{titlepage}
 % Redefine environment titlepage, provide additional optional arguments
 %    \begin{macrocode}
-\renewenvironment{titlepage}[1][]{%
-  \thispagestyle{empty}
-  \setcounter{tubs@tp@yseg@cnt}{1}%
-  \tubsboxsetup[#1]%TODO...
-  \@layout@pre{pages=single,#1}%
-  \sffamily%
-}{%
-  \@layout@post%
-  ~\newpage%
-}
+% \renewenvironment{titlepage}[1][]{%
+%   \thispagestyle{empty}
+%   \setcounter{tubs@tp@yseg@cnt}{1}%
+%   \tubsboxsetup[#1]%TODO...
+%   \@layout@pre{pages=single,#1}%
+%   \sffamily%
+% }{%
+%   \@layout@post%
+%   ~\newpage%
+% }
+\let\titlepage\gausspage
+\let\endtitlepage\endgausspage
 %    \end{macrocode}
 %    \end{environment}
 %
@@ -295,8 +299,7 @@
 }{\thispagestyle{empty}\oldmaketitle}
 %
 \new@back@style{plain}{}{%
-  \clearpage
-  \thispagestyle{empty}
+%   \thispagestyle{empty}
   \begin{gausspage}
     \showtopline
     \showtubslogo[left,plain]
@@ -370,7 +373,7 @@
 }
 %
 \new@back@style{plain}{}{%
-  \thispagestyle{empty}
+%   \thispagestyle{empty}
   \begin{gausspage}
     \showtopline
     \showtubslogo[left,plain]
@@ -409,7 +412,7 @@
 %
 %
 \new@back@style{info}{}{%
-  \thispagestyle{empty}
+%   \thispagestyle{empty}
   \begin{gausspage}
 %     \showtopline
     \showtubslogo[left,plain]
@@ -442,7 +445,7 @@
 }
 %
 \new@back@style{addressinfo}{}{%
-  \thispagestyle{empty}
+%   \thispagestyle{empty}
   \begin{gausspage}
     \showtubslogo[left,plain]
     \begin{segment}[bgcolor=tuSecondary60]{1}
