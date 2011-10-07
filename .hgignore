@@ -24,6 +24,9 @@ report/src/tubsstyle.sty
 report/src/tubstypearea.sty
 report/src/tubsbox.sty
 report/src/tubstitlepage.sty
+doc/examples/gallery/*
+doc/examples/png/*
+
 
 # no autosave
 *~

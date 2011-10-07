@@ -1,4 +1,4 @@
-\documentclass[a4paper,9pt,twoside,bcor=8mm]{tubsartcl}
+\documentclass[a4paper,twoside,bcor=8mm,extramargin]{tubsartcl}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
@@ -15,8 +15,8 @@
 \title{Lorem ipsum dolor sit amet}
 \subtitle{Morbi auctor lorem\vphantom{g}\\ % TODO!!!!
 Nam lacus libero}
-\logo{\includegraphics[height=\headheight]{dummy_institut.jpg}}
-% \logo{\fboxsep0mm\fbox{\vbox to\headheight{~}}}
+\logo{\includegraphics{dummy_institut_large.jpg}}
+% \logo{\begingroup\setkeys{Gin}{height=\headheight}This is a test.\endgroup}
 \author{Enrico Jörns}
 
 \begin{document}
@@ -29,6 +29,9 @@ Nam lacus libero}
 \section{Ut purus elit}
 
 \lipsum[1]
+
+% \input{fününü}
+% \includegraphics{fününü.png}
 
 \section{Phasellus eu tellus sit amet}
 
