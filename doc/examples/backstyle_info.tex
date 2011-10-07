@@ -1,0 +1,24 @@
+\documentclass[a4paper,11pt,blue]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+%opening
+\title{Beispieltitiel}
+\titlepicture{infozentrum.jpg}
+\subtitle{Untertitel}
+\author{Max Mustermann}
+\publishers{Institut fuer Lorem Ipsum} % to logo?
+
+\address{Inistitut für Lorem Ipsum\\
+Schlossallee 13\\
+33333 Schildburg}
+
+\backpageinfo{\lipsum[1]\par\bigskip\lipsum[2]}
+
+\begin{document}
+
+\makebackpage[info]
+
+\end{document}
