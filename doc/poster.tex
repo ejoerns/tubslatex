@@ -1,0 +1,140 @@
+\chapter{Plakate}
+
+Plakate werden mit Hilfe der Klasse \newdocumentclass{tubsposter} erstellt.
+Dabei kann mittels der Option \texttt{style} zwischen der Darstellung als
+normales Plakat oder als wissenschaftliches Plakat gewählt werden.
+
+\section{Veranstaltungsplakate}
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{tubsposter}}%
+    \OParameter{options}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{tubsposter}
+\end{Declaration}
+
+Ein neues Plakat wird mit der Umgebung \Environment{tubsposter} erstellt.
+Der optionale Parameter \PName{options} akzeptiert dabei die
+unter \ref{} beschriebenen Optionen.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{posterrow}}%
+    \OParameter{cols}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{posterrow}%\\
+%   \XMacro{begin}\PParameter{\Environment{posterrow*}}%
+%     \OParameter{cols}\\%
+%   \quad\dots\\
+%   \XMacro{end}\PParameter{posterrow*}
+\end{Declaration}
+
+Einzelne Segmente im Gaußraster können mit der Umgebung \Environment{posterrow}
+erzeugt werden.
+
+\section{Wissenschaftliche Plakate}
+
+\begin{Declaration}
+  \Option{scifiposter}
+\end{Declaration}
+
+Paket-Option zum erstellen von wissenschaftlichen Postern.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{tubsposter}}%
+    \OParameter{options}%
+    \Parameter{rows}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{tubsposter}
+\end{Declaration}
+
+Für die Erstellung von wissenschaftlichen Plakaten wird ebenfalls die Umgebung
+\Environment{tubsposter} verwendet, welche in diesem Fall jedoch einen
+zusätzlichen Parameter \PName{rows} erwartet.
+Damit wird die Anzahl an Modulzeilen bestimmt. Dies geschieht mittels
+einer kommagetrennten Liste, wobei jedes Element entweder eine Länge
+oder der Buchstabe 'X' sein kann. Eine Länge legt die Höhe der jeweiligen
+Modulzeile genau fest, ein X sorgt dafür, dass alle mit X gekennzeichneten
+Zeilen den restlichen zur Verfügung stehenden Platz gleichmäßig untereinander
+aufteilen. Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx}
+angelehnt.
+
+\begin{Example}
+  \noindent\Macro{begin}\PParameter{\Environment{tubsposter}}
+    \Parameter{3cm,X,5cm,X}\par
+  \noindent Erzeugt 4 Modulzeilen, wobei die 1. 3cm und die 3. 5cm hoch sind.
+  Die Zeilen 2 und 4 nehmen den Restlichen verfügbaren Platz ein
+  und sind gleich hoch.
+\end{Example}
+
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{posterrow}}%
+    \OParameter{cols}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{posterrow}\\
+  \XMacro{begin}\PParameter{\Environment{posterrow*}}%
+    \OParameter{cols}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{posterrow*}
+\end{Declaration}
+
+Die mit \Environment{tubsposter} angelegten Modulzeilen können nun jeweils mit
+der Umgebung \Environment{posterrow} mit Inhalt gefüllt werden.
+Dabei kann entweder direkt der gewünschte Inhalt geschrieben oder das optionale
+Parameter \PName{cols} benutzt werden.
+Dieses erlaubt die Definition zusätzlicher Spalten in der aktuellen Modulzeile.
+Es wird wieder ein kommagetrennte Liste erwartet,
+deren Elemente dieselbe Bedeutung haben wie bereits beschrieben, außer, dass
+sie die Breite und nicht die Höhe definieren.
+
+Der normale Abstand des Inhalts vom Rand der Modulbox beträgt halbe
+Rahmenbreite. Für das Einfügen von Bildern etwa kann es sinnvoll sein,
+diesen Rahmen wegzulassen. Dies geschieht mit der Sternchen-Variante
+\Environment{posterrow*}.
+
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{postercol}}%
+    \OParameter{rows}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{postercol}\\
+  \XMacro{begin}\PParameter{\Environment{postercol*}}%
+    \OParameter{rows}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{postercol*}
+\end{Declaration}
+
+Die mit \Environment{posterrow} angelegten Spalten können jeweils mit 
+\Environment{postercol} mit Inhalt gefüllt oder in neue Unterzeilen aufgeteilt 
+werden.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{postersubrow}}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{postersubrow}\\
+  \XMacro{begin}\PParameter{\Environment{postersubrow*}}\\%
+  \quad\dots\\
+  \XMacro{end}\PParameter{postersubrow*}
+\end{Declaration}
+
+Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit 
+\Environment{postercol} mit Inhalt gefüllt werden.
+
+\begin{Example}
+
+\end{Example}
+
+\section{Seitenlayout}
+
+% margin
+% bcor
+% sender=top/bottom
+
+
+\section{Format}
+
+\section{Farben}
+
+\section{Befehle}
+
+\section{Optionen}
