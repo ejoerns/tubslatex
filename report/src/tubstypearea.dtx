@@ -259,6 +259,7 @@
 %
 %    \begin{macrocode}
 \newboolean{scifiposter}\setboolean{scifiposter}{false}
+\newboolean{tubspage@extramargin}\setboolean{tubspage@extramargin}{false}
 %    \end{macrocode}
 %
 %    \begin{macro}{\tubspage@calclayout}
@@ -268,6 +269,20 @@
 %    \begin{macrocode}
 \newcommand{\tubspage@calclayout}{%
   \setlength{\tubspage@columnsep}{5mm}
+  % inner geometry
+  \setcounter{tubspage@gausssum}{%
+    \tubspage@ysegments*(\tubspage@ysegments+1)/2}
+  % dimension is a hack..
+  \setlength{\tubspage@columnwidth}{%
+    (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}%TODO: might cause problems
+  \setlength{\tubspage@gaussheight}{%
+    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+  \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  \setlength{\tubspage@contentwidth}{%
+    \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
+}
+%
+\newcommand{\@tubspage@setlayout}{%
   \geometry{columnsep=\tubspage@columnsep}
   % outer geometry
   \ifthenelse{\boolean{tubspage@bottomsender}}{%
@@ -297,20 +312,12 @@
       left=1.5\tubspage@borderwidth,
       right=1.5\tubspage@borderwidth}
   }{}
-  % inner geometry
-  \setcounter{tubspage@gausssum}{%
-    \tubspage@ysegments*(\tubspage@ysegments+1)/2}
-  % dimension is a hack..
-  \setlength{\tubspage@columnwidth}{%
-%     (\paperwidth-4\tubspage@borderwidth)*\ratio{1px}{\tubspage@xsegments px}}
-% \setlength{\tubspage@columnwidth}{%
-    (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}%TODO: might cause problems
-  \setlength{\tubspage@gaussheight}{%
-    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
-  \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
-  \setlength{\tubspage@contentwidth}{%
-    \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
-  % Wenn margin auf linker Seite gewünscht ist, 
+  \ifthenelse{\boolean{tubspage@extramargin}}{%
+    \geometry{%
+      left=3\tubspage@borderwidth,
+      right=3\tubspage@borderwidth
+    }
+  }{}
   \ifthenelse{\boolean{tubspage@marginleft}}{%
     \geometry{%
       lmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
@@ -326,8 +333,8 @@
   \ifthenelse{\boolean{tubspage@twosided}}{%
     \geometry{twoside}
   }
-%   \setlength{\marginparwidth}{\tubspage@columnwidth}
 }
+\let\tubspage@setlayout\@tubspage@setlayout
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -457,6 +464,25 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{tubstypearea.sty}{calconly}
+% Berechnet nur Längen ohne das Seitenlayout zu verändern
+%    \begin{macrocode}
+\DeclareOptionX{calconly}{%
+  \let\tubspage@setlayout\relax
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubstypearea.sty}{extramargin}
+% Seitenränder um |\tubspage@borderwidth| breiter, damit Textbereich schmaler
+% wird.
+%    \begin{macrocode}
+\DeclareOptionX{extramargin}{%
+  \setboolean{tubspage@extramargin}{true}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{key}{tubstypearea.sty}{scifiposter}
 % Darstellungsbereich für wissenschaftliche Poster
 % Dabei werden die Seitenränder halbiert und der Absenderbereich
@@ -504,7 +530,8 @@
   \setkeys{tubstypearea.sty}{#1}
   \tubspage@process@paper
   \tubspage@modifications
-  \tubspage@calclayout  
+  \tubspage@calclayout
+  \tubspage@setlayout
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -691,6 +718,7 @@
 \tubspage@process@paper
 \tubspage@modifications
 \tubspage@calclayout
+\tubspage@setlayout
 %    \end{macrocode}
 %
 % portrait:
