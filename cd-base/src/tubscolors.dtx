@@ -175,6 +175,7 @@
 % \subsubsection{CMYK}
 %    \begin{macrocode}
 \ifthenelse{\equal{\tc@colormodel}{cmyk}}{%
+\selectcolormodel{cmyk}
 %    \end{macrocode}
 %
 % \paragraph {Primärfarben}
@@ -317,6 +318,7 @@
 % Farben aus den ppt-Vorlagen
 %    \begin{macrocode}
 \ifthenelse{\equal{\tc@colormodel}{rgbbeamer}}{%
+\selectcolormodel{rgb}
 %    \end{macrocode}
 %
 % \paragraph{Primärfarben}
@@ -445,6 +447,7 @@
 % \subsubsection{RGB}
 % \paragraph{Primärfarben}
 %    \begin{macrocode}
+\selectcolormodel{rgb}
 \iftc@mono
   \definecolor{tuRed}{RGB}{0,0,0}
 \else
