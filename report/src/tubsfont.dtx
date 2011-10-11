@@ -103,25 +103,52 @@
 \RequirePackage{nexus}
 %    \end{macrocode}
 %
-% Definiere KOMA-Fontthemes
+%\subsection{Definition von KOMA-Fonts}
 %    \begin{macrocode}
 %<*package|leaflet>
 \let\sectfont\relax
 \RequirePackage{scrbase}
 \RequirePackage{scrextend}
 %</package|leaflet>
+%    \end{macrocode}
+%
+%    \begin{macro}{headline}
+%    \begin{macro}{title}
+% Schrifteinstellungen für Titel
+%    \begin{macrocode}
 \newkomafont{headline}{\sffamily\Huge\bfseries\raggedright}
+\setkomafont{title}{\sffamily\Huge\bfseries\raggedright}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
+%
+%    \begin{macro}{headlinesamll}
+% Schrifteinstellungen für kleiner Titel
+%    \begin{macrocode}
 \newkomafont{headlinesmall}{\sffamily\huge\bfseries\raggedright}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{subheadline}
+%    \begin{macro}{subtitle}
+% Schrifteinstellungen für Sub-Titel
+%    \begin{macrocode}
 \newkomafont{subheadline}{\sffamily\Large\raggedright}
+\setkomafont{subtitle}{\sffamily\Large\raggedright}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
+%
+%    \begin{macrocode}
+\newkomafont{author}{\sffamily\LARGE}
+\newkomafont{date}{\large}
 %<!leaflet>\newkomafont{institute}{\sffamily\large}
 %<leaflet>\newkomafont{institute}{\sffamily\fontsize{10pt}{12}\selectfont}
 %<leaflet>\newkomafont{intro}{\large}
 \newkomafont{infotext}{\large}
 \newkomafont{infotextitem}{\large}
 \newkomafont{copytext}{\normalsize}
-\let\newcdfont\newkomafont
-\let\usecdfont\usekomafont
-\let\setcdfont\setkomafont
+\let\newtubsfont\newkomafont
+\let\usetubsfont\usekomafont
+\let\settubsfont\setkomafont
 %    \end{macrocode}
 %
 %
