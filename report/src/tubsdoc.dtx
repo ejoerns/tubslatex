@@ -173,6 +173,17 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{tubsdoc.dtx}{rgb}
+% Die Option |rgb| schaltet alle verwendeten CD-Elemente auf rgb-Farbschema
+% um.
+%    \begin{macrocode}
+\DeclareOptionX{rgb}{%
+  \PassOptionsToPackage{rgb}{tubscolors}
+  \PassOptionsToPackage{rgb}{tubslogo}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % \subsubsection{Satz-Optionen}
 %
 %    \begin{key}{tubsdoc.dtx}{landscape}
@@ -190,10 +201,16 @@
 % kommt.
 %    \begin{macrocode}
 %<*book|report|article|package>
-\DeclareOptionX{twoside}{%
-  \PassOptionsToPackage{twosided}{tubstypearea}
-  \PassOptionsToPackage{twoside}{tubsstyle}
-%<class>  \PassOptionsToClass{twoside}{\BaseClass}
+\define@boolkey{\tubsClassName.cls}[tb@]{twoside}[true]{%
+  \iftb@twoside
+    \PassOptionsToPackage{twoside=true}{tubstypearea}
+    \PassOptionsToPackage{twoside=true}{tubsstyle}
+%<class>  \PassOptionsToClass{twoside=true}{\BaseClass}
+  \else
+    \PassOptionsToPackage{twoside=false}{tubstypearea}
+    \PassOptionsToPackage{twoside=false}{tubsstyle}
+%<class>  \PassOptionsToClass{twoside=false}{\BaseClass}
+  \fi
 }
 %</book|report|article|package>
 %    \end{macrocode}
@@ -239,6 +256,38 @@
 }
 %    \end{macrocode}
 %    \end{key}
+%
+%<*article|report|book|leaflet>
+%
+%    \begin{key}{tubsdoc.dtx}{style}
+% |screen|: Standardeinstellungen für Dokumente,
+%           die nur zur Bildschirmdarstellung bestimmt sind.
+% |print|:  Standardeinstellungen für Dokumente,
+%           die zum Druck bestimmt sind.
+%    \begin{macrocode}
+\DeclareOptionX{style}{%
+  \ifthenelse{\equal{#1}{screen}}{%
+    \PassOptionsToPackage{bcor=0mm}{tubstypearea}
+    \PassOptionsToPackage{rgb}{tubslogo}
+    \PassOptionsToPackage{rgb}{tubscolors}
+    \PassOptionsToPackage{twoside=false}{tubstypearea}
+    \PassOptionsToPackage{twoside=false}{tubsstyle}
+  }{%
+    \ifthenelse{\equal{#1}{print}}{%
+      \PassOptionsToPackage{bcor=15mm}{tubstypearea}
+      \PassOptionsToPackage{cmyk}{tubslogo}
+      \PassOptionsToPackage{cmyk}{tubscolors}
+      \PassOptionsToPackage{twoside=true}{tubstypearea}
+      \PassOptionsToPackage{twoside=true}{tubsstyle}
+    }{%
+      \ClassError{\tubsClassName}{Unknown Value for option 'style'}{}
+    }
+  }
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%</article|report|book|leaflet>
 %
 % \subsubsection{Papierformat}
 %
@@ -409,7 +458,7 @@
   }{\ifthenelse{\equal{#1}{none}}{%
     \relax
   }{%
-    \ClassError{leaflet.cls}{%
+    \ClassError{tubsleaflet.cls}{%
       Invalid parameter for option 'style'
     }{%
       Allowed parameters: 'simple', 'none'
@@ -447,9 +496,9 @@
 % 
 % Finally execute default options and load the tubstex packages
 %    \begin{macrocode}
-%<report>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
-%<article>\ExecuteOptionsX{a4paper,cmyk,bcor=15mm,backend=base}
-%<leaflet>\ExecuteOptionsX{langpaper,cmyk}
+%<report>\ExecuteOptionsX{a4paper,style=print,backend=base}
+%<article>\ExecuteOptionsX{a4paper,style=print,backend=base}
+%<leaflet>\ExecuteOptionsX{langpaper,print}
 \ProcessOptionsX*\relax
 % Namen für Fontsize-Dateien festlegen
 \providecommand{\@fontsizefilebase}{}
