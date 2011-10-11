@@ -395,14 +395,14 @@
     \endtitlerow
     \begin{titlerow}[bgcolor=tuSecondary80]{2}
       \sffamily\raggedright%
-      {\bfseries\Huge\@title}\bigskip\\%
-      {\LARGE\@subtitle}%
+      {\usekomafont{title}\@title}\bigskip\\%
+      {\usekomafont{subtitle}\@subtitle}%
       \vfill%
-      {\Large\@date}
+      {\usekomafont{date}\@date}
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary60]{1}
       \vfill%
-      {\sffamily\Huge\@author}%
+      {\usekomafont{author}\@author}%
       \vfill
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary40]{3}
@@ -433,14 +433,14 @@
     \endtitlerow
     \begin{titlerow}[bgcolor=tuSecondary80]{2}
       \sffamily\raggedright%
-      {\bfseries\Huge\@title}\bigskip\\%
-      {\LARGE\@subtitle}%
+      {\usekomafont{title}\@title}\bigskip\\%
+      {\usekomafont{subtitle}\@subtitle}%
       \vfill%
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary60]{3}
-      \sffamily{\huge\@author}%
+      {\usekomafont{author}\@author}%
       \vfill
-      \@date
+      {\usekomafont{date}\@date}
     \end{titlerow}
   \end{titlepage}
 }
