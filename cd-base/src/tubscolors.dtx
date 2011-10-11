@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2011 by Enrico Jörns
+% Copyright (C) 2011 by Enrico Jörns and Mr. X
 % -----------------------------------
 %
 % This file may be distributed and/or modified under the
@@ -51,7 +51,7 @@
 % \fi
 %
 % \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
+% \newenvironment{OptionXs}%
 %  {\begin{list}{}{%
 %   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
 %   \setlength{\itemsep}{-.5\parsep}
@@ -62,6 +62,10 @@
 %  {\end{list}}
 %
 % \changes{v0.4}{ 2011 / 09 / 18 }{Initial version}
+%
+% \changes{v0.5}{ 2011 / 10 / 11 }{%
+%     Auf xkeyval umgestellt,
+%     Option |trueblack| hinzugefügt.}
 %
 % \GetFileInfo{tubcolors.sty}
 %
@@ -81,11 +85,12 @@
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubscolors}[2011/09/18  v0.4  Color scheme TU-Braunschweig]
+\ProvidesPackage{tubscolors}[2011/10/11  v0.5  Farbschema der TU-Braunschweig]
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
 %    \begin{macrocode}
+\RequirePackage{xkeyval}
 \RequirePackage{xcolor}
 \RequirePackage{ifthen}
 \RequirePackage{forloop}
@@ -95,8 +100,10 @@
 %    \begin{macrocode}
 \newboolean{rgbbeamer}\setboolean{rgbbeamer}{false}
 \newboolean{cmyk}\setboolean{cmyk}{false}
+\newcommand*{\tc@colormodel}{rgb}
 \def\secondaryColorName{undefined}
-\newif\ifmono\monofalse
+\newif\iftc@mono\tc@monofalse
+\newif\iftc@trueblack\tc@trueblackfalse
 %    \end{macrocode}
 %
 % \subsection{Optionen}
@@ -107,11 +114,30 @@
 % 'rgb' ist das Standard-Farbschema\\
 % 'rgbbeamer' ist optimiert für Beamer-Ausgabe
 %    \begin{macrocode}
-\DeclareOption{rgb}{\relax}
-\DeclareOption{rgbbeamer}{\setboolean{rgbbeamer}{true}}
-\DeclareOption{cmyk}{\setboolean{cmyk}{true}}
+\DeclareOptionX{rgb}{\renewcommand*{\tc@colormodel}{rgb}}
+\DeclareOptionX{rgbbeamer}{\renewcommand*{\tc@colormodel}{rgbbeamer}}
+\DeclareOptionX{cmyk}{\renewcommand*{\tc@colormodel}{cmyk}}
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}
+%
+%    \begin{key}{}{mono}
+% Schwarz-weiß
+%    \begin{macrocode}
+\DeclareOptionX{mono}{\tc@monotrue}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{trueblack}
+% Stellt CMYK-Schwarz als 'richtiges' Schwarz dar, also nicht als
+% 100%K-Farbe.
+% Diese Option zeigt nur Auswirkung in Verbindung mit der Option |cmyk|.
+%    \begin{macrocode}
+\DeclareOptionX{trueblack}[0.75,0.68,0.67,0.90]{%
+  \tc@trueblacktrue
+  \def\tc@trueblackval{#1}
+}
+%    \end{macrocode}
+%    \end{key}
 %
 %    \begin{key}{}{orange}
 %    \begin{key}{}{green}
@@ -119,62 +145,63 @@
 %    \begin{key}{}{violet}
 % Sekundär-Farbklangwahl
 %    \begin{macrocode}
-\DeclareOption{orange}{\def\secondaryColorName{Orange}}
-\DeclareOption{green}{\def\secondaryColorName{Green}}
-\DeclareOption{blue}{\def\secondaryColorName{Blue}}
-\DeclareOption{violet}{\def\secondaryColorName{Violet}}
-\DeclareOption{Orange}{\def\secondaryColorName{Orange}}
-\DeclareOption{Green}{\def\secondaryColorName{Green}}
-\DeclareOption{Blue}{\def\secondaryColorName{Blue}}
-\DeclareOption{Violet}{\def\secondaryColorName{Violet}}
+\DeclareOptionX{orange}{\def\secondaryColorName{Orange}}
+\DeclareOptionX{green}{\def\secondaryColorName{Green}}
+\DeclareOptionX{blue}{\def\secondaryColorName{Blue}}
+\DeclareOptionX{violet}{\def\secondaryColorName{Violet}}
+\DeclareOptionX{Orange}{\def\secondaryColorName{Orange}}
+\DeclareOptionX{Green}{\def\secondaryColorName{Green}}
+\DeclareOptionX{Blue}{\def\secondaryColorName{Blue}}
+\DeclareOptionX{Violet}{\def\secondaryColorName{Violet}}
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}\end{key}
 %
-%    \begin{key}{}{mono}
-% Schwarz-weiß
-%    \begin{macrocode}
-\DeclareOption{mono}{\monotrue}
-%    \end{macrocode}
-%    \end{key}
 %
 % Fehler bei unbekannter Option
 %    \begin{macrocode}
-\DeclareOption*{%
+\DeclareOptionX*{%
   \PackageWarning{tubscolors}{Unknown option `\CurrentOption'}%
 }
 %    \end{macrocode}
 %
 % Optionen auswerten
 %    \begin{macrocode}
-\ExecuteOptions{rgb,blue} %TODO: check
-\ProcessOptions\relax
+\ExecuteOptionsX{rgb,blue} %TODO: check
+\ProcessOptionsX*\relax% Behandelt auch Optionen der Dokumentenklasse!
 %    \end{macrocode}
 %
 % \subsection{Farbdefinitionen -- Farbmodelle}
 %
 % \subsubsection{CMYK}
 %    \begin{macrocode}
-\ifthenelse{\boolean{cmyk}}{%
+\ifthenelse{\equal{\tc@colormodel}{cmyk}}{%
 %    \end{macrocode}
 %
 % \paragraph {Primärfarben}
+% Hinweis: CMYK-Schwarz wird im RGB-Farbraum als dunkles Grau dargestellt.
+%   Dies ist kein Fehler, sondern liegt in der Natur des Sache, dass
+%   Schwarz als 100%K definiert ist.
 %    \begin{macrocode}
-\ifmono
-  \definecolor{tuRed}{cmyk}{0,0,0,1}
+\iftc@trueblack
+  \definecolor{tuBlack}{cmyk}{\tc@trueblackval}
+\else
+  \definecolor{tuBlack}{cmyk}{0.0,0.0,0.0,1.0}
+\fi
+\iftc@mono
+  \colorlet{tuRed}{tuBlack}
 \else
   \definecolor{tuRed}{cmyk}{0.1,1.0,0.8,0.0}
 \fi
-\definecolor{tuBlack}{cmyk}{0.0,0.0,0.0,1.0}
 \definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
 %    \end{macrocode}
 %
 % \paragraph {Grautöne}
 %    \begin{macrocode}
-\definecolor{tuGray100}{cmyk}{0,0,0,1}
-\definecolor{tuGray80}{cmyk}{0,0,0,0.8}
-\definecolor{tuGray60}{cmyk}{0,0,0,0.6}
-\definecolor{tuGray40}{cmyk}{0,0,0,0.4}
-\definecolor{tuGray20}{cmyk}{0,0,0,0.2}
+\colorlet{tuGray100}{tuBlack}
+\colorlet{tuGray80}{tuBlack!80}
+\colorlet{tuGray60}{tuBlack!60}
+\colorlet{tuGray40}{tuBlack!40}
+\colorlet{tuGray20}{tuBlack!20}
 %    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill
@@ -289,12 +316,12 @@
 % \subsubsection{RGB (Beamer-angepasst)}
 % Farben aus den ppt-Vorlagen
 %    \begin{macrocode}
-\ifthenelse{\boolean{rgbbeamer}}{%
+\ifthenelse{\equal{\tc@colormodel}{rgbbeamer}}{%
 %    \end{macrocode}
 %
 % \paragraph{Primärfarben}
 %    \begin{macrocode}
-\ifmono
+\iftc@mono
   \definecolor{tuRed}{RGB}{8,8,8}
 \else
   \definecolor{tuRed}{RGB}{190,30,60}
@@ -418,7 +445,7 @@
 % \subsubsection{RGB}
 % \paragraph{Primärfarben}
 %    \begin{macrocode}
-\ifmono
+\iftc@mono
   \definecolor{tuRed}{RGB}{0,0,0}
 \else
   \definecolor{tuRed}{RGB}{190,30,60}
@@ -691,3 +718,9 @@
 %
 % \Finale
 \endinput
+%
+% TODO:
+% - Light, Medium und Dark als Präfix
+% - Möglichkeiten von xcolor besser ausnutzen
+% - Farbdifferenzen zu Logo-Dateien prüfen
+%
