@@ -456,10 +456,14 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{tubstypearea.sty}{twosided}
+%    \begin{key}{tubstypearea.sty}{twoside}
 %    \begin{macrocode}
-\DeclareOptionX{twosided}{%
-  \setboolean{tubspage@twosided}{true}
+\define@boolkey{tubstypearea.sty}[tt@]{twoside}[true]{%
+  \iftt@twoside
+    \setboolean{tubspage@twosided}{true}
+  \else
+    \setboolean{tubspage@twosided}{false}
+  \fi
 }
 %    \end{macrocode}
 %    \end{key}
@@ -515,7 +519,7 @@
 %
 %    \begin{macrocode}
 % \ExecuteOptionsX{anypaper}
-\ProcessOptionsX\relax
+\ProcessOptionsX*\relax
 %    \end{macrocode}
 %
 %
