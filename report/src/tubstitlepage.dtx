@@ -166,13 +166,34 @@
 %
 % \subsection{Befehle und Umgebungen zu Erstellung von Titel- und Rückseiten}
 %
+%    \begin{key}{}{logo}
+%\oarg{pos}\par
+% Positionierung des Logos.
+% Mögliche Werte: |left|, |inside|, |right|, |outside|
+%    \begin{macrocode}
+\newcommand\tubs@tp@logopos{left}
+\define@choicekey*{tubs@tp}{logo}[\val\nr]{left,inside,right,outside}{%
+  \ifcase\nr\relax
+    \renewcommand\tubs@tp@logopos{left}
+  \or
+    \renewcommand\tubs@tp@logopos{left}
+  \or
+    \renewcommand\tubs@tp@logopos{right}
+  \or
+    \renewcommand\tubs@tp@logopos{right}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{macro}{\maketitle}
 % Neu-Definition von |\maketitle| zur Erstellung von Titelseiten im CD.
 % Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][\style@select]{%
-  \expandafter\csname tubs@style@bg@#1\endcsname%
-  \expandafter\csname tubs@style@content@#1\endcsname%
+  \setkeys*{tubs@tp}{#1}
+  \expandafter\csname tubs@style@bg@\XKV@rm\endcsname%
+  \expandafter\csname tubs@style@content@\XKV@rm\endcsname%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -283,7 +304,7 @@
   \clearpage
   \bglayout[pages=single]{%
     \showtopline
-    \showtubslogo[left]
+    \showtubslogo[\tubs@tp@logopos]
     \showlogo{\tubs@tp@logo}
   }
 }{\thispagestyle{empty}\oldmaketitle}
@@ -292,7 +313,7 @@
 \new@title@style{plain}{}{% NOTE: code from scrreprt.cls
     \begin{titlepage}
       \showtopline
-      \showtubslogo[left]
+      \showtubslogo[\tubs@tp@logopos]
       \showlogo{\tubs@tp@logo}
       \let\footnotesize\small
       \let\footnoterule\relax
@@ -358,7 +379,7 @@
 %    \begin{macrocode}
 \new@title@style{image}{}{%
   \begin{titlepage}
-    \showtubslogo[left]
+    \showtubslogo[\tubs@tp@logopos]
     \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{3}
     \endtitlerow
@@ -382,7 +403,7 @@
 %    \begin{macrocode}
 \new@title@style{imagetext}{}{%
   \begin{titlepage}
-    \showtubslogo[left]
+    \showtubslogo[\tubs@tp@logopos]
     \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{2}
     \endtitlerow
@@ -414,7 +435,7 @@
 \new@back@style{plain}{}{%
   \begin{gausspage}
     \showtopline
-    \showtubslogo[left,plain]
+    \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}{1}
       \tubs@tp@address
     \end{segment}
@@ -425,7 +446,7 @@
 \new@back@style{plain}{}{%
   \begin{gausspage}
     \showtopline
-    \showtubslogo[left,plain]
+    \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}{1}
       \tubs@tp@address
     \end{segment}
@@ -439,7 +460,7 @@
 %    \begin{macrocode}
 \new@back@style{addressinfo}{}{%
   \begin{gausspage}
-    \showtubslogo[left,plain]
+    \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondary60]{1}
       \tubs@tp@address
     \end{segment}
