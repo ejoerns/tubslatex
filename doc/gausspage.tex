@@ -1,0 +1,71 @@
+\chapter{Hintergrundlayout}\label{chap:gausspage}
+
+\begin{Declaration}
+  \Macro{showtubslogo}\OParameter{Position}
+\end{Declaration}
+
+Bewirkt Darstellung des TU-Siegelbandlogos im aktiven Layout.
+Die Option \PName{Position} erlaubt die Angabe der Darstellungsseite
+(links/rechts). Standardmäßig wird das Logo links bzw. innen dargestellt.
+
+\begin{Declaration}
+  \Macro{showlogo}\PParameter{Logo}
+\end{Declaration}
+
+Bewirkt Darstellung eines Individuellen Logos im aktuellen Layout.
+\PName{Logo} kann dabei entweder einfacher Text oder auch ein 
+mit \Macro{includegraphics} eingebundenes Bild sein.
+
+Die Positionierung wird automatisch an die Positionierung des Siegelbandlogos
+angepasst. Wird dies links bzw. innen platziert, so steht das individuelle
+Logo rechts bzw. außen.
+
+\begin{Declaration}
+  \Macro{showtopline}
+\end{Declaration}
+
+Bewirkt Darstellung einer Trennlinie zwischen Absender und Kommunikationsbereich
+im aktuellen Layout.
+
+\begin{Declaration}
+  \Macro{showdesignhelper}
+\end{Declaration}
+
+\begin{Declaration}
+  \Macro{bgelement}\OParameter{Darstellung}\PParameter{Höhe}
+\end{Declaration}
+
+Erstellt ein Hintergrundelement im Gaußraster mit angegebener \PName{Höhe}.
+Der Parameter \PName{Darstellung} kann die folgenden Einstellungen verarbeiten:
+
+\begin{Declaration}
+  \KOption{bgcolor}\PName{Farbe}\\
+  \KOption{bgimage}\PName{Bild-Datei}\\
+  \KOption{imagefit}\PName{Darstellungsoption}
+\end{Declaration}
+
+Mit \OptionValue{bgcolor}{Farbe} wird das Hintergrundelement mit der angegebenen
+Farbe gefüllt.
+
+Die Option \OptionValue{bgimage}{Bild-Datei} erlaubt dagegen die Darstellung
+eines Hintergrundbildes im Element.
+Da der Darstellungsbereich fest vorgegeben ist, muss das eingebundene Bild
+in diesen Bereich eingepasst werden. Dies geschieht automatisch, die Art
+der Einpassung lässt sich aber mit der Option \Option{imagefit} kontrollieren.
+Sie erlaubt folgende Einstellungen:
+
+
+\begin{desctable}
+\entry{\PValue{cropped}}{%
+  Automatisches Abschneiden. Dies ist die Standardeinstellung.
+}
+\entry{\PValue{cropx}}{%
+  Abschnitt horizontal.
+}
+\entry{\PValue{cropy}}{%
+  Abschnitt vertikal.
+}
+\entry{\PValue{scaled}}{%
+  Horizontale \emph{und} vertikale Skalierung.
+}
+\end{desctable}
