@@ -84,7 +84,7 @@
 %   unter Verwendung des Paketes |eso-pic|.
 % \end{abstract}
 %
-\tableofcontents
+% \tableofcontents
 %
 %
 % \section{Implementierung}
@@ -122,6 +122,21 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{sender}
+%    \begin{macrocode}
+\newcommand*\tubs@ts@sender@default{top}
+\define@choicekey*{tubsstyle.sty}{sender}[\val\nr]{top,bottom}{%
+  \ifcase\nr\relax
+    \presetkeys{bglayout}{sender=top}{}
+    \renewcommand*{\tubs@ts@sender@default}{top}
+  \or
+    \presetkeys{bglayout}{sender=bottom}{}
+    \renewcommand*{\tubs@ts@sender@default}{bottom}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % Fehler bei unbekannter Option
 %    \begin{macrocode}
 \DeclareOption*{%
@@ -131,6 +146,7 @@
 %
 %    \begin{macrocode}
 %<*package>
+\ExecuteOptionsX{sender=top}
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
@@ -788,7 +804,7 @@
   \def\@@next@shipout{} % Makro to set content after keys
   \def\@layout@preset{}
   \setcounter{tubs@yseg@cnt}{1}
-  \setkeys{bglayout}{pages=all,sender=top,#1}
+  \setkeys{bglayout}{pages=all,#1}
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
 }
 %    \end{macrocode}
