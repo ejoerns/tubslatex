@@ -7,25 +7,50 @@ Einfache Textdokumente können mit den Klassen \newdocumentclass{tubsartcl},
 
 Da Dokumente normalerweise gedruckt werden und ggf. auch gebunden, werden
 sie standardmäßig mit einer kleinen Bindekorrektur gesetzt, sodass das
-Logo beim Drucken oder Abheften nicht abgeschnitten wird.
-Diese Bindekorrektur kann mittels der Paketoption \texttt{bcor} angepasst werden.
-Mit \texttt{bcor=0mm} wird sie beispielsweise deaktiviert.
+Logo beim Drucken oder Abheften nicht abgeschnitten wird, außerdem wird
+es als zweiseitiges Dokument in CMYK-Farben ausgegeben.
+Für eine Optimierung zur Ausgabe auf einem Bildschirm steht die Option
+\OptionValue{style}{screen} zu Verfügung. Weitere Paket-Optionen dienen der
+genauen individuellen Anpassung der Darstellung. Eine genauere Darstellung
+liefert \mbox{u.\,a.}\xspace das Kapitel~\ref{sec:pagelayout}.
+
+Für die Darstellung von Titelseiten stellt \tubslatex verschiedene Möglichkeiten
+zur Verfügung, die an die konventionelle Erstellung von Titelseiten angelehnt
+sind. So sowohl sowohl der Befehl \Macro{maketitle} als auch die Umgebung
+\Environment{titlepage} so umdefiniert, dass man mit ihnen einfach CD-konforme
+Titelseiten aus Vorlagen auswählen bzw. individuell erstellen kann.
+Darüber hinaus steht auch die Möglichkeit zur Verfügung mittels
+\Macro{makebackpage} oder der Umgebung \Environment{backpage}
+Rückseiten zu erstellen. Kapitel~\ref{sec:titlepage} geht darauf näher ein.
+
+Darüber hinaus ist die Schrift Nexus, sowie alle Farben des Corporate Designs
+in allen Dokumenten vordefiniert.
+Befehle für die Erstellung von Kopf- bzw. Fußzeilen sind CD-konform angepasst und
+werden im Kapitel~\ref{sec:headline} beschrieben.
+
+Die Darstellung von Seiten basiert im CD-Layout im Prinzip immer auf den
+sogenannten Gaußraster. Dies unterteilt die Seite in verschieden große
+Segmente, deren Höhe durch die gaußsche Summenformel berechnet werden kann.
+Außerdem könne Seiten ein Reihe von Standardelementen wie das Sigellogo oder
+ein zusätzliches individuelles Logo aufweisen.
+Alle Seiten, die im Stil des \gls{glos:gaussraster} erzeugt werden basieren letzendlich
+auf dem Selben backend. Dies wird in Kapitel~\ref{sec:gausspage} ausführlicher
+beschrieben.
 
 
-
-\section{Titelseite}
+\section{Titelseite}\label{sec:titlepage}
 
 Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
 werden; entweder mit Hilfe des Befehls \lstinline{\maketitle} oder mit
 der Umgebung \lstinline{titlepage}. Beide Varianten werden von \tubslatex
-unterstützt und leicht modifiziert.
+in modifizierter Weise unterstützt.
 
 \begin{Declaration}
   \Macro{maketitle}\OParameter{style}
 \end{Declaration}
 
 Die einfache Verwendung von \lstinline{\maketitle} erzeugt eine Titelseite
-mit dem TU-Logo und einer roten Trennlinie zwischen Absender- und
+mit dem TU-\gls{glos:siegelbandlogo} und einer roten Trennlinie zwischen Absender- und
 Kommunikationsbereich.
 
 Mit Hilfe des optionalen Arguments \PName{style} kann die Darstellung
@@ -44,7 +69,7 @@ oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
 
 \Macro{logo} dient zur Darstellung eines zusätzlichen Absenders als Schrift
 oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
-TU Siegelband-Logo gegenüberliegenden Seite dargestellt. Eingefügte Grafiken
+TU \gls{glos:siegelbandlogo} gegenüberliegenden Seite dargestellt. Eingefügte Grafiken
 werden automatisch auf die Höhe des Kopfbereichs skaliert.
 
 Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
@@ -62,7 +87,11 @@ Weitere Erläuterungen finden sich jeweils auch im Kapitel~\ref{sec:titlestyles}
 
 Mit der \Environment{titlepage}-Umgebung können, wie von den Standardklassen
 gewohnt, Titelseiten definiert werden. Sie bietet aber in \tubslatex noch einige
-zusätzliche Darstellungsmöglichkeiten.
+zusätzliche Darstellungsmöglichkeiten. \Environment{titlepage} entspricht
+im Prinzip der Umgebung \Environment{gausspage}, die allgemein zum Erstellen
+von Seiten im \gls{glos:gaussraster} konzipiert ist. Daher finden sich
+weiterführende Information zu Definitionsmölighckeiten auch in
+Abschnitt~\ref{sec:gausspage}.
 
 \begin{Declaration}
   \Macro{showtubslogo}\OParameter{Seite}\\
@@ -83,6 +112,12 @@ Seite des Blattes erwirkt. Gleichzeitig hat dies Auswirkungen
 auf die Positionierung des Zweitlogos, das automatisch immer auf der 
 dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
 % TODO: inner, outer?
+
+\begin{Declaration}
+  \Macro{showdesignhelper}
+\end{Declaration}
+
+% TODO...
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{titlerow}}%
@@ -132,6 +167,8 @@ Siehe hierzu jeweils auch Kapitel~\ref{sec:backstyles}.
 
 \subsection{Vordefinierte Titel-Styles}\label{sec:titlestyles}
 
+%TODO: Hinweis Schriftgrößen, KOMA-Fonts
+
 Es sind 3 einfache Styles definiert.% vordefiniert
 % TODO: styles selbst definieren.
 % Hinweis zu Farbdarstellung!
@@ -168,24 +205,30 @@ Es sind 3 einfache Styles definiert.% vordefiniert
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/backstyle_plain.pdf}}
+      \includegraphics[width=0.95\textwidth,page=1]{examples/backstyles.pdf}}
     [plain] (default)
   \end{minipage}%
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/backstyle_info.pdf}}
+      \includegraphics[width=0.95\textwidth,page=2]{examples/backstyles.pdf}}
     [info]
   \end{minipage}%
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/backstyle_addressinfo.pdf}}
+      \includegraphics[width=0.95\textwidth,page=3]{examples/backstyles.pdf}}
     [addressinfo]
+  \end{minipage}
+  \begin{minipage}[t]{0.33\textwidth}
+    \centering\sffamily
+    \fbox{%
+      \includegraphics[width=0.95\textwidth,page=4]{examples/backstyles.pdf}}
+    [trisec]
   \end{minipage}
 \end{center}
 
-\section{Kopf-/ Fußzeile}
+\section{Kopf-/ Fußzeile}\label{sec:headline}
 
 Standardmäßig wird die Fußzeile komplett leer gelassen und die Kopfzeile
 wird mit Seitennummer rechts und Kapitelname links gesetzt. Bei zweiseitigem
@@ -212,7 +255,7 @@ Kopfbereiches sind im Makro \Macro{headsepline} definiert.
 Dies kann bei Bedarf überschrieben werden.
 
 
-\section{Seitenlayout}
+\section{Seitenlayout}\label{sec:pagelayout}
 
 Eine Seite im Corporate Design unterteilt sich grundlegend in 2 Bereiche.
 Der Absenderbereich und der Kommunikationsbereich. Der Absenderbereich wird zur
@@ -274,6 +317,33 @@ wird der Absenderbereich am unteren Ende der Seite platziert
 \end{important}
 
 
+\begin{Declaration}
+  \KOption{style}\PName{<print/screen>}
+\end{Declaration}
+
+Die Option \Option{style} bietet die automatische Möglichkeit diverse Elemente
+des Layouts so anzupassen, dass sie die Darstellung auf dem gewünschten
+Zielmedium optimieren.
+
+Mit \OptionValue{style}{print}, was standardmäßig voreingestellt ist,
+wird die Darstellung für den Druck optimiert.
+
+Mit \OptionValue{style}{screen} wird die Darstellung
+für die Ausgabe auf Bildschirmen optimiert.
+
+\begin{center}
+\begin{tabular}{lll}
+                      & \textbf{\ttfamily print} & \textbf{\ttfamily screen}  \\
+  \midrule
+Bindekorrektur        & 15mm  & 0mm     \\
+Zweisitige Dartellung & Ja    & Nein    \\
+Farbdarstellung       & CMYK  & RGB
+\end{tabular}
+\end{center}
+
+Die einzelnen Einstellungen können natürlich auch einzeln angepasst oder
+nachträglich geändert werden. Es entscheidet die Reihenfolge der Optionen.
+Die zuletzt gesetzte Option hat dabei die höchste Priorität.
 
 \begin{Declaration}
   \KOption{bcor}\PName{Wert}
@@ -291,7 +361,7 @@ Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
 mit \OptionValue{bcor}{0mm} möglich.
 
 \begin{Declaration}
-  \Option{twoside}
+  \KOption{twoside}\PName{bool}
 \end{Declaration}
 
 Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
@@ -300,6 +370,9 @@ umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
 auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
 auf definierte Ränder (Bindungskorrektur, Marginale).
 
+Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
+dabei der einfachen Benutzung von \Option{twoside}.
+\OptionValue{twoside}{false} sorgt dagegen für die Deaktivierung der Option.
 
 \begin{Declaration}
   \Option{marginleft}\\
@@ -311,29 +384,61 @@ Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
 bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
 einem Element im Spaltenraster entspricht.
 
+\begin{Declaration}
+  \Option{extramargin}
+\end{Declaration}
+
+Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
+für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
+Darstellung, welche häufig Verwendung findet jedoch deutlich zu breit.
+Die Option \Option{extramargin} definiert dafür einen Textbereich, der um
+doppelte Rahmenstärke schmaler ist als der herkömmliche Textbereich.
+\begin{important}
+Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
+\Environment{gausspage} benutzen.
+\end{important}
+
 
 \section{Schrift}
 
 Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
-gesetzt.
-Diese wird standardmäßig bei allen Dokumenten geladen. Auf eine explizite
-Angabe der Schriftgröße in den Dokumentenoptionen sollte nach Möglichkeit
-verzichtet werden, da für die jeweiligen Papierformate spezielle
-Schriftgrößen vordefiniert sind und geladen werden.
-Das Laden anderer Schriftgrößen führt im Vergleich dazu teilweise zu stark abweichenden Ergebnissen.
+gesetzt. Diese wird standardmäßig bei allen Dokumenten in der Schriftgröße
+11pt geladen. Außerdem definiert sind Schriftgrößen von 10pt und 9pt.
+Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereiches sollte
+nach Möglichkeit verzichtet werden, da dies zu starken Abweichungen in der
+Größendarstellung und somit im Gesamtlayout führt.
 
-Für wichtige Standard-Elemente gibt es des weiteren vordefinierte Koma-Fonts.
 
+Für wichtige Standard-Elemente gibt es des Weiteren vordefinierte Koma-Fonts.
+Diese können bei Bedarf mit dem Befehl \Macro{setkomafont}\Parameter{Parameter} 
+geändert werden, wovon aber abgeraten wird, da sie entsprechend des CD korrekt
+definiert sind. Teilweise sind Namen auch doppelt definiert, um sowohl
+CD- als auch \LaTeX-Konventionen zu entsprechen.
+
+Die folgende Liste bietet eine Übersicht über alle verfügbaren bzw.
+definierten KOMA-Font-Elemente:
 
 \begin{desctable}
-\entry{\PValue{headline}}{%
-  Einfache Überschrift (groß)
+\entry{\PValue{headline}\\
+  \PValue{title}}{%
+  Einfache Überschrift (groß) (Titelseite)
 }
-\entry{\PValue{subheadline}}{%
-  Unterüberschrift
+\entry{\PValue{headlinesmall}\\
+  \PValue{title}}{%
+  Einfache Überschrift (klein)
+}
+\entry{\PValue{subheadline}\\
+  \PValue{subtitle}}{%
+  Unterüberschrift (Titelseite)
 }
 \entry{\PValue{institute}}{%
   Institutsname im Logo-Bereich des Absenders.
+}
+\entry{\PValue{author}}{%
+  Autorenname auf der Titelseite
+}
+\entry{\PValue{date}}{%
+  Datum auf der Titelseite
 }
 % \entry{\PValue{infotext}}{%
 % }
@@ -345,18 +450,95 @@ Für wichtige Standard-Elemente gibt es des weiteren vordefinierte Koma-Fonts.
 \end{desctable}
 
 
-\subsection{Farben}
+\paragraph{Aufzählungszeichen}
 
-Für eine Übersicht über die verfügbaren Farben siehe \ref{sec:colors}.%TODO...
+Aufzählungszeichen für die \Environment{itemize}-Umgebung werden in \tubslatex
+als kleine Kästchen dargestellt.
+Diese sind für die ersten zwei Ebenen einer Aufzählung definiert, wobei
+die zweite Ebene kleinere Kästchen in der Darstellung aufweißt:
+\begin{center}
+\fbox{\parbox{0.5\textwidth}{\begin{itemize}
+  \item Item 1
+  \item Item 2
+  \begin{itemize}
+    \item Sub-Item 1
+    \item Sub-Item 2
+  \end{itemize}
+  \item Item 3
+\end{itemize}}}
+\end{center}
 
-\begin{Declaration}
-  \Option{mono}
-\end{Declaration}
 
-Schwarz-Weiß-Darstellung der Standardelemente
+
+\section{Farben}
+
+Diese Kapitel gibt nur einen kurzen Einblick über die wichtigsten Punkte
+zum Thema Farben. Für eine detaillierte Übersicht über die verfügbaren Farben
+und weitere Möglichkeiten siehe Kapitel~\ref{sec:colors}.%TODO...
+
+Die Dokumentenklassen in \tubslatex unterstüzen im Prinzip 2 Farbmodelle:
+Das für Bildschirmdarstellungen verwendeten RGB-Modell und das im
+Druck gebräuchliche CMYK-Modell. Zwischen diesen beiden kann in den Optionen
+der Dokumentenklasse gewählt werden. Darüber hinaus gibt es noch die Unterstützung
+für die Darstellung von Schwarz-Weiß-Dokumenten. Dabei werden automatisch
+alle Elemente, die sonst in der roten Primärfarbe des CD dargestellt werden,
+schwarz dargestellt.
 
 \begin{Declaration}
   \Option{cmyk}
 \end{Declaration}
 
-CMYK-Darstellung der Standardelemente
+Diese Klassenoption erwirkt eine CMYK-Darstellung des Siegelbandlogos und der
+CD-Standardfarben. Sie ist für den Druck zu bevorzugen.
+
+\begin{important}
+  Bei der Verwendung von \Option{cmyk} ist zu beachten,
+  dass das die Farbe Schwarz (\texttt{tuBlack})
+  aus den Farbdefinitionen der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht,
+  was in der Bildschirmdarstellung allgemein als dunkles grau wirkt. Dies
+  gilt somit auch für den Text im Dokument und ist normal.
+
+  Sollte dagegen die Ausgabe aus dem Drucker zu hell erscheinen, so kann dies
+  durch einen manuelle Anpassung der Farbe \texttt{tuBlack} korrigiert werden,
+  indem zusätzlich die CMY-Farben benutzt werden. Dies kann jedoch auch zu
+  schlechteren Druckergebnissen durch übermäßigen Tinteneinsatz führen!
+  
+  Beispiel zur Umdefinierung:
+  \lstinline!\definecolor{tuBlack}{CMYK}{0.5,0.5,0.5,1.0}!
+\end{important}
+
+\begin{Declaration}
+  \Option{rgb}
+\end{Declaration}
+
+Diese Klassenoption erwirkt eine RGB-Darstellung des Siegelbandlogos und der
+CD-Standardfarben. Sie ist für Bildschirmdarstellungen zu bevorzugen.
+
+\begin{Declaration}
+  \Option{mono}
+\end{Declaration}
+
+Diese Klassenoption stellt sowhl das Siegelbandlogo als auch alle in der
+roten Primärfarbe (\texttt{tuRed}) des CD definierten Elemente schwarz dar.
+Sie entscheidet dabei \emph{nicht} über das verwendete Farbmodell (RGB/CMYK).
+\begin{important}
+  Bei der Verwendung von \Option{mono} in Verbindung mit \Option{cmyk}
+  ist zu beachten, dass das die Farbe Schwarz (\texttt{tuBlack})
+  aus den Farbdefinitionen (wie oben beschrieben) nicht dem 'wirklichen' Schwarz
+  des Siegelbandlogos entspricht.
+  Im Zweifelsfall ist also eine Verwendung des RGB-Farbmodells in Verbindung
+  mit \Option{mono} oder eine Neudefinition von \texttt{tuBlack} vorzuziehen.
+\end{important}
+
+\section{Gauß-Layout}\label{sec:gausspage}
+
+
+\section{Arbeiten mit \tubslatex}
+
+\subsection{Text schreiben}
+
+
+
+% TODO: margins, textwidth-Problem, etc.
+
+
