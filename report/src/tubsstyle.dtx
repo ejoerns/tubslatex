@@ -84,32 +84,8 @@
 %   unter Verwendung des Paketes |eso-pic|.
 % \end{abstract}
 %
-% \section{Einleitung}
+\tableofcontents
 %
-% Put text here.
-%
-% \section{Benutzung}
-%
-% \parindent0mm
-% \parskip\medskipamount
-%
-% \subsection{Layout-Templates}
-%
-% \subsection{Poster}
-%
-% \DescribeMacro{\showtopline}
-%   bla
-%
-% \DescribeMacro{\showtubslogo}
-%   bla
-%
-% \DescribeMacro{\showlogo}
-%   bla
-%
-% \DescribeEnv{YOURENV}
-% Put description of |YOURENV| here.
-%
-% \StopEventually{\PrintIndex}
 %
 % \section{Implementierung}
 %
@@ -119,14 +95,6 @@
 % für das aktuelle shipout oder alle shipouts gesetzt. Alte Shipout-Definitionen
 % werden dann jeweils komplett gelöscht.
 %
-%    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
 % 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,7 +109,7 @@
 %    \end{macrocode}
 %
 %    \begin{key}{}{twoside}
-% Es werden zur Zeit keine Optionen zur Verfügung gestellt
+% Darstellung für zweiseitiges Layout.
 %    \begin{macrocode}
 \newboolean{tubsstyle@twoside}\setboolean{tubsstyle@twoside}{false}
 \define@boolkey{tubsstyle.sty}[ts@]{twoside}[true]{%
@@ -166,7 +134,7 @@
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
-% Lade benötigte Pakete.
+% Lade benötigte tubslatex-Pakete.
 %    \begin{macrocode}
 \RequirePackage{tubslogo}
 \RequirePackage{tubscolors}
@@ -201,7 +169,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\RequirePackage{transparent}
+\RequirePackage{transparent}% TODO: noch nicht benutzt...
 %    \end{macrocode}
 %
 %
@@ -355,7 +323,7 @@
 %    \end{key}
 %
 %    \begin{key}{tubslogo}{plain}
-% Darstellung des mit einfarbigen Hintergrund, ohne Grafik
+% Darstellung des Siegelbandlogos mit einfarbigen Hintergrund, ohne Grafik
 %    \begin{macrocode}
 \define@boolkey{tubslogo}{plain}[true]{%
   \ifKV@tubslogo@plain%
@@ -564,13 +532,6 @@
 %    \end{macro}
 %
 %
-% Zähler für das aktuelle y-Segment im Gaußraster, das bearbeitet
-% werden kann, bzw. mit |tubsrow| erzeugt.
-%    \begin{macrocode}
-\newcounter{tubs@yseg@cnt}
-%    \end{macrocode}
-%
-%
 %    \begin{macro}{\tubs@draw@topline}
 %    \begin{macro}{\tubs@draw@tubslogo}
 %    \begin{macro}{\tubs@draw@logo}
@@ -598,7 +559,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\if@tubs@shologo}
+%    \begin{macro}{\if@tubs@showlogo}
 % If-Abfrage, um testen zu können, ob Logo auf aktuellem Layout gesetzt wurde
 %    \begin{macrocode}
 \newif\if@tubs@showlogo\@tubs@showlogofalse
@@ -636,17 +597,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macro}{\tubs@bg@cmd}
-% Speicher fuer den Befehl zu Erstellung des Hintergrundes
+% Speicher für den Befehl zu Erstellung des Hintergrundes
 %    \begin{macrocode}
 \def\tubs@bg@cmd{}
 %    \end{macrocode}
 %    \end{macro}
+%
 %    \begin{macro}{\tubstyle@imagefit}
-% Speicher fuer die imagefit-Option
+% Speicher für die imagefit-Option
 %    \begin{macrocode}
 \newcommand{\tubstyle@imagefit}{\relax}
 %    \end{macrocode}
 %    \end{macro}
+%
+% Zähler für das aktuelle y-Segment im Gaußraster, das bearbeitet
+% werden kann, bzw. mit |tubsrow| erzeugt.
+%    \begin{macrocode}
+\newcounter{tubs@yseg@cnt}
+%    \end{macrocode}
+%
 %
 %    \begin{key}{bgelement}{bgcolor}
 % Option zum Setzen der Hintergrundfarbe eines Elements.
@@ -692,12 +661,13 @@
 %
 %    \begin{macrocode}
 %
-\define@choicekey{bgelement}{imagefit}[\val\nr]{default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
+\define@choicekey{bgelement}{imagefit}[\val\nr]{%
+        default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
     % default
-%     \PackageWarning{tubsstyle}{%
-%       Option 'imagefit' not set. Using standard value 'cropped'.
-%     }
+    \PackageInfo{tubsstyle}{%
+      Option 'imagefit' not set. Using standard value 'cropped'.
+    }
     \renewcommand{\tubstyle@imagefit}{cropped}
   \or
     % scaled
@@ -750,20 +720,12 @@
 % des Rasters.\par
 % Diese Information wird im shipout gespeichert!
 %    \begin{macrocode}
-\define@key{bglayout}{sender}{%
-  \ifthenelse{\equal{#1}{bottom}}{%
+\define@choicekey*{bglayout}{sender}[\val\nr]{top,bottom}{%
+  \ifcase\nr\relax
+    \setboolean{tubsstyle@bottomsender}{false}
+  \or
     \setboolean{tubsstyle@bottomsender}{true}
-  }{%
-    \ifthenelse{\equal{#1}{top}}{%
-      \setboolean{tubsstyle@bottomsender}{false}
-    }{%
-      \PackageError{tubsstyle}{%
-        Value '#1' unknown for option 'sender'.
-      }{%
-        Allowed values are: top, bottom
-      }
-    }
-  }
+  \fi
 }
 %    \end{macrocode}
 %    \end{key}
@@ -773,12 +735,12 @@
 % sein soll. Mögliche Werte sind |all| für alle folgenden Seiten oder |single|
 % für Darstellung nur auf der aktuellen Seite.
 %    \begin{macrocode}
-\define@key{bglayout}{pages}[all]{%
-  \ifthenelse{\equal{#1}{single}}{%
-    \setboolean{tubsstyle@singlepage}{true}
-  }{%
+\define@choicekey{bglayout}{pages}[\val\nr]{all,single}{%
+  \ifcase\nr\relax
     \setboolean{tubsstyle@singlepage}{false}
-  }
+  \or
+    \setboolean{tubsstyle@singlepage}{true}
+  \fi
 }
 %    \end{macrocode}
 %    \end{key}
@@ -786,9 +748,9 @@
 % \begin{key}{bglayout}{bgcolor}
 % Mit dieser Option kann der komplette Kommunikationsbereich mit einer
 % gewünschten Hintergrundfarbe gefüllt werden. Wird kein Wert mit übergeben,
-% so wird die Farbe tuBlueLight benutzt.
+% so wird die Farbe tuGray20 benutzt.
 %    \begin{macrocode}
-\define@key{bglayout}{bgcolor}[tuBlueLight]{%
+\define@key{bglayout}{bgcolor}[tuGray20]{%
   \g@addto@macro{\@@next@shipout}{%
     \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
       \put(0,\LenToUnit{\tubspage@senderheight}){{%
@@ -802,7 +764,7 @@
           \parbox[b][\paperheight-\tubspage@senderheight]%
             {\paperwidth}{~}}%
       }}%
-    }
+    }%
   }
 }
 %    \end{macrocode}
@@ -826,8 +788,7 @@
   \def\@@next@shipout{} % Makro to set content after keys
   \def\@layout@preset{}
   \setcounter{tubs@yseg@cnt}{1}
-  \setkeys{bglayout}{pages=all,sender=top}
-  \setkeys{bglayout}{#1}
+  \setkeys{bglayout}{pages=all,sender=top,#1}
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
 }
 %    \end{macrocode}
@@ -905,9 +866,9 @@
       \tubs@background@designhelper{7}%
       \tubs@background@designhelper{8}%
       %
-      \AtTextUpperLeft{%
-        \fbox{\parbox[t][\textheight]{\textwidth}{~}}%
-      }%
+%       \AtTextUpperLeft{%
+%         \fbox{\parbox[t][\textheight]{\textwidth}{~}}%
+%       }%
     }%
   }%
 }
