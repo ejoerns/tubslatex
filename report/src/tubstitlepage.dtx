@@ -191,7 +191,7 @@
 % Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][\style@select]{%
-  \setkeys*{tubs@tp}{#1}
+  \setkeys*{tubs@tp}{logo=left,#1}
   \expandafter\csname tubs@style@bg@\XKV@rm\endcsname%
   \expandafter\csname tubs@style@content@\XKV@rm\endcsname%
 }
