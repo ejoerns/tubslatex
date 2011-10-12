@@ -16,7 +16,19 @@
 \usepackage{subcaption}
 \usepackage{longtable}
 
+% glossaries
+\usepackage[ngerman]{translator}
+%Paket laden
+\usepackage[
+nonumberlist, %keine Seitenzahlen anzeigen
+acronym,      %ein Abkürzungsverzeichnis erstellen
+toc,          %Einträge im Inhaltsverzeichnis
+section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
+{glossaries}
+%Glossar-Befehle anschalten
+\makeglossaries
 
+% Kopiert von KOMA
 \makeatletter
 \providecommand\marg[1]{%
   {\ttfamily\char`\{}\meta{#1}{\ttfamily\char`\}}}
