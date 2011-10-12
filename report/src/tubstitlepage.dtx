@@ -78,18 +78,7 @@
 %
 % \maketitle
 %
-% \begin{abstract}
-%   This package offers functionality to create titlepages in the
-%   CorporateDesign of the TU Braunschweig.
-% \end{abstract}
-%
-% \section{Einleitung}
-%
-% \section{Bekannte Probleme}
-% Für tubsreprt und tubsartcl werden noch nicht die korrekten Titelseiten
-% im einfachen Stil gesetzt.
-%
-% \section{Benutzung}
+% \tableofcontents
 %
 % \parindent0mm
 % \parskip\medskipamount
@@ -150,26 +139,7 @@
   \csname tubs@style@bg@#1\endcsname
 }
 %
-%    \begin{macro}{\maketitle}
-% Neu-Definition von |\maketitle| zur Erstellung von Titelseiten im CD.
-% Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
-%    \begin{macrocode}
-\renewcommand*{\maketitle}[1][\style@select]{%
-  \expandafter\csname tubs@style@bg@#1\endcsname%
-  \expandafter\csname tubs@style@content@#1\endcsname%
-}
-%    \end{macrocode}
-%    \end{macro}
-%
-%    \begin{macro}{\makebackpage}
-% Kommando um Rückseiten im CD zu erzeugen.
-%    \begin{macrocode}
-\newcommand{\makebackpage}[1][\style@select]{%
-  \expandafter\csname tubs@backstyle@bg@#1\endcsname%
-  \expandafter\csname tubs@backstyle@content@#1\endcsname%
-}
-%    \end{macrocode}
-%    \end{macro}
+% \subsection{Kommandos zur Style-Definition}
 %
 %    \begin{macro}{\new@title@style}
 % \marg{name}\marg{bgstyle}\marg{content}
@@ -190,6 +160,29 @@
 \newcommand{\new@back@style}[3]{%
   \expandafter\def\csname tubs@backstyle@bg@#1\endcsname{#2}
   \expandafter\def\csname tubs@backstyle@content@#1\endcsname{#3}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% \subsection{Befehle und Umgebungen zu Erstellung von Titel- und Rückseiten}
+%
+%    \begin{macro}{\maketitle}
+% Neu-Definition von |\maketitle| zur Erstellung von Titelseiten im CD.
+% Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
+%    \begin{macrocode}
+\renewcommand*{\maketitle}[1][\style@select]{%
+  \expandafter\csname tubs@style@bg@#1\endcsname%
+  \expandafter\csname tubs@style@content@#1\endcsname%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\makebackpage}
+% Kommando um Rückseiten im CD zu erzeugen.
+%    \begin{macrocode}
+\newcommand{\makebackpage}[1][\style@select]{%
+  \expandafter\csname tubs@backstyle@bg@#1\endcsname%
+  \expandafter\csname tubs@backstyle@content@#1\endcsname%
 }
 %    \end{macrocode}
 %    \end{macro}
