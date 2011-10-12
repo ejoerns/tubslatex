@@ -1,6 +1,6 @@
 \chapter{Installation}
 
-Aktuell wird \tubslatex\ in drei verschiedenen Varianten angeboten.
+Aktuell wird \tubslatex in drei verschiedenen Varianten angeboten.
 Zum einen als gepackter tex-Paketaum, der sowohl lokal als auch systemweit
 entpackt werden kann. Allerdings müssen hier alle notwendigen Schritte zur 
 Installation der Schriften und Anmelden der neuen Datein manuell gemacht werden.
@@ -10,3 +10,42 @@ Ebenso gibt es für Debian-basierte Systeme, die texlive verwenden ein
 \texttt{.deb}-Paket, das alle Abhängigkeiten korrekt auflöst und die Vorlagen
 automatisch installiert.
 
+\section{Automatische Installation}
+
+\subsection{Windows -- MikTeX}
+
+Bei Verwendung von MikTeX unter Windows kann auf den verfügbaren Installer
+zurück gegriffen werden. Um eine fehlerfreie Installation zu ermöglichen
+sollte MiKTeX in der Version 2.9 vorhanden sein.
+Ältere Versionen werden nur bedingt unterstützt.
+
+Der Installer kopiert alle benötigten Dateien in ein frei wählbares Verzeichnis
+auf der Festplatte und registriert dies automatisch als neuen texmf-Baum.
+Auch die Schriftart Nexus wird standardmäßig installiert und in 
+Font-Verwaltung registriert.
+
+\subsection{Ubuntu/Debian -- TexLive}
+
+Für debian-basierte Systeme wie Ubuntu oder Debian selber steht ein
+\texttt{.deb}-Paket zur Verfügung, dass einfach mit Hilfe eines Paketmanagers
+installiert werden kann.
+Genutz werden können dafür die diversen graphischen Tools oder einfach das
+Kommandozeilenprogramm \texttt{gdebi}. Diese Programme lösen alle Abhängigkeiten
+auf und installieren sie automatisch mit.
+
+Die Installation der Dateien erfolgt in das Verzeichnis
+\lstinline{/usr/share/texmf-texlive/}. Sowohl die neuen Dateien als auch 
+die Schrift Nexus werden automatisch registriert.
+
+\section{Manuelle Installation}
+
+Zur manuellen Installation liegen die LaTeX-Dateien als gepacktes
+zip-Verzeichnis vor, in dem die komplette tex-Pfadstruktur oberhalb der
+texmf-Ebene enthalten ist. Konkret sind dies die Ordner
+\lstinline{doc}, \lstinline{tex} und \lstinline{fonts}.
+
+Diese können entweder lokal oder global entpackt werden.
+Für erste Variante kann der Inahlt einfach in das Verzeichnis
+\lstinline{/home/benutzername/texmf} hinein geschrieben werden.
+
+% TODO...
