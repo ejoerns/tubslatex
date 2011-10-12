@@ -192,8 +192,8 @@
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][\style@select]{%
   \setkeys*{tubs@tp}{logo=left,#1}
-  \expandafter\csname tubs@style@bg@\XKV@rm\endcsname%
-  \expandafter\csname tubs@style@content@\XKV@rm\endcsname%
+  \csname tubs@style@content@\XKV@rm\endcsname%
+  \csname tubs@style@bg@\XKV@rm\endcsname%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -300,14 +300,15 @@
 % Kommunikationsbereich.
 %    \begin{macrocode}
 %<*article>
-\new@title@style{plain}{%
+\new@title@style{plain}{}{
   \clearpage
+  \thispagestyle{empty}\oldmaketitle
   \bglayout[pages=single]{%
     \showtopline
     \showtubslogo[\tubs@tp@logopos]
     \showlogo{\tubs@tp@logo}
   }
-}{\thispagestyle{empty}\oldmaketitle}
+}
 %</article>
 %<*report|book>
 \new@title@style{plain}{}{% NOTE: code from scrreprt.cls
