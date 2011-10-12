@@ -461,10 +461,10 @@
 \new@back@style{addressinfo}{}{%
   \begin{gausspage}
     \showtubslogo[\tubs@tp@logopos,plain]
-    \begin{segment}[bgcolor=tuSecondary60]{1}
-      \tubs@tp@address
+    \begin{segment}[bgcolor=tuSecondary]{2}
+      \leavevmode\color{white}\tubs@tp@address
     \end{segment}
-    \begin{segment}[bgcolor=tuSecondary20]{7}
+    \begin{segment}[bgcolor=tuSecondaryLight]{6}
       \tubs@tp@backinfo
     \end{segment}
   \end{gausspage}
@@ -477,8 +477,27 @@
 \new@back@style{info}{}{%
   \begin{gausspage}
     \showtubslogo[left,plain]
-    \begin{segment}[bgcolor=tuSecondary40]{8}
+    \begin{segment}[bgcolor=tuSecondaryLight]{8}
       \tubs@tp@backinfo
+    \end{segment}
+  \end{gausspage}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{info}
+%    \begin{macrocode}
+\new@back@style{trisec}{}{%
+  \begin{gausspage}
+    \showtubslogo[left,plain]
+    \begin{segment}[bgcolor=tuSecondaryLight]{2}
+      \usekomafont{copytext}\tubs@tp@address
+    \end{segment}
+    \begin{segment}[bgcolor=tuSecondaryDark]{3}
+      ~
+    \end{segment}
+    \begin{segment}[bgcolor=tuSecondary]{3}
+      ~
     \end{segment}
   \end{gausspage}
 }
