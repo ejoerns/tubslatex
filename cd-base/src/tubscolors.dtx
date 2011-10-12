@@ -66,7 +66,8 @@
 % \changes{v0.5}{ 2011 / 10 / 12 }{%
 %     Auf xkeyval umgestellt,
 %     Option |trueblack| hinzugefügt,
-%     Auch klein geschriebene Farbnamen in selectSecondary erlaubt.}
+%     Auch klein geschriebene Farbnamen in selectSecondary erlaubt,
+%     Makro colorshow hinzugefügt.}
 %
 % \GetFileInfo{tubcolors.sty}
 %
@@ -708,7 +709,7 @@
 %    \end{macrocode}
 %
 %    \begin{macro}{\selectSecondary}
-% Anwernder-Makro zum Wechsel des Sekundär-Farbklangs.
+% Anwender-Makro zum Wechsel des Sekundär-Farbklangs.
 %    \begin{macrocode}
 \newcommand{\selectSecondary}[1]{
   \def\tc@sec@arg{#1}
@@ -723,6 +724,25 @@
   }{}}}}
   \define@Secondary{\tc@sec@arg}
 }
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\colorshow}
+%\oarg{width}\marg{color}\marg{shade}\par
+% Anwender-Makro zum Anzeigen der Farbabstufungen einer Reihe eines arblankgs
+%    \begin{macrocode}
+\newlength{\cshowwidth}
+\newcommand{\colorshow}[3][\relax]{{\noindent\sffamily\footnotesize%
+\if#1\relax\setlength{\cshowwidth}{\textwidth}\else\setlength{\cshowwidth}{#1}\fi
+\colorlet{fglbg}{black}
+\colorbox{tu#2#3100}{\hbox to 0.188\cshowwidth{%
+  \color{fglbg}\vphantom{Fg}#3{}100\hfill}}% 
+\colorbox{tu#2#380}{\hbox to 0.188\cshowwidth{%
+  \color{fglbg}\vphantom{Fg}#3{}80\hfill}}% 
+\colorbox{tu#2#360}{\hbox to 0.188\cshowwidth{\vphantom{Fg}#3{}60\hfill}}% 
+\colorbox{tu#2#340}{\hbox to 0.188\cshowwidth{\vphantom{Fg}#3{}40\hfill}}% 
+\colorbox{tu#2#320}{\hbox to 0.188\cshowwidth{\vphantom{Fg}#3{}20\hfill}}\\% 
+}}
 %    \end{macrocode}
 %    \end{macro}
 %
