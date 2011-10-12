@@ -1,4 +1,5 @@
 all:
+	makeglossaries tubsdocguide
 	TEXINPUTS=../beamer/doc:$$TEXINPUTS pdflatex tubsdocguide.tex
 
 examples: examples/*.tex
