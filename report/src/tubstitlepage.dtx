@@ -107,7 +107,6 @@
 %<package> \ProvidesPackage{tubstitlepage}
 %    \end{macrocode}
 %
-%
 %<*option>
 %    \begin{macro}{\style@select}
 %    \begin{macrocode}
@@ -125,6 +124,7 @@
 %    \end{key}
 %
 %</option>
+%
 %    \begin{macrocode}
 % \ProcessOptionsX\relax
 %    \end{macrocode}
@@ -135,9 +135,7 @@
 %
 % Lade benötigte Pakete.
 %    \begin{macrocode}
-% \PassOptionsToPackage{frame=fbox}{tubsbox}% TODO: TESTING!!!
 \RequirePackage{xkeyval}
-% \RequirePackage{tubsflowfram}
 \RequirePackage{tubsstyle}
 \RequirePackage{tubsbox}
 \RequirePackage{tubscolors}
@@ -147,76 +145,92 @@
 \let\oldmaketitle\@maketitle
 %    \end{macrocode}
 %
+% TODO: Check!
 \newcommand*{\titlestyle}[1]{%
   \csname tubs@style@bg@#1\endcsname
 }
 %
 %    \begin{macro}{\maketitle}
-% Redefine maketitle, provide additional optional arguments
+% Neu-Definition von |\maketitle| zur Erstellung von Titelseiten im CD.
+% Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][\style@select]{%
-%   \thispagestyle{empty}%
   \expandafter\csname tubs@style@bg@#1\endcsname%
   \expandafter\csname tubs@style@content@#1\endcsname%
 }
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\makebackpage}
+% Kommando um Rückseiten im CD zu erzeugen.
+%    \begin{macrocode}
 \newcommand{\makebackpage}[1][\style@select]{%
-%   \thispagestyle{empty}
   \expandafter\csname tubs@backstyle@bg@#1\endcsname%
   \expandafter\csname tubs@backstyle@content@#1\endcsname%
 }
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\new@title@style}
+% \marg{name}\marg{bgstyle}\marg{content}
+% Erstellt neuen Titel-Style
+% Erzeugt Makros vom Typ |\tubs@style@bg@stylename|
 %    \begin{macrocode}
-\newcounter{tubs@tp@yseg@cnt}
+\newcommand{\new@title@style}[3]{%
+  \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
+  \expandafter\def\csname tubs@style@content@#1\endcsname{#3}
+}
 %    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\new@back@style}
+% \marg{name}\marg{bgstyle}\marg{content}
+% Erstellt neuen Backpage-Style
+%    \begin{macrocode}
+\newcommand{\new@back@style}[3]{%
+  \expandafter\def\csname tubs@backstyle@bg@#1\endcsname{#2}
+  \expandafter\def\csname tubs@backstyle@content@#1\endcsname{#3}
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{environment}{titlerow}
-% Umgebung mit der Innerhalb der |titlepage|-Umgebung Inhalts-Elemente im
-% Gauß-Layout definiert werden können.
+% Umgebung mit der innerhalb der |titlepage|-Umgebung Inhalts-Elemente im
+% Gauß-Layout definiert werden können. Entspricht |segment|-Umgebung.
 %    \begin{macrocode}
-% \newenvironment{titlerow}[2][]{%
-%   \bgelement[#1]{#2}%
-%   \edef\@tubs@arg{{1}{\thetubs@tp@yseg@cnt}{6}{#2}}%
-%   \addtocounter{tubs@tp@yseg@cnt}{#2}%
-%   \expandafter\gaussbox\@tubs@arg%
-% }{%
-%   \endgaussbox%
-% }
 \let\titlerow\segment
 \let\endtitlerow\endsegment
 %    \end{macrocode}
 %    \end{environment}
 %
 %    \begin{environment}{titlepage}
-% Redefine environment titlepage, provide additional optional arguments
+% Neue Definition der |titlepage|-Umgebung.
+% Entspricht |gausspage|-Umgebung.
 %    \begin{macrocode}
-% \renewenvironment{titlepage}[1][]{%
-%   \thispagestyle{empty}
-%   \setcounter{tubs@tp@yseg@cnt}{1}%
-%   \tubsboxsetup[#1]%TODO...
-%   \@layout@pre{pages=single,#1}%
-%   \sffamily%
-% }{%
-%   \@layout@post%
-%   ~\newpage%
-% }
 \let\titlepage\gausspage
 \let\endtitlepage\endgausspage
 %    \end{macrocode}
 %    \end{environment}
 %
+% \subsection{Benutzer-Befehle für Zusatz-Elemente}
 %
+%    \begin{macro}{\tubs@tp@logo}
+%    \begin{macro}{\tubs@tp@titlepicture}
+%    \begin{macro}{\tubs@tp@titlabstract}
+%    \begin{macro}{\tubs@tp@address}
+%    \begin{macro}{\tubs@tp@backinfo}
+% Interne Speicher-Makros für Titel- und Rückseiten-Elemente.
 %    \begin{macrocode}
 \newcommand{\tubs@tp@logo}{}
-\newcommand{\tubs@tp@address}{}
-\newcommand{\tubs@tp@backinfo}{}
 \newcommand{\tubs@tp@titlepicture}{}
 \newcommand{\tubs@tp@titleabstract}{}
+\newcommand{\tubs@tp@address}{}
+\newcommand{\tubs@tp@backinfo}{}
 %    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 %
 %    \begin{macro}{\logo}
-% Erlaubt ein Logo zu definieren, dass auf die Titelseite gesetzt werden soll.
+% Erlaubt ein Logo zu definieren, das auf die Titelseite gesetzt werden soll.
 %    \begin{macrocode}
 \newcommand{\logo}[1]{%
   \renewcommand{\tubs@tp@logo}{#1}
@@ -224,8 +238,8 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\logo}
-% Erlaubt ein Logo zu definieren, dass auf die Titelseite gesetzt werden soll.
+%    \begin{macro}{\address}
+% Erlaubt eine Adresse zu definieren, die auf Rückseiten gesetzt werden soll.
 %    \begin{macrocode}
 \newcommand{\address}[1]{%
   \renewcommand{\tubs@tp@address}{#1}
@@ -233,8 +247,8 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\logo}
-% Erlaubt ein Logo zu definieren, dass auf die Titelseite gesetzt werden soll.
+%    \begin{macro}{\backpageinfo}
+% Erlaubt ein Text zu definieren, der auf Rückseiten gesetzt werden soll.
 %    \begin{macrocode}
 \newcommand{\backpageinfo}[1]{%
   \renewcommand{\tubs@tp@backinfo}{#1}
@@ -264,28 +278,10 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\new@title@style}
-% \marg{name}\marg{bgstyle}\marg{content}
-% Creates new title style
-% produces command of type |\tubs@style@bg@stylename|
-% args:
-% 1 - style name
-% 2 - background style
-% 3 - content
-%    \begin{macrocode}
-\newcommand{\new@title@style}[3]{%
-  \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
-  \expandafter\def\csname tubs@style@content@#1\endcsname{#3}
-}
-\newcommand{\new@back@style}[3]{%
-  \expandafter\def\csname tubs@backstyle@bg@#1\endcsname{#2}
-  \expandafter\def\csname tubs@backstyle@content@#1\endcsname{#3}
-}
-%    \end{macrocode}
-%    \end{macro}
 %
-%%% styles defenitions %%%
+% \subsection{Title-Styles}
 %
+%    \begin{macro}{plain}
 % Standard-Style, einfaches Logo mit Trennlinie zwischen Absender- und
 % Kommunikationsbereich.
 %    \begin{macrocode}
@@ -298,17 +294,6 @@
     \showlogo{\tubs@tp@logo}
   }
 }{\thispagestyle{empty}\oldmaketitle}
-%
-\new@back@style{plain}{}{%
-%   \thispagestyle{empty}
-  \begin{gausspage}
-    \showtopline
-    \showtubslogo[left,plain]
-    \begin{segment}{1}
-      \tubs@tp@address
-    \end{segment}
-  \end{gausspage}
-}
 %</article>
 %<*report|book>
 \new@title@style{plain}{}{% NOTE: code from scrreprt.cls
@@ -372,20 +357,35 @@
       \fi
     \end{titlepage}
 }
-%
-\new@back@style{plain}{}{%
-%   \thispagestyle{empty}
-  \begin{gausspage}
-    \showtopline
-    \showtubslogo[left,plain]
-    \begin{segment}{1}
-      \tubs@tp@address
-    \end{segment}
-  \end{gausspage}
-}
 %</report|book>
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{image}
+%    \begin{macrocode}
+\new@title@style{image}{}{%
+  \begin{titlepage}
+    \showtubslogo[left]
+    \showlogo{\tubs@tp@logo}
+    \expandafter\titlerow\tubs@tp@titlepicture{3}
+    \endtitlerow
+    \begin{titlerow}[bgcolor=tuSecondary80]{2}
+      \sffamily\raggedright%
+      {\usekomafont{title}\@title}\bigskip\\%
+      {\usekomafont{subtitle}\@subtitle}%
+      \vfill%
+    \end{titlerow}
+    \begin{titlerow}[bgcolor=tuSecondary60]{3}
+      {\usekomafont{author}\@author}%
+      \vfill
+      {\usekomafont{date}\@date}
+    \end{titlerow}
+  \end{titlepage}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{imagetext}
 %    \begin{macrocode}
 \new@title@style{imagetext}{}{%
   \begin{titlepage}
@@ -410,43 +410,41 @@
     \end{titlerow}
   \end{titlepage}
 }
+%    \end{macrocode}
+%    \end{macro}
 %
+% \subsection{Backpage-Styles}
 %
-\new@back@style{info}{}{%
-%   \thispagestyle{empty}
+%    \begin{macro}{plain}
+%    \begin{macrocode}
+%<*article>
+\new@back@style{plain}{}{%
   \begin{gausspage}
-%     \showtopline
+    \showtopline
     \showtubslogo[left,plain]
-    \begin{segment}[bgcolor=tuSecondary40]{8}
-      \tubs@tp@backinfo
+    \begin{segment}{1}
+      \tubs@tp@address
     \end{segment}
   \end{gausspage}
 }
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\new@title@style{image}{}{%
-  \begin{titlepage}
-    \showtubslogo[left]
-    \showlogo{\tubs@tp@logo}
-    \expandafter\titlerow\tubs@tp@titlepicture{3}
-    \endtitlerow
-    \begin{titlerow}[bgcolor=tuSecondary80]{2}
-      \sffamily\raggedright%
-      {\usekomafont{title}\@title}\bigskip\\%
-      {\usekomafont{subtitle}\@subtitle}%
-      \vfill%
-    \end{titlerow}
-    \begin{titlerow}[bgcolor=tuSecondary60]{3}
-      {\usekomafont{author}\@author}%
-      \vfill
-      {\usekomafont{date}\@date}
-    \end{titlerow}
-  \end{titlepage}
+%</article>
+%<*report|book>
+\new@back@style{plain}{}{%
+  \begin{gausspage}
+    \showtopline
+    \showtubslogo[left,plain]
+    \begin{segment}{1}
+      \tubs@tp@address
+    \end{segment}
+  \end{gausspage}
 }
+%</report|book>
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{addressinfo}
+%    \begin{macrocode}
 \new@back@style{addressinfo}{}{%
-%   \thispagestyle{empty}
   \begin{gausspage}
     \showtubslogo[left,plain]
     \begin{segment}[bgcolor=tuSecondary60]{1}
@@ -458,6 +456,20 @@
   \end{gausspage}
 }
 %    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{info}
+%    \begin{macrocode}
+\new@back@style{info}{}{%
+  \begin{gausspage}
+    \showtubslogo[left,plain]
+    \begin{segment}[bgcolor=tuSecondary40]{8}
+      \tubs@tp@backinfo
+    \end{segment}
+  \end{gausspage}
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 %    \begin{macrocode}
 %</body>
