@@ -119,7 +119,7 @@
 \newcommand\@img@scale@param{}%
 \newcommand\tubs@calc@autoscale[1]{%
   \ifthenelse{\equal{\tubs@imagefit}{scaled}}{%
-    \renewcommand\@img@scale@param{%
+    \renewcommand\@img@scale@param{clip,%
         height=\titlegraphicsheight,
         width=\titlegraphicswidth}
   }{\ifthenelse{\equal{\tubs@imagefit}{cropped}}{%
@@ -144,26 +144,48 @@
       % Das Ergebnis wir dann einmal am oberen und einmal am unteren Teil
       % des (Original-)Bildes mit Hilfe der 'trim'-Option abgeschnitten.
       \settoheight{\@image@yorig}{%
-        \includegraphics[clip]{#1}}
+        \includegraphics[clip]{#1}}%
+\showthe\@image@yorig
       \settoheight{\@image@ycalc}{%
-        \includegraphics[clip,width=\titlegraphicswidth]{#1}}
-      \setlength{\@image@ycalc}{(\@image@ycalc-(\titlegraphicsheight))*\ratio{\@image@yorig}{\@image@ycalc}}
-      \setlength{\@image@ycalc}{0.5\@image@ycalc}
-      \def\@img@scale@param{%
+        \includegraphics[clip,width=\titlegraphicswidth]{#1}}%
+\showthe\@image@ycalc
+      \setlength{\@image@ycalc}{(\@image@ycalc-\titlegraphicsheight)*\ratio{\@image@yorig}{\@image@ycalc}}
+\showthe\@image@ycalc
+      \setlength{\@image@ycalc}{0.5\@image@ycalc}%
+      \renewcommand\@img@scale@param{clip,%
           width=\titlegraphicswidth,
-          trim=0pt {\@image@ycalc} 0pt {\@image@ycalc}}
+          trim=0pt {\@image@ycalc} 0pt {\@image@ycalc}}%
     }{\ifthenelse{\equal{\tubs@imagefit}{cropx}}{%
       \settowidth{\@image@xorig}{%
-        \includegraphics[clip]{#1}}
+        \includegraphics[clip]{#1}}%
       \settowidth{\@image@xcalc}{%
-        \includegraphics[clip,height=\titlegraphicsheight]{#1}}
+        \includegraphics[clip,height=\titlegraphicsheight]{#1}}%
       \setlength{\@image@xcalc}{(\@image@xcalc-(\titlegraphicswidth))*\ratio{\@image@xorig}{\@image@xcalc}}
-      \setlength{\@image@xcalc}{0.5\@image@xcalc}
-      \def\@img@scale@param{%
+      \setlength{\@image@xcalc}{0.5\@image@xcalc}%
+      \renewcommand\@img@scale@param{clip,%
           height=\titlegraphicsheight,
-          trim={\@image@xcalc} 0pt {\@image@xcalc} 0pt}
-    }{}
-  }}
+          trim={\@image@xcalc} 0pt {\@image@xcalc} 0pt}%
+    }{\ifthenelse{\equal{\tubs@imagefit}{keepsize}}{%
+      \renewcommand\@img@scale@param{}%
+    }{}}}%
+  }%
+}
+
+% imagefit keys
+\define@key{tubs@titlegraphic}{scaled}[true]{
+  \renewcommand\tubs@imagefit{scaled}
+}
+\define@key{tubs@titlegraphic}{cropx}[true]{
+  \renewcommand\tubs@imagefit{cropx}
+}
+\define@key{tubs@titlegraphic}{cropy}[true]{
+  \renewcommand\tubs@imagefit{cropy}
+}
+\define@key{tubs@titlegraphic}{cropped}[true]{
+  \renewcommand\tubs@imagefit{cropped}
+}
+\define@key{tubs@titlegraphic}{keepsize}[true]{
+  \renewcommand\tubs@imagefit{keepsize}
 }
 
 
@@ -171,11 +193,10 @@
 \newsavebox{\@test@box}
 \renewcommand{\titlegraphic}[2][]{%
   \@orig@titlegpraphic{
+    \setkeys{cropped,tubs@titlegraphic}{#1}%
     % redefine includegraphics to store information
     \newif\if@incgraphused\@incgraphusedfalse%
     \let\@orig@includegraphics\includegraphics%
-%     \def\@incgraph@optparam{\relax}%
-%     \def\@incgraph@param{\relax}%
     \renewcommand{\includegraphics}[2][\relax]{%
       \@incgraphusedtrue%
       \def\@incgraph@optparam{####1}%
@@ -183,20 +204,16 @@
       \ifthenelse{\equal{\@incgraph@optparam}{\relax}}{%
         \let\@manipulated@includegraphics\includegraphics
         \let\includegraphics\@orig@includegraphics
-        \tubs@calc@autoscale{infozentrum.jpg}%
+        \tubs@calc@autoscale{\@incgraph@param}%
         \let\includegraphics\@manipulated@includegraphics
-%         \@img@scale@param
-%         \expandafter\@orig@includegraphics\@img@scale@param{\@incgraph@param}%
-        \expandafter\@orig@includegraphics\expandafter[\@img@scale@param,clip]{%
+        \expandafter\@orig@includegraphics\expandafter[\@img@scale@param]{%
                 \@incgraph@param}%
       }{%
-        \@orig@includegraphics[width=2cm]{\@incgraph@param}%
+        \expandafter\@orig@includegraphics\expandafter[\@incgraph@optparam]{%
+                \@incgraph@param}%
       }
   }%
   #2}
-%   \edef\@titlegraphic@param{#2}
-  % originalen Befehl aufrufen
-%   \@orig@titlegpraphic{\@titlegraphic@param}%
 }
 
 \mode<presentation>
