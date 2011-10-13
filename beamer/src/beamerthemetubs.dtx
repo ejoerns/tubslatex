@@ -63,6 +63,9 @@
 %  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
+% \changes{v1.1}{ 2011 / 10 / 13 }{%
+%   Falsche Font-Optionen gelöscht,
+%   Optionsweiterreichung erweitert}
 %
 % \GetFileInfo{beamerthemetubs.sty}
 %
@@ -91,7 +94,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\ProvidesPackage{beamerthemetubs}[2010/04/12 v1.0 Beamer-Template TuBs]
+\ProvidesPackage{beamerthemetubs}[2011/10/13 v1.1 Beamer-Template TuBs]
 %
 % Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
 %
@@ -127,19 +130,43 @@
 
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
 % color options
-\PassOptionsToPackage{rgb}{tubslogo}% default
 \DeclareOptionBeamer{rgb}{%
-  \PassOptionsToPackage{rgb}{beamerthemetubs}%
+  \PassOptionsToPackage{rgb}{beamercolorthemetubs}%
   \PassOptionsToPackage{rgb}{tubslogo}}
 \DeclareOptionBeamer{rgbprint}{%
-  \PassOptionsToPackage{rgbprint}{beamerthemetubs}%
+  \PassOptionsToPackage{rgbprint}{beamercolorthemetubs}%
   \PassOptionsToPackage{rgbprint}{tubslogo}}
 \DeclareOptionBeamer{cmyk}{%
-  \PassOptionsToPackage{cmyk}{beamerthemetubs}%
+  \PassOptionsToPackage{cmyk}{beamercolorthemetubs}%
   \PassOptionsToPackage{cmyk}{tubslogo}}
+\DeclareOptionBeamer{yellow}{%
+  \PassOptionsToPackage{yellow}{beamercolorthemetubs}}% for compatibility
+\DeclareOptionBeamer{orange}{%
+  \PassOptionsToPackage{orange}{beamercolorthemetubs}}
+\DeclareOptionBeamer{green}{%
+  \PassOptionsToPackage{green}{beamercolorthemetubs}}
+\DeclareOptionBeamer{blue}{%
+  \PassOptionsToPackage{blue}{beamercolorthemetubs}}
+\DeclareOptionBeamer{violet}{%
+  \PassOptionsToPackage{violet}{beamercolorthemetubs}}
+\DeclareOptionBeamer{light}{%
+  \PassOptionsToPackage{light}{beamercolorthemetubs}}
+\DeclareOptionBeamer{medium}{%
+  \PassOptionsToPackage{medium}{beamercolorthemetubs}}
+\DeclareOptionBeamer{dark}{%
+  \PassOptionsToPackage{dark}{beamercolorthemetubs}}
+\DeclareOptionBeamer{colorhead}{%
+  \PassOptionsToPackage{colorhead}{beamercolorthemetubs}}
+\DeclareOptionBeamer{colorfoot}{%
+  \PassOptionsToPackage{colorfoot}{beamercolorthemetubs}}
+\DeclareOptionBeamer{colorblocks}{%
+  \PassOptionsToPackage{colorblocks}{beamercolorthemetubs}}
+%
 % layout options
-\DeclareOptionBeamer{nopagenum}{\PassOptionsToPackage{nopagenum}{beamerouterthemetubs}}
-\DeclareOptionBeamer{nodate}{\PassOptionsToPackage{nodate}{beamerouterthemetubs}}
+\DeclareOptionBeamer{nopagenum}{%
+  \PassOptionsToPackage{nopagenum}{beamerouterthemetubs}}
+\DeclareOptionBeamer{nodate}{%
+  \PassOptionsToPackage{nodate}{beamerouterthemetubs}}
 \DeclareOptionBeamer{tocinheader}{%
   \PassOptionsToPackage{tocinheader}{beamerouterthemetubs}}
 \DeclareOptionBeamer{tinytocinheader}{%
@@ -147,8 +174,12 @@
   \PassOptionsToPackage{tinytocinheader}{beamerfontthemetubs}}
 \DeclareOptionBeamer{nosubsectionsinheader}{%
   \PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemetubs}}
-\DeclareOptionBeamer{widetoc}{\PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
-\DeclareOptionBeamer{narrowtoc}{\PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
+\DeclareOptionBeamer{widetoc}{%
+  \PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
+\DeclareOptionBeamer{narrowtoc}{%
+  \PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
+\DeclareOptionBeamer{nologoinfoot}{
+  \PassOptionsToPackage{nologoinfoot}{beamerouterthemetubs}}
 \DeclareOptionBeamer*{%
   \PassOptionsToPackage{\CurrentOption}{beamerthemetubs}%
 }
@@ -156,7 +187,8 @@
 \ProcessOptionsBeamer\relax
 %
 \DeclareOption*{%
-  \PassOptionsToPackage{\CurrentOption}{beamerthemetubs}%
+  \let\@classoptionslist\CurrentOption
+  \PassOptionsToClass{\CurrentOption}{beamer}%
 }
 \ProcessOptions\relax
 %
