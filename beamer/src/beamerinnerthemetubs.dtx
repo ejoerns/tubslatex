@@ -109,6 +109,94 @@
 \newcommand{\tuDefaultTitlegraphic}{%
 \includegraphics[width=\titlegraphicswidth]{defaulttitlepicture}}
 
+\newlength{\@image@xorig}
+\newlength{\@image@xcalc}
+\newlength{\@image@yorig}
+\newlength{\@image@ycalc}
+
+\newcommand\tubs@imagefit{cropy}
+\newcommand\@img@scale@param{}%
+\newcommand\tubs@calc@autoscale[1]{%
+  \ifthenelse{\equal{\tubs@imagefit}{scaled}}{%
+    \renewcommand\@img@scale@param{%
+        height=\titlegraphicsheight,
+        width=\titlegraphicswidth}
+  }{\ifthenelse{\equal{\tubs@imagefit}{cropped}}{%
+      % Ermittelt, ob das Bild an den Seiten oder oben und unten beschnitten
+      % werden muss, um in den Darstellungsbereich zu passen
+      % Dazu wird die Höhe des auf korrekte Breite skalierten Bildes
+      % mit der Höhe des Darstellungsbereichs verglichen und entsprechend
+      % eine crop-Option gesetzt.
+      \settoheight{\@image@ycalc}{%
+        \includegraphics*[width=\titlegraphicswidth]{#1}}
+      \ifthenelse{\lengthtest{\@image@ycalc>\titlegraphicsheight}}{%
+        \renewcommand{\tubs@imagefit}{cropy}
+      }{%
+        \renewcommand{\tubs@imagefit}{cropx}
+      }
+    }{}
+    \ifthenelse{\equal{\tubs@imagefit}{cropy}}{%
+      % Berechne abzuschneidende Ränder (oben+unten)
+      % Dazu wird die Differenz zwischen Darstellungsbereich und Höhe des
+      % korrekt auf die Breite skalierten Bildes berechnet und mit dem
+      % ermittelten Skalierungsfaktor multipliziert, sowie durch 2 geteilt.
+      % Das Ergebnis wir dann einmal am oberen und einmal am unteren Teil
+      % des (Original-)Bildes mit Hilfe der 'trim'-Option abgeschnitten.
+      \settoheight{\@image@yorig}{%
+        \@orig@includegraphics*{#1}}
+      \settoheight{\@image@ycalc}{%
+        \@orig@includegraphics*[width=\titlegraphicswidth]{#1}}
+      \setlength{\@image@ycalc}{(\@image@ycalc-(\titlegraphicsheight))*\ratio{\@image@yorig}{\@image@ycalc}}
+      \setlength{\@image@ycalc}{0.5\@image@ycalc}
+      \def\@img@scale@param{%
+          width=\titlegraphicswidth,
+          trim=0pt {\@image@ycalc} 0pt {\@image@ycalc}}
+    }{\ifthenelse{\equal{\tubs@imagefit}{cropx}}{%
+      \settowidth{\@image@xorig}{%
+        \includegraphics*{#1}}
+      \settowidth{\@image@xcalc}{%
+        \includegraphics*[height=\titlegraphicsheight]{#1}}
+      \setlength{\@image@xcalc}{(\@image@xcalc-(\titlegraphicswidth))*\ratio{\@image@xorig}{\@image@xcalc}}
+      \setlength{\@image@xcalc}{0.5\@image@xcalc}
+      \def\@img@scale@param{%
+          height=\titlegraphicsheight,
+          trim={\@image@xcalc} 0pt {\@image@xcalc} 0pt}
+    }{}
+  }}
+}
+
+
+\let\@orig@titlegpraphic\titlegraphic
+\newsavebox{\@test@box}
+\renewcommand{\titlegraphic}[2][]{%
+  \@orig@titlegpraphic{
+    % redefine includegraphics to store information
+    \newif\if@incgraphused\@incgraphusedfalse%
+    \let\@orig@includegraphics\includegraphics%
+%     \def\@incgraph@optparam{\relax}%
+%     \def\@incgraph@param{\relax}%
+    \renewcommand{\includegraphics}[2][\relax]{%
+      \@incgraphusedtrue%
+      \def\@incgraph@optparam{####1}%
+      \def\@incgraph@param{####2}%
+      \ifthenelse{\equal{\@incgraph@optparam}{\relax}}{%
+        \let\@manipulated@includegraphics\includegraphics
+%         \let\includegraphics\@orig@includegraphics
+        \tubs@calc@autoscale{infozentrum.jpg}%
+        \let\includegraphics\@manipulated@includegraphics
+%         \@img@scale@param
+%         \expandafter\@orig@includegraphics\@img@scale@param{\@incgraph@param}%
+        \expandafter\@orig@includegraphics\expandafter[\@img@scale@param]{%
+                \@incgraph@param}%
+      }{%
+        \@orig@includegraphics[width=2cm]{\@incgraph@param}%
+      }
+  }%
+  #2}
+%   \edef\@titlegraphic@param{#2}
+  % originalen Befehl aufrufen
+%   \@orig@titlegpraphic{\@titlegraphic@param}%
+}
 
 \mode<presentation>
 
