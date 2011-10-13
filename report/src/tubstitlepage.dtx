@@ -190,10 +190,15 @@
 % Neu-Definition von |\maketitle| zur Erstellung von Titelseiten im CD.
 % Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
 %    \begin{macrocode}
-\renewcommand*{\maketitle}[1][\style@select]{%
+\renewcommand*{\maketitle}[1][]{%
   \setkeys*{tubs@tp}{logo=left,#1}
-  \csname tubs@style@content@\XKV@rm\endcsname%
-  \csname tubs@style@bg@\XKV@rm\endcsname%
+  \ifthenelse{\equal{\XKV@rm}{}}{%
+    \csname tubs@style@content@\style@select\endcsname%
+    \csname tubs@style@bg@\style@select\endcsname%
+  }{%
+    \csname tubs@style@content@\XKV@rm\endcsname%
+    \csname tubs@style@bg@\XKV@rm\endcsname%
+  }
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -477,7 +482,7 @@
 %    \begin{macrocode}
 \new@back@style{info}{}{%
   \begin{gausspage}
-    \showtubslogo[left,plain]
+    \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{8}
       \tubs@tp@backinfo
     \end{segment}
@@ -490,7 +495,7 @@
 %    \begin{macrocode}
 \new@back@style{trisec}{}{%
   \begin{gausspage}
-    \showtubslogo[left,plain]
+    \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{2}
       \usekomafont{copytext}\tubs@tp@address
     \end{segment}
