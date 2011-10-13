@@ -1,0 +1,19 @@
+\setkomavar{fromlogo}{\includegraphics[height=0.9\tubslogoHeight]{dummy_institut.pdf}}
+%\setkomavar{fromlogo}{Institut f\"ur Unkreativit\"at\\ und Schreibschw\"ache}
+
+\setkomavar{frominstitute}{[Institutsname]}
+
+\setkomavar{fromstreet}{[Stra\ss e]}
+\setkomavar{fromzipcode}{[PLZ]}
+%\setkomavar{fromtown}{[Stadt]}
+
+\setkomavar{fromurl}{[Internetadresse Institut]}
+
+\setkomavar{frombank}{%
+  [Bankname]\newline
+  [Kontonummer~000\,000\,000]\newline
+  [BLZ~000\,000\,00]}
+\setkomavar{fromIBAN}{DE00~00000000~0000000000}
+\setkomavar{fromBIC}{0000 00 00}
+\setkomavar{fromUStID}{000000000}
+\setkomavar{fromSteuernummer}{00/000/0000}

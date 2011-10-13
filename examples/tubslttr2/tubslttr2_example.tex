@@ -1,0 +1,43 @@
+\documentclass[%
+  mustermann,%  Name der zu ladenden .lco-Datei
+  arial,%       Schriftart Arial wählen
+% mono,%        Darstellung in schwarz-weiß
+  10pt%         gewählte Schriftgröße (standard)
+]{tubslttr2}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum} % Paket für Blindtextgenerierung
+
+% Brief-Variablen setzen (optional)
+\setkomavar{specialmail}{[Postvermerk]}
+\setkomavar{yourref}{[xxx]}
+\setkomavar{yourmail}{[Datum]}
+\setkomavar{myref}{[xxx]}
+\setkomavar{mymail}{[Datum]}
+
+\begin{document}
+\begin{letter}{%
+  %%% Anschrift %%%
+  Name\\
+  Straße\\
+  PLZ Ort
+}
+\setkomavar{subject}{[Betreff]}% Betreff-Variable setzen
+\opening{Sehr geehrte Damen und Herren,}
+
+  %%% Textteil %%%
+  \lipsum[1-2]% Blindtext Seite 1
+  \clearpage% \clearpage erforderlich um zweite Seite zu beginnen!
+  \lipsum[5-8]% Blindtext Seite 2
+  %%% Ende Textteil%%%
+
+\closing{Mit freundlichen Grüßen}
+
+%%% optionaler Teil %%%
+\ps
+P.S.: Nicht vergessen!
+\encl{Anlage\,1, Anlage\,2}
+\cc{Institut\,1, Institut\,2}
+\end{letter}
+\end{document}
