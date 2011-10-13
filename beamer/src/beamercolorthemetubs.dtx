@@ -97,7 +97,6 @@
 % Es werden die folgenden Pakete geladen:
 %    \begin{macrocode}
 \RequirePackage{ifthen}
-\RequirePackage{tubscolors}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -106,7 +105,7 @@
 %
 % Vordefinierte Makros
 %    \begin{macrocode}
-\def\tubscolor{Yellow} % yellow is standard color
+\def\tubscolor{Orange} % yellow is standard color
 \def\tubscolorshade{}
 \newboolean{colorhead}\setboolean{colorhead}{false}
 \newboolean{colorfoot}\setboolean{colorfoot}{false}
@@ -145,7 +144,8 @@
 %    \begin{key}{}{violet}
 % Legt das für die Darstellung verwendete Sekundärfarbschema fest.
 %    \begin{macrocode}
-\DeclareOptionBeamer{yellow}{\def\tubscolor{Yellow}}
+\DeclareOptionBeamer{yellow}{\def\tubscolor{Orange}}% for compatibility
+\DeclareOptionBeamer{orange}{\def\tubscolor{Orange}}
 \DeclareOptionBeamer{green}{\def\tubscolor{Green}}
 \DeclareOptionBeamer{blue}{\def\tubscolor{Blue}}
 \DeclareOptionBeamer{violet}{\def\tubscolor{Violet}}
@@ -183,8 +183,9 @@
 %    \end{key}
 %
 %    \begin{macrocode}
-\ExecuteOptionsBeamer{rgb,yellow}
+\ExecuteOptionsBeamer{rgb,yellow,light}
 \ProcessOptionsBeamer\relax
+\RequirePackage{tubscolors}
 %    \end{macrocode}
 %
 % \subsection{Farbdefinitionen}
