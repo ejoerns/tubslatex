@@ -62,7 +62,11 @@
 %   \raggedright}
 %  {\end{list}}
 %
-% \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
+% \changes{v0.2}{ 2011 / 08 / 23 }{%
+%   Initial version}
+% \changes{v0.3}{ 2011 / 10 / 13 }{%
+%   Optionen 'nexus' und 'arial' hinzugefügt,
+%   mathpazo als Standard-Mathe-Font.}
 %
 % \GetFileInfo{nexus.sty}
 %
@@ -91,14 +95,44 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\ProvidesPackage{nexus} [2011/03/12 v0.2 Nexus support for LaTeX]
-
+\ProvidesPackage{nexus} [2011/10/13 v0.3 Nexus support for LaTeX]
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\RequirePackage{xkeyval}
+\newif\ifnexus@usearial\nexus@usearialfalse
+%    \end{macrocode}
+%
+%    \begin{key}{}{arial}
+%    \begin{macrocode}
+\DeclareOptionX{arial}{%
+  \nexus@usearialtrue
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nexus}
+%    \begin{macrocode}
+\DeclareOptionX{nexus}{%
+  \nexus@usearialfalse
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% Behandle Optionen
+%    \begin{macrocode}
+\ProcessOptionsX*\relax
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \RequirePackage{mathpazo}
 \RequirePackage[scaled]{uarial} % for T1 encoding
 \PassOptionsToPackage{T1,LY1}{fontenc}
 \RequirePackage{fontenc}
-
-%Anführungszeichen
+%    \end{macrocode}
+%
+% Anführungszeichen
+%    \begin{macrocode}
 %%deutsch
 %%%einfach
 \ProvideTextCommand{\glq}{LY1}{\symbol{0130}}
@@ -114,13 +148,20 @@
 \ProvideTextCommand{\frqq}{LY1}{\symbol{0187}}
 
 \DeclareTextCommand{\textasteriskcentered}{LY1}{$*$}
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\ifnexus@usearial%
+\renewcommand*{\encodingdefault}{T1}
+\else%
 \renewcommand*{\encodingdefault}{LY1}
 \renewcommand*{\rmdefault}{NexusProSerif}
 \renewcommand*{\sfdefault}{NexusProSans}
 \renewcommand*{\ttdefault}{txtt} % with bold series!
-
-%% support for babels latintext (used by LaTeX, TeX, etc.)
+%    \end{macrocode}
+%
+% Support für babels latintext (used by LaTeX, TeX, etc.)
+%    \begin{macrocode}
 \AtBeginDocument{%
 \ifx\@undefined\latintext%
 \else%
@@ -136,6 +177,9 @@
 \def\encodingdefault{\latinencoding}}%
 \fi%
 }
+\fi%
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
