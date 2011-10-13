@@ -67,7 +67,8 @@
 %     Auf xkeyval umgestellt,
 %     Option |trueblack| hinzugefügt,
 %     Auch klein geschriebene Farbnamen in selectSecondary erlaubt,
-%     Makro colorshow hinzugefügt.}
+%     Makro colorshow hinzugefügt,
+%     Textfarbe automatisch tuBlack.}
 %
 % \GetFileInfo{tubcolors.sty}
 %
@@ -87,7 +88,7 @@
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubscolors}[2011/10/12  v0.5  Farbschema der TU-Braunschweig]
+\ProvidesPackage{tubscolors}[2011/10/13  v0.5  Farbschema der TU-Braunschweig]
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -745,6 +746,11 @@
 }}
 %    \end{macrocode}
 %    \end{macro}
+%
+% Setze Hauptfarbe auf tuBlack.
+%    \begin{macrocode}
+\color{tuBlack}
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 %</package>
