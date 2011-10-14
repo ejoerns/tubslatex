@@ -9,6 +9,10 @@ install/rawtree/tex/*
 install/debian/texlive-tubs/*
 install/release/*
 #ignore tex generated classes and packages
+cd-base/src/tubscolors.sty
+cd-base/src/tubslogo.sty
+letter/src/tubs.lco
+letter/src/tubslttr2.cls
 report/src/build
 report/src/tubsa49pt.clo
 report/src/tubsa59pt.clo
