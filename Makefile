@@ -20,9 +20,9 @@ ALL_SRCDIRS = $(CDBASE_SRCDIR) $(BEAMER_SRCDIR) $(LETTER_SRCDIR) $(NEXUS_SRCDIR)
 # Programme
 MAKE = make
 
-.PHONY: clean mkdir documentation examples source sourcedoc
+.PHONY: clean mkdir source sourcedoc documentation examples
 
-release: mkdir documentation examples source
+release: mkdir source sourcedoc documentation examples
 
 mkdir:
 	mkdir -p Website/$(TUBSLATEX_VERSION)
@@ -42,8 +42,5 @@ sourcedoc:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i doc; done
 
 clean:
-	$(MAKE) -C $(NEXUS_SRCDIR) clean
-	$(MAKE) -C $(CDBASE_SRCDIR) clean
-	$(MAKE) -C $(BEAMER_SRCDIR) clean
-	$(MAKE) -C $(LETTER_SRCDIR) clean
-	$(MAKE) -C $(REPORT_SRCDIR) clean
+	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i clean; done
+	$(MAKE) -C $(DOCUMENTATION_DIR) clean
