@@ -4,7 +4,7 @@
 # die nicht benoetigt werden
 #
 
-PDFLIST=beamer_example.pdf
+PDFLIST = beamer_example.pdf
 
 all: $(PDFLIST) clean
 
