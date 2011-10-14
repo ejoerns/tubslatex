@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,bcor=8mm,extramargin]{tubsartcl}
+\documentclass[a4paper,extramargin,violet]{tubsartcl}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
@@ -21,10 +21,28 @@ Nam lacus libero}
 
 \begin{document}
 
-\maketitle[image]
+\maketitle[image,logo=outside]
+\makebackpage
 \pagestyle{scrheadings}
 \tableofcontents
 
+\begin{gausspage}
+  \showtubslogo[right]
+  \showlogo{Dies ist ein Text}
+  \showdesignhelper
+  \begin{segment}[bgcolor=tuSecondaryLight]{2}
+    asdf
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \showtubslogo[right]
+  \showlogo{Dies ist ein Text}
+  \showdesignhelper
+  \begin{segment}[bgcolor=tuSecondaryLight]{2}
+    asdf
+  \end{segment}
+\end{gausspage}
 
 \section{Ut purus elit}
 
