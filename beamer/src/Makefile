@@ -14,11 +14,11 @@ PDFLATEX = pdflatex
 
 .PHONY: cleantemp clean
 
-all: src doc cleantemp
+all: src doc
 
 src: $(STYLIST)
 
-doc: $(DTXLIST:%.dtx=%.pdf)
+doc: $(DTXLIST:%.dtx=%.pdf) cleantemp
 
 $(STYLIST): $(DTXLIST)
 	$(LATEX) $(INSFILE)

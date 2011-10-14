@@ -16,30 +16,52 @@ LETTER_SRCDIR = letter/src
 NEXUS_SRCDIR = nexus/src
 REPORT_SRCDIR = report/src
 ALL_SRCDIRS = $(CDBASE_SRCDIR) $(BEAMER_SRCDIR) $(LETTER_SRCDIR) $(NEXUS_SRCDIR) $(REPORT_SRCDIR)
+INSTALL_RAW_DIR = install/rawtree
+INSTALL_ZIP = tubslatex_$(TUBSLATEX_VERSION).zip
+INSTALL_DEB_DIR = install/debian
+INSTALL_DEB = texlive-tubs_$(TUBSLATEX_VERSION)debian.deb
+INSTALL_WIN_DIR = install/windows
+INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_VERSION).exe
 
 # Programme
 MAKE = make
 
-.PHONY: clean mkdir source sourcedoc documentation examples
+.PHONY: clean mkdir generate source sourcedoc documentation examples buildinstaller fetch
 
-release: mkdir source sourcedoc documentation examples
+release: generate buildinstaller mkdir fetch
+
+generate: source sourcedoc documentation examples
 
 mkdir:
 	mkdir -p Website/$(TUBSLATEX_VERSION)
 
 documentation:
 	$(MAKE) -C $(DOCUMENTATION_DIR)
-	cp $(DOCUMENTATION_DIR)/$(DOCUMENTATION_PDF) Website/$(TUBSLATEX_VERSION)/.
 
 examples:
 	$(MAKE) -C $(EXAMPLE_DIR)
-	cp $(EXAMPLE_DIR)/$(EXAMPLE_ZIP) Website/$(TUBSLATEX_VERSION)/.
 
 source:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
 
 sourcedoc:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i doc; done
+
+buildinstaller:
+	$(MAKE) -C $(INSTALL_RAW_DIR)
+	$(MAKE) -C $(INSTALL_RAW_DIR) VERSION=$(TUBSLATEX_VERSION) zip
+	$(MAKE) -C $(INSTALL_DEB_DIR) copy
+	$(MAKE) -C $(INSTALL_DEB_DIR) VERSION=$(TUBSLATEX_VERSION) deb
+	$(MAKE) -C $(INSTALL_WIN_DIR) copy
+	$(MAKE) -C $(INSTALL_WIN_DIR) VERSION=$(TUBSLATEX_VERSION) exe
+
+fetch:
+	cp $(DOCUMENTATION_DIR)/$(DOCUMENTATION_PDF) Website/$(TUBSLATEX_VERSION)/.
+	cp $(EXAMPLE_DIR)/$(EXAMPLE_ZIP)     Website/$(TUBSLATEX_VERSION)/.
+	cp $(INSTALL_RAW_DIR)/$(INSTALL_ZIP) Website/$(TUBSLATEX_VERSION)/.
+	cp $(INSTALL_DEB_DIR)/$(INSTALL_DEB) Website/$(TUBSLATEX_VERSION)/.
+	cp $(INSTALL_WIN_DIR)/$(INSTALL_EXE) Website/$(TUBSLATEX_VERSION)/.
+
 
 clean:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i clean; done

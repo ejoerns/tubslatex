@@ -1,11 +1,13 @@
-# This makefile is made to generate  documentation from all .dtx files
+# Makefile (c) 2011 by Enrico Jörns
+# ---------------------------------
 #
 # Benutzung:
 #   Aufruf von 'make' erzeugt Verzeichnisbaum
+#   Aufruf von 'make copy' kopiert lediglich (bereits erzeugte) Dateien
 #   Aufruf von 'make zip' erzeugt gepackte zip
 #
 
-VERSION = 0.3-alpha1
+VERSION = undefined
 
 # Basis-Verzeichnis des Repositories
 BASEDIR=../..
@@ -18,9 +20,9 @@ NEXUS_FETCHDIR  = $(BASEDIR)/nexus/src
 REPORT_FETCHDIR = $(BASEDIR)/report/src/build
 DOC_FETCHDIR = $(BASEDIR)/doc
 
-.PHONY: build copy-pre copy-generated copy-other copy-doc font
+.PHONY: build copy-pre copy-generated copy-other copy-doc font clean zip
 
-all: buil copy font
+all: build copy font
 
 build:
 	make -C $(BASEDIR) generate
@@ -55,7 +57,7 @@ copy-doc:
 	cp -r $(CDBASE_FETCHDIR)/*.pdf doc/latex/tubs/.
 	cp -r $(BEAMER_FETCHDIR)/*.pdf doc/latex/tubs/.
 	cp -r $(LETTER_FETCHDIR)/*.pdf doc/latex/tubs/.
-	cp -r $(REPORT_FETCHDIR)/*.pdf doc/latex/tubs/.
+	cp -r $(REPORT_FETCHDIR)/../*.pdf doc/latex/tubs/.
 	cp -r $(DOC_FETCHDIR)/*.pdf    doc/latex/tubs/.
 
 OTFDEFAULT= --warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force

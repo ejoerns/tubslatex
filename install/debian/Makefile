@@ -1,15 +1,27 @@
-all: clean structure fetch build
+# Makefile (c) 2011 by Enrico Jörns
+# ---------------------------------
+#
+# Benutzung:
+#   Aufrunf von 'make' erzeugt deb-Datei ...
 
-VERSION = 0.3-alpha1
+VERSION = undefined
 DIST = debian
 
-REPODIR = /home/enrico/CD-LaTeX
+# Verzeichnisse
+REPODIR = ../..
 INSTALLPATH = usr/share/texmf-texlive
 
 RAWTREE = $(REPODIR)/install/rawtree
 
-build:
+all: build copy deb
+
+copy: clean structure fetch
+
+deb:
 	sudo dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb
+
+build:
+	make -C $(RAWTREE)
 
 structure:
 	mkdir -p texlive-tubs
@@ -17,16 +29,15 @@ structure:
 	mkdir -p texlive-tubs/$(INSTALLPATH)
 
 fetch:
-	make -C $(RAWTREE) -B
 	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
-	mv $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
-	mv $(RAWTREE)/doc texlive-tubs/$(INSTALLPATH)/.
-	mv $(RAWTREE)/fonts texlive-tubs/$(INSTALLPATH)/.
+	cp -r $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
+	cp -r $(RAWTREE)/doc texlive-tubs/$(INSTALLPATH)/.
+	cp -r $(RAWTREE)/fonts texlive-tubs/$(INSTALLPATH)/.
 
 clean:
 	rm -rf texlive-tubs
 	rm -f *.otf
-	rm -f texlive-tubs_$(VERSION)$(DIST).deb
+	rm -f texlive-tubs_$(TUBSLATEX_VERSION)$(DIST).deb
 
 install:
-	sudo dpkg -i texlive-tubs_$(VERSION)$(DIST).deb
+	sudo dpkg -i texlive-tubs_$(TUBSLATEX_VERSION)$(DIST).deb

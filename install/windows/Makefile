@@ -10,6 +10,8 @@ REPODIR = ../..
 RAWTREE = $(REPODIR)/install/rawtree
 MAKENSIS = wine ~/.wine/drive_c/Programme/NSIS/makensis.exe
 
+.PHONY: exe build structure fetch clean install
+
 all: build copy exe
 
 copy: clean structure fetch
@@ -26,9 +28,9 @@ structure:
 	mkdir -p data
 
 fetch:
-	mv $(RAWTREE)/tex data/.
-	mv $(RAWTREE)/doc data/.
-	mv $(RAWTREE)/fonts data/.
+	cp -r $(RAWTREE)/tex data/.
+	cp -r $(RAWTREE)/doc data/.
+	cp -r $(RAWTREE)/fonts data/.
 
 clean:
 	rm -rf data

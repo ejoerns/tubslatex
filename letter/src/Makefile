@@ -4,7 +4,7 @@
 #
 
 # Dateien
-GENLIST = tubs.lco tubslttr2.dtx
+GENLIST = tubs.lco tubslttr2.cls
 DTXLIST = tubslttr2.dtx
 INSFILE = tubslttr.ins
 
