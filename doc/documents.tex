@@ -179,19 +179,19 @@ Es sind 3 einfache Styles definiert.% vordefiniert
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/titlestyle_plain.pdf}}
+      \includegraphics[width=0.95\textwidth,page=1]{examples/titlestyles.pdf}}
     [default]
   \end{minipage}%
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/titlestyle_image.pdf}}
+      \includegraphics[width=0.95\textwidth,page=2]{examples/titlestyles.pdf}}
     [image]
   \end{minipage}%
   \begin{minipage}[t]{0.33\textwidth}
     \centering\sffamily
     \fbox{%
-      \includegraphics[width=0.95\textwidth]{examples/titlestyle_imagetext.pdf}}
+      \includegraphics[width=0.95\textwidth,page=3]{examples/titlestyles.pdf}}
     [imagetext]
   \end{minipage}
 \end{center}
@@ -237,7 +237,11 @@ mit Seitennummer links und Kapitelname rechts gesetzt.
 
 \begin{Declaration}
   \Macro{ihead}\Parameter{innen}\\
-  \Macro{ohead}\Parameter{außen}
+  \Macro{ohead}\Parameter{außen}\\
+  \Macro{ifoot}\Parameter{innen}\\
+  \Macro{ofoot}\Parameter{außen}\\
+  \Macro{isender}\Parameter{innen}\\
+  \Macro{osender}\Parameter{außen}
 \end{Declaration}
 
 Bei Bedarf können die Kopfzeilen individuell angepasst werden.
@@ -401,6 +405,8 @@ Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
 
 \section{Schrift}
 
+%TODO: Wahl Nexus/Arial
+
 Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
 gesetzt. Diese wird standardmäßig bei allen Dokumenten in der Schriftgröße
 11pt geladen. Außerdem definiert sind Schriftgrößen von 10pt und 9pt.
@@ -530,7 +536,73 @@ Sie entscheidet dabei \emph{nicht} über das verwendete Farbmodell (RGB/CMYK).
   mit \Option{mono} oder eine Neudefinition von \texttt{tuBlack} vorzuziehen.
 \end{important}
 
-\section{Gauß-Layout}\label{sec:gausspage}
+\subsection{Farbschema}
+
+Das Farbschema des CD gliedert sich grob in zwei Kategorieren: Primärfarben
+und Sekundärfarben. Während zu den Primärfarben nur das TU-Rot (\texttt{tuRed})
+und Schwarz, Weiß, sowie weitere Grautöne gehören, bieten die Sekundärfarben
+eine größere Auswahl. Sie sind nochmals in 4 verschiedene Farbklänge
+(orange, grün, blau, violett) unterteilt, die jeweils 3 Farben aufeinander
+abgesetimmte Farben enthalten, die wiederum noch 20-Prozent-Schritten aufgehellt
+werden können.
+
+\begin{Declaration}
+  \Option{orange}\\
+  \Option{blue}\\
+  \Option{green}\\
+  \Option{violet}
+\end{Declaration}
+
+Da Oftmals nur mit einem Hauptfarbklang gearbeitet wird, gibt es die Möglichkeit
+diesen in den Klassenoptionen zu wählen. Die Farben sind dann unter den
+Aliasnamen
+\texttt{tuSecondary\textit{<Light//Medium/Dark>}\textit{<100//80/60/40/20}}
+verwendbar.
+So entspricht \texttt{tuSecondaryDark80} in Verbindung mit Option
+\Option{blue} \texttt{tuBlueDark80}, in Verbindung mit Option \Option{green}
+jedoch \texttt{tuGreenDark80}.
+
+Viele der standardmäßig definierte Styles und Vorlagen nutzen ebenfalls diese
+Alias-Farben, sodass deren darstellung durch die Optionen ebenfalls beeinflusst 
+werden kann.
+
+\begin{Declaration}
+  \Macro{colorshow}\OParameter{Breite}\Parameter{Farbe}\Parameter{Helligkeit}
+\end{Declaration}
+
+Hilfreicher Befehl für den Design-Prozess. Er zeigt alle Abstufungen
+einer \PName{Farbe} \PValue{Orange/Blue/Green/Violet} mit gewählter 
+\PName{Helligkeit} \PValue{Light/Medium/Dark}.
+Optional kann noch die \PName{Breite} der Darstellung gewählt werden,
+ist kein Wert angegeben, so wird \Macro{textwidth} verwendet.
+
+\begin{figure}
+  tuOrange\ldots\\
+  \colorshow{Orange}{Light}
+  \colorshow{Orange}{Medium}
+  \colorshow{Orange}{Dark}\\[-1ex]
+  tuBlue\ldots\\
+  \colorshow{Blue}{Light}
+  \colorshow{Blue}{Medium}
+  \colorshow{Blue}{Dark}\\[-1ex]
+  tuGreen\ldots\\
+  \colorshow{Green}{Light}
+  \colorshow{Green}{Medium}
+  \colorshow{Green}{Dark}\\[-1ex]
+  tuViolet\ldots\\
+  \colorshow{Violet}{Light}
+  \colorshow{Violet}{Medium}
+  \colorshow{Violet}{Dark}
+  \caption{Im CD definierte Farben und deren Benennung (Auszug)}
+\end{figure}
+
+
+\subsection{Hinweis zur Verwendung}
+
+Für Typografie auf farbigen Flächen gilt: Bis zu einer Abstufung von 60\% kann die Schrift in Weiß auf diesem Farbton stehen. Ab einem Tonwert von 40\% sollte die Schrift, im Sinne einer optimalen Lesbarkeit, in Schwarz dargestellt werden. 
+
+Weitere Hinweise zur allgemeinen Verwendung sind bitte der
+CD-Toolbox\cite{toolbox} zu entnehmen.
 
 
 \section{Arbeiten mit \tubslatex}

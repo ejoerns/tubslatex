@@ -1,21 +1,21 @@
-\documentclass[a4paper,11pt,green]{tubsreprt}
+\documentclass[a4paper,11pt,blue,twoside]{tubsreprt}
 \usepackage[utf8x]{inputenc}
 
 \usepackage[ngerman]{babel}
 
 %opening
-\title{Beispieltitiel}
-\titlepicture{infozentrum.jpg}
+\title{Beispieltitel}
 \subtitle{Untertitel}
 \author{Max Mustermann}
 \publishers{Institut fuer Lorem Ipsum} % to logo?
-
-\address{Inistitut für Lorem Ipsum\\
-Schlossallee 13\\
-33333 Schildburg}
+\titlepicture{infozentrum.jpg}
 
 \begin{document}
 
-\makebackpage[plain]
+\maketitle[plain]
+
+\maketitle[image]
+
+\maketitle[imagetext]
 
 \end{document}
