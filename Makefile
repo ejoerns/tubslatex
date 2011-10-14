@@ -1,7 +1,7 @@
 # Makefile (c) 2011 by Enrico Jörns
 # ---------------------------------
 # Erstellt komplettes Release (still under construction!)
-#
+# 
 
 TUBSLATEX_VERSION = 0.3-alpha2
 
