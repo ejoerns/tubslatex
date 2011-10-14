@@ -1,7 +1,7 @@
 ;; Tubslatex Installer
 ;; Written by Enrico Joerns
 
-!define VERSION 0.3-alpha1
+!define VERSION REPLACEWITHVERSION
 
 ;--------------------------------
 ;Include Modern UI
