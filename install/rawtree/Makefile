@@ -2,61 +2,61 @@
 #
 # Benutzung:
 #   Aufruf von 'make' erzeugt Verzeichnisbaum
-#   Aufruf von 'make zip' erzeugt gepackte zipp
+#   Aufruf von 'make zip' erzeugt gepackte zip
 #
 
 VERSION = 0.3-alpha1
 
+# Basis-Verzeichnis des Repositories
 BASEDIR=../..
-LATEXGEN = *.aux *.log *.ins *.idx *.out *.glo *.toc
 
-DTXLIST = $(BASEDIR)/cd-base/src/*.dtx
-DTXLIST += $(BASEDIR)/report/src/*.dtx
-DTXLIST += $(BASEDIR)/letter/src/*.dtx
-DTXLIST += $(BASEDIR)/beamer/src/*.dtx
-DTXLIST += $(BASEDIR)/nexus/src/*.dtx
-# tubs-Dokumentation
-TUBSDOC = $(BASEDIR)/doc/tubsdocguide.tex
-# ins-Dateien
-INSLIST = $(BASEDIR)/cd-base/src/cd-base.ins
-INSLIST += $(BASEDIR)/report/src/tubs.ins
-INSLIST += $(BASEDIR)/letter/src/tubslttr.ins
-INSLIST += $(BASEDIR)/beamer/src/tubsbeamer.ins
-INSLIST += $(BASEDIR)/nexus/src/nexus.ins
+#Verzeichnisse aus denen Inhalte kopiert werden müssen
+CDBASE_FETCHDIR = $(BASEDIR)/cd-base/src
+BEAMER_FETCHDIR = $(BASEDIR)/beamer/src
+LETTER_FETCHDIR = $(BASEDIR)/letter/src
+NEXUS_FETCHDIR  = $(BASEDIR)/nexus/src
+REPORT_FETCHDIR = $(BASEDIR)/report/src/build
+DOC_FETCHDIR = $(BASEDIR)/doc
 
-.PHONY: doc doc-clean doc-move
+.PHONY: build copy-pre copy-generated copy-other copy-doc font
 
-all: ins copy font doc
+all: buil copy font
 
+build:
+	make -C $(BASEDIR) generate
 
-# generate .sty .cls and other files
-ins: ins-pre ins-tex ins-post
+copy: copy-pre copy-generated copy-other copy-doc
 
-ins-pre:
-	mkdir -p build
-
-ins-tex: $(INSLIST)
-
-%.ins:
-	echo "XXX" $@
-	TEXINPUTS=`dirname $@`/:$$TEXINPUTS latex $@
-
-ins-post:
+copy-pre:
 	mkdir -p tex/latex/tubs
-	mv build/* .
-	rm -r build
-	mv *.sty *.cls *.lco *.clo tex/latex/tubs/.
-	rm *.log
+	mkdir -p doc/latex/tubs
+
+
+copy-generated:
+	cp -r $(NEXUS_FETCHDIR)/*.sty  tex/latex/tubs/.
+	cp -r $(CDBASE_FETCHDIR)/*.sty tex/latex/tubs/.
+	cp -r $(BEAMER_FETCHDIR)/*.sty tex/latex/tubs/.
+	cp -r $(LETTER_FETCHDIR)/*.cls tex/latex/tubs/.
+	cp -r $(LETTER_FETCHDIR)/*.lco tex/latex/tubs/.
+	cp -r $(REPORT_FETCHDIR)/*.cls tex/latex/tubs/.
+	cp -r $(REPORT_FETCHDIR)/*.sty tex/latex/tubs/.
+	cp -r $(REPORT_FETCHDIR)/*.clo tex/latex/tubs/.
 
 
 # directly copy all other needed files
-copy:
-	mkdir -p tex/latex/tubs
-	cp -r $(BASEDIR)/cd-base/src/TUBraunschweig-rgb.pdf tex/latex/tubs/.
-	cp -r $(BASEDIR)/cd-base/src/logos tex/latex/tubs/.
-	cp -r $(BASEDIR)/beamer/src/defaulttitlepicture.jpg tex/latex/tubs/.
-	cp -r $(BASEDIR)/nexus/src/*.fd tex/latex/tubs/.
+copy-other:
+	cp -r $(CDBASE_FETCHDIR)/logos tex/latex/tubs/.
+	cp -r $(BEAMER_FETCHDIR)/defaulttitlepicture.jpg tex/latex/tubs/.
+	cp -r $(NEXUS_FETCHDIR)/*.fd tex/latex/tubs/.
 
+
+copy-doc:
+	cp -r $(NEXUS_FETCHDIR)/*.pdf  doc/latex/tubs/.
+	cp -r $(CDBASE_FETCHDIR)/*.pdf doc/latex/tubs/.
+	cp -r $(BEAMER_FETCHDIR)/*.pdf doc/latex/tubs/.
+	cp -r $(LETTER_FETCHDIR)/*.pdf doc/latex/tubs/.
+	cp -r $(REPORT_FETCHDIR)/*.pdf doc/latex/tubs/.
+	cp -r $(DOC_FETCHDIR)/*.pdf    doc/latex/tubs/.
 
 OTFDEFAULT= --warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force
 
@@ -103,29 +103,6 @@ font:
 	mv *.pfb fonts/type1/Nexus/
 
 	rm *.otf
-
-
-# generate doc
-doc: $(DTXLIST) tubsdoc doc-clean doc-move
-
-tubsdoc:
-	make -C `dirname $(TUBSDOC)`
-
-# Dokumentation aus dtx-Dateien
-%.dtx:
-	TEXINPUTS=`dirname $@`/:$$TEXINPUTS pdflatex $@
-# Dokumentation aus tex-Dateien
-%.tex:
-	TEXINPUTS=../.:`dirname $@`/:$$TEXINPUTS pdflatex $@
-
-
-doc-clean:
-	rm -f $(LATEXGEN)	
-
-doc-move:
-	mkdir -p doc/latex/tubs
-	mv *.pdf doc/latex/tubs/.
-	cp $(basename $(TUBSDOC)).pdf doc/latex/tubs/.
 
 
 # zippen
