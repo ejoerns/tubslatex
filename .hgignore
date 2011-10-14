@@ -9,8 +9,15 @@ install/rawtree/tex/*
 install/debian/texlive-tubs/*
 install/release/*
 #ignore tex generated classes and packages
+nexus/src/nexus.sty
 cd-base/src/tubscolors.sty
 cd-base/src/tubslogo.sty
+beamer/src/beamercolorthemetubs.sty
+beamer/src/beamerfontthemetubs.sty
+beamer/src/beamerinnerthemetubs.sty
+beamer/src/beamerouterthemetubs.sty
+beamer/src/beamerthemetubs.sty
+beamer/src/tubsbeamersizes.sty
 letter/src/tubs.lco
 letter/src/tubslttr2.cls
 report/src/build
@@ -28,6 +35,7 @@ report/src/tubsstyle.sty
 report/src/tubstypearea.sty
 report/src/tubsbox.sty
 report/src/tubstitlepage.sty
+examples/tubslatex_examples.zip
 doc/examples/gallery/*
 doc/examples/png/*
 

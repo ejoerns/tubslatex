@@ -1,6 +1,6 @@
 # Makefile (c) 2011 by Enrico Jörns
 # ---------------------------------
-# Erzeugt cd-base Pakete und Dokumentation
+# Erzeugt cd-base-Pakete und Dokumentation
 #
 
 # Dateien

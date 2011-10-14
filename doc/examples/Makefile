@@ -18,6 +18,6 @@ cleantemp:
 
 
 clean: cleantemp
-	rm -f *.pdf
+	rm -f $(EXAMPLELIST)
 
 .PONY: clean cleantemp
