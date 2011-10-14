@@ -145,12 +145,9 @@
       % des (Original-)Bildes mit Hilfe der 'trim'-Option abgeschnitten.
       \settoheight{\@image@yorig}{%
         \includegraphics[clip]{#1}}%
-\showthe\@image@yorig
       \settoheight{\@image@ycalc}{%
         \includegraphics[clip,width=\titlegraphicswidth]{#1}}%
-\showthe\@image@ycalc
       \setlength{\@image@ycalc}{(\@image@ycalc-\titlegraphicsheight)*\ratio{\@image@yorig}{\@image@ycalc}}
-\showthe\@image@ycalc
       \setlength{\@image@ycalc}{0.5\@image@ycalc}%
       \renewcommand\@img@scale@param{clip,%
           width=\titlegraphicswidth,
@@ -193,7 +190,7 @@
 \newsavebox{\@test@box}
 \renewcommand{\titlegraphic}[2][]{%
   \@orig@titlegpraphic{
-    \setkeys{cropped,tubs@titlegraphic}{#1}%
+    \setkeys{tubs@titlegraphic}{cropped,#1}%
     % redefine includegraphics to store information
     \newif\if@incgraphused\@incgraphusedfalse%
     \let\@orig@includegraphics\includegraphics%
@@ -215,6 +212,10 @@
   }%
   #2}
 }
+
+% Höhe des Logos wird automatisch skaliert bei Verwendung von includegraphics
+\renewcommand{\logo}[1]{\setbeamertemplate{logo}{%
+  \begingroup\setkeys{Gin}{height=\logoheight}#1\endgroup}}
 
 \mode<presentation>
 
