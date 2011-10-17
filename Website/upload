@@ -1,0 +1,2 @@
+#!/bin/bash
+rsync -vrz . enrico@enricojoerns.de:/var/www/enricojoerns.de/httpdocs/tubslatex/.
