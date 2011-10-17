@@ -430,6 +430,11 @@
 %
 % Setzen des Locationfeldes am rechten Rand mit allen Absenderinformationen
 %    \begin{macrocode}
+% Komavar new line
+\newcommand{\usekomavarNL}[2][\relax]{%
+  \ifkomavarempty{#2}{\relax}{\usekomavar{#2}%
+  \ifx#1\relax\\\else#1\fi}
+}
 \setkomavar{location}{%
 \begin{flushleft}\locationspacing
 %Wenn eine Durchwahl angegeben wurde, wird diese zusammengesetzt, ansonsten wird das komplette phone/fax Feld genutzt
@@ -447,18 +452,21 @@ Technische Universit\"at\\Braunschweig\\
   ~\\%
   \usekomavar{fromdepartment}\\%
 }
+%
 ~\\%
-\usekomavar{fromstreet}\\
+\usekomavarNL{fromstreet}
 \usekomavar{fromzipcode}~\usekomavar{fromtown}\\
 Deutschland\\
+%
+\ifkomavarempty{fromname}{}{~\\}
+\usekomavarNL{fromtitle}
+\usekomavarNL{fromname}
+%
 ~\\
-\ifkomavarempty{fromtitle}{\relax}{\usekomavar{fromtitle}\\}
-\usekomavar{fromname}\\
-~\\
-\usekomavar{fromphone}\\
-\usekomavar{fromfax}\\
-\usekomavar{fromemail}\\
-\usekomavar{fromurl}\\
+\usekomavarNL{fromphone}
+\usekomavarNL{fromfax}
+\usekomavarNL{fromemail}
+\usekomavarNL{fromurl}
 ~\\~\\
 % \@ifpackagelater{scrbase}{2011/06/16}{%
 \if@OldKomaVersion%
@@ -496,8 +504,10 @@ Datum: \usekomavar{date}\\
 %    \begin{macrocode}
 \setkomavar{backaddress}{%
   \parbox{8.5cm}{%
-    Technische Universit\"at Braunschweig | \usekomavar{frominstitute}\\
-    \usekomavar{fromstreet} | \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland}
+    Technische Universit\"at Braunschweig%
+    \ifkomavarempty{frominstitute}{\relax}{| \usekomavar{frominstitute}}\\
+    \ifkomavarempty{fromstreet}{\relax}{\usekomavar{fromstreet} |}% 
+    \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland}
 }
 %    \end{macrocode}
 %
