@@ -1,0 +1,46 @@
+Übersicht über die wichtigsten Änderungen:
+
+Version 0.3-alpha2:
+
+  Allgemein:
+    - Dokumentation erweitert und angepasst
+    - Diverse "overfull hbox"-Fehler korrigiert
+    - Verbesserte Optionsverarbeitung des Logo-Pakets,
+      Vektorbasierte RGB-PDF eingebunden
+    - Korrekturen und Erweiterungen des Farb-Paketes
+    - Individuelles Logo wird automatisch skaliert,
+      Grobe Fehler in der horizontalen Positionierung korrigiert
+    - Pazo wird als neuer Standard-Mathe-Font in Kombination mit Nexus verwendet
+    - Zusammenspiel zwischen Optionen für Seitenstil bei gausspage-Umgebung
+      (in Verbindung mit Dokumentenklassen-Optionen) korrigiert und verbessert
+
+  Briefklasse:
+    - Kompatibilität zu alten KOMA-Skript-Versionen verbessert
+
+  Beamer-Templates:
+    - Gravierender Fehler in Schriftgrößenoptionen behoben
+    - Automatische Skalierung von Sekundärlogo
+    - Automatische Beschneidung/Skalierung von Titelgraphik auf
+      Darstellungsbereich (Wählbar durch Option)
+
+  Dokumentenklassen:
+    - Unterstützung zur Erstellung von Rückseiten im CD
+    - Unterstützung für Schriftgröße 10pt und 11pt (Standard)
+    - Neue Option 'extramargin' erlaubt schmaleren Textbereich
+    - Option 'style' mit Werten 'screen'/'print' für vereinfachten
+      Wechsel zwischen Darstellung auf Papier und Bildschirm als Medium
+    - Schriftgrößen-Definitionen verbessert und aktualisiert
+    - Logo-Positionierung auf Titelseiten nun anpassbar (left/right)
+    - Diverse Korrekturen in Optionsbehandlungen
+    - Seitenumbrüche bei Titel- und Rückseiten korrigiert
+    - Deutlich erweiterte Möglichkeiten für Kopf-/Fußzeilen-Definitionen
+      geschaffen
+
+  - Diverse weitere Verbesserungen und Fehlerkorrekturen
+  - Darüber hinaus stehen komplett neu strukturierte Beispiel-Dateien
+    zur Verfügung
+
+--------------------------------------------------------------------------------
+
+Version 0.3-alpha1:
+  - Initiale Version
