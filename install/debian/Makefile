@@ -29,6 +29,8 @@ structure:
 	mkdir -p texlive-tubs/$(INSTALLPATH)
 
 fetch:
+	cat control.template | sed 's/CONTROLVERSION/$(VERSION)/g' | \
+	sed 's/INSTALLSIZE/'"`du -sk --apparent-size texlive-tubs | awk  '{print $$1}' `"'/g' > control
 	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
 	cp -r $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
 	cp -r $(RAWTREE)/doc texlive-tubs/$(INSTALLPATH)/.
