@@ -363,7 +363,7 @@
 %    \end{macro}\end{macro}\end{macro}
 %
 %    \begin{macro}{gaussbox}
-% \oarg{options}\marg{xpos}\marg{ypos}\marg{widht}\marg{height}\par
+% \oarg{options}\marg{xpos}\marg{ypos}\marg{width}\marg{height}\par
 % \begin{tabularx}{\textwidth}{lX}
 %   |options| & Siehe Abschnit \ref{sec:options}  \\
 %   |xpos|    & Horizontaler Startpunt der Box,
@@ -425,8 +425,8 @@
 \else
   \setlength{\tubs@gb@bottommargin}{0mm}
 \fi%
-
-
+%
+%
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}
@@ -527,13 +527,22 @@
 % Boolean für Hintergrundbild
 %    \begin{macrocode}
 \newboolean{scifibox@showbgimage}
+\setboolean{scifibox@showbgimage}{false}
+\newcommand{\@bgimage@to@insert}{dummy}
 %    \end{macrocode}
 %
 %
 %    \begin{key}{scifibox}{bgimage}
+% Setze Hintergrundbild.
 %    \begin{macrocode}
-\define@key{scifibox}{bgimage}{%
-  
+\define@key{scifibox}{bgimage}[none]{%
+  \ifthenelse{\equal{#1}{none}}{%
+    \setboolean{scifibox@showbgimage}{false}%
+  }{%
+    \setkeys{scifibox}{bgcolor=none}%
+    \renewcommand{\@bgimage@to@insert}{#1}%
+    \setboolean{scifibox@showbgimage}{true}%
+  }
 }
 %    \end{macrocode}
 %    \end{key}
@@ -573,22 +582,46 @@
 %    \end{key}
 %
 %
+% \begin{key}{tubsbox.sty}{bgcolor}
+%   Standard-Hintergrundfarbe der Boxen festlegen.
+%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\par
+%   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
-\newlength{\@sb@image@xorig}
-\newlength{\@sb@image@xcalc}
-\newlength{\@sb@image@yorig}
-\newlength{\@sb@image@ycalc}
+\define@key{scifibox}{bgcolor}{% TODO: noch exakte kopie von tubsstyle.sty
+  \ifthenelse{\equal{#1}{none}}{%
+    \renewcommand\tubsbox@colorbox{\relax}
+  }{%
+    \def\bgcolor{#1}
+    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
+  }
+}
+%    \end{macrocode}
+%    \end{key}
 %
 %
-\newcommand\tubs@sb@imagefit{cropy}
+%    \begin{macrocode}
+\newcommand\tubs@sb@imagefit{cropped}
 \newcommand\@img@scale@param{}%
+%    \end{macrocode}
 %
-% Setzt |\@img@scale@param| als Parameter für |\includegraphics|
-\newcommand\tubs@calc@autoscale[1]{%
+% Setzt |\@img@scale@param| als Parameter für |\includegraphics|\par
+% \marg{imagefile}\marg{viewwidth}\marg{viewheight}
+% TODO: generalize with other packages?
+%    \begin{macrocode}
+\newcommand\tubs@sb@calc@autoscale[3]{%
+  \newdimen{\@sb@image@xorig}
+  \newdimen{\@sb@image@xcalc}
+  \newdimen{\@sb@image@yorig}
+  \newdimen{\@sb@image@ycalc}
+  % store dimension arguments (width, height)
+  \newdimen\@view@width%
+  \newdimen\@view@height%
+  \setlength\@view@width{#2}%
+  \setlength\@view@height{#3}%
   \ifthenelse{\equal{\tubs@sb@imagefit}{scaled}}{%
     \renewcommand\@img@scale@param{clip,%
-        height=\titlegraphicsheight,
-        width=\titlegraphicswidth}
+        height=\@view@height,
+        width=\@view@width}
   }{\ifthenelse{\equal{\tubs@sb@imagefit}{cropped}}{%
       % Ermittelt, ob das Bild an den Seiten oder oben und unten beschnitten
       % werden muss, um in den Darstellungsbereich zu passen
@@ -596,8 +629,8 @@
       % mit der Höhe des Darstellungsbereichs verglichen und entsprechend
       % eine crop-Option gesetzt.
       \settoheight{\@sb@image@ycalc}{%
-        \includegraphics[clip,width=\titlegraphicswidth]{#1}}
-      \ifthenelse{\lengthtest{\@sb@image@ycalc>\titlegraphicsheight}}{%
+        \includegraphics[clip,width=\@view@width]{#1}}
+      \ifthenelse{\lengthtest{\@sb@image@ycalc>\@view@height}}{%
         \renewcommand{\tubs@sb@imagefit}{cropy}
       }{%
         \renewcommand{\tubs@sb@imagefit}{cropx}
@@ -613,21 +646,21 @@
       \settoheight{\@sb@image@yorig}{%
         \includegraphics[clip]{#1}}%
       \settoheight{\@sb@image@ycalc}{%
-        \includegraphics[clip,width=\titlegraphicswidth]{#1}}%
-      \setlength{\@sb@image@ycalc}{(\@sb@image@ycalc-\titlegraphicsheight)*\ratio{\@sb@image@yorig}{\@sb@image@ycalc}}
+        \includegraphics[clip,width=\@view@width]{#1}}%
+      \setlength{\@sb@image@ycalc}{(\@sb@image@ycalc-\@view@height)*\ratio{\@sb@image@yorig}{\@sb@image@ycalc}}
       \setlength{\@sb@image@ycalc}{0.5\@sb@image@ycalc}%
       \renewcommand\@img@scale@param{clip,%
-          width=\titlegraphicswidth,
+          width=\@view@width,
           trim=0pt {\@sb@image@ycalc} 0pt {\@sb@image@ycalc}}%
     }{\ifthenelse{\equal{\tubs@sb@imagefit}{cropx}}{%
       \settowidth{\@sb@image@xorig}{%
         \includegraphics[clip]{#1}}%
       \settowidth{\@sb@image@xcalc}{%
-        \includegraphics[clip,height=\titlegraphicsheight]{#1}}%
-      \setlength{\@sb@image@xcalc}{(\@sb@image@xcalc-(\titlegraphicswidth))*\ratio{\@sb@image@xorig}{\@sb@image@xcalc}}
+        \includegraphics[clip,height=\@view@height]{#1}}%
+      \setlength{\@sb@image@xcalc}{(\@sb@image@xcalc-(\@view@width))*\ratio{\@sb@image@xorig}{\@sb@image@xcalc}}
       \setlength{\@sb@image@xcalc}{0.5\@sb@image@xcalc}%
       \renewcommand\@img@scale@param{clip,%
-          height=\titlegraphicsheight,
+          height=\@view@height,
           trim={\@sb@image@xcalc} 0pt {\@sb@image@xcalc} 0pt}%
     }{\ifthenelse{\equal{\tubs@sb@imagefit}{keepsize}}{%
       \renewcommand\@img@scale@param{}%
@@ -716,8 +749,8 @@
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
-  \setkeys{tubsbox.sty}{bgcolor=tuWhite}{}
-  \setkeys{tubsbox.sty}{#1}
+  \setkeys{scifibox}{bgcolor=tuWhite}{}
+  \setkeys{scifibox}{#1}
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}
   %TODO: length is just a very diry hack, fix this!
@@ -751,7 +784,7 @@
 \newenvironment{@modrow}[1][X]{%
   % setze keys
 %   \scifibox@setdefault@opts
-  \setkeys*{tubsbox.sty}{#1}
+  \setkeys*{scifibox}{#1}
   \edef\@remaining@keys{\XKV@rm}
   % Ersetze mit X, falls keine Länge angegeben
   \ifthenelse{\equal{\@remaining@keys}{}}{%
@@ -835,7 +868,7 @@
 \newenvironment{@modcol}[1][]{%
   % setze keys
 %   \scifibox@setdefault@opts
-  \setkeys*{tubsbox.sty}{#1}
+  \setkeys*{scifibox}{#1}
   \edef\@remaining@keys{\XKV@rm}
   % Ersetze mit X, falls keine Länge angegeben
   \ifthenelse{\equal{\@remaining@keys}{}}{%
@@ -924,7 +957,7 @@
 \newenvironment{@modsubrow}[1][]{%
   % setze keys
 %   \scifibox@setdefault@opts
-  \setkeys*{tubsbox.sty}{#1}
+  \setkeys*{scifibox}{#1}
   \stepcounter{tubs@sb@current@subrow}
   \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
@@ -994,9 +1027,15 @@
       \vspace*{0.5\tubs@sb@padding}%
     \end{minipage}%
   \end{lrbox}%
-  \begin{lrbox}{\tubs@sb@bgimagebox}
-    \includegraphics[width=\@current@width,height=\@current@height]{infozentrum}
-  \end{lrbox}
+  \ifthenelse{\boolean{scifibox@showbgimage}}{%
+    \tubs@sb@calc@autoscale{\@bgimage@to@insert}%
+          {\@current@width}%
+          {\@current@height}%
+    \begin{lrbox}{\tubs@sb@bgimagebox}%
+      \expandafter\includegraphics\expandafter[\@img@scale@param]{%
+              \@bgimage@to@insert}%
+    \end{lrbox}%
+  }{}
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \begin{textblock*}{\@current@width}(%
@@ -1010,6 +1049,7 @@
         }%
     \end{textblock*}%
   }{%
+    \ifthenelse{\boolean{scifibox@showbgimage}}{%
     \begin{textblock*}{\@current@width}(%
       -\tubspage@borderwidth+\tubs@sb@box@xpos,%
       -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
@@ -1018,6 +1058,7 @@
           \usebox{\tubs@sb@bgimagebox}%
         }}%
     \end{textblock*}%
+    }{}
     \begin{textblock*}{\@current@width}(%
       -\tubspage@borderwidth+\tubs@sb@box@xpos,%
       -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
@@ -1061,14 +1102,14 @@
 \let\end@scifibox\end@@scifibox
 %
 \newcommand\scifibox@setdefault@opts{%
-  \setkeys{tubsbox.sty}{bgcolor=tuWhite}
+  \setkeys{scifibox}{bgcolor=tuWhite}
 }
 %    \end{macrocode}
 %
 % Behandlung von erstem optionalen Argument (keyvals)
 %    \begin{macrocode}
 \def\@scifibox@oparam[#1]{%
-  \setkeys*{tubsbox.sty}{#1}%
+  \setkeys*{scifibox}{#1}%
   \setkeys*{gaussbox}{#1}%
   \@@scifibox
 }
