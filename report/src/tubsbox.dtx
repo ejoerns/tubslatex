@@ -209,6 +209,9 @@
 %    \end{key}
 %
 %
+% \subsection{Gaussbox-Optionen}
+%
+%
 % \begin{key}{tubsbox.sty}{addtopsep}
 % Fügt zusätzlichen Top-Innenabstand hinzu. Wenn kein Wert angegeben, wird
 % doppelte Rahmenstärke hinzugefügt. (Dies ist die Standardeinstellung für
@@ -369,7 +372,7 @@
 \newenvironment{gaussbox}[5][bgcolor=none]{%
 \setkeys*{tubsbox.sty}{#1}
 \tubs@gb@setorig
-\setkeys*{gaussbox}{logosep=false,#1}
+\setkeys*{gaussbox}{bgcolor=none,logosep=false,#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
@@ -627,39 +630,6 @@
 \newboolean{tubs@sb@borderless}\setboolean{tubs@sb@borderless}{false}
 %    \end{macrocode}
 %
-%    \begin{environment}{modrow}
-%    \begin{environment}{modrow*}
-% \oarg{cols}\par
-% Umgebung mit der Modulzeilen mit Inhalt gefüllt oder
-% zusätzliche Spaltenbereiche angelegt werden können.
-% Das optionale Argument \emph{rows} hat dabei dieselbe Funktion wie
-% in |modulepage| beschrieben, allerdings definiert sie nun
-% \emph{Spalten}breiten.\par
-% Wenn nur eine einzelne (X)-Spalte definiert wurde, kann der Inhalt
-% direkt in die Umgebung geschrieben werden,
-% ansonsten müssen die einzelnen Spalteninhalte mittels der Umgebung
-% |modcol| definiert werden.\par
-% Wertet Argument-Liste aus und speichert ermittelte Längen in Makros
-% mit Präfix |tubs@sb@collength@|. Wenn nur eine einzelne (X)-Spalte
-% definiert wurde, bzw. das optionale Argument leer gelassen, so wird
-% direkt eine scifibox erstellt.
-%    \begin{macrocode}
-\newenvironment{modrow}[1][X]{%
-  \setboolean{tubs@sb@borderless}{false}%
-  \@modrow[#1]%
-}{%
-  \end@modrow
-}
-%    \end{macrocode}
-%    \begin{macrocode}
-\newenvironment{modrow*}[1][X]{%
-  \setboolean{tubs@sb@borderless}{true}%
-  \@modrow[#1]%
-}{%
-  \end@modrow
-}
-%    \end{macrocode}
-%    \end{environment}\end{environment}
 %
 %    \begin{environment}{@modrow}
 % Implementierung von |modrow|.
@@ -692,30 +662,48 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{environment}{modcol}
-%    \begin{environment}{modcol*}
-% \oarg{subrows}\par
-% Umgebung mit der Modulspalten mit Inhalt gefüllt oder
-% zusätzliche Unterzeilen angelegt werden können.\par
-% Die Sternchen-Version sorgt dafür, dass der innere Rand weggelassen
-% wird, wie dies zum Beispiel für das Einfügen von Grafiken sinnvoll ist.
+
+%    \begin{environment}{modrow}
+%    \begin{environment}{modrow*}
+% \oarg{cols}\par
+% Umgebung mit der Modulzeilen mit Inhalt gefüllt oder
+% zusätzliche Spaltenbereiche angelegt werden können.
+% Das optionale Argument \emph{rows} hat dabei dieselbe Funktion wie
+% in |modulepage| beschrieben, allerdings definiert sie nun
+% \emph{Spalten}breiten.\par
+% Wenn nur eine einzelne (X)-Spalte definiert wurde, kann der Inhalt
+% direkt in die Umgebung geschrieben werden,
+% ansonsten müssen die einzelnen Spalteninhalte mittels der Umgebung
+% |modcol| definiert werden.\par
+% Wertet Argument-Liste aus und speichert ermittelte Längen in Makros
+% mit Präfix |tubs@sb@collength@|. Wenn nur eine einzelne (X)-Spalte
+% definiert wurde, bzw. das optionale Argument leer gelassen, so wird
+% direkt eine scifibox erstellt.
 %    \begin{macrocode}
-\newenvironment{modcol}[1][X]{%
+\newcommand{\@@modrow}{%
+  \@ifnextchar[{%
+  }{%
+  }%
+  \@modrow%
+}
+%
+\newenvironment{modrow}{%
   \setboolean{tubs@sb@borderless}{false}%
-  \@modcol[#1]%
+  \@@modrow%
 }{%
-  \end@modcol
+  \end@modrow%
 }
 %    \end{macrocode}
 %    \begin{macrocode}
-\newenvironment{modcol*}[1][X]{%
+\newenvironment{modrow*}{%
   \setboolean{tubs@sb@borderless}{true}%
-  \@modcol[#1]%
+  \@@modrow%
 }{%
-  \end@modcol
+  \end@modrow%
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
+%
 %
 %    \begin{environment}{@modcol}
 % Implementierung von |modcol|.
@@ -747,6 +735,32 @@
 }
 %    \end{macrocode}
 %    \end{environment}
+%
+%    \begin{environment}{modcol}
+%    \begin{environment}{modcol*}
+% \oarg{subrows}\par
+% Umgebung mit der Modulspalten mit Inhalt gefüllt oder
+% zusätzliche Unterzeilen angelegt werden können.\par
+% Die Sternchen-Version sorgt dafür, dass der innere Rand weggelassen
+% wird, wie dies zum Beispiel für das Einfügen von Grafiken sinnvoll ist.
+%    \begin{macrocode}
+\newenvironment{modcol}{%
+  \setboolean{tubs@sb@borderless}{false}%
+  \@modcol%
+}{%
+  \end@modcol
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newenvironment{modcol*}{%
+  \setboolean{tubs@sb@borderless}{true}%
+  \@modcol%
+}{%
+  \end@modcol
+}
+%    \end{macrocode}
+%    \end{environment}\end{environment}
+%
 %
 %    \begin{environment}{modsubrow}
 %    \begin{environment}{modsubrow*}
@@ -780,7 +794,7 @@
     \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}
   \expandafter\edef\expandafter\@argII\expandafter{%
     \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
-  \@scifibox[\@oarg]{\@argI}{\@argII}%
+  \@scifibox[][\@oarg]{\@argI}{\@argII}%
 }{%
   \end@scifibox%
 }
@@ -807,7 +821,7 @@
 % Dies ist unabhängig vom Gaußraster und hat schmalere Ränder als die gaussbox.
 % Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
-\newenvironment{@scifibox}[3][\relax]{%
+\newenvironment{@@scifibox}[3][\relax]{%
   \tubs@gb@setorig
   % Argumente sichern
   \ifx#1\relax%
@@ -847,11 +861,11 @@
       -\tubspage@borderwidth+\tubs@sb@box@xpos,%
       -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
-        \colorbox{tuWhite}{%
+        \tubsbox@framebox{\tubsbox@colorbox{%
           \hspace{0.5\tubs@sb@padding}%
           \usebox{\tubs@sb@storebox}%
           \hspace{0.5\tubs@sb@padding}%
-        }%
+        }}%
     \end{textblock*}%
   }
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
@@ -881,6 +895,25 @@
   \global\tubs@sb@box@xpos=\tubs@sb@box@xpos%
   \global\tubs@sb@box@ypos=\tubs@sb@box@ypos%
   \global\tubs@sb@box@splitrow=\tubs@sb@box@splitrow%
+}
+% Umgebungsende
+\let\end@scifibox\end@@scifibox
+%
+% Behandlung von erstem optionalen Argument (keyvals)
+\def\@scifibox@oparam[#1]{%
+  \setkeys*{tubsbox.sty}{bgcolor=white,#1}%
+  \setkeys*{gaussbox}{bgcolor=white,#1}%
+  \@@scifibox
+}
+%
+% Test nach erstem optionales Argument (keyvals)
+\def\@scifibox{%
+  \@ifnextchar[{%
+    \@scifibox@oparam%
+  }{%
+    \setkeys*{tubsbox.sty}{bgcolor=white}%
+    \@@scifibox%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}
