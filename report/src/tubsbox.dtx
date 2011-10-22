@@ -630,20 +630,25 @@
 \newboolean{tubs@sb@borderless}\setboolean{tubs@sb@borderless}{false}
 %    \end{macrocode}
 %
+% \subsubsection{Modulzeile (modrow)}
 %
 %    \begin{environment}{@modrow}
 % Implementierung von |modrow|.
 %    \begin{macrocode}
 \newenvironment{@modrow}[1][X]{%
+  % setze keys
+  \scifibox@setdefault@opts
+  \setkeys*{tubsbox.sty}{#1}
+  \edef\@remaining@keys{\XKV@rm}
   % reset modcol counter
   \setcounter{tubs@sb@current@col}{0}
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
   \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubspage@borderwidth}
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@collength@'
-  \tubs@sb@setelements{#1}{tubs@sb@collength@}
+  \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@collength@}
   \stepcounter{tubs@sb@current@row}
   % Wenn nur eine Spalte, dann direkt scifibox setzen
-  \ifthenelse{\equal{#1}{X}}{%
+  \ifthenelse{\expandafter\equal\expandafter{\@remaining@keys}{X}}{%
     \stepcounter{tubs@sb@current@col}
     \expandafter\edef\expandafter\@argI\expandafter{%
       \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
@@ -899,10 +904,14 @@
 % Umgebungsende
 \let\end@scifibox\end@@scifibox
 %
+\newcommand\scifibox@setdefault@opts{%
+  \setkeys{tubsbox.sty}{bgcolor=tuWhite}
+}
+%
 % Behandlung von erstem optionalen Argument (keyvals)
 \def\@scifibox@oparam[#1]{%
-  \setkeys*{tubsbox.sty}{bgcolor=white,#1}%
-  \setkeys*{gaussbox}{bgcolor=white,#1}%
+  \setkeys*{tubsbox.sty}{#1}%
+  \setkeys*{gaussbox}{#1}%
   \@@scifibox
 }
 %
@@ -911,7 +920,6 @@
   \@ifnextchar[{%
     \@scifibox@oparam%
   }{%
-    \setkeys*{tubsbox.sty}{bgcolor=white}%
     \@@scifibox%
   }%
 }
