@@ -82,6 +82,8 @@
 %   und Umgebungen für Darstellungen im Modulraster zur Verfügung.
 % \end{abstract}
 %
+% \tableofcontents
+%
 % \section{Benutzung}
 %
 % \subsection{Gaußraster}
@@ -229,7 +231,8 @@
 %    \end{key}
 %
 %
-% \begin{key}{tubsbox.sty}{bgcolor}
+% \begin{key}{tubsbox.sty}{margin}
+%   \emph{TODO}\par
 %   Führt dazu, dass \emph{innerhalb} der gaussbox ein zusätzlicher Rand
 %   in Breite der Marginale eingefügt wird.
 %    \begin{macrocode}
@@ -245,6 +248,30 @@
 }
 %    \end{macrocode}
 %    \end{key}
+%
+%
+%    \begin{macro}{\tubsboxsetup}
+%    \begin{macro}{\gaussboxsetup}
+%    \begin{macro}{\scifiboxsetup}
+% \oarg{option}\par
+% Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
+% Die Namen sind jeweils Aliase.
+%    \begin{macrocode}
+\newcommand{\tubsboxsetup}[1][]{%
+  \setkeys{tubsbox.sty}{#1}
+}
+\let\gaussboxsetup=\tubsboxsetup%
+\let\scifiboxsetup=\tubsboxsetup%
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
+%
+%
+% Paket-Optionen auswerten,
+% Initialisierung mit Werten der Paket-Optionen.
+%    \begin{macrocode}
+\ProcessOptionsX\relax%
+\gaussboxsetup
+%    \end{macrocode}%
 %
 %
 %    \begin{macro}{\tubs@gb@setorig}
@@ -275,29 +302,6 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%
-%    \begin{macro}{\tubsboxsetup}
-%    \begin{macro}{\gaussboxsetup}
-%    \begin{macro}{\scifiboxsetup}
-% \oarg{option}\par
-% Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
-% Die Namen sind jeweils Aliase.
-%    \begin{macrocode}
-\newcommand{\tubsboxsetup}[1][]{%
-  \setkeys{tubsbox.sty}{#1}
-}
-\let\gaussboxsetup=\tubsboxsetup%
-\let\scifiboxsetup=\tubsboxsetup%
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}
-%
-%
-% Paket-Optionen auswerten,
-% Initialisierung mit Werten der Paket-Optionen.
-%    \begin{macrocode}
-\ProcessOptionsX\relax%
-\gaussboxsetup
-%    \end{macrocode}%
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -548,15 +552,6 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% Merker, ob gebrüftes Element eine key-Option war.
-%    \begin{macrocode}
-\newboolean{tubs@sb@waskeyopt}\setboolean{tubs@sb@waskeyopt}{false}
-%    \end{macrocode}
-%    \begin{macrocode}
-\define@key{scifi}{bgcolor}{%
-  \setboolean{tubs@sb@waskeyopt}{true}
-}
-%    \end{macrocode}
 %
 %    \begin{macro}{\tubs@sb@setrows}
 % \marg{element}\par
@@ -565,23 +560,18 @@
 % diese zu speichern.
 %    \begin{macrocode}
 \newcommand*{\tubs@sb@parsenext}[1]{%
-  % Prüfen, ob Argument, Key oder X ist, ansonsten Länge annehmen.
-  \setboolean{tubs@sb@waskeyopt}{false}%
-  \setkeys*{scifi}{#1}%
-  \ifthenelse{\boolean{tubs@sb@waskeyopt}}{}{%
-    \stepcounter{tubs@sb@elementcount}
-    \ifthenelse{\equal{#1}{X}}{% X
-      \stepcounter{tubs@sb@xcount}%
-      \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{X}
-    }{% Laenge
-      % Ziehe Länge von xfreespace ab und speichere sie.
-      \addtolength\tubs@sb@xfreespace{-#1}
-      \expandafter\def\csname% 
-        tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{#1}%
-    }
-    % Ziehe zusätzlich Stegbreite ab.
-    \addtolength{\tubs@sb@xfreespace}{-0.5\tubspage@borderwidth}
+  \stepcounter{tubs@sb@elementcount}
+  \ifthenelse{\equal{#1}{X}}{% X
+    \stepcounter{tubs@sb@xcount}%
+    \expandafter\def\csname tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{X}
+  }{% Laenge
+    % Ziehe Länge von xfreespace ab und speichere sie.
+    \addtolength\tubs@sb@xfreespace{-#1}
+    \expandafter\def\csname% 
+      tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{#1}%
   }
+  % Ziehe zusätzlich Stegbreite ab.
+  \addtolength{\tubs@sb@xfreespace}{-0.5\tubspage@borderwidth}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -713,6 +703,9 @@
 %    \end{environment}\end{environment}
 %
 %
+% \subsubsection{Modulspalte (modcol)}
+%
+%
 %    \begin{environment}{@modcol}
 % Implementierung von |modcol|.
 %    \begin{macrocode}
@@ -753,7 +746,7 @@
 %
 %    \begin{environment}{modcol}
 %    \begin{environment}{modcol*}
-% \oarg{subrows}\par
+% \oarg{subrows,settings}\par
 % Umgebung mit der Modulspalten mit Inhalt gefüllt oder
 % zusätzliche Unterzeilen angelegt werden können.\par
 % Die Sternchen-Version sorgt dafür, dass der innere Rand weggelassen
@@ -775,6 +768,9 @@
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
+%
+%
+% \subsubsection{Modulunterzeile (modsubrow)}
 %
 %
 %    \begin{environment}{modsubrow}
@@ -818,6 +814,10 @@
 }
 %    \end{macrocode}
 %    \end{environment}
+%
+%
+% \subsection{Scifibox}
+%
 %
 %    \begin{macro}{\tubs@sb@box@xpos}
 %    \begin{macro}{\tubs@sb@box@ypos}
@@ -920,15 +920,19 @@
 \newcommand\scifibox@setdefault@opts{%
   \setkeys{tubsbox.sty}{bgcolor=tuWhite}
 }
+%    \end{macrocode}
 %
 % Behandlung von erstem optionalen Argument (keyvals)
+%    \begin{macrocode}
 \def\@scifibox@oparam[#1]{%
   \setkeys*{tubsbox.sty}{#1}%
   \setkeys*{gaussbox}{#1}%
   \@@scifibox
 }
+%    \end{macrocode}
 %
-% Test nach erstem optionales Argument (keyvals)
+% Test nach erstem optionalen Argument (keyvals)
+%    \begin{macrocode}
 \def\@scifibox{%
   \@ifnextchar[{%
     \@scifibox@oparam%
