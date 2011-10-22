@@ -9,20 +9,25 @@
     \bfseries\sffamily{\LARGE Das Corporate Design mit \LaTeX}\\[1em]
     von Enrico Jörns
   \end{posterrow}
-  \begin{posterrow}[X,3cm,X]
-    \begin{postercol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
-    \end{postercol}
-    \begin{postercol}
+  \begin{posterrow}[X,3cm,X,bgcolor=tuBlue]
+    \begin{modcol*}[bgimage=infozentrum]
+      ~
+    \end{modcol*}
+    \begin{postercol}[bgimage=infozentrum,imagefit=scaled]
       Dies ist ein Testtext, der absolut keinen Sinn hat.
     \end{postercol}
     \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
     \end{postercol}
   \end{posterrow}
-  \begin{posterrow}[X,X,X]
-    \begin{postercol}
-      Dies ist ein Testtext, der absolut keinen Sinn hat.
+  \begin{posterrow}[X,X,X,bgcolor=tuViolet]
+    \begin{postercol}[X,X,bgcolor=tuRed]
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
     \end{postercol}
     \begin{postercol}
       Dies ist ein Testtext, der absolut keinen Sinn hat.
@@ -31,15 +36,13 @@
       \begin{postersubrow}
         Dies ist ein Testtext, der absolut keinen Sinn hat.
       \end{postersubrow}
-      \begin{postersubrow}
+      \begin{postersubrow}[bgcolor=tuOrange]
         Dies ist ein Testtext, der absolut keinen Sinn hat.
       \end{postersubrow}
     \end{postercol}
   \end{posterrow}
-%   \begin{posterrow}[1cm]
-%     \begin{postercol}
-%       x
-%     \end{postercol}
-%   \end{posterrow}
+  \begin{modrow*}[bgimage=infozentrum]
+    ~
+  \end{modrow*}
 \end{tubsposter}
 \end{document}
