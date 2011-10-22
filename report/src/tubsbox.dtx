@@ -640,6 +640,9 @@
   \scifibox@setdefault@opts
   \setkeys*{tubsbox.sty}{#1}
   \edef\@remaining@keys{\XKV@rm}
+  % Ersetze mit X, falls keine Länge angegeben
+  \ifthenelse{\equal{\@remaining@keys}{}}{%
+    \edef\@remaining@keys{X}}{}
   % reset modcol counter
   \setcounter{tubs@sb@current@col}{0}
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
@@ -713,16 +716,23 @@
 %    \begin{environment}{@modcol}
 % Implementierung von |modcol|.
 %    \begin{macrocode}
-\newenvironment{@modcol}[1][X]{%
+\newenvironment{@modcol}[1][]{%
+  % setze keys
+  \scifibox@setdefault@opts
+  \setkeys*{tubsbox.sty}{#1}
+  \edef\@remaining@keys{\XKV@rm}
+  % Ersetze mit X, falls keine Länge angegeben
+  \ifthenelse{\equal{\@remaining@keys}{}}{%
+    \edef\@remaining@keys{X}}{}
   % reset modsubrow counter
   \setcounter{tubs@sb@current@subrow}{0}
   % Setze Länge auf Zeilenhöhe + Trennstrich
   \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubspage@borderwidth}
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@subrowlength@'
-  \tubs@sb@setelements{#1}{tubs@sb@subrowlength@}
+  \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@subrowlength@}
   \stepcounter{tubs@sb@current@col}
   % Wenn nur eine Spalte, dann direkt scifibox setzen
-  \ifthenelse{\equal{#1}{X}}{%
+  \ifthenelse{\expandafter\equal\expandafter{\@remaining@keys}{X}}{%
     \stepcounter{tubs@sb@current@subrow}
     \expandafter\edef\expandafter\@argI\expandafter{%
       \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}
@@ -791,7 +801,10 @@
 %    \begin{environment}{@modsubrow}
 % Implementierung von |modsubrow|.
 %    \begin{macrocode}
-\newenvironment{@modsubrow}{%
+\newenvironment{@modsubrow}[1][]{%
+  % setze keys
+  \scifibox@setdefault@opts
+  \setkeys*{tubsbox.sty}{#1}
   \stepcounter{tubs@sb@current@subrow}
   \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
