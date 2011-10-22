@@ -495,12 +495,10 @@
 %    \begin{macrocode}
 \DeclareOptionX{scifiposter}{%
   \setboolean{scifiposter}{true}
-  % TODO: replace by g@addto@macro?
-  \let\tubspage@old@modifications\tubspage@modifications
-  \renewcommand*{\tubspage@modifications}{%
-    \tubspage@old@modifications%
+  \g@addto@macro{\tubspage@modifications}{%
     \setlength{\tubspage@senderheight}{0.095\paperheight}% ~1/11?
-    \setlength{\tubspage@communicationheight}{\paperheight-\tubspage@senderheight-\tubspage@borderwidth}
+    \setlength{\tubspage@communicationheight}{%
+      \paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }
 }
 %    \end{macrocode}
