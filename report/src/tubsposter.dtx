@@ -114,14 +114,29 @@
 %    \begin{macrocode}
 \newcommand{\tubs@poster@style}{poster}
 \DeclareOptionX{style}{%
+  % Diese Option erzeugt Formatierung entsprechend der Konventionen für
+  % wissenschaftliche Plakate
   \ifthenelse{\equal{#1}{scifi}}{%
     \renewcommand{\tubs@poster@style}{scifi}
+    \PassOptionsToPackage{scifiposter}{tubstypearea}
+    \PassOptionsToPackage{relscale=0.9}{tubslogo}
+    % Scifiposter haben eigene Schrift-Definitionen!
+    \renewcommand*{\@fsfbs@sub}{scifi}
   }{\ifthenelse{\equal{#1}{notes}}{%
     \renewcommand{\tubs@poster@style}{notes}
   }{%
     \renewcommand{\tubs@poster@style}{poster}
   }}
 }
+%    \begin{macrocode}
+%<*poster>
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</poster>
+%    \end{macrocode}
+
 %    \end{macrocode}
 %    \begin{macrocode}
 %</option>
