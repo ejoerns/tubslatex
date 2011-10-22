@@ -64,6 +64,10 @@
 %  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
+% \changes{v1.1}{ 2011 / 08 / 23 }{%
+%   Fehler bei Darstellung von modsubrow am Zeilenende behoben,
+%   Hintergrundfarbe als Option nutzbar
+% }
 %
 % \GetFileInfo{tubsbox.sty}
 %
@@ -123,7 +127,7 @@
 \RequirePackage[absolute]{textpos}
 %    \end{macrocode}
 %
-% \subsection{Allgemeine Optionen}\label{sec:options}
+% \subsection{Allgemeine Optionen / Paketoptionen}\label{sec:options}
 %
 %    \begin{macro}{tubsbox@bottomsender}
 % Merker für Option '|sender|'.
@@ -161,6 +165,23 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
+%
+%    \begin{macro}{\tubsboxsetup}
+%    \begin{macro}{\gaussboxsetup}
+%    \begin{macro}{\scifiboxsetup}
+% \oarg{option}\par
+% Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
+% Die Namen sind jeweils Aliase.
+%    \begin{macrocode}
+\newcommand{\tubsboxsetup}[1][]{%
+  \setkeys{tubsbox.sty}{#1}
+}
+\let\gaussboxsetup=\tubsboxsetup%
+\let\scifiboxsetup=\tubsboxsetup%
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
+%
 %
 % \begin{key}{tubsbox.sty}{sender}
 % Mögliche Werte: |bottom| oder |top|.
@@ -211,6 +232,14 @@
 %    \end{key}
 %
 %
+% Paket-Optionen auswerten,
+% Initialisierung mit Werten der Paket-Optionen.
+%    \begin{macrocode}
+\ProcessOptionsX\relax%
+\gaussboxsetup
+%    \end{macrocode}%
+%
+%
 % \subsection{Gaussbox-Optionen}
 %
 %
@@ -250,29 +279,6 @@
 %    \end{key}
 %
 %
-%    \begin{macro}{\tubsboxsetup}
-%    \begin{macro}{\gaussboxsetup}
-%    \begin{macro}{\scifiboxsetup}
-% \oarg{option}\par
-% Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
-% Die Namen sind jeweils Aliase.
-%    \begin{macrocode}
-\newcommand{\tubsboxsetup}[1][]{%
-  \setkeys{tubsbox.sty}{#1}
-}
-\let\gaussboxsetup=\tubsboxsetup%
-\let\scifiboxsetup=\tubsboxsetup%
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}
-%
-%
-% Paket-Optionen auswerten,
-% Initialisierung mit Werten der Paket-Optionen.
-%    \begin{macrocode}
-\ProcessOptionsX\relax%
-\gaussboxsetup
-%    \end{macrocode}%
-%
 %
 %    \begin{macro}{\tubs@gb@setorig}
 % Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
@@ -280,7 +286,6 @@
 %    \begin{macrocode}
 \providecommand\tubs@gb@setorig{%
   % TODO: this seems to be a bug, only one borderwidth should be needed
-  % TODO: Verwendung für scifibox?
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
       \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
@@ -480,6 +485,10 @@
 \newsavebox{\tubs@sb@storebox}
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\newsavebox{\tubs@sb@bgimagebox}
+%    \end{macrocode}
+%
 %    \begin{macro}{tubs@sb@elementcount}
 % Counter zählt Anzahl Zeilen für Box-Layout.
 %    \begin{macrocode}
@@ -514,6 +523,119 @@
 \newcounter{tubs@cnt}
 %    \end{macrocode}
 %    \end{macro}
+%
+% Boolean für Hintergrundbild
+%    \begin{macrocode}
+\newboolean{scifibox@showbgimage}
+%    \end{macrocode}
+%
+%
+%    \begin{key}{scifibox}{bgimage}
+%    \begin{macrocode}
+\define@key{scifibox}{bgimage}{%
+  
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%
+%    \begin{key}{scifibox}{imagefit}
+%    \begin{macrocode}
+\define@choicekey{scifibox}{imagefit}[\val\nr]{%
+        default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
+  \ifcase\nr\relax
+    % default
+    \PackageInfo{tubsstyle}{%
+      Option 'imagefit' not set. Using standard value 'cropped'.
+    }
+    \renewcommand{\tubs@sb@imagefit}{cropped}
+  \or
+    % scaled
+    \renewcommand{\tubs@sb@imagefit}{scaled}
+  \or
+    % cropped
+    \renewcommand{\tubs@sb@imagefit}{cropped}
+  \or
+    % cropx
+    \renewcommand{\tubs@sb@imagefit}{cropx}
+  \or
+    % cropy
+    \renewcommand{\tubs@sb@imagefit}{cropy}
+  \or
+    % fitheight
+    \renewcommand{\tubs@sb@imagefit}{cropx}
+  \or
+    % fitwidth
+    \renewcommand{\tubs@sb@imagefit}{cropy}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%
+%    \begin{macrocode}
+\newlength{\@sb@image@xorig}
+\newlength{\@sb@image@xcalc}
+\newlength{\@sb@image@yorig}
+\newlength{\@sb@image@ycalc}
+%
+%
+\newcommand\tubs@sb@imagefit{cropy}
+\newcommand\@img@scale@param{}%
+%
+% Setzt |\@img@scale@param| als Parameter für |\includegraphics|
+\newcommand\tubs@calc@autoscale[1]{%
+  \ifthenelse{\equal{\tubs@sb@imagefit}{scaled}}{%
+    \renewcommand\@img@scale@param{clip,%
+        height=\titlegraphicsheight,
+        width=\titlegraphicswidth}
+  }{\ifthenelse{\equal{\tubs@sb@imagefit}{cropped}}{%
+      % Ermittelt, ob das Bild an den Seiten oder oben und unten beschnitten
+      % werden muss, um in den Darstellungsbereich zu passen
+      % Dazu wird die Höhe des auf korrekte Breite skalierten Bildes
+      % mit der Höhe des Darstellungsbereichs verglichen und entsprechend
+      % eine crop-Option gesetzt.
+      \settoheight{\@sb@image@ycalc}{%
+        \includegraphics[clip,width=\titlegraphicswidth]{#1}}
+      \ifthenelse{\lengthtest{\@sb@image@ycalc>\titlegraphicsheight}}{%
+        \renewcommand{\tubs@sb@imagefit}{cropy}
+      }{%
+        \renewcommand{\tubs@sb@imagefit}{cropx}
+      }
+    }{}
+    \ifthenelse{\equal{\tubs@sb@imagefit}{cropy}}{%
+      % Berechne abzuschneidende Ränder (oben+unten)
+      % Dazu wird die Differenz zwischen Darstellungsbereich und Höhe des
+      % korrekt auf die Breite skalierten Bildes berechnet und mit dem
+      % ermittelten Skalierungsfaktor multipliziert, sowie durch 2 geteilt.
+      % Das Ergebnis wir dann einmal am oberen und einmal am unteren Teil
+      % des (Original-)Bildes mit Hilfe der 'trim'-Option abgeschnitten.
+      \settoheight{\@sb@image@yorig}{%
+        \includegraphics[clip]{#1}}%
+      \settoheight{\@sb@image@ycalc}{%
+        \includegraphics[clip,width=\titlegraphicswidth]{#1}}%
+      \setlength{\@sb@image@ycalc}{(\@sb@image@ycalc-\titlegraphicsheight)*\ratio{\@sb@image@yorig}{\@sb@image@ycalc}}
+      \setlength{\@sb@image@ycalc}{0.5\@sb@image@ycalc}%
+      \renewcommand\@img@scale@param{clip,%
+          width=\titlegraphicswidth,
+          trim=0pt {\@sb@image@ycalc} 0pt {\@sb@image@ycalc}}%
+    }{\ifthenelse{\equal{\tubs@sb@imagefit}{cropx}}{%
+      \settowidth{\@sb@image@xorig}{%
+        \includegraphics[clip]{#1}}%
+      \settowidth{\@sb@image@xcalc}{%
+        \includegraphics[clip,height=\titlegraphicsheight]{#1}}%
+      \setlength{\@sb@image@xcalc}{(\@sb@image@xcalc-(\titlegraphicswidth))*\ratio{\@sb@image@xorig}{\@sb@image@xcalc}}
+      \setlength{\@sb@image@xcalc}{0.5\@sb@image@xcalc}%
+      \renewcommand\@img@scale@param{clip,%
+          height=\titlegraphicsheight,
+          trim={\@sb@image@xcalc} 0pt {\@sb@image@xcalc} 0pt}%
+    }{\ifthenelse{\equal{\tubs@sb@imagefit}{keepsize}}{%
+      \renewcommand\@img@scale@param{}%
+    }{}}}%
+  }%
+}
+%    \end{macrocode}
+%
 %
 %    \begin{macro}{\tubs@sb@setelements}
 % \marg{list}\par
@@ -594,6 +716,7 @@
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
+  \setkeys{tubsbox.sty}{bgcolor=tuWhite}{}
   \setkeys{tubsbox.sty}{#1}
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}
@@ -627,7 +750,7 @@
 %    \begin{macrocode}
 \newenvironment{@modrow}[1][X]{%
   % setze keys
-  \scifibox@setdefault@opts
+%   \scifibox@setdefault@opts
   \setkeys*{tubsbox.sty}{#1}
   \edef\@remaining@keys{\XKV@rm}
   % Ersetze mit X, falls keine Länge angegeben
@@ -711,7 +834,7 @@
 %    \begin{macrocode}
 \newenvironment{@modcol}[1][]{%
   % setze keys
-  \scifibox@setdefault@opts
+%   \scifibox@setdefault@opts
   \setkeys*{tubsbox.sty}{#1}
   \edef\@remaining@keys{\XKV@rm}
   % Ersetze mit X, falls keine Länge angegeben
@@ -784,6 +907,7 @@
   \end@modsubrow
 }
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 \newenvironment{modsubrow*}{%
   \setboolean{tubs@sb@borderless}{true}%
@@ -799,7 +923,7 @@
 %    \begin{macrocode}
 \newenvironment{@modsubrow}[1][]{%
   % setze keys
-  \scifibox@setdefault@opts
+%   \scifibox@setdefault@opts
   \setkeys*{tubsbox.sty}{#1}
   \stepcounter{tubs@sb@current@subrow}
   \expandafter\edef\expandafter\@oarg\expandafter{%
@@ -818,6 +942,12 @@
 %
 % \subsection{Scifibox}
 %
+%
+% Benutzer-Längen für Höhe und Breite des akutell verwendeten Moduls
+%    \begin{macrocode}
+\newlength{\modulewidth}
+\newlength{\moduleheight}
+%    \end{macrocode}
 %
 %    \begin{macro}{\tubs@sb@box@xpos}
 %    \begin{macro}{\tubs@sb@box@ypos}
@@ -857,11 +987,16 @@
   % Speichere Inhalt in minipage-Box.
   \begin{lrbox}{\tubs@sb@storebox}%
     \begin{minipage}[t][\@current@height]{\@current@width-\tubs@sb@padding}%
+      \setlength{\moduleheight}{\@current@height}%
+      \setlength{\modulewidth}{\@current@width}%
       \vspace*{0.5\tubs@sb@padding}%
 }{%
       \vspace*{0.5\tubs@sb@padding}%
     \end{minipage}%
   \end{lrbox}%
+  \begin{lrbox}{\tubs@sb@bgimagebox}
+    \includegraphics[width=\@current@width,height=\@current@height]{infozentrum}
+  \end{lrbox}
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \begin{textblock*}{\@current@width}(%
@@ -875,6 +1010,14 @@
         }%
     \end{textblock*}%
   }{%
+    \begin{textblock*}{\@current@width}(%
+      -\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
+        \setlength\fboxsep{0mm}%
+        \tubsbox@framebox{\tubsbox@colorbox{%
+          \usebox{\tubs@sb@bgimagebox}%
+        }}%
+    \end{textblock*}%
     \begin{textblock*}{\@current@width}(%
       -\tubspage@borderwidth+\tubs@sb@box@xpos,%
       -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
