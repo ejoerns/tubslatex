@@ -549,32 +549,33 @@
 %
 %
 %    \begin{key}{scifibox}{imagefit}
+% NOTE: *crop*-Options are only kept for compatiblity reasons
+% TODO: rename internal cmds
 %    \begin{macrocode}
 \define@choicekey{scifibox}{imagefit}[\val\nr]{%
-        default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
-  \ifcase\nr\relax
-    % default
+        default,scaled,autoclip,cropped,clipx,cropx,clipy,cropy,fitheight,fitwidth}{%
+  \ifcase\nr\relax% default
     \PackageInfo{tubsstyle}{%
       Option 'imagefit' not set. Using standard value 'cropped'.
     }
     \renewcommand{\tubs@sb@imagefit}{cropped}
-  \or
-    % scaled
+  \or% scaled
     \renewcommand{\tubs@sb@imagefit}{scaled}
-  \or
-    % cropped
+  \or% autoclip
     \renewcommand{\tubs@sb@imagefit}{cropped}
-  \or
-    % cropx
+  \or% cropped
+    \renewcommand{\tubs@sb@imagefit}{cropped}
+  \or% clipx
     \renewcommand{\tubs@sb@imagefit}{cropx}
-  \or
-    % cropy
+  \or% cropx
+    \renewcommand{\tubs@sb@imagefit}{cropx}
+  \or% clipy
     \renewcommand{\tubs@sb@imagefit}{cropy}
-  \or
-    % fitheight
+  \or% cropy
+    \renewcommand{\tubs@sb@imagefit}{cropy}
+  \or% fitheight
     \renewcommand{\tubs@sb@imagefit}{cropx}
-  \or
-    % fitwidth
+  \or% fitwidth
     \renewcommand{\tubs@sb@imagefit}{cropy}
   \fi
 }
@@ -591,6 +592,7 @@
   \ifthenelse{\equal{#1}{none}}{%
     \renewcommand\tubsbox@colorbox{\relax}
   }{%
+    \setkeys{scifibox}{bgimage=none}
     \def\bgcolor{#1}
     \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
   }
@@ -604,11 +606,13 @@
 \newcommand\@img@scale@param{}%
 %    \end{macrocode}
 %
+%    \begin{macro}{\tubs@sb@calc@autoscale}
 % Setzt |\@img@scale@param| als Parameter für |\includegraphics|\par
 % \marg{imagefile}\marg{viewwidth}\marg{viewheight}
 % TODO: generalize with other packages?
 %    \begin{macrocode}
 \newcommand\tubs@sb@calc@autoscale[3]{%
+  % Temporäre Längen für die Berechnung
   \newdimen{\@sb@image@xorig}
   \newdimen{\@sb@image@xcalc}
   \newdimen{\@sb@image@yorig}
@@ -668,6 +672,7 @@
   }%
 }
 %    \end{macrocode}
+%    \end{macro}
 %
 %
 %    \begin{macro}{\tubs@sb@setelements}
