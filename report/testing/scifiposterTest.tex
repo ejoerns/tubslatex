@@ -1,0 +1,45 @@
+\documentclass[a3paper,scifiposter,style=scifi]{tubsposter}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\begin{document}
+  \begin{tubsposter}{5cm,5cm,X,X}
+  \begin{posterrow}
+    \bfseries\sffamily{\LARGE Das Corporate Design mit \LaTeX}\\[1em]
+    von Enrico Jörns
+  \end{posterrow}
+  \begin{posterrow}[X,3cm,X]
+    \begin{postercol}
+      Dies ist ein Testtext, der absolut keinen Sinn hat.
+    \end{postercol}
+    \begin{postercol}
+      Dies ist ein Testtext, der absolut keinen Sinn hat.
+    \end{postercol}
+    \begin{postercol}
+      Dies ist ein Testtext, der absolut keinen Sinn hat.
+    \end{postercol}
+  \end{posterrow}
+  \begin{posterrow}[X,X,X]
+    \begin{postercol}
+      Dies ist ein Testtext, der absolut keinen Sinn hat.
+    \end{postercol}
+    \begin{postercol}
+      Dies ist ein Testtext, der absolut keinen Sinn hat.
+    \end{postercol}
+    \begin{postercol}[X,X]
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+      \begin{postersubrow}
+        Dies ist ein Testtext, der absolut keinen Sinn hat.
+      \end{postersubrow}
+    \end{postercol}
+  \end{posterrow}
+%   \begin{posterrow}[1cm]
+%     \begin{postercol}
+%       x
+%     \end{postercol}
+%   \end{posterrow}
+\end{tubsposter}
+\end{document}
