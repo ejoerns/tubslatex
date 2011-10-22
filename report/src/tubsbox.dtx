@@ -810,7 +810,11 @@
 \newenvironment{@scifibox}[3][\relax]{%
   \tubs@gb@setorig
   % Argumente sichern
-  \def\@current@rowheight{#1}
+  \ifx#1\relax%
+    \def\@current@rowheight{#2}
+  \else%
+    \def\@current@rowheight{#1}%
+  \fi%
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
   \ifthenelse{\boolean{tubs@sb@borderless}}{%
@@ -866,7 +870,7 @@
   }
   % Wenn Zeile gefüllt ist, springen in nächste Zeile
   \ifthenelse{\lengthtest{\tubs@sb@box@xpos > \textwidth}}{%
-    \addtolength\tubs@sb@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@sb@box@ypos{\@current@rowheight+0.5\tubspage@borderwidth}%
     \setlength\tubs@sb@box@xpos{0mm}%
     % Wenn darüber hinaus Seite gefüllt ist, fange neue an!
     \ifthenelse{\lengthtest{\tubs@sb@box@ypos > \textheight}}{%
