@@ -108,19 +108,19 @@
 \ProcessOptionsBeamer\relax
 
 % Smaller fonts
-\newcommand\micro{%
+\newcommand\microsize{%
   \tiny%
   \@tempdima=\f@size pt%
   \@tempdima=0.8333333\@tempdima%
   \@tempdimb=1.2\@tempdima%
-  \@setfontsize\micro{\the\@tempdima}{\the\@tempdimb}%
+  \@setfontsize\microsize{\the\@tempdima}{\the\@tempdimb}%
 }
-\newcommand\nano{%
-  \micro%
+\newcommand\nanosize{%
+  \microsize%
   \@tempdima=\f@size pt%
   \@tempdima=0.8333333\@tempdima%
   \@tempdimb=1.2\@tempdima%
-  \@setfontsize\nano{\the\@tempdima}{\the\@tempdimb}%
+  \@setfontsize\nanosize{\the\@tempdima}{\the\@tempdimb}%
 }
 
 \setbeamerfont*{page number in sidebar}{size=\small,series=\bfseries}
@@ -129,7 +129,7 @@
 \setbeamerfont*{author}{series=\mdseries,size=\footnotesize}
 
 \setbeamerfont*{frametitle}{series=\bfseries,size=\Large}
-\setbeamerfont*{footline}{series=\mdseries,size=\micro}
+\setbeamerfont*{footline}{series=\mdseries,size=\microsize}
 
 
 \setbeamerfont*{section in toc}{series=\bfseries,size=\large}
@@ -139,9 +139,9 @@
 
 % Set the font for the running toc dependig on option tinytocinheader
 \ifthenelse{\boolean{tinytocinheader}}{%
-  \setbeamerfont*{headertoc}{series=\mdseries,size=\nano}%
+  \setbeamerfont*{headertoc}{series=\mdseries,size=\nanosize}%
 }{%
-  \setbeamerfont*{headertoc}{series=\mdseries,size=\micro}%
+  \setbeamerfont*{headertoc}{series=\mdseries,size=\microsize}%
 }
 %    \begin{macrocode}
 %</fonttheme>
