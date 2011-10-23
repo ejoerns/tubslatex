@@ -1,4 +1,4 @@
-PDFLIST=tubsposter_example.pdf
+PDFLIST=tubsposter_example.pdf scifiposter_example.pdf
 
 all: $(PDFLIST) clean
 
