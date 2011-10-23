@@ -122,8 +122,8 @@
     \PassOptionsToPackage{relscale=0.9}{tubslogo}
     % Scifiposter haben eigene Schrift-Definitionen!
     \renewcommand*{\@fsfbs@sub}{scifi}
-  }{\ifthenelse{\equal{#1}{notes}}{%
-    \renewcommand{\tubs@poster@style}{notes}
+  }{\ifthenelse{\equal{#1}{bulletin}}{%
+    \renewcommand{\tubs@poster@style}{bulletin}
   }{%
     \renewcommand{\tubs@poster@style}{poster}
   }}
@@ -226,7 +226,17 @@
   \let\endpostercol=\endmodcol
   \let\postersubrow=\modsubrow
   \let\endpostersubrow=\endmodsubrow
-}{\ifthenelse{\equal{\tubs@poster@style}{notes}}{%
+}{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
+  \def\tubsposter{%
+    \@tubsposter%
+    \showtubslogo[left]%
+    \showtopline%
+    \@posterrow{8}%
+  }
+  \def\endtubsposter{%
+    \end@posterrow%
+    \end@tubsposter%
+  }
 }{%
   \let\tubsposter=\@tubsposter
   \let\endtubsposter=\end@tubsposter
