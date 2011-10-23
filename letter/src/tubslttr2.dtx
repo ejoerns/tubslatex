@@ -505,9 +505,9 @@ Datum: \usekomavar{date}\\
 \setkomavar{backaddress}{%
   \parbox{8.5cm}{%
     Technische Universit\"at Braunschweig%
-    \ifkomavarempty{frominstitute}{\relax}{| \usekomavar{frominstitute}}\\
-    \ifkomavarempty{fromstreet}{\relax}{\usekomavar{fromstreet} |}% 
-    \usekomavar{fromzipcode} \usekomavar{fromtown} | Deutschland}
+    \ifkomavarempty{frominstitute}{\relax}{~|\ \usekomavar{frominstitute}}\\
+    \ifkomavarempty{fromstreet}{\relax}{\usekomavar{fromstreet}~|\ }%
+    \usekomavar{fromzipcode}~\usekomavar{fromtown}\ |\ Deutschland}
 }
 %    \end{macrocode}
 %
