@@ -63,13 +63,15 @@
 %  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
+% \changes{v1.1}{ 2011 / 10 / 13 }{%
+%   'micro' und 'nano' in 'microsize' und 'nanosize' umbenannt}
 %
 % \GetFileInfo{beamerfontthemetubs.sty}
 %
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{beamerfontthemetubs} -- 
-%   beamer-Farbschema für \emph{tubslatex}\thanks{This document
+%   beamer-Fontschema für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{beamerfontthemetubs}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -77,7 +79,7 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Diese Datei stellt das Farbschema für latex-beamer-Präsentationen im
+%   Diese Datei stellt das Fontschema für latex-beamer-Präsentationen im
 %   Corporate Design dar.
 % \end{abstract}
 %
@@ -91,23 +93,40 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\ProvidesPackage{beamerfontthemetubs}[2010/05/18 v1.0.1 Font-Theme CD TU-Braunschweig]
+\ProvidesPackage{beamerfontthemetubs}[2010/10/23 v1.1 Font-Theme CD TU-Braunschweig]
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 \RequirePackage{ifthen}
-% font packages
+%    \end{macrocode}
+%
+%    \subsection{Optionen}
+%
+%    \begin{key}{}{tinytocinheader}
+%    \begin{macrocode}
+\newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
+\DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{macrocode}
+\ProcessOptionsBeamer\relax
+%    \end{macrocode}
+%
+% Lade Pakete
+%    \begin{macrocode}
 \PassOptionsToPackage{T1}{fontenc}
 \RequirePackage{fontenc}
 \RequirePackage[OT1]{eulervm}% don't know why OT1 is required here, but it is.
 \RequirePackage{uarial}
 \RequirePackage{type1cm}% prevent OT1 font size warnings
-
-\newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
-%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
-\DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
+%    \end{macrocode}
 %
-\ProcessOptionsBeamer\relax
-
-% Smaller fonts
+%
+%    \subsection{Zusätzliche Schriftgrößen}
+%
+%    \begin{macro}{\microsize}
+%    \begin{macrocode}
 \newcommand\microsize{%
   \tiny%
   \@tempdima=\f@size pt%
@@ -115,6 +134,11 @@
   \@tempdimb=1.2\@tempdima%
   \@setfontsize\microsize{\the\@tempdima}{\the\@tempdimb}%
 }
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\nanosize}
+%    \begin{macrocode}
 \newcommand\nanosize{%
   \microsize%
   \@tempdima=\f@size pt%
@@ -122,21 +146,26 @@
   \@tempdimb=1.2\@tempdima%
   \@setfontsize\nanosize{\the\@tempdima}{\the\@tempdimb}%
 }
-
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \subsection{Beamerfont-Definitionen}
+%
+%    \begin{macrocode}
 \setbeamerfont*{page number in sidebar}{size=\small,series=\bfseries}
 \setbeamerfont*{title}{series=\bfseries,size=\Large}
 \setbeamerfont*{subtitle}{series=\mdseries,size=\normalsize}
 \setbeamerfont*{author}{series=\mdseries,size=\footnotesize}
-
+%
 \setbeamerfont*{frametitle}{series=\bfseries,size=\Large}
 \setbeamerfont*{footline}{series=\mdseries,size=\microsize}
-
-
+%
+%
 \setbeamerfont*{section in toc}{series=\bfseries,size=\large}
 \setbeamerfont*{subsection in toc}{series=\mdseries,size=\normalsize}
-
+%
 \setbeamerfont{footlinelogo}{size=\scriptsize}%
-
+%
 % Set the font for the running toc dependig on option tinytocinheader
 \ifthenelse{\boolean{tinytocinheader}}{%
   \setbeamerfont*{headertoc}{series=\mdseries,size=\nanosize}%
