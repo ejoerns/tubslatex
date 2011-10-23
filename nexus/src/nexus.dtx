@@ -95,7 +95,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\ProvidesPackage{nexus} [2011/10/13 v0.3 Nexus support for LaTeX]
+\ProvidesPackage{nexus} [2011/10/23 v0.4 Nexus support for LaTeX]
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -124,10 +124,30 @@
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
+% Testen, ob Option 'arial' gewählt wurde.\par
+% Behandlung für Option 'arial'
+%    \begin{macrocode}
+\ifnexus@usearial%
+%    \end{macrocode}
+%
+% Arial und passende Pakete laden
+%    \begin{macrocode}
+\RequirePackage[scaled]{uarial} % for T1 encoding
+\RequirePackage[OT1]{eulervm}% don't know why OT1 is required here, but it is.
+\PassOptionsToPackage{T1}{fontenc}
+\renewcommand*{\encodingdefault}{T1}
+\RequirePackage{fontenc}
+%    \end{macrocode}
+%
+% Behandlung für Option 'nexus'
+%    \begin{macrocode}
+\else%
+%    \end{macrocode}
+%
+% Lade benötigte Pakete
 %    \begin{macrocode}
 \RequirePackage{mathpazo}
-\RequirePackage[scaled]{uarial} % for T1 encoding
-\PassOptionsToPackage{T1,LY1}{fontenc}
+\PassOptionsToPackage{LY1}{fontenc}
 \RequirePackage{fontenc}
 %    \end{macrocode}
 %
@@ -146,14 +166,12 @@
 %%%doppelt
 \ProvideTextCommand{\flqq}{LY1}{\symbol{0171}}
 \ProvideTextCommand{\frqq}{LY1}{\symbol{0187}}
-
+%
 \DeclareTextCommand{\textasteriskcentered}{LY1}{$*$}
 %    \end{macrocode}
 %
+% Nexus verwenden.
 %    \begin{macrocode}
-\ifnexus@usearial%
-\renewcommand*{\encodingdefault}{T1}
-\else%
 \renewcommand*{\encodingdefault}{LY1}
 \renewcommand*{\rmdefault}{NexusProSerif}
 \renewcommand*{\sfdefault}{NexusProSans}
