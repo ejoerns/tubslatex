@@ -102,10 +102,27 @@
 %
 %    \subsection{Optionen}
 %
-%    \begin{key}{}{tinytocinheader}
+% Variablen für Optionsbehandlung
 %    \begin{macrocode}
 \newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
+\newboolean{use@nexus}\setboolean{use@nexus}{false}
+%    \end{macrocode}
+%
+%    \begin{key}{}{tinytocinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{tinytocinheader}{\setboolean{tinytocinheader}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nexus}
+%    \begin{macrocode}
+\DeclareOptionBeamer{nexus}{\setboolean{use@nexus}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{arial}
+%    \begin{macrocode}
+\DeclareOptionBeamer{arial}{\setboolean{use@nexus}{false}}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -113,13 +130,16 @@
 \ProcessOptionsBeamer\relax
 %    \end{macrocode}
 %
+%
 % Lade Pakete
 %    \begin{macrocode}
-\PassOptionsToPackage{T1}{fontenc}
-\RequirePackage{fontenc}
-\RequirePackage[OT1]{eulervm}% don't know why OT1 is required here, but it is.
-\RequirePackage{uarial}
-\RequirePackage{type1cm}% prevent OT1 font size warnings
+\ifthenelse{\boolean{use@nexus}}{%
+  \PassOptionsToPackage{nexus}{nexus}
+}{%
+  \RequirePackage{type1cm}% prevent OT1 font size warnings
+  \PassOptionsToPackage{arial}{nexus}
+}
+\RequirePackage{nexus}
 %    \end{macrocode}
 %
 %

@@ -129,7 +129,11 @@
 %
 
 %%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
-% color options
+% font options
+\DeclareOptionBeamer{nexus}{%
+  \PassOptionsToPackage{nexus}{beamerfontthemetubs}}
+\DeclareOptionBeamer{arial}{%
+  \PassOptionsToPackage{arial}{beamerfontthemetubs}}
 \DeclareOptionBeamer{rgb}{%
   \PassOptionsToPackage{rgb}{beamercolorthemetubs}%
   \PassOptionsToPackage{rgb}{tubslogo}}
