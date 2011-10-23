@@ -1,10 +1,88 @@
 \chapter{Plakate}
 
-Plakate werden mit Hilfe der Klasse \newdocumentclass{tubsposter} erstellt.
-Dabei kann mittels der Option \texttt{style} zwischen der Darstellung als
-normales Plakat oder als wissenschaftliches Plakat gewählt werden.
+Plakate können in \tubslatex mit Hilfe der Dokumentenklasse \newdocumentclass{tubsposter} erstellt werden.
+Dabei werden drei unterschiedliche Plakat-Typen unterstützt,
+zwischen denen mit der Paketoption \KOption{style}\PName{<standard/scifi/bulletin>} gewählt werden kann.
+
+Dies sind zum einen Veranstaltungsplakate, welche sich am normalen Gaußraster
+orientieren und als Standard-Darstellungstyp voreingestellt sind.
+
+Für die Darstellung wissenschaftlicher Inhalte gibt es ein spezielles Layout,
+das mehr Platt und Flexible für die Unterbringung von Informationen bietet.
+Es orientiert sich an einem eigenen Modulsystem und nicht am Gaußraster.
+
+Zusätzlich gibt es noch eine Unterstützung für die Erstellung einfacher
+Aushänge. Diese weisen nur einen einfachen großen Textbereich auf, der
+nach oben durch das Siegelbandlogo mit einer Trennlinie begrenzt ist.
+
+\begin{figure}[htp]
+\fboxsep0mm
+\begin{minipage}{0.3\textwidth}\centering
+  \fbox{\includegraphics[width=0.9\textwidth]{examples/posterstyle_standard.pdf}}
+  \subcaption{Veranstaltung (\PValue{standard})}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}\centering
+  \fbox{\includegraphics[width=0.9\textwidth]{examples/posterstyle_scifi.pdf}}
+  \subcaption{wissenschaftlich (\PValue{scifi})}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}\centering
+  \fbox{\includegraphics[width=0.9\textwidth]{examples/posterstyle_bulletin.pdf}}
+  \subcaption{Aushang (\PValue{bulletin})}
+\end{minipage}
+\caption{Die verschiedenen Plakat-Stile}
+\end{figure}
+
+\begin{Declaration}
+  \KOption{style}\PName{<standard/scifi/bulletin>}
+\end{Declaration}
+
+Mit \KOption{style}{standard} wird die Darstellung für Veranstaltungsplakate
+gewählt. Diese ist bereits voreingestellt und muss daher nicht explizit gewählt
+werden.
+Mit \KOption{style}{scifi} wir das Layout-System für wissenschaftliche Plakate
+geladen, was sich teilweise grundlegend von dem normalen Layout unterscheidet.
+Der Wert \KOption{style}{bulleting} erlaubt die schnelle Erstellung von
+Aushängen und lädt eine relative schlichte voreingestellte Darstellung.
+
+\begin{Declaration}
+  \KOption{sender}\PName{top/bottom}
+\end{Declaration}
+
+Diese Option legt fest, ob der Absenderbereich am oberen oder unteren Blattrand
+platziert werden soll. Für weitere Informationen siehe vorausgehende Kapitel.
+
+
+\begin{Declaration}
+  \Option{a3paper}\\
+  \Option{a2paper}\\
+  \Option{a1paper}\\
+  \Option{a0paper}
+\end{Declaration}
+
+Für alle Poster-Variante stehen vier Papiertformate zur Auswahl für die
+Schriftgrößen etc. vordefiniert sind und automatisch geladen werden.
+Dies sind A3, A2, A1 und A0, die mit den entsprechenden Optionen
+\Option{a3paper}, \Option{a2paper}, \Option{a1paper} bzw. \Option{a0paper}
+gewählt werden können.
+\bigskip
+
+\paragraph{Weitere Paket-Optionen:}
+
+Wie bei allen anderen \tubslatex-Klassen könnnen auch für Poster
+die diversen verfügbaren Optionen zur Farbdarstellung verwendet werden.
+Näheres hierzu findet sich in den vorausgehenden Kapiteln oder detaillierter
+in Kapitel~\ref{chap:tubscolors}.
 
 \section{Veranstaltungsplakate}
+
+Veranstaltungsplakate werden im Gaußraster gesetzt und entsprechen somit
+im Grunde allen Standarddarstellungen des Corporate Design.
+
+\begin{Declaration}
+  \KOption{style}{standard}
+\end{Declaration}
+
+(Optionale) Paketoption zum Erstellung von Veranstaltungsplakaten.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -16,6 +94,9 @@ normales Plakat oder als wissenschaftliches Plakat gewählt werden.
 Ein neues Plakat wird mit der Umgebung \Environment{tubsposter} erstellt.
 Der optionale Parameter \PName{options} akzeptiert dabei die
 unter \ref{} beschriebenen Optionen.
+
+% sender
+% bgcolor?
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{posterrow}}%
@@ -34,10 +115,10 @@ erzeugt werden.
 \section{Wissenschaftliche Plakate}
 
 \begin{Declaration}
-  \Option{scifiposter}
+  \KOption{style}{scifi}
 \end{Declaration}
 
-Paket-Option zum erstellen von wissenschaftlichen Postern.
+Paketoption zum Erstellen von wissenschaftlichen Postern.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -124,17 +205,19 @@ Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit
 
 \end{Example}
 
-\section{Seitenlayout}
+\section{Aushänge}
+
+% \section{Seitenlayout}
 
 % margin
 % bcor
 % sender=top/bottom
 
 
-\section{Format}
+% \section{Format}
 
-\section{Farben}
+% \section{Farben}
 
-\section{Befehle}
+% \section{Befehle}
 
-\section{Optionen}
+% \section{Optionen}

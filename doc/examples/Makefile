@@ -3,7 +3,7 @@
 # Erzeugt Doku-Beispiele
 #
 
-EXAMPLELIST = backstyles.pdf titlestyles.pdf article_landscape.pdf leaflet.pdf example_vars.pdf
+EXAMPLELIST = backstyles.pdf titlestyles.pdf article_landscape.pdf leaflet.pdf example_vars.pdf posterstyle_standard.pdf posterstyle_scifi.pdf posterstyle_bulletin.pdf
 
 PDFLATEX = pdflatex
 

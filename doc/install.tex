@@ -49,3 +49,26 @@ Für erste Variante kann der Inahlt einfach in das Verzeichnis
 \lstinline{/home/benutzername/texmf} hinein geschrieben werden.
 
 % TODO...
+
+\def\foonote{%
+kpathsea: Running mktexpk --mfmode / --bdpi 600 --mag 1+240/600 --dpi 840 NexusProSans-Bold-Regular--base
+mktexpk: don't know how to create bitmap font for NexusProSans-Bold-Regular--base.
+
+Reproduce:
+  - sudo updmap
+  - sudo aptitude install texlive-tubs
+Test:
+  - wenn 'kpsewhich pdftex.map' nicht /var/lib/.. ausgibt, liegt der Fehler vor
+Beschreibung:
+  - Dieses Problem kann unter anderem auftreten, wenn vor der Installation
+    irgendwann einmal 'updmap' aufgerufen wurde.
+Begründung:
+  - Installation greift auf updmap-sys zurück, die Damit generierte Datei
+    wird aber nicht mehr verwendet.
+Lösung 1:
+  - updmap manuell aufrufen.
+Lösung 2:
+  - Datei, die bei 'kpsewhich pdftex.map' angezeigt wird, löschen
+    (z.B. /root/.texmf-var/fonts/map/pdftex/updmap/pdftex.map)
+  - 'sudo updmap-sys' aufrufen
+}
