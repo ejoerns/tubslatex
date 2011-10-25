@@ -63,6 +63,10 @@
 %
 %
 % \changes{v1.0}{ 2011 / 10 / 13 }{Initial version}
+% \changes{v2.0}{ 2011 / 10 / 13 }{%
+%   Befehle und Verwendung komplett überarbeitet,
+%   Kompaibilität zu Koma erhöht,
+%   Befehle umbenannt}
 %
 % \GetFileInfo{tubsodc.sty}
 %
@@ -123,6 +127,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\innerhead}
+% \oarg{right}\marg{left}
 % Umdefinierte Makros zur Darstellung von Inhalten in Kopf- bzw. Fußzeile.
 %    \begin{macrocode}
 \newcommand{\innerhead}[2][]{%
@@ -154,6 +159,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\innerfoot}
+% \oarg{right}\marg{left}
 %    \begin{macrocode}
 \newcommand{\innerfoot}[2][]{%
   % Benutze optionale Einstellung für linke Seite, falls vorhanden
@@ -184,6 +190,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\innersender}
+% \oarg{right}\marg{left}
 %    \begin{macrocode}
 \newcommand{\innersender}[2][]{%
   \iftubs@bottomsender%
@@ -196,6 +203,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\outerhead}
+% \oarg{left}\marg{right}
 %    \begin{macrocode}
 \newcommand{\outerhead}[2][\relax]{%
   % Benutze optionale Einstellung für linke Seite, falls vorhanden
@@ -225,6 +233,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\outerfoot}
+% \oarg{left}\marg{right}
 %    \begin{macrocode}
 \newcommand{\outerfoot}[2][]{%
   % Benutze optionale Einstellung für linke Seite, falls vorhanden
@@ -255,6 +264,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\outersender}
+% \oarg{left}\marg{right}
 %    \begin{macrocode}
 \newcommand{\outersender}[2][]{%
   \iftubs@bottomsender%
@@ -276,26 +286,29 @@
 \clearscrplain
 %    \end{macrocode}
 %
+% Breite des Kopfbereiches einstellen
 %    \begin{macrocode}
 \setheadwidth[-1in-\hoffset-\oddsidemargin+\tubspage@bcor+2\tubspage@borderwidth]{\paperwidth-4\tubspage@borderwidth-\tubspage@bcor}
 %    \end{macrocode}
 %
-% Setze Standard-Inhalte. headmark nur bei sender=top.
+% Liniendarstellung und Font-Einstellungen
 %    \begin{macrocode}
 \setheadtopline[\tubspage@borderwidth]{1pt}[]
 %
 \renewcommand{\headfont}{\normalfont\mdseries\scshape}
 \let\footfont\headfont
 \let\pnumfont\headfont
+%    \end{macrocode}
 %
+% Inhalt der Kopf-/Fußzeilen festlegen
+%    \begin{macrocode}
 %<book>\automark[chapter]{section}
 %<report|article>\automark[section]{subsection}
-%
 \innerhead[\leftmark]{}
 \outerhead[\pagemark]{\rightmark\qquad\pagemark}
-% \pagestyle{scrheadings}
 %    \end{macrocode}
-% 
+%
+% NOTE: wird noch nicht verwendet!
 %    \begin{macrocode}
 \newpagestyle{@tubsheadings}
 {%
