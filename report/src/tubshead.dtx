@@ -138,7 +138,7 @@
   }%
   \iftubs@bottomsender\else%
   \@orig@ihead{\vbox to\headheight{%
-    \vspace*{1ex}\strut\@iheadsepline\linebreak#1%
+    \vspace*{1ex}\strut\@iheadsepline\linebreak#1\vfill%
   }}%
   \fi%
 }
@@ -183,10 +183,10 @@
   }%
   \iftubs@bottomsender\else%
   \@orig@ohead{\vbox to\headheight{%
-    \vspace*{1ex}\strut\@oheadsepline\linebreak#1%
+    \vspace*{1ex}\strut\@oheadsepline\linebreak#1\vfill%
   }}%
   \fi%
-}
+}%
 %
 \let\@orig@ofoot\ofoot
 \renewcommand{\ofoot}[1]{%
