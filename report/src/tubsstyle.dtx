@@ -163,8 +163,8 @@
 %    \begin{macrocode}
 \begingroup
 \let\OldProvidesPackage\ProvidesPackage
-\def\ProvidesPackage#1[#2]{\OldProvidesPackage{#1}[#2]\endinput}
-\RequirePackage{eso-pic}
+\def\ProvidesPackage#1[#2]{\OldProvidesPackage#1[#2]\endinput}
+\RequirePackage{eso-pic}[2010/10/06]
 \let\ProvidesPackage\OldProvidesPackage
 \newif\if@OldEsoPicVersion
 \@ifpackagelater{eso-pic}{2010/10/06}{%
