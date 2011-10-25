@@ -106,17 +106,169 @@
 % Setzt das Standard-Aussehen der Kopfzeile fuer Pagestyle scrheadings
 %    \begin{macrocode}
 % \PassOptionsToPackage{headsepline}{scrpage2}
+\PassOptionsToPackage{olines}{scrpage2}
 \RequirePackage{scrpage2}
-\setheadwidth[-1in-\hoffset-\oddsidemargin+\tubspage@bcor+2\tubspage@borderwidth]{\paperwidth-4\tubspage@borderwidth-\tubspage@bcor}
+%
 \AtBeginDocument{\pagestyle{scrheadings}}
 %    \end{macrocode}
-% TODO: Das ganze in den footer für sender=bottom!...
+%
+%
+% \subsection{Benutzerbefehle}
+%
 %
 %    \begin{macro}{\headsepline}
 %    \begin{macrocode}
-\newcommand\headsepline{\rule{15pt}{0.2pt}}
+\newcommand\headsepline{\rule{25pt}{1pt}}
 %    \end{macrocode}
 %    \end{macro}
+%
+%    \begin{macro}{\innerhead}
+% Umdefinierte Makros zur Darstellung von Inhalten in Kopf- bzw. Fußzeile.
+%    \begin{macrocode}
+\newcommand{\innerhead}[2][]{%
+  % Benutze optionale Einstellung für linke Seite, falls vorhanden
+  \def\@tubs@linner{#2}%
+  \ifx#1\relax%
+    \let\@tubs@rinner\@tubs@linner%
+  \else%
+    \def\@tubs@rinner{#1}%
+  \fi%
+  %
+  \ifthenelse{\equal{#2}{}}{%
+    \let\@iheadsepline\relax%
+  }{%
+    \let\@iheadsepline\headsepline%
+  }%
+  \iftubs@bottomsender\else%
+    \newdimen\@tubs@headheight%
+    \setlength\@tubs@headheight{\headheight}%
+    \addtolength\@tubs@headheight{-2pt}%
+    \ihead{\vbox to\@tubs@headheight{%
+      ~\vspace*{1.5ex}\linebreak%
+      \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+      \vfill%
+    }}%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\innerfoot}
+%    \begin{macrocode}
+\newcommand{\innerfoot}[2][]{%
+  % Benutze optionale Einstellung für linke Seite, falls vorhanden
+  \def\@tubs@linner{#2}%
+  \ifx#1\relax%
+    \let\@tubs@rinner\@tubs@linner%
+  \else%
+    \def\@tubs@rinner{#1}%
+  \fi%
+  %
+  \ifthenelse{\equal{#2}{}}{%
+    \let\@iheadsepline\relax%
+  }{%
+    \let\@iheadsepline\headsepline%
+  }%
+  \iftubs@bottomsender%
+  \ifoot{%
+    \raisebox{\tubspage@headheight+\depth}{%
+      \vbox to\tubspage@headheight{%
+        \vfill\vspace*{1ex}\strut%
+        \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+        \vspace*{-1.5ex}\linebreak%
+        \@iheadsepline\vspace*{1ex}%
+  }}}%
+  \else\fi%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\innersender}
+%    \begin{macrocode}
+\newcommand{\innersender}[2][]{%
+  \iftubs@bottomsender%
+    \innerfoot[#1]{#2}%
+  \else%
+    \innerhead[#1]{#2}%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\outerhead}
+%    \begin{macrocode}
+\newcommand{\outerhead}[2][\relax]{%
+  % Benutze optionale Einstellung für linke Seite, falls vorhanden
+  \def\@tubs@router{#2}%
+  \ifx#1\relax%
+    \let\@tubs@louter\@tubs@router%
+  \else%
+    \def\@tubs@louter{#1}%
+  \fi%
+  %
+  \ifthenelse{\equal{#2}{}}{%
+    \let\@oheadsepline\relax%
+  }{%
+    \let\@oheadsepline\headsepline%
+  }%
+  \iftubs@bottomsender\else%
+    \newdimen\@tubs@headheight%
+    \setlength\@tubs@headheight{\headheight}%
+    \addtolength\@tubs@headheight{-6pt}%
+    \ohead{\vbox to\@tubs@headheight{%
+      ~\vspace*{1.5ex}\linebreak%
+      \ifthispageodd{\@tubs@router}{\@tubs@louter}\vfill%
+    }}%
+  \fi%
+}%
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\outerfoot}
+%    \begin{macrocode}
+\newcommand{\outerfoot}[2][]{%
+  % Benutze optionale Einstellung für linke Seite, falls vorhanden
+  \def\@tubs@router{#2}%
+  \ifx#1\relax%
+    \let\@tubs@louter\@tubs@router%
+  \else%
+    \def\@tubs@louter{#1}%
+  \fi%
+  %
+  \ifthenelse{\equal{#2}{}}{%
+    \let\@oheadsepline\relax%
+  }{%
+    \let\@oheadsepline\headsepline%
+  }%
+  \iftubs@bottomsender%
+  \ofoot{%
+    \raisebox{\tubspage@headheight+\depth}{%
+      \vbox to\tubspage@headheight{%
+        \vfill\vspace*{\baselineskip}\strut%
+        \ifthispageodd{\@tubs@router}{\@tubs@louter}%
+        \vspace*{-1.5ex}\linebreak%
+        \@oheadsepline\vspace*{1ex}%
+  }}}%
+  \else\fi%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\outersender}
+%    \begin{macrocode}
+\newcommand{\outersender}[2][]{%
+  \iftubs@bottomsender%
+    \outerfoot[#1]{#2}%
+  \else%
+    \outerhead[#1]{#2}%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
+% \subsection{Darstellung}
+%
 %
 % Lösche Headings und footer bei Stilen scrheadings und plain
 %    \begin{macrocode}
@@ -124,107 +276,77 @@
 \clearscrplain
 %    \end{macrocode}
 %
-%    \begin{macro}{\ihead}
-%    \begin{macro}{\ifoot}
-%    \begin{macro}{\isender}
-% Umdefinierte Makros zur Darstellung von Inhalten in Kopf- bzw. Fußzeile.
 %    \begin{macrocode}
-\let\@orig@ihead\ihead
-\renewcommand{\ihead}[1]{%
-  \ifthenelse{\equal{#1}{}}{%
-    \let\@iheadsepline\relax%
-  }{%
-    \let\@iheadsepline\headsepline%
-  }%
-  \iftubs@bottomsender\else%
-  \@orig@ihead{\vbox to\headheight{%
-    \vspace*{1ex}\strut\@iheadsepline\linebreak#1\vfill%
-  }}%
-  \fi%
-}
-%
-\let\@orig@ifoot\ifoot
-\renewcommand{\ifoot}[1]{%
-  \ifthenelse{\equal{#1}{}}{%
-    \let\@iheadsepline\relax%
-  }{%
-    \let\@iheadsepline\headsepline%
-  }%
-  \iftubs@bottomsender%
-  \@orig@ifoot{%
-    \raisebox{\tubspage@headheight+\depth}{%
-      \vbox to\tubspage@headheight{%
-        \vfill\vspace*{1ex}\strut#1\vspace*{-1.5ex}\linebreak%
-        \@iheadsepline\vspace*{1ex}%
-  }}}%
-  \else\fi%
-}
-%
-\newcommand{\isender}[1]{%
-  \iftubs@bottomsender%
-    \ifoot{#1}
-  \else%
-    \ihead{#1}
-  \fi%
-}
+\setheadwidth[-1in-\hoffset-\oddsidemargin+\tubspage@bcor+2\tubspage@borderwidth]{\paperwidth-4\tubspage@borderwidth-\tubspage@bcor}
 %    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}
-%
-%    \begin{macro}{\ohead}
-%    \begin{macro}{\ofoot}
-%    \begin{macro}{\osender}
-%    \begin{macrocode}
-\let\@orig@ohead\ohead
-\renewcommand{\ohead}[1]{%
-  \ifthenelse{\equal{#1}{}}{%
-    \let\@oheadsepline\relax%
-  }{%
-    \let\@oheadsepline\headsepline%
-  }%
-  \iftubs@bottomsender\else%
-  \@orig@ohead{\vbox to\headheight{%
-    \vspace*{1ex}\strut\@oheadsepline\linebreak#1\vfill%
-  }}%
-  \fi%
-}%
-%
-\let\@orig@ofoot\ofoot
-\renewcommand{\ofoot}[1]{%
-  \ifthenelse{\equal{#1}{}}{%
-    \let\@oheadsepline\relax%
-  }{%
-    \let\@oheadsepline\headsepline%
-  }%
-  \iftubs@bottomsender%
-  \@orig@ofoot{%
-    \raisebox{\tubspage@headheight+\depth}{%
-      \vbox to\tubspage@headheight{%
-        \vfill\vspace*{1ex}\strut#1\vspace*{-1.5ex}\linebreak%
-        \@oheadsepline\vspace*{1ex}%
-  }}}%
-  \else\fi%
-}
-%
-\newcommand{\osender}[1]{%
-  \iftubs@bottomsender%
-    \ofoot{#1}
-  \else%
-    \ohead{#1}
-  \fi%
-}
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}
-%
 %
 % Setze Standard-Inhalte. headmark nur bei sender=top.
 %    \begin{macrocode}
-\automark[chapter]{chapter}
-\ihead{\scshape\headmark}
-\osender{\mdseries\pagemark}
+\setheadtopline[\tubspage@borderwidth]{1pt}[]
+%
+\renewcommand{\headfont}{\normalfont\mdseries\scshape}
+\let\footfont\headfont
+\let\pnumfont\headfont
+%
+%<book>\automark[chapter]{section}
+%<report|article>\automark[section]{subsection}
+%
+\innerhead[\leftmark]{}
+\outerhead[\pagemark]{\rightmark\qquad\pagemark}
 % \pagestyle{scrheadings}
 %    \end{macrocode}
 % 
 %    \begin{macrocode}
+\newpagestyle{@tubsheadings}
+{%
+  {%
+    \rlap{\parbox{\@headwidth}{\raggedright
+        \strut\tubsheadings@even@left@head\strut}}%
+    \hfill
+    \llap{\parbox{\@headwidth}{\raggedleft%
+        \strut\tubsheadings@even@right@head\strut}}}%
+  {%
+    \rlap{\parbox{\@headwidth}{\raggedright
+        \strut\tubsheadings@odd@left@head\strut}}%
+    \hfill
+    \llap{\parbox{\@headwidth}{\raggedleft%
+        \strut\tubsheadings@odd@right@head\strut}}}%
+  {%
+    \rlap{\parbox{\@headwidth}{\raggedright
+        \strut\tubsheadings@odd@left@head\strut}}%
+    \hfill
+    \llap{\parbox{\@headwidth}{\raggedleft
+        \strut\tubsheadings@odd@right@head\strut}}}}%
+{%
+  {%
+    \rlap{\parbox{\@footwidth}{\raggedright
+        \strut\tubsheadings@even@left@foot\strut}}%
+    \hfill
+    \parbox{\@footwidth}{\centering
+      \strut\tubsheadings@even@middle@foot\strut}%
+    \hfill
+    \llap{\parbox{\@footwidth}{\raggedleft
+        \strut\tubsheadings@even@right@foot\strut}}}%
+  {%
+    \rlap{\parbox{\@footwidth}{\raggedright
+        \strut\tubsheadings@odd@left@foot\strut}}%
+    \hfill
+    \parbox{\@footwidth}{\centering
+      \strut\tubsheadings@odd@middle@foot\strut}%
+    \hfill
+    \llap{\parbox{\@footwidth}{\raggedleft
+        \strut\tubsheadings@odd@right@foot\strut}}}%
+  {%
+    \rlap{\parbox{\@footwidth}{\raggedright
+        \strut\tubsheadings@odd@left@foot\strut}}%
+    \hfill
+    \parbox{\@footwidth}{\centering
+      \strut\tubsheadings@odd@middle@foot\strut}%
+    \hfill
+    \llap{\parbox{\@footwidth}{\raggedleft
+        \strut\tubsheadings@odd@right@foot\strut}}%
+  }%
+}
 %</body>
 %    \end{macrocode}
 % 
