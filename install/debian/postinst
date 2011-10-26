@@ -21,15 +21,32 @@ case "$1" in
     configure)
 
     if [ -x /usr/bin/mktexlsr ] ; then
-    /usr/bin/mktexlsr
+      /usr/bin/mktexlsr
     fi
-    /usr/bin/getnonfreefonts-sys arial-urw
-    echo "Adding map file for NexusProSans"
-    /usr/bin/updmap-sys --quiet --nomkmap --nohash --enable Map=NexusProSans.map
-    echo "Adding map file for NexusProSerif"
-    /usr/bin/updmap-sys --quiet --nomkmap --nohash --enable Map=NexusProSerif.map
-    echo "running updmap-sys"
-    /usr/bin/updmap-sys
+    # Debugging output
+    pdftexmap=`kpsewhich pdftex.map`
+    echo "Found map file: $pdftexmap";
+    # Select if to use local version
+    varlibmap=`kpsewhich pdftex.map | grep /var/lib`
+    if [ -z "$varlibmap" ]; then
+      echo "Using local variants"
+      /usr/bin/getnonfreefonts arial-urw
+      echo "Adding map file for NexusProSans"
+      /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
+      echo "Adding map file for NexusProSerif"
+      /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSerif.map
+      echo "running updmap"
+      /usr/bin/updmap
+    else
+      echo "Using sys variants"
+      /usr/bin/getnonfreefonts-sys arial-urw
+      echo "Adding map file for NexusProSans"
+      /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+      echo "Adding map file for NexusProSerif"
+      /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+      echo "running updmap-sys"
+      /usr/bin/updmap-sys
+    fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
@@ -48,4 +65,3 @@ esac
 
 
 exit 0
-
