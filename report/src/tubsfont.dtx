@@ -156,6 +156,8 @@
 \let\newtubsfont\newkomafont
 \let\usetubsfont\usekomafont
 \let\settubsfont\setkomafont
+%
+\setkomafont{caption}{\small}
 %    \end{macrocode}
 %
 %
@@ -166,6 +168,8 @@
 \titleformat{\chapter}[block]
 {\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
+\setkomafont{chapter}{\usekomafont{headlinesmall}}% TODO: has no effect, why?
+\setkomafont{section}{\usekomafont{subheadline}}
 %    \end{macrocode}
 %
 % Aufzählungszeichen werden als Quadrate dargestellt
@@ -234,7 +238,7 @@
 %</9>
 %<*10>
 \def\normalsize{%
-  \@setfontsize\normalsize\@xpt\@xiipt
+  \@setfontsize\normalsize\@xpt\@xivpt
   \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
   \abovedisplayshortskip \z@ \@plus3\p@
   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
@@ -244,7 +248,7 @@
 %</10>
 %<*11>
 \def\normalsize{%
-  \@setfontsize\normalsize\@xipt{13.6}%
+  \@setfontsize\normalsize\@xipt{15.4}%
   \abovedisplayskip 11\p@ \@plus3\p@ \@minus6\p@
   \abovedisplayshortskip \z@ \@plus3\p@
   \belowdisplayshortskip 6.5\p@ \@plus3.5\p@ \@minus3\p@
@@ -257,9 +261,9 @@
 %
 %    \begin{macro}{\small}
 %    \begin{macrocode}
-%<*9|10>
+%<*9>
 \def\small{%
-    \@setfontsize\small\@viiipt{9.5}%
+    \@setfontsize\small\@viiipt{11.2}%
     \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
     \abovedisplayshortskip \z@ \@plus 2\p@
     \belowdisplayshortskip 4\p@ \@plus 2\p@ \@minus 2\p@
@@ -270,10 +274,10 @@
                 }%
    \belowdisplayskip \abovedisplayskip
 }
-%</9|10>
-%<*11>
+%</9>
+%<*10>
 \def\small{%
-  \@setfontsize\small\@ixpt{11}%
+  \@setfontsize\small\@ixpt{12.6}%
   \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
   \abovedisplayshortskip \z@ \@plus2\p@
   \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
@@ -282,7 +286,20 @@
     \parsep 2\p@ \@plus\p@ \@minus\p@
     \itemsep \parsep}%
   \belowdisplayskip \abovedisplayskip
-}% from file 'scrsize10pt.clo'
+}%from scrsize10pt
+%</10>
+%<*11>
+\def\small{%
+  \@setfontsize\small\@xpt\@xivpt
+  \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+  \abovedisplayshortskip \z@ \@plus3\p@
+  \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+  \def\@listi{\leftmargin\leftmargini
+    \topsep 6\p@ \@plus2\p@ \@minus2\p@
+    \parsep 3\p@ \@plus2\p@ \@minus\p@
+    \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip
+}%from scrsize11pt
 %</11>
 %    \end{macrocode}
 %    \end{macro}
@@ -290,16 +307,16 @@
 %    \begin{macro}{\footnotesize}
 %    \begin{macrocode}
 \def\footnotesize{%
-    \@setfontsize\footnotesize\@viipt{10}%
-    \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
-    \abovedisplayshortskip \z@ \@plus 2\p@
-    \belowdisplayshortskip 4\p@ \@plus 2\p@ \@minus 2\p@
-    \def\@listi{\leftmargin\leftmargini
-                \topsep 2\p@ \@plus 2\p@ \@minus 2\p@
-                \parsep 1\p@ \@plus\p@ \@minus\p@
-                \itemsep \parsep
-               }%
-   \belowdisplayskip \abovedisplayskip
+  \@setfontsize\footnotesize\@viipt{10}%
+  \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
+  \abovedisplayshortskip \z@ \@plus 2\p@
+  \belowdisplayshortskip 4\p@ \@plus 2\p@ \@minus 2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 2\p@ \@plus 2\p@ \@minus 2\p@
+              \parsep 1\p@ \@plus\p@ \@minus\p@
+              \itemsep \parsep
+             }%
+  \belowdisplayskip \abovedisplayskip
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -331,8 +348,18 @@
 %    \begin{macro}{\LARGE}
 % Definition der interpolierten Größen (A4)
 %    \begin{macrocode}
-\def\tiny{\@setfontsize\tiny\@vpt{6}}
+%<*9>
+\def\tiny{\@setfontsize\tiny\@ivpt{5.2}}
 \def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
+%</9>
+%<*10>
+\def\tiny{\@setfontsize\tiny\@vpt{6}}
+\def\scriptsize{\@setfontsize\scriptsize\@viipt{9}}
+%</10>
+%<*11>
+\def\tiny{\@setfontsize\tiny\@vipt{7.8}}
+\def\scriptsize{\@setfontsize\scriptsize\@viiipt{10.4}}
+%</11>
 \def\LARGE{\@setfontsize\LARGE{27pt}{35}}
 %</a4>
 %    \end{macrocode}
