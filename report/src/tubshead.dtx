@@ -150,7 +150,11 @@
     \addtolength\@tubs@headheight{-2pt}%
     \ihead{\vbox to\@tubs@headheight{%
       ~\vspace*{1.5ex}\linebreak%
-      \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+      \if@twoside%
+        \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+      \else%
+        \@tubs@linner%
+      \fi%
       \vfill%
     }}%
   \fi%
@@ -180,7 +184,11 @@
     \raisebox{\tubspage@headheight+\depth}{%
       \vbox to\tubspage@headheight{%
         \vfill\vspace*{1ex}\strut%
-        \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+        \if@twoside%
+          \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+        \else%
+          \@tubs@linner%
+        \fi%
         \vspace*{-1.5ex}\linebreak%
         \@iheadsepline\vspace*{1ex}%
   }}}%
@@ -225,7 +233,12 @@
     \addtolength\@tubs@headheight{-6pt}%
     \ohead{\vbox to\@tubs@headheight{%
       ~\vspace*{1.5ex}\linebreak%
-      \ifthispageodd{\@tubs@router}{\@tubs@louter}\vfill%
+      \if@twoside%
+        \ifthispageodd{\@tubs@router}{\@tubs@louter}%
+      \else%
+        \@tubs@router%
+      \fi%
+      \vfill%
     }}%
   \fi%
 }%
@@ -254,7 +267,11 @@
     \raisebox{\tubspage@headheight+\depth}{%
       \vbox to\tubspage@headheight{%
         \vfill\vspace*{\baselineskip}\strut%
-        \ifthispageodd{\@tubs@router}{\@tubs@louter}%
+        \if@twoside%
+          \ifthispageodd{\@tubs@router}{\@tubs@louter}%
+        \else%
+          \@tubs@router%
+        \fi%
         \vspace*{-1.5ex}\linebreak%
         \@oheadsepline\vspace*{1ex}%
   }}}%
