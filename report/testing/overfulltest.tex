@@ -1,0 +1,53 @@
+\documentclass[a4paper,11pt,blue,twoside,bcor=0mm,draft]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+\usepackage{lipsum}
+
+\usepackage[ngerman]{babel}
+%opening
+\title{Beispieltitel}
+\subtitle{Untertitel}
+\author{Max Mustermann}
+\publishers{Institut fuer Lorem Ipsum} % to logo?
+\address{%
+  TU Braunschweig\\
+  \textbf{Institut für Lorem Ipsum}\\
+  Schleinitzstraße 13\\
+  38106 Braunschweig}
+\backpageinfo{%
+Thist ist backpage \hfill with info
+\vfill
+Well, its good!
+}
+
+\geometry{top=0mm,left=0mm,right=0cm}
+\begin{document}
+
+\bglayout{%
+  \bgelement[bgcolor=tuGray20]{1}
+}
+\begin{tubsbox}{1}{1}{6}{1}
+  \lipsum[1]
+\end{tubsbox}
+\begin{tubsbox}{1}{2}{3}{3}
+  \lipsum[1]
+\end{tubsbox}
+\begin{tubsbox}{4}{2}{3}{3}
+  \lipsum[1]
+\end{tubsbox}
+\begin{tubsbox}{1}{5}{2}{4}
+  \lipsum[1]
+\end{tubsbox}
+\begin{tubsbox}{3}{5}{2}{4}
+  \lipsum[1]
+\end{tubsbox}
+\begin{tubsbox}{5}{5}{2}{4}
+  \lipsum[1]
+\end{tubsbox}
+
+~\clearpage
+\makeatletter
+% \begin{addmargin}{-\tubspage@borderwidth}
+ \lipsum[1-2]
+% \end{addmargin}
+\makeatother
+\end{document}

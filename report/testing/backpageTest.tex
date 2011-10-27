@@ -1,0 +1,59 @@
+\documentclass[a4paper,twoside=false,extramargin,violet]{tubsartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+%opening
+\titleabstract{%
+  Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi.
+  Morbi auctor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, 
+  ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat
+  ligula aliquet magna, vitae ornare odio metus a mi. Morbi ac orci et nisl 
+  hendrerit mollis.%
+}
+\titlepicture{infozentrum.jpg}
+\title{Lorem ipsum dolor sit amet}
+\subtitle{Morbi auctor lorem\vphantom{g}\\ % TODO!!!!
+Nam lacus libero}
+\logo{\includegraphics{dummy_institut_large.jpg}}
+% \logo{\begingroup\setkeys{Gin}{height=\headheight}This is a test.\endgroup}
+\author{Enrico Jörns}
+\address{(c) Technische Universität Braunschweig\\
+Name des Instituts oder der zentralen Einrichtung\\
+Musterstr. 4 -- 5\\
+38106 Braunschweig\\
+Telefon +49 531 391-0000\\
+Telefax +49 531 391-0000\\
+institut@tu-braunschweig.de\\
+www.tu-braunschweig.de}
+
+
+\begin{document}
+
+\makebackpage[plain]
+
+\selectSecondary{orange}
+\makebackpage[info]
+\makebackpage[addressinfo]
+\makebackpage[trisec]
+
+\selectSecondary{blue}
+\makebackpage[info]
+\makebackpage[addressinfo]
+\makebackpage[trisec]
+
+\selectSecondary{green}
+\makebackpage[info]
+\makebackpage[addressinfo]
+\makebackpage[trisec]
+
+\selectSecondary{violet}
+\makebackpage[info]
+\makebackpage[addressinfo]
+\makebackpage[trisec]
+
+\end{document}
+
+%       \begin{tabularx}{\textwidth}{@{}X@{}X@{}X@{}X@{}}
+%         \fboxsep0mm\colorbox{tuSecondary}{\parbox[t][1cm]{0.2\textwidth}{~}}
+%       \end{tabularx}

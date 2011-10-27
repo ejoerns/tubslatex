@@ -1,0 +1,57 @@
+\documentclass[a4paper,twoside=false,extramargin,violet]{tubsartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+%opening
+\titleabstract{%
+  Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi.
+  Morbi auctor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, 
+  ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat
+  ligula aliquet magna, vitae ornare odio metus a mi. Morbi ac orci et nisl 
+  hendrerit mollis.%
+}
+\titlepicture{infozentrum.jpg}
+\title{Lorem ipsum dolor sit amet}
+\subtitle{Morbi auctor lorem\vphantom{g}\\ % TODO!!!!
+Nam lacus libero}
+\logo{\includegraphics{dummy_institut_large.jpg}}
+% \logo{\begingroup\setkeys{Gin}{height=\headheight}This is a test.\endgroup}
+\author{Enrico Jörns}
+
+\begin{document}
+
+\maketitle[plain]
+~
+\maketitle[plain,logo=outside]
+~
+\selectSecondary{orange}
+\maketitle[image]
+\maketitle[image,logo=outside]
+
+\maketitle[imagetext]
+\maketitle[imagetext,logo=outside]
+
+\selectSecondary{blue}
+\maketitle[image]
+\maketitle[image,logo=outside]
+
+\maketitle[imagetext]
+\maketitle[imagetext,logo=outside]
+
+\selectSecondary{green}
+\maketitle[image]
+\maketitle[image,logo=outside]
+
+\maketitle[imagetext]
+\maketitle[imagetext,logo=outside]
+
+\selectSecondary{violet}
+\maketitle[image]
+\maketitle[image,logo=outside]
+
+\maketitle[imagetext]
+\maketitle[imagetext,logo=outside]
+
+
+\end{document}
