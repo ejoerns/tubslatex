@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{tubsreprt}
+\documentclass[a4paper,11pt,twoside=false,rgb]{tubsreprt}
 
 \input{preamble}
 
@@ -149,10 +149,14 @@ im Allgemeinen nicht erforderlich sein sollte.
 
 \appendix
 
+\input{unsorted}
+
 %Glossar ausgeben
 \printglossary[style=altlist,title=Glossar]
 
 \include{appendixletter}
+
+\listoffigures
 
 \bibliographystyle{alpha}
 \bibliography{lit}

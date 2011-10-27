@@ -229,34 +229,60 @@ Es sind 3 einfache Styles definiert.% vordefiniert
 \end{center}
 
 \section{Kopf-/ Fußzeile}\label{sec:headline}
+\marginpar[Neu in 0.3-alpha3]{}
 
-Standardmäßig wird die Fußzeile komplett leer gelassen und die Kopfzeile
-wird mit Seitennummer rechts und Kapitelname links gesetzt. Bei zweiseitigem
-Layout gilt dies für die ungeraden Seiten, gerade Seiten werden entsprechend
-mit Seitennummer links und Kapitelname rechts gesetzt.
+Bei Dokumenten mit Absenderbereich am oberen Rand wird die Fußzeile
+standardmäßig komplett leer gelassen und die Kopfzeile
+wird mit Seitennummer außen und Kapitelname auf ungeraden Seiten außen gesetzt.
+Zusätzlich wird noch ein schmaler Strich am oberen äußeren Ende des
+Absenderbereiches gesetzt.
+Bei Dokumenten mit Absenderbereich am unteren Rand wird dagegen die Kopfzeile
+komplett leer gelassen und die Fußzeile entsprechend der eben aufgeführten
+Vorgaben gesetzt. Der kleine Trensstrich befindet sich dabei am unteren
+äußeren Rand.
 
-\begin{Declaration}
-  \Macro{ihead}\Parameter{innen}\\
-  \Macro{ohead}\Parameter{außen}\\
-  \Macro{ifoot}\Parameter{innen}\\
-  \Macro{ofoot}\Parameter{außen}\\
-  \Macro{isender}\Parameter{innen}\\
-  \Macro{osender}\Parameter{außen}
-\end{Declaration}
-
-Bei Bedarf können die Kopfzeilen individuell angepasst werden.
-Dies geschieht mit den Befehlen \Macro{ihead} und \Macro{ohead}, welche
-auf den gleichnamigen Kommandos aus dem Koma-Skript aufbauen und für eine
-korrekte vertikale Positionierung sorgen.
+Die Darstellung der Kopf- und Fußzeilen lässt sich jedoch mit einigen
+speziellen Befehlen individuell anpassen.
 
 \begin{Declaration}
-  \Macro{headsepline}
+  \Macro{outersender}\OParameter{links}\Parameter{recht}\\
+  \Macro{innersender}\OParameter{rechts}\Parameter{links}\\
+  \Macro{outerhead}\OParameter{links}\Parameter{rechts}\\
+  \Macro{innerhead}\OParameter{rechts}\Parameter{links}\\
+  \Macro{outerfoot}\OParameter{links}\Parameter{rechts}\\
+  \Macro{innerfoot}\OParameter{rechts}\Parameter{links}
+\end{Declaration}
+
+Mit dem Befehl \Macro{outersender}\OParameter{links}\Parameter{recht}
+wird der Inhalt des äußeren Absenderbereichs festgelegt.
+Die Parameter \PName{rechts} stellt dabei den darzustellenden Inhalt dar.
+Mit Hilfe des optionalen Parameters \PName{links} können unterschiedliche
+Inhalte gesetzt werden, abhängig davong, ob (bei zweiseitigem Layout)
+der äußere Rand auf der jeweiligen Seite der linke oder rechte Rand ist.
+Abhängig davon, ob der Absenderbereicht am oberen oder unteren Ende des Blattes
+dargestellt ist wird der Inhalt entweder in der Kopf- oder in der Fußzeile
+dargestellt.
+
+Mit den Befehlen \Macro{outerhead} und \Macro{innerhead}, die ansonsten genause
+wie die beiden zuvor erläuterten Befehle funktionieren, kann man dagegen
+Inhalte festlegen, die explizit nur als Kopfzeile gesetzt werden, also
+im Falle eines am unteren Rand platzierten Absenderbereiches nicht dargestellt 
+werden.
+
+Analog dazu gibt es noch die zwei Befehle \Macro{outerfoot}
+und \Macro{innerfoot}, die selbiges Verhalten für Fußzeilen aufweisen.
+Der so festgelegte Inhalt wird dann im Falle eines am oberen Blattrand
+befindlichen Absenderbereichs nicht dargestellt.
+
+\begin{Declaration}
+  \Macro{headtopline}
 \end{Declaration}
 
 
-Die standardmäßig gesetzten kurzen Linien am jeweils oberen äußeren Ende des
-Kopfbereiches sind im Makro \Macro{headsepline} definiert.
-Dies kann bei Bedarf überschrieben werden.
+Die standardmäßig gesetzte kurze Linien am oberen äußeren Ende des
+Kopfbereiches kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
+werden. Näheres ist in der zugehörigen Dokumenation zu
+entnehmen\cite{koma-skript}.
 
 
 \section{Seitenlayout}\label{sec:pagelayout}
