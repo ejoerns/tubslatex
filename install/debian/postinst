@@ -29,7 +29,7 @@ case "$1" in
     # Select if to use local version
     varlibmap=`kpsewhich pdftex.map | grep /var/lib`
     if [ -z "$varlibmap" ]; then
-      echo "Using local variants"
+      echo "You seem to use a local font map. Using local variants, too"
       /usr/bin/getnonfreefonts arial-urw
       echo "Adding map file for NexusProSans"
       /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
