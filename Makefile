@@ -3,7 +3,7 @@
 # Erstellt komplettes Release (still under construction!)
 # 
 
-TUBSLATEX_VERSION = 0.3-alpha2
+TUBSLATEX_VERSION = 0.3-alpha3-pre
 
 # Verzeichnisse und Dateien
 DOCUMENTATION_DIR = doc
@@ -26,7 +26,7 @@ INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_VERSION).exe
 # Programme
 MAKE = make
 
-.PHONY: clean mkdir generate source sourcedoc documentation examples buildinstaller fetch
+.PHONY: clean mkdir generate source sourcedoc documentation examples buildinstaller zip deb exe fetch
 
 release: generate buildinstaller mkdir fetch
 
@@ -47,11 +47,15 @@ source:
 sourcedoc:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i doc; done
 
-buildinstaller:
+buildinstaller: zip deb exe
+
+zip:
 	$(MAKE) -C $(INSTALL_RAW_DIR)
 	$(MAKE) -C $(INSTALL_RAW_DIR) VERSION=$(TUBSLATEX_VERSION) zip
+deb:
 	$(MAKE) -C $(INSTALL_DEB_DIR) copy
 	$(MAKE) -C $(INSTALL_DEB_DIR) VERSION=$(TUBSLATEX_VERSION) deb
+exe:
 	$(MAKE) -C $(INSTALL_WIN_DIR) copy
 	$(MAKE) -C $(INSTALL_WIN_DIR) VERSION=$(TUBSLATEX_VERSION) exe
 
