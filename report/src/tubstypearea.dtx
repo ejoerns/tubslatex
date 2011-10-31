@@ -288,7 +288,7 @@
 % Setzt Layout mit Hilfe des geometry-Befehls.
 %    \begin{macrocode}
 \newcommand{\@tubspage@setlayout}{%
-  \ifthenelse{\boolean{scifiposter}}{
+  \ifthenelse{\boolean{scifiposter}}{%
     %%% Einstellungen für wissenschaftliche Poster %%%
     \geometry{%
       left=1.5\tubspage@borderwidth,
@@ -332,6 +332,9 @@
         bottom=\tubspage@senderheight+\tubspage@borderwidth,
         footskip=\tubspage@senderheight
       }
+      \ifthenelse{\boolean{tubspage@extramargin}}{%
+        \geometry{top=3\tubspage@borderwidth}
+      }{}
     }{% Absenderbereich oben
       \geometry{%
         headheight=\tubspage@senderheight-2\tubspage@borderwidth,
@@ -339,6 +342,9 @@
         top=\tubspage@senderheight+\tubspage@borderwidth,
         bottom=2\tubspage@borderwidth
       }
+      \ifthenelse{\boolean{tubspage@extramargin}}{%
+        \geometry{bottom=3\tubspage@borderwidth}
+      }{}
     }
     % Marginale links
     \ifthenelse{\boolean{tubspage@marginleft}}{%
