@@ -29,6 +29,10 @@ case "$1" in
     # Select if to use local version
     varlibmap=`kpsewhich pdftex.map | grep /var/lib`
     if [ -z "$varlibmap" ]; then
+      # Touch 10local.cfg to prevent errors of buggy updmap
+      mkdir -p ~/.texmf-config/updmap.d
+      touch ~/.texmf-config/updmap.d/10local.cfg
+
       echo "You seem to use a local font map. Using local variants, too"
       /usr/bin/getnonfreefonts arial-urw
       echo "Adding map file for NexusProSans"
@@ -38,6 +42,9 @@ case "$1" in
       echo "running updmap"
       /usr/bin/updmap
     else
+      # Touch 10local.cfg to prevent errors of buggy updmap
+      touch /etc/texmf/updmap.d/10local.cfg
+
       echo "Using sys variants"
       /usr/bin/getnonfreefonts-sys arial-urw
       echo "Adding map file for NexusProSans"
