@@ -93,9 +93,9 @@ $ unzip -d ~/texmf/ tubslatex_0.3-alpha2.zip
   \item[3. Schriften registrieren]\hfill
 
     \begin{lstlisting}
-/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
-/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
-/usr/bin/updmap-sys
+# /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+# /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+# /usr/bin/updmap-sys
     \end{lstlisting}
     
     Für eine lokale Installation muss jeweils der Zustatz \texttt{-sys}
@@ -104,11 +104,67 @@ $ unzip -d ~/texmf/ tubslatex_0.3-alpha2.zip
 \end{description}
 
 
+\newenvironment{knownissue}[1]{%
+  \paragraph{#1}\hfill
+  \newcommand{\solution}[1]{\noindent{\itshape ##1}}
+}{%
+}
+
 \section{Fehlerbehebung}
 
 \subsection{MikTeX}
 
 \subsection{texlive}
+
+\begin{knownissue}{%
+  updmap bricht plötzlich ab (Fehlercode 2) / getnonfreefonts bricht ab
+}
+
+Dieses Problem ist unter anderem von texlive2009 bekannt.
+Dort hat sich ein Problem eingeschlichen, das leider die Funktionalität von
+updmap teilweise lahmlegt.
+
+\solution{Mögliche Lösung:}
+\begin{itemize}
+  \item Die Datei 10local.cfg (falls sie noch nicht vorhanden ist) manuell
+    erstellen (z.B. mit \texttt{touch}).
+  \item Nicht die Option \texttt{--quiet} verwenden.
+\end{itemize}
+
+Alternativ kann auch die Zeile \lstinline{set -e} am Anfang des Skripts einfach auskommentiert werden.
+\end{knownissue}
+
+
+\begin{knownissue}{
+  \texttt{mktexpk: don't know how to create bitmap font for \ldots}\newline
+  nach Schriften-Installation mit \lstinline{updmap-sys}}
+
+Dieses Problem kann auftauchen, wenn auf dem System vom aktuellen Benutzer
+zuvor schon einmal \lstinline{updmap} (ohne -sys) ausgeführt wurde.
+Dann legt texlive eine lokale Map-Datei an und verwendet fortan diese,
+auch wenn die System-Map mit \lstinline{updmap-sys} upgedated wurde.
+
+\noindent\textit{Überprüfung:}
+
+Die Ausgabe von
+\begin{lstlisting}
+kpsewhich pdftex.map
+\end{lstlisting}
+sollte einen anderen Pfad als
+\lstinline{/var/lib/texmf/fonts/map/pdftex/updmap/} liefern.
+
+\solution{Lösung 1:}
+
+Entfernen der aktuell verwendeten (lokalen) Map-Datei.
+
+\solution{Lösung 2:}
+
+Installation weiterer Schriften mit \lstinline{updmap} statt
+\lstinline{updmap-sys}.
+
+\end{knownissue}
+
+
 
 
 % TODO...
