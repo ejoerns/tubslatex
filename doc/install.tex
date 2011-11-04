@@ -48,6 +48,69 @@ Diese können entweder lokal oder global entpackt werden.
 Für erste Variante kann der Inahlt einfach in das Verzeichnis
 \lstinline{/home/benutzername/texmf} hinein geschrieben werden.
 
+Es sei darauf hingewiesen, dass alle weiteren benötigten Pakete der
+Tex-Distribution ggf. manuell installiert werden müssen.
+MikTeX macht dies normalerweise automatisch.
+Bei texlive können unter Linux zum Beispiel die entsprechenden System-Pakete
+installiert werden.
+
+
+\subsection{MikTeX}
+
+\begin{description}
+  \item[1. Dateien Kopieren]
+  \item[2. Dateien registrieren]
+  \item[3. Schriften registrieren]
+\end{description}
+
+
+\subsection{TexLive}
+
+\begin{description}
+  \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
+    Dateien entpackt werden.
+    Diese liegen dort schon in der korrekten Ordner-Sktruktur vor, sodass
+    sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
+    müssen.
+    
+    Grundsätzlich kann man sich bei der Installation entscheiden,
+    ob die Vorlagen nur Lokal für den aktuellen Benutzer oder systemweit
+    installiert werden sollen.
+    Es sei darauf hingewiesen, dass eine lokale Installation ein paar
+    Fallstricke mit sich bringt, die evtl. zu Problemen bei der späteren
+    Installation weiterer Pakete führen können.
+    
+    Entpacken als Benutzer ins lokale texmf-Verzeichnis:
+    \begin{lstlisting}
+$ unzip -d ~/texmf/ tubslatex_0.3-alpha2.zip
+    \end{lstlisting}
+    Oder als Root ins systemweite texmf-Verzeichnis:
+    \begin{lstlisting}
+# unzip -d /usr/share/texmf/ tubslatex_0.3-alpha2.zip
+    \end{lstlisting}
+
+  \item[2. Dateien registrieren]
+  \item[3. Schriften registrieren]\hfill
+
+    \begin{lstlisting}
+/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+/usr/bin/updmap-sys
+    \end{lstlisting}
+    
+    Für eine lokale Installation muss jeweils der Zustatz \texttt{-sys}
+    weggelassen werden.
+
+\end{description}
+
+
+\section{Fehlerbehebung}
+
+\subsection{MikTeX}
+
+\subsection{texlive}
+
+
 % TODO...
 
 \def\foonote{%
