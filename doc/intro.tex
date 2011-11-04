@@ -10,19 +10,36 @@ Insbesondere sind alle Dokumentenklassen von Klassen des KOMA-Scripts
 abgeleitet, was sich auch in ihrem Benennungsschema wiederspiegelt.
 Konkret bauen die Vorlagen für Poster (\texttt{tubsposter}) und Dokumente
 (\texttt{tubsartcl}, \texttt{tubsreprt}, \texttt{tubsboox}) auf
-KOMA-Skript-Klassen auf. Die Vorlage für Broschüren (\texttt{tubsleaflet})
-ist von der Klasse \texttt{leaflet} abgeleitet. Für Präsentationen wird
-die Klasse \texttt{beamer} verwendet, hier gibt es keine spezielle Klasse,
-die Vorlagen werden als \texttt{beamer-theme} geladen. Die Briefklasse
-\texttt{tubslttr2} ist dafür wieder direkt von der KOMA-Briefklasse
-\texttt{scrlttr2} abgeleitet.
+den entsprechenden KOMA-Skript-Klassen auf%
+\footnote{\texttt{tubsposter} verwendet \texttt{scrartcl}}.
+Dabei wurden einige Optionen und Befehle, die die Basis-Klassen bieten erhalten
+und können in der ausführlichen Dokumentation zum KOMA-Skript\cite{koma-skript}
+nachgeschlagen werden.
+Einige Funktionalitäten wie etwa die Satzspiegelberechnung sind dagegen
+komplett ersetzt wurden.
+Die Dokumentation geht an einigen Stellen noch expliziter auf Unterschiede ein.
 
-Einige Grundelemente sind in Paketen untergebracht, sodass sie bei Bedarf auch
-von anderen \LaTeX-Klassen benutzt werden könnten. Dazu gehören unter anderem
-die Schriftart \emph{Nexus}, das Siegelbandlogo und die Farbdefinitionen.
-Auf diesen Aspekt geht der zweite Teil des Dokumentes näher ein.
+Ebenfalls von einer KOMA-Klasse abgeleitet ist die Briefklasse
+\texttt{tubslttr2}.
+Diese nutzt (wie der Name vermuten lässt) die noch verhältnismäßig junge
+Klasse \texttt{scrlttr2}. Dies spiegelt sich vor allem darin wieder, dass
+das verwendete Interface sich in Teilen stark von den anderen Klassen unterscheidet. Die Dokumentation geht dabei hauptsächlich auf die Besonderheiten in \texttt{tubslatex} ein. Für detailliertere Informationen empiehlt sich auch hier wieder die Dokumentation von KOMA\cite{koma-skript}.
+
+Für Präsentationen wird die relativ bekannt \texttt{beamer}-Klasse verwendet. Hier stellt \tubslatex keine eigene Klasse zur Verfügung, sondernd bietet entsprechend der Beamer-Philosiphie ein \emph{Beamer-Theme} an, dass
+im Dokument geladen werden kann und so viel Flexibilität erlaubt.
+Bei der Verwendung ergeben sich daher lediglich eine minimale Anzahl an
+Veränderungen und Erweiterungen des Funktionsumfangs von beamer.
+
+Die Vorlage für Broschüren (\texttt{tubsleaflet}) ist
+von der Klasse \texttt{leaflet} abgeleitet.\par
+
+Einige Grundelemente von \tubslatex sind in eigenständigen Paketen untergebracht, sodass sie bei Bedarf auch von anderen \LaTeX-Klassen benutzt werden könnten. Dazu gehören unter anderem die Schriftart \emph{Nexus}, das Siegelbandlogo und die Farbdefinitionen.
+Auf diesen Aspekt geht der zweite Teil des Dokumentes näher ein.% TODO: Link
 
 Der erste Teil des Dokumentes beschäftigt sich mit der allgemeinen Verwendung
-der vorgestellten Klassen. Für besonders Eilige empfiehlt sich das
-Kapitel~\ref{chap:rapid}, welches in aller Kürze die jeweils wichtigsten
-Befehle und Optionen zusammenfasst.
+der vorgestellten Klassen.
+Dabei wurde versucht, für jede Klasse eine möglichst vollständige Beschreibung
+zu liefern. Da sich allerdings viele Funktionen gleichen, das sie auf die selben
+Grundfunktionen zurück greifen sind manche Funktionen an einer Stelle nur kurz erwähnt mit einem Verweis auf die ausführlichere Beschreibung.
+
+Für besonders Eilige empfiehlt sich das Kapitel~\ref{chap:rapid}, welches in aller Kürze die jeweils wichtigsten Befehle und Optionen einer Klasse zusammenfasst und so einen raschen Einstieg ermöglicht.
