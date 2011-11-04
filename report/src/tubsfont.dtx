@@ -312,6 +312,7 @@
 %
 %    \begin{macro}{\footnotesize}
 %    \begin{macrocode}
+%<*9>
 \def\footnotesize{%
   \@setfontsize\footnotesize\@viipt{10}%
   \abovedisplayskip 6\p@ \@plus 2\p@ \@minus 4\p@
@@ -324,6 +325,33 @@
              }%
   \belowdisplayskip \abovedisplayskip
 }
+%</9>
+%<*10>
+\def\footnotesize{%
+  \@setfontsize\footnotesize\@viiipt{11}%
+  \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+    \topsep 3\p@ \@plus\p@ \@minus\p@
+    \parsep 2\p@ \@plus\p@ \@minus\p@
+    \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip
+}
+%</10>
+%<*11>
+\def\footnotesize{%
+  \@setfontsize\footnotesize\@ixpt{12.6}%
+  \abovedisplayskip 8\p@ \@plus2\p@ \@minus4\p@
+  \abovedisplayshortskip \z@ \@plus\p@
+  \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+    \topsep 4\p@ \@plus2\p@ \@minus2\p@
+    \parsep 2\p@ \@plus\p@ \@minus\p@
+    \itemsep \parsep}%
+  \belowdisplayskip \abovedisplayskip
+}
+%</11>
 %    \end{macrocode}
 %    \end{macro}
 %
