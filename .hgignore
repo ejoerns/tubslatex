@@ -7,6 +7,7 @@ install/rawtree/doc/*
 install/rawtree/fonts/*
 install/rawtree/tex/*
 install/debian/texlive-tubs/*
+install/debian/control
 install/release/*
 #ignore tex generated classes and packages
 nexus/src/nexus.sty
@@ -38,7 +39,8 @@ report/src/tubstitlepage.sty
 examples/tubslatex_examples.zip
 doc/examples/gallery/*
 doc/examples/png/*
-
+Website/png/*
+Website/gallery/*
 
 # no autosave
 *~
