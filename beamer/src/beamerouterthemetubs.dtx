@@ -69,7 +69,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{beamerouterthemetubs} -- 
-%   beamer-Farbschema für \emph{tubslatex}\thanks{This document
+%   beamer-Aussenschema für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{beamerouterthemetubs}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -77,7 +77,7 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Diese Datei stellt das Farbschema für latex-beamer-Präsentationen im
+%   Diese Datei stellt das outer-Theme für latex-beamer-Präsentationen im
 %   Corporate Design dar.
 % \end{abstract}
 %
@@ -88,60 +88,119 @@
 %
 %    \begin{macrocode}
 %<*outertheme>
+\ProvidesPackage{beamerouterthemetubs}[2010/05/18 v1.0.1 Beamer-Outer-Template TuBs]
 %    \end{macrocode}
 %
+% Lade benötigte Pakete
 %    \begin{macrocode}
-\ProvidesPackage{beamerouterthemetubs}[2010/05/18 v1.0.1 Beamer-Outer-Template TuBs]
-% Copyright 2011 by Till Tantau <tantau@users.sourceforge.net>
-%
-% This program can be redistributed and/or modified under the terms
-% of the GNU Public License, version 2.
-% Modified by Martin Baeker 2010 <martin.baeker@tu-bs.de>
-% Modified by Enrico Jörns 2011 <e.joerns@tu-bs.de>
-%
 \RequirePackage{ifthen}
 \RequirePackage{calc}
 \RequirePackage{tubslogo}
 \PassOptionsToPackage{ngerman}{babel}
 \RequirePackage{babel}
 \RequirePackage{tubsbeamersizes}
+%    \end{macrocode}
 %
-%% Horizontal distance in running toc
+% Horizontaler Abstand in running toc
+%    \begin{macrocode}
 \newdimen\beamer@tochorizontalspace
 \beamer@tochorizontalspace=0.15em
+%    \end{macrocode}
+%
+% Boolean-Variablen für Optionen
+%    \begin{macrocode}
 \newboolean{nopagenum}\setboolean{nopagenum}{false}
 \newboolean{nodate}\setboolean{nodate}{false}
 \newboolean{tocinheader}\setboolean{tocinheader}{false}
 \newboolean{nosubsectionsinheader}\setboolean{nosubsectionsinheader}{false}
 \newboolean{nologoinfoot}\setboolean{nologoinfoot}{false}
-%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+%
+%
+% \subsection{Optionen}
+%
+%
+%    \begin{key}{}{nopagenum}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nopagenum}{\setboolean{nopagenum}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nodate}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{tocinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{tocinheader}{\setboolean{tocinheader}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{tinytocinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{tinytocinheader}{%
   \setboolean{tocinheader}{true}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nosubsectionsinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nosubsectionsinheader}{%
   \setboolean{nosubsectionsinheader}{true}}
-\DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
-\DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
-\DeclareOptionBeamer{narrowtoc}{\beamer@tochorizontalspace=0.em}
+%    \end{macrocode}
+%    \end{key}
 %
+%    \begin{key}{}{nologoinfoot}
+%    \begin{macrocode}
+\DeclareOptionBeamer{nologoinfoot}{\setboolean{nologoinfoot}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{widetoc}
+%    \begin{macrocode}
+\DeclareOptionBeamer{widetoc}{\beamer@tochorizontalspace=0.3em}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{narrowtoc}
+%    \begin{macrocode}
+\DeclareOptionBeamer{narrowtoc}{\beamer@tochorizontalspace=0.em}
+%    \end{macrocode}
+%    \end{key}
+%
+% Optionen verarbeiten
+%    \begin{macrocode}
 \ProcessOptionsBeamer\relax
-
-%% Only sections and subsections in toc
+%    \end{macrocode}
+%
+%
+% \subsection{}
+%
+%
+% Only sections and subsections in toc
+%    \begin{macrocode}
 \setcounter{tocdepth}{2}
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \newboolean{highlighttitle}\setboolean{highlighttitle}{false}
 \newboolean{notitle}\setboolean{notitle}{false}
-
+%    \end{macrocode}
+%
+% Textränder links/rechts
+%    \begin{macrocode}
 \setbeamersize{text margin left=\beamer@leftmarginwidth}
 \setbeamersize{text margin right=\beamer@leftmarginwidth}
-\reset@font
-
-%% These are dummy definitions because with frametitle in the
-%% headline, the frametitle is needed before it is first set.
-\def\insertframetitle{Dummy}
+\reset@font% TODO
+%    \end{macrocode}
+%
+% These are dummy definitions because with frametitle in the
+% headline, the frametitle is needed before it is first set.
+%    \begin{macrocode}
+\def\insertframetitle{Dummy}% TODO... \strut.. ?
 \def\insertframesubtitle{Dummy}
 
 \def\beamer@lefttext{left}
@@ -153,8 +212,11 @@
 \defbeamertemplate*{sidebar right}{sidebar theme}{}
 
 \defbeamertemplate*{frametitle}{sidebar theme}{}
-
-%% Define the frame title using the color scheme titlelike
+%    \end{macrocode}
+%
+%    \begin{macro}{headline}
+% Define the frame title using the color scheme titlelike
+%    \begin{macrocode}
 \defbeamertemplate*{headline}{sidebar theme}{%
   \usebeamerfont{frametitle}
   \ifthenelse{\boolean{notitle}}{%
@@ -191,128 +253,147 @@
     }%
   }%
 }
-
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
 \defbeamertemplate*{section in head/foot}{tubs}{%
-\usebeamercolor[fg]{section in head/foot}%
-{\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
+  \usebeamercolor[fg]{section in head/foot}%
+  {\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \defbeamertemplate*{section in head/foot shaded}{tubs}{%
-\usebeamercolor[bg]{section in head/foot shaded}%
-\insertsectionhead\hspace{\beamer@tochorizontalspace}%
+  \usebeamercolor[bg]{section in head/foot shaded}%
+  {\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \defbeamertemplate*{subsection in head/foot}{tubs}{%
-\usebeamercolor[fg]{subsection in head/foot}%
-{\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
+  \usebeamercolor[fg]{subsection in head/foot}%
+  {\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \defbeamertemplate*{subsection in head/foot shaded}{tubs}{%
 \usebeamercolor[bg]{subsection in head/foot shaded}%
 \insertsubsectionhead\hspace{\beamer@tochorizontalspace}%
 }
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \defbeamertemplate*{section in sidebar}{sidebar theme}{}
 \defbeamertemplate*{section in sidebar shaded}{sidebar theme}{}
 \defbeamertemplate*{subsection in sidebar}{sidebar theme}{}
 \defbeamertemplate*{subsection in sidebar shaded}{sidebar theme}{}
 \defbeamertemplate*{subsubsection in sidebar}{sidebar theme}{}
 \defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}{}
-
-
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \setbeamercolor*{page number in sidebar}{fg=structure.fg}
 \setbeamercolor*{page number in sidebar shaded}{fg=structure.fg!40}
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \newlength{\tubs@outer@datewidth}% width of date
 \newlength{\tubs@outer@tempwidth}% used for settowidth
 \newlength{\tubs@outer@fullfootwidth}% width of short authro
 \newlength{\tubs@outer@titlepagewidth}% width of title and page
 \defbeamertemplate*{footline}{sidebar theme}{%
-%% Additional space needed to increase the calculated height of the footline
-\vspace*{0.25cm}
-\begin{minipage}{\paperwidth}
-{\usebeamercolor[fg]{structure}
-\rule{\textwidth}{0.3pt}}
-\vspace{-9pt}
+  %% Additional space needed to increase the calculated height of the footline
+  \vspace*{0.25cm}
+  \begin{minipage}{\paperwidth}
+    {\usebeamercolor[fg]{structure}
+    \rule{\textwidth}{0.3pt}}
+    \vspace{-9pt}
 
-\newdimen\beamer@CDlogowidth
-\beamer@CDlogowidth=24.7mm
+    \newdimen\beamer@CDlogowidth
+    \beamer@CDlogowidth=24.7mm
 
-\tubslogoAbs{\beamer@CDlogowidth}%
-\par
-% handle option 'nologoinfoot'
-\ifthenelse{\boolean{nologoinfoot}}{%
-\vspace{10.7pt}
-}{%
-\vspace{-19pt}%
-\logoheight=20.7pt%
-\vbox to \logoheight{%
-\hfill%
-\parbox[b]{0.3\textwidth}{%
-\usebeamerfont{footlinelogo}%
-\vspace*{3pt}%
-\raggedleft\insertlogo}\hspace*{0.5\beamer@CDborderwidth}%
-}%
-\vspace{9pt}%
+    \tubslogoAbs{\beamer@CDlogowidth}%
+    \par
+    % handle option 'nologoinfoot'
+    \ifthenelse{\boolean{nologoinfoot}}{%
+      \vspace{10.7pt}
+    }{%
+      \vspace{-19pt}%
+      \logoheight=20.7pt%
+      \vbox to \logoheight{%
+        \hfill%
+        \parbox[b]{0.3\textwidth}{%
+          \usebeamerfont{footlinelogo}%
+          \vspace*{3pt}%
+          \raggedleft\insertlogo}%
+        \hspace*{0.5\beamer@CDborderwidth}%
+      }%
+      \vspace{9pt}%
+    }
+  \end{minipage}
+  \hspace*{26mm}
+  \begin{minipage}[t]{\textwidth-26mm-0.2\textwidth}% TODO: width computation
+    \vspace*{-9.5mm}
+    % reset lengths
+    \setlength{\tubs@outer@datewidth}{0mm}
+    \setlength{\tubs@outer@titlepagewidth}{0mm}
+    % calculate footline width
+    \ifthenelse{\boolean{nodate}}{}{%
+      \insertdate\ \rule[-0.1em]{0.1em}{1em}\ %
+      \settowidth{\tubs@outer@datewidth}{\insertdate\ \rule[-0.1em]{0.1em}{1em}\ }%
+      \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
+    }%
+    \ifthenelse{\boolean{nopagenum}}{}{%
+      \settowidth{\tubs@outer@tempwidth}{%
+        ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber}%
+      \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+      \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+    }%
+    \settowidth{\tubs@outer@tempwidth}{%
+      \insertshortauthor~\rule[-0.1em]{0.1em}{1em}\ }%
+    \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+    \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
+    \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+    \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+    % test if fooltine width exceeds available space
+    \ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
+      \insertshortauthor[%
+        width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
+        respectlinebreaks]%
+        ~\rule[-0.1em]{0.1em}{1em}\ %
+    }{%
+      \insertshortauthor%
+      ~\rule[-0.1em]{0.1em}{1em}\ %
+    }%
+    \insertshorttitle%
+    \ifthenelse{\boolean{nopagenum}}{}{%
+      ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber%
+    }%
+  \end{minipage}
 }
-\end{minipage}
-\hspace*{26mm}
-\begin{minipage}[t]{\textwidth-26mm-0.2\textwidth}% TODO: width computation
-\vspace*{-9.5mm}
-% reset lengths
-\setlength{\tubs@outer@datewidth}{0mm}
-\setlength{\tubs@outer@titlepagewidth}{0mm}
-% calculate footline width
-\ifthenelse{\boolean{nodate}}{}{%
-  \insertdate\ \rule[-0.1em]{0.1em}{1em}\ %
-  \settowidth{\tubs@outer@datewidth}{\insertdate\ \rule[-0.1em]{0.1em}{1em}\ }%
-  \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
-}%
-\ifthenelse{\boolean{nopagenum}}{}{%
-  \settowidth{\tubs@outer@tempwidth}{%
-    ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber}%
-  \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-  \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
-}%
-\settowidth{\tubs@outer@tempwidth}{%
-  \insertshortauthor~\rule[-0.1em]{0.1em}{1em}\ }%
-\addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-\settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
-\addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-\addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
-% test if fooltine width exceeds available space
-\ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
-  \insertshortauthor[%
-    width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
-    respectlinebreaks]%
-  ~\rule[-0.1em]{0.1em}{1em}\ %
-}{%
-  \insertshortauthor%
-  ~\rule[-0.1em]{0.1em}{1em}\ %
-}%
-\insertshorttitle%
-\ifthenelse{\boolean{nopagenum}}{}{%
-  ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber%
-}%
-\end{minipage}
-}
-
-%% Get rid of the stupid navigation symbol bar
+%
+% Ausblenden der Navigations-Symbolleiste
 \setbeamertemplate{navigation symbols}{}
-
-%%%%%%%%%%%%%%%%%%%% newenvironments %%%%%%%%%%%%%%%%%%%%
+%
+% \subsection{Neue Umgebungen}
+%
 %% allows to switch the headline-color
 \newenvironment{highlightframe}[1]{%
-  \setboolean{highlighttitle}{true}\begin{frame}{#1}%
+  \setboolean{highlighttitle}{true}%
+  \begin{frame}{#1}%
 }{%
-  \end{frame}\setboolean{highlighttitle}{false}%
+  \end{frame}%
+  \setboolean{highlighttitle}{false}%
 }
 
 \newenvironment{notitleframe}[1]{%
-  \setboolean{notitle}{true}\begin{frame}{#1}%
+  \setboolean{notitle}{true}%
+  \begin{frame}{#1}%
 }{%
-  \end{frame}\setboolean{notitle}{false}%
+  \end{frame}%
+  \setboolean{notitle}{false}%
 }
 
 %% Strange numbers are 10/21 and 11/21
