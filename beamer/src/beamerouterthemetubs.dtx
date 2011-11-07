@@ -279,8 +279,8 @@
 %
 %    \begin{macrocode}
 \defbeamertemplate*{subsection in head/foot shaded}{tubs}{%
-\usebeamercolor[bg]{subsection in head/foot shaded}%
-\insertsubsectionhead\hspace{\beamer@tochorizontalspace}%
+  \usebeamercolor[bg]{subsection in head/foot shaded}%
+  {\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
 %
@@ -376,10 +376,45 @@
 %
 % Ausblenden der Navigations-Symbolleiste
 \setbeamertemplate{navigation symbols}{}
+%    \end{macrocode}
 %
-% \subsection{Neue Umgebungen}
 %
-%% allows to switch the headline-color
+% \subsection{Zusätzliche frame-Optionen}
+%
+%    \begin{key}{beamerframe}{notitle}
+%    \begin{macrocode}
+\define@boolkey{beamerframe}{notitle}[true]{%
+  \ifKV@beamerframe@notitle
+    \setboolean{notitle}{true}
+  \else
+    \setboolean{notitle}{false}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{beamerframe}{highlight}
+%    \begin{macrocode}
+\define@boolkey{beamerframe}{highlight}[true]{%
+  \ifKV@beamerframe@highlight
+    \setboolean{highlighttitle}{true}
+  \else
+    \setboolean{highlighttitle}{false}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% Setze Standardwerte für zusätzliche Keys.
+%    \begin{macrocode}
+\presetkeys{beamerframe}{notitle=false, highlight=false}{}
+%    \end{macrocode}
+%
+% \subsubsection{Veraltete Umgebungs-Alternative}
+%
+% Umgebungen sind nicht weiter dokumentiert und sollten nicht verwendet werden.
+% Sie sind nur aus Kompatibilitätsgründen erhalten.
+%    \begin{macrocode}
 \newenvironment{highlightframe}[1]{%
   \setboolean{highlighttitle}{true}%
   \begin{frame}{#1}%
@@ -387,7 +422,9 @@
   \end{frame}%
   \setboolean{highlighttitle}{false}%
 }
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \newenvironment{notitleframe}[1]{%
   \setboolean{notitle}{true}%
   \begin{frame}{#1}%
@@ -395,24 +432,13 @@
   \end{frame}%
   \setboolean{notitle}{false}%
 }
-
-%% Strange numbers are 10/21 and 11/21
-\def\leftwidth{0.52\textwidth}
-\def\rightwidth{0.47\textwidth}
-\def\topadjust{{\ \par \vspace{-1em}}}
-
-% TODO: check
-\newenvironment{leftside}[1][\leftwidth]{%
-\begin{minipage}[t]{#1}\raggedright\topadjust}{%
-\end{minipage}%
-}
-\newenvironment{rightside}[1][\rightwidth]{%
-\begin{minipage}[t]{#1}\topadjust}{%
-\end{minipage}%
-}
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \mode
 <all>
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</outertheme>
 %    \end{macrocode}
