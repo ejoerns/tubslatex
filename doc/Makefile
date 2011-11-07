@@ -23,10 +23,10 @@ MAKEGLOSSARIES = makeglossaries
 all: examples $(DOCFILE)
 
 $(DOCFILE): $(DOCSRC)
-	TEXINPUTS=../beamer/doc:$$TEXINPUTS $(PDFLATEX) $(basename $@ .pdf).tex
+	$(PDFLATEX) $(basename $@ .pdf).tex
 	bibtex $(basename $@ .pdf)
 	makeglossaries $(basename $@ .pdf)
-	TEXINPUTS=../beamer/doc:$$TEXINPUTS $(PDFLATEX) $(basename $@ .pdf).tex
+	$(PDFLATEX) $(basename $@ .pdf).tex
 
 examples:
 	$(MAKE) -C $(EXAMPLEDIR)

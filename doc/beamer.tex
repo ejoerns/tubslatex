@@ -1,4 +1,6 @@
-\chapter{Anwendung und Folienaufbau}
+\chapter{Präsentationen}
+
+\section{Anwendung und Folienaufbau}
 
 Grundsätzlich handelt es sich bei der Vorlage lediglich um ein Theme für
 das beamer-Paket. An der Funktionalität von beamer wird so gut wie nichts
@@ -10,7 +12,7 @@ einige damit verbundene allgemeine Hinweise gegeben werden.
 
 Die Vorlage wird mit dem Beamer-Befehl \lstinline!\usetheme{tubs}! geladen.
 
-\section{Titelfolie}
+\subsection{Titelfolie}
 
 Die Titelfolie ist im Absender/Kommunikations-Bereichslayout mit
 Siegelband-Logo im Sinne der allgemeinen Gestaltungsprinzipien des
@@ -43,7 +45,7 @@ Instituts-Logo platziert werden.
 \fbox{\includegraphics[width=0.9\textwidth]{examples/titelseite.pdf}}
 \end{minipage}
 
-\subsection{Befehle}
+\subsubsection{Befehle}
 
 Es können die Standardbefehle zur Titelseitenerstellung, wie
 \lstinline{\title},
@@ -64,7 +66,7 @@ Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
 \lstinline{[plain]} übergeben werden,
 sonst kommt es zu einer falschen Darstellung!
 
-\subsection{Titelgrafik}
+\subsubsection{Titelgrafik}
 
 Das Titelbild kann (im Rahmen der Corporate Design-Richtlinine
 unter Beachtung der unten aufgeführten Hinweise) frei gewählt werden.
@@ -141,7 +143,7 @@ korrekte vertikale Skalierung sichergestellt.
 \end{lstlisting}
 \end{example}
 
-\subsection{Logo}
+\subsubsection{Logo}
 
 Das mittels \lstinline{\logo} eingebundene Logo wird in der rechten oberen
 Ecke des Absenderbereiches angezeigt und standardmäßig auch auf allen weiteren
@@ -161,7 +163,7 @@ hoch.
 \end{example}
 
 
-\section{Inhaltsfolien}
+\subsection{Inhaltsfolien}
 
 Das Layout der Inhaltsfolien ist relativ schlicht und bietet viel Platz.
 Die Überschrift ist im Kopfbereich grau hinterlegt und im Fußbereich der Folien
@@ -183,42 +185,59 @@ Ist dies nicht gewünscht, kann dies mit der Klassenoption
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \fboxsep0mm
-\fbox{\includegraphics[width=0.9\textwidth]{examples/inhaltsseite.pdf}}
+\fbox{\includegraphics[width=0.9\textwidth,page=1]{examples/inhaltsseite.pdf}}
 \end{minipage}
 
-\subsection{Hervorgehobene Folien}
+\subsubsection{Hervorgehobene Folien}
 
-Einzelne wichtige Folien können extra hervorgehoben werden. Diese werden mit
-der Umgebung \lstinline{highlightframe} erzeugt. Dies hat einen breiteren und
-rot hinterlegten Titelbereich zur Folge.
-
-% \begin{example}
-% \begin{lstlisting}
-% \begin{highlightframe}{Wichtig}
-% Diese Folie ist wichtig!
-% \end{highlightframe}
-% \end{lstlisting}
-% \end{example}
+Einzelne wichtige Folien können extra hervorgehoben werden.
+Dazu dient die Option \lstinline{highlight},
+welche einen breiteren und rot hinterlegten Titelbereich erzeugt.
 
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
-\begin{highlightframe}
+\begin{frame}[highlight]
   {Inhaltsseite -- Hervorgehoben}
   \begin{itemize}
     \item Hier steht der Inhalt
     \item Hier nicht
     \item Weitere Informationen
   \end{itemize}
-\end{highlightframe}
+\end{frame}
 \end{verbatim}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \fboxsep0mm
-\fbox{\includegraphics[width=0.9\textwidth]{%
-  examples/inhaltsseite_hervorgehoben.pdf}}
+\fbox{\includegraphics[width=0.9\textwidth,page=2]{%
+  examples/inhaltsseite.pdf}}
 \end{minipage}
 
-\subsection{Fußzeile}
+\subsubsection{Titellose Folien}
+
+Für besondere Fälle bei denen ein sehr breiter Darstellungsbereich benötigt
+wird, kann mit der Option \lstinline{notitle} die Titelleiste auf einzelnen
+Folien deaktiviert werden.
+Anders als bei der \lstinline{plain}-Option wird hier
+der Fußbereich normal dargestellt.
+
+\begin{minipage}{0.5\textwidth}
+\begin{verbatim}
+\begin{frame}[notitle]
+  \begin{itemize}
+    \item Hier steht der Inhalt
+    \item Hier nicht
+    \item Weitere Informationen
+  \end{itemize}
+\end{frame}
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\fboxsep0mm
+\fbox{\includegraphics[width=0.9\textwidth,page=3]{%
+  examples/inhaltsseite.pdf}}
+\end{minipage}
+
+\subsubsection{Fußzeile}
 
 In der Fußzeile steht laut Vorgabe Datum und Seitenzahl.
 Ist das einmal nicht gewollt, kann dies durch Angabe der Optionen
@@ -230,7 +249,7 @@ und \lstinline{\title}, sodass auch Kurztitel möglich sind.
 die Fußzeile (\textit{page} statt Seite, anderes Datumsformat).
 
 
-\section{Skalierbarkeit}
+\subsection{Skalierbarkeit}
 
 Die beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
 andere Seitenformate gebrachte werden kann, wird vom Layout generell
@@ -239,7 +258,7 @@ Seitenverhältnis benötigt wird, wenn es passend dargestellt werden soll
 (siehe Tabelle \ref{tab:picratio}).
 
 
-\chapter{Farbanpassung}
+\section{Farbanpassung}
 
 Um ein individuelleres Foliendesign zu ermöglichen, können einige Elemente
 (unter Verwendung des CorporateDesign-Farbkontingents)
@@ -256,7 +275,7 @@ erläutert.
 Details über die Farben der CorporateDesign-Farbklänge sind bitte der
 entsprechenden Dokumentation zu entnehmen.%TODO: ref
 
-\section{Anpassung über Optionen}
+\subsection{Anpassung über Optionen}
 
 Über die Angabe von Farbargumenten können alle zur farblichen Anpassung
 vorgesehenen Elemente nach einem vordefinierten Farbschema unter freier Auswahl
@@ -341,7 +360,7 @@ zu finden.
 % \lstinline!\usetheme[blue,colorhead]{tubs}!
 % \end{minipage}
 
-\section{Anpassung über Farb-Templates}
+\subsection{Anpassung über Farb-Templates}
 
 Es können folgende Farb-Templates angepasst werden:
 \begin{description}
@@ -367,9 +386,9 @@ Es können folgende Farb-Templates angepasst werden:
 Die Anpassung weiterer Elemente ist natürlich möglich,
 wird aber nicht empfohlen.
 
-\chapter{Optionen und Befehle}
+\section{Optionen und Befehle}
 
-\section{Optionen}\label{optionen}
+\subsection{Optionen}\label{optionen}
 
 Auflistung aller Theme-spezieller Optionen zur Übergabe and die
 Dokumentenklasse bzw. das Beamer-theme.
@@ -377,7 +396,7 @@ Dokumentenklasse bzw. das Beamer-theme.
 Die templatespezifischen Argumente sollten bevorzugt
 über \lstinline!\usetheme! übergeben werden.
 
-\subsection{Kopf-/Fußbereich}
+\subsubsection{Kopf-/Fußbereich}
 
 \begin{classoption}{nopagenum}
   Blendet die mitlaufende Seitenzählung im Fuß der Folie aus.
@@ -392,9 +411,9 @@ Die templatespezifischen Argumente sollten bevorzugt
   das auch zur Navigation im Dokument genutz werden kann
   (entsprechend der Standard-Beamer-Klassen).
   
-  Angezeigt werden standardmäßig sections und subsections.
+  Angezeigt werden standardmäßig sections und subsubsections.
   Sollen nur sections angezeigt werden, bitte die Option
-  \lstinline{nosubsectionsinheader} verwenden.
+  \lstinline{nosubsubsectionsinheader} verwenden.
   
 \end{classoption}
 
@@ -414,8 +433,8 @@ Die templatespezifischen Argumente sollten bevorzugt
   Horizontal gestauchte Version des mitlaufenden Inahltsverzeichnisses.
 \end{classoption}
 
-\begin{classoption}{nosubsectionsinheader}
-  Deaktiviert die Anzeige von subsections im Header.
+\begin{classoption}{nosubsubsectionsinheader}
+  Deaktiviert die Anzeige von subsubsections im Header.
   
   Nur wirksam, wenn Option \lstinline{tocinheader} oder
   \lstinline{tinytocinheader} verwendet wird!
@@ -425,7 +444,7 @@ Die templatespezifischen Argumente sollten bevorzugt
   Deaktiviert die Anzeige des Logos im Fußbereich.
 \end{classoption}
 
-\subsection{Farbmodell}
+\subsubsection{Farbmodell}
 
 \begin{classoption}{rgbprint}
   Ausgabe in RGB-Druckfraben.\\
@@ -437,7 +456,7 @@ Die templatespezifischen Argumente sollten bevorzugt
 \end{classoption}
 
 
-\subsection{Farbschema}
+\subsubsection{Farbschema}
 
 \paragraph{Farbklang}
 \begin{themeoption}{yellow}
@@ -489,12 +508,12 @@ Die templatespezifischen Argumente sollten bevorzugt
 % \end{classoption}
 
 
-\section{Befehle}
+\subsection{Befehle}
 
 % \titlegraphicsheight
 % \tuDefaultTitlegraphic
 
-\subsection{Schriftgröße}
+\subsubsection{Schriftgröße}
 
 \begin{classoption}{9pt}
   Beschreibung
@@ -517,9 +536,9 @@ Die templatespezifischen Argumente sollten bevorzugt
 \end{classoption}
 
 
-\chapter{Hinweise}
+\section{Hinweise}
 
-\section{Inner-, Outer-, Font-, Color-Template}
+\subsection{Inner-, Outer-, Font-, Color-Template}
 
 Die einzelnen Teil-Templates des beamer-Templates können,
 entsprechend der beamer-Konventionen, selbstverständlich
@@ -530,7 +549,7 @@ Standard-Template verwendet werden, etc.
 Die Kompbination mit anderen Templates ist im allgemeinen jedoch nicht
 CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
 
-\section{columns-Umgebung}
+\subsection{columns-Umgebung}
 
 Die Verwendung der columns-Umgebung ist in vielen Fällen sinnvoll.
 Jedoch ist auf eine korrekte Verwendung zu achten.
@@ -557,7 +576,7 @@ Das Beispiel wäre wie folgt zu ändern:
 \end{lstlisting}
 
 
-\section{Listings in Folien}
+\subsection{Listings in Folien}
 
 Auch wenn dies in der beamer-Dokumentation ausdrücklich erläutert ist,
 sollte hier noch einmal erwähnt werden, dass bei Gebraucht von Listings etc.
@@ -571,7 +590,7 @@ in Folien die Option \lstinline{fragile} übergeben werden muss.
 
 
 
-\section{PDF-Titel}
+\subsection{PDF-Titel}
 
 Die standardmäßige Erstellung des PDF-Titel von beamer ist dahingehend
 abgeändert, dass, sofern vorhanden, die Kurzversion des Präsentationstitels
@@ -581,7 +600,7 @@ Dies ermöglicht es zum Beispiel kleine Grafiken in den Titel einzubringen und
 trotzdem einen korrekten PDF-Titel zu erhalten.
 
 
-\section{Zusätzliche Schriftgrößen}
+\subsection{Zusätzliche Schriftgrößen}
 
 Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\micro}
 und \lstinline{\nano} an, die jeweils noch kleiner sind als alle restlich
@@ -592,7 +611,7 @@ Notwendigkeit von Autoren verwendet werden, z\,B für kleinste Quellenangaben
 etc.
 
 
-\chapter{Minimalbeispiel}
+\section{Minimalbeispiel}
 
 Im folgenden ist der Code eines Minimalbeispieles aufgeführt, zusammen mit den
 daraus erzeugten Folien.
