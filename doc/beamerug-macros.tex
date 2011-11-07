@@ -126,10 +126,10 @@
 
 \def\typesetsol#1{\texttt{\def\_{\char`\_}#1}}
 
-\def\solution#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
-\item \textbf{Solution Template }\declare{\typesetsol{#1}}\par\topsep=0pt%
-  \index{#1@\protect\typesetsol{#1} solution}%
-  \index{Solutions!#1@\protect\typesetsol{#1}}}
+% \def\solution#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
+% \item \textbf{Solution Template }\declare{\typesetsol{#1}}\par\topsep=0pt%
+%   \index{#1@\protect\typesetsol{#1} solution}%
+%   \index{Solutions!#1@\protect\typesetsol{#1}}}
 \def\endsolution{\endlist}
 
 \def\template#1{\list{}{\leftmargin=2em\itemindent-\leftmargin\def\makelabel##1{\hss##1}}%
@@ -194,7 +194,7 @@
   \index{Inserts!\stripcommand#1@\protect\myprintocmmand{\stripcommand#1}}}
 
 \newcommand\opt[1]{{\color{black!50!green}#1}}
-\newcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
+% \newcommand\oarg[1]{\opt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
 \newcommand\ooarg[1]{{\ttfamily[}\meta{#1}{\ttfamily]}}
 \newcommand\sarg[1]{\opt{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}}
 \newcommand\ssarg[1]{{\ttfamily\char`\<}\meta{#1}{\ttfamily\char`\>}}
