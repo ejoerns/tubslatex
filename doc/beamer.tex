@@ -1,6 +1,6 @@
 \chapter{Präsentationen}
 
-\section{Anwendung und Folienaufbau}
+% \section{Anwendung und Folienaufbau}
 
 Grundsätzlich handelt es sich bei der Vorlage lediglich um ein Theme für
 das beamer-Paket. An der Funktionalität von beamer wird so gut wie nichts
@@ -12,7 +12,7 @@ einige damit verbundene allgemeine Hinweise gegeben werden.
 
 Die Vorlage wird mit dem Beamer-Befehl \lstinline!\usetheme{tubs}! geladen.
 
-\subsection{Titelfolie}
+\section{Titelfolie}
 
 Die Titelfolie ist im Absender/Kommunikations-Bereichslayout mit
 Siegelband-Logo im Sinne der allgemeinen Gestaltungsprinzipien des
@@ -45,7 +45,7 @@ Instituts-Logo platziert werden.
 \fbox{\includegraphics[width=0.9\textwidth]{examples/titelseite.pdf}}
 \end{minipage}
 
-\subsubsection{Befehle}
+\subsection{Verfügbare Befehle}
 
 Es können die Standardbefehle zur Titelseitenerstellung, wie
 \lstinline{\title},
@@ -66,35 +66,61 @@ Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
 \lstinline{[plain]} übergeben werden,
 sonst kommt es zu einer falschen Darstellung!
 
-\subsubsection{Titelgrafik}
+\subsection{Titelgrafik}
 
-Das Titelbild kann (im Rahmen der Corporate Design-Richtlinine
-unter Beachtung der unten aufgeführten Hinweise) frei gewählt werden.
-Wenn kein eigenes Bild zur Hand ist, kann alternativ ein Standardbild eingefügt
-werden, dass die Front des TU-Altgebäudes zeigt und gut mit den Folienfarben
-harmoniert.
+\begin{Declaration}
+  \Macro{titlegraphic}\Parameter{Inhalt}
+\end{Declaration}
 
-Die Einbindung des Bildes erfolgt in beiden Fällen mit dem Befehl
-\lstinline!\titlegraphic{}!.
+\begin{sloppypar}
+Dieser von \LaTeX-beamer bereitgestellte Befehl erlaubt in \tubslatex
+die Darstellung von Inhalten im Bildbereich der Titel-Folie.
+Der \PName{Inhalt} kann dabei ein beliebiges \LaTeX-Konstrukt sein
+und wird am unteren Rande des Bildbereiches ausgerichtet dargestellt.
 
-\paragraph{Standardgrafik}
+Im Normalfall wird als Titelgrafik allerdings eine Bild-Datei mittels
+\lstinline{\includegraphics} eingebunden werden.
+Diese kann (im Rahmen der allgemeinen Corporate Design-Richtlinien)
+frei gewählt werden.
+Das eingebundene Bild wird dabei automatisch randfrei
+auf den Darstellungsbereich skaliert und zugeschnitten, sofern keine
+Standard-Optionen an \lstinline{\includegraphics} übergeben werden.
 
-Das Einfügen des Standardbildes ist mit dem Befehl
-\linebreak\lstinline{\tuDefaultTitlegraphic} möglich,
-der \lstinline!\titlegraphic{}! direkt als Argument übergeben werden kann.
+Innerhalb von \lstinline!\titlegraphic{}! stehen folgende
+zusäztliche Optionen zur Einpassung des Bildes zur Verfügung:
+\end{sloppypar}
 
-\begin{example}
-\begin{lstlisting}
-\titlegraphic{\tuDefaultTitlegraphic}
-\end{lstlisting}
-\end{example}
+\begin{desctable}
+\entry{\PValue{clipped}}{%
+  Automatisches Abschneiden. Dies ist die \emph{Standardeinstellung}.
+}
+\entry{\PValue{clipx}}{%
+  Abschnitt horizontal.
+}
+\entry{\PValue{clipy}}{%
+  Abschnitt vertikal.
+}
+\entry{\PValue{scaled}}{%
+  Horizontale \emph{und} vertikale Skalierung.
+}
+\entry{\PValue{keepsize}}{%
+  ?
+}
+\end{desctable}
 
-\paragraph{Individuelle Grafik}
+\begin{Example}
+  \begin{lstlisting}
+\titlegraphic{\includegraphics[scaled]{myimage.jpg}}
+  \end{lstlisting}
+  Fügt \textit{myimage.jpg} passend in den Bildbereich ein, indem es das Bild
+  horizontal und vertikal skaliert.
+\end{Example}
 
-Damit das Bild auf der Titelfolie den gesamten zur Verfügung stehenden Raum
-ausfüllen kann, muss es ein korrektes Seitenverhältnis haben.
-In Tabelle \ref{tab:picratio} sind Bild-Seiten\-verhältnisse für verschiedene
-Seitenverhältnisse der Präsentation aufgeführt.
+Im Prinzip ist das Seitenverhältnis des Quellbildes durch die automatische
+Einpassung nicht besonders kritisch. Jedoch wird durch ein korrektes Verhältnis
+sicher gestellt, dass keine wichtigen Teile des Bildes abgeschnitten werden.
+In Tabelle \ref{tab:picratio} sind daher Bild-Seiten\-verhältnisse für
+verschiedene Seitenverhältnisse der Präsentation aufgeführt.
 
 \begin{table}[ht]
 \centering
@@ -112,58 +138,68 @@ $16:10$ & $1:3{,}83$ \\
 \label{tab:picratio}
 \end{table}
 
-Werden keine korrekten Verhältnisse verwendet, wird das Bild vertikal
-skaliert und zentriert im Bildbereich dargestellt.
 
-Der Bildbereich kann theoretisch auch freigelassen werden, er ist mit
-einem Gelbton aus den Sekundärfarben eingefärbt.\medskip
 
-Die Verwendung von \lstinline{\titlegraphicswidth} als Breitenbeschränkung sorgt
-darfür, dass das Bild in der korrekten Breite dargestellt wird. Das Titelbild 
-wird generell an der unteren Kante des dafür vorgesehenen Bereichs ausgerichtet,
-sodass in falschem Seitenverhältnis vorliegene Bilder nach Oben 'rausgeschoben'
-werden.
+\paragraph{Standardgrafik}
 
-\begin{example}
-\begin{lstlisting}
-\titlegraphic{\includegraphics[width=\titlegraphicswidth]
-    {titlepicture}}
-\end{lstlisting}
-\end{example}
+Zu Testwecken oder falls kein eigenes Bild zur Hand ist,
+kann alternativ ein Standardbild eingefügt werden, das die Front
+des TU-Altgebäudes zeigt und gut mit den Standard-Folienfarben harmoniert.
 
-Alternativ kann auch eine Höhenbeschränkung über die Längenangabe
-\lstinline{\titlegraphicsheight} erfolgen. Dies ist besonders bei Grafiken
-sinnvoll, deren Breite geringer als benötigt ist. Damit wird deren automatische
-korrekte vertikale Skalierung sichergestellt.
+Das Einfügen des Standardbildes ist mit dem Befehl
+\linebreak\lstinline{\tuDefaultTitlegraphic} möglich,
+der \lstinline!\titlegraphic{}! direkt als Argument übergeben werden kann.
 
 \begin{example}
 \begin{lstlisting}
-\titlegraphic{\includegraphics[height=\titlegraphicsheight]
-    {titlepicture}}
+\titlegraphic{\tuDefaultTitlegraphic}
 \end{lstlisting}
 \end{example}
 
-\subsubsection{Logo}
+
+\paragraph{Manuelle Einpassung}\hfill
+
+\begin{Declaration}
+  \Macro{titlegraphicswidth}\\
+  \Macro{titlegraphicsheight}
+\end{Declaration}
+
+Zur manuellen Einpassung oder für das Erstellen von Grafiken mittels
+\LaTeX-Befehlen ist die Dimension des Titelgrafik-Bereichs in den
+beiden Längen \lstinline{titlegraphicswidth} und \lstinline{titlegraphicsheight}
+hinterlegt.
+
+% Das Titelbild wird generell an der unteren Kante des dafür vorgesehenen Bereichs ausgerichtet, sodass in falschem Seitenverhältnis vorliegene Bilder nach Oben 'rausgeschoben' werden.
+
+\subsection{Logo}
+
+\begin{Declaration}
+  \Macro{logo}\Parameter{Bild}
+\end{Declaration}
 
 Das mittels \lstinline{\logo} eingebundene Logo wird in der rechten oberen
 Ecke des Absenderbereiches angezeigt und standardmäßig auch auf allen weiteren
 Folien im Fußbereich, sofern nicht die Option \lstinline{nologoinfoot}
 verwendet wird.
 
-Die Verwendung von \lstinline{\logoheight} als Höhenbeschränkung für Grafiken
-stellt deren automatische korrekte vertikale Skalierung sicher.
-Das Seitenverhältnis der verwendeten Grafik-Datei ist dabei relativ
-frei, sollte jedoch nach Möglichkeit und Gründen der Lesbarkeit breiter sein als
-hoch.
+Das eingebundene Logo wird bei Verwendung von \lstinline!\includegraphics{}! 
+automatisch korrekt vertikal skaliert,
+sofern keine manuelle Skalierung als Option angegeben wird.
+
+% Die Verwendung von \lstinline{\logoheight} als Höhenbeschränkung für Grafiken
+% stellt deren automatische korrekte vertikale Skalierung sicher.
+% Das Seitenverhältnis der verwendeten Grafik-Datei ist dabei relativ
+% frei, sollte jedoch nach Möglichkeit und Gründen der Lesbarkeit breiter sein als
+% hoch.
 
 \begin{example}
 \begin{lstlisting}
-\logo{\includegraphics[height=\logoheight]{institut.jpg}}
+\logo{\includegraphics{institut.jpg}}
 \end{lstlisting}
 \end{example}
 
 
-\subsection{Inhaltsfolien}
+\section{Inhaltsfolien}
 
 Das Layout der Inhaltsfolien ist relativ schlicht und bietet viel Platz.
 Die Überschrift ist im Kopfbereich grau hinterlegt und im Fußbereich der Folien
