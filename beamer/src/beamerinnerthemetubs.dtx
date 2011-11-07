@@ -88,35 +88,57 @@
 %
 %    \begin{macrocode}
 %<*innertheme>
+\ProvidesPackage{beamerinnerthemetubs}[2011/09/10 v1.0 Beamer-Inner-Template TuBs]
 %    \end{macrocode}
 %
+% Lade Pakete.
 %    \begin{macrocode}
-\ProvidesPackage{beamerinnerthemetubs}[2011/09/10 v1.0 Beamer-Inner-Template TuBs]
-% Load packages
 \RequirePackage{ifthen}
 \RequirePackage{relsize}[1999/11/01]
 \RequirePackage{printlen}
 \RequirePackage{tubsbeamersizes}
 \RequirePackage{tubslogo}
-
-%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+%
+%
+% \subsection{Optionen}
+%
+%
+%    \begin{key}{}{shadow}
+%    \begin{macrocode}
 \DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
-\DeclareOptionBeamer{minion}{\setboolean{useminion}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+% Optionen behandel
+%    \begin{macrocode}
 \ExecuteOptionsBeamer{shadow=false}
 \ProcessOptionsBeamer\relax
-
-% loads the default title graphic
+%    \end{macrocode}
+%
+%    \begin{macro}{\tuDefaultTitlegraphic}
+% Lädt Standard-Titelgraphik
+%    \begin{macrocode}
 \newcommand{\tuDefaultTitlegraphic}{%
 \includegraphics[width=\titlegraphicswidth]{defaulttitlepicture}}
-
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
 \newlength{\@image@xorig}
 \newlength{\@image@xcalc}
 \newlength{\@image@yorig}
 \newlength{\@image@ycalc}
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 %NOTE: beamer redefines includegraphics and drops the starred version... :/
 \newcommand\tubs@imagefit{cropped}
 \newcommand\@img@scale@param{}%
+%    \end{macrocode}
+%
+%    \begin{macro}{\tubs@calc@autoscale}
+%    \begin{macrocode}
 \newcommand\tubs@calc@autoscale[1]{%
   \ifthenelse{\equal{\tubs@imagefit}{scaled}}{%
     \renewcommand\@img@scale@param{clip,%
@@ -167,27 +189,59 @@
     }{}}}%
   }%
 }
-
-% imagefit keys
+%    \end{macrocode}
+%    \end{macro}
+%
+% \paragraph{Imagefit-Keys}
+%
+%    \begin{key}{}{scaled}
+%    \begin{macrocode}
 \define@key{tubs@titlegraphic}{scaled}[true]{
   \renewcommand\tubs@imagefit{scaled}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{cropx}
+%    \begin{macrocode}
 \define@key{tubs@titlegraphic}{cropx}[true]{
   \renewcommand\tubs@imagefit{cropx}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{cropy}
+%    \begin{macrocode}
 \define@key{tubs@titlegraphic}{cropy}[true]{
   \renewcommand\tubs@imagefit{cropy}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{cropped}
+%    \begin{macrocode}
 \define@key{tubs@titlegraphic}{cropped}[true]{
   \renewcommand\tubs@imagefit{cropped}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{keepsize}
+%    \begin{macrocode}
 \define@key{tubs@titlegraphic}{keepsize}[true]{
   \renewcommand\tubs@imagefit{keepsize}
 }
-
-
+%    \end{macrocode}
+%    \end{key}
+%
+%
+%    \begin{macrocode}
 \let\@orig@titlegpraphic\titlegraphic
 \newsavebox{\@test@box}
+%    \end{macrocode}
+%
+%    \begin{macro}{\titlegpraphic}
+%    \begin{macrocode}
 \renewcommand{\titlegraphic}[2][]{%
   \@orig@titlegpraphic{
     \setkeys{tubs@titlegraphic}{cropped,#1}%
@@ -212,20 +266,30 @@
   }%
   #2}
 }
-
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\logo}
+%    \begin{macrocode}
 % Höhe des Logos wird automatisch skaliert bei Verwendung von includegraphics
 \renewcommand{\logo}[1]{\setbeamertemplate{logo}{%
   \begingroup\setkeys{Gin}{height=\logoheight}#1\endgroup}}
-
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
 \mode<presentation>
-
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \setbeamertemplate{blocks}[rounded][shadow=\beamer@themerounded@shadow]
-
+%    \end{macrocode}
+%
+%    \begin{macro}{title page}
+%    \begin{macrocode}
 %% Trick: To re-define a template from scratch, give it a new name as
 %% second argument.
-
-\defbeamertemplate*{title page}{TU-CD}[1][]{%
+\defbeamertemplate*{title page}{tubs}[1][]{%
   \vspace*{-5.5pt} % korrigierte Nulllinie
   \vspace*{\beamer@CDsenderheight}
   \begin{beamercolorbox}[
@@ -275,8 +339,12 @@
   \end{beamercolorbox}
   \vspace*{22\beamer@CDgaussunit}
 }
-
-\defbeamertemplate*{part page}{TU-CD}[1][]{%
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{part page}
+%    \begin{macrocode}
+\defbeamertemplate*{part page}{tubs}[1][]{%
   \begin{centering}
     {\usebeamerfont{part name}\usebeamercolor[fg]{part name}\partname~\insertromanpartnumber}
     \vskip1em\par
@@ -285,140 +353,85 @@
     \end{beamercolorbox}
   \end{centering}
 }
-
-%% Itemize environment with narrower lines
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{narrowitemize}
+% Itemize environment with narrower lines
+%    \begin{macrocode}
 \newenvironment{narrowitemize}{%
-  \begin{itemize}\setlength{\itemsep}{0pt}}{\end{itemize}}
-%% Itemize environment with narrower lines and with no item signs
+  \begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+}{%
+  \end{itemize}%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{emptyitemize}
+% Itemize environment with narrower lines and with no item signs
+%    \begin{macrocode}
 \newenvironment{emptyitemize}{%
-\setbeamertemplate{itemize item}{\ }
-\setbeamertemplate{itemize subitem}{\rule[0.17em]{0.25em}{0.25em}}
-\begin{itemize}\setlength{\itemsep}{0pt}}{\end{itemize}}
-
+  \setbeamertemplate{itemize item}{\ }
+  \setbeamertemplate{itemize subitem}{\rule[0.17em]{0.25em}{0.25em}}
+  \begin{itemize}%
+    \setlength{\itemsep}{0pt}%
+}{%
+  \end{itemize}%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
 %  Squares for items
-\defbeamertemplate*{itemize item}{TU-CD}{\rule[0.15em]{0.3em}{0.3em}}
-\defbeamertemplate*{itemize subitem}{TU-CD}{\rule[0.17em]{0.25em}{0.25em}}
+\defbeamertemplate*{itemize item}{tubs}{\rule[0.15em]{0.3em}{0.3em}}
+\defbeamertemplate*{itemize subitem}{tubs}{\rule[0.17em]{0.25em}{0.25em}}
 %  dash for subsubitems
-\defbeamertemplate*{itemize subsubitem}{TU-CD}{\textbf{\textendash}}
-\defbeamertemplate*{itemize subsubsubitem}{TU-CD}{\textperiodcentered}
-
-\defbeamertemplate{section in toc}{TU-CD}{%
+\defbeamertemplate*{itemize subsubitem}{tubs}{\textbf{\textendash}}
+\defbeamertemplate*{itemize subsubsubitem}{tubs}{\textperiodcentered}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\defbeamertemplate{section in toc}{tubs}{%
   \leavevmode\normalsize\raise-1.5pt\hbox{\rule[0.15em]{0.3em}{0.3em}}\kern1.25ex
   \inserttocsection\par
 }
-\defbeamertemplate{subsection in toc}{TU-CD}{%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\defbeamertemplate{subsection in toc}{tubs}{%
   \leavevmode\leftskip=1.5em\hbox{\rule[0.17em]{0.25em}{0.25em}}%
   \kern1ex\inserttocsubsection\par
 }
-\defbeamertemplate{subsubsection in toc}{TU-CD}{%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\defbeamertemplate{subsubsection in toc}{tubs}{%
   \leavevmode\normalsize\usebeamerfont{subsection in
     toc}\leftskip=3em\usebeamerfont{subsubsection in toc}%
   \hbox{\textasteriskcentered}%
   \kern0.75ex\inserttocsubsubsection\par
 }
-
-\setbeamertemplate{items}[TU-CD]
-\setbeamertemplate{sections/subsections in toc}[TU-CD]
-
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\setbeamertemplate{items}[tubs]
+\setbeamertemplate{sections/subsections in toc}[tubs]
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \setlength{\leftmargini}{1.3em}
 \setlength{\leftmarginii}{1.3em}
 \setlength{\leftmarginiii}{1.3em}
 \setlength{\leftmarginiv}{1.3em}
-
-\setbeamercovered{transparent}
-
-\mode<all>
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% TODO: Entfernen????
-
-\RequirePackage[sepfour]{numprint}[2003/09/18]
-\RequirePackage[activate]{pdfcprot}[2002/02/27]
-
-\newboolean{usethis}
-\setboolean{usethis}{false}
-\ifthenelse{\boolean{usethis}}{%
-\DeclareRobustCommand\noscshape{%
-  \not@math@alphabet\noscshape\relax
-  \ifthenelse{\equal{\f@shape}{\scdefault}}{%
-    \fontshape\updefault
-  }{%
-  }%
-  \selectfont
-}
-
-\DeclareRobustCommand\acro[1]{\textsmaller{\MakeUppercase{#1}}}
-
-\newcommand\person{}%
-\let\person=\emph
-\newcommand\new{}%
-\let\new=\emph
-\newcommand\engl{}%
-\let\engl=\emph
-%\newcommand*\qed{%
-%  \hskip 1em plus 1fill\rule{0pt}{1ex}\hskip\z@skip
-%  \hglue 0pt plus 1fill\mbox{\qedname}}
-\newcommand*\qedname{\rule{1ex}{1ex}}
-\newcommand*\tr{\mathop{\operator@font tr}\nolimits}
-\newcommand*\e{\mathop{\operator@font e}\nolimits}
-\newcommand*\D{\ensuremath{\upDelta}}
-\newcommand*\grad{\mathop{\operator@font grad}\nolimits}
-\newenvironment{cases*}{%
-  \matrix@check\cases\env@cases
-}{%
-  \endarray\right\rbrace%
-}
-\newcommand*\equivalent{\ensuremath{\mathrel{\widehat{=}}}}
-
-\newenvironment{nomathindent}[1][1.0]{%
-  \addtolength{\mathindent}{-#1\mathindent}%
-  \ignorespaces
-}{\ignorespacesafterend}
-
-%\ClassWarningNoLine{rhbslides}{The combination of the main font
-%  Times\MessageBreak
-%  with bold vectors (option <boldvec>)\MessageBreak
-%  leads to ugly results in some cases}%
-%\renewcommand*\vec[1]{\ensuremath{\pmb{#1}}}
-%\renewcommand*\matr[1]{\ensuremath{\pmb{#1}}}
-%\renewcommand*\tens[2]{\ensuremath{\pmb{#1}}}
-
-\addto\extrasgerman{\npdecimalsign{,}\npproductsign{\cdot}}%
-\addto\extrasngerman{\npdecimalsign{,}\npproductsign{\cdot}}%
-\addto\extrasaustrian{\npdecimalsign{,}\npproductsign{\cdot}}%
-\addto\extrasnaustrian{\npdecimalsign{,}\npproductsign{\cdot}}%
-\addto\extrasenglish{\npdecimalsign{.}\npproductsign{\cdot}}%
-\addto\extrasamerican{\npdecimalsign{.}\npproductsign{\times}}%
-
-\mathchardef\mathcomma\mathcode`\,
-\mathcode`\,=32768 % "8000
-\begingroup
-\catcode`\_=12
-\catcode`\,=\active
-\@firstofone{%
-\endgroup
- \edef\DC@char{\meaning_}
- \def\DC@parse#1 _{\def\DC@parse##1#1 ##2##3\delimiter{##2}}
- \expandafter\DC@parse\DC@char
- \toks@={\expandafter\DC@parse\meaning\DC@char}
- \edef\DC@test{9<2\the\toks@ \DC@char.\delimiter}
- \DeclareRobustCommand\ActiveComma{\futurelet\DC@char\DC@docomma}
- \def\DC@docomma{%
-   \ifnum\DC@test \mathord \fi
-   \mathcomma
- }
- \let,\ActiveComma
-}
-
-\let\glqq=\frqq
-\let\grqq=\flqq
-\let\glq=\frq
-\let\grq=\flq
-}{}
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \end{macrocode}
+%
 %    \begin{macrocode}
+\setbeamercovered{transparent}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\mode<all>
 %</innertheme>
 %    \end{macrocode}
 %
