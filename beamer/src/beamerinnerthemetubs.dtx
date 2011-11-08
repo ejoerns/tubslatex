@@ -116,6 +116,10 @@
 \ProcessOptionsBeamer\relax
 %    \end{macrocode}
 %
+%
+% \subsection{Titelgrafik und Logo}
+%
+%
 %    \begin{macro}{\tuDefaultTitlegraphic}
 % Lädt Standard-Titelgraphik
 %    \begin{macrocode}
@@ -124,12 +128,6 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macrocode}
-\newlength{\@image@xorig}
-\newlength{\@image@xcalc}
-\newlength{\@image@yorig}
-\newlength{\@image@ycalc}
-%    \end{macrocode}
 %
 %    \begin{macrocode}
 %NOTE: beamer redefines includegraphics and drops the starred version... :/
@@ -140,6 +138,10 @@
 %    \begin{macro}{\tubs@calc@autoscale}
 %    \begin{macrocode}
 \newcommand\tubs@calc@autoscale[1]{%
+  \newdimen\@image@xorig%
+  \newdimen\@image@xcalc%
+  \newdimen\@image@yorig%
+  \newdimen\@image@ycalc%
   \ifthenelse{\equal{\tubs@imagefit}{scaled}}{%
     \renewcommand\@img@scale@param{clip,%
         height=\titlegraphicsheight,
@@ -195,6 +197,7 @@
 % \paragraph{Imagefit-Keys}
 %
 %    \begin{key}{}{scaled}
+% Horizontal + vertikal Skalieren
 %    \begin{macrocode}
 \define@key{tubs@titlegraphic}{scaled}[true]{
   \renewcommand\tubs@imagefit{scaled}
@@ -203,7 +206,11 @@
 %    \end{key}
 %
 %    \begin{key}{}{cropx}
+% Skalieren auf Höhe, Zuschneiden auf Breite
 %    \begin{macrocode}
+\define@key{tubs@titlegraphic}{clipx}[true]{
+  \renewcommand\tubs@imagefit{cropx}
+}
 \define@key{tubs@titlegraphic}{cropx}[true]{
   \renewcommand\tubs@imagefit{cropx}
 }
@@ -211,7 +218,11 @@
 %    \end{key}
 %
 %    \begin{key}{}{cropy}
+% Skalieren auf Breite, Zuschneiden auf Höhe
 %    \begin{macrocode}
+\define@key{tubs@titlegraphic}{clipy}[true]{
+  \renewcommand\tubs@imagefit{cropy}
+}
 \define@key{tubs@titlegraphic}{cropy}[true]{
   \renewcommand\tubs@imagefit{cropy}
 }
@@ -219,7 +230,11 @@
 %    \end{key}
 %
 %    \begin{key}{}{cropped}
+% Automatisches Skalieren und Zuschneiden
 %    \begin{macrocode}
+\define@key{tubs@titlegraphic}{clipped}[true]{
+  \renewcommand\tubs@imagefit{cropped}
+}
 \define@key{tubs@titlegraphic}{cropped}[true]{
   \renewcommand\tubs@imagefit{cropped}
 }
@@ -269,6 +284,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
 %    \begin{macro}{\logo}
 %    \begin{macrocode}
 % Höhe des Logos wird automatisch skaliert bei Verwendung von includegraphics
@@ -277,8 +293,11 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%
+% \subsection{Templates}
+%
 %    \begin{macrocode}
-\mode<presentation>
+\mode<presentation>% TODO: Hier ???
 %    \end{macrocode}
 %
 %    \begin{macrocode}
