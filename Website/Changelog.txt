@@ -1,0 +1,103 @@
+Revision: 742
+
+- Allgemein:
+  - eso-pic-Warnung behoben
+
+- Dokumentenklassen
+  - Zeilenspacing für 10pt und 11pt \normalsize angepasst (CD-konform)
+  - \small, \tiny und \scriptsize für 10pt und 11pt angepasst (+ spacing)
+  - Kopfzeilenbehandlung umgeschrieben und erweitert. Nun Koma-kompatibler,
+    over- und underfull \vbox-Warnungen behoben,
+    ihead, ohead, etc. bekommen alte Bedeutung zurück,
+    innerhead, outerhead, etc. als neue Kommandos.
+    Einzelne Linie am Kopfbereich, wird nun von Koma bereitgestellt
+  - 'extramargin'-Option vergrößert Abstand zum unteren (oberen) Rand
+
+- poster
+  - Doppelte Option für wissenschaftliche Poster verschmolzen
+  - Fehlerhafte Darstellung von subrow-Modulen am Zeilenende korrigiert
+  - Darstellungswahl über Option 'style' vereinheitlicht, Darstellung
+    für Aushänge hinzugefuegt
+  - Optionen für Hintergrundfarbe und Hintergrundbild für Module implementiert
+    (automatisch zuschneidend/skalierend)
+
+- beamer
+  - Schriftgrößen 'micro' und 'nano' in 'microsize' und 'nanosize' umbenannt,
+    um Kompatibilität mit siunit und evlt. anderen Paketen zu gewährleisten
+  - Optionen 'nexus' und 'arial' zur flexiblen Wahl der Schriftart
+  - Frame-Optionen 'highlight' und 'notitle' hinzugefuegt
+  - crop~-Optionen in clip~ umbenannt
+
+- nexus
+  - Striktere Behandlung der Schriftwahl Nexus/Arial, nur noch benötigte
+    Pakete werden geladen
+  - Optionswahl 'arial' stellt automatisch auf sffamily um
+
+- letter
+  - Behandlung von leeren Felder korrigiert,
+    Darstellung für leere Felder verbessert
+
+- leaflet
+  - Kompatibilität mit KOMA-Fonts erhöht
+
+- Installation
+  - Test auf lokales map-File und antsprechende Behandlung
+  - Umgehung von updmap-Fehlern
+  - Debian-Paket-Versionsnummer angepasst,
+    korrekt berechnete Paketgröße
+
+- Dokumenation
+  - Kapitel 'Plakete' erweitert
+  - Beschreibung von Kopfzeilen angepasst
+  - Kapitel 'Präsentationen' angepasst
+  - Kapitel 'Gauß-Layout' erweitert und angepasst
+  - chapter-Fonteinstellungen auf book und report begrenzt
+  - einige Hinweise zu Fehlerbehebungen
+  - diverse Änderungen
+
+--------------------------------------------------------------------------------
+
+Version 0.3-alpha2:
+
+  Allgemein:
+    - Dokumentation erweitert und angepasst
+    - Diverse "overfull hbox"-Fehler korrigiert
+    - Verbesserte Optionsverarbeitung des Logo-Pakets,
+      Vektorbasierte RGB-PDF eingebunden
+    - Korrekturen und Erweiterungen des Farb-Paketes
+    - Individuelles Logo wird automatisch skaliert,
+      Grobe Fehler in der horizontalen Positionierung korrigiert
+    - Pazo wird als neuer Standard-Mathe-Font in Kombination mit Nexus verwendet
+    - Zusammenspiel zwischen Optionen für Seitenstil bei gausspage-Umgebung
+      (in Verbindung mit Dokumentenklassen-Optionen) korrigiert und verbessert
+
+  Briefklasse:
+    - Kompatibilität zu alten KOMA-Skript-Versionen verbessert
+
+  Beamer-Templates:
+    - Gravierender Fehler in Schriftgrößenoptionen behoben
+    - Automatische Skalierung von Sekundärlogo
+    - Automatische Beschneidung/Skalierung von Titelgraphik auf
+      Darstellungsbereich (Wählbar durch Option)
+
+  Dokumentenklassen:
+    - Unterstützung zur Erstellung von Rückseiten im CD
+    - Unterstützung für Schriftgröße 10pt und 11pt (Standard)
+    - Neue Option 'extramargin' erlaubt schmaleren Textbereich
+    - Option 'style' mit Werten 'screen'/'print' für vereinfachten
+      Wechsel zwischen Darstellung auf Papier und Bildschirm als Medium
+    - Schriftgrößen-Definitionen verbessert und aktualisiert
+    - Logo-Positionierung auf Titelseiten nun anpassbar (left/right)
+    - Diverse Korrekturen in Optionsbehandlungen
+    - Seitenumbrüche bei Titel- und Rückseiten korrigiert
+    - Deutlich erweiterte Möglichkeiten für Kopf-/Fußzeilen-Definitionen
+      geschaffen
+
+  - Diverse weitere Verbesserungen und Fehlerkorrekturen
+  - Darüber hinaus stehen komplett neu strukturierte Beispiel-Dateien
+    zur Verfügung
+
+--------------------------------------------------------------------------------
+
+Version 0.3-alpha1:
+  - Initiale Version
