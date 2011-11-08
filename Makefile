@@ -3,7 +3,9 @@
 # Erstellt komplettes Release (still under construction!)
 # 
 
-TUBSLATEX_VERSION = 0.3-alpha3-pre
+HG_REVISION = `hg tip --template '{rev}'`
+TUBSLATEX_VERSION = 0.3-alpha3-r$(HG_REVISION)
+TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)alpha3
 
 # Verzeichnisse und Dateien
 DOCUMENTATION_DIR = doc
@@ -53,7 +55,7 @@ zip:
 	$(MAKE) -C $(INSTALL_RAW_DIR)
 	$(MAKE) -C $(INSTALL_RAW_DIR) VERSION=$(TUBSLATEX_VERSION) zip
 deb:
-	$(MAKE) -C $(INSTALL_DEB_DIR) copy
+	$(MAKE) -C $(INSTALL_DEB_DIR) copy DEBVERSION=$(TUBSLATEX_DEBVERSION) deb
 	$(MAKE) -C $(INSTALL_DEB_DIR) VERSION=$(TUBSLATEX_VERSION) deb
 exe:
 	$(MAKE) -C $(INSTALL_WIN_DIR) copy
@@ -70,3 +72,7 @@ fetch:
 clean:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i clean; done
 	$(MAKE) -C $(DOCUMENTATION_DIR) clean
+
+
+test:
+	echo $(TUBSLATEX_DEBVERSION)

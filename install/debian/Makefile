@@ -5,7 +5,12 @@
 #   Aufrunf von 'make' erzeugt deb-Datei ...
 
 VERSION = undefined
+DEBVERSION = undefined
+
+# Distribution the package is designed for
 DIST = debian
+# Version of deb package
+DISTVERSION = 0$(DIST)1
 
 # Verzeichnisse
 REPODIR = ../..
@@ -29,7 +34,7 @@ structure:
 	mkdir -p texlive-tubs/$(INSTALLPATH)
 
 fetch:
-	cat control.template | sed 's/CONTROLVERSION/$(VERSION)/g' | \
+	cat control.template | sed 's/CONTROLVERSION/$(DEBVERSION)-$(DISTVERSION)/g' | \
 	sed 's/INSTALLSIZE/'"`du -sk --apparent-size texlive-tubs | awk  '{print $$1}' `"'/g' > control
 	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
 	cp -r $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
