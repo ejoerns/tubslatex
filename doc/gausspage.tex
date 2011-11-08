@@ -16,7 +16,7 @@ zu nutzen:
 \end{itemize}
 wobei die Letztgenannte den Regelfall darstellt.
 
-\section{Hintergrund-Layout}
+\section{Hintergrund-Layout}\label{sec:gausspage:bglayout}
 
 \begin{Declaration}
   \Macro{bglayout}\OParameter{Optionen}\Parameter{Layout}
@@ -54,7 +54,7 @@ Darstellung der verfügbaren Segmente und Logo-Positionen durch schwarze Rahmen,
 Diese Optione ist hiflreich für das Design einer Seite im Gauß-Layout.
 
 
-\subsection{Elemente}
+\subsection{Elemente}\label{subsec:gausspage:bgelement}
 
 \begin{Declaration}
   \Macro{bgelement}\OParameter{Darstellung}\PParameter{Höhe}
@@ -194,14 +194,12 @@ Logo rechts bzw. außen.
 Bewirkt Darstellung einer Trennlinie zwischen Absender und Kommunikationsbereich
 im aktuellen Layout.
 
-
-
 \begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von bglayout}]
 \bglayout[pages=single]{%
   \showtubslogo
-  \bgelement{2}
-  \bgelement{3}
-  \bgelement{3}
+  \bgelement[bgimage=mypic.jpg]{2}
+  \bgelement[bgcolor=tuGreen]{3}
+  \bgelement[bgcolor=tuGreenDark]{3}
 }
 \end{lstlisting}
 
@@ -243,6 +241,11 @@ mit \PName{Breite} wieviel Spalten.
 
 \section{Kombination}
 
+Die hier vorgestellte Kombination ist für die einfache Erstellung ganzer Seiten
+inklusive Text im Gauß-Raster gedacht.
+Sie bildet auch die Basis für die Umgebungen von Veranstaltungspostern und
+für Titelseiten von Dokumenten.
+
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{gausspage}}%
     \OParameter{Optionen}\\
@@ -250,7 +253,51 @@ mit \PName{Breite} wieviel Spalten.
   \XMacro{end}\PParameter{gausspage}
 \end{Declaration}
 
+Die Umgebung \Environment{gausspage} kombiniert das Hintergrund-Layout
+und die Textboxen zu einem Interface, das dem Standard-Anwendungsfall für
+das Gauß-Layout gerecht wird, da Textboxen und Hintergrund im Regelfall
+genau gleich positioniert sind.
 
+Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausspage:bglayout}
+für \Macro{bglayout} definierten Optionen verwendet werden.
+Die Option \Option{pages} ist standardmäßig auf \PValue{single}
+eingestellt.% TODO: check
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{segment}}%
+    \OParameter{Optionen}
+    \Parameter{Höhe}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{segment}
+\end{Declaration}
+
+Mit der Umgebung \Environment{segment} könnnen die einzelnen
+Segmente gesetzt werden.
+Diese gehen jeweils über die ganze Textbreite und oriniertieren sich
+in der vertikalen Positionierung am Interface von \Macro{bgelement}.
+Die \PName{Höhe} gibt also die Anzahl der verwendete Basis-Segmente an
+und belegt diese von oben nach unten.
+
+Als \PName{Optionen} können alle in Kapitel~\ref{subsec:gausspage:bgelement}
+für \Macro{bgelement} definierten Optionen verwendet werden. % TODO: check
+
+
+\begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von gausspage}]
+\begin{gausspage}{%
+  \showtubslogo
+  \begin{segment}[bgimage=mypic.jpg]{2}
+    // Inhalt
+  \end{segment}
+  \begin{segment}[bgcolor=tuGreen]{3}
+    // Inhalt
+  \end{segment}
+  \begin{segment}[bgcolor=tuGreenDark]{3}
+    // Inhalt
+  \end{segment}
+}
+\end{lstlisting}
+
+% TODO: place? ref?
 \begin{figure}\centering
   \fboxsep0mm
   \begin{minipage}{0.35\textwidth}
@@ -264,11 +311,3 @@ mit \PName{Breite} wieviel Spalten.
   \end{minipage}
   \caption{Gaußraster mit möglichen Logo-Positionen}\label{fig:gausspage}
 \end{figure}
-
-
-
-
-\begin{Declaration}
-  \Macro{showdesignhelper}
-\end{Declaration}
-
