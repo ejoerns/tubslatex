@@ -90,6 +90,7 @@ Innerhalb von \lstinline!\titlegraphic{}! stehen folgende
 zusäztliche Optionen zur Einpassung des Bildes zur Verfügung:
 \end{sloppypar}
 
+%TODO: float-table + Link?
 \begin{desctable}
 \entry{\PValue{clipped}}{%
   Automatisches Abschneiden. Dies ist die \emph{Standardeinstellung}.
@@ -198,6 +199,13 @@ sofern keine manuelle Skalierung als Option angegeben wird.
 \end{lstlisting}
 \end{example}
 
+\begin{Declaration}
+  \Macro{logoheight}
+\end{Declaration}
+
+Für allgemeine Inhalte kann auf die Höhe des Logo-Bereichs über die Länge
+\lstinline{\logoheight} zugegriffen werden.
+
 
 \section{Inhaltsfolien}
 
@@ -273,9 +281,9 @@ der Fußbereich normal dargestellt.
   examples/inhaltsseite.pdf}}
 \end{minipage}
 
-\subsubsection{Fußzeile}
+\subsubsection{Fußbereich}
 
-In der Fußzeile steht laut Vorgabe Datum und Seitenzahl.
+In der Fußbereich stehen laut Vorgabe Datum und Seitenzahl.
 Ist das einmal nicht gewollt, kann dies durch Angabe der Optionen
 \lstinline{nopagenum} bzw. \lstinline{nodate} unterdrückt werden.
 
@@ -290,14 +298,14 @@ die Fußzeile (\textit{page} statt Seite, anderes Datumsformat).
 Die beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
 andere Seitenformate gebrachte werden kann, wird vom Layout generell
 unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
-Seitenverhältnis benötigt wird, wenn es passend dargestellt werden soll
+Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
 (siehe Tabelle \ref{tab:picratio}).
 
 
 \section{Farbanpassung}
 
 Um ein individuelleres Foliendesign zu ermöglichen, können einige Elemente
-(unter Verwendung des CorporateDesign-Farbkontingents)
+(unter Verwendung des CD-Farbkontingents)
 farblich angepasst werden.
 
 Dazu zählen die Elemente der Titelseite (mit Ausnahme des Logos),
@@ -308,8 +316,8 @@ Eine komplett freie Gestaltung kann bei Bedarf über Änderung der
 jeweiligen Templates erfolgen. Beide Möglichkeiten werden im folgenden
 erläutert.
 
-Details über die Farben der CorporateDesign-Farbklänge sind bitte der
-entsprechenden Dokumentation zu entnehmen.%TODO: ref
+Details über die Farben der CD-Farbklänge können dem
+Kapitel~\ref{chap:tubscolors} entnommen werden.
 
 \subsection{Anpassung über Optionen}
 
@@ -328,7 +336,7 @@ Die Optionen gliedern sich in 3 Kategorien:
     Optionen: \texttt{colorhead}, \texttt{colorfoot}
 \end{itemize}
 
-Weitere Details zu Verwendung der Optionen sind im Kapitel \ref{optionen}
+Weitere Details zu Verwendung der Optionen sind im Kapitel \ref{beamer:optionen}
 zu finden.
 
 \clearpage
@@ -422,154 +430,111 @@ Es können folgende Farb-Templates angepasst werden:
 Die Anpassung weiterer Elemente ist natürlich möglich,
 wird aber nicht empfohlen.
 
-\section{Optionen und Befehle}
+\section{Template-Optionen}\label{beamer:optionen}
 
-\subsection{Optionen}\label{optionen}
+% \subsection{Optionen}\label{optionen}
 
-Auflistung aller Theme-spezieller Optionen zur Übergabe and die
+Auflistung aller template-spezifischer Optionen zur Übergabe and die
 Dokumentenklasse bzw. das Beamer-theme.
 
 Die templatespezifischen Argumente sollten bevorzugt
 über \lstinline!\usetheme! übergeben werden.
 
-\subsubsection{Kopf-/Fußbereich}
+\subsection{Kopf-/Fußbereich}
 
-\begin{classoption}{nopagenum}
-  Blendet die mitlaufende Seitenzählung im Fuß der Folie aus.
-\end{classoption}
+\begin{desctable}
+  \entry{\PValue{nopagenum}}{%
+    Blendet die mitlaufende Seitenzählung im Fuß der Folie aus.
+  }
+  \entry{\PValue{nodate}}{%
+    Blendet das Datum im Fuß der Folie aus.
+  }
+  \entry{\PValue{tocinheader}}{%
+    Erzeugt ein mitlaufendes Inhaltsverzeichnis im Folienkopf,
+    das auch zur Navigation im Dokument genutz werden kann
+    (entsprechend der Standard-Beamer-Klassen).
 
-\begin{classoption}{nodate}
-  Blendet das Datum im Fuß der Folie aus.
-\end{classoption}
+    Angezeigt werden standardmäßig sections und subsubsections.
+    Sollen nur sections angezeigt werden, bitte die Option
+    \lstinline!nosubsubsectionsinheader! verwenden.
+  }
+  \entry{\PValue{tinytocinheader}}{%
+    Wie \lstinline{tocinheader}, jedoch mit kleinerer Schrift.
 
-\begin{classoption}{tocinheader}
-  Erzeugt ein mitlaufendes Inhaltsverzeichnis im Folienkopf,
-  das auch zur Navigation im Dokument genutz werden kann
-  (entsprechend der Standard-Beamer-Klassen).
+    Kann eingesetzt werden für den Fall, dass das mit \lstinline{tocinheader}
+    erzeugte Inhaltsverzeichnis zu breit wirkt oder die Foliendimension
+    überragt.
+  }
+  \entry{\PValue{widetoc}}{%
+    Horizontal gestreckte Version des mitlaufenden Inahltsverzeichnisses.
+  }
+  \entry{\PValue{narrowtoc}}{%
+    Horizontal gestauchte Version des mitlaufenden Inahltsverzeichnisses.
+  }
+  \entry{\PValue{nosubsubsectionsinheader}}{%
+    Deaktiviert die Anzeige von subsubsections im Header.
   
-  Angezeigt werden standardmäßig sections und subsubsections.
-  Sollen nur sections angezeigt werden, bitte die Option
-  \lstinline{nosubsubsectionsinheader} verwenden.
-  
-\end{classoption}
+    Nur wirksam, wenn Option \lstinline{tocinheader} oder
+    \lstinline{tinytocinheader} verwendet wird!
+  }
+  \entry{\PValue{nologoinfoot}}{%
+    Deaktiviert die Anzeige des Logos im Fußbereich.
+  }
+  \entry{\PValue{colorfoot}}{%
+    Bewirkt, dass auch die Farbe der standardmäßig rot gefärbten Fußleiste auf
+    der Titelseite dem gewählten Farbschema angepasst wird.
+  }
+  \entry{\PValue{colorhead}}{%
+    Bewirkt, dass auch die Farbe des standardmäßig hellgrau gefärbten
+    Titelhintergrunds auf jeder Inhaltsfolie
+    dem gewählten Farbschema angepasst wird.
+  }
+\end{desctable}
 
-\begin{classoption}{tinytocinheader}
-  Wie \lstinline{tocinheader}, jedoch mit kleinerer Schrift.
+\subsection{Farbschema}
 
-  Kann eingesetzt werden für den Fall, dass das mit \lstinline{tocinheader}
-  erzeugte Inhaltsverzeichnis zu breit wirkt oder die Foliendimension
-  überragt.
-\end{classoption}
+\subsubsection{Farbklang}
 
-\begin{classoption}{widetoc}
-  Horizontal gestreckte Version des mitlaufenden Inahltsverzeichnisses.
-\end{classoption}
+\begin{desctable}
+  \entry{\PValue{yellow}}{%
+    Auswahl des gelben Farbklangs
+  }
+  \entry{\PValue{green}}{%
+    Auswahl des grünen Farbklangs
+  }
+  \entry{\PValue{blue}}{%
+    Auswahl des blauen Farbklangs
+  }
+  \entry{\PValue{blue}}{%
+    Auswahl des violetten Farbklangs
+  }
+\end{desctable}
 
-\begin{classoption}{narrowtoc}
-  Horizontal gestauchte Version des mitlaufenden Inahltsverzeichnisses.
-\end{classoption}
+\subsubsection{Helligkeit}
 
-\begin{classoption}{nosubsubsectionsinheader}
-  Deaktiviert die Anzeige von subsubsections im Header.
-  
-  Nur wirksam, wenn Option \lstinline{tocinheader} oder
-  \lstinline{tinytocinheader} verwendet wird!
-\end{classoption}
+\begin{desctable}
+  \entry{\PValue{dark}}{%
+    Auswahl der hellen Farbreihe aus gewähltem Farbklang
+  }
+  \entry{\PValue{medium}}{%
+    Auswahl der mittleren Farbreihe aus gewähltem Farbklang
+  }
+  \entry{\PValue{light}}{%
+    Auswahl der dunklen Farbreihe aus gewähltem Farbklang
+  }
+\end{desctable}
 
-\begin{classoption}{nologoinfoot}
-  Deaktiviert die Anzeige des Logos im Fußbereich.
-\end{classoption}
+\subsection{Farbmodell}
 
-\subsubsection{Farbmodell}
-
-\begin{classoption}{rgbprint}
-  Ausgabe in RGB-Druckfraben.\\
-  Standardmäßig wird sonst ein auf Beamer optimiertes Farbmodell genutzt.
-\end{classoption}
-
-\begin{classoption}{cmyk}
-  Ausgabe in CMYK-Farben.
-\end{classoption}
-
-
-\subsubsection{Farbschema}
-
-\paragraph{Farbklang}
-\begin{themeoption}{yellow}
-  Auswahl des gelben Farbklangs
-\end{themeoption}
-\begin{themeoption}{green}
-  Auswahl des grünen Farbklangs
-\end{themeoption}
-\begin{themeoption}{blue}
-  Auswahl des blauen Farbklangs
-\end{themeoption}
-\begin{themeoption}{violet}
-  Auswahl des violetten Farbklangs
-\end{themeoption}
-\paragraph{Helligkeit}
-\begin{themeoption}{dark}
-  Auswahl der hellen Farbreihe aus gewähltem Farbklang
-\end{themeoption}
-\begin{themeoption}{medium}
-  Auswahl der mittleren Farbreihe aus gewähltem Farbklang
-\end{themeoption}
-\begin{themeoption}{light}
-  Auswahl der dunklen Farbreihe aus gewähltem Farbklang
-\end{themeoption}
-\paragraph{Elemente}
-\begin{themeoption}{colorfoot}
-  Bewirkt, dass auch die Farbe der standardmäßig rot gefärbten Fußleiste auf
-  der Titelseite dem gewählten Farbschema angepasst wird.
-\end{themeoption}
-\begin{themeoption}{colorhead}
-  Bewirkt, dass auch die Farbe des standardmäßig hellgrau gefärbten
-  Titelhintergrunds auf jeder Inhaltsfolie
-  dem gewählten Farbschema angepasst wird.
-\end{themeoption}
-
-%TODO : notieren, dass Argumenten sowohl an die klasse als auch an
-% das Theme übergeben werden können! (-> tubs-spezifische besser an theme!?)
-
-% \begin{classoption}{mathserif}
-%   Beschreibung
-% \end{classoption}
-
-% \begin{classoption}{fleqn}
-%   Beschreibung
-% \end{classoption}
-
-% \begin{classoption}{minion}
-%   Beschreibung
-% \end{classoption}
-
-
-\subsection{Befehle}
-
-% \titlegraphicsheight
-% \tuDefaultTitlegraphic
-
-\subsubsection{Schriftgröße}
-
-\begin{classoption}{9pt}
-  Beschreibung
-\end{classoption}
-
-\begin{classoption}{10pt}
-  Beschreibung
-\end{classoption}
-
-\begin{classoption}{11pt}
-  Beschreibung
-\end{classoption}
-
-\begin{classoption}{12pt}
-  Beschreibung
-\end{classoption}
-
-\begin{classoption}{14pt}
-  Beschreibung
-\end{classoption}
+\begin{desctable}
+  \entry{\PValue{rgbprint}}{%
+    Ausgabe in RGB-Druckfraben.\par
+    Standardmäßig wird sonst ein auf Beamer optimiertes Farbmodell genutzt.
+  }
+  \entry{\PValue{cmyk}}{%
+    Ausgabe in CMYK-Farben.
+  }
+\end{desctable}
 
 
 \section{Hinweise}
@@ -638,8 +603,8 @@ trotzdem einen korrekten PDF-Titel zu erhalten.
 
 \subsection{Zusätzliche Schriftgrößen}
 
-Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\micro}
-und \lstinline{\nano} an, die jeweils noch kleiner sind als alle restlich
+Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\microsize}
+und \lstinline{\nanosize} an, die jeweils noch kleiner sind als alle restlich
 verfügbaren.
 
 Sie werden intern verwendet, können aber auch bei \emph{begründeter}
@@ -647,9 +612,9 @@ Notwendigkeit von Autoren verwendet werden, z\,B für kleinste Quellenangaben
 etc.
 
 
-\section{Minimalbeispiel}
+\section{Minimalbeispiel}% TODO: Anhang?!
 
-Im folgenden ist der Code eines Minimalbeispieles aufgeführt, zusammen mit den
+Im Folgenden ist der Code eines Minimalbeispieles aufgeführt, zusammen mit den
 daraus erzeugten Folien.
 
 \begin{verbatim}
