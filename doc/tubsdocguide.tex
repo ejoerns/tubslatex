@@ -100,30 +100,17 @@ Dieser wird einfach mit \lstinline!\usetheme{tubs}! geladen.
 
 \part{Anwenderklassen und -Pakete}
 
-\include{documents}
+\include{documents} % Kapitel: 'Dokumente'
 
+\include{letter}    % Kapitel: 'Brief'
 
-\chapter{Broschüren}
+\input{beamer}      % Kapitel: 'Präsentationen'
 
-Mit der Klass \newdocumentclass{tubsleaflet} können dreigeteilte Broschüren
-im Corporate Design erstellt werden.
+\include{poster}    % Kapitel: 'Plakate'
 
-\begin{figure}[!ht]
-  \fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/leaflet.pdf}}
-  \caption{Einfacher Flyer im CD (erste Seite)}
-\end{figure}
+\include{leaflet}   % Kapitel: 'Broschüren'
 
-
-
-% \noindent\hspace*{-\parindent}\fbox{\cmd{\maketitle}\oarg{asdf}\marg{asdf}}
-\include{poster}
-
-\include{letter}
-
-\input{beamer}  % Kapitel: 'Präsentationen'
-
-\include{gausspage}
-
+\include{gausspage} % Kapitel: 'Gauß-Layout'
 
 \part{Basis-Pakete}
 
