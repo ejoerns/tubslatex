@@ -45,10 +45,14 @@ RequestExecutionLevel admin
 Var Dialog
 Var Label
 Var Text
+Var ButtonGlobal
+Var ButtonLocal
+Var ButtonState
+Var desiredInstallType
 
 !insertmacro MUI_PAGE_WELCOME
 ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-Page custom nsDialogsPage nsDialogsPageLeave
+Page custom pageInstallType pageInstallTypeLeave
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
@@ -61,7 +65,7 @@ Page custom nsDialogsPage nsDialogsPageLeave
 
 
 ; Function for custom Page
-Function nsDialogsPage
+Function pageInstallType
 	nsDialogs::Create 1018
 	Pop $Dialog
 	
@@ -69,26 +73,35 @@ Function nsDialogsPage
 		Abort
 	${EndIf}
 	
+	; Paget title
 	!insertmacro MUI_HEADER_TEXT "Installationsart wählen" "Bitte wählen Sie aus, ob die Komponenten lokal oder systemweit installiert werden sollen."
 	
+	; Description text
 	${NSD_CreateLabel} 0 0 100% 25% "Sie können entscheiden, ob die Komponenten nur für den aktuellen Benutzer oder für alle Benutzer des Systems installiert werden sollen."
-  ${NSD_CreateLabel} 0 25% 100% 25% "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen ignoriert werden."
+  ${NSD_CreateLabel} 0 25% 100% 25% "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
 	Pop $Label
 
-;	${NSD_CreateText} 0 13u 100% -13u "Type something here..."
-;	Pop $Text
-
+  ; Add radio buttons, set first checked
 	${NSD_CreateRadioButton} 0 50% 100% 10% "Für alle Benutzer installieren (global)"
+	Pop $ButtonGlobal
+	${NSD_SetState} $ButtonGlobal ${BST_CHECKED}
 	${NSD_CreateRadioButton} 0 60% 100% 10% "Nur für diesen Benutzer installieren (lokal)"
+	Pop $ButtonLocal
 	
+	; Show us
 	nsDialogs::Show
 FunctionEnd
 
-; Callback function for custom Page
-Function nsDialogsPageLeave
+; Callback function: Checks if local or global install was chosen
+Function pageInstallTypeLeave
 
-	${NSD_GetText} $Text $0
-	MessageBox MB_OK "You typed:$\n$\n$0"
+  ${NSD_GetState} $ButtonGlobal $ButtonState
+
+  ${IF} $ButtonState == ${BST_CHECKED}
+    StrCpy $desiredInstallType "global"
+  ${Else}
+    StrCpy $desiredInstallType "local"
+  ${EndIf}
 
 FunctionEnd
 
