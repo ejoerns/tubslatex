@@ -6,58 +6,58 @@
 ;--------------------------------
 ;Include Modern UI
 
-  !include "MUI2.nsh"
-  !include "TextFunc.nsh"
-	!include "Sections.nsh"
+!include "MUI2.nsh"
+!include "TextFunc.nsh"
+!include "Sections.nsh"
 
 
 ;--------------------------------
 ;General
 
-  ;; Name and file
-  Name "tubslatex"
-  OutFile "tubslatexSetup_${VERSION}.exe"
+;; Name and file
+Name "tubslatex"
+OutFile "tubslatexSetup_${VERSION}.exe"
 
-  ;; Default installation folder
-  InstallDir "$PROGRAMFILES\tubslatex"
+;; Default installation folder
+InstallDir "$PROGRAMFILES\tubslatex"
 
-  ;; Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\tubslatex" ""
+;; Get installation folder from registry if available
+InstallDirRegKey HKCU "Software\tubslatex" ""
 
-  ;; Request application privileges for Windows Vista / 7
-  RequestExecutionLevel admin
+;; Request application privileges for Windows Vista / 7
+RequestExecutionLevel admin
 
 
 ;--------------------------------
 ;Interface Settings
 
-  !define MUI_ABORTWARNING
+!define MUI_ABORTWARNING
 
-	;; Directory page
-  !define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
+; Directory page
+!define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
 
 
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_WELCOME
-  ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-  !insertmacro MUI_PAGE_COMPONENTS
-	!insertmacro MUI_PAGE_DIRECTORY
-  !insertmacro MUI_PAGE_INSTFILES
-  !insertmacro MUI_PAGE_FINISH
+!insertmacro MUI_PAGE_WELCOME
+;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
 
-  !insertmacro MUI_UNPAGE_WELCOME
-  !insertmacro MUI_UNPAGE_CONFIRM
-  !insertmacro MUI_UNPAGE_INSTFILES
-  !insertmacro MUI_UNPAGE_FINISH
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
 
 
 ;--------------------------------
 ;Languages
 
-  !insertmacro MUI_LANGUAGE "English"
-  !insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "German"
 
 
 ;--------------------------------
@@ -137,7 +137,9 @@ FunctionEnd
 !define StrContains '!insertmacro "_StrContainsConstructor"'
 !define un.StrContains '!insertmacro "un_StrContainsConstructor"'
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Looks for the MiKTeX installation path and stores it under ${MiktexInstallPath}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function getMiktexInstallPath
   ;; Check if common directory was selected
   ReadRegStr $R0 HKLM "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "CommonInstall"
@@ -148,7 +150,9 @@ Function getMiktexInstallPath
   !define MiktexInstallPath $R0
 FunctionEnd
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Adds the install directory to MiKTeX's UserRoots if required
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function addLocaltexmf
   ;; Test if MiKTeX installdir was selected, skip if true
   StrCmp ${MiktexInstallPath} $INSTDIR skipRootsUpdate
@@ -163,8 +167,9 @@ Function addLocaltexmf
   skipRootsUpdate:
 FunctionEnd
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Adds specified data at the end of the specified file
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function WriteToFile
  Exch $0 ;file to write to
  Exch
@@ -187,15 +192,19 @@ FunctionEnd
 !define WriteToFile "!insertmacro WriteToFile"
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Delete every line from specified file that contains the specified text
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Function deleteLineFromFile
 ;	; TODO...
 ;FunctionEnd
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Searches in given updmap config file for given map definitions and
 ;; removes them if found.
 ;; Then this map information is simply added at the end of the file
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function enableUpdmaps
 	;; search for map an delete if found
 	Exch $R0 ;map name
@@ -227,6 +236,10 @@ Function enableUpdmaps
 FunctionEnd
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Searches in given updmap config file for given map definitions and
+;; removes them if found.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function un.disableUpdmaps
 	;; search for map an delete if found
 	Exch $R0 ;map name
@@ -254,9 +267,10 @@ Function un.disableUpdmaps
 	;; add map
 FunctionEnd
 
-;--------------------------------
-;Installer Sections
 
+;-------------------------------------------------------------------------------
+; Installer Sections
+;-------------------------------------------------------------------------------
 Section "Nexus" SecNexus
 	;; Make sure that updmap.cfg exists
 	SetOutPath "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
@@ -281,6 +295,9 @@ Section "Nexus" SecNexus
 SectionEnd
 
 
+;-------------------------------------------------------------------------------
+; Documentation Section
+;-------------------------------------------------------------------------------
 Section "Dokumentation" SecDoc
 
   ;; files to copy
@@ -290,6 +307,9 @@ Section "Dokumentation" SecDoc
 SectionEnd
 
 
+;-------------------------------------------------------------------------------
+; tex Section
+;-------------------------------------------------------------------------------
 Section "tubslatex" SecTubslatex
 
   ;; enables install logging
@@ -306,6 +326,9 @@ Section "tubslatex" SecTubslatex
 SectionEnd
 
 
+;-------------------------------------------------------------------------------
+; Post Install Section
+;-------------------------------------------------------------------------------
 Section "-postinst" SecPostInstall
   Call getMiktexInstallPath
   Call addLocaltexmf  
@@ -316,8 +339,8 @@ Section "-postinst" SecPostInstall
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
 	;; register uninstall for windows uninstall manager
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"                  "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"                 "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 SectionEnd
 
 ;--------------------------------
@@ -326,6 +349,9 @@ SectionEnd
 Var userrights ;stores user rights, either "admin" or "user"
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; .onInit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function .onInit
   ;!insertmacro MUI_LANGDLL_DISPLAY
   Call analyzeMiktex
@@ -346,21 +372,21 @@ FunctionEnd
 ;--------------------------------
 ;Descriptions
 
-  ;Language strings
-  LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
-  LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
+;Language strings
+LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
+LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
 
-  LangString DESC_AbortInstallation ${LANG_ENGLISH} "MiKTeX not installed. Canceling installation"
-  LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. Installation wird abgebrochen."
+LangString DESC_AbortInstallation ${LANG_ENGLISH} "MiKTeX not installed. Canceling installation"
+LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. Installation wird abgebrochen."
   
-  ;Assign language strings to sections
-  !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
-  !insertmacro MUI_FUNCTION_DESCRIPTION_END
+;Assign language strings to sections
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
-;--------------------------------
-;Uninstaller Section
-
+;-------------------------------------------------------------------------------
+; Uninstaller Section
+;-------------------------------------------------------------------------------
 Section "Uninstall"
 
   Delete "$INSTDIR\Uninstall.exe"
@@ -382,3 +408,4 @@ Section "Uninstall"
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
 
 SectionEnd
+
