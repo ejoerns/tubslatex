@@ -63,6 +63,19 @@ Page custom pageInstallType pageInstallTypeLeave
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Function for page jump
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Function RelGotoPage
+  IntCmp $R9 0 0 Move Move
+    StrCmp $R9 "X" 0 Move
+      StrCpy $R9 "120"
+ 
+  Move:
+  SendMessage $HWNDPARENT "0x408" "$R9" ""
+FunctionEnd
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Function for custom Page
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function pageInstallType
@@ -100,10 +113,17 @@ Function pageInstallTypeLeave
 
   ${IF} $ButtonState == ${BST_CHECKED}
     StrCpy $desiredInstallType "global"
+    IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
+      MessageBox MB_YESNO "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?" IDYES noskip
+        StrCpy $R9 0 ;
+        Call RelGotoPage
+        Abort
+    noskip:
+	  SetShellVarContext all
   ${Else}
     StrCpy $desiredInstallType "local"
+	  SetShellVarContext current
   ${EndIf}
-
 FunctionEnd
 
 ;--------------------------------
@@ -266,7 +286,7 @@ Function enableUpdmaps
 	Exch
 	Exch $R1 ;updmap config file
 	ClearErrors
-	messageBox MB_OK "File: $R1, Content: $R0";TODO 
+	;messageBox MB_OK "File: $R1, Content: $R0";TODO 
 	FileOpen $0 $R1 "r"                     ; open target file for reading
 	GetTempFileName $R9                           ; get new temp file name
 	FileOpen $1 $R9 "w"                           ; open temp file for writing
@@ -330,14 +350,7 @@ Var UpdmapDir
 ;-------------------------------------------------------------------------------
 Section "Nexus" SecNexus
 	;; Make sure that updmap.cfg exists, switch for local/global
-	${If} $desiredInstallType == "local"
-	  SetShellVarContext current
-	${Else}
-	  SetShellVarContext all
-	${EndIf}
-
   StrCpy $UpdmapDir "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
-	MessageBox MB_OK "updmap in: $UpdmapDir"
   SetOutPath $UpdmapDir
 	FileOpen $9 "updmap.cfg" w
 	FileClose $9
