@@ -6,3 +6,8 @@ Benötigt:
   Plugins:
     - registry  - http://nsis.sourceforge.net/Registry_plug-in
     - ExecCmd   - http://nsis.sourceforge.net/ExecCmd_plug-in
+    - nsDialogs - http://nsis.sourceforge.net/Docs/nsDialogs/Readme.html
+    - LogicLib  - http://nsis.sourceforge.net/LogicLib
+
+
+

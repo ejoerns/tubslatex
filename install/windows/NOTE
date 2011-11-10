@@ -10,3 +10,28 @@ Die Roots für die user-texmf's liegen im registy-eintrag
 
 MiKTeX standard install path:
 C:\Programme\MiKTeX 2.9
+
+
+initexmf --admin --edit-config-file updmap
+
+und
+
+initexmf --edit-config-file updmap
+
+öffnen verschiedene Dateien!
+
+--admin:
+C:\Dokumente und Einstellungen/All Users/Anwendungsdaten/MiKTeX/2.9/miktex/config/updmap.cfg
+
+C:\Dokumente und Einstellungen/enrico/Anwendungsdaten/MiKTeX/2.9/miktex/config/updmap.cfg
+--> $APPDATA...
+
+map-File:
+--admin:
+C:\Dokumene und Einstellungen\All Users\Anwendungsdaten\MiKTeX\2.9\pdftex\config\pdftex.map
+
+C:\Dokumente und Einstellungen\enrico\Lokale Einstellungen\Anwendungsdaten\MiKTeX\2.9\pdftex\config\pdftex.map
+--> $LOCALAPPDATA...
+
+
+--> Test auf Existenz lokaler pdftex.map ausreichend!
