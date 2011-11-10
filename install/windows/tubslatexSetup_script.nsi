@@ -95,8 +95,11 @@ Function RelGotoPage
 FunctionEnd
 
 
+Var miktexRoots
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; 
+; Note: Used MiKTeX registry keys for *writing* depend on tubslatex install type,
+;       not on MiKteX install type!
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function setInstallMode
   ; Prevent execution on first call
@@ -108,6 +111,8 @@ Function setInstallMode
   ; Test...
   ${If} $MultiUser.InstallMode == AllUsers
     StrCpy $desiredInstallType "global"
+    ; Names of registry keys
+    StrCpy $miktexRoots "CommonRoots"
     IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
       MessageBox MB_YESNO "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?" IDYES noskip
         StrCpy $R9 0 ;
@@ -116,6 +121,8 @@ Function setInstallMode
     noskip:
   ${Else}
     StrCpy $desiredInstallType "local"
+    ; Names of registry keys
+    StrCpy $miktexRoots "UserRoots"
   ${EndIf}
 FunctionEnd
 
@@ -130,17 +137,28 @@ FunctionEnd
 ;--------------------------------
 ;Functions
 
-Var miktexVersion
+Var miktexVersion ; Detected Version of MiKTeX
+Var miktexInstall ; key name for install dir
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Tries to get Version number of MiKTeX
+;; Tries to get Version number and shell context of MiKTeX
 ;; Aborts installation if no version was found
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function analyzeMiktex
+  ; check in HKLM
   EnumRegKey $miktexVersion HKLM Software\MiKTeX.org\MiKTeX 0
-  StrCmp $miktexVersion "" 0 +3
-  MessageBox MB_OK "MiKTeX not installed, cancelling installation"
-  Abort "MiKTeX not installed, cancelling installation"
+  ${If} $miktexVersion == ""
+    ; check in HKCU
+    EnumRegKey $miktexVersion HKCU Software\MiKTeX.org\MiKTeX 0
+    ${If} $miktexVersion == ""
+      MessageBox MB_OK "MiKTeX not installed, cancelling installation"
+      Abort "MiKTeX not installed, cancelling installation"
+    ${Else}
+      StrCpy $miktexInstall "UserInstall"
+    ${EndIf}
+  ${Else}
+    StrCpy $miktexInstall "CommonInstall"
+  ${EndIf}
 FunctionEnd
 
 
@@ -211,13 +229,19 @@ FunctionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function getMiktexInstallPath
   ;; Check if common directory was selected
-  ReadRegStr $R0 HKLM "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "CommonInstall"
+  ${If} $miktexInstall == "CommonInstall"
+    ReadRegStr $R0 HKLM "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexInstall"
+  ${Else}
+    ReadRegStr $R0 HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexInstall"
+  ${EndIf}
   StrCmp $R0 "" 0 installDirReady
-  StrCpy $R0 "$PROGRAMFILES\MiKTeX $miktexVersion"
+    StrCpy $R0 "$PROGRAMFILES\MiKTeX $miktexVersion"
   InstallDirReady:
 ;  messageBox MB_OK " Ok, MiKTeX is installed in $R0"
   !define MiktexInstallPath $R0
 FunctionEnd
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -226,14 +250,12 @@ FunctionEnd
 Function addLocaltexmf
   ;; Test if MiKTeX installdir was selected, skip if true
   StrCmp ${MiktexInstallPath} $INSTDIR skipRootsUpdate
-  ;; This part backs up already existing local texmf root paths and adds the new one
-  ;; But it is not very flexible yet
-  ReadRegStr $R0 HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "UserRoots"
-  ;; Test if directory ist already listed in UserRoots, skip if true
-  ${StrContains} $R1 $INSTDIR $R0
-  StrCmp $R1 "" 0 skipRootsUpdate
-;  messageBox MB_OK "Updating UserRoots..."
-  WriteRegStr HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "UserRoots" "$INSTDIR;$R0"
+    ;; This part backs up already existing local texmf root paths and adds the new one
+    ReadRegStr $R0 SHCTX "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexRoots"
+    ;; Test if directory ist already listed in UserRoots, skip if true
+    ${StrContains} $R1 $INSTDIR $R0
+    StrCmp $R1 "" 0 skipRootsUpdate
+      WriteRegStr SHCTX "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexRoots" "$INSTDIR;$R0"
   skipRootsUpdate:
 FunctionEnd
 
@@ -355,10 +377,10 @@ Section "Nexus" SecNexus
 	Call enableUpdmaps
 
 	;; run font update
-	${If} $desiredInstallType == "local"
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --mkmaps"'
-	${Else}
+	${If} $MultiUser.InstallMode == AllUsers
   	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+	${Else}
+  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --mkmaps"'
 	${EndIf}
 SectionEnd
 
@@ -388,10 +410,10 @@ Section "tubslatex" SecTubslatex
 	FILE /r data\tex
 
 	;; run file db update script
-  ${If} $desiredInstallType == "local"
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
-  ${Else}
+  ${If} $MultiUser.InstallMode == AllUsers
   	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
+  ${Else}
+  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
 	${EndIf}
 
 SectionEnd
@@ -402,22 +424,23 @@ SectionEnd
 ;-------------------------------------------------------------------------------
 Section "-postinst" SecPostInstall
   Call getMiktexInstallPath
-  Call addLocaltexmf  
+  Call addLocaltexmf
 
+  ; Write program Information for later use
   WriteRegStr SHCTX "Software\tubslatex" "InstallDir" $INSTDIR
+  WriteRegStr SHCTX "Software\tubslatex" "InstallMode" $MultiUser.InstallMode
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
-	;; register uninstall for windows uninstall manager
+	;; register uninstaller for windows uninstall manager
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayVersion" "${VERSION}"
 SectionEnd
 
 ;--------------------------------
 ;Installer Functions
-
-Var userrights ;stores user rights, either "admin" or "user"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -441,13 +464,6 @@ Function .onInit
 
 FunctionEnd
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; un.onInit
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Function un.onInit
-  !insertmacro MULTIUSER_UNINIT
-FunctionEnd
-
 ;--------------------------------
 ;Descriptions
 
@@ -463,6 +479,15 @@ LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. 
   !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; un.onInit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Function un.onInit
+  !insertmacro MULTIUSER_UNINIT
+FunctionEnd
+
+
 ;-------------------------------------------------------------------------------
 ; Uninstaller Section
 ;-------------------------------------------------------------------------------
@@ -472,7 +497,6 @@ Section "Uninstall"
 
   RMDir /r "$INSTDIR"
 
-  ; TODO
 	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
 	Push "NexusProSans.map"
   Call un.disableUpdmaps
@@ -480,7 +504,6 @@ Section "Uninstall"
 	Push "NexusProSerif.map"
   Call un.disableUpdmaps
   
-  ; TODO
   ${If} $MultiUser.InstallMode == AllUsers
     ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
   ${Else}
@@ -494,5 +517,5 @@ Section "Uninstall"
 
 SectionEnd
 
-; TODO: Handle HKLM install of MiKTeX!
 ; TODO: User-Mode-Key setzen!?
+; TODO: Test + Behandlung alter tusblatex-Installation?
