@@ -1,15 +1,33 @@
 ;; Tubslatex Installer
 ;; Written by Enrico Joerns
 
+!define NAME    "tubslatex"
 !define VERSION REPLACEWITHVERSION
 
 ;--------------------------------
 ;Include Modern UI
 
-!define MULTIUSER_INSTALLMODE_FUNCTION setInstallMode ;TODO?
-!define MULTIUSER_EXECUTIONLEVEL Highest
+;;; mulit user settings
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
+;; Page texts
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_TOP "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS "Für alle Benutzer installieren (global)"
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_CURRENTUSER "Nur für diesen Benutzer installieren (lokal)"
+; installation default subdir
+!define MULTIUSER_INSTALLMODE_INSTDIR "tubslatex"
+; registry keys
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "Software\tubslatex"
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\tubslatex"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallString"
+; mode handler function
+!define MULTIUSER_INSTALLMODE_FUNCTION setInstallMode
+; request highest possible execution level
+!define MULTIUSER_EXECUTIONLEVEL Highest
+
+
+; load libs
 !include MultiUser.nsh
 !include "MUI2.nsh"
 !include "TextFunc.nsh"
@@ -22,17 +40,17 @@
 ;General
 
 ;; Name and file
-Name "tubslatex"
-OutFile "tubslatexSetup_${VERSION}.exe"
+Name "${NAME}"
+OutFile "${NAME}Setup_${VERSION}.exe"
 
 ;; Default installation folder
-InstallDir "$PROGRAMFILES\tubslatex"
+;InstallDir "$PROGRAMFILES\tubslatex"
 
 ;; Get installation folder from registry if available
-InstallDirRegKey HKCU "Software\tubslatex" ""
+;InstallDirRegKey HKCU "Software\tubslatex" ""
 
 ;; Request application privileges for Windows Vista / 7
-RequestExecutionLevel admin
+;RequestExecutionLevel admin
 
 
 ;--------------------------------
@@ -54,17 +72,11 @@ Var ButtonState
 Var checkSecondCall
 Var desiredInstallType
 
-; mulit user settings
-!define MULTIUSER_INSTALLMODEPAGE_TEXT_TOP "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
-!define MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS "Für alle Benutzer installieren (global)"
-!define MULTIUSER_INSTALLMODEPAGE_TEXT_CURRENTUSER "Nur für diesen Benutzer installieren (lokal)"
-!define MULTIUSER_INSTALLMODE_INSTDIR "tubslatex"
-!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MULTIUSER_PAGE_INSTALLMODE 
 ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-Page custom pageInstallType pageInstallTypeLeave
+;Page custom pageInstallType pageInstallTypeLeave
 !insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
@@ -138,11 +150,11 @@ Function setInstallMode
         Call RelGotoPage
         Abort
     noskip:
-	  SetShellVarContext all
-;    StrCpy $instdir "$PROGRAMFILES\tubslatex"
+;	  SetShellVarContext all
+;   StrCpy $instdir "$PROGRAMFILES\tubslatex"
   ${Else}
     StrCpy $desiredInstallType "local"
-	  SetShellVarContext current
+;	  SetShellVarContext current
 ;	  StrCpy $instdir "$PROFILE\tubslatex"
   ${EndIf}
 FunctionEnd
@@ -469,7 +481,7 @@ Section "-postinst" SecPostInstall
 
 	;; register uninstall for windows uninstall manager
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
-;	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 SectionEnd
 
 ;--------------------------------
@@ -534,7 +546,11 @@ Section "Uninstall"
   Call un.disableUpdmaps
   
   ; TODO
-  ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+  ${If} $MultiUser.InstallMode == AllUsers
+    ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
+  ${Else}
+    ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+  ${EndIf}
 
   DeleteRegKey /ifempty HKCU "Software\tubslatex"
   
