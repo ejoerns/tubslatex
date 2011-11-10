@@ -43,8 +43,6 @@ RequestExecutionLevel admin
 ;Pages
 
 Var Dialog
-Var Label
-Var Text
 Var ButtonGlobal
 Var ButtonLocal
 Var ButtonState
@@ -64,7 +62,9 @@ Page custom pageInstallType pageInstallTypeLeave
 !insertmacro MUI_UNPAGE_FINISH
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Function for custom Page
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function pageInstallType
 	nsDialogs::Create 1018
 	Pop $Dialog
@@ -79,7 +79,6 @@ Function pageInstallType
 	; Description text
 	${NSD_CreateLabel} 0 0 100% 25% "Sie können entscheiden, ob die Komponenten nur für den aktuellen Benutzer oder für alle Benutzer des Systems installiert werden sollen."
   ${NSD_CreateLabel} 0 25% 100% 25% "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
-	Pop $Label
 
   ; Add radio buttons, set first checked
 	${NSD_CreateRadioButton} 0 50% 100% 10% "Für alle Benutzer installieren (global)"
@@ -92,7 +91,9 @@ Function pageInstallType
 	nsDialogs::Show
 FunctionEnd
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Callback function: Checks if local or global install was chosen
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function pageInstallTypeLeave
 
   ${NSD_GetState} $ButtonGlobal $ButtonState
@@ -117,8 +118,10 @@ FunctionEnd
 
 Var miktexVersion
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tries to get Version number of MiKTeX
 ;; Aborts installation if no version was found
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function analyzeMiktex
   EnumRegKey $miktexVersion HKLM Software\MiKTeX.org\MiKTeX 0
   StrCmp $miktexVersion "" 0 +3
@@ -263,7 +266,7 @@ Function enableUpdmaps
 	Exch
 	Exch $R1 ;updmap config file
 	ClearErrors
-	;messageBox MB_OK "File: $R1, Content: $R0"
+	messageBox MB_OK "File: $R1, Content: $R0";TODO 
 	FileOpen $0 $R1 "r"                     ; open target file for reading
 	GetTempFileName $R9                           ; get new temp file name
 	FileOpen $1 $R9 "w"                           ; open temp file for writing
@@ -320,12 +323,22 @@ Function un.disableUpdmaps
 FunctionEnd
 
 
+Var UpdmapDir
+
 ;-------------------------------------------------------------------------------
 ; Installer Sections
 ;-------------------------------------------------------------------------------
 Section "Nexus" SecNexus
-	;; Make sure that updmap.cfg exists
-	SetOutPath "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
+	;; Make sure that updmap.cfg exists, switch for local/global
+	${If} $desiredInstallType == "local"
+	  SetShellVarContext current
+	${Else}
+	  SetShellVarContext all
+	${EndIf}
+
+  StrCpy $UpdmapDir "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
+	MessageBox MB_OK "updmap in: $UpdmapDir"
+  SetOutPath $UpdmapDir
 	FileOpen $9 "updmap.cfg" w
 	FileClose $9
 
@@ -333,17 +346,19 @@ Section "Nexus" SecNexus
 	FILE /r data\fonts
 
 	;; enable updmaps
-	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
+	Push "$UpdmapDir\updmap.cfg"
 	Push "NexusProSans.map"
-		Call enableUpdmaps
-	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
+	Call enableUpdmaps
+	Push "$UpdmapDir\updmap.cfg"
 	Push "NexusProSerif.map"
-		Call enableUpdmaps
+	Call enableUpdmaps
 
 	;; run font update
-	;ExecCmd::exec /TEST /TIMEOUT=60000 '"initexmf -v --mkmaps"'
-	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --mkmaps"'
-	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+	${If} $desiredInstallType == "local"
+  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --mkmaps"'
+	${Else}
+  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
+	${EndIf}
 SectionEnd
 
 
@@ -372,8 +387,11 @@ Section "tubslatex" SecTubslatex
 	FILE /r data\tex
 
 	;; run file db update script
-	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
-	;ExecCmd::exec /TIMEOUT=60000 '"initexmf --update-fndb"'
+  ${If} $desiredInstallType == "local"
+  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+  ${Else}
+  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
+	${EndIf}
 
 SectionEnd
 
@@ -403,8 +421,10 @@ Var userrights ;stores user rights, either "admin" or "user"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; .onInit
+;; Tests if admin privileges are available. Stores in var $userrights
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function .onInit
+  ; TODO: place after install selection
   ;!insertmacro MUI_LANGDLL_DISPLAY
   Call analyzeMiktex
 
@@ -445,6 +465,7 @@ Section "Uninstall"
 
   RMDir /r "$INSTDIR"
 
+  ; TODO
 	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
 	Push "NexusProSans.map"
   Call un.disableUpdmaps
@@ -452,6 +473,7 @@ Section "Uninstall"
 	Push "NexusProSerif.map"
   Call un.disableUpdmaps
   
+  ; TODO
   ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
 
   DeleteRegKey /ifempty HKCU "Software\tubslatex"
