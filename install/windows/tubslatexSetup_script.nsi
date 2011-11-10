@@ -6,6 +6,11 @@
 ;--------------------------------
 ;Include Modern UI
 
+!define MULTIUSER_INSTALLMODE_FUNCTION setInstallMode ;TODO?
+!define MULTIUSER_EXECUTIONLEVEL Highest
+!define MULTIUSER_MUI
+!define MULTIUSER_INSTALLMODE_COMMANDLINE
+!include MultiUser.nsh
 !include "MUI2.nsh"
 !include "TextFunc.nsh"
 !include "Sections.nsh"
@@ -46,12 +51,21 @@ Var Dialog
 Var ButtonGlobal
 Var ButtonLocal
 Var ButtonState
+Var checkSecondCall
 Var desiredInstallType
 
+; mulit user settings
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_TOP "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS "Für alle Benutzer installieren (global)"
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_CURRENTUSER "Nur für diesen Benutzer installieren (lokal)"
+!define MULTIUSER_INSTALLMODE_INSTDIR "tubslatex"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
+
 !insertmacro MUI_PAGE_WELCOME
+!insertmacro MULTIUSER_PAGE_INSTALLMODE 
 ;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
 Page custom pageInstallType pageInstallTypeLeave
-!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -61,6 +75,9 @@ Page custom pageInstallType pageInstallTypeLeave
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
+Function un.onInit
+  !insertmacro MULTIUSER_UNINIT
+FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Function for page jump
@@ -103,6 +120,33 @@ Function pageInstallType
 	; Show us
 	nsDialogs::Show
 FunctionEnd
+
+
+Function setInstallMode
+  ; Prevent execution on first call
+  ${If} $checkSecondCall != "OK"
+    StrCpy $checkSecondCall "OK"
+    Return
+  ${EndIf}
+  
+  ; Test...
+  ${If} $MultiUser.InstallMode == AllUsers
+    StrCpy $desiredInstallType "global"
+    IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
+      MessageBox MB_YESNO "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?" IDYES noskip
+        StrCpy $R9 0 ;
+        Call RelGotoPage
+        Abort
+    noskip:
+	  SetShellVarContext all
+;    StrCpy $instdir "$PROGRAMFILES\tubslatex"
+  ${Else}
+    StrCpy $desiredInstallType "local"
+	  SetShellVarContext current
+;	  StrCpy $instdir "$PROFILE\tubslatex"
+  ${EndIf}
+FunctionEnd
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Callback function: Checks if local or global install was chosen
@@ -425,7 +469,7 @@ Section "-postinst" SecPostInstall
 
 	;; register uninstall for windows uninstall manager
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+;	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 SectionEnd
 
 ;--------------------------------
@@ -439,6 +483,7 @@ Var userrights ;stores user rights, either "admin" or "user"
 ;; Tests if admin privileges are available. Stores in var $userrights
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function .onInit
+  !insertmacro MULTIUSER_INIT
   ; TODO: place after install selection
   ;!insertmacro MUI_LANGDLL_DISPLAY
   Call analyzeMiktex
