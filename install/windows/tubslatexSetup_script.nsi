@@ -120,9 +120,11 @@ Function pageInstallTypeLeave
         Abort
     noskip:
 	  SetShellVarContext all
+    StrCpy $instdir "$PROGRAMFILES\tubslatex"
   ${Else}
     StrCpy $desiredInstallType "local"
 	  SetShellVarContext current
+	  StrCpy $instdir "$PROFILE\tubslatex"
   ${EndIf}
 FunctionEnd
 
