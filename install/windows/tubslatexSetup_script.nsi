@@ -20,7 +20,7 @@
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "Software\tubslatex"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\tubslatex"
-!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallString"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallDir"
 ; mode handler function
 !define MULTIUSER_INSTALLMODE_FUNCTION setInstallMode
 ; request highest possible execution level
@@ -65,31 +65,22 @@ OutFile "${NAME}Setup_${VERSION}.exe"
 ;--------------------------------
 ;Pages
 
-Var Dialog
-Var ButtonGlobal
-Var ButtonLocal
-Var ButtonState
 Var checkSecondCall
 Var desiredInstallType
 
-
+; Install Pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MULTIUSER_PAGE_INSTALLMODE 
-;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
-;Page custom pageInstallType pageInstallTypeLeave
 !insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
-
+; Uninstall Pages
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
-Function un.onInit
-  !insertmacro MULTIUSER_UNINIT
-FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Function for page jump
@@ -105,35 +96,8 @@ FunctionEnd
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Function for custom Page
+; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Function pageInstallType
-	nsDialogs::Create 1018
-	Pop $Dialog
-	
-	${If} $Dialog == error
-		Abort
-	${EndIf}
-	
-	; Paget title
-	!insertmacro MUI_HEADER_TEXT "Installationsart wählen" "Bitte wählen Sie aus, ob die Komponenten lokal oder systemweit installiert werden sollen."
-	
-	; Description text
-	${NSD_CreateLabel} 0 0 100% 25% "Sie können entscheiden, ob die Komponenten nur für den aktuellen Benutzer oder für alle Benutzer des Systems installiert werden sollen."
-  ${NSD_CreateLabel} 0 25% 100% 25% "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
-
-  ; Add radio buttons, set first checked
-	${NSD_CreateRadioButton} 0 50% 100% 10% "Für alle Benutzer installieren (global)"
-	Pop $ButtonGlobal
-	${NSD_SetState} $ButtonGlobal ${BST_CHECKED}
-	${NSD_CreateRadioButton} 0 60% 100% 10% "Nur für diesen Benutzer installieren (lokal)"
-	Pop $ButtonLocal
-	
-	; Show us
-	nsDialogs::Show
-FunctionEnd
-
-
 Function setInstallMode
   ; Prevent execution on first call
   ${If} $checkSecondCall != "OK"
@@ -150,39 +114,11 @@ Function setInstallMode
         Call RelGotoPage
         Abort
     noskip:
-;	  SetShellVarContext all
-;   StrCpy $instdir "$PROGRAMFILES\tubslatex"
   ${Else}
     StrCpy $desiredInstallType "local"
-;	  SetShellVarContext current
-;	  StrCpy $instdir "$PROFILE\tubslatex"
   ${EndIf}
 FunctionEnd
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Callback function: Checks if local or global install was chosen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Function pageInstallTypeLeave
-
-  ${NSD_GetState} $ButtonGlobal $ButtonState
-
-  ${IF} $ButtonState == ${BST_CHECKED}
-    StrCpy $desiredInstallType "global"
-    IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
-      MessageBox MB_YESNO "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?" IDYES noskip
-        StrCpy $R9 0 ;
-        Call RelGotoPage
-        Abort
-    noskip:
-	  SetShellVarContext all
-    StrCpy $instdir "$PROGRAMFILES\tubslatex"
-  ${Else}
-    StrCpy $desiredInstallType "local"
-	  SetShellVarContext current
-	  StrCpy $instdir "$PROFILE\tubslatex"
-  ${EndIf}
-FunctionEnd
 
 ;--------------------------------
 ;Languages
@@ -205,7 +141,6 @@ Function analyzeMiktex
   StrCmp $miktexVersion "" 0 +3
   MessageBox MB_OK "MiKTeX not installed, cancelling installation"
   Abort "MiKTeX not installed, cancelling installation"
-  ;MessageBox MB_OK "Found Version: $miktexVersion"
 FunctionEnd
 
 
@@ -270,6 +205,7 @@ FunctionEnd
 !define StrContains '!insertmacro "_StrContainsConstructor"'
 !define un.StrContains '!insertmacro "un_StrContainsConstructor"'
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Looks for the MiKTeX installation path and stores it under ${MiktexInstallPath}
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -282,6 +218,7 @@ Function getMiktexInstallPath
 ;  messageBox MB_OK " Ok, MiKTeX is installed in $R0"
   !define MiktexInstallPath $R0
 FunctionEnd
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Adds the install directory to MiKTeX's UserRoots if required
@@ -299,6 +236,7 @@ Function addLocaltexmf
   WriteRegStr HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "UserRoots" "$INSTDIR;$R0"
   skipRootsUpdate:
 FunctionEnd
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Adds specified data at the end of the specified file
@@ -323,14 +261,6 @@ FunctionEnd
   Call WriteToFile
 !macroend
 !define WriteToFile "!insertmacro WriteToFile"
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Delete every line from specified file that contains the specified text
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;Function deleteLineFromFile
-;	; TODO...
-;FunctionEnd
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -474,14 +404,14 @@ Section "-postinst" SecPostInstall
   Call getMiktexInstallPath
   Call addLocaltexmf  
 
-  WriteRegStr HKCU "Software\tubslatex" "" $INSTDIR
+  WriteRegStr SHCTX "Software\tubslatex" "InstallDir" $INSTDIR
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
 	;; register uninstall for windows uninstall manager
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
+	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 SectionEnd
 
 ;--------------------------------
@@ -500,18 +430,23 @@ Function .onInit
   ;!insertmacro MUI_LANGDLL_DISPLAY
   Call analyzeMiktex
 
-  # call userInfo plugin to get user info.
-  userInfo::getAccountType
-  # pop the result from the stack into $0
-  pop $0
-  StrCpy $userrights "admin"
-  strCmp $0 "Admin" +3
-		StrCpy $userrights "user"
-		messageBox MB_OK "Info: Installer started without admin privileges. Only local install will be possible."
+;  # call userInfo plugin to get user info.
+;  userInfo::getAccountType
+;  # pop the result from the stack into $0
+;  pop $0
+;  StrCpy $userrights "admin"
+;  strCmp $0 "Admin" +3
+;		StrCpy $userrights "user"
+;		messageBox MB_OK "Info: Installer started without admin privileges. Only local install will be possible."
 
 FunctionEnd
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; un.onInit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Function un.onInit
+  !insertmacro MULTIUSER_UNINIT
+FunctionEnd
 
 ;--------------------------------
 ;Descriptions
@@ -552,10 +487,12 @@ Section "Uninstall"
     ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
   ${EndIf}
 
-  DeleteRegKey /ifempty HKCU "Software\tubslatex"
+  DeleteRegKey /ifempty SHCTX "Software\tubslatex"
   
   ;; Delete from windows uninstall list
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
+	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
 
 SectionEnd
 
+; TODO: Handle HKLM install of MiKTeX!
+; TODO: User-Mode-Key setzen!?
