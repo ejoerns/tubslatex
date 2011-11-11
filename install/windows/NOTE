@@ -35,3 +35,20 @@ C:\Dokumente und Einstellungen\enrico\Lokale Einstellungen\Anwendungsdaten\MiKTe
 
 
 --> Test auf Existenz lokaler pdftex.map ausreichend!
+
+
+
+Auch schön:
+
+http://nsis.sourceforge.net/Docs/MultiUser/Readme.html
+
+SHCTX statt HKLM oder HKCU für Mulit-User
+
+
+
+Neue texmfs:
+
+-- admin:
+HKLM "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "CommonRoots
+
+HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "UserRoots"

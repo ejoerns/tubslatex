@@ -517,7 +517,6 @@ Section "Uninstall"
 
 SectionEnd
 
-; TODO: User-Mode-Key setzen!?
 ; TODO: Test + Behandlung alter tusblatex-Installation?
 ; TODO: user roots aus MiKTeX bei Deinstallation cond. entfernen
 
