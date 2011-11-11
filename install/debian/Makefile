@@ -34,12 +34,12 @@ structure:
 	mkdir -p texlive-tubs/$(INSTALLPATH)
 
 fetch:
-	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
 	cp -r $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
 	cp -r $(RAWTREE)/doc texlive-tubs/$(INSTALLPATH)/.
 	cp -r $(RAWTREE)/fonts texlive-tubs/$(INSTALLPATH)/.
 	cat control.template | sed 's/CONTROLVERSION/$(DEBVERSION)-$(DISTVERSION)/g' | \
 	sed 's/INSTALLSIZE/'"`du -sk --apparent-size texlive-tubs | awk  '{print $$1}' `"'/g' > control
+	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
 
 clean:
 	rm -rf texlive-tubs
