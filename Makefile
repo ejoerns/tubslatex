@@ -55,7 +55,7 @@ zip:
 	$(MAKE) -C $(INSTALL_RAW_DIR)
 	$(MAKE) -C $(INSTALL_RAW_DIR) VERSION=$(TUBSLATEX_VERSION) zip
 deb:
-	$(MAKE) -C $(INSTALL_DEB_DIR) copy DEBVERSION=$(TUBSLATEX_DEBVERSION) deb
+	$(MAKE) -C $(INSTALL_DEB_DIR) copy DEBVERSION=$(TUBSLATEX_DEBVERSION)
 	$(MAKE) -C $(INSTALL_DEB_DIR) VERSION=$(TUBSLATEX_VERSION) deb
 exe:
 	$(MAKE) -C $(INSTALL_WIN_DIR) copy
@@ -67,12 +67,9 @@ fetch:
 	cp $(INSTALL_RAW_DIR)/$(INSTALL_ZIP) Website/$(TUBSLATEX_VERSION)/.
 	cp $(INSTALL_DEB_DIR)/$(INSTALL_DEB) Website/$(TUBSLATEX_VERSION)/.
 	cp $(INSTALL_WIN_DIR)/$(INSTALL_EXE) Website/$(TUBSLATEX_VERSION)/.
+	cp Website/Changelog.txt             Website/$(TUBSLATEX_VERSION)/.
 
 
 clean:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i clean; done
 	$(MAKE) -C $(DOCUMENTATION_DIR) clean
-
-
-test:
-	echo $(TUBSLATEX_DEBVERSION)
