@@ -1,0 +1,44 @@
+\documentclass[a4paper]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+\usepackage[noae,nogin]{Sweave}
+
+%opening
+\title{Lorem ipsum dolor sit amet}
+\author{Enrico Jörns}
+\logo{\fboxsep0mm\fbox{\includegraphics{institut.png}}}
+\titlepicture{infozentrum.jpg}
+
+\begin{document}
+
+\maketitle[image]
+
+\tableofcontents
+
+\pagestyle{scrheadings}
+
+% \getbackend
+
+\chapter{Ut purus elit}
+
+\lipsum[1]
+
+\section{Phasellus eu tellus sit amet}
+{\renewcommand*{\sfdefault}{NexusProSans}
+\sffamily
+\lipsum[2-5]
+}
+\section{Pellentesque habitant}
+
+\lipsum[8-11]
+
+\chapter{Nulla malesuada porttitor diam}
+
+\lipsum[1-3]
+
+\section{Donec felis erat}
+
+\lipsum[4-7]
+
+\end{document}
