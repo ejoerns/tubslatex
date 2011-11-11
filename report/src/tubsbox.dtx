@@ -174,7 +174,15 @@
 % Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
 % Die Namen sind jeweils Aliase.
 %    \begin{macrocode}
-\newcommand{\tubsboxsetup}[1][]{%
+\newcommand*{\tubsboxsetup}{%
+  \@ifstar%
+  \tubsboxsetupStar%
+  \tubsboxsetupNoStar%
+}
+\newcommand*{\tubsboxsetupStar}[1][]{%
+  \setkeys*{tubsbox.sty}{#1}
+}
+\newcommand*{\tubsboxsetupNoStar}[1][]{%
   \setkeys{tubsbox.sty}{#1}
 }
 \let\gaussboxsetup=\tubsboxsetup%

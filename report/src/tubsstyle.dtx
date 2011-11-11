@@ -200,6 +200,7 @@
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
 \newboolean{tubsstyle@bottomsender}\setboolean{tubsstyle@bottomsender}{false}
 \newboolean{tubsstyle@singlepage}\setboolean{tubsstyle@singlepage}{false}
+\newboolean{tubsstyle@designhelper}\setboolean{tubsstyle@designhelper}{false}
 %    \end{macrocode}
 %
 %
@@ -415,7 +416,7 @@
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
     \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
       {0.5\paperwidth-0.5\tubspage@bcor-\tubspage@borderwidth}{%
-      \setkeys{Gin}{height=\headheight}%
+      \setkeys{Gin}{height=\headheight,width=0.5\textwidth,keepaspectratio}%
       \usekomafont{institute}\@ragged%
       \leavevmode\color{tuRed}#1%
     }%
@@ -678,7 +679,7 @@
 %    \begin{macrocode}
 %
 \define@choicekey{bgelement}{imagefit}[\val\nr]{%
-        default,scaled,cropped,cropx,cropy,fitheight,fitwidth}{%
+        default,scaled,clipped,cropped,clipx,cropx,clipy,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax
     % default
     \PackageInfo{tubsstyle}{%
@@ -689,11 +690,20 @@
     % scaled
     \renewcommand{\tubstyle@imagefit}{scaled}
   \or
+    % clipped
+    \renewcommand{\tubstyle@imagefit}{cropped}
+  \or
     % cropped
     \renewcommand{\tubstyle@imagefit}{cropped}
   \or
+    % clipx
+    \renewcommand{\tubstyle@imagefit}{cropx}
+  \or
     % cropx
     \renewcommand{\tubstyle@imagefit}{cropx}
+  \or
+    % clipy
+    \renewcommand{\tubstyle@imagefit}{cropy}
   \or
     % cropy
     \renewcommand{\tubstyle@imagefit}{cropy}
@@ -761,6 +771,14 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{bglayout}{designhelper}
+%    \begin{macrocode}
+\define@key{bglayout}{designhelper}[true]{%
+  \setboolean{tubsstyle@designhelper}{true}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % \begin{key}{bglayout}{bgcolor}
 % Mit dieser Option kann der komplette Kommunikationsbereich mit einer
 % gewünschten Hintergrundfarbe gefüllt werden. Wird kein Wert mit übergeben,
@@ -819,7 +837,11 @@
   \tubs@draw@topline
   \tubs@draw@tubslogo
   \tubs@draw@logo
-  \tubs@draw@designhelper
+  \ifthenelse{\boolean{tubsstyle@designhelper}}{%
+    \setboolean{tubsstyle@designhelper}{false}%
+    \showdesignhelper%
+  }{}
+  \tubs@draw@designhelper% TODO: keep?
   \ClearShipoutPicture
   \ifthenelse{\boolean{tubsstyle@singlepage}}{%
     \AddToShipoutPicture*{\@next@shipout}
@@ -936,7 +958,7 @@
 %    \begin{macrocode}
 \newenvironment{gausspage}[1][]{%
   \clearpage
-  \tubsboxsetup[#1]%TODO...
+  \tubsboxsetup*[#1]%TODO...
   \@layout@pre{pages=single,#1}
   \sffamily
 }{%
