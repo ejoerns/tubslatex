@@ -280,7 +280,15 @@
       \PassOptionsToPackage{twoside=true}{tubstypearea}
       \PassOptionsToPackage{twoside=true}{tubsstyle}
     }{%
-      \ClassError{\tubsClassName}{Unknown Value for option 'style'}{}
+      \ifthenelse{\equal{#1}{printdev}}{%
+        \PassOptionsToPackage{bcor=15mm}{tubstypearea}
+        \PassOptionsToPackage{rgb}{tubslogo}
+        \PassOptionsToPackage{rgb}{tubscolors}
+        \PassOptionsToPackage{twoside=false}{tubstypearea}
+        \PassOptionsToPackage{twoside=false}{tubsstyle}
+      }{%
+        \ClassError{\tubsClassName}{Unknown Value for option 'style'}{}
+      }
     }
   }
 }
