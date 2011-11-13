@@ -226,7 +226,10 @@
 % Neue Definition der |titlepage|-Umgebung.
 % Entspricht |gausspage|-Umgebung.
 %    \begin{macrocode}
-\let\titlepage\gausspage
+\renewcommand\titlepage{%
+  \gausspage%
+  \thispagestyle{empty}%
+}
 \let\endtitlepage\endgausspage
 %    \end{macrocode}
 %    \end{environment}
