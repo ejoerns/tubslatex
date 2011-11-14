@@ -150,15 +150,15 @@
     \newdimen\@tubs@headheight%
     \setlength\@tubs@headheight{\headheight}%
     \addtolength\@tubs@headheight{-2pt}%
-    \ihead{\vbox to\@tubs@headheight{%
-      ~\vspace*{1.5ex}\linebreak%
-      \if@twoside%
-        \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
-      \else%
-        \@tubs@linner%
-      \fi%
-      \vfill%
-    }}%
+%     \ihead{\vbox to\@tubs@headheight{%
+%       ~\vspace*{1.5ex}\linebreak%
+%       \if@twoside%
+%         \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+%       \else%
+%         \@tubs@linner%
+%       \fi%
+%       \vfill%
+%     }}%
   \fi%
 }
 %    \end{macrocode}
@@ -232,16 +232,20 @@
   \iftubs@bottomsender\else%
     \newdimen\@tubs@headheight%
     \setlength\@tubs@headheight{\headheight}%
-    \addtolength\@tubs@headheight{-6pt}%
-    \ohead{\vbox to\@tubs@headheight{%
-      ~\vspace*{1.5ex}\linebreak%
-      \if@twoside%
+    \addtolength\@tubs@headheight{-\scr@headabove@linethickness}
+    \addtolength\@tubs@headheight{-1pt}
+    \ohead{%
+      \vtop to\@tubs@headheight{%
+        \boxmaxdepth=0pt%
+        \strut{\vbox to 3.5ex{}}%
+        \if@twoside%
         \ifthispageodd{\@tubs@router}{\@tubs@louter}%
-      \else%
-        \@tubs@router%
-      \fi%
-      \vfill%
-    }}%
+        \else%
+          \@tubs@router%
+        \fi%
+        \vfil%
+      }%
+    }%
   \fi%
 }%
 %    \end{macrocode}
