@@ -34,7 +34,7 @@ case "$1" in
       touch ~/.texmf-config/updmap.d/10local.cfg
 
       echo "You seem to use a local font map. Using local variants, too"
-      /usr/bin/getnonfreefonts arial-urw
+      /usr/bin/getnonfreefonts --verbose arial-urw
       echo "Adding map file for NexusProSans"
       /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
       echo "Adding map file for NexusProSerif"
@@ -46,7 +46,7 @@ case "$1" in
       touch /etc/texmf/updmap.d/10local.cfg
 
       echo "Using sys variants"
-      /usr/bin/getnonfreefonts-sys arial-urw
+      /usr/bin/getnonfreefonts-sys --verbose arial-urw
       echo "Adding map file for NexusProSans"
       /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
       echo "Adding map file for NexusProSerif"
