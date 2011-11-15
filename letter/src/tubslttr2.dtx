@@ -195,8 +195,8 @@
   left=2.45cm,%
   top=3.3cm,%
   bottom=3.5cm,%
-  headsep=1cm,%
-  headheight=1.2cm,%
+  headsep=0.5cm,%
+  headheight=2.2cm,%
   textwidth=12.2cm
 }
 %    \end{macrocode}
@@ -421,9 +421,25 @@
   \if@OldKomaVersion%
     \setlength{\@fheadwidth}{\textwidth}
     \addtolength{\@fheadwidth}{1cm}
-    \parbox[b][2cm]{\@fheadwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}%
+    \parbox[b][2cm]{\@fheadwidth}{%
+      \begingroup%
+      \raggedleft%
+      \vfill%
+      \presetkeys{Gin}{width=8cm,height=\headheight,keepaspectratio}{}%
+      \usekomavar{fromlogo}%
+      \vfill%
+      \endgroup%
+    }%
   \else%
-    \parbox[b][2cm]{\textwidth}{\raggedleft\vfill\usekomavar{fromlogo}\vfill}%
+    \parbox[b][2cm]{\textwidth}{%
+      \begingroup%
+      \raggedleft%
+      \vfill%
+      \presetkeys{Gin}{width=8cm,height=\headheight,keepaspectratio}{}%
+      \usekomavar{fromlogo}%
+      \vfill%
+      \endgroup%
+    }%
   \fi%
 }
 %    \end{macrocode}
@@ -514,11 +530,17 @@ Datum: \usekomavar{date}\\
 % Kopfzeile auf Folgeseiten
 %    \begin{macrocode}
 \@fix@nexthead{\footnotesize\sffamily%
-  \vbox to\headheight{\parbox{12.2cm}{\usekomafont{fromaddress}%
-    Technische Universit\"at Braunschweig\\
-    {\bfseries\usekomavar{frominstitute}}\\
-    \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
-  }\vfill}
+  \fboxsep0mm\fbox{%
+  \vbox to\headheight{%
+    \vfill%
+    \parbox{12.2cm}{%
+      \usekomafont{fromaddress}Technische Universit\"at Braunschweig\\
+      {\bfseries\usekomavar{frominstitute}}\\
+      \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
+    }%
+    \vfill%
+  }%
+  }
 }
 %    \end{macrocode}
 %
