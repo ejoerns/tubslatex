@@ -91,7 +91,8 @@
 %    \begin{key}{}{sender}
 %    \begin{macrocode}
 \newif\iftubs@bottomsender\tubs@bottomsenderfalse
-\define@choicekey{\tubsClassName.cls}{sender}[\val\nr]{top,bottom}{%
+%<class>\define@choicekey{\tubsClassName.cls}{sender}[\val\nr]{top,bottom}{%
+%<package>\define@choicekey{tubsdoc.sty}{sender}[\val\nr]{top,bottom}{%
   \ifcase\nr\relax
     \tubs@bottomsenderfalse
   \or
@@ -150,15 +151,18 @@
     \newdimen\@tubs@headheight%
     \setlength\@tubs@headheight{\headheight}%
     \addtolength\@tubs@headheight{-2pt}%
-%     \ihead{\vbox to\@tubs@headheight{%
-%       ~\vspace*{1.5ex}\linebreak%
-%       \if@twoside%
-%         \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
-%       \else%
-%         \@tubs@linner%
-%       \fi%
-%       \vfill%
-%     }}%
+    \ihead{%
+      \vtop to\@tubs@headheight{%
+        \boxmaxdepth=0pt%
+        \strut{\vbox to 4ex{}}%
+        \if@twoside%
+          \ifthispageodd{\@tubs@linner}{\@tubs@rinner}%
+        \else%
+          \@tubs@linner%
+        \fi%
+        \vfil%
+      }%
+    }%
   \fi%
 }
 %    \end{macrocode}
@@ -237,7 +241,7 @@
     \ohead{%
       \vtop to\@tubs@headheight{%
         \boxmaxdepth=0pt%
-        \strut{\vbox to 3.5ex{}}%
+        \strut{\vbox to 4ex{}}%
         \if@twoside%
         \ifthispageodd{\@tubs@router}{\@tubs@louter}%
         \else%
@@ -325,8 +329,8 @@
 %
 % Inhalt der Kopf-/Fußzeilen festlegen
 %    \begin{macrocode}
-%<book>\automark[chapter]{section}
-%<report|article>\automark[section]{subsection}
+%<report|book>\automark[chapter]{section}
+%<article>\automark[section]{subsection}
 \innerhead[\leftmark]{}
 \outerhead[\pagemark]{\rightmark\qquad\pagemark}
 %    \end{macrocode}

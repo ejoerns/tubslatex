@@ -201,7 +201,8 @@
 % kommt.
 %    \begin{macrocode}
 %<*book|report|article|package>
-\define@boolkey{\tubsClassName.cls}[tb@]{twoside}[true]{%
+%<class>\define@boolkey{\tubsClassName.cls}[tb@]{twoside}[true]{%
+%<package>\define@boolkey{tubsdoc.sty}[tb@]{twoside}[true]{%
   \iftb@twoside
     \PassOptionsToPackage{twoside=true}{tubstypearea}
     \PassOptionsToPackage{twoside=true}{tubsstyle}
@@ -287,7 +288,8 @@
         \PassOptionsToPackage{twoside=false}{tubstypearea}
         \PassOptionsToPackage{twoside=false}{tubsstyle}
       }{%
-        \ClassError{\tubsClassName}{Unknown Value for option 'style'}{}
+%<class>  \ClassError{\tubsClassName}{Unknown Value for option 'style'}{}
+%<package>\ClassError{tubsdoc}{Unknown Value for option 'style'}{}
       }
     }
   }
@@ -469,6 +471,7 @@
 %    \begin{macrocode}
 \DeclareOptionX*{%
 %<class>  \PassOptionsToClass{\CurrentOption}{\BaseClass}
+%<package>\PassOptionsToPackage{\CurrentOption}{scrextend}
 }
 %    \end{macrocode}
 %
@@ -491,6 +494,7 @@
 %
 \PassOptionsToPackage{\tubs@opt@paper}{tubstypearea}
 \PassOptionsToPackage{\tubs@opt@paper}{tubslogo}
+\PassOptionsToPackage{calconly}{tubstypearea}
 %
 %    \end{macrocode}
 % 
