@@ -114,16 +114,21 @@
 \ProvidesPackage{tubstypearea}% 'tubslayout'?
 
 \RequirePackage{ifthen}
-\RequirePackage{geometry}
 \RequirePackage{calc}
 \RequirePackage{xkeyval}
 %    \end{macrocode}
 %
 % \subsection{Definitionen}
 %
+%
+% Boolean to check if calconly mode is used
+%    \begin{macrocode}
+\newboolean{tubspage@calconly}
+%    \end{macrocode}
+%
 % Boolean to check if landscape mode is used
 %    \begin{macrocode}
-\newboolean{tubspage@landscape}\setboolean{tubspage@landscape}{false}
+\newboolean{tubspage@landscape}
 %    \end{macrocode}
 %
 % Boolean to check if left margin is used
@@ -288,81 +293,84 @@
 % Setzt Layout mit Hilfe des geometry-Befehls.
 %    \begin{macrocode}
 \newcommand{\@tubspage@setlayout}{%
-  \ifthenelse{\boolean{scifiposter}}{%
-    %%% Einstellungen für wissenschaftliche Poster %%%
-    \geometry{%
-      left=1.5\tubspage@borderwidth,
-      right=1.5\tubspage@borderwidth
-    }
-    \ifthenelse{\boolean{tubspage@bottomsender}}{%
-      % Absenderbereich unten (TESTING! TODO)
+  % Layout nur setzen, wenn Option 'calconly' nicht benutzt
+  \ifthenelse{\boolean{tubspage@calconly}}{}{%
+    \ifthenelse{\boolean{scifiposter}}{%
+      %%% Einstellungen für wissenschaftliche Poster %%%
       \geometry{%
-        bottom=0.14\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5!
-        top=1.5\tubspage@borderwidth,
+        left=1.5\tubspage@borderwidth,
+        right=1.5\tubspage@borderwidth
       }
-    }{% Absenderbereich oben
-      \geometry{%
-        top=0.14\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5!
-        bottom=1.5\tubspage@borderwidth,
+      \ifthenelse{\boolean{tubspage@bottomsender}}{%
+        % Absenderbereich unten (TESTING! TODO)
+        \geometry{%
+          bottom=0.14\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5!
+          top=1.5\tubspage@borderwidth,
+        }
+      }{% Absenderbereich oben
+        \geometry{%
+          top=0.14\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5!
+          bottom=1.5\tubspage@borderwidth,
+        }
       }
-    }
-  }{%%% Einstellungen für normale Dokumente/poster %%%
-    \geometry{%
-        columnsep=\tubspage@columnsep,
-        bindingoffset=\tubspage@bcor
-    }
-    \ifthenelse{\boolean{tubspage@extramargin}}{%
-      % Extra breite Ränder
+    }{%%% Einstellungen für normale Dokumente/poster %%%
       \geometry{%
-        left=3\tubspage@borderwidth,
-        right=3\tubspage@borderwidth
-      }
-    }{% Standardwerte für Ränder
-      \geometry{%
-        left=2\tubspage@borderwidth,
-        right=2\tubspage@borderwidth
-      }
-    }
-    \ifthenelse{\boolean{tubspage@bottomsender}}{%
-      % Absenderbereich unten
-      \geometry{%
-        headheight=0mm,nohead,
-        headsep=\tubspage@borderwidth,
-        top=2\tubspage@borderwidth,
-        bottom=\tubspage@senderheight+\tubspage@borderwidth,
-        footskip=\tubspage@senderheight
+          columnsep=\tubspage@columnsep,
+          bindingoffset=\tubspage@bcor
       }
       \ifthenelse{\boolean{tubspage@extramargin}}{%
-        \geometry{top=3\tubspage@borderwidth}
-      }{}
-    }{% Absenderbereich oben
-      \geometry{%
-        headheight=\tubspage@senderheight-2\tubspage@borderwidth,
-        headsep=1.5\tubspage@borderwidth,
-        top=\tubspage@senderheight+\tubspage@borderwidth,
-        bottom=2\tubspage@borderwidth
+        % Extra breite Ränder
+        \geometry{%
+          left=3\tubspage@borderwidth,
+          right=3\tubspage@borderwidth
+        }
+      }{% Standardwerte für Ränder
+        \geometry{%
+          left=2\tubspage@borderwidth,
+          right=2\tubspage@borderwidth
+        }
       }
-      \ifthenelse{\boolean{tubspage@extramargin}}{%
-        \geometry{bottom=3\tubspage@borderwidth}
+      \ifthenelse{\boolean{tubspage@bottomsender}}{%
+        % Absenderbereich unten
+        \geometry{%
+          headheight=0mm,nohead,
+          headsep=\tubspage@borderwidth,
+          top=2\tubspage@borderwidth,
+          bottom=\tubspage@senderheight+\tubspage@borderwidth,
+          footskip=\tubspage@senderheight
+        }
+        \ifthenelse{\boolean{tubspage@extramargin}}{%
+          \geometry{top=3\tubspage@borderwidth}
+        }{}
+      }{% Absenderbereich oben
+        \geometry{%
+          headheight=\tubspage@senderheight-2\tubspage@borderwidth,
+          headsep=1.5\tubspage@borderwidth,
+          top=\tubspage@senderheight+\tubspage@borderwidth,
+          bottom=2\tubspage@borderwidth
+        }
+        \ifthenelse{\boolean{tubspage@extramargin}}{%
+          \geometry{bottom=3\tubspage@borderwidth}
+        }{}
+      }
+      % Marginale links
+      \ifthenelse{\boolean{tubspage@marginleft}}{%
+        \geometry{%
+          lmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+          marginparsep=\tubspage@columnsep,
+          marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
       }{}
-    }
-    % Marginale links
-    \ifthenelse{\boolean{tubspage@marginleft}}{%
-      \geometry{%
-        lmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
-        marginparsep=\tubspage@columnsep,
-        marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
-    }{}
-    % Marginale rechts
-    \ifthenelse{\boolean{tubspage@marginright}}{%
-      \geometry{%
-        rmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
-        marginparsep=\tubspage@columnsep,
-        marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
-    }{}
-    % Zweiseitiges Layout
-    \ifthenelse{\boolean{tubspage@twosided}}{%
-      \geometry{twoside}
+      % Marginale rechts
+      \ifthenelse{\boolean{tubspage@marginright}}{%
+        \geometry{%
+          rmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
+          marginparsep=\tubspage@columnsep,
+          marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
+      }{}
+      % Zweiseitiges Layout
+      \ifthenelse{\boolean{tubspage@twosided}}{%
+        \geometry{twoside}
+      }
     }
   }
 }
@@ -504,7 +512,7 @@
 % Berechnet nur Längen ohne das Seitenlayout zu verändern
 %    \begin{macrocode}
 \DeclareOptionX{calconly}{%
-  \let\tubspage@setlayout\relax
+  \setboolean{tubspage@calconly}{true}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -552,6 +560,12 @@
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
+%
+%    \begin{macrocode}
+\ifthenelse{\boolean{tubspage@calconly}}{}{%
+  \RequirePackage{geometry}
+}
+%    \end{macrocode}
 %
 %    \begin{macro}{\tubsgeometry}
 % \marg{settings}\par
