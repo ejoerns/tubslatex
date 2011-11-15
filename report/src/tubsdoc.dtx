@@ -98,6 +98,7 @@
 %<*head>
 %<*class>
 %    \end{macrocode}
+%
 % Definition des zu verwendenden Klassennamens
 %    \begin{macrocode}
 \RequirePackage{ifthen}
@@ -119,18 +120,20 @@
 %<leaflet> leaflet%
 }
 %    \end{macrocode}
+%
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%
 % Sub-Präfix für fontsizefilebase-Namen
 %    \begin{macrocode}
-\newcommand*{\@fsfbs@sub}{}
-%</class>
-%<*package>
-% \newcommand{\BaseClass}{\KOMAClassName}
-%</package>
 %<package|class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<package>\ProvidesPackage{tubsdoc}%[2011/07/09 vTesting TU Braunschweig CD Templates]
 %<class>\ProvidesClass{\tubsClassName}[2011/07/09 tubstex document class]
+%
+\newcommand*{\@fsfbs@sub}{}
 %    \end{macrocode}
-% 
+%
 % This package requires the following package:
 % \textsf{xkeyval}
 %    \begin{macrocode}
@@ -140,7 +143,7 @@
 %    \begin{macrocode}
 %</head>
 %    \end{macrocode}
-% 
+%
 % Option section
 %    \begin{macrocode}
 %<*option>
@@ -488,7 +491,18 @@
 %<article|report|book>\ExecuteOptionsX{a4paper,style=print,backend=base}
 %<leaflet>\ExecuteOptionsX{langpaper,cmyk}
 \ProcessOptionsX*\relax
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%</execoption>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+%<*body>
+%    \end{macrocode}
+%
 % Namen für Fontsize-Dateien festlegen
+%    \begin{macrocode}
 \providecommand{\@fontsizefilebase}{}
 \renewcommand{\@fontsizefilebase}{\@fsfb@prefix\@fsfbs@sub}
 %
@@ -496,17 +510,6 @@
 \PassOptionsToPackage{\tubs@opt@paper}{tubslogo}
 \PassOptionsToPackage{calconly}{tubstypearea}
 %
-%    \end{macrocode}
-% 
-%    \begin{macrocode}
-%</execoption>
-%    \end{macrocode}
-% 
-%    \begin{macrocode}
-%<*body>
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 %<class>\PassOptionsToClass{DIV=1}{\BaseClass}
 %<class>\LoadClass{\BaseClass}
 \RequirePackage{tubscolors}

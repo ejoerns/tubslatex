@@ -247,6 +247,14 @@
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 %
+% Stelle |\subtitle| für Paket-Zur Verfügung
+%    \begin{macrocode}
+%<*package>
+\providecommand{\@subtitle}{}
+\providecommand{\subtitle}[1]{\renewcommand{\@subtitle}{#1}}
+%</package>
+%    \end{macro}
+%
 %    \begin{macro}{\logo}
 % Erlaubt ein Logo zu definieren, das auf die Titelseite gesetzt werden soll.
 %    \begin{macrocode}
