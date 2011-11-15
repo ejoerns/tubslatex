@@ -56,7 +56,10 @@ Informationen evtl. unvollständig oder unklar!
 
 \input{preface}
 
-\pagestyle{scrheadings}
+\pagestyle{scrheadings}% TODO:!?!?
+
+\phantomsection % requires hyperref package
+\pdfbookmark[1]{Inhaltsverzeichnis}{toc}
 \tableofcontents
 
 

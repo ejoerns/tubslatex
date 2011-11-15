@@ -10,34 +10,8 @@ Ebenso gibt es für Debian-basierte Systeme, die texlive verwenden ein
 \texttt{.deb}-Paket, das alle Abhängigkeiten korrekt auflöst und die Vorlagen
 automatisch installiert.
 
-\section{Automatische Installation}
 
-\subsection{Windows -- MikTeX}
-
-Bei Verwendung von MikTeX unter Windows kann auf den verfügbaren Installer
-zurück gegriffen werden. Um eine fehlerfreie Installation zu ermöglichen
-sollte MiKTeX in der Version 2.9 vorhanden sein.
-Ältere Versionen werden nur bedingt unterstützt.
-
-Der Installer kopiert alle benötigten Dateien in ein frei wählbares Verzeichnis
-auf der Festplatte und registriert dies automatisch als neuen texmf-Baum.
-Auch die Schriftart Nexus wird standardmäßig installiert und in 
-Font-Verwaltung registriert.
-
-\subsection{Ubuntu/Debian -- TexLive}
-
-Für debian-basierte Systeme wie Ubuntu oder Debian selber steht ein
-\texttt{.deb}-Paket zur Verfügung, dass einfach mit Hilfe eines Paketmanagers
-installiert werden kann.
-Genutz werden können dafür die diversen graphischen Tools oder einfach das
-Kommandozeilenprogramm \texttt{gdebi}. Diese Programme lösen alle Abhängigkeiten
-auf und installieren sie automatisch mit.
-
-Die Installation der Dateien erfolgt in das Verzeichnis
-\lstinline{/usr/share/texmf-texlive/}. Sowohl die neuen Dateien als auch 
-die Schrift Nexus werden automatisch registriert.
-
-\section{Manuelle Installation}
+\paragraph{Manuelle Installation}
 
 Zur manuellen Installation liegen die LaTeX-Dateien als gepacktes
 zip-Verzeichnis vor, in dem die komplette tex-Pfadstruktur oberhalb der
@@ -54,8 +28,28 @@ MikTeX macht dies normalerweise automatisch.
 Bei texlive können unter Linux zum Beispiel die entsprechenden System-Pakete
 installiert werden.
 
+\clearpage
+\section{Windows -- MiKTeX}
 
-\subsection{MikTeX}
+\subsection{Automatische Installation}
+
+% \subsection{Windows -- MikTeX}
+
+Bei Verwendung von MikTeX unter Windows kann auf den verfügbaren Installer
+zurück gegriffen werden. Um eine fehlerfreie Installation zu ermöglichen
+sollte MiKTeX in der Version 2.9 vorhanden sein.
+Ältere Versionen werden nur bedingt unterstützt.
+
+Der Installer kopiert alle benötigten Dateien in ein frei wählbares Verzeichnis
+auf der Festplatte und registriert dies automatisch als neuen texmf-Baum.
+Auch die Schriftart Nexus wird standardmäßig installiert und in 
+Font-Verwaltung registriert.
+
+% \subsection{Ubuntu/Debian -- TexLive}
+
+
+
+\subsection{Manuelle Installation}
 
 \begin{description}
   \item[1. Dateien Kopieren]
@@ -78,15 +72,15 @@ installiert werden.
     \end{enumerate}
 
   \item[2. Dateien registrieren]
-    
+
     Anschließend ist es noch ratsam den Button \glqq Refresh FNDB\grqq\
     zu drücken, um die Dateidatenbank zu aktualisieren. Alternativ kann auch 
     der Konsolenbefehl \lstinline{initexmf -u} verwendet werden.
-    
+
   \item[3. Schriften registrieren]
     Um die Schrift Nexus benutzen zu können, sind zunächst wie oben beschrieben
     die benötigten Dateien zu kopieren.
-    
+
     \begin{enumerate}
 
       \item {\bfseries map-Dateien bekannt machen}
@@ -104,7 +98,7 @@ Map NexusProSerif.map
         Danach ist ein Update der Font-Datenbank erforderlich. Dies geschieht
         mittels\\ \lstinline{initexmf --admin --mkmaps}. Die Konsole muss dazu
         mit Administratorrechten gestartet werden.
-        
+
         \paragraph{Hinweis:} Es ist auch möglich, die Datenbank im 
           Nicht-Administrator-Modus zu erneu\-ern. Dies ist jedoch nur bei einer
           Einzelbenutzer-Installation von MiKTeX sinnvoll. Wird
@@ -116,7 +110,7 @@ Map NexusProSerif.map
           aufgerufen werden.
 %           Welche map-Liste aktuell verwendet wird, lässt sich mit dem Befehl
     \end{enumerate}
-    
+
     Danach sollte die Installation abgeschlossen sein und alle Pakete verwendbar 
     sein.
 \end{description}
@@ -127,7 +121,23 @@ Map NexusProSerif.map
 \end{description}
 
 
-\subsection{TexLive -- Ubuntu/Debian}
+\clearpage
+\section{Ubuntu/Debian -- TexLive}
+
+\subsection{Automatische Installation}
+
+Für debian-basierte Systeme wie Ubuntu oder Debian selber steht ein
+\texttt{.deb}-Paket zur Verfügung, dass einfach mit Hilfe eines Paketmanagers
+installiert werden kann.
+Genutz werden können dafür die diversen graphischen Tools oder einfach das
+Kommandozeilenprogramm \texttt{gdebi}. Diese Programme lösen alle Abhängigkeiten
+auf und installieren sie automatisch mit.
+
+Die Installation der Dateien erfolgt in das Verzeichnis
+\lstinline{/usr/share/texmf-texlive/}. Sowohl die neuen Dateien als auch 
+die Schrift Nexus werden automatisch registriert.
+
+\subsection{Manuelle Installation}
 
 \paragraph{Lokale/systemweite Installation}
 
@@ -195,9 +205,9 @@ $ mktexlsr .
   \item[3. Schriften registrieren]\hfill
 
     \begin{lstlisting}
-# /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
-# /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSerif.map
-# /usr/bin/updmap
+$ /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
+$ /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSerif.map
+$ /usr/bin/updmap
     \end{lstlisting}
     
     Für eine systemweite Installation muss den Befehlen jeweils der Zustatz
@@ -231,27 +241,8 @@ $ getnonfreefonts --verbose arial-urw
 }{%
 }
 
-\subsection{TexLive -- Mac OS}
+\subsection{Fehlerbehebung}
 
-Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
-
-\begin{description}
-  \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
-    Dateien entpackt werden.
-    Diese liegen dort schon in der korrekten Ordner-Sktruktur vor, sodass
-    sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
-    müssen.
-    Dies sollte im Allgemeinen \lstinline{~/Library/texmf} sein.
-  \item[2. Dateien registrieren]
-  \item[3. Schriften registrieren]
-    
-\end{description}
-
-\section{Fehlerbehebung}
-
-\subsection{MikTeX}
-
-\subsection{texlive}
 
 \begin{knownissue}{%
   updmap bricht plötzlich ab (Fehlercode 2) / getnonfreefonts bricht ab
@@ -301,6 +292,64 @@ Installation weiterer Schriften mit \lstinline{updmap} statt
 
 \end{knownissue}
 
+
+\clearpage
+\section{Mac OS -- TexLive}
+
+\subsection{Manuelle Installation}
+
+Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
+
+\begin{description}
+  \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
+    Dateien entpackt werden.
+    Diese liegen dort schon in der korrekten Ordner-Sktruktur vor, sodass
+    sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
+    müssen.
+    Dies sollte im Allgemeinen \lstinline{~/Library/texmf} sein.
+%   \item[2. Dateien registrieren]
+
+  \item[3. Schriften registrieren]\hfill
+    \begin{lstlisting}
+# /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
+# /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSerif.map
+# /usr/bin/updmap
+    \end{lstlisting}
+
+
+  \item[4. Arial installieren]\hfill
+    Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
+    nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
+    eingestellt ist.
+    
+    Die Installation erfolgt mit Hilfe des Programms \lstinline{getnonfreefonts},
+    dass die benötigten Dateien automatisch herunterlädt und alle zur Installation
+    nötigen Schritte durchführt.
+    \begin{enumerate}[a)]
+      \item Falls nicht vorhanden kann ein Installer unter folgendem Link
+        bezogen werden:
+        \url{http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts}.
+    
+        Die Installation von \lstinline{getnonfreefonts} erfolgt dann mit dem
+        Befehl\footnote{Weitere Informationen finden sich hier:\\
+          \url{http://www.golatex.de/vollautomatischen-installation-einiger-nicht-freier-fonts-t5386.html}}
+        \begin{lstlisting}
+# texlua install-getnonfreefonts
+        \end{lstlisting}
+    \end{enumerate}
+
+    Eine lokale Installation von Arial geschieht mit Hilfe des Befehls
+    \begin{lstlisting}
+$ getnonfreefonts arial-urw
+    \end{lstlisting}
+    
+    Eine systemweite Installation ist dabei mit dem Zusatz \lstinline{-sys}
+    möglich.
+    \begin{lstlisting}
+$ getnonfreefonts-sys arial-urw
+    \end{lstlisting}
+
+\end{description}
 
 
 
