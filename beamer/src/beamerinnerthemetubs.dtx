@@ -287,9 +287,16 @@
 %
 %    \begin{macro}{\logo}
 %    \begin{macrocode}
+% TODO: innertheme???
 % Höhe des Logos wird automatisch skaliert bei Verwendung von includegraphics
-\renewcommand{\logo}[1]{\setbeamertemplate{logo}{%
-  \begingroup\setkeys{Gin}{height=\logoheight}#1\endgroup}}
+\renewcommand{\logo}[1]{%
+  \setbeamertemplate{logo}{%
+    \begingroup%
+    \presetkeys{Gin}{height=\logoheight,width=0.5\textwidth,keepaspectratio}{}%
+    #1%
+    \endgroup%
+  }%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
