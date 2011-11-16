@@ -96,8 +96,8 @@
 \RequirePackage{ifthen}
 \RequirePackage{calc}
 \RequirePackage{tubslogo}
-\PassOptionsToPackage{ngerman}{babel}% TODO: check!!!!
-\RequirePackage{babel}% TODO: check!!!!
+\PassOptionsToPackage{ngerman}{babel}
+\RequirePackage{babel}
 \RequirePackage{tubsbeamersizes}
 %    \end{macrocode}
 %
@@ -320,17 +320,20 @@
     \ifthenelse{\boolean{nologoinfoot}}{%
       \vspace{10.7pt}
     }{%
-      \vspace{-19pt}%
+      \vspace{-20pt}%
       \logoheight=20.7pt%
+      \vspace{5pt}%
       \vbox to \logoheight{%
-        \hfill%
-        \parbox[b]{0.3\textwidth}{%
+        \vfill%
+        \raggedleft
+        \parbox[c]{0.3\textwidth}{%
           \usebeamerfont{footlinelogo}%
-          \vspace*{3pt}%
-          \raggedleft\insertlogo}%
+          \raggedleft\insertlogo%
+        }%
         \hspace*{0.5\beamer@CDborderwidth}%
+        \vfill%
       }%
-      \vspace{9pt}%
+      \vspace{5pt}%
     }
   \end{minipage}
   \hspace*{26mm}
