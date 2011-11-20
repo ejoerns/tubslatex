@@ -1,7 +1,14 @@
-Revision: 742
+Revision: 780
 
 - Allgemein:
   - eso-pic-Warnung behoben
+  - designhelper-Option fuer Gauß-Layout-basierte Seiten hinzugefuegt
+  - Umbenennung einiger imagefit-Optionen
+    (alte Namen aus Kombatibilitätsgründen behalten)
+  - 'tubsdoc' nun experimentell als Paket ladbar.
+    Es stellt Basis-Funktionen von tubslatex zur Verfügung
+    ohne Dabei Einfluss auf das Seitenlayout zu nehmen.
+  - Topline etwas verbreitert
 
 - Dokumentenklassen
   - Zeilenspacing für 10pt und 11pt \normalsize angepasst (CD-konform)
@@ -12,6 +19,11 @@ Revision: 742
     innerhead, outerhead, etc. als neue Kommandos.
     Einzelne Linie am Kopfbereich, wird nun von Koma bereitgestellt
   - 'extramargin'-Option vergrößert Abstand zum unteren (oberen) Rand
+  - Kopfzeilen auf Titelseiten nun allgemein deaktiviert.
+  - Style-Optionswert 'printdev' hinzugefuegt
+  - Neuer Befehl \cleartubsheadings zum Löschen von Kopf-/Fußzeileninhalten
+  - Vertikale Positionierung in Kopfzeilen verbessert (ergab vbox-Fehler)
+  - 
 
 - poster
   - Doppelte Option für wissenschaftliche Poster verschmolzen
@@ -27,6 +39,9 @@ Revision: 742
   - Optionen 'nexus' und 'arial' zur flexiblen Wahl der Schriftart
   - Frame-Optionen 'highlight' und 'notitle' hinzugefuegt
   - crop~-Optionen in clip~ umbenannt
+  - underfull-/overfull-vbox-Fehler behoben (Logo)
+  - vertikale Skalierung von Inhalten in logo{} verbessert
+  - automatische Sklaierung von Logo auf Titelseite verbessert
 
 - nexus
   - Striktere Behandlung der Schriftwahl Nexus/Arial, nur noch benötigte
@@ -36,15 +51,21 @@ Revision: 742
 - letter
   - Behandlung von leeren Felder korrigiert,
     Darstellung für leere Felder verbessert
+  - \headheight korrigiert und automatische Logo-Skalierung implementiert
 
 - leaflet
   - Kompatibilität mit KOMA-Fonts erhöht
 
 - Installation
-  - Test auf lokales map-File und antsprechende Behandlung
-  - Umgehung von updmap-Fehlern
-  - Debian-Paket-Versionsnummer angepasst,
-    korrekt berechnete Paketgröße
+  - deb
+    - Test auf lokales map-File und antsprechende Behandlung
+    - Umgehung von updmap-Fehlern
+    - Debian-Paket-Versionsnummer angepasst,
+      korrekt berechnete Paketgröße
+  - exe
+    - Installer Komplett überarbeitet
+    - Optionswahl lokale/systemweite Installation
+    - Bessere Fallbehandlungen
 
 - Dokumenation
   - Kapitel 'Plakete' erweitert
@@ -52,6 +73,7 @@ Revision: 742
   - Kapitel 'Präsentationen' angepasst
   - Kapitel 'Gauß-Layout' erweitert und angepasst
   - chapter-Fonteinstellungen auf book und report begrenzt
+  - Kapitel 'Installation' erweitert
   - einige Hinweise zu Fehlerbehebungen
   - diverse Änderungen
 
