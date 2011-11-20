@@ -28,6 +28,7 @@
 
 
 ; load libs
+!include "x64.nsh"
 !include MultiUser.nsh
 !include "MUI2.nsh"
 !include "TextFunc.nsh"
@@ -448,6 +449,17 @@ SectionEnd
 ;; Tests if admin privileges are available. Stores in var $userrights
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function .onInit
+
+  ; check for os bit version (32/64)
+  ${If} ${RunningX64}
+    messageBox MB_OK "64 Bit Windows detected"
+    SetRegView 64
+  ${Else}
+    messageBox MB_OK "32 Bit Windows detected"
+    SetRegView 32
+  ${EndIf}
+
+
   !insertmacro MULTIUSER_INIT
   ; TODO: place after install selection
   ;!insertmacro MUI_LANGDLL_DISPLAY
