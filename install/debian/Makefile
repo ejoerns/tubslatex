@@ -10,7 +10,7 @@ DEBVERSION = undefined
 # Distribution the package is designed for
 DIST = debian
 # Version of deb package
-DISTVERSION = 0$(DIST)1
+DISTVERSION = 0$(DIST)2
 
 # Verzeichnisse
 REPODIR = ../..
