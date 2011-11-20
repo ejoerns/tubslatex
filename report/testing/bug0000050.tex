@@ -1,10 +1,11 @@
-\documentclass[12pt,twoside,draft]{tubsreprt}
+\PassOptionsToPackage{showframe}{geometry}
+\documentclass[11pt,twoside]{tubsartcl}
 \usepackage{lipsum}
 % \usepackage{scrpage2}
 
 % \clearscrheadings
 % \automark[section]{chapter}
-% \ohead{\pagemark}
+% \outerhead{\upshape Afg}
 % \ihead{\headmark}
 % \cfoot{}
 
@@ -13,13 +14,25 @@
 
 
 \begin{document}
+\makeatletter
+% \let\@old@oddhead\@oddhead%
+% \renewcommand{\@oddhead}{%
+%   \fboxsep0mm\colorbox{tuRed}{\@old@oddhead}
+% }
+% \let\@old@evenhead\@evenhead%
+% \renewcommand{\@evenhead}{%
+%   \fboxsep0mm\colorbox{tuRed}{\@old@evenhead}
+% }
+\makeatother
+
 \sloppy
 % \pagestyle{scrheadings}
-\chapter{First Chapter}
+% \chapter{First Chapter}
 \lipsum[1]
 \section{First.First Section}
+\subsection{subsection}
 \lipsum[2-25]
-\chapter{Second Chapter}
+% \chapter{Second Chapter}
 \lipsum[26]
 \section{Second.First Section}
 \lipsum[27-40]
