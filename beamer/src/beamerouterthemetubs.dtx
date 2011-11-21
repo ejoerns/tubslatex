@@ -311,21 +311,76 @@
   \vspace*{0.25cm}
   % TU-Logo und Sekundärlogo
   \begin{minipage}{\paperwidth}
-    {\usebeamercolor[fg]{structure}
-    \rule{\textwidth}{0.3pt}}
-    \vspace{-9pt}%
-    %
-    \newdimen\beamer@CDlogowidth
-    \beamer@CDlogowidth=24.7mm
-    \par
-    \tubslogoAbs{\beamer@CDlogowidth}%
+    \logoheight=20.7pt% Höhe des Logos in Fußzeile
+    %Linie zeichnen
+    {\usebeamercolor[fg]{structure}\rule{\paperwidth}{0.3pt}}%
+    % Logo-Dimensionen (manuell)
+    \newdimen\beamer@CDlogowidth%
+    \newdimen\beamer@CDlogoheight%
+    \newdimen\@temp@a%
+    \beamer@CDlogowidth=24.7mm%
+    \beamer@CDlogoheight=9.17mm%
+    % Wieder auf Zeilenanfang
+    \hspace*{-\paperwidth}%
+    % Siegelbandlogo
+    \raisebox{-0.75\beamer@CDlogoheight}{%
+      \tubslogoAbs{\beamer@CDlogowidth}%
+    }%
+    % Text
+    \hspace*{5pt}% Abstand Logo<->Text
+    \raisebox{-9pt}{% Abstand Linie/Text
+      % Breite von Textbereich (abhängig von Option 'nologoinfoot')
+      \setlength\@temp@a{\paperwidth-5pt-\beamer@CDlogowidth-\beamer@CDborderwidth}%
+      \ifthenelse{\boolean{nologoinfoot}}{}{%
+        \addtolength\@temp@a{-3.5\logoheight}% Logo-Breite abziehen
+      }%
+      \fboxsep0mm\fbox{%
+      \parbox{\@temp@a}{% Breite Textbereich
+        % Datum einfügen, wenn gewünscht.
+        % Breite in |\tubs@outer@fullfootwidth| speichern.
+        \ifthenelse{\boolean{nodate}}{}{%
+          \insertdate\ \@footsepline\ %
+          \settowidth{\tubs@outer@datewidth}{\insertdate\ \@footsepline\ }%
+          \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
+        }%
+        % Seitenzahl einfügen, wenn gewünscht.
+        % Breite in |\tubs@outer@fullfootwidth| speichern.
+        \ifthenelse{\boolean{nopagenum}}{}{%
+          \settowidth{\tubs@outer@tempwidth}{%
+            ~\@footsepline\ \pagename~\insertframenumber}%
+          \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+          \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+        }%
+        % Breite von shortauthor speichern.
+        \settowidth{\tubs@outer@tempwidth}{%
+          \insertshortauthor~\@footsepline\ }%
+        \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+        \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
+        \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+        \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+        % test if fooltine width exceeds available space
+        \ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
+          \insertshortauthor[%
+            width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
+            respectlinebreaks]%
+            ~\@footsepline\ %
+        }{%
+          \insertshortauthor%
+          ~\@footsepline\ %
+        }%
+        \insertshorttitle%
+        \ifthenelse{\boolean{nopagenum}}{}{%
+          ~\@footsepline\ \pagename~\insertframenumber%
+        }%
+      }%
+      }%
+    }
     \par
     % handle option 'nologoinfoot'
     \ifthenelse{\boolean{nologoinfoot}}{%
       \vspace{10.7pt}
     }{%
       \vspace{-20pt}%
-      \logoheight=20.7pt%
       \vspace{4pt}%
       \vbox to \logoheight{%
         \vfill%
@@ -339,50 +394,6 @@
       }%
       \vspace{6pt}%
     }
-  \end{minipage}
-  \hspace*{24.7mm}\hspace*{1.3mm}
-  \begin{minipage}[t]{\textwidth-26mm-0.2\textwidth}% TODO: width computation
-    \vspace*{-9.5mm}
-    % reset lengths
-    \setlength{\tubs@outer@datewidth}{0mm}
-    \setlength{\tubs@outer@titlepagewidth}{0mm}
-    % calculate footline width
-    % Datum einfügen, wenn gewünscht.
-    % Breite in |\tubs@outer@fullfootwidth| speichern.
-    \ifthenelse{\boolean{nodate}}{}{%
-      \insertdate\ \@footsepline\ %
-      \settowidth{\tubs@outer@datewidth}{\insertdate\ \@footsepline\ }%
-      \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
-    }%
-    % Seitenzahl einfügen, wenn gewünscht.
-    % Breite in |\tubs@outer@fullfootwidth| speichern.
-    \ifthenelse{\boolean{nopagenum}}{}{%
-      \settowidth{\tubs@outer@tempwidth}{%
-        ~\@footsepline\ \pagename~\insertframenumber}%
-      \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-      \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
-    }%
-    % Breite von shortauthor speichern.
-    \settowidth{\tubs@outer@tempwidth}{%
-      \insertshortauthor~\@footsepline\ }%
-    \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-    \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
-    \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-    \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
-    % test if fooltine width exceeds available space
-    \ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
-      \insertshortauthor[%
-        width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
-        respectlinebreaks]%
-        ~\@footsepline\ %
-    }{%
-      \insertshortauthor%
-      ~\@footsepline\ %
-    }%
-    \insertshorttitle%
-    \ifthenelse{\boolean{nopagenum}}{}{%
-      ~\@footsepline\ \pagename~\insertframenumber%
-    }%
   \end{minipage}
 }
 %
