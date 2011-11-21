@@ -298,22 +298,26 @@
 \setbeamercolor*{page number in sidebar shaded}{fg=structure.fg!40}
 %    \end{macrocode}
 %
+% Breite tubslogo: 24.7mm
+% 
 %    \begin{macrocode}
 \newlength{\tubs@outer@datewidth}% width of date
 \newlength{\tubs@outer@tempwidth}% used for settowidth
 \newlength{\tubs@outer@fullfootwidth}% width of short authro
 \newlength{\tubs@outer@titlepagewidth}% width of title and page
 \defbeamertemplate*{footline}{sidebar theme}{%
+  \def\@footsepline{\rule[-0.1em]{0.1em}{1em}}
   %% Additional space needed to increase the calculated height of the footline
   \vspace*{0.25cm}
+  % TU-Logo und Sekundärlogo
   \begin{minipage}{\paperwidth}
     {\usebeamercolor[fg]{structure}
     \rule{\textwidth}{0.3pt}}
-    \vspace{-9pt}
-
+    \vspace{-9pt}%
+    %
     \newdimen\beamer@CDlogowidth
     \beamer@CDlogowidth=24.7mm
-
+    \par
     \tubslogoAbs{\beamer@CDlogowidth}%
     \par
     % handle option 'nologoinfoot'
@@ -326,7 +330,7 @@
       \vbox to \logoheight{%
         \vfill%
         \raggedleft
-        \parbox[c]{0.3\textwidth}{%
+        \parbox[c]{3.5\logoheight}{%
           \usebeamerfont{footlinelogo}%
           \raggedleft\insertlogo%
         }%
@@ -336,26 +340,31 @@
       \vspace{6pt}%
     }
   \end{minipage}
-  \hspace*{26mm}
+  \hspace*{24.7mm}\hspace*{1.3mm}
   \begin{minipage}[t]{\textwidth-26mm-0.2\textwidth}% TODO: width computation
     \vspace*{-9.5mm}
     % reset lengths
     \setlength{\tubs@outer@datewidth}{0mm}
     \setlength{\tubs@outer@titlepagewidth}{0mm}
     % calculate footline width
+    % Datum einfügen, wenn gewünscht.
+    % Breite in |\tubs@outer@fullfootwidth| speichern.
     \ifthenelse{\boolean{nodate}}{}{%
-      \insertdate\ \rule[-0.1em]{0.1em}{1em}\ %
-      \settowidth{\tubs@outer@datewidth}{\insertdate\ \rule[-0.1em]{0.1em}{1em}\ }%
+      \insertdate\ \@footsepline\ %
+      \settowidth{\tubs@outer@datewidth}{\insertdate\ \@footsepline\ }%
       \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
     }%
+    % Seitenzahl einfügen, wenn gewünscht.
+    % Breite in |\tubs@outer@fullfootwidth| speichern.
     \ifthenelse{\boolean{nopagenum}}{}{%
       \settowidth{\tubs@outer@tempwidth}{%
-        ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber}%
+        ~\@footsepline\ \pagename~\insertframenumber}%
       \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
       \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
     }%
+    % Breite von shortauthor speichern.
     \settowidth{\tubs@outer@tempwidth}{%
-      \insertshortauthor~\rule[-0.1em]{0.1em}{1em}\ }%
+      \insertshortauthor~\@footsepline\ }%
     \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
     \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
     \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
@@ -365,14 +374,14 @@
       \insertshortauthor[%
         width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
         respectlinebreaks]%
-        ~\rule[-0.1em]{0.1em}{1em}\ %
+        ~\@footsepline\ %
     }{%
       \insertshortauthor%
-      ~\rule[-0.1em]{0.1em}{1em}\ %
+      ~\@footsepline\ %
     }%
     \insertshorttitle%
     \ifthenelse{\boolean{nopagenum}}{}{%
-      ~\rule[-0.1em]{0.1em}{1em}\ \pagename~\insertframenumber%
+      ~\@footsepline\ \pagename~\insertframenumber%
     }%
   \end{minipage}
 }
