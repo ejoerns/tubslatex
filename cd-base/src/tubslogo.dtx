@@ -64,8 +64,11 @@
 %
 % \changes{v1.02}{ 2011 / 09 / 18 }{Initial version}
 %
-% \changes{v1.02}{ 2011 / 09 / 28 }{%
+% \changes{v1.1}{ 2011 / 09 / 28 }{%
 %   Optionsverarbeitung für Farbraum komplett überarbeitet}
+%
+% \changes{v1.2}{ 2011 / 11 / 22 }{%
+%   Logo in beamer-RGB-Modell hinzugefuegt}
 %
 % \GetFileInfo{tubcolors.sty}
 %
@@ -85,7 +88,7 @@
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubslogo}[2011/10/10  v1.1 CD-Logo der TU Braunschweig]
+\ProvidesPackage{tubslogo}[2011/11/22  v1.2 CD-Logo der TU Braunschweig]
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -112,17 +115,19 @@
 %
 % \subsection{Optionen}
 %    \begin{key}{}{rgb}
+%    \begin{key}{}{rgbbeamer}
 %    \begin{key}{}{hks}
 %    \begin{key}{}{cmyk}
 %    \begin{key}{}{mono}
 % Farbmodell-Optionen
 %    \begin{macrocode}
 \DeclareOptionX{rgb}{\def\tubs@logo@file{TUBraunschweig_RGB}}
+\DeclareOptionX{rgbbeamer}{\def\tubs@logo@file{TUBraunschweig_RGB_beamer}}
 \DeclareOptionX{hks}{\def\tubs@logo@file{TUBraunschweig_SC}}
 \DeclareOptionX{cmyk}{\def\tubs@logo@file{TUBraunschweig_4C}}
 \DeclareOptionX{mono}{\def\tubs@logo@file{TUBraunschweig_B}}
 %    \end{macrocode}
-%    \end{key}\end{key}\end{key}\end{key}
+%    \end{key}\end{key}\end{key}\end{key}\end{key}
 %
 %    \begin{key}{}{a6paper}
 %    \begin{key}{}{langpaper}
