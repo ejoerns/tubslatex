@@ -303,8 +303,9 @@
 %    \begin{macrocode}
 \newlength{\tubs@outer@datewidth}% width of date
 \newlength{\tubs@outer@tempwidth}% used for settowidth
-\newlength{\tubs@outer@fullfootwidth}% width of short authro
-\newlength{\tubs@outer@titlepagewidth}% width of title and page
+\newlength{\tubs@outer@sauthorswidth}% width of authors
+\newlength{\tubs@outer@stitlewidth}% width of short title
+\newlength{\tubs@footline@freenametitle}% width available for names and title
 \defbeamertemplate*{footline}{sidebar theme}{%
   \def\@footsepline{\rule[-0.1em]{0.1em}{1em}}
   %% Additional space needed to increase the calculated height of the footline
@@ -338,39 +339,68 @@
       }%
       % Textbereich setzen
       \parbox{\@footline@textwidth}{% Breite Textbereich
-        % Datum einfügen, wenn gewünscht.
-        % Breite in |\tubs@outer@fullfootwidth| speichern.
+        % Berechnung von |\tubs@footline@freenametitle|
+        \setlength\tubs@footline@freenametitle{\@footline@textwidth}%
         \ifthenelse{\boolean{nodate}}{}{%
-          \insertdate\ \@footsepline\ %
-          \settowidth{\tubs@outer@datewidth}{\insertdate\ \@footsepline\ }%
-          \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@datewidth}%
+          \settowidth{\tubs@outer@tempwidth}{%
+            \insertdate~\@footsepline~}%
+          \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         }%
-        % Seitenzahl einfügen, wenn gewünscht.
-        % Breite in |\tubs@outer@fullfootwidth| speichern.
         \ifthenelse{\boolean{nopagenum}}{}{%
           \settowidth{\tubs@outer@tempwidth}{%
-            ~\@footsepline\ \pagename~\insertframenumber}%
-          \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-          \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
+            ~\@footsepline~\pagename~\insertframenumber}%
+          \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         }%
+        \settowidth{\tubs@outer@tempwidth}{~\@footsepline~}%
+        \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         % Breite von shortauthor speichern.
-        \settowidth{\tubs@outer@tempwidth}{%
-          \insertshortauthor~\@footsepline\ }%
-        \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
+        \settowidth{\tubs@outer@tempwidth}{\insertshortauthor~\@footsepline~}%
+        \setlength{\tubs@outer@sauthorswidth}{\tubs@outer@tempwidth}%
+        % Breite von shorttitle speichern.
         \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
-        \addtolength{\tubs@outer@fullfootwidth}{\tubs@outer@tempwidth}%
-        \addtolength{\tubs@outer@titlepagewidth}{\tubs@outer@tempwidth}%
-        % test if fooltine width exceeds available space
-        \ifthenelse{\lengthtest{\tubs@outer@fullfootwidth>\textwidth}}{%
-          \insertshortauthor[%
-            width=\textwidth-\tubs@outer@datewidth-\tubs@outer@titlepagewidth-1em,
-            respectlinebreaks]%
-            ~\@footsepline\ %
-        }{%
-          \insertshortauthor%
-          ~\@footsepline\ %
+        \setlength{\tubs@outer@stitlewidth}{\tubs@outer@tempwidth}%
+        %
+        \setlength{\tubs@outer@tempwidth}{\tubs@outer@sauthorswidth+\tubs@outer@stitlewidth}%
+        %
+        \ifthenelse{\boolean{nodate}}{}{%
+          \insertdate~\@footsepline~%
         }%
-        \insertshorttitle%
+        % Unterscheide 5? verschiedene Fälle
+        % Prüfe, ob Autor(en) und Titel in verfügbaren Platz passen
+        \ifthenelse{\lengthtest{\tubs@outer@tempwidth>\tubs@footline@freenametitle}}{%
+          % Prüfe, ob Autorenbreite < 33% des verfügbaren Platzes
+          \ifthenelse{\lengthtest{\tubs@outer@sauthorswidth<0.33\tubs@footline@freenametitle}}{%
+            % Setze Autor auf Ursprungsbreite, Fülle Restplatz mit Titel
+            \insertshortauthor%
+            ~\@footsepline~%
+            \insertshorttitle[%
+              width=\tubs@footline@freenametitle-\tubs@outer@sauthorswidth,%
+              respectlinebreaks]%
+          }{%
+            \ifthenelse{\lengthtest{\tubs@outer@stitlewidth<0.66\tubs@footline@freenametitle}}{%
+              % Setze Autor auf Restbreite, und Titel ganz
+              \insertshortauthor[%
+                width=\tubs@footline@freenametitle-\tubs@outer@stitlewidth,%
+                respectlinebreaks]%
+              ~\@footsepline~%
+              \insertshorttitle%
+            }{%
+              % Setze Autor auf 33% Breite, und Titel auf 66%
+              \insertshortauthor[%
+                width=0.33\tubs@footline@freenametitle,%
+                respectlinebreaks]%
+              ~\@footsepline~%
+              \insertshorttitle[%
+                width=0.66\tubs@footline@freenametitle,%
+                respectlinebreaks]%
+            }
+          }
+        }{%
+          % Autor und Titel mit nativer Breite setzen
+          \insertshortauthor%
+          ~\@footsepline~%
+          \insertshorttitle%
+        }%
         \ifthenelse{\boolean{nopagenum}}{}{%
           ~\@footsepline\ \pagename~\insertframenumber%
         }%
@@ -388,11 +418,11 @@
             \usebeamerfont{footlinelogo}%
             \raggedleft\insertlogo%
           }%
-        }
-        \hspace*{0.5\beamer@CDborderwidth}%
+        }%
         \vfill%
       }%
     }
+%     \hspace*{0.5\beamer@CDborderwidth}%
     % Abstand nach unten
     \vspace{\logoheight}%
     \vspace{-14pt}%
