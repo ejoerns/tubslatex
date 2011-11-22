@@ -118,7 +118,10 @@
 %    \begin{key}{}{rgb}
 % Standard-Option. Darstellung in Beamer-optimiertem rgb-Farbmodell.
 %    \begin{macrocode}
-\DeclareOptionBeamer{rgb}{\PassOptionsToPackage{rgbbeamer}{tubscolors}}
+\DeclareOptionBeamer{rgb}{%
+  \PassOptionsToPackage{rgbbeamer}{tubscolors}
+  \PassOptionsToPackage{rgbbeamer}{tubslogo}
+}
 %    \end{macrocode}
 %    \end{key}
 %
