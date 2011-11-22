@@ -364,6 +364,7 @@
         %
         \setlength{\tubs@outer@tempwidth}{\tubs@outer@sauthorswidth+\tubs@outer@stitlewidth}%
         %
+        \strut%
         \ifthenelse{\boolean{nodate}}{}{%
           \insertdate~\@footsepline~%
         }%
@@ -395,8 +396,8 @@
               \insertshorttitle[%
                 width=0.66\tubs@footline@freenametitle,%
                 respectlinebreaks]%
-            }
-          }
+            }%
+          }%
         }{%
           % Autor und Titel mit nativer Breite setzen
           \insertshortauthor%
