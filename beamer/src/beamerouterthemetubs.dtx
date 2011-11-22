@@ -331,14 +331,14 @@
     \hspace*{5pt}% Abstand Logo<->Text
     %
     \raisebox{-9pt}{% Abstand Linie/Text
-      % Breite von Textbereich (abhängig von Option 'nologoinfoot') berechnen
+    % Breite von Textbereich (abhängig von Option 'nologoinfoot') berechnen
       \setlength\@footline@textwidth{%
         \paperwidth-5pt-\beamer@CDlogowidth-\beamer@CDborderwidth}%
       \ifthenelse{\boolean{nologoinfoot}}{}{%
         \addtolength\@footline@textwidth{-3.5\logoheight}% Logo-Breite abziehen
       }%
       % Textbereich setzen
-      \parbox{\@footline@textwidth}{% Breite Textbereich
+      \parbox[t][28pt]{\@footline@textwidth}{% Breite Textbereich
         % Berechnung von |\tubs@footline@freenametitle|
         \setlength\tubs@footline@freenametitle{\@footline@textwidth}%
         \ifthenelse{\boolean{nodate}}{}{%
@@ -422,10 +422,6 @@
         \vfill%
       }%
     }
-%     \hspace*{0.5\beamer@CDborderwidth}%
-    % Abstand nach unten
-    \vspace{\logoheight}%
-    \vspace{-14pt}%
   \end{minipage}
 }
 %
