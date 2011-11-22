@@ -317,7 +317,7 @@
     % Logo-Dimensionen (manuell)
     \newdimen\beamer@CDlogowidth%
     \newdimen\beamer@CDlogoheight%
-    \newdimen\@temp@a%
+    \newdimen\@footline@textwidth%
     \beamer@CDlogowidth=24.7mm%
     \beamer@CDlogoheight=9.17mm%
     % Wieder auf Zeilenanfang
@@ -326,16 +326,18 @@
     \raisebox{-0.75\beamer@CDlogoheight}{%
       \tubslogoAbs{\beamer@CDlogowidth}%
     }%
-    % Text
+    %
     \hspace*{5pt}% Abstand Logo<->Text
+    %
     \raisebox{-9pt}{% Abstand Linie/Text
-      % Breite von Textbereich (abhängig von Option 'nologoinfoot')
-      \setlength\@temp@a{\paperwidth-5pt-\beamer@CDlogowidth-\beamer@CDborderwidth}%
+      % Breite von Textbereich (abhängig von Option 'nologoinfoot') berechnen
+      \setlength\@footline@textwidth{%
+        \paperwidth-5pt-\beamer@CDlogowidth-\beamer@CDborderwidth}%
       \ifthenelse{\boolean{nologoinfoot}}{}{%
-        \addtolength\@temp@a{-3.5\logoheight}% Logo-Breite abziehen
+        \addtolength\@footline@textwidth{-3.5\logoheight}% Logo-Breite abziehen
       }%
-      \fboxsep0mm\fbox{%
-      \parbox{\@temp@a}{% Breite Textbereich
+      % Textbereich setzen
+      \parbox{\@footline@textwidth}{% Breite Textbereich
         % Datum einfügen, wenn gewünscht.
         % Breite in |\tubs@outer@fullfootwidth| speichern.
         \ifthenelse{\boolean{nodate}}{}{%
@@ -373,27 +375,27 @@
           ~\@footsepline\ \pagename~\insertframenumber%
         }%
       }%
-      }%
-    }
-    \par
-    % handle option 'nologoinfoot'
-    \ifthenelse{\boolean{nologoinfoot}}{%
-      \vspace{10.7pt}
-    }{%
-      \vspace{-20pt}%
-      \vspace{4pt}%
+    }%
+    %
+    \hspace*{0.5\beamer@CDborderwidth}% Abstand Text<->Logo
+    %
+    \raisebox{-\logoheight-4pt}{%
       \vbox to \logoheight{%
         \vfill%
-        \raggedleft
-        \parbox[c]{3.5\logoheight}{%
-          \usebeamerfont{footlinelogo}%
-          \raggedleft\insertlogo%
-        }%
+        % Logo einfügen, wenn nicht 'nologoinfoot'-Option gewählt wurde
+        \ifthenelse{\boolean{nologoinfoot}}{}{%
+          \parbox[c]{3.5\logoheight}{%
+            \usebeamerfont{footlinelogo}%
+            \raggedleft\insertlogo%
+          }%
+        }
         \hspace*{0.5\beamer@CDborderwidth}%
         \vfill%
       }%
-      \vspace{6pt}%
     }
+    % Abstand nach unten
+    \vspace{\logoheight}%
+    \vspace{-14pt}%
   \end{minipage}
 }
 %
