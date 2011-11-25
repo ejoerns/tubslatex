@@ -1,4 +1,4 @@
-Revision: 780
+Revision: 796
 
 - Allgemein:
   - eso-pic-Warnung behoben
@@ -42,6 +42,10 @@ Revision: 780
   - underfull-/overfull-vbox-Fehler behoben (Logo)
   - vertikale Skalierung von Inhalten in logo{} verbessert
   - automatische Sklaierung von Logo auf Titelseite verbessert
+  - Fußbereich komplett neu programmiert.
+    Logo ragt nicht mehr in Text,
+    Autoren und Titel werden je nach Bedarf umbebrochen
+  - Logo mit korrekter Farbe eingebunden (beameropt. RGB-Schema)
 
 - nexus
   - Striktere Behandlung der Schriftwahl Nexus/Arial, nur noch benötigte
@@ -66,6 +70,7 @@ Revision: 780
     - Installer Komplett überarbeitet
     - Optionswahl lokale/systemweite Installation
     - Bessere Fallbehandlungen
+    - 64-Bit-Test und -Behandlung für registry
 
 - Dokumenation
   - Kapitel 'Plakete' erweitert
@@ -73,7 +78,7 @@ Revision: 780
   - Kapitel 'Präsentationen' angepasst
   - Kapitel 'Gauß-Layout' erweitert und angepasst
   - chapter-Fonteinstellungen auf book und report begrenzt
-  - Kapitel 'Installation' erweitert
+  - Kapitel 'Installation' erweitert und neu sortiert
   - einige Hinweise zu Fehlerbehebungen
   - diverse Änderungen
 
