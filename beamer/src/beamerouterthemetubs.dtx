@@ -113,6 +113,8 @@
 %    \begin{macrocode}
 \newboolean{nopagenum}\setboolean{nopagenum}{false}
 \newboolean{nodate}\setboolean{nodate}{false}
+\newboolean{noauthor}\setboolean{noauthor}{false}
+\newboolean{totalpages}\setboolean{totalpages}{false}
 \newboolean{tocinheader}\setboolean{tocinheader}{false}
 \newboolean{nosubsectionsinheader}\setboolean{nosubsectionsinheader}{false}
 \newboolean{nologoinfoot}\setboolean{nologoinfoot}{false}
@@ -131,6 +133,18 @@
 %    \begin{key}{}{nodate}
 %    \begin{macrocode}
 \DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{noauthor}
+%    \begin{macrocode}
+\DeclareOptionBeamer{noauthor}{\setboolean{noauthor}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{noauthor}
+%    \begin{macrocode}
+\DeclareOptionBeamer{totalpages}{\setboolean{totalpages}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -309,7 +323,28 @@
 \newlength{\tubs@outer@stitlewidth}% width of short title
 \newlength{\tubs@footline@freenametitle}% width available for names and title
 \defbeamertemplate*{footline}{sidebar theme}{%
-  \def\@footsepline{\rule[-0.1em]{0.1em}{1em}}
+  % Kommandos deklarieren
+  \def\@footsepline{\rule[-0.1em]{0.1em}{1em}}%
+  % Trennwort zwischen Seitenzahl und Gesamtseitenzahl
+  \def\pageof{%
+    \iflanguage{ngerman}{von}{of}%
+  }%
+  % Datum einfügen, Optionen beachten
+  \def\tubs@insertdate{%
+    \ifthenelse{\boolean{nodate}}{}{%
+      \insertdate~\@footsepline~%
+    }%
+  }%
+  % Trennstrich + Seite einfügen, Optionen beachten
+  \def\tubs@insertpage{%
+    \ifthenelse{\boolean{nopagenum}}{}{%
+      \ifthenelse{\boolean{totalpages}}{%
+        ~\@footsepline~\pagename~\insertframenumber~\pageof~\inserttotalframenumber%
+      }{%
+        ~\@footsepline~\pagename~\insertframenumber%
+      }%
+    }%
+  }%
   %% Additional space needed to increase the calculated height of the footline
   \vspace*{0.25cm}
   % TU-Logo und Sekundärlogo
@@ -345,68 +380,60 @@
         \setlength\tubs@footline@freenametitle{\@footline@textwidth}%
         \ifthenelse{\boolean{nodate}}{}{%
           \settowidth{\tubs@outer@tempwidth}{%
-            \insertdate~\@footsepline~}%
+            \tubs@insertdate}%
           \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         }%
         \ifthenelse{\boolean{nopagenum}}{}{%
           \settowidth{\tubs@outer@tempwidth}{%
-            ~\@footsepline~\pagename~\insertframenumber}%
+            \tubs@insertpage}%
           \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         }%
         \settowidth{\tubs@outer@tempwidth}{~\@footsepline~}%
         \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         % Breite von shortauthor speichern.
-        \settowidth{\tubs@outer@tempwidth}{\insertshortauthor~\@footsepline~}%
-        \setlength{\tubs@outer@sauthorswidth}{\tubs@outer@tempwidth}%
+        \ifthenelse{\boolean{noauthor}}{%
+          \setlength{\tubs@outer@sauthorswidth}{0pt}%
+        }{%
+          \settowidth{\tubs@outer@sauthorswidth}{\insertshortauthor}%~\@footsepline~}%
+        }%
         % Breite von shorttitle speichern.
-        \settowidth{\tubs@outer@tempwidth}{\insertshorttitle}%
-        \setlength{\tubs@outer@stitlewidth}{\tubs@outer@tempwidth}%
+        \settowidth{\tubs@outer@stitlewidth}{\insertshorttitle}%
+        % Gesamtbreite von author und title mit Seperator berechnen
+        \settowidth{\tubs@outer@tempwidth}{~\@footsepline~}%
+        \addtolength{\tubs@outer@tempwidth}{\tubs@outer@sauthorswidth+\tubs@outer@stitlewidth}%
         %
-        \setlength{\tubs@outer@tempwidth}{\tubs@outer@sauthorswidth+\tubs@outer@stitlewidth}%
-        %
+        % Datum setzen
         \strut%
         \ifthenelse{\boolean{nodate}}{}{%
-          \insertdate~\@footsepline~%
+          \tubs@insertdate%
         }%
         % Unterscheide 5? verschiedene Fälle
-        % Prüfe, ob Autor(en) und Titel in verfügbaren Platz passen
+        % Prüfe, ob Autor(en) und Titel nicht in verfügbaren Platz passen
         \ifthenelse{\lengthtest{\tubs@outer@tempwidth>\tubs@footline@freenametitle}}{%
-          % Prüfe, ob Autorenbreite < 33% des verfügbaren Platzes
-          \ifthenelse{\lengthtest{\tubs@outer@sauthorswidth<0.33\tubs@footline@freenametitle}}{%
-            % Setze Autor auf Ursprungsbreite, Fülle Restplatz mit Titel
-            \insertshortauthor%
-            ~\@footsepline~%
-            \insertshorttitle[%
-              width=\tubs@footline@freenametitle-\tubs@outer@sauthorswidth,%
-              respectlinebreaks]%
+          % Prüfe, ob Autor(en) oder Titel länge ist und setze temp auf längere
+          \ifthenelse{\lengthtest{\tubs@outer@sauthorswidth>\tubs@outer@stitlewidth}}{%
+            \setlength{\tubs@outer@tempwidth}{\tubs@outer@sauthorswidth}%
           }{%
-            \ifthenelse{\lengthtest{\tubs@outer@stitlewidth<0.66\tubs@footline@freenametitle}}{%
-              % Setze Autor auf Restbreite, und Titel ganz
-              \insertshortauthor[%
-                width=\tubs@footline@freenametitle-\tubs@outer@stitlewidth,%
-                respectlinebreaks]%
-              ~\@footsepline~%
-              \insertshorttitle%
-            }{%
-              % Setze Autor auf 33% Breite, und Titel auf 66%
-              \insertshortauthor[%
-                width=0.33\tubs@footline@freenametitle,%
-                respectlinebreaks]%
-              ~\@footsepline~%
-              \insertshorttitle[%
-                width=0.66\tubs@footline@freenametitle,%
-                respectlinebreaks]%
+            \setlength{\tubs@outer@tempwidth}{\tubs@outer@stitlewidth}%
+          }%
+          % Prüfe, ob Autorenbreite < 33% des verfügbaren Platzes
+          \parbox[t]{\tubs@outer@tempwidth}{%
+            \ifthenelse{\boolean{noauthor}}{}{%
+              \insertshortauthor\hfill\\%
             }%
+%             ~\@footsepline~%
+            \insertshorttitle%
           }%
         }{%
           % Autor und Titel mit nativer Breite setzen
-          \insertshortauthor%
-          ~\@footsepline~%
+          \ifthenelse{\boolean{noauthor}}{}{%
+            \insertshortauthor%
+            ~\@footsepline~%
+          }%
           \insertshorttitle%
         }%
-        \ifthenelse{\boolean{nopagenum}}{}{%
-          ~\@footsepline\ \pagename~\insertframenumber%
-        }%
+        % Seite setzen (kond.)
+        \tubs@insertpage%
       }%
     }%
     %
