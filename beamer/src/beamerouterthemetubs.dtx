@@ -408,12 +408,15 @@
           }{%
             \setlength{\tubs@outer@tempwidth}{\tubs@outer@stitlewidth}%
           }%
-          % Prüfe, ob Autorenbreite < 33% des verfügbaren Platzes
+          % Prüfen, ob Breite größer als Maximalbreite
+          \ifthenelse{\lengthtest{\tubs@outer@tempwidth>\tubs@footline@freenametitle}}{%
+             \setlength{\tubs@outer@tempwidth}{\tubs@footline@freenametitle}%
+          }{}%
           \parbox[t]{\tubs@outer@tempwidth}{%
             \ifthenelse{\boolean{tubs@noauthor}}{}{%
-              \tubs@insertauthor\hfill\\%
+              \tubs@insertauthor[width=\tubs@footline@freenametitle]\hfill\\%
             }%
-            \insertshorttitle%
+            \insertshorttitle[width=\tubs@footline@freenametitle]%
           }%
         }{%
           % Autor und Titel mit nativer Breite setzen
