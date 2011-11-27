@@ -142,7 +142,7 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{noauthor}
+%    \begin{key}{}{totalpages}
 %    \begin{macrocode}
 \DeclareOptionBeamer{totalpages}{\setboolean{totalpages}{true}}
 %    \end{macrocode}
@@ -345,6 +345,12 @@
       }%
     }%
   }%
+  %
+  \def\tubs@insertauthor{%
+    \ifthenelse{\boolean{noauthor}}{}{%
+      \insertshortauthor%
+    }%
+  }%
   %% Additional space needed to increase the calculated height of the footline
   \vspace*{0.25cm}
   % TU-Logo und Sekundärlogo
@@ -375,27 +381,18 @@
         \addtolength\@footline@textwidth{-3.5\logoheight}% Logo-Breite abziehen
       }%
       % Textbereich setzen
-      \parbox[t][26pt]{\@footline@textwidth}{% Höhe und Breite Textbereich
+      \fboxsep0mm\fbox{\parbox[t][26pt]{\@footline@textwidth}{% Höhe und Breite Textbereich
         % Berechnung von |\tubs@footline@freenametitle|
         \setlength\tubs@footline@freenametitle{\@footline@textwidth}%
-        \ifthenelse{\boolean{nodate}}{}{%
-          \settowidth{\tubs@outer@tempwidth}{%
-            \tubs@insertdate}%
-          \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
-        }%
-        \ifthenelse{\boolean{nopagenum}}{}{%
-          \settowidth{\tubs@outer@tempwidth}{%
-            \tubs@insertpage}%
-          \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
-        }%
-        \settowidth{\tubs@outer@tempwidth}{~\@footsepline~}%
+        \settowidth{\tubs@outer@tempwidth}{\tubs@insertdate}%
         \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
+        %
+        \settowidth{\tubs@outer@tempwidth}{\tubs@insertpage}%
+        \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
+        %
         % Breite von shortauthor speichern.
-        \ifthenelse{\boolean{noauthor}}{%
-          \setlength{\tubs@outer@sauthorswidth}{0pt}%
-        }{%
-          \settowidth{\tubs@outer@sauthorswidth}{\insertshortauthor}%~\@footsepline~}%
-        }%
+        \settowidth{\tubs@outer@sauthorswidth}{\tubs@insertauthor}%
+        %
         % Breite von shorttitle speichern.
         \settowidth{\tubs@outer@stitlewidth}{\insertshorttitle}%
         % Gesamtbreite von author und title mit Seperator berechnen
@@ -404,9 +401,7 @@
         %
         % Datum setzen
         \strut%
-        \ifthenelse{\boolean{nodate}}{}{%
-          \tubs@insertdate%
-        }%
+        \tubs@insertdate%
         % Unterscheide 5? verschiedene Fälle
         % Prüfe, ob Autor(en) und Titel nicht in verfügbaren Platz passen
         \ifthenelse{\lengthtest{\tubs@outer@tempwidth>\tubs@footline@freenametitle}}{%
@@ -419,22 +414,21 @@
           % Prüfe, ob Autorenbreite < 33% des verfügbaren Platzes
           \parbox[t]{\tubs@outer@tempwidth}{%
             \ifthenelse{\boolean{noauthor}}{}{%
-              \insertshortauthor\hfill\\%
+              \tubs@insertauthor\hfill\\%
             }%
-%             ~\@footsepline~%
             \insertshorttitle%
           }%
         }{%
           % Autor und Titel mit nativer Breite setzen
           \ifthenelse{\boolean{noauthor}}{}{%
-            \insertshortauthor%
+            \tubs@insertauthor%
             ~\@footsepline~%
           }%
           \insertshorttitle%
         }%
         % Seite setzen (kond.)
         \tubs@insertpage%
-      }%
+      }}%
     }%
     %
     \hspace*{0.5\beamer@CDborderwidth}% Abstand Text<->Logo
