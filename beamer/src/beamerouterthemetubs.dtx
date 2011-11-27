@@ -395,7 +395,7 @@
           \tubs@insertpage%
         }{% passt nicht...
           % Teste, ob 1. oder 2. Zeile breiter sein würde, setze Länge auf längeres
-          \settowidth{\tubs@outer@tempwidtha}{\tubs@insertdate\tubs@insertauthor}%
+          \settowidth{\tubs@outer@tempwidtha}{\tubs@insertdate\tubs@insertauthor\tubs@insertpage}%
           \settowidth{\tubs@outer@tempwidthb}{\insertshorttitle}%
           \ifthenelse{\lengthtest{\tubs@outer@tempwidtha>\tubs@outer@tempwidthb}}{%
             \setlength{\tubs@outer@tempwidtha}{\tubs@outer@tempwidtha}
@@ -403,10 +403,9 @@
             \setlength{\tubs@outer@tempwidtha}{\tubs@outer@tempwidthb}
           }%
           \parbox[t]{\tubs@outer@tempwidtha}{%
-            \strut\tubs@insertdate%
-            \hfil\tubs@insertauthor\hfill\\%
+            \strut\tubs@insertdate\tubs@insertauthor\tubs@insertpage\hfill\\%
             \insertshorttitle%
-          }\tubs@insertpage%
+          }
         }%
         % Seite setzen (kond.)
 %         \tubs@insertpage%
