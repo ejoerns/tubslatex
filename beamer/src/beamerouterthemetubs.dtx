@@ -111,10 +111,10 @@
 %
 % Boolean-Variablen für Optionen
 %    \begin{macrocode}
-\newboolean{nopagenum}\setboolean{nopagenum}{false}
-\newboolean{nodate}\setboolean{nodate}{false}
-\newboolean{noauthor}\setboolean{noauthor}{false}
-\newboolean{totalpages}\setboolean{totalpages}{false}
+\newboolean{tubs@nopagenum}\setboolean{tubs@nopagenum}{false}
+\newboolean{tubs@nodate}\setboolean{tubs@nodate}{false}
+\newboolean{tubs@noauthor}\setboolean{tubs@noauthor}{false}
+\newboolean{tubs@totalpages}\setboolean{tubs@totalpages}{false}
 \newboolean{tocinheader}\setboolean{tocinheader}{false}
 \newboolean{nosubsectionsinheader}\setboolean{nosubsectionsinheader}{false}
 \newboolean{nologoinfoot}\setboolean{nologoinfoot}{false}
@@ -126,25 +126,25 @@
 %
 %    \begin{key}{}{nopagenum}
 %    \begin{macrocode}
-\DeclareOptionBeamer{nopagenum}{\setboolean{nopagenum}{true}}
+\DeclareOptionBeamer{nopagenum}{\setboolean{tubs@nopagenum}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
 %    \begin{key}{}{nodate}
 %    \begin{macrocode}
-\DeclareOptionBeamer{nodate}{\setboolean{nodate}{true}}
+\DeclareOptionBeamer{nodate}{\setboolean{tubs@nodate}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
 %    \begin{key}{}{noauthor}
 %    \begin{macrocode}
-\DeclareOptionBeamer{noauthor}{\setboolean{noauthor}{true}}
+\DeclareOptionBeamer{noauthor}{\setboolean{tubs@noauthor}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
 %    \begin{key}{}{totalpages}
 %    \begin{macrocode}
-\DeclareOptionBeamer{totalpages}{\setboolean{totalpages}{true}}
+\DeclareOptionBeamer{totalpages}{\setboolean{tubs@totalpages}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -156,16 +156,15 @@
 %
 %    \begin{key}{}{tinytocinheader}
 %    \begin{macrocode}
-\DeclareOptionBeamer{tinytocinheader}{%
-  \setboolean{tocinheader}{true}
-}
+\DeclareOptionBeamer{tinytocinheader}{\setboolean{tocinheader}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
 %    \begin{key}{}{nosubsectionsinheader}
 %    \begin{macrocode}
 \DeclareOptionBeamer{nosubsectionsinheader}{%
-  \setboolean{nosubsectionsinheader}{true}}
+  \setboolean{nosubsectionsinheader}{true}%
+}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -329,16 +328,16 @@
   \def\pageof{%
     \iflanguage{ngerman}{von}{of}%
   }%
-  % Datum einfügen, Optionen beachten
+  % Datum + Trennstrich einfügen, Optionen beachten
   \def\tubs@insertdate{%
-    \ifthenelse{\boolean{nodate}}{}{%
+    \ifthenelse{\boolean{tubs@nodate}}{}{%
       \insertdate~\@footsepline~%
     }%
   }%
   % Trennstrich + Seite einfügen, Optionen beachten
   \def\tubs@insertpage{%
-    \ifthenelse{\boolean{nopagenum}}{}{%
-      \ifthenelse{\boolean{totalpages}}{%
+    \ifthenelse{\boolean{tubs@nopagenum}}{}{%
+      \ifthenelse{\boolean{tubs@totalpages}}{%
         ~\@footsepline~\pagename~\insertframenumber~\pageof~\inserttotalframenumber%
       }{%
         ~\@footsepline~\pagename~\insertframenumber%
@@ -347,7 +346,7 @@
   }%
   %
   \def\tubs@insertauthor{%
-    \ifthenelse{\boolean{noauthor}}{}{%
+    \ifthenelse{\boolean{tubs@noauthor}}{}{%
       \insertshortauthor%
     }%
   }%
@@ -381,12 +380,11 @@
         \addtolength\@footline@textwidth{-3.5\logoheight}% Logo-Breite abziehen
       }%
       % Textbereich setzen
-      \fboxsep0mm\fbox{\parbox[t][26pt]{\@footline@textwidth}{% Höhe und Breite Textbereich
+      \parbox[t][26pt]{\@footline@textwidth}{% Höhe und Breite Textbereich
         % Berechnung von |\tubs@footline@freenametitle|
-        \setlength\tubs@footline@freenametitle{\@footline@textwidth}%
+        \setlength{\tubs@footline@freenametitle}{\@footline@textwidth}%
         \settowidth{\tubs@outer@tempwidth}{\tubs@insertdate}%
         \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
-        %
         \settowidth{\tubs@outer@tempwidth}{\tubs@insertpage}%
         \addtolength{\tubs@footline@freenametitle}{-\tubs@outer@tempwidth}%
         %
@@ -402,7 +400,6 @@
         % Datum setzen
         \strut%
         \tubs@insertdate%
-        % Unterscheide 5? verschiedene Fälle
         % Prüfe, ob Autor(en) und Titel nicht in verfügbaren Platz passen
         \ifthenelse{\lengthtest{\tubs@outer@tempwidth>\tubs@footline@freenametitle}}{%
           % Prüfe, ob Autor(en) oder Titel länge ist und setze temp auf längere
@@ -413,14 +410,14 @@
           }%
           % Prüfe, ob Autorenbreite < 33% des verfügbaren Platzes
           \parbox[t]{\tubs@outer@tempwidth}{%
-            \ifthenelse{\boolean{noauthor}}{}{%
+            \ifthenelse{\boolean{tubs@noauthor}}{}{%
               \tubs@insertauthor\hfill\\%
             }%
             \insertshorttitle%
           }%
         }{%
           % Autor und Titel mit nativer Breite setzen
-          \ifthenelse{\boolean{noauthor}}{}{%
+          \ifthenelse{\boolean{tubs@noauthor}}{}{%
             \tubs@insertauthor%
             ~\@footsepline~%
           }%
@@ -428,7 +425,7 @@
         }%
         % Seite setzen (kond.)
         \tubs@insertpage%
-      }}%
+      }%
     }%
     %
     \hspace*{0.5\beamer@CDborderwidth}% Abstand Text<->Logo
