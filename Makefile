@@ -61,7 +61,7 @@ source:
 	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
 	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
 	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)
-	#for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
+	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
 
 sourcedoc:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i doc; done
