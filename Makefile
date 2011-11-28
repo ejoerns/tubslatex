@@ -5,6 +5,7 @@
 
 # Programme
 HG = /usr/bin/hg
+SED = /bin/sed
 
 # Version
 TUBSLATEX_VERSION = 0.3-alpha3
@@ -12,6 +13,7 @@ TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
 TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)alpha3
 #
 HG_REVISION = `hg tip --template '{rev}'`
+HG_DATE = `hg tip --template '{date|shortdate}' | tr - /`
 HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
 
 # 
@@ -55,8 +57,11 @@ examples:
 	$(MAKE) -C $(EXAMPLE_DIR)
 
 source:
-	
-	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
+	cat tex.hgtemplate \
+	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
+	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
+	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)
+	#for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
 
 sourcedoc:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i doc; done

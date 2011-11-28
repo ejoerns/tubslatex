@@ -79,10 +79,11 @@
 %
 %    \begin{macrocode}
 %<*default>
-\def\HgDate{{date|shortdate}}
-\def\HgRevision{{rev}}
-\def\HgAuthor{{author|person}}
-\def\tubslatexVersion{\HgDate\ tubslatex version \HgRevision}
+% \def\HgDate{{date|shortdate}}
+% \def\HgRevision{{rev}}
+% \def\HgAuthor{{author|person}}
+% \def\tubslatexVersion{$VERSION$}
+\def\tubslatexVersion{$HG_DATE$ tubslatex v. $VERSION$-r$HG_REV$}
 %</default>
 %    \end{macrocode}
 %
