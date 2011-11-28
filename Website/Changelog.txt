@@ -1,4 +1,6 @@
-Revision: 796
+Revision: 813
+
+# Änderungen zu letzter Test-Version sind ab jetzt immer mit '+' markiert
 
 - Allgemein:
   - eso-pic-Warnung behoben
@@ -9,6 +11,7 @@ Revision: 796
     Es stellt Basis-Funktionen von tubslatex zur Verfügung
     ohne Dabei Einfluss auf das Seitenlayout zu nehmen.
   - Topline etwas verbreitert
+  + Einheitliche Versionsnummerierung für alle Pakete und Klassen
 
 - Dokumentenklassen
   - Zeilenspacing für 10pt und 11pt \normalsize angepasst (CD-konform)
@@ -23,7 +26,6 @@ Revision: 796
   - Style-Optionswert 'printdev' hinzugefuegt
   - Neuer Befehl \cleartubsheadings zum Löschen von Kopf-/Fußzeileninhalten
   - Vertikale Positionierung in Kopfzeilen verbessert (ergab vbox-Fehler)
-  - 
 
 - poster
   - Doppelte Option für wissenschaftliche Poster verschmolzen
@@ -46,6 +48,9 @@ Revision: 796
     Logo ragt nicht mehr in Text,
     Autoren und Titel werden je nach Bedarf umbebrochen
   - Logo mit korrekter Farbe eingebunden (beameropt. RGB-Schema)
+  + Neu-Implementierung des Fußbereiches mit besserer Unterstützung
+    für lange Autoren/Titel und Logo-Skalierung,
+    damit auch weiterer Probleme behoben
 
 - nexus
   - Striktere Behandlung der Schriftwahl Nexus/Arial, nur noch benötigte
@@ -59,6 +64,7 @@ Revision: 796
 
 - leaflet
   - Kompatibilität mit KOMA-Fonts erhöht
+  + Problem mit institue-Font behoben
 
 - Installation
   - deb
