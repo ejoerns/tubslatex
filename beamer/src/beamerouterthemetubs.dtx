@@ -332,7 +332,7 @@
   % Datum + Trennstrich einfügen, Optionen beachten
   \def\tubs@insertdate{%
     \ifthenelse{\boolean{tubs@nodate}}{}{%
-      \insertdate~\@footsepline~%
+      \insertdate%
     }%
   }%
   % Trennstrich + Seite einfügen, Optionen beachten
@@ -386,30 +386,20 @@
         \settowidth{\tubs@outer@tempwidtha}{%
           \tubs@insertdate\tubs@insertauthor~\@footsepline~\insertshorttitle\tubs@insertpage}%
         \ifthenelse{\lengthtest{\tubs@outer@tempwidtha<\@footline@textwidth}}{% passt...
-          \strut\tubs@insertdate%
-          \ifthenelse{\boolean{tubs@noauthor}}{}{%
-            \tubs@insertauthor%
-            ~\@footsepline~%
-          }%
+          \strut\tubs@insertdate
+          \ifthenelse{\boolean{tubs@nodate}}{}{~\@footsepline~}%
+          \tubs@insertauthor%
+          \ifthenelse{\boolean{tubs@noauthor}}{}{~\@footsepline~}%
           \insertshorttitle%
           \tubs@insertpage%
         }{% passt nicht...
-          % Teste, ob 1. oder 2. Zeile breiter sein würde, setze Länge auf längeres
-          \settowidth{\tubs@outer@tempwidtha}{\tubs@insertdate\tubs@insertauthor\tubs@insertpage}%
-          \settowidth{\tubs@outer@tempwidthb}{\insertshorttitle}%
-          \ifthenelse{\lengthtest{\tubs@outer@tempwidtha>\tubs@outer@tempwidthb}}{%
-            \setlength{\tubs@outer@tempwidtha}{\tubs@outer@tempwidtha}
-          }{%
-            \setlength{\tubs@outer@tempwidtha}{\tubs@outer@tempwidthb}
-          }%
-          \parbox[t]{\tubs@outer@tempwidtha}{%
-            \strut\tubs@insertdate\tubs@insertauthor\tubs@insertpage\hfill\\%
-            \insertshorttitle%
-          }
+          \strut\tubs@insertdate%
+          \ifthenelse{\boolean{tubs@nodate}}{}{%
+            \ifthenelse{\boolean{tubs@noauthor}}{}{%
+              ~\@footsepline~}}%
+          \tubs@insertauthor\tubs@insertpage\hfill\\%
+          \insertshorttitle[width=\@footline@textwidth]%
         }%
-        % Seite setzen (kond.)
-%         \tubs@insertpage%
-%         \insertshorttitle%
       }%
     }%
     %
