@@ -330,12 +330,13 @@
       {titlebarsecond}
     \hspace*{\beamer@leftmarginwidth}
     \parbox[b][9\beamer@CDgaussunit][c]{\beamer@titlepagetextwidth}{%
-    \vskip1.0ex\par
-    \usebeamerfont{title}\inserttitle \par%
-    \vskip0.8ex\par
-    \usebeamerfont{subtitle}\insertsubtitle \par%
-    \vskip1.6ex\par
-    \usebeamerfont{author}\insertauthor, \insertdate}
+      \vskip1.0ex\par
+      \usebeamerfont{title}\inserttitle \par%
+      \vskip0.8ex\par
+      \usebeamerfont{subtitle}\insertsubtitle \par%
+      \vskip1.6ex\par
+      \raggedright%
+      \usebeamerfont{author}\insertauthor, \mbox{\insertdate}}
   \end{beamercolorbox}%
   \vskip-1pt
 
