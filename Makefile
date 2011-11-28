@@ -3,9 +3,20 @@
 # Erstellt komplettes Release (still under construction!)
 # 
 
-HG_REVISION = `hg tip --template '{rev}'`
-TUBSLATEX_VERSION = 0.3-alpha3-r$(HG_REVISION)
+# Programme
+HG = /usr/bin/hg
+
+# Version
+TUBSLATEX_VERSION = 0.3-alpha3
+TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
 TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)alpha3
+#
+HG_REVISION = `hg tip --template '{rev}'`
+HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
+
+# 
+HG_TEXSTYLE = tex.hgstyle
+HG_DTXOUT = tubsvers.inc
 
 # Verzeichnisse und Dateien
 DOCUMENTATION_DIR = doc
@@ -19,11 +30,11 @@ NEXUS_SRCDIR = nexus/src
 REPORT_SRCDIR = report/src
 ALL_SRCDIRS = $(CDBASE_SRCDIR) $(BEAMER_SRCDIR) $(LETTER_SRCDIR) $(NEXUS_SRCDIR) $(REPORT_SRCDIR)
 INSTALL_RAW_DIR = install/rawtree
-INSTALL_ZIP = tubslatex_$(TUBSLATEX_VERSION).zip
+INSTALL_ZIP = tubslatex_$(TUBSLATEX_FULLVERSION).zip
 INSTALL_DEB_DIR = install/debian
-INSTALL_DEB = texlive-tubs_$(TUBSLATEX_VERSION)debian.deb
+INSTALL_DEB = texlive-tubs_$(TUBSLATEX_FULLVERSION)debian.deb
 INSTALL_WIN_DIR = install/windows
-INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_VERSION).exe
+INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
 
 # Programme
 MAKE = make
@@ -35,7 +46,7 @@ release: generate buildinstaller mkdir fetch
 generate: source sourcedoc documentation examples
 
 mkdir:
-	mkdir -p Website/$(TUBSLATEX_VERSION)
+	mkdir -p Website/$(TUBSLATEX_FULLVERSION)
 
 documentation:
 	$(MAKE) -C $(DOCUMENTATION_DIR)
@@ -44,6 +55,7 @@ examples:
 	$(MAKE) -C $(EXAMPLE_DIR)
 
 source:
+	
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
 
 sourcedoc:
@@ -53,21 +65,21 @@ buildinstaller: zip deb exe
 
 zip:
 	$(MAKE) -C $(INSTALL_RAW_DIR)
-	$(MAKE) -C $(INSTALL_RAW_DIR) VERSION=$(TUBSLATEX_VERSION) zip
+	$(MAKE) -C $(INSTALL_RAW_DIR) VERSION=$(TUBSLATEX_FULLVERSION) zip
 deb:
 	$(MAKE) -C $(INSTALL_DEB_DIR) copy DEBVERSION=$(TUBSLATEX_DEBVERSION)
-	$(MAKE) -C $(INSTALL_DEB_DIR) VERSION=$(TUBSLATEX_VERSION) deb
+	$(MAKE) -C $(INSTALL_DEB_DIR) VERSION=$(TUBSLATEX_FULLVERSION) deb
 exe:
 	$(MAKE) -C $(INSTALL_WIN_DIR) copy
-	$(MAKE) -C $(INSTALL_WIN_DIR) VERSION=$(TUBSLATEX_VERSION) exe
+	$(MAKE) -C $(INSTALL_WIN_DIR) VERSION=$(TUBSLATEX_FULLVERSION) exe
 
 fetch:
-	cp $(DOCUMENTATION_DIR)/$(DOCUMENTATION_PDF) Website/$(TUBSLATEX_VERSION)/.
-	cp $(EXAMPLE_DIR)/$(EXAMPLE_ZIP)     Website/$(TUBSLATEX_VERSION)/.
-	cp $(INSTALL_RAW_DIR)/$(INSTALL_ZIP) Website/$(TUBSLATEX_VERSION)/.
-	cp $(INSTALL_DEB_DIR)/$(INSTALL_DEB) Website/$(TUBSLATEX_VERSION)/.
-	cp $(INSTALL_WIN_DIR)/$(INSTALL_EXE) Website/$(TUBSLATEX_VERSION)/.
-	cp Website/Changelog.txt             Website/$(TUBSLATEX_VERSION)/.
+	cp $(DOCUMENTATION_DIR)/$(DOCUMENTATION_PDF) Website/$(TUBSLATEX_FULLVERSION)/.
+	cp $(EXAMPLE_DIR)/$(EXAMPLE_ZIP)     Website/$(TUBSLATEX_FULLVERSION)/.
+	cp $(INSTALL_RAW_DIR)/$(INSTALL_ZIP) Website/$(TUBSLATEX_FULLVERSION)/.
+	cp $(INSTALL_DEB_DIR)/$(INSTALL_DEB) Website/$(TUBSLATEX_FULLVERSION)/.
+	cp $(INSTALL_WIN_DIR)/$(INSTALL_EXE) Website/$(TUBSLATEX_FULLVERSION)/.
+	cp Website/Changelog.txt             Website/$(TUBSLATEX_FULLVERSION)/.
 
 
 clean:
