@@ -137,6 +137,20 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{fullline}
+% Top-Linie über gesamte Seitenbreite (für Aushänge, etc.)
+%    \begin{macrocode}
+\newboolean{tubsstyle@fullline}\setboolean{tubsstyle@fullline}{false}
+\define@boolkey{tubsstyle.sty}[ts@]{fullline}[true]{%
+  \ifts@fullline
+    \setboolean{tubsstyle@fullline}{true}
+  \else
+    \setboolean{tubsstyle@fullline}{false}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % Fehler bei unbekannter Option
 %    \begin{macrocode}
 \DeclareOption*{%
@@ -235,20 +249,28 @@
 % zu platzieren.
 %    \begin{macrocode}
 \newcommand\tubs@topline{%
-  % calculate x pos of logo and line depending on oddness
+  % Setze Bindungs-Offset abhängig von oddness
   \if@tubs@oddpage{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth+\tubspage@bcor}%
+    \setlength{\tmp@posx}{\tubspage@bcor}%
   }{%
-    \setlength{\tmp@posx}{\tubspage@borderwidth}%
+    \setlength{\tmp@posx}{0mm}%
   }%
+  % Randbreite dazuaddieren, wenn nicht Option 'fullline' gewählt wurde
+  \ifthenelse{\boolean{tubsstyle@fullline}}{}{%
+    \addtolength{\tmp@posx}{\tubspage@borderwidth}%
+  }
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
     \setlength{\tmp@posy}{\paperheight-(\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight)}%
   }{%
     \setlength{\tmp@posy}{\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight}%
   }%
-  \put(\LenToUnit{\tmp@posx},%
-    \LenToUnit{\tmp@posy})%
-    {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.24ex}}}%
+  \ifthenelse{\boolean{tubsstyle@fullline}}{%
+    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
+      {{\color{tuRed}\rule{\paperwidth-\tubspage@bcor}{0.24ex}}}%
+  }{%
+    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy})%
+      {{\color{tuRed}\rule{\paperwidth-2\tubspage@borderwidth-\tubspage@bcor}{0.24ex}}}%
+  }
 }
 %    \end{macrocode}
 %    \end{macro}
