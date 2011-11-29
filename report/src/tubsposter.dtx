@@ -106,9 +106,7 @@
 %    \begin{macrocode}
 %<*class>
 %<*poster>
-%    \end{macrocode}
 %
-%    \begin{macrocode}
 %<*option>
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -129,9 +127,12 @@
   }}
 }
 %
+% TODO: place better...
+\PassOptionsToPackage{fullline}{tubsstyle}
 %    \begin{macrocode}
 %</option>
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 %<*body>
 %    \end{macrocode}
@@ -146,14 +147,14 @@
 % \subsection{Poster-Befehle}
 %
 %
-%
 %    \begin{macrocode}
 \newenvironment{tubsposter}{\relax}{\relax}
 \newenvironment{posterrow}{\relax}{\relax}
 \newenvironment{postercol}{\relax}{\relax}
 \newenvironment{postersubrow}{\relax}{\relax}
 %    \end{macrocode}
-%    \begin{environment}{tubsposter}
+%
+%    \begin{environment}{@tubsposter}
 % Erzeugt eine neue Poster-Seite.
 % Steuert die Aufbaureihenfolge des Hintergrundes, indem die
 % Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
@@ -172,6 +173,7 @@
 %    \end{macrocode}
 %    \end{environment}
 %
+%    \begin{environment}{@scifiposter}
 %    \begin{macrocode}
 \newenvironment{@scifiposter}[2][]{%
   % Setze Hintergrundlayout, setzt Standar-bgcolor
@@ -186,8 +188,9 @@
   ~\newpage
 }
 %    \end{macrocode}
+%    \end{environment}
 %
-%    \begin{environment}{posterrow}
+%    \begin{environment}{@posterrow}
 % Erzeugt einen neuen Inhalts-Bereich.\\
 % Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}\\
 % |options|: Mögliche Optionen,
@@ -206,6 +209,8 @@
 %    \end{macrocode}
 %    \end{environment}
 %
+% \subsection{Zuweisung}
+%
 % Definiere Kommandos entsprechend gewählte Poster-Art.
 %    \begin{macrocode}
 \ifthenelse{\equal{\tubs@poster@style}{scifi}}{%
@@ -217,6 +222,7 @@
   \let\endpostercol=\endmodcol
   \let\postersubrow=\modsubrow
   \let\endpostersubrow=\endmodsubrow
+%
 }{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
   \def\tubsposter{%
     \@tubsposter%
@@ -228,7 +234,8 @@
     \end@posterrow%
     \end@tubsposter%
   }
-}{%
+%
+}{% default
   \let\tubsposter=\@tubsposter
   \let\endtubsposter=\end@tubsposter
   \let\posterrow=\@posterrow
@@ -245,6 +252,7 @@
   \let\endpostersubrow=\relax
 }}
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 %</body>
 %    \end{macrocode}
