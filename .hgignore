@@ -41,6 +41,7 @@ doc/examples/gallery/*
 doc/examples/png/*
 Website/png/*
 Website/gallery/*
+Website/0.*
 tubsvers.inc
 
 # no autosave

@@ -1,20 +1,16 @@
 # Makefile (c) 2011 by Enrico Jörns
 # ---------------------------------
 # Erstellt komplettes Release (still under construction!)
-# 
-
-# Programme
-HG = /usr/bin/hg
-SED = /bin/sed
-
-# Version
-TUBSLATEX_VERSION = 0.3-alpha3
-TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
-TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)alpha3
 #
+
+# hg-Version
 HG_REVISION = `hg tip --template '{rev}'`
 HG_DATE = `hg tip --template '{date|shortdate}' | tr - /`
 HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
+# tubslatex-Version
+TUBSLATEX_VERSION = 0.3-alpha3
+TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
+TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)alpha3
 
 # 
 HG_TEXSTYLE = tex.hgstyle
@@ -40,6 +36,8 @@ INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
 
 # Programme
 MAKE = make
+HG = /usr/bin/hg
+SED = /bin/sed
 
 .PHONY: clean mkdir generate source sourcedoc documentation examples buildinstaller zip deb exe fetch
 
@@ -85,7 +83,6 @@ fetch:
 	cp $(INSTALL_DEB_DIR)/$(INSTALL_DEB) Website/$(TUBSLATEX_FULLVERSION)/.
 	cp $(INSTALL_WIN_DIR)/$(INSTALL_EXE) Website/$(TUBSLATEX_FULLVERSION)/.
 	cp Website/Changelog.txt             Website/$(TUBSLATEX_FULLVERSION)/.
-
 
 clean:
 	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i clean; done
