@@ -198,6 +198,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+\def\foo{%
 \setbeamercolor{normal text}{fg=black,bg=white}
 \setbeamercolor{alerted text}{fg=tuRed}
 \setbeamercolor{example text}{fg=tuGreenDark}% TODO: check
@@ -409,6 +410,53 @@
 \setbeamercolor{page number in head/foot}{fg=fg!50!bg}
 
 \setbeamercolor{qed symbol}{parent=structure}
+}
+
+% Structure & Highlight
+\setbeamercolor{structure}{fg=tuRed}% TODO: red???
+\setbeamercolor{highlight}{bg=tuRed,fg=white}
+
+% Palette
+\setbeamercolor{palette primary}{fg=tuGreenLight,bg=tuOrange}
+\setbeamercolor{palette secondary}{use={palette tertiary},fg=palette tertiary.fg,bg=palette tertiary.bg!80}
+\setbeamercolor{palette tertiary}{use={palette quaternary}, fg=tuRed,bg=tuBlack}
+\ifthenelse{\boolean{colorhead}}{%
+  \setbeamercolor{palette quaternary}{bg=tu\tubscolor\tubscolorshade 40,fg=black}
+}{%
+  \setbeamercolor{palette quaternary}{bg=tuGrey20,fg=black}
+}
+% Title
+\setbeamercolor{titlelike}{parent=palette quaternary}
+
+% Titlepage bars
+\setbeamercolor{titlebarthird}{bg=tu\tubscolor\tubscolorshade 80}
+\setbeamercolor{titlebarsecond}{bg=tu\tubscolor\tubscolorshade 40,fg=black}
+\ifthenelse{\boolean{colorfoot}}{%
+  \setbeamercolor{titlebarlow}{bg=tu\tubscolor\tubscolorshade 80}
+}{%
+  \setbeamercolor{titlebarlow}{bg=tuRed}
+}
+
+% Text
+\setbeamercolor{alerted text}{fg=tuRed}
+\setbeamercolor{example text}{fg=tuGreenDark}% TODO: check
+
+%Blöcke
+\ifthenelse{\boolean{colorblocks}}{%
+\setbeamercolor{block body}{bg=tuBlueDark20}
+\setbeamercolor{block body alerted}{bg=tuRed20}
+\setbeamercolor{block body example}{bg=tuGreenDark20}
+\setbeamercolor{block title}{fg=tuBlueDark,bg=tuBlueDark40}
+\setbeamercolor{block title alerted}{fg=tuRed100,bg=tuRed60}
+\setbeamercolor{block title example}{fg=tuGreenDark,bg=tuGreenDark40}
+}{%
+\setbeamercolor{block body}{}
+\setbeamercolor{block body alerted}{}
+\setbeamercolor{block body example}{}
+\setbeamercolor{block title}{fg=tuBlue}
+\setbeamercolor{block title alerted}{parent=alerted text}
+\setbeamercolor{block title example}{parent=example text}
+}
 
 \mode
 <all>

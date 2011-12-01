@@ -192,7 +192,7 @@
 %    \end{macrocode}
 %
 %
-% \subsection{}
+% \subsection{Implementierung}
 %
 %
 % Only sections and subsections in toc
@@ -233,11 +233,15 @@
     \usebeamerfont{frametitle}%
     \def\@headtemplate{titlelike}
     \ifthenelse{\boolean{highlighttitle}}{% TODO...
-      \setbeamercolor{titlelike}{bg=tuRed,fg=white}
+      \setbeamercolor*{palette quaternary}{parent=highlight}
+      \setbeamercolor{palette tertiary}{fg=tuWhite}
     }{%
       %\def\@headtemplate{titlelike}
     }
-    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{headline}%
+%       \setbeamercolor*{palette quaternary}{use={highlight}, bg=tuBlack, fg=highlight.fg}
+%       \setbeamercolor{titlelike}{parent=palette quaternary}
+% \setbeamercolor{titlelike}{use={palette primary}}
+    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{titlelike}%
       \raisebox{\depth+.05\beamer@headheight}{%
         \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
         \ifthenelse{\boolean{tocinheader}}{%
@@ -344,12 +348,12 @@
 %    \begin{environment}{subsubsection in sidebar}
 %    \begin{environment}{subsubsection in sidebar shaded}
 %    \begin{macrocode}
-\defbeamertemplate*{section in sidebar}{sidebar theme}{}
-\defbeamertemplate*{section in sidebar shaded}{sidebar theme}{}
-\defbeamertemplate*{subsection in sidebar}{sidebar theme}{}
-\defbeamertemplate*{subsection in sidebar shaded}{sidebar theme}{}
-\defbeamertemplate*{subsubsection in sidebar}{sidebar theme}{}
-\defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}{}
+\defbeamertemplate*{section in sidebar}{tubs}{}
+\defbeamertemplate*{section in sidebar shaded}{tubs}{}
+\defbeamertemplate*{subsection in sidebar}{tubs}{}
+\defbeamertemplate*{subsection in sidebar shaded}{tubs}{}
+\defbeamertemplate*{subsubsection in sidebar}{tubs}{}
+\defbeamertemplate*{subsubsection in sidebar shaded}{tubs}{}
 %    \end{macrocode}
 %    \end{environment}
 %    \end{environment}
@@ -369,7 +373,7 @@
 %    \begin{macrocode}
 \newlength{\tubs@outer@tempwidtha}% used for settowidth
 \newlength{\tubs@outer@tempwidthb}% used for settowidth
-\defbeamertemplate*{footline}{sidebar theme}{%
+\defbeamertemplate*{footline}{tubs}{%
   % Kommandos deklarieren
   \def\@footsepline{\rule[-0.1em]{0.1em}{1em}}%
   % Trennwort zwischen Seitenzahl und Gesamtseitenzahl
