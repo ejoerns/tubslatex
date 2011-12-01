@@ -235,15 +235,28 @@
     \setlength{\tubs@outer@tempwidthb}{\beamer@headheight}%
   }%
   \vskip-1.5pt% TODO: check why needed...
-  \begin{beamercolorbox}[%
-          wd=\tubs@outer@tempwidtha,%
-          dp=0mm,%
-          ht=\tubs@outer@tempwidthb]{titlelike}%
-    \parbox[b][0.55\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
+  \ifthenelse{\boolean{highlighttitle}}{%
+    \addtolength{\tubs@outer@tempwidthb}{0.5\beamer@headheight}%
+    \begin{beamercolorbox}[%
+            wd=\tubs@outer@tempwidtha,%
+            dp=0mm,%
+            ht=\tubs@outer@tempwidthb]{highlight}%
+      \vspace*{1em}\par%
+      %% vphantom makes sure that underlengths are always accounted for
       \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
-      \vfill%
-    }%
-  \end{beamercolorbox}%
+      \vspace*{0.5em}%
+    \end{beamercolorbox}%
+  }{%
+    \begin{beamercolorbox}[%
+            wd=\tubs@outer@tempwidtha,%
+            dp=0mm,%
+            ht=\tubs@outer@tempwidthb]{titlelike}%
+      \parbox[b][0.55\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
+        \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
+        \vfill%
+      }%
+    \end{beamercolorbox}%
+  }
 }%
 %    \end{macrocode}
 %
@@ -253,20 +266,14 @@
 \ifthenelse{\boolean{tocinheader}}{%
   \defbeamertemplate*{headline}{sidebar theme}{%
     \usebeamerfont{frametitle}%
-    \ifthenelse{\boolean{notitle}}{%
-      % notitle
-    }{%
+    \def\@headtemplate{titlelike}
     \ifthenelse{\boolean{highlighttitle}}{% TODO...
-      \begin{beamercolorbox}[ht=1.5\beamer@headheight]{highlight}%
-      \vspace*{1.em}\par%
-      %% vphantom makes sure that underlengths are always accounted for
-      \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}%
-      \vspace*{0.7em}%
-      \end{beamercolorbox}%
-      %\vspace*{0.1em}
+      \def\@headtemplate{highlight}
     }{%
-      \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{titlelike}%
-        \raisebox{\depth+.05\beamer@headheight}{%
+      \def\@headtemplate{titlelike}
+    }
+    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{\@headtemplate}%
+      \raisebox{\depth+.05\beamer@headheight}{%
         \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
         \ifthenelse{\boolean{tocinheader}}{%
           {\usebeamerfont{headertoc}%
@@ -280,10 +287,8 @@
           }}%
         }{}%
         \vfill%
-        }}%
-      \end{beamercolorbox}%
-      }%
-    }%
+      }}%
+    \end{beamercolorbox}%
   }%
 }{%
   \defbeamertemplate*{headline}{sidebar theme}{}%
