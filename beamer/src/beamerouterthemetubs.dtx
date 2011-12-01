@@ -227,12 +227,18 @@
 \defbeamertemplate*{sidebar right}{sidebar theme}{}
 
 \defbeamertemplate*{frametitle}{sidebar theme}{%
+  % Breite und hoehe berechnen
   \setlength{\tubs@outer@tempwidtha}{\textwidth+2\beamer@leftmarginwidth}
+  \ifthenelse{\boolean{tocinheader}}{%
+    \setlength{\tubs@outer@tempwidthb}{0.55\beamer@headheight}%
+  }{%
+    \setlength{\tubs@outer@tempwidthb}{\beamer@headheight}%
+  }%
   \vskip-1.5pt% TODO: check why needed...
   \begin{beamercolorbox}[%
           wd=\tubs@outer@tempwidtha,%
           dp=0mm,%
-          ht=0.55\beamer@headheight]{titlelike}%
+          ht=\tubs@outer@tempwidthb]{titlelike}%
     \parbox[b][0.55\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
       \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
       \vfill%
@@ -244,40 +250,44 @@
 %    \begin{macro}{headline}
 % Define the frame title using the color scheme titlelike
 %    \begin{macrocode}
-\defbeamertemplate*{headline}{sidebar theme}{%
-  \usebeamerfont{frametitle}%
-  \ifthenelse{\boolean{notitle}}{%
-    % notitle
-  }{%
-  \ifthenelse{\boolean{highlighttitle}}{% TODO...
-    \begin{beamercolorbox}[ht=1.5\beamer@headheight]{highlight}%
-    \vspace*{1.em}\par%
-    %% vphantom makes sure that underlengths are always accounted for
-    \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}%
-    \vspace*{0.7em}%
-    \end{beamercolorbox}%
-    %\vspace*{0.1em}
-  }{%
-    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{titlelike}%
-      \raisebox{\depth+.05\beamer@headheight}{%
-      \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
-      \ifthenelse{\boolean{tocinheader}}{%
-        {\usebeamerfont{headertoc}%
-        \vspace*{0.8ex}%
-        \insertsectionnavigationhorizontal{\textwidth}%
-          {\hskip20pt plus1filll}{\quad}%
-        \ifthenelse{\boolean{nosubsectionsinheader}}{}{%
-          \vspace*{-0.5mm}%
-          \insertsubsectionnavigationhorizontal{\textwidth}%
+\ifthenelse{\boolean{tocinheader}}{%
+  \defbeamertemplate*{headline}{sidebar theme}{%
+    \usebeamerfont{frametitle}%
+    \ifthenelse{\boolean{notitle}}{%
+      % notitle
+    }{%
+    \ifthenelse{\boolean{highlighttitle}}{% TODO...
+      \begin{beamercolorbox}[ht=1.5\beamer@headheight]{highlight}%
+      \vspace*{1.em}\par%
+      %% vphantom makes sure that underlengths are always accounted for
+      \hspace*{\beamer@leftmarginwidth}\insertframetitle\vphantom{Fg}%
+      \vspace*{0.7em}%
+      \end{beamercolorbox}%
+      %\vspace*{0.1em}
+    }{%
+      \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{titlelike}%
+        \raisebox{\depth+.05\beamer@headheight}{%
+        \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
+        \ifthenelse{\boolean{tocinheader}}{%
+          {\usebeamerfont{headertoc}%
+          \vspace*{0.8ex}%
+          \insertsectionnavigationhorizontal{\textwidth}%
             {\hskip20pt plus1filll}{\quad}%
+          \ifthenelse{\boolean{nosubsectionsinheader}}{}{%
+            \vspace*{-0.5mm}%
+            \insertsubsectionnavigationhorizontal{\textwidth}%
+              {\hskip20pt plus1filll}{\quad}%
+          }}%
+        }{}%
+        \vfill%
         }}%
-      }{}%
-      \vfill%
-      }}%
-    \end{beamercolorbox}%
+      \end{beamercolorbox}%
+      }%
     }%
   }%
-}%
+}{%
+  \defbeamertemplate*{headline}{sidebar theme}{}%
+}
 %    \end{macrocode}
 %    \end{macro}
 %
