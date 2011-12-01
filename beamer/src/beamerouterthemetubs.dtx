@@ -212,21 +212,59 @@
 \reset@font% TODO
 %    \end{macrocode}
 %
-% These are dummy definitions because with frametitle in the
-% headline, the frametitle is needed before it is first set.
+%
+% Präsentations-Modus
 %    \begin{macrocode}
-\def\insertframetitle{Dummy}% TODO... \strut.. ?
-\def\insertframesubtitle{Dummy}
-
-\def\beamer@lefttext{left}
-
-
 \mode<presentation>
-
-% Let the logo disappear
-\defbeamertemplate*{sidebar right}{sidebar theme}{}
-
-\defbeamertemplate*{frametitle}{sidebar theme}{%
+%    \end{macrocode}
+%
+%    \begin{environment}{sidebar right}
+% Sidebar löschen
+%    \begin{macrocode}
+\defbeamertemplate*{sidebar right}{tubs}{}
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{macro}{headline}
+% Kopfzeile wird gesetzt, wenn 'tocinheader' gewählt wurde
+%    \begin{macrocode}
+\ifthenelse{\boolean{tocinheader}}{%
+  \defbeamertemplate*{headline}{tubs}{%
+    \usebeamerfont{frametitle}%
+    \def\@headtemplate{titlelike}
+    \ifthenelse{\boolean{highlighttitle}}{% TODO...
+      \setbeamercolor{titlelike}{bg=tuRed,fg=white}
+    }{%
+      %\def\@headtemplate{titlelike}
+    }
+    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{headline}%
+      \raisebox{\depth+.05\beamer@headheight}{%
+        \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
+        \ifthenelse{\boolean{tocinheader}}{%
+          {\usebeamerfont{headertoc}%
+          \vspace*{0.8ex}%
+          \insertsectionnavigationhorizontal{\textwidth}%
+            {\hskip20pt plus1filll}{\quad}%
+          \ifthenelse{\boolean{nosubsectionsinheader}}{}{%
+            \vspace*{-0.5mm}%
+            \insertsubsectionnavigationhorizontal{\textwidth}%
+              {\hskip20pt plus1filll}{\quad}%
+          }}%
+        }{}%
+        \vfill%
+      }}%
+    \end{beamercolorbox}%
+  }%
+}{%
+  \defbeamertemplate*{headline}{tubs}{}%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{environment}{frametitle}
+% Frame-Titel
+%    \begin{macrocode}
+\defbeamertemplate*{frametitle}{tubs}{%
   % Breite und hoehe berechnen
   \setlength{\tubs@outer@tempwidtha}{\textwidth+2\beamer@leftmarginwidth}
   \ifthenelse{\boolean{tocinheader}}{%
@@ -259,71 +297,52 @@
   }
 }%
 %    \end{macrocode}
+%    \end{environment}
 %
-%    \begin{macro}{headline}
-% Define the frame title using the color scheme titlelike
-%    \begin{macrocode}
-\ifthenelse{\boolean{tocinheader}}{%
-  \defbeamertemplate*{headline}{sidebar theme}{%
-    \usebeamerfont{frametitle}%
-    \def\@headtemplate{titlelike}
-    \ifthenelse{\boolean{highlighttitle}}{% TODO...
-      \def\@headtemplate{highlight}
-    }{%
-      \def\@headtemplate{titlelike}
-    }
-    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{\@headtemplate}%
-      \raisebox{\depth+.05\beamer@headheight}{%
-        \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
-        \ifthenelse{\boolean{tocinheader}}{%
-          {\usebeamerfont{headertoc}%
-          \vspace*{0.8ex}%
-          \insertsectionnavigationhorizontal{\textwidth}%
-            {\hskip20pt plus1filll}{\quad}%
-          \ifthenelse{\boolean{nosubsectionsinheader}}{}{%
-            \vspace*{-0.5mm}%
-            \insertsubsectionnavigationhorizontal{\textwidth}%
-              {\hskip20pt plus1filll}{\quad}%
-          }}%
-        }{}%
-        \vfill%
-      }}%
-    \end{beamercolorbox}%
-  }%
-}{%
-  \defbeamertemplate*{headline}{sidebar theme}{}%
-}
-%    \end{macrocode}
-%    \end{macro}
-%
+%    \begin{environment}{section in head/foot}
 %    \begin{macrocode}
 \defbeamertemplate*{section in head/foot}{tubs}{%
   \usebeamercolor[fg]{section in head/foot}%
   {\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
+%    \end{environment}
 %
+%    \begin{environment}{section in head/foot shaded}
 %    \begin{macrocode}
 \defbeamertemplate*{section in head/foot shaded}{tubs}{%
   \usebeamercolor[bg]{section in head/foot shaded}%
   {\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
+%    \end{environment}
 %
+%    \begin{environment}{subsection in head/foot}
 %    \begin{macrocode}
 \defbeamertemplate*{subsection in head/foot}{tubs}{%
   \usebeamercolor[fg]{subsection in head/foot}%
   {\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
+%    \end{environment}
 %
+%    \begin{environment}{subsection in head/foot shaded}
 %    \begin{macrocode}
 \defbeamertemplate*{subsection in head/foot shaded}{tubs}{%
   \usebeamercolor[bg]{subsection in head/foot shaded}%
   {\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
+%    \end{environment}
 %
+% Lösche nicht benötigte Sidebar-Inhalte
+%
+%    \begin{environment}{section in sidebar}
+%    \begin{environment}{section in sidebar shaded}
+%    \begin{environment}{subsection in sidebar}
+%    \begin{environment}{subsection in sidebar shaded}
+%    \begin{environment}{subsubsection in sidebar}
+%    \begin{environment}{subsubsection in sidebar shaded}
 %    \begin{macrocode}
 \defbeamertemplate*{section in sidebar}{sidebar theme}{}
 \defbeamertemplate*{section in sidebar shaded}{sidebar theme}{}
@@ -332,6 +351,12 @@
 \defbeamertemplate*{subsubsection in sidebar}{sidebar theme}{}
 \defbeamertemplate*{subsubsection in sidebar shaded}{sidebar theme}{}
 %    \end{macrocode}
+%    \end{environment}
+%    \end{environment}
+%    \end{environment}
+%    \end{environment}
+%    \end{environment}
+%    \end{environment}
 %
 %    \begin{macrocode}
 \setbeamercolor*{page number in sidebar}{fg=structure.fg}
@@ -339,7 +364,8 @@
 %    \end{macrocode}
 %
 % Breite tubslogo: 24.7mm
-% 
+%
+%    \begin{environment}{footline}
 %    \begin{macrocode}
 \newlength{\tubs@outer@tempwidtha}% used for settowidth
 \newlength{\tubs@outer@tempwidthb}% used for settowidth
@@ -441,11 +467,15 @@
     }
   \end{minipage}
 }
+%    \end{macrocode}
+%    \end{environment}
 %
+%    \begin{environment}{navigation symbols}
 % Ausblenden der Navigations-Symbolleiste
+%    \begin{macrocode}
 \setbeamertemplate{navigation symbols}{}
 %    \end{macrocode}
-%
+%    \end{environment}
 %
 % \subsection{Zusätzliche frame-Optionen}
 %
