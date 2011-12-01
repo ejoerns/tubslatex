@@ -79,7 +79,29 @@
 %
 %    \begin{macrocode}
 %<*default>
-\def\tubslatexVersion{$HG_DATE$ tubslatex v$VERSION$-r$HG_REV$}
+\begingroup
+  \makeatletter
+  \ifx\tubslatexVersion\undefined
+    \newcommand*{\check@tubslatexVersion}[1]{%
+      \gdef\tubslatexVersion{#1}%
+    }%
+  \else
+    \newcommand*{\check@tubslatexVersion}[1]{%
+      \def\@tempa{#1}%
+      \ifx\tubslatexVersion\@tempa\else
+        \@latex@warning@no@line{%
+          \noexpand\tubslatexVersion\space is
+          `\tubslatexVersion',\MessageBreak
+          but `#1' was expected!\MessageBreak
+          You should not use classes, packages or files
+          from\MessageBreak
+          different tubslatex versions%
+        }%
+      \fi
+    }
+  \fi
+  \check@tubslatexVersion{$HG_DATE$ v$VERSION$-r$HG_REV$ tubslatex}%
+\endgroup
 %</default>
 %    \end{macrocode}
 %
