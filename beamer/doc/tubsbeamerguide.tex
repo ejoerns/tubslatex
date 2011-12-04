@@ -1,0 +1,131 @@
+\documentclass{beamer}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{listings}
+\lstset{literate=%
+{Ö}{{\"O}}1
+{Ä}{{\"A}}1
+{Ü}{{\"U}}1
+{ß}{{\ss}}2
+{ü}{{\"u}}1
+{ä}{{\"a}}1
+{ö}{{\"o}}1,
+backgroundcolor=\color{tuLightGray},
+}
+
+\usepackage[english,ngerman]{babel}
+\usetheme[tocinheader,colorblocks]{tubs}
+
+\newcommand{\tubslatex}{tubs\LaTeX}
+
+\begin{document}
+
+% Titelseite
+\logo{\includegraphics{dummy_institut}}
+\titlegraphic{\includegraphics{defaulttitlepicture}}
+\title{\raggedright%
+  Präsentationen im Corporate Design\newline
+  mit \tubslatex}
+\subtitle{Eine kleine Einführung}
+\author{Enrico Jörns}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{Titelseite I}
+Standard-Befehle verfügbar: \lstinline{\title}, \lstinline{\subtitle}, \lstinline{\author}, \ldots
+
+Spezielle Befehle:
+\begin{description}
+  \item[Logo:]
+    Ein Logo kann mit dem Befehl {\color{tuRed}\lstinline!\logo{}!} gesetzt werden.
+    Wird eine Grafik mit \lstinline!\includegraphics{}! eingebunden,
+    wird sie automatisch korrekt skaliert.
+    \begin{lstlisting}
+ \logo{\includegraphics{DATEI}}
+    \end{lstlisting}
+  \item[Titelgrafik:]
+    Eine Titelgrafik kann mit dem Befehl {\leavevmode\color{tuRed}\lstinline!\titlegraphic{}!} gesetzt werden.
+    Sie wird bei Verwendung von \lstinline!\includegraphics{}! ebenfalls automatisch skaliert.
+    \begin{lstlisting}
+ \titlegraphic{\includegraphics{DATEI}}
+    \end{lstlisting}
+\end{description}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Titelseite II}
+  Die obige Titelseite wurde mit folgenden Inhalten erstellt
+  \small\begin{lstlisting}
+ \logo{\includegraphics{dummy_institut}}
+ \titlegraphic{\includegraphics{defaulttitlepicture}}
+ \title{\raggedright%
+     Präsentationen im Corporate Design\newline
+     mit \tubslatex}
+ \subtitle{Eine kleine Einführung}
+ \author{Enrico Jörns}
+  \end{lstlisting}
+\begin{lstlisting}
+ \begin{frame}[plain]
+   \titlepage
+ \end{frame}
+\end{lstlisting}
+\end{frame}
+
+
+\section{sectionA}
+\section{sectionB}
+% \date{22. Dezember 2011}
+% \logo{\fboxsep0mm\fbox{\includegraphics{iva_logo.pdf}}}
+% \logo{\fboxsep0mm\fbox{\includegraphics{dummy_institut.pdf}}}
+% \logo{\fboxsep0mm\fbox{\parbox{3.5\logoheight}{\vbox to\logoheight{~}}}}
+
+
+
+\subsection{subsectionA}
+
+\begin{frame}{Dummy}
+  
+\end{frame}
+
+\subsection{subsectionB}
+
+\begin{frame}
+  Titellose Folien werden wie diese dargestellt.
+\end{frame}
+
+\begin{frame}[fragile,highlight]{Wichtige Folie}
+Besonders hervorzuhebende Folien können mit der Option
+{\color{tuRed}\lstinline{[highlight]}} erstellt werden.
+\begin{lstlisting}
+ \begin{frame}[highlight]{Wichtige Folie}
+   ...
+ \end{frame}
+\end{lstlisting}
+\end{frame}
+
+
+\section{sectionC}
+\begin{frame}
+  \begin{columns}[onlytextwidth]
+    \begin{column}{0.3\textwidth}
+      \begin{block}{Block}
+        Hier steht der Inhalt.
+      \end{block}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \begin{alertblock}{Alert-Block}
+        Hier steht der Inhalt.
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \begin{exampleblock}{Example-Block}
+        Hier steht der Inhalt.
+      \end{exampleblock}     
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\end{document}
