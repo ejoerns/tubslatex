@@ -1,0 +1,25 @@
+\documentclass[a4paper,11pt]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+
+\usepackage[ngerman]{babel}
+
+%opening
+\title{Beispieltitiel}
+\subtitle{Untertitel}
+\author{Max Mustermann}
+\publishers{Institut fuer Lorem Ipsum} % to logo?
+
+\begin{document}
+
+% Logo-Position
+\begin{gausspage}
+  \showtubslogo
+  \showtopline
+  \showlogo{\color{tuBlack}\fboxsep0mm\colorbox{tuGray}{\parbox[c][\headheight]{0.5\textwidth}{\centering\huge\textcolor{tuWhite}{Logo}}}}
+  \begin{segment}{8}
+    ~
+  \end{segment}
+\end{gausspage}
+
+
+\end{document}

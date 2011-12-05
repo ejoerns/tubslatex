@@ -74,6 +74,10 @@ Inhalte einer Kopf-/Fußzeile.
 Der Absenderbereich kann entweder am Anfang oder am Ende der Seite platziert
 werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
 größten Segment am Absenderbereich.
+\bigskip
+
+Im Folgenden werden alle \tubslatex-spezifischen Klassenoptionen beschrieben,
+die das Layout beeinflussen.
 
 \begin{Declaration}
   \Option{a0paper}\\
@@ -87,6 +91,8 @@ größten Segment am Absenderbereich.
 
 Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
 0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
+Die Standard-Schriftgröße wird dabei jeweils automatisch mit umgestellt.
+Die verfügbaren \acs{CD}-konformen 
 
 \begin{Declaration}
   \Option{landscape}
@@ -121,12 +127,12 @@ wird der Absenderbereich am unteren Ende der Seite platziert
 \begin{important}
   Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
   Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
-  an den Absenderbereich anschließt und alle folgende von absteigender Höhe sind.
+  an den Absenderbereich anschließt und alle Folgende von absteigender Höhe sind.
 \end{important}
 
 
 \begin{Declaration}
-  \KOption{style}\PName{<print/screen>}
+  \KOption{style}\PName{<print/screen/printdev>}
 \end{Declaration}
 
 Die Option \Option{style} bietet die automatische Möglichkeit diverse Elemente
@@ -135,17 +141,24 @@ Zielmedium optimieren.
 
 Mit \OptionValue{style}{print}, was standardmäßig voreingestellt ist,
 wird die Darstellung für den Druck optimiert.
-
 Mit \OptionValue{style}{screen} wird die Darstellung
 für die Ausgabe auf Bildschirmen optimiert.
 
+Die Option \OptionValue{style}{printdev} entspricht in der Darstellung
+der Option \PValue{print}, setzt das Dokument aber nur einseitig.
+Damit lassen sich zu druckende Dokumente am Bildschirm leichter entwickeln.
+Bei Wechsel zu \OptionValue{style}{print} ändern sich dann keine Umbrüche etc.
+mehr, da der Darstellungsbereich gleich groß bleibt.
+
+Eine Übersicht über die Einstellungen liefert folgende Tabelle:
+
 \begin{center}
-\begin{tabular}{lll}
-                      & \textbf{\ttfamily print} & \textbf{\ttfamily screen}  \\
+\begin{tabular}{llll}
+  & \textbf{\ttfamily print} & \textbf{\ttfamily screen} & \textbf{\ttfamily printdev} \\
   \midrule
-Bindekorrektur        & 15mm  & 0mm     \\
-Zweisitige Dartellung & Ja    & Nein    \\
-Farbdarstellung       & CMYK  & RGB
+Bindekorrektur          & 15mm  & 0mm   & 15mm\\
+Zweiseitige Darstellung & Ja    & Nein  & Nein\\
+Farbmodell              & CMYK  & RGB   & CMYK
 \end{tabular}
 \end{center}
 
@@ -158,13 +171,14 @@ Die zuletzt gesetzte Option hat dabei die höchste Priorität.
 \end{Declaration}
 
 Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
-Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
-ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
+Darstellungsbereichs vom inneren Formatrand.
+Sie ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
 
 Sinnvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
 wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
 Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
-keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
+keinen randlosen Druck ermöglichen.
+Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
 Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
 mit \OptionValue{bcor}{0mm} möglich.
 
@@ -172,11 +186,12 @@ mit \OptionValue{bcor}{0mm} möglich.
   \KOption{twoside}\PName{bool}
 \end{Declaration}
 
-Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
+Für das Setzen von zweiseitigen Dokumente ist die Option \Option{twoside}
 vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
 umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
-auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
-auf definierte Ränder (Bindungskorrektur, Marginale).
+auf der linken und rechten Seite definiert ist. Dies hat unter anderem Einfluss
+auf definierte Ränder (Bindekorrektur, Marginale) und den Inhalt der
+Kopf-/Fußzeilen.
 
 Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
 dabei der einfachen Benutzung von \Option{twoside}.
@@ -190,7 +205,7 @@ dabei der einfachen Benutzung von \Option{twoside}.
 Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
 \PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
 bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
-einem Element im Spaltenraster entspricht.
+einem Element im sechsgeteilten \gls{glos:Spaltenraster} entspricht.
 
 \begin{Declaration}
   \Option{extramargin}
@@ -198,9 +213,10 @@ einem Element im Spaltenraster entspricht.
 
 Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
 für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
-Darstellung, welche häufig Verwendung findet jedoch deutlich zu breit.
+Darstellung, welche häufig Verwendung findet, jedoch deutlich zu breit.
 Die Option \Option{extramargin} definiert dafür einen Textbereich, der um
-doppelte Rahmenstärke schmaler ist als der herkömmliche Textbereich.
+doppelte Rahmenstärke schmaler und um einfache Rahmenstärke flacher
+ist als der herkömmliche Textbereich.
 \begin{important}
 Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
 \Environment{gausspage} benutzen.
@@ -210,15 +226,18 @@ Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
 \section{Titelseite}\label{sec:titlepage}
 
 Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
-werden; entweder mit Hilfe des Befehls \lstinline{\maketitle} oder mit
-der Umgebung \lstinline{titlepage}. Beide Varianten werden von \tubslatex
+werden; entweder mit Hilfe des Befehls \Macro{maketitle} oder mit
+der Umgebung \Environment{titlepage}. Beide Varianten werden von \tubslatex
 in modifizierter Weise unterstützt.
+
+Darüber hinaus können auch Rückseiten automatisch bzw. manuell eingefügt
+werden. Das Kapitel~\ref{subsec:backpages} geht hierauf näher ein.
 
 \begin{Declaration}
   \Macro{maketitle}\OParameter{style}
 \end{Declaration}
 
-Die einfache Verwendung von \lstinline{\maketitle} erzeugt eine Titelseite
+Die einfache Verwendung von \Macro{maketitle} erzeugt eine Titelseite
 mit dem TU-\gls{glos:siegelbandlogo} und einer roten Trennlinie zwischen Absender- und
 Kommunikationsbereich.
 
@@ -232,20 +251,40 @@ oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
 
 \begin{Declaration}
   \Macro{logo}\Parameter{logo}\\
-  \Macro{titlepicture}\Parameter{file}\\
+  \Macro{titlepicture}\OParameter{fitting}\Parameter{file}\\
   \Macro{titleabstract}\Parameter{text}
 \end{Declaration}
 
-\Macro{logo} dient zur Darstellung eines zusätzlichen Absenders als Schrift
-oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
-TU \gls{glos:siegelbandlogo} gegenüberliegenden Seite dargestellt. Eingefügte Grafiken
-werden automatisch auf die Höhe des Kopfbereichs skaliert.
+\begin{minipage}[t]{0.6\textwidth}
+  \Macro{logo} dient zur Darstellung eines zusätzlichen Absender-Logos als Schrift
+  oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
+  TU-\gls{glos:siegelbandlogo} gegenüberliegenden Seite dargestellt.
+  
+  Mittels \Macro{includegraphics} eingefügte Grafiken werden automatisch
+  passend auf die Höhe des Kopfbereichs (\Macro{headheight}) und
+  halbe Textbereichsbreite (0.5\Macro{textwidth}) skaliert
+  (Seitenverhältnis wird beibehalten).
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \vspace*{-1ex}%
+  \fboxsep0mm\fbox{\includegraphics[width=\textwidth,page=1]{examples/doc_layout.pdf}}
+\end{minipage}
 
 Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
 Verwendung eines entsprechenden Styles auf der Titelseite dargestellt wird.
+Diese wird standardmäßig so skaliert und zurechtgeschnitten, dass sie den ihr
+zur Verfügung stehenden Bereich optimal ausfüllt.
+Mit der Option \Option{fitting} kann die Einpassung beeinflust werden.
+Hier können die in Kapitel~\ref{subsec:gausspage:bgelement} beschriebenen Werte
+verwendet werden.
 
-Der Befehl \Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
-Weitere Erläuterungen finden sich jeweils auch im Kapitel~\ref{sec:titlestyles}.
+Der Befehl \Macro{titleabstract} erlaubt die Darstellung eines kurzen
+zusammenfassenden Textes auf der Titelseite, sofern der gewählte Style
+dies unterstützt.
+
+Weitere Erläuterungen und eine Übersicht über die vordefinierten Styles
+finden sich in Kapitel~\ref{sec:titlestyles}.
 
 
 \begin{Declaration}
@@ -260,7 +299,7 @@ zusätzliche Darstellungsmöglichkeiten. \Environment{titlepage} entspricht
 im Prinzip der Umgebung \Environment{gausspage}, die allgemein zum Erstellen
 von Seiten im \gls{glos:gaussraster} konzipiert ist. Daher finden sich
 weiterführende Information zu Definitionsmöglichkeiten auch in
-Abschnitt~\ref{sec:gausspage}.
+Abschnitt~\ref{chap:gausspage}.
 
 \begin{Declaration}
   \Macro{showtubslogo}\OParameter{Seite}\\
@@ -268,19 +307,16 @@ Abschnitt~\ref{sec:gausspage}.
   \Macro{showtopline}
 \end{Declaration}
 
-Die Verwendung einer dieser Befehle innerhalb einer Titlepage-Umgebung sorgt
-dafür, dass das entsprechende Element auf der Seite dargestellt wird.
+Die Verwendung einer dieser Befehle innerhalb einer \Environment{titlepage}-Umgebung
+sorgt dafür, dass das entsprechende Element auf der Seite dargestellt wird.
 \Macro{showtubslogo} stellt das Siegelbandlogo dar. Der optionale Parameter
-\PName{Seite} akzeptiert legt dabei fest auf welcher Seite des Blattes
-das Logo gezeigt werden soll. Der Wert \PValue{left} entspricht der Standardeinstellung und stellt das Logo auf der linken Seite,
-% bzw. bei zweiseitigem Layout auf der Innenseite % NOTE: für Titelseite irrelevant!?
-dar.
+\PName{Seite} legt dabei fest auf welcher Seite des Blattes
+das Logo gezeigt werden soll.
+Der Wert \PValue{left} entspricht der Standardeinstellung und platziert das Logo auf der linken Seite.
 Mit dem Wert \PValue{right} wird dagegen eine Darstellung auf der rechten
-% bzw. äußeren
 Seite des Blattes erwirkt. Gleichzeitig hat dies Auswirkungen
 auf die Positionierung des Zweitlogos, das automatisch immer auf der 
 dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
-% TODO: inner, outer?
 
 \begin{Declaration}
   \Macro{showdesignhelper}
@@ -302,7 +338,7 @@ die Höhe des jeweiligen Elements in Segmenten an. Die Position der Elemente
 ergibt sich aus der Reihenfolge der Definition.
 Mit dem optionalen Parameter \PName{options} können Einstellung wie die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
 
-\subsection{Rückseiten}
+\subsection{Rückseiten}\label{subsec:backpages}
 
 Neben der Möglichkeit Titelseiten zu definieren, gibt es in \tubslatex auch
 einen ähnlichen Mechanismus zur Erstellung von Rückseiten derselbigen, sodass
