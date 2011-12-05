@@ -21,7 +21,7 @@ Einige Funktionalitäten, welche diese Klassen bieten:
 
 \paragraph{Seitenlayout}
 
-Der im \acs{CD} festgelegte \gls{glos:Absenderbereich} findet sich sowohl auf
+Der im \acs{CD} festgelegte \gls{glos:absenderbereich} findet sich sowohl auf
 Titelseiten als auch auf Inhaltsseiten (als Kopf- bzw. Fußzeile) wieder.
 Der Absenderbereich wird normalerweise am oberen Seitenende platziert,
 kann mittels der Klassenoption \OptionValue{sender}{bottom} aber auch am unteren
@@ -100,10 +100,10 @@ Die verfügbaren \acs{CD}-konformen
 
 Schaltet das Dokument in Querformat-Darstellung.
 
-\begin{minipage}{0.45\textwidth}\sffamily\centering
-  {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
+\begin{center}
+  \fboxsep0mm\fbox{\includegraphics[width=0.45\textwidth]{examples/article_landscape.pdf}}\\
   Dokument im Querformat
-\end{minipage}
+\end{center}
 
 
 \begin{important}
@@ -205,7 +205,7 @@ dabei der einfachen Benutzung von \Option{twoside}.
 Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
 \PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
 bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
-einem Element im sechsgeteilten \gls{glos:Spaltenraster} entspricht.
+einem Element im sechsgeteilten \gls{glos:spaltenraster} entspricht.
 
 \begin{Declaration}
   \Option{extramargin}
@@ -322,7 +322,9 @@ dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
   \Macro{showdesignhelper}
 \end{Declaration}
 
-% TODO...
+Dieser Befehl eignet sich für die Gestaltungsphase der Titelseite.
+Er stellt alle verfügbaren Gauß-Segmente, sowie die möglichen Positionen
+für Siegelbandlogo und Zweitlogo dar.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{titlerow}}%
@@ -332,30 +334,35 @@ dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
   \XMacro{end}\PParameter{titlerow}
 \end{Declaration}
 
-Die Umgebung \Environment{titlerow} erlaubt es dabei, die Titelelemente im 
+Die Umgebung \Environment{titlerow} erlaubt es, Titelelemente im 
 Gaußraster anzulegen. Der Parameter \PName{gaussheight} gibt dabei
 die Höhe des jeweiligen Elements in Segmenten an. Die Position der Elemente
 ergibt sich aus der Reihenfolge der Definition.
-Mit dem optionalen Parameter \PName{options} können Einstellung wie die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
+Mit dem optionalen Parameter \PName{options} können Einstellung wie
+die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
+Die Umgebung basiert auf der \Environment{segment}-Umgebung.
+Detailliertere Informationen sind daher deren Beschreibung
+in Kapitel~\ref{subsec:gausspage:bgelement} zu entnehmen.
 
 \subsection{Rückseiten}\label{subsec:backpages}
 
 Neben der Möglichkeit Titelseiten zu definieren, gibt es in \tubslatex auch
-einen ähnlichen Mechanismus zur Erstellung von Rückseiten derselbigen, sodass
-ohne Mühe ein komplettes Titelblatt, dass auf die Möglichkeiten des
+einen ähnlichen Mechanismus zur Erstellung von Rückseiten.
+Sodass ohne Mühe ein komplettes Titelblatt, dass auf die Möglichkeiten des
 Corporate Design abgestimmt ist, erstellt werden kann.
 
 \begin{Declaration}
   \Macro{makebackpage}\OParameter{Style}
 \end{Declaration}
 
-Dieser Befehl stellst das Gegenstück zu \Macro{maketitle} auf und erstellt eine
+Dieser Befehl stellst das Gegenstück zu \Macro{maketitle} dar und erstellt eine
 Rückseite. Genau wie bei \Macro{maketitle} kann über den Optionalen Parameter
-\PName{style} wieder ein vordefinierter Stil geladen werden.
+\PName{style} wieder ein vordefinierter Style geladen werden.
 
-Außerdem stehen ein paare Befehle zur Verfügung, mit denen sich der Inhalt
+Außerdem stehen ein paar Befehle zur Verfügung, mit denen sich der Inhalt
 der Rückseite festlegen lässt. Die konkrete Darstellung ist dabei wieder
-von dem verwendeten Style abhängig. Weiteres findet sich in 
+von dem verwendeten Style abhängig.
+Beschreibungen und Beispiele zu den verfügbaren Styles finden sich in
 Kapitel~\ref{sec:backstyles}.
 
 
@@ -374,36 +381,94 @@ Siehe hierzu jeweils auch Kapitel~\ref{sec:backstyles}.
 
 %TODO: Hinweis Schriftgrößen, KOMA-Fonts
 
-Es sind 3 einfache Styles definiert.% vordefiniert
+Für Titelseiten gibt es 3 vordefinierte Styles, die durch Angabe des
+Style-Namens als Option von \Macro{maketitle} verwendet werden können
+
+\begin{Declaration}
+  \KOption{logo}\PName{Position}
+\end{Declaration}
+
+Bei allen Styles kann die Darstellungsseite des Siegelbandlogos
+(und somit auch des Zweitlogos) durch Angabe der Option
+\OptionValue{logo}{Position} angepasst werden.
+Mögliche Werte sind \PValue{left} bzw. \PValue{inside} für die Darstellung
+auf der linken bzw. inneren Blattseite und \PValue{right} bzw. \PValue{outside}
+für die Darstellung auf der rechten bzw. äußeren Blattseite.
+
+\paragraph{Farbe}
+Da als Darstellungsfarbe der \gls{glos:sekundaerfarbklang} verwendet wird,
+kann die Farbgebung der Titelseite z.B. durch eine entsprechende Klassenoption
+angepasst werden.
 % TODO: styles selbst definieren.
 % Hinweis zu Farbdarstellung!
 % TODO: Default-Style in Config-Datei speichern
 
-\begin{center}
-  \fboxsep0mm
+Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
+
+% \begin{center}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
-    \fbox{%
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
       \includegraphics[width=0.95\textwidth,page=1]{examples/titlestyles.pdf}}
-    [default]
+%     [default]
   \end{minipage}%
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
-    \fbox{%
-      \includegraphics[width=0.95\textwidth,page=2]{examples/titlestyles.pdf}}
-    [image]
-  \end{minipage}%
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
-    \fbox{%
-      \includegraphics[width=0.95\textwidth,page=3]{examples/titlestyles.pdf}}
-    [imagetext]
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{default}
+    Einfacher Stil, der Darstellung der Standardklassen imitiert.
+    Er wird benutzt, wenn kein Style explizit gewählt wurde.
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+    \end{compactitem}
   \end{minipage}
-\end{center}
+  
+  \begin{minipage}[t]{0.33\textwidth}
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
+      \includegraphics[width=0.95\textwidth,page=2]{examples/titlestyles.pdf}}
+%     [image]
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{image}
+    
+    Einfacher dreigeteilter Stil im Gaußraster mit großem Titelbild.
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+      \item titlepicture
+    \end{compactitem}
+  \end{minipage}
+  
+  \begin{minipage}[t]{0.33\textwidth}
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
+      \includegraphics[width=0.95\textwidth,page=3]{examples/titlestyles.pdf}}
+%     [imagetext]
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{imagetext}
+    
+    Viergeteilter Stil im Gaußraster mit Titelbild und schmalem Abstract-Bereich.
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+      \item titlepicture
+      \item titleabstract
+    \end{compactitem}
+
+  \end{minipage}
+% \end{center}
 
 \subsection{Vordefinierte Rückseiten-Styles}\label{sec:backstyles}
 
-Es sind 3 einfache Styles definiert.% vordefiniert
+Es sind 4 einfache Styles definiert.% vordefiniert
 
 \begin{center}
   \fboxsep0mm
