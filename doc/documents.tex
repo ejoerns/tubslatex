@@ -1,23 +1,40 @@
 \chapter{Dokumente}
 
-\begin{sloppypar}
-Einfache Textdokumente können mit den Klassen \newdocumentclass{tubsartcl},
-\newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook} erstellt werden.
+Für das Erstellen von Dokumenten im Corporate Design gibt es diverse Richtlinien
+und Gestaltungsmöglichkeiten, die unter Einsatz von Standard-Klassen nur sehr
+mühselig einzuhalten und zu verwirklichen sind.
+Daher stellt \tubslatex drei eigene Dokumentenklassen bereit, die als Ersatz für
+die Basisklassen \lstinline{article}, \lstinline{report} und \lstinline{book} 
+verwendet werden können. Sie heißen \newdocumentclass{tubsartcl},
+\newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook}.
 
-\end{sloppypar}
+Einige Funktionalitäten, welche diese Klassen bieten:
+\begin{itemize}
+  \item Anpassung der Seitengeometrie
+  \item Angepasste Schriftart- und größe für 9pt, 10pt und 11pt
+  \item Vorlagenoptimierte Darstellung von Kopf- bzw. Fußzeilen
+  \item Vorlagen für Titelseiten im Gauß-Raster
+  \item Umgebungen zur individuellen Erstellung von (Titel-)Seiten im Gauß-Raster.
+  \item Vordefinierte Farben aus der \acs{CD}-Farbpalette.
+  \item Einfache Darstellungsstile für Bildschirmdarstellung und Druck
+\end{itemize}
 
+\paragraph{Seitenlayout}
+
+Der im \acs{CD} festgelegte \gls{glos:Absenderbereich} 
 Da Dokumente normalerweise gedruckt werden und ggf. auch gebunden, werden
 sie standardmäßig mit einer kleinen Bindekorrektur gesetzt, sodass das
-Logo beim Drucken oder Abheften nicht abgeschnitten wird, außerdem wird
-es als zweiseitiges Dokument in CMYK-Farben ausgegeben.
+Logo beim Drucken oder Abheften nicht abgeschnitten wird.
+Außerdem wird es als zweiseitiges Dokument im \gls{glos:cmyk} ausgegeben.
 Für eine Optimierung zur Ausgabe auf einem Bildschirm steht die Option
 \OptionValue{style}{screen} zu Verfügung. Weitere Paket-Optionen dienen der
 genauen individuellen Anpassung der Darstellung. Eine genauere Darstellung
 liefert \mbox{u.\,a.}\xspace das Kapitel~\ref{sec:pagelayout}.
 
+\paragraph{Titelseiten}
 Für die Darstellung von Titelseiten stellt \tubslatex verschiedene Möglichkeiten
 zur Verfügung, die an die konventionelle Erstellung von Titelseiten angelehnt
-sind. So sowohl sowohl der Befehl \Macro{maketitle} als auch die Umgebung
+sind. So werden sowohl sowohl der Befehl \Macro{maketitle} als auch die Umgebung
 \Environment{titlepage} so umdefiniert, dass man mit ihnen einfach CD-konforme
 Titelseiten aus Vorlagen auswählen bzw. individuell erstellen kann.
 Darüber hinaus steht auch die Möglichkeit zur Verfügung mittels
@@ -29,12 +46,13 @@ in allen Dokumenten vordefiniert.
 Befehle für die Erstellung von Kopf- bzw. Fußzeilen sind CD-konform angepasst und
 werden im Kapitel~\ref{sec:headline} beschrieben.
 
+\paragraph{Gaußraster}
 Die Darstellung von Seiten basiert im CD-Layout im Prinzip immer auf den
 sogenannten Gaußraster. Dies unterteilt die Seite in verschieden große
 Segmente, deren Höhe durch die gaußsche Summenformel berechnet werden kann.
-Außerdem könne Seiten ein Reihe von Standardelementen wie das Sigellogo oder
+Außerdem könne Seiten ein Reihe von Standardelementen wie das Siegellogo oder
 ein zusätzliches individuelles Logo aufweisen.
-Alle Seiten, die im Stil des \gls{glos:gaussraster} erzeugt werden basieren letzendlich
+Alle Seiten, die im Stil des \gls{glos:gaussraster} erzeugt werden basieren letztendlich
 auf dem Selben backend. Dies wird in Kapitel~\ref{sec:gausspage} ausführlicher
 beschrieben.
 
@@ -91,7 +109,7 @@ gewohnt, Titelseiten definiert werden. Sie bietet aber in \tubslatex noch einige
 zusätzliche Darstellungsmöglichkeiten. \Environment{titlepage} entspricht
 im Prinzip der Umgebung \Environment{gausspage}, die allgemein zum Erstellen
 von Seiten im \gls{glos:gaussraster} konzipiert ist. Daher finden sich
-weiterführende Information zu Definitionsmölighckeiten auch in
+weiterführende Information zu Definitionsmöglichkeiten auch in
 Abschnitt~\ref{sec:gausspage}.
 
 \begin{Declaration}

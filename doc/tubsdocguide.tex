@@ -1,14 +1,19 @@
-\documentclass[a4paper,11pt,twoside=false,rgb,extramargin]{tubsbook}
+\documentclass[%
+  a4paper,%
+  11pt,%
+  twoside=false,%
+  rgb,%
+  extramargin,%
+  parskip=half%
+]{tubsbook}
 
 \input{preamble}
 
 %opening
-\title{\tubslatex\ -- Das CorporateDesign in \LaTeX}
+\title{\tubslatex -- Das CorporateDesign in \LaTeX}
 \subtitle{Anleitung und Dokumentation}
 \author{Enrico Jörns}
 \publishers{Presse und Kommunikation} % to logo?
-
-\newcommand{\CD}{Corporate Design\xspace}
 
 \begin{document}
 
@@ -120,8 +125,8 @@ Dieser wird einfach mit \lstinline!\usetheme{tubs}! geladen.
 Dieser Abschnitt befasst sich mit den Paketen, die von den jeweiligen
 \tubslatex-Anwenderklassen normalerweise automatisch geladen werden.
 Diese Pakete stellen einige grundlegende Funktionalitäten und Darstellungen
-für das \CD der TU Braunschweig dar. Dazu gehören zum einen das Paket
-\newpackage{tubscolors}, das alle Farben, die im \CD vorgesehen sind,
+für das \acs{CD} der TU Braunschweig dar. Dazu gehören zum einen das Paket
+\newpackage{tubscolors}, das alle Farben, die im \acs{CD} vorgesehen sind,
 definiert. Des weiteren gibt es das Paket \newpackage{tubslogo}, welches
 zur Darstellung des Siegelbandlogos dient. Abschließend ist noch das Paket
 \newpackage{nexus} zu erwähnen, welches die Hausschrift \emph{Nexus}
@@ -143,6 +148,9 @@ im Allgemeinen nicht erforderlich sein sollte.
 
 %Glossar ausgeben
 \printglossary[style=altlist,title=Glossar]
+%Abkürzungen ausgeben
+\deftranslation[to=German]{Acronyms}{Abkürzungsverzeichnis}
+\printglossary[type=\acronymtype,style=long]
 
 \include{appendixletter}
 

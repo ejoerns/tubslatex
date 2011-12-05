@@ -1,10 +1,5 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{xspace}
-% \usepackage[T1]{fontenc}
-% \usepackage{ae}
-% \usepackage[a4paper]{tubsdoc}
-
-\usepackage{scrpage2}
 \usepackage{amsmath}
 \usepackage{tabularx}
 \usepackage{booktabs}
@@ -31,6 +26,7 @@ acronym,      %ein Abkürzungsverzeichnis erstellen
 toc,          %Einträge im Inhaltsverzeichnis
 section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 {glossaries}
+\let\acs\gls
 %Glossar-Befehle anschalten
 \makeglossaries
 
@@ -265,7 +261,10 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 \makeatother
 
-\newcommand{\tubslatex}{\emph{tubslatex}\xspace}
+% xspace für tubslatex-Logo
+\makeatletter
+\g@addto@macro{\tubslatex}{\xspace}
+\makeatother
 
 \def\example{\par\smallskip\noindent\textit{Beispiel: }}
 
