@@ -416,8 +416,12 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
   \hfill
   \begin{minipage}[t]{0.6\textwidth}
     \paragraph{default}
-    Einfacher Stil, der Darstellung der Standardklassen imitiert.
+    Einfacher Stil, der Darstellung der Standardklassen imitiert und Logos,
+    sowie eine Trennline zwischen Absender- und Kommunikationsbereich hinzufügt.
+    \\
     Er wird benutzt, wenn kein Style explizit gewählt wurde.
+    \par\bigskip
+    \Macro{maketitle}\OParameter{default}
     \par\bigskip
     Dargestellte Zusatz-Elemente:
     \begin{compactitem}\ttfamily
@@ -436,6 +440,8 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
     \paragraph{image}
     
     Einfacher dreigeteilter Stil im Gaußraster mit großem Titelbild.
+    \par\bigskip
+    \Macro{maketitle}\OParameter{image}
     \par\bigskip
     Dargestellte Zusatz-Elemente:
     \begin{compactitem}\ttfamily
@@ -456,49 +462,112 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
     
     Viergeteilter Stil im Gaußraster mit Titelbild und schmalem Abstract-Bereich.
     \par\bigskip
+    \Macro{maketitle}\OParameter{imagetext}
+    \par\bigskip
     Dargestellte Zusatz-Elemente:
     \begin{compactitem}\ttfamily
       \item logo
       \item titlepicture
       \item titleabstract
     \end{compactitem}
-
   \end{minipage}
 % \end{center}
 
 \subsection{Vordefinierte Rückseiten-Styles}\label{sec:backstyles}
 
-Es sind 4 einfache Styles definiert.% vordefiniert
+Für Rückseiten gibt es 4 vordefinierte Styles, die durch Angabe des
+Style-Namens als Option von \Macro{makebackpage} verwendet werden können.
+Auf Rückseiten wird das Siegelbandlogo immer als einfarbige Fläche fortgesetzt.
 
-\begin{center}
-  \fboxsep0mm
+Die Positionierung der Logos ist abhängig von der Wahl in \Macro{maketitle}.
+Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklang.
+% TODO: wie wird Adresse dargestellt
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=1]{examples/backstyles.pdf}}
-    [plain] (default)
   \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{plain}
+    \par
+    Einfache Darstellung ohne Hintergrundfarbe aber mit
+    roter Trennlinie zwischen Abender- und Kommunikationsbereich.
+    Lediglich Absenderinformationen werden (wenn vorhanden) dargestellt.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{plain}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item address
+    \end{compactitem}
+  \end{minipage}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=2]{examples/backstyles.pdf}}
-    [info]
   \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{info}
+    \par
+    Einfarbiger Hintergrund mit Darstellung der backpageinfo.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{info}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item backpageinfo
+    \end{compactitem}
+  \end{minipage}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=3]{examples/backstyles.pdf}}
-    [addressinfo]
   \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{addressinfo}
+    \par
+    Kontrastreiche zweigeteile Darstellung von Adresse und backpageinfo.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{addressinfo}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item address
+      \item backpageinfo
+    \end{compactitem}
+  \end{minipage}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=4]{examples/backstyles.pdf}}
-    [trisec]
   \end{minipage}
-\end{center}
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{trisec}
+    \par
+    Kontrastreiche dreigeteilte Darstellung, die aber nur Adresse anzeigt.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{trisec}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item address
+    \end{compactitem}
+  \end{minipage}
 
-\section{Kopf-/ Fußzeile}\label{sec:headline}
+
+\section{Kopf-/Fußzeile}\label{sec:headline}
 \marginpar[Neu in 0.3-alpha3]{}
 
 Bei Dokumenten mit Absenderbereich am oberen Rand wird die Fußzeile
