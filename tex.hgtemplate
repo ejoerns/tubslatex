@@ -79,6 +79,9 @@
 %
 %    \begin{macrocode}
 %<*default>
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \begingroup
   \makeatletter
   \ifx\tubslatexVersion\undefined
@@ -102,11 +105,17 @@
   \fi
   \check@tubslatexVersion{$HG_DATE$ v$VERSION$-r$HG_REV$ tubslatex}%
 \endgroup
-%</default>
 %    \end{macrocode}
 %
+%    \begin{macro}{\tubslatex}
+% 'Logo' für tubslatex
 %    \begin{macrocode}
+\providecommand{\tubslatex}{tubs\LaTeX}
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macrocode}
+%</default>
 %    \end{macrocode}
 %
 % \Finale
