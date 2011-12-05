@@ -13,7 +13,7 @@ Einige Funktionalitäten, welche diese Klassen bieten:
   \item Anpassung der Seitengeometrie
   \item Angepasste Schriftart- und größe für 9pt, 10pt und 11pt
   \item Vorlagenoptimierte Darstellung von Kopf- bzw. Fußzeilen
-  \item Vorlagen für Titelseiten im Gauß-Raster
+  \item Vorlagen für Titelseiten im \gls{glos:gaussraster}
   \item Umgebungen zur individuellen Erstellung von (Titel-)Seiten im Gauß-Raster.
   \item Vordefinierte Farben aus der \acs{CD}-Farbpalette.
   \item Einfache Darstellungsstile für Bildschirmdarstellung und Druck
@@ -21,13 +21,18 @@ Einige Funktionalitäten, welche diese Klassen bieten:
 
 \paragraph{Seitenlayout}
 
-Der im \acs{CD} festgelegte \gls{glos:Absenderbereich} 
-Da Dokumente normalerweise gedruckt werden und ggf. auch gebunden, werden
-sie standardmäßig mit einer kleinen Bindekorrektur gesetzt, sodass das
+Der im \acs{CD} festgelegte \gls{glos:Absenderbereich} findet sich sowohl auf
+Titelseiten als auch auf Inhaltsseiten (als Kopf- bzw. Fußzeile) wieder.
+Der Absenderbereich wird normalerweise am oberen Seitenende platziert,
+kann mittels der Klassenoption \OptionValue{sender}{bottom} aber auch am unteren
+Seitenende platziert werden.
+
+Da Dokumente normalerweise gedruckt und ggf. auch gebunden werden,
+wird standardmäßig eine kleine Bindekorrektur gesetzt, sodass das
 Logo beim Drucken oder Abheften nicht abgeschnitten wird.
-Außerdem wird es als zweiseitiges Dokument im \gls{glos:cmyk} ausgegeben.
+Außerdem wird das Dokument als zweiseitig und im \gls{glos:cmyk} gesetzt.
 Für eine Optimierung zur Ausgabe auf einem Bildschirm steht die Option
-\OptionValue{style}{screen} zu Verfügung. Weitere Paket-Optionen dienen der
+\OptionValue{style}{screen} zu Verfügung. Weitere Optionen dienen der
 genauen individuellen Anpassung der Darstellung. Eine genauere Darstellung
 liefert \mbox{u.\,a.}\xspace das Kapitel~\ref{sec:pagelayout}.
 
@@ -40,21 +45,166 @@ Titelseiten aus Vorlagen auswählen bzw. individuell erstellen kann.
 Darüber hinaus steht auch die Möglichkeit zur Verfügung mittels
 \Macro{makebackpage} oder der Umgebung \Environment{backpage}
 Rückseiten zu erstellen. Kapitel~\ref{sec:titlepage} geht darauf näher ein.
+\bigskip
+
+% \paragraph{Gaußraster}
+% Die Darstellung von Seiten basiert im CD-Layout im Prinzip immer auf den
+% sogenannten Gaußraster. Dies unterteilt die Seite in verschieden große
+% Segmente, deren Höhe durch die gaußsche Summenformel berechnet werden kann.
+% Außerdem könne Seiten ein Reihe von Standardelementen wie das Siegellogo oder
+% ein zusätzliches individuelles Logo aufweisen.
+% Alle Seiten, die im Stil des \gls{glos:gaussraster} erzeugt werden basieren letztendlich
+% auf dem Selben backend. Dies wird in Kapitel~\ref{sec:gausspage} ausführlicher
+% beschrieben.\bigskip
 
 Darüber hinaus ist die Schrift Nexus, sowie alle Farben des Corporate Designs
 in allen Dokumenten vordefiniert.
 Befehle für die Erstellung von Kopf- bzw. Fußzeilen sind CD-konform angepasst und
 werden im Kapitel~\ref{sec:headline} beschrieben.
 
-\paragraph{Gaußraster}
-Die Darstellung von Seiten basiert im CD-Layout im Prinzip immer auf den
-sogenannten Gaußraster. Dies unterteilt die Seite in verschieden große
-Segmente, deren Höhe durch die gaußsche Summenformel berechnet werden kann.
-Außerdem könne Seiten ein Reihe von Standardelementen wie das Siegellogo oder
-ein zusätzliches individuelles Logo aufweisen.
-Alle Seiten, die im Stil des \gls{glos:gaussraster} erzeugt werden basieren letztendlich
-auf dem Selben backend. Dies wird in Kapitel~\ref{sec:gausspage} ausführlicher
-beschrieben.
+
+\section{Seitenlayout}\label{sec:pagelayout}
+
+Eine Seite im Corporate Design unterteilt sich grundlegend in 2 Bereiche.
+Der Absenderbereich und der Kommunikationsbereich. Der Absenderbereich wird zur
+Darstellung des TU-Siegelbandlogos und des Logos eines speziellen Instituts
+oder einer Abteilung verwendet. Im Textteil dient er teilweise als Bereich für
+Inhalte einer Kopf-/Fußzeile.
+
+Der Absenderbereich kann entweder am Anfang oder am Ende der Seite platziert
+werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
+größten Segment am Absenderbereich.
+
+\begin{Declaration}
+  \Option{a0paper}\\
+  \Option{a1paper}\\
+  \Option{a2paper}\\
+  \Option{a3paper}\\
+  \Option{a4paper}\\
+  \Option{a5paper}\\
+  \Option{a6paper}
+\end{Declaration}
+
+Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
+0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
+
+\begin{Declaration}
+  \Option{landscape}
+\end{Declaration}
+
+Schaltet das Dokument in Querformat-Darstellung.
+
+\begin{minipage}{0.45\textwidth}\sffamily\centering
+  {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
+  Dokument im Querformat
+\end{minipage}
+
+
+\begin{important}
+  Im Querformat hat das Gaußraster eine abweichende
+  Segmentanzahl. Für alle gängigen Formate sind im Querformat \emph{6 Segmente}
+  definiert. Daher lösen Layouts, die für hochformatige Dokumente
+  geschrieben wurden, im Querformat einen Fehler aus.
+\end{important}
+
+
+\begin{Declaration}
+  \KOption{sender}\PName{Position}
+\end{Declaration}
+
+Mit der Option \Option{sender} kann die Position des Absenderbereiches
+festgelegt werden. Mit der Einstellung \OptionValue{sender}{top} wird
+der Absenderbereich am oberen Seitenende dargestellt. Dies ist auch die
+Standardeinstellung. Wählt man dagegen \OptionValue{sender}{bottom}, so
+wird der Absenderbereich am unteren Ende der Seite platziert
+
+\begin{important}
+  Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
+  Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
+  an den Absenderbereich anschließt und alle folgende von absteigender Höhe sind.
+\end{important}
+
+
+\begin{Declaration}
+  \KOption{style}\PName{<print/screen>}
+\end{Declaration}
+
+Die Option \Option{style} bietet die automatische Möglichkeit diverse Elemente
+des Layouts so anzupassen, dass sie die Darstellung auf dem gewünschten
+Zielmedium optimieren.
+
+Mit \OptionValue{style}{print}, was standardmäßig voreingestellt ist,
+wird die Darstellung für den Druck optimiert.
+
+Mit \OptionValue{style}{screen} wird die Darstellung
+für die Ausgabe auf Bildschirmen optimiert.
+
+\begin{center}
+\begin{tabular}{lll}
+                      & \textbf{\ttfamily print} & \textbf{\ttfamily screen}  \\
+  \midrule
+Bindekorrektur        & 15mm  & 0mm     \\
+Zweisitige Dartellung & Ja    & Nein    \\
+Farbdarstellung       & CMYK  & RGB
+\end{tabular}
+\end{center}
+
+Die einzelnen Einstellungen können natürlich auch einzeln angepasst oder
+nachträglich geändert werden. Es entscheidet die Reihenfolge der Optionen.
+Die zuletzt gesetzte Option hat dabei die höchste Priorität.
+
+\begin{Declaration}
+  \KOption{bcor}\PName{Wert}
+\end{Declaration}
+
+Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
+Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
+ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
+
+Sinnvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
+wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
+Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
+keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
+Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
+mit \OptionValue{bcor}{0mm} möglich.
+
+\begin{Declaration}
+  \KOption{twoside}\PName{bool}
+\end{Declaration}
+
+Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
+vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
+umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
+auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
+auf definierte Ränder (Bindungskorrektur, Marginale).
+
+Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
+dabei der einfachen Benutzung von \Option{twoside}.
+\OptionValue{twoside}{false} sorgt dagegen für die Deaktivierung der Option.
+
+\begin{Declaration}
+  \Option{marginleft}\\
+  \Option{marginright}
+\end{Declaration}
+
+Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
+\PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
+bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
+einem Element im Spaltenraster entspricht.
+
+\begin{Declaration}
+  \Option{extramargin}
+\end{Declaration}
+
+Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
+für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
+Darstellung, welche häufig Verwendung findet jedoch deutlich zu breit.
+Die Option \Option{extramargin} definiert dafür einen Textbereich, der um
+doppelte Rahmenstärke schmaler ist als der herkömmliche Textbereich.
+\begin{important}
+Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
+\Environment{gausspage} benutzen.
+\end{important}
 
 
 \section{Titelseite}\label{sec:titlepage}
@@ -302,150 +452,6 @@ Die standardmäßig gesetzte kurze Linien am oberen äußeren Ende des
 Kopfbereiches kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
 werden. Näheres ist in der zugehörigen Dokumenation zu
 entnehmen\cite{koma-skript}.
-
-
-\section{Seitenlayout}\label{sec:pagelayout}
-
-Eine Seite im Corporate Design unterteilt sich grundlegend in 2 Bereiche.
-Der Absenderbereich und der Kommunikationsbereich. Der Absenderbereich wird zur
-Darstellung des TU-Siegelbandlogos und des Logos eines speziellen Instituts
-oder einer Abteilung verwendet. Im Textteil dient er teilweise als Bereich für
-Inhalte einer Kopf-/Fußzeile.
-
-Der Absenderbereich kann entweder am Anfang oder am Ende der Seite platziert
-werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
-größten Segment am Absenderbereich.
-
-\begin{Declaration}
-  \Option{a0paper}\\
-  \Option{a1paper}\\
-  \Option{a2paper}\\
-  \Option{a3paper}\\
-  \Option{a4paper}\\
-  \Option{a5paper}\\
-  \Option{a6paper}
-\end{Declaration}
-
-Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
-0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
-
-\begin{Declaration}
-  \Option{landscape}
-\end{Declaration}
-
-Schaltet das Dokument in Querformat-Darstellung.
-
-\begin{minipage}{0.45\textwidth}\sffamily\centering
-  {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
-  Dokument im Querformat
-\end{minipage}
-
-
-\begin{important}
-  Im Querformat hat das Gaußraster eine abweichende
-  Segmentanzahl. Für alle gängigen Formate sind im Querformat \emph{6 Segmente}
-  definiert. Daher lösen Layouts, die für hochformatige Dokumente
-  geschrieben wurden, im Querformat einen Fehler aus.
-\end{important}
-
-
-\begin{Declaration}
-  \KOption{sender}\PName{Position}
-\end{Declaration}
-
-Mit der Option \Option{sender} kann die Position des Absenderbereiches
-festgelegt werden. Mit der Einstellung \OptionValue{sender}{top} wird
-der Absenderbereich am oberen Seitenende dargestellt. Dies ist auch die
-Standardeinstellung. Wählt man dagegen \OptionValue{sender}{bottom}, so
-wird der Absenderbereich am unteren Ende der Seite platziert
-
-\begin{important}
-  Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
-  Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
-  an den Absenderbereich anschließt und alle folgende von absteigender Höhe sind.
-\end{important}
-
-
-\begin{Declaration}
-  \KOption{style}\PName{<print/screen>}
-\end{Declaration}
-
-Die Option \Option{style} bietet die automatische Möglichkeit diverse Elemente
-des Layouts so anzupassen, dass sie die Darstellung auf dem gewünschten
-Zielmedium optimieren.
-
-Mit \OptionValue{style}{print}, was standardmäßig voreingestellt ist,
-wird die Darstellung für den Druck optimiert.
-
-Mit \OptionValue{style}{screen} wird die Darstellung
-für die Ausgabe auf Bildschirmen optimiert.
-
-\begin{center}
-\begin{tabular}{lll}
-                      & \textbf{\ttfamily print} & \textbf{\ttfamily screen}  \\
-  \midrule
-Bindekorrektur        & 15mm  & 0mm     \\
-Zweisitige Dartellung & Ja    & Nein    \\
-Farbdarstellung       & CMYK  & RGB
-\end{tabular}
-\end{center}
-
-Die einzelnen Einstellungen können natürlich auch einzeln angepasst oder
-nachträglich geändert werden. Es entscheidet die Reihenfolge der Optionen.
-Die zuletzt gesetzte Option hat dabei die höchste Priorität.
-
-\begin{Declaration}
-  \KOption{bcor}\PName{Wert}
-\end{Declaration}
-
-Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
-Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
-ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
-
-Sinnvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
-wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
-Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
-keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
-Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
-mit \OptionValue{bcor}{0mm} möglich.
-
-\begin{Declaration}
-  \KOption{twoside}\PName{bool}
-\end{Declaration}
-
-Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
-vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
-umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
-auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
-auf definierte Ränder (Bindungskorrektur, Marginale).
-
-Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
-dabei der einfachen Benutzung von \Option{twoside}.
-\OptionValue{twoside}{false} sorgt dagegen für die Deaktivierung der Option.
-
-\begin{Declaration}
-  \Option{marginleft}\\
-  \Option{marginright}
-\end{Declaration}
-
-Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
-\PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
-bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
-einem Element im Spaltenraster entspricht.
-
-\begin{Declaration}
-  \Option{extramargin}
-\end{Declaration}
-
-Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
-für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
-Darstellung, welche häufig Verwendung findet jedoch deutlich zu breit.
-Die Option \Option{extramargin} definiert dafür einen Textbereich, der um
-doppelte Rahmenstärke schmaler ist als der herkömmliche Textbereich.
-\begin{important}
-Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
-\Environment{gausspage} benutzen.
-\end{important}
 
 
 \section{Schrift}
