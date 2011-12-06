@@ -1,0 +1,10 @@
+all:
+	- Befehl \tubslatex mit entsprechender Darstellung erstellen
+  - hyperref-Farben?
+
+beamer:
+  - toc bewegt sich noch bei wechsel zwischen subsections und keinen
+  - publisher?
+
+
+
