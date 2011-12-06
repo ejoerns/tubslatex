@@ -142,6 +142,25 @@
 \renewcommand{\familydefault}{\sfdefault}
 %    \end{macrocode}
 %
+% Support für babels latintext (used by LaTeX, TeX, etc.)
+%    \begin{macrocode}
+\AtBeginDocument{%
+\ifx\@undefined\latintext%
+\else%
+\renewcommand{\latintext}{%
+\ifx\f@family\rmdefault%
+\fontencoding{\latinencoding}\fontfamily{ptm}\selectfont%
+\else%
+  \ifx\f@family\sfdefault%
+  \fontencoding{\latinencoding}\fontfamily{ua1}\selectfont%
+  \else%
+  \fi%
+\fi%
+\def\encodingdefault{\latinencoding}}%
+\fi%
+}
+%    \end{macrocode}
+%
 % Behandlung für Option 'nexus'
 %    \begin{macrocode}
 \else%
@@ -188,16 +207,26 @@
 \else%
 \renewcommand{\latintext}{%
 \ifx\f@family\rmdefault%
-\fontencoding{\latinencoding}\fontfamily{ptm}\selectfont%
+\fontencoding{LY1}\fontfamily{NexusProSerif}\selectfont%
 \else%
   \ifx\f@family\sfdefault%
-  \fontencoding{\latinencoding}\fontfamily{ua1}\selectfont%
+  \fontencoding{LY1}\fontfamily{NexusProSans}\selectfont%
   \else%
   \fi%
 \fi%
-\def\encodingdefault{\latinencoding}}%
+\def\encodingdefault{LY1}}%
 \fi%
 }
+%    \end{macrocode}
+%
+%    \begin{macro}{\LaTeX}
+% Korrigierte Abstände für Logo unter Nexus % TODO: fix capacity error
+%    \begin{macrocode}
+% \def\LaTeX{L\kern-.32em\raise.3ex\hbox{\scalebox{0.76}{A}}\kern-.15em\TeX}%
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macrocode}
 \fi%
 %    \end{macrocode}
 %
