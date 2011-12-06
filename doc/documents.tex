@@ -586,9 +586,18 @@ Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklan
 \section{Kopf-/Fußzeile}\label{sec:headline}
 % \marginpar[Neu in 0.3-alpha3]{}
 
-Bei Dokumenten mit Absenderbereich am oberen Rand wird die Fußzeile
-standardmäßig komplett leer gelassen und die Kopfzeile
-wird mit Seitennummer außen und Kapitelname auf ungeraden Seiten außen gesetzt.
+Durch das im \acs{CD} festgeschriebene Layout ist eine klassische Behandlung von
+Kopf- und Fußzeile nicht möglich.
+Stattdessen wird jeweils der Absenderbereich zur Darstellung entsprechender
+Inhalte benutzt. Dies entspricht je nach dessen Platzierung
+(Seitenanfang/Seitenende) einer Kopf- oder Fußzeile.
+
+Bei Dokumenten mit Absenderbereich am oberen Seitenrand wird daher die Fußzeile
+komplett leer gelassen und die Kopfzeile wird auf ungeraden Seiten
+(bzw. bei einseitigem Layout auf allen Seiten)
+mit Seitennummer und (Unter-)Kapitelname rechts bzw. außen gesetzt.
+Bei zweiseitiger Darstellung wir auf geraden Seiten die Seitennummer außen und
+der Kapitelname innen gesetzt.
 Zusätzlich wird noch ein schmaler Strich am oberen äußeren Ende des
 Absenderbereichs gesetzt.
 Bei Dokumenten mit Absenderbereich am unteren Rand wird dagegen die Kopfzeile
@@ -600,7 +609,7 @@ Die Darstellung der Kopf- und Fußzeilen lässt sich mit einigen
 speziellen Befehlen individuell anpassen.
 
 \begin{Declaration}
-  \Macro{outersender}\OParameter{links}\Parameter{recht}\\
+  \Macro{outersender}\OParameter{links}\Parameter{rechts}\\
   \Macro{innersender}\OParameter{rechts}\Parameter{links}\\
   \Macro{outerhead}\OParameter{links}\Parameter{rechts}\\
   \Macro{innerhead}\OParameter{rechts}\Parameter{links}\\
@@ -608,7 +617,7 @@ speziellen Befehlen individuell anpassen.
   \Macro{innerfoot}\OParameter{rechts}\Parameter{links}
 \end{Declaration}
 
-Mit dem Befehl \Macro{outersender}\OParameter{links}\Parameter{recht}
+Mit dem Befehl \Macro{outersender}\OParameter{links}\Parameter{rechts}
 wird der Inhalt des äußeren Absenderbereichs festgelegt.
 Die Parameter \PName{rechts} stellt dabei den darzustellenden Inhalt dar.
 Mit Hilfe des optionalen Parameters \PName{links} können unterschiedliche
@@ -618,7 +627,7 @@ Abhängig davon, ob der Absenderbereich am oberen oder unteren Ende des Blattes
 dargestellt ist wird der Inhalt entweder in der Kopf- oder in der Fußzeile
 dargestellt.
 
-Mit den Befehlen \Macro{outerhead} und \Macro{innerhead}, die ansonsten genause
+Mit den Befehlen \Macro{outerhead} und \Macro{innerhead}, die ansonsten genauso
 wie die beiden zuvor erläuterten Befehle funktionieren, kann man dagegen
 Inhalte festlegen, die explizit nur als Kopfzeile gesetzt werden, also
 im Falle eines am unteren Rand platzierten Absenderbereichs nicht dargestellt 
@@ -634,7 +643,7 @@ befindlichen Absenderbereichs nicht dargestellt.
 \end{Declaration}
 
 
-Die standardmäßig gesetzte kurze Linien am oberen äußeren Ende des
+Die standardmäßig gesetzte kurze Linie am oberen äußeren Ende des
 Kopfbereichs kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
 werden. Näheres ist in der zugehörigen Dokumentation zu
 entnehmen\cite{koma-skript}.
@@ -642,15 +651,34 @@ entnehmen\cite{koma-skript}.
 
 \section{Schrift}
 
-%TODO: Wahl Nexus/Arial
+Dokumente im \acs{CD} werden allgemein in der Schriftart \emph{Nexus}
+gesetzt.
 
-Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
-gesetzt. Diese wird standardmäßig bei allen Dokumenten in der Schriftgröße
-11pt geladen. Außerdem definiert sind Schriftgrößen von 10pt und 9pt.
+\begin{Declaration}
+  \Option{nexus}\\
+  \Option{arial}
+\end{Declaration}
+
+Als Alternativschrift ist im \acs{CD} Arial festgelegt. Durch die Klassenoption
+\Option{arial} kann die Dokumentenschriftart auf die serifenlose Schrift
+Arial umgestellt werden. Dies ist bei textlastigen Darstellungen aus
+typographischer Sicht jedoch nicht zu empfehlen.
+Die vollständigkeitshalber definierte Option \Option{nexus} wählt Nexus als 
+Dokumentenschriftart, welche jedoch standardmäßig bereits voreingestellt ist.
+
+
+\paragraph{Schriftgröße}
+% TODO: List Format <-> Default font size !?
+
+Die Standardschriftgröße bei allen DINA4-Dokumenten ist 11pt.
+Für diese sind die verschiedenen Größenabstufungen
+(\Macro{small}, \Macro{large}, \ldots) \acs{CD}-konform definiert.
+Dies gilt ebenfalls für die Basis-Schriftgrößen von 10pt und 9pt.
 Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereichs sollte
 nach Möglichkeit verzichtet werden, da dies zu starken Abweichungen in der
 Größendarstellung und somit im Gesamtlayout führt.
 
+% TODO: Hier weiter machen!
 
 Für wichtige Standard-Elemente gibt es des Weiteren vordefinierte Koma-Fonts.
 Diese können bei Bedarf mit dem Befehl \Macro{setkomafont}\Parameter{Parameter} 
