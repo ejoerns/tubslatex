@@ -433,7 +433,6 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
     \null\centering\sffamily
     \fboxsep0mm\fbox{%
       \includegraphics[width=0.95\textwidth,page=2]{examples/titlestyles.pdf}}
-%     [image]
   \end{minipage}%
   \hfill
   \begin{minipage}[t]{0.6\textwidth}
@@ -454,7 +453,6 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
     \null\centering\sffamily
     \fboxsep0mm\fbox{%
       \includegraphics[width=0.95\textwidth,page=3]{examples/titlestyles.pdf}}
-%     [imagetext]
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.6\textwidth}
@@ -471,7 +469,6 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
       \item titleabstract
     \end{compactitem}
   \end{minipage}
-% \end{center}
 
 \subsection{Vordefinierte Rückseiten-Styles}\label{sec:backstyles}
 
@@ -494,7 +491,7 @@ Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklan
     \paragraph{plain}
     \par
     Einfache Darstellung ohne Hintergrundfarbe aber mit
-    roter Trennlinie zwischen Abender- und Kommunikationsbereich.
+    roter Trennlinie zwischen Absender- und Kommunikationsbereich.
     Lediglich Absenderinformationen werden (wenn vorhanden) dargestellt.
     \par\bigskip
     \Macro{makebackpage}\OParameter{plain}
@@ -535,7 +532,7 @@ Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklan
   \begin{minipage}[t]{0.6\textwidth}
     \paragraph{addressinfo}
     \par
-    Kontrastreiche zweigeteile Darstellung von Adresse und backpageinfo.
+    Kontrastreiche zweigeteilte Darstellung von Adresse und backpageinfo.
     \par\bigskip
     \Macro{makebackpage}\OParameter{addressinfo}
     \par\bigskip
@@ -568,19 +565,19 @@ Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklan
 
 
 \section{Kopf-/Fußzeile}\label{sec:headline}
-\marginpar[Neu in 0.3-alpha3]{}
+% \marginpar[Neu in 0.3-alpha3]{}
 
 Bei Dokumenten mit Absenderbereich am oberen Rand wird die Fußzeile
 standardmäßig komplett leer gelassen und die Kopfzeile
 wird mit Seitennummer außen und Kapitelname auf ungeraden Seiten außen gesetzt.
 Zusätzlich wird noch ein schmaler Strich am oberen äußeren Ende des
-Absenderbereiches gesetzt.
+Absenderbereichs gesetzt.
 Bei Dokumenten mit Absenderbereich am unteren Rand wird dagegen die Kopfzeile
 komplett leer gelassen und die Fußzeile entsprechend der eben aufgeführten
-Vorgaben gesetzt. Der kleine Trensstrich befindet sich dabei am unteren
+Vorgaben gesetzt. Der kleine Trennstrich befindet sich dabei am unteren
 äußeren Rand.
 
-Die Darstellung der Kopf- und Fußzeilen lässt sich jedoch mit einigen
+Die Darstellung der Kopf- und Fußzeilen lässt sich mit einigen
 speziellen Befehlen individuell anpassen.
 
 \begin{Declaration}
@@ -596,16 +593,16 @@ Mit dem Befehl \Macro{outersender}\OParameter{links}\Parameter{recht}
 wird der Inhalt des äußeren Absenderbereichs festgelegt.
 Die Parameter \PName{rechts} stellt dabei den darzustellenden Inhalt dar.
 Mit Hilfe des optionalen Parameters \PName{links} können unterschiedliche
-Inhalte gesetzt werden, abhängig davong, ob (bei zweiseitigem Layout)
+Inhalte gesetzt werden, abhängig davon, ob (bei zweiseitigem Layout)
 der äußere Rand auf der jeweiligen Seite der linke oder rechte Rand ist.
-Abhängig davon, ob der Absenderbereicht am oberen oder unteren Ende des Blattes
+Abhängig davon, ob der Absenderbereich am oberen oder unteren Ende des Blattes
 dargestellt ist wird der Inhalt entweder in der Kopf- oder in der Fußzeile
 dargestellt.
 
 Mit den Befehlen \Macro{outerhead} und \Macro{innerhead}, die ansonsten genause
 wie die beiden zuvor erläuterten Befehle funktionieren, kann man dagegen
 Inhalte festlegen, die explizit nur als Kopfzeile gesetzt werden, also
-im Falle eines am unteren Rand platzierten Absenderbereiches nicht dargestellt 
+im Falle eines am unteren Rand platzierten Absenderbereichs nicht dargestellt 
 werden.
 
 Analog dazu gibt es noch die zwei Befehle \Macro{outerfoot}
@@ -619,8 +616,8 @@ befindlichen Absenderbereichs nicht dargestellt.
 
 
 Die standardmäßig gesetzte kurze Linien am oberen äußeren Ende des
-Kopfbereiches kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
-werden. Näheres ist in der zugehörigen Dokumenation zu
+Kopfbereichs kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
+werden. Näheres ist in der zugehörigen Dokumentation zu
 entnehmen\cite{koma-skript}.
 
 
@@ -631,7 +628,7 @@ entnehmen\cite{koma-skript}.
 Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
 gesetzt. Diese wird standardmäßig bei allen Dokumenten in der Schriftgröße
 11pt geladen. Außerdem definiert sind Schriftgrößen von 10pt und 9pt.
-Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereiches sollte
+Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereichs sollte
 nach Möglichkeit verzichtet werden, da dies zu starken Abweichungen in der
 Größendarstellung und somit im Gesamtlayout führt.
 
@@ -682,7 +679,7 @@ definierten KOMA-Font-Elemente:
 Aufzählungszeichen für die \Environment{itemize}-Umgebung werden in \tubslatex
 als kleine Kästchen dargestellt.
 Diese sind für die ersten zwei Ebenen einer Aufzählung definiert, wobei
-die zweite Ebene kleinere Kästchen in der Darstellung aufweißt:
+die zweite Ebene kleinere Kästchen in der Darstellung aufweist:
 \begin{center}
 \fbox{\parbox{0.5\textwidth}{\begin{itemize}
   \item Item 1
@@ -703,7 +700,7 @@ Diese Kapitel gibt nur einen kurzen Einblick über die wichtigsten Punkte
 zum Thema Farben. Für eine detaillierte Übersicht über die verfügbaren Farben
 und weitere Möglichkeiten siehe Kapitel~\ref{sec:colors}.%TODO...
 
-Die Dokumentenklassen in \tubslatex unterstüzen im Prinzip 2 Farbmodelle:
+Die Dokumentenklassen in \tubslatex unterstützen im Prinzip 2 Farbmodelle:
 Das für Bildschirmdarstellungen verwendeten RGB-Modell und das im
 Druck gebräuchliche CMYK-Modell. Zwischen diesen beiden kann in den Optionen
 der Dokumentenklasse gewählt werden. Darüber hinaus gibt es noch die Unterstützung
@@ -759,12 +756,12 @@ Sie entscheidet dabei \emph{nicht} über das verwendete Farbmodell (RGB/CMYK).
 
 \subsection{Farbschema}
 
-Das Farbschema des CD gliedert sich grob in zwei Kategorieren: Primärfarben
+Das Farbschema des CD gliedert sich grob in zwei Kategorien: Primärfarben
 und Sekundärfarben. Während zu den Primärfarben nur das TU-Rot (\texttt{tuRed})
 und Schwarz, Weiß, sowie weitere Grautöne gehören, bieten die Sekundärfarben
 eine größere Auswahl. Sie sind nochmals in 4 verschiedene Farbklänge
 (orange, grün, blau, violett) unterteilt, die jeweils 3 Farben aufeinander
-abgesetimmte Farben enthalten, die wiederum noch 20-Prozent-Schritten aufgehellt
+abgestimmte Farben enthalten, die wiederum noch 20-Prozent-Schritten aufgehellt
 werden können.
 
 \begin{Declaration}
@@ -784,7 +781,7 @@ So entspricht \texttt{tuSecondaryDark80} in Verbindung mit Option
 jedoch \texttt{tuGreenDark80}.
 
 Viele der standardmäßig definierte Styles und Vorlagen nutzen ebenfalls diese
-Alias-Farben, sodass deren darstellung durch die Optionen ebenfalls beeinflusst 
+Alias-Farben, sodass deren Darstellung durch die Optionen ebenfalls beeinflusst 
 werden kann.
 
 \begin{Declaration}
