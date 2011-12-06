@@ -21,7 +21,7 @@ Einige Funktionalitäten, welche diese Klassen bieten:
 
 \paragraph{Seitenlayout}
 
-Der im \acs{CD} festgelegte \gls{glos:Absenderbereich} findet sich sowohl auf
+Der im \acs{CD} festgelegte \gls{glos:absenderbereich} findet sich sowohl auf
 Titelseiten als auch auf Inhaltsseiten (als Kopf- bzw. Fußzeile) wieder.
 Der Absenderbereich wird normalerweise am oberen Seitenende platziert,
 kann mittels der Klassenoption \OptionValue{sender}{bottom} aber auch am unteren
@@ -74,6 +74,10 @@ Inhalte einer Kopf-/Fußzeile.
 Der Absenderbereich kann entweder am Anfang oder am Ende der Seite platziert
 werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
 größten Segment am Absenderbereich.
+\bigskip
+
+Im Folgenden werden alle \tubslatex-spezifischen Klassenoptionen beschrieben,
+die das Layout beeinflussen.
 
 \begin{Declaration}
   \Option{a0paper}\\
@@ -87,6 +91,8 @@ größten Segment am Absenderbereich.
 
 Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
 0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
+Die Standard-Schriftgröße wird dabei jeweils automatisch mit umgestellt.
+Die verfügbaren \acs{CD}-konformen 
 
 \begin{Declaration}
   \Option{landscape}
@@ -94,10 +100,10 @@ Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
 
 Schaltet das Dokument in Querformat-Darstellung.
 
-\begin{minipage}{0.45\textwidth}\sffamily\centering
-  {\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}}\\
+\begin{center}
+  \fboxsep0mm\fbox{\includegraphics[width=0.45\textwidth]{examples/article_landscape.pdf}}\\
   Dokument im Querformat
-\end{minipage}
+\end{center}
 
 
 \begin{important}
@@ -121,12 +127,12 @@ wird der Absenderbereich am unteren Ende der Seite platziert
 \begin{important}
   Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
   Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
-  an den Absenderbereich anschließt und alle folgende von absteigender Höhe sind.
+  an den Absenderbereich anschließt und alle Folgende von absteigender Höhe sind.
 \end{important}
 
 
 \begin{Declaration}
-  \KOption{style}\PName{<print/screen>}
+  \KOption{style}\PName{<print/screen/printdev>}
 \end{Declaration}
 
 Die Option \Option{style} bietet die automatische Möglichkeit diverse Elemente
@@ -135,17 +141,24 @@ Zielmedium optimieren.
 
 Mit \OptionValue{style}{print}, was standardmäßig voreingestellt ist,
 wird die Darstellung für den Druck optimiert.
-
 Mit \OptionValue{style}{screen} wird die Darstellung
 für die Ausgabe auf Bildschirmen optimiert.
 
+Die Option \OptionValue{style}{printdev} entspricht in der Darstellung
+der Option \PValue{print}, setzt das Dokument aber nur einseitig.
+Damit lassen sich zu druckende Dokumente am Bildschirm leichter entwickeln.
+Bei Wechsel zu \OptionValue{style}{print} ändern sich dann keine Umbrüche etc.
+mehr, da der Darstellungsbereich gleich groß bleibt.
+
+Eine Übersicht über die Einstellungen liefert folgende Tabelle:
+
 \begin{center}
-\begin{tabular}{lll}
-                      & \textbf{\ttfamily print} & \textbf{\ttfamily screen}  \\
+\begin{tabular}{llll}
+  & \textbf{\ttfamily print} & \textbf{\ttfamily screen} & \textbf{\ttfamily printdev} \\
   \midrule
-Bindekorrektur        & 15mm  & 0mm     \\
-Zweisitige Dartellung & Ja    & Nein    \\
-Farbdarstellung       & CMYK  & RGB
+Bindekorrektur          & 15mm  & 0mm   & 15mm\\
+Zweiseitige Darstellung & Ja    & Nein  & Nein\\
+Farbmodell              & CMYK  & RGB   & CMYK
 \end{tabular}
 \end{center}
 
@@ -158,13 +171,14 @@ Die zuletzt gesetzte Option hat dabei die höchste Priorität.
 \end{Declaration}
 
 Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
-Darstellungsbereichs vom inneren Formatrand. Die Bindekorrektur
-ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
+Darstellungsbereichs vom inneren Formatrand.
+Sie ist bei Textdokumenten standardmäßig auf Rahmenbreite voreingestellt.
 
 Sinnvoll ist eine Bindekorrektur selbstverständlich zum einen für Bindungen,
 wo sie der Breite des durch die Bindung verdeckten Bereiches entsprechen sollte.
 Zum anderen ist sie aber auch für den Druckvorgang sinnvoll, da normale Drucker
-keinen randlosen Druck ermöglichen. Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
+keinen randlosen Druck ermöglichen.
+Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
 Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
 mit \OptionValue{bcor}{0mm} möglich.
 
@@ -172,11 +186,12 @@ mit \OptionValue{bcor}{0mm} möglich.
   \KOption{twoside}\PName{bool}
 \end{Declaration}
 
-Für das Setzen von zweiseitige Dokumente ist die Option \Option{twoside}
+Für das Setzen von zweiseitigen Dokumente ist die Option \Option{twoside}
 vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
 umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
-auf der linken und rechten Seite definiert ist. Die hat unter anderem Einfluss
-auf definierte Ränder (Bindungskorrektur, Marginale).
+auf der linken und rechten Seite definiert ist. Dies hat unter anderem Einfluss
+auf definierte Ränder (Bindekorrektur, Marginale) und den Inhalt der
+Kopf-/Fußzeilen.
 
 Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
 dabei der einfachen Benutzung von \Option{twoside}.
@@ -190,7 +205,7 @@ dabei der einfachen Benutzung von \Option{twoside}.
 Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
 \PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
 bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
-einem Element im Spaltenraster entspricht.
+einem Element im sechsgeteilten \gls{glos:spaltenraster} entspricht.
 
 \begin{Declaration}
   \Option{extramargin}
@@ -198,9 +213,10 @@ einem Element im Spaltenraster entspricht.
 
 Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
 für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
-Darstellung, welche häufig Verwendung findet jedoch deutlich zu breit.
+Darstellung, welche häufig Verwendung findet, jedoch deutlich zu breit.
 Die Option \Option{extramargin} definiert dafür einen Textbereich, der um
-doppelte Rahmenstärke schmaler ist als der herkömmliche Textbereich.
+doppelte Rahmenstärke schmaler und um einfache Rahmenstärke flacher
+ist als der herkömmliche Textbereich.
 \begin{important}
 Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
 \Environment{gausspage} benutzen.
@@ -210,15 +226,18 @@ Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
 \section{Titelseite}\label{sec:titlepage}
 
 Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
-werden; entweder mit Hilfe des Befehls \lstinline{\maketitle} oder mit
-der Umgebung \lstinline{titlepage}. Beide Varianten werden von \tubslatex
+werden; entweder mit Hilfe des Befehls \Macro{maketitle} oder mit
+der Umgebung \Environment{titlepage}. Beide Varianten werden von \tubslatex
 in modifizierter Weise unterstützt.
+
+Darüber hinaus können auch Rückseiten automatisch bzw. manuell eingefügt
+werden. Das Kapitel~\ref{subsec:backpages} geht hierauf näher ein.
 
 \begin{Declaration}
   \Macro{maketitle}\OParameter{style}
 \end{Declaration}
 
-Die einfache Verwendung von \lstinline{\maketitle} erzeugt eine Titelseite
+Die einfache Verwendung von \Macro{maketitle} erzeugt eine Titelseite
 mit dem TU-\gls{glos:siegelbandlogo} und einer roten Trennlinie zwischen Absender- und
 Kommunikationsbereich.
 
@@ -232,20 +251,40 @@ oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
 
 \begin{Declaration}
   \Macro{logo}\Parameter{logo}\\
-  \Macro{titlepicture}\Parameter{file}\\
+  \Macro{titlepicture}\OParameter{fitting}\Parameter{file}\\
   \Macro{titleabstract}\Parameter{text}
 \end{Declaration}
 
-\Macro{logo} dient zur Darstellung eines zusätzlichen Absenders als Schrift
-oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
-TU \gls{glos:siegelbandlogo} gegenüberliegenden Seite dargestellt. Eingefügte Grafiken
-werden automatisch auf die Höhe des Kopfbereichs skaliert.
+\begin{minipage}[t]{0.6\textwidth}
+  \Macro{logo} dient zur Darstellung eines zusätzlichen Absender-Logos als Schrift
+  oder Bild. Es wird in allen Stilen im Absenderbereich auf der dem
+  TU-\gls{glos:siegelbandlogo} gegenüberliegenden Seite dargestellt.
+  
+  Mittels \Macro{includegraphics} eingefügte Grafiken werden automatisch
+  passend auf die Höhe des Kopfbereichs (\Macro{headheight}) und
+  halbe Textbereichsbreite (0.5\Macro{textwidth}) skaliert
+  (Seitenverhältnis wird beibehalten).
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \vspace*{-1ex}%
+  \fboxsep0mm\fbox{\includegraphics[width=\textwidth,page=1]{examples/doc_layout.pdf}}
+\end{minipage}
 
 Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
 Verwendung eines entsprechenden Styles auf der Titelseite dargestellt wird.
+Diese wird standardmäßig so skaliert und zurechtgeschnitten, dass sie den ihr
+zur Verfügung stehenden Bereich optimal ausfüllt.
+Mit der Option \Option{fitting} kann die Einpassung beeinflust werden.
+Hier können die in Kapitel~\ref{subsec:gausspage:bgelement} beschriebenen Werte
+verwendet werden.
 
-Der Befehl \Macro{titeabstract} erlaubt die Darstellung eines kurzen zusammenfassenden Textes auf der Titelseite, sofern der gewählte Stil dies unterstützt.
-Weitere Erläuterungen finden sich jeweils auch im Kapitel~\ref{sec:titlestyles}.
+Der Befehl \Macro{titleabstract} erlaubt die Darstellung eines kurzen
+zusammenfassenden Textes auf der Titelseite, sofern der gewählte Style
+dies unterstützt.
+
+Weitere Erläuterungen und eine Übersicht über die vordefinierten Styles
+finden sich in Kapitel~\ref{sec:titlestyles}.
 
 
 \begin{Declaration}
@@ -260,7 +299,7 @@ zusätzliche Darstellungsmöglichkeiten. \Environment{titlepage} entspricht
 im Prinzip der Umgebung \Environment{gausspage}, die allgemein zum Erstellen
 von Seiten im \gls{glos:gaussraster} konzipiert ist. Daher finden sich
 weiterführende Information zu Definitionsmöglichkeiten auch in
-Abschnitt~\ref{sec:gausspage}.
+Abschnitt~\ref{chap:gausspage}.
 
 \begin{Declaration}
   \Macro{showtubslogo}\OParameter{Seite}\\
@@ -268,25 +307,24 @@ Abschnitt~\ref{sec:gausspage}.
   \Macro{showtopline}
 \end{Declaration}
 
-Die Verwendung einer dieser Befehle innerhalb einer Titlepage-Umgebung sorgt
-dafür, dass das entsprechende Element auf der Seite dargestellt wird.
+Die Verwendung einer dieser Befehle innerhalb einer \Environment{titlepage}-Umgebung
+sorgt dafür, dass das entsprechende Element auf der Seite dargestellt wird.
 \Macro{showtubslogo} stellt das Siegelbandlogo dar. Der optionale Parameter
-\PName{Seite} akzeptiert legt dabei fest auf welcher Seite des Blattes
-das Logo gezeigt werden soll. Der Wert \PValue{left} entspricht der Standardeinstellung und stellt das Logo auf der linken Seite,
-% bzw. bei zweiseitigem Layout auf der Innenseite % NOTE: für Titelseite irrelevant!?
-dar.
+\PName{Seite} legt dabei fest auf welcher Seite des Blattes
+das Logo gezeigt werden soll.
+Der Wert \PValue{left} entspricht der Standardeinstellung und platziert das Logo auf der linken Seite.
 Mit dem Wert \PValue{right} wird dagegen eine Darstellung auf der rechten
-% bzw. äußeren
 Seite des Blattes erwirkt. Gleichzeitig hat dies Auswirkungen
 auf die Positionierung des Zweitlogos, das automatisch immer auf der 
 dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
-% TODO: inner, outer?
 
 \begin{Declaration}
   \Macro{showdesignhelper}
 \end{Declaration}
 
-% TODO...
+Dieser Befehl eignet sich für die Gestaltungsphase der Titelseite.
+Er stellt alle verfügbaren Gauß-Segmente, sowie die möglichen Positionen
+für Siegelbandlogo und Zweitlogo dar.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{titlerow}}%
@@ -296,30 +334,35 @@ dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
   \XMacro{end}\PParameter{titlerow}
 \end{Declaration}
 
-Die Umgebung \Environment{titlerow} erlaubt es dabei, die Titelelemente im 
+Die Umgebung \Environment{titlerow} erlaubt es, Titelelemente im 
 Gaußraster anzulegen. Der Parameter \PName{gaussheight} gibt dabei
 die Höhe des jeweiligen Elements in Segmenten an. Die Position der Elemente
 ergibt sich aus der Reihenfolge der Definition.
-Mit dem optionalen Parameter \PName{options} können Einstellung wie die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
+Mit dem optionalen Parameter \PName{options} können Einstellung wie
+die Hintergrundfarbe oder ein Hintergrundbild übergeben werden.
+Die Umgebung basiert auf der \Environment{segment}-Umgebung.
+Detailliertere Informationen sind daher deren Beschreibung
+in Kapitel~\ref{subsec:gausspage:bgelement} zu entnehmen.
 
-\subsection{Rückseiten}
+\subsection{Rückseiten}\label{subsec:backpages}
 
 Neben der Möglichkeit Titelseiten zu definieren, gibt es in \tubslatex auch
-einen ähnlichen Mechanismus zur Erstellung von Rückseiten derselbigen, sodass
-ohne Mühe ein komplettes Titelblatt, dass auf die Möglichkeiten des
+einen ähnlichen Mechanismus zur Erstellung von Rückseiten.
+Sodass ohne Mühe ein komplettes Titelblatt, dass auf die Möglichkeiten des
 Corporate Design abgestimmt ist, erstellt werden kann.
 
 \begin{Declaration}
   \Macro{makebackpage}\OParameter{Style}
 \end{Declaration}
 
-Dieser Befehl stellst das Gegenstück zu \Macro{maketitle} auf und erstellt eine
+Dieser Befehl stellst das Gegenstück zu \Macro{maketitle} dar und erstellt eine
 Rückseite. Genau wie bei \Macro{maketitle} kann über den Optionalen Parameter
-\PName{style} wieder ein vordefinierter Stil geladen werden.
+\PName{style} wieder ein vordefinierter Style geladen werden.
 
-Außerdem stehen ein paare Befehle zur Verfügung, mit denen sich der Inhalt
+Außerdem stehen ein paar Befehle zur Verfügung, mit denen sich der Inhalt
 der Rückseite festlegen lässt. Die konkrete Darstellung ist dabei wieder
-von dem verwendeten Style abhängig. Weiteres findet sich in 
+von dem verwendeten Style abhängig.
+Beschreibungen und Beispiele zu den verfügbaren Styles finden sich in
 Kapitel~\ref{sec:backstyles}.
 
 
@@ -338,79 +381,203 @@ Siehe hierzu jeweils auch Kapitel~\ref{sec:backstyles}.
 
 %TODO: Hinweis Schriftgrößen, KOMA-Fonts
 
-Es sind 3 einfache Styles definiert.% vordefiniert
+Für Titelseiten gibt es 3 vordefinierte Styles, die durch Angabe des
+Style-Namens als Option von \Macro{maketitle} verwendet werden können
+
+\begin{Declaration}
+  \KOption{logo}\PName{Position}
+\end{Declaration}
+
+Bei allen Styles kann die Darstellungsseite des Siegelbandlogos
+(und somit auch des Zweitlogos) durch Angabe der Option
+\OptionValue{logo}{Position} angepasst werden.
+Mögliche Werte sind \PValue{left} bzw. \PValue{inside} für die Darstellung
+auf der linken bzw. inneren Blattseite und \PValue{right} bzw. \PValue{outside}
+für die Darstellung auf der rechten bzw. äußeren Blattseite.
+
+\paragraph{Farbe}
+Da als Darstellungsfarbe der \gls{glos:sekundaerfarbklang} verwendet wird,
+kann die Farbgebung der Titelseite z.B. durch eine entsprechende Klassenoption
+angepasst werden.
 % TODO: styles selbst definieren.
 % Hinweis zu Farbdarstellung!
 % TODO: Default-Style in Config-Datei speichern
 
-\begin{center}
-  \fboxsep0mm
+Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
+
+% \begin{center}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
-    \fbox{%
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
       \includegraphics[width=0.95\textwidth,page=1]{examples/titlestyles.pdf}}
-    [default]
+%     [default]
   \end{minipage}%
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
-    \fbox{%
-      \includegraphics[width=0.95\textwidth,page=2]{examples/titlestyles.pdf}}
-    [image]
-  \end{minipage}%
-  \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
-    \fbox{%
-      \includegraphics[width=0.95\textwidth,page=3]{examples/titlestyles.pdf}}
-    [imagetext]
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{default}
+    Einfacher Stil, der Darstellung der Standardklassen imitiert und Logos,
+    sowie eine Trennline zwischen Absender- und Kommunikationsbereich hinzufügt.
+    \\
+    Er wird benutzt, wenn kein Style explizit gewählt wurde.
+    \par\bigskip
+    \Macro{maketitle}\OParameter{default}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+    \end{compactitem}
   \end{minipage}
-\end{center}
+  
+  \begin{minipage}[t]{0.33\textwidth}
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
+      \includegraphics[width=0.95\textwidth,page=2]{examples/titlestyles.pdf}}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{image}
+    
+    Einfacher dreigeteilter Stil im Gaußraster mit großem Titelbild.
+    \par\bigskip
+    \Macro{maketitle}\OParameter{image}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+      \item titlepicture
+    \end{compactitem}
+  \end{minipage}
+  
+  \begin{minipage}[t]{0.33\textwidth}
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
+      \includegraphics[width=0.95\textwidth,page=3]{examples/titlestyles.pdf}}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{imagetext}
+    
+    Viergeteilter Stil im Gaußraster mit Titelbild und schmalem Abstract-Bereich.
+    \par\bigskip
+    \Macro{maketitle}\OParameter{imagetext}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+      \item titlepicture
+      \item titleabstract
+    \end{compactitem}
+  \end{minipage}
 
 \subsection{Vordefinierte Rückseiten-Styles}\label{sec:backstyles}
 
-Es sind 3 einfache Styles definiert.% vordefiniert
+Für Rückseiten gibt es 4 vordefinierte Styles, die durch Angabe des
+Style-Namens als Option von \Macro{makebackpage} verwendet werden können.
+Auf Rückseiten wird das Siegelbandlogo immer als einfarbige Fläche fortgesetzt.
 
-\begin{center}
-  \fboxsep0mm
+Die Positionierung der Logos ist abhängig von der Wahl in \Macro{maketitle}.
+Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklang.
+% TODO: wie wird Adresse dargestellt
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=1]{examples/backstyles.pdf}}
-    [plain] (default)
   \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{plain}
+    \par
+    Einfache Darstellung ohne Hintergrundfarbe aber mit
+    roter Trennlinie zwischen Absender- und Kommunikationsbereich.
+    Lediglich Absenderinformationen werden (wenn vorhanden) dargestellt.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{plain}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item address
+    \end{compactitem}
+  \end{minipage}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=2]{examples/backstyles.pdf}}
-    [info]
   \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{info}
+    \par
+    Einfarbiger Hintergrund mit Darstellung der backpageinfo.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{info}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item backpageinfo
+    \end{compactitem}
+  \end{minipage}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=3]{examples/backstyles.pdf}}
-    [addressinfo]
   \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{addressinfo}
+    \par
+    Kontrastreiche zweigeteilte Darstellung von Adresse und backpageinfo.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{addressinfo}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item address
+      \item backpageinfo
+    \end{compactitem}
+  \end{minipage}
+
   \begin{minipage}[t]{0.33\textwidth}
-    \centering\sffamily
+    \fboxsep0mm
+    \null\centering\sffamily
     \fbox{%
       \includegraphics[width=0.95\textwidth,page=4]{examples/backstyles.pdf}}
-    [trisec]
   \end{minipage}
-\end{center}
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{trisec}
+    \par
+    Kontrastreiche dreigeteilte Darstellung, die aber nur Adresse anzeigt.
+    \par\bigskip
+    \Macro{makebackpage}\OParameter{trisec}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item address
+    \end{compactitem}
+  \end{minipage}
 
-\section{Kopf-/ Fußzeile}\label{sec:headline}
-\marginpar[Neu in 0.3-alpha3]{}
+
+\section{Kopf-/Fußzeile}\label{sec:headline}
+% \marginpar[Neu in 0.3-alpha3]{}
 
 Bei Dokumenten mit Absenderbereich am oberen Rand wird die Fußzeile
 standardmäßig komplett leer gelassen und die Kopfzeile
 wird mit Seitennummer außen und Kapitelname auf ungeraden Seiten außen gesetzt.
 Zusätzlich wird noch ein schmaler Strich am oberen äußeren Ende des
-Absenderbereiches gesetzt.
+Absenderbereichs gesetzt.
 Bei Dokumenten mit Absenderbereich am unteren Rand wird dagegen die Kopfzeile
 komplett leer gelassen und die Fußzeile entsprechend der eben aufgeführten
-Vorgaben gesetzt. Der kleine Trensstrich befindet sich dabei am unteren
+Vorgaben gesetzt. Der kleine Trennstrich befindet sich dabei am unteren
 äußeren Rand.
 
-Die Darstellung der Kopf- und Fußzeilen lässt sich jedoch mit einigen
+Die Darstellung der Kopf- und Fußzeilen lässt sich mit einigen
 speziellen Befehlen individuell anpassen.
 
 \begin{Declaration}
@@ -426,16 +593,16 @@ Mit dem Befehl \Macro{outersender}\OParameter{links}\Parameter{recht}
 wird der Inhalt des äußeren Absenderbereichs festgelegt.
 Die Parameter \PName{rechts} stellt dabei den darzustellenden Inhalt dar.
 Mit Hilfe des optionalen Parameters \PName{links} können unterschiedliche
-Inhalte gesetzt werden, abhängig davong, ob (bei zweiseitigem Layout)
+Inhalte gesetzt werden, abhängig davon, ob (bei zweiseitigem Layout)
 der äußere Rand auf der jeweiligen Seite der linke oder rechte Rand ist.
-Abhängig davon, ob der Absenderbereicht am oberen oder unteren Ende des Blattes
+Abhängig davon, ob der Absenderbereich am oberen oder unteren Ende des Blattes
 dargestellt ist wird der Inhalt entweder in der Kopf- oder in der Fußzeile
 dargestellt.
 
 Mit den Befehlen \Macro{outerhead} und \Macro{innerhead}, die ansonsten genause
 wie die beiden zuvor erläuterten Befehle funktionieren, kann man dagegen
 Inhalte festlegen, die explizit nur als Kopfzeile gesetzt werden, also
-im Falle eines am unteren Rand platzierten Absenderbereiches nicht dargestellt 
+im Falle eines am unteren Rand platzierten Absenderbereichs nicht dargestellt 
 werden.
 
 Analog dazu gibt es noch die zwei Befehle \Macro{outerfoot}
@@ -449,8 +616,8 @@ befindlichen Absenderbereichs nicht dargestellt.
 
 
 Die standardmäßig gesetzte kurze Linien am oberen äußeren Ende des
-Kopfbereiches kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
-werden. Näheres ist in der zugehörigen Dokumenation zu
+Kopfbereichs kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
+werden. Näheres ist in der zugehörigen Dokumentation zu
 entnehmen\cite{koma-skript}.
 
 
@@ -461,7 +628,7 @@ entnehmen\cite{koma-skript}.
 Dokumente im Corporate Design werden allgemein in der Schrift \emph{Nexus}
 gesetzt. Diese wird standardmäßig bei allen Dokumenten in der Schriftgröße
 11pt geladen. Außerdem definiert sind Schriftgrößen von 10pt und 9pt.
-Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereiches sollte
+Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereichs sollte
 nach Möglichkeit verzichtet werden, da dies zu starken Abweichungen in der
 Größendarstellung und somit im Gesamtlayout führt.
 
@@ -512,7 +679,7 @@ definierten KOMA-Font-Elemente:
 Aufzählungszeichen für die \Environment{itemize}-Umgebung werden in \tubslatex
 als kleine Kästchen dargestellt.
 Diese sind für die ersten zwei Ebenen einer Aufzählung definiert, wobei
-die zweite Ebene kleinere Kästchen in der Darstellung aufweißt:
+die zweite Ebene kleinere Kästchen in der Darstellung aufweist:
 \begin{center}
 \fbox{\parbox{0.5\textwidth}{\begin{itemize}
   \item Item 1
@@ -533,7 +700,7 @@ Diese Kapitel gibt nur einen kurzen Einblick über die wichtigsten Punkte
 zum Thema Farben. Für eine detaillierte Übersicht über die verfügbaren Farben
 und weitere Möglichkeiten siehe Kapitel~\ref{sec:colors}.%TODO...
 
-Die Dokumentenklassen in \tubslatex unterstüzen im Prinzip 2 Farbmodelle:
+Die Dokumentenklassen in \tubslatex unterstützen im Prinzip 2 Farbmodelle:
 Das für Bildschirmdarstellungen verwendeten RGB-Modell und das im
 Druck gebräuchliche CMYK-Modell. Zwischen diesen beiden kann in den Optionen
 der Dokumentenklasse gewählt werden. Darüber hinaus gibt es noch die Unterstützung
@@ -589,12 +756,12 @@ Sie entscheidet dabei \emph{nicht} über das verwendete Farbmodell (RGB/CMYK).
 
 \subsection{Farbschema}
 
-Das Farbschema des CD gliedert sich grob in zwei Kategorieren: Primärfarben
+Das Farbschema des CD gliedert sich grob in zwei Kategorien: Primärfarben
 und Sekundärfarben. Während zu den Primärfarben nur das TU-Rot (\texttt{tuRed})
 und Schwarz, Weiß, sowie weitere Grautöne gehören, bieten die Sekundärfarben
 eine größere Auswahl. Sie sind nochmals in 4 verschiedene Farbklänge
 (orange, grün, blau, violett) unterteilt, die jeweils 3 Farben aufeinander
-abgesetimmte Farben enthalten, die wiederum noch 20-Prozent-Schritten aufgehellt
+abgestimmte Farben enthalten, die wiederum noch 20-Prozent-Schritten aufgehellt
 werden können.
 
 \begin{Declaration}
@@ -614,7 +781,7 @@ So entspricht \texttt{tuSecondaryDark80} in Verbindung mit Option
 jedoch \texttt{tuGreenDark80}.
 
 Viele der standardmäßig definierte Styles und Vorlagen nutzen ebenfalls diese
-Alias-Farben, sodass deren darstellung durch die Optionen ebenfalls beeinflusst 
+Alias-Farben, sodass deren Darstellung durch die Optionen ebenfalls beeinflusst 
 werden kann.
 
 \begin{Declaration}
