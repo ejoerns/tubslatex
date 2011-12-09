@@ -1,10 +1,11 @@
 all:
-	- Befehl \tubslatex mit entsprechender Darstellung erstellen
+  - Befehl \tubslatex mit entsprechender Darstellung erstellen
   - hyperref-Farben?
 
 beamer:
   - toc bewegt sich noch bei wechsel zwischen subsections und keinen
   - publisher?
 
-
-
+doc:
+  - Schriftgröße Logo?
+  - Option für kleinere Überschriften?
