@@ -674,11 +674,28 @@ Die Standardschriftgröße bei allen DINA4-Dokumenten ist 11pt.
 Für diese sind die verschiedenen Größenabstufungen
 (\Macro{small}, \Macro{large}, \ldots) \acs{CD}-konform definiert.
 Dies gilt ebenfalls für die Basis-Schriftgrößen von 10pt und 9pt.
+Für andere Formate ist jeweils ebenfalls eine Basis-Schriftgröße definiert.
+Eine Übersicht darüber bietet Tabelle~\ref{table:fontsizes}
 Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereichs sollte
 nach Möglichkeit verzichtet werden, da dies zu starken Abweichungen in der
 Größendarstellung und somit im Gesamtlayout führt.
 
 % TODO: Hier weiter machen!
+\begin{table}\centering
+\begin{tabular}{ll}
+  Format  & Basis-Schriftgröße  \\
+  \midrule
+  DIN A0  & 40pt \\
+  DIN A1  & 25pt \\
+  DIN A2  & 18pt \\
+  DIN A3  & 13pt \\
+  DIN A4  & 9pt,10pt,11pt \\
+  DIN A5  & 9pt \\
+  DIN lang& 9pt \\
+\end{tabular}
+\caption{Definierte Basis-Schriftgrößen}\label{table:fontsizes}
+\end{table}
+
 
 Für wichtige Standard-Elemente gibt es des Weiteren vordefinierte Koma-Fonts.
 Diese können bei Bedarf mit dem Befehl \Macro{setkomafont}\Parameter{Parameter} 
@@ -686,29 +703,102 @@ geändert werden, wovon aber abgeraten wird, da sie entsprechend des CD korrekt
 definiert sind. Teilweise sind Namen auch doppelt definiert, um sowohl
 CD- als auch \LaTeX-Konventionen zu entsprechen.
 
+\paragraph{Überschriften}
+Alle Überschriftsebenen werden in einer im CD definierten
+Schriftgröße dargestellt.
+Die Darstellung erfolgt dabei in der Farbe \lstinline{tubsheadings},
+welche normalerweise auf \lstinline{tuBlack} voreingestellt ist.
+Sie kann mittels
+\Macro{colorlet}\Parameter{tubsheadings}\Parameter{{\textit Farbe}} individuell
+angepasst werden.
+
+\begin{Declaration}
+  \Option{colorheadings}
+\end{Declaration}
+
+Diese Klassenoption stellt alle Überschriftsebenen
+(\Macro{chapter}, \ldots, \Macro{subsubsection})
+in Sekundärfarbe dar, indem die Farbe \lstinline{tubsheadings} zu
+\lstinline{tuSecondary} gesetzt wird (siehe vorheriger Abschnitt).
+
+\paragraph{Schriftauszeichnung}
+\begin{sloppypar}
+Die Schriften für die verschiedenen Elemente sind als benannte Schrift-Elemente
+definiert und können so einfach und universell verwendet werden.
+Dabei wird auf das aus dem KOMA-Skript\cite{koma-skript} bekannte Schrift-Interface
+aufgebaut. Die verschiedenen Befehle können daher größtenteils wie ihre KOMA-Pendants
+benutzt werden. Eine kurze Benutzungsbeschreibung ist trotzdem sinnvoll.
+\end{sloppypar}
+
+\begin{Declaration}
+  \Macro{usetubsfont}\Parameter{Element}\\
+  \Macro{settubsfont}\Parameter{Element}\Parameter{Befehle}\\
+  \Macro{addtotubsfont}\Parameter{Element}\Parameter{Befehle}
+\end{Declaration}
+
+Mit \Macro{usetubsfont} können die einzelnen Schrift-\PName{Element}e benutzt
+werden, um die aktuelle Schriftart zu ändern.
+Die Schriftart für Introtexte wird beispielsweise mit\\
+\lstinline!\usetubsfont{introtext}! ausgewählt.
+Auch wenn es allgemein nicht zu empfehlen ist, können die einzelnen
+\PName{Element}e auch verändert oder individuell neu definiert werden.
+Dies geschieht mit den Befehlen \Macro{addtotubsfont} bzw.
+\Macro{settubsfont}.
+
+
+
 Die folgende Liste bietet eine Übersicht über alle verfügbaren bzw.
-definierten KOMA-Font-Elemente:
+vordefinierten Schriftart-Elemente. Identisch definierte Elemente sind
+dabei zusammengefasst dargestellt:
 
 \begin{desctable}
-\entry{\PValue{headline}\\
-  \PValue{title}}{%
-  Einfache Überschrift (groß) (Titelseite)
+\toprule
+\entry{%
+  \PValue{headline}, \PValue{title}}{%
+  Einfache Überschrift (groß) wie sie hauptsächlich auf Titelseiten verwendet wird.
+  Die Schriftfarbe ist abhängig von der Klassenoption \Option{colorheadings} bzw.
+  der Farbe \lstinline{tubsheadings}.
 }
-\entry{\PValue{headlinesmall}\\
-  \PValue{title}}{%
-  Einfache Überschrift (klein)
+\entry{%
+  \PValue{headlinesmall}, \PValue{chapter}}{%
+  Einfache Überschrift (klein).
+  Sie wird auch als Schrift der Gliederungsebene \Macro{chapter}
+  verwendet.
+  Die Schriftfarbe ist abhängig von der Klassenoption \Option{colorheadings} bzw.
+  der Farbe \lstinline{tubsheadings}.
 }
-\entry{\PValue{subheadline}\\
-  \PValue{subtitle}}{%
-  Unterüberschrift (Titelseite)
+\entry{%
+  \PValue{subheadline}, \PValue{subtitle}, \PValue{section}}{%
+  Unterüberschrift wie sie unter anderem auf Titelseiten verwendet wird.
+  Sie wird auch als Schrift der Gliederungsebene \Macro{section} verwendet.
+  Die Schriftfarbe ist abhängig von der Klassenoption \Option{colorheadings} bzw.
+  der Farbe \lstinline{tubsheadings}.
 }
-\entry{\PValue{institute}}{%
+\entry{%
+  \PValue{subheadlinesmall}, \PValue{subsection}}{%
+  Unterüberschrift (klein).
+  Sie wird auch als Schrift der Gliederungsebene \Macro{subsection} verwendet.
+  Die Schriftfarbe ist abhängig von der Klassenoption \Option{colorheadings} bzw.
+  der Farbe \lstinline{tubsheadings}.
+}
+\entry{%
+  \PValue{intro}, \PValue{subsubsection}}{%
+  Schrift für Introtext.
+  Sie wird auch als Schrift der Gliederungsebene \Macro{subsubsection}
+  verwendet.
+  Die Schriftfarbe ist abhängig von der Klassenoption \Option{colorheadings} bzw.
+  der Farbe \lstinline{tubsheadings}.
+}
+\entry{%
+  \PValue{institute}}{%
   Institutsname im Logo-Bereich des Absenders.
 }
-\entry{\PValue{author}}{%
+\entry{%
+  \PValue{author}}{%
   Autorenname auf der Titelseite
 }
-\entry{\PValue{date}}{%
+\entry{%
+  \PValue{date}}{%
   Datum auf der Titelseite
 }
 % \entry{\PValue{infotext}}{%
@@ -716,8 +806,10 @@ definierten KOMA-Font-Elemente:
 % \entry{\PValue{infotextitem}}{%
 % }
 \entry{\PValue{copytext}}{%
-  Mengentext
+  Mengentext in Basis-Schriftgröße
 }
+\bottomrule
+\caption{In \tubslatex-Dokumentenklassen definierte Schriften (KOMA-Fonts)}
 \end{desctable}
 
 
@@ -745,7 +837,7 @@ die zweite Ebene kleinere Kästchen in der Darstellung aufweist:
 
 Diese Kapitel gibt nur einen kurzen Einblick über die wichtigsten Punkte
 zum Thema Farben. Für eine detaillierte Übersicht über die verfügbaren Farben
-und weitere Möglichkeiten siehe Kapitel~\ref{sec:colors}.%TODO...
+und weitere Möglichkeiten siehe Kapitel~\ref{chap:tubscolors}.%TODO...
 
 Die Dokumentenklassen in \tubslatex unterstützen im Prinzip 2 Farbmodelle:
 Das für Bildschirmdarstellungen verwendeten RGB-Modell und das im
@@ -807,8 +899,8 @@ Das Farbschema des CD gliedert sich grob in zwei Kategorien: Primärfarben
 und Sekundärfarben. Während zu den Primärfarben nur das TU-Rot (\texttt{tuRed})
 und Schwarz, Weiß, sowie weitere Grautöne gehören, bieten die Sekundärfarben
 eine größere Auswahl. Sie sind nochmals in 4 verschiedene Farbklänge
-(orange, grün, blau, violett) unterteilt, die jeweils 3 Farben aufeinander
-abgestimmte Farben enthalten, die wiederum noch 20-Prozent-Schritten aufgehellt
+(orange, grün, blau, violett) unterteilt, die jeweils 3 aufeinander
+abgestimmte Farben enthalten, die wiederum noch in 20\%-Schritten aufgehellt
 werden können.
 
 \begin{Declaration}
@@ -818,14 +910,16 @@ werden können.
   \Option{violet}
 \end{Declaration}
 
-Da Oftmals nur mit einem Hauptfarbklang gearbeitet wird, gibt es die Möglichkeit
+\begin{sloppypar}
+Da oftmals nur mit einem Hauptfarbklang gearbeitet wird, gibt es die Möglichkeit
 diesen in den Klassenoptionen zu wählen. Die Farben sind dann unter den
 Aliasnamen
-\texttt{tuSecondary\textit{<Light//Medium/Dark>}\textit{<100//80/60/40/20}}
+\texttt{tuSecondary\textit{<Light//Medium/Dark>}\textit{<100/80/60/40/20}}
 verwendbar.
 So entspricht \texttt{tuSecondaryDark80} in Verbindung mit Option
 \Option{blue} \texttt{tuBlueDark80}, in Verbindung mit Option \Option{green}
 jedoch \texttt{tuGreenDark80}.
+\end{sloppypar}
 
 Viele der standardmäßig definierte Styles und Vorlagen nutzen ebenfalls diese
 Alias-Farben, sodass deren Darstellung durch die Optionen ebenfalls beeinflusst 
@@ -835,11 +929,13 @@ werden kann.
   \Macro{colorshow}\OParameter{Breite}\Parameter{Farbe}\Parameter{Helligkeit}
 \end{Declaration}
 
+\begin{sloppypar}
 Hilfreicher Befehl für den Design-Prozess. Er zeigt alle Abstufungen
-einer \PName{Farbe} \PValue{Orange/Blue/Green/Violet} mit gewählter 
-\PName{Helligkeit} \PValue{Light/Medium/Dark}.
+einer \PName{Farbe} (\PValue{Orange/Blue/Green/Violet}) mit gewählter 
+\PName{Helligkeit} (\PValue{Light/Medium/Dark}).
 Optional kann noch die \PName{Breite} der Darstellung gewählt werden,
 ist kein Wert angegeben, so wird \Macro{textwidth} verwendet.
+\end{sloppypar}
 
 \begin{figure}
   tuOrange\ldots\\
@@ -862,17 +958,17 @@ ist kein Wert angegeben, so wird \Macro{textwidth} verwendet.
 \end{figure}
 
 
-\subsection{Hinweis zur Verwendung}
+\paragraph{Hinweis zur Verwendung}
 
 Für Typografie auf farbigen Flächen gilt: Bis zu einer Abstufung von 60\% kann die Schrift in Weiß auf diesem Farbton stehen. Ab einem Tonwert von 40\% sollte die Schrift, im Sinne einer optimalen Lesbarkeit, in Schwarz dargestellt werden. 
 
 Weitere Hinweise zur allgemeinen Verwendung sind bitte der
 CD-Toolbox\cite{toolbox} zu entnehmen.
 
+% TODO... later...
+% \section{Arbeiten mit \tubslatex}
 
-\section{Arbeiten mit \tubslatex}
-
-\subsection{Text schreiben}
+% \subsection{Text schreiben}
 
 
 
