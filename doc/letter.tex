@@ -2,7 +2,6 @@
 
 Briefe können mit der Dokumentenklasse \newdocumentclass{tubslttr2} erstellt
 werden.
-
 Der Aufbau eines Briefes unterscheidet sich zum Teil grundlegend von dem eines
 normalen Dokumentes, weswegen hierfür eine spezielle Klasse vorliegt%
 \footnote{Das etwas spezielle Interface liegt in der zugrunde liegenden 
@@ -18,14 +17,14 @@ und vor allem von Person zu Person. Innerhalb eines Instituts und insbesondere
 bei gleichem individuellen Absender sind diese Informationen jedoch sehr
 konstant. Daher gibt es die Möglichkeit, die Absender-Informationen in
 separaten Dateien als Vorlage vorzudefinieren. Mehr Informationen dazu gibt
-das Kapitel \ref{sec:lco}
+das Kapitel~\ref{sec:lco}
 
 \section{Paketoptionen}
 
 Generell können die meisten Optionen, die auch die zugrunde liegenden Klasse
 \texttt{scrlttr2} akzeptiert, übergeben werden. Es wird jedoch keine korrekte
 Funktionalität gewährleistet und darauf hingewiesen, dass diese Optionen
-ggf. nicht Corporate Design-Konform sind.
+ggf. nicht \acs{CD}-Konform sind.
 
 Als Schriftgröße ist standardmäßig \PValue{10pt} eingestellt.
 
@@ -53,18 +52,21 @@ in Schwarz statt in Rot dargestellt.
 
 \section{Variablen}\label{sec:lettervars}
 
-Eine Übersicht über alle zu verwendenden Variablen geben die
+Diverse Inhalte jedes Briefes können mittels einer Reihe von Variablen
+definiert werden.
+Eine Übersicht über alle verwendbaren Variablen geben die
 Tabellen \ref{table:lettervars} und \ref{table:lettervars2}.
 Es ist dabei meist nicht nötig zu wissen,
-wo die entsprechenden Werte verwendet werden, da das Design im allgemeinen
-festgelegt ist. Zur besseren Veranschaulichung kann jedoch
+wo die entsprechenden Werte in der Ausgabe konkret gesetzt werden,
+da das Design im allgemeinen festgelegt ist.
+Zur besseren Veranschaulichung kann jedoch
 Abbildung~\ref{fig:lettervarpos} zu Rate gezogen werden.
 
 \begin{Declaration}
   \Macro{setkomavar}\Parameter{Name}\Parameter{Inhalt}
 \end{Declaration}
 
-Variablen werden mit dem Befehl \Macro{sektomavar} gesetzt.
+Variableninhalte werden mit dem Befehl \Macro{sektomavar} gesetzt.
 \PName{Name} ist dabei der Name der zu setzenden Variable, also z.B. einer der in
 Tabelle~\ref{table:lettervars} definierten Namen. \PName{Inhalt} setzt den
 Inhalt der Variablen, was mit Ausnahme des Logos meist ein einfacher
@@ -75,50 +77,55 @@ Brief neu gesetzt werden, sondern sollten besser in eine \texttt{.lco}-Datei,
 entsprechend der Beschreibung in Kapitel~\ref{sec:lco}, ausgelagert werden.
 Diese Variablen finden sich in Tabelle~\ref{table:lettervars}.
 
-Ein Paar Variablen müssen (wenn sie überhaupt benutzt werden) in jedem Brief
+Ein paar Variablen müssen (wenn sie überhaupt benutzt werden) in jedem Brief
 neu gesetzt werden. Diese sind in Tabelle~\ref{table:lettervars2} aufgezählt.
 
 \begin{example}
 \begin{lstlisting}
 \setkomavar{fromname}{Max Mustermann}
 \end{lstlisting}
-Mit dieser Anweisung wird der Name des Absender auf \glqq Max Mustermann\grqq\ 
+Mit dieser Anweisung wird der Name des Absenders auf \glqq Max Mustermann\grqq\ 
 gesetzt.
 \end{example}
 
 
 \begin{desctable}
   \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
-    Variablen -- Inhaltsunabhängig}\label{table:lettervars}\\
+    Variablen und deren Bedeutung\\
+    -- Inhaltsunabhängig --}\label{table:lettervars}\\
   \Endfirsthead
   \caption[]{Von der Klasse \newdocumentclass{tubslttr2} unterstützte Variablen
     (\emph{Fortsetzung})}\\
   \Endhead%
   \standardfoot%
-  \ventry{fromlogo}{Anweisungen zum Setzen des Institutslogos (Text oder Grafik)}%
+  \ventry{fromlogo}{Anweisung(en) zum Setzen des Institutslogos (Text oder Grafik)}%
   \ventry{frominstitute}{Name des Instituts}%
+  \ventry{fromdepartment}{ggf. Abteilung oder Untereinheit (eines Instituts, etc.) des Absenders}%
   \ventry{fromstreest}{Straßennahme und Hausnummer der Absenders}%
   \ventry{fromzipcode}{Postleitzahl des Absenders}%
-  \ventry{fromtown}{Absender-Ort}%
-  \ventry{fromfaxdirect}{Fax-Durchwahl}%
-  \ventry{fromurl}{Internetaddresse}%
+  \ventry{fromtown}{Ort des Absenders. Voreingestellt auf \emph{Braunschweig}}%
+  %
+  \ventry{fromtitle}{Titel des Absenders (Dr., Prof. Dr., \ldots)}
+  \ventry{fromname}{Vollständiger Name des Absenders}
+  %
+  \ventry{fromphonedirect}{Telefon-Durchwahl des Absenders}
+  \ventry{fromfaxdirect}{Fax-Durchwahl des Absenders}%
+  \ventry{fromemail}{E-Mail-Adresse des Absenders}
+  \ventry{fromurl}{Website des Absenders}%
+  %
   \ventry{frombank}{Bankverbindung des Absenders}%
   \ventry{fromIBAN}{IBAN des Absender}%
   \ventry{fromBIC}{BIC-Code des Absenders}%
   \ventry{fromUStID}{Umsatzsteuer-ID des Absenders}%
   \ventry{fromSteuernummer}{Steuernummer des Absenders}%
   %
-  \ventry{fromdepartment}{ggf. Abteilung oder andere Untereinheit des Instituts}%
-  \ventry{fromtitle}{Titel des Absenders (Dr., Prof. Dr., \ldots)}
-  \ventry{fromname}{Vollständiger Name des Absenders}
   \ventry{signature}{Signatur unter Unterschrift und Grußformel}
-  \ventry{fromphonedirect}{Durchwahl}
-  \ventry{fromemail}{E-Mail-Adresse}
 \end{desctable}
 
 \begin{desctable}
   \caption{Von der Klasse \newdocumentclass{tubslttr2} unterstützte
-    Variablen -- Inhaltsabhängig}\label{table:lettervars2}\\
+    Variablen und deren Bedeutung\\
+    -- Inhaltsabhängig --}\label{table:lettervars2}\\
   \Endfirsthead
   \ventry{subject}{Inhalt der Betreffzeile}
   \ventry{specialmail}{Spezielle Versandart, wird zwischen Rücksendeadresse
@@ -151,7 +158,7 @@ Kommandos, die im Folgenden vorgestellt werden.
 \end{Declaration}
 
 Innerhalb von \lstinline!\begin{document}! und \lstinline!\end{document}!
-können mit der Umgebung \lstinline{letter} beliebig viele einzelne Briefe
+können mit der Umgebung \Environment{letter} beliebig viele einzelne Briefe
 erstellt werden. Der grundlegende Aufbau eines solchen Briefes ist in
 Abbildung~\ref{fig:scrlttr2.letter} dargestellt. Die wichtigsten Befehle
 sind im Folgenden aufgelistet.
@@ -172,23 +179,23 @@ Dieser Bereich wird dann wiederum mit dem Befehl \Macro{closing}, über den
 man zugleich eine Grußfloskel angibt (z.B. \textit{Mit freundlichen Grüßen}),
 beendet.
 
-Der Befehl \Macro{ps} wird ein Absatz für das Postscriptum eingeleitet.
+Der Befehl \Macro{ps} leitet einen Absatz für das Postscriptum ein.
 Mit \Macro{cc} lässt sich ein \PName{Verteiler} Angeben und
-aufzugührende \PName{Anlagen} werden im Makro \Macro{encl} angegeben.
+aufzuführende \PName{Anlagen} werden im Makro \Macro{encl} angegeben.
 
 Für weitere Details zum Schreiben von Briefen wird auf die Dokumentation
-der zugrundeliegenden Klasse \lstinline{scrlttr2} verwiesen
+der zugrunde liegenden Klasse \lstinline{scrlttr2} verwiesen
 \cite[S.162ff]{koma-skript}.
 
 Ein vollständiges Beispieldokument findet sich in Anhang~\ref{appendix:letter}.
 
 \begin{important}
-Eine Besonderheit Beim Erstellen des Brieftextes ergibt sich aus dem wechselnden
+Eine Besonderheit beim Erstellen des Brieftextes ergibt sich aus dem wechselnden
 Seitenlayout nach der ersten Seite.
 Soll mehr als eine Seite beschrieben werden, so muss nach
 dem Inhalt für die erste Seite ein \lstinline{\clearpage} eingefügt werden.
 Ansonsten kommt es zu fehlerhafter Darstellung der Textbreite des ersten
-Absatzes auf der zweiten Seite
+Absatzes auf der zweiten Seite.
 \end{important}
 
 
@@ -226,12 +233,12 @@ Absatzes auf der zweiten Seite
 \section{lco-Dateien}\label{sec:lco}
 
 Eine Reihe von Einstellungen und definierten Variablen für das Erstellen eines
-Briefes sind meist bei allen Briefen, die man erstellt gleichbleibend.
+Briefes sind meist bei allen Briefen, die man erstellt, gleichbleibend.
 Während Zieladresse, Anrede, Inhalt und Grußformel meist von Brief zu Brief
 abweichen werden Elemente wie Absenderadresse, Telefon-Durchwahl oder
 Bankverbindung immer dieselben bleiben.
 
-Es ist daher sinnvoll, diese Einstellungen in als Vorlage in separaten Dateien
+Es ist daher sinnvoll, diese Einstellungen als Vorlage in (eine) separate Datei(en)
 auszulagern, die man dann bei jedem neu zu erstellenden Brief einfach laden
 kann. Bei \texttt{tubslttr2} bzw. \texttt{scrlttr2} sind dafür die sogenannten
 \emph{Letter-Class-Option}-Dateien, kurz \texttt{.lco}-Dateien vorgesehen.
@@ -244,11 +251,11 @@ Aufgrund der Organisationsstruktur an der Universität gibt es meist 3 Ebenen f�
 die jeweils ein bestimmter Satz an Informationen immer gleichbleibend ist.
 
 \begin{itemize}
-  \item Die \emph{TU Braunschweig} nimmt dabei die oberste Ebene ein. Alle allgemeinen
-    Einstellung, wie die Nennung des Namens oder die Stadt Braunschweig sind
-    bereits standardmäßig vordefiniert.
+  \item Die \emph{TU Braunschweig} nimmt dabei die oberste Ebene ein.
+    Alle allgemeinen Einstellung, wie die Nennung des Namens oder die Stadt Braunschweig sind
+    fasst immer gleich und daher bereits standardmäßig vordefiniert.
 
-  \item Die Zweite Ebene stellen die einzelnen \emph{Institute} bzw.
+  \item Die zweite Ebene stellen die einzelnen \emph{Institute} bzw.
     zentralen Einrichtung dar. Auf dieser Ebene sind meist Elemente wie die
     Anschrift, die Web-Adresse oder die Bankverbindung gleich.
 
@@ -258,7 +265,7 @@ die jeweils ein bestimmter Satz an Informationen immer gleichbleibend ist.
 \end{itemize}
 
 Aufgrund dieser Aufteilung wird empfohlen zwei Arten von \texttt{.lco}-Dateien
-anzulegen. Das jeweilige Institut kann eine institutsspezifische Datei
+anzulegen. Das jeweilige Institut kann eine instituts-spezifische Datei
 bereit stellen, auf die alle Mitarbeiter zugriff haben. Jeder Mitarbeiter kann
 sich dann eine individuelle \texttt{.lco}-Datei erstellen, die seine spezifischen
 Informationen enthalten. Beides sind einmalige Vorgänge und erleichtern die
