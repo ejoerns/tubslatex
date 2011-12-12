@@ -94,6 +94,10 @@
 %    \begin{macrocode}
 %<*option>
 %    \end{macrocode}
+\newcommand\headingscolor{tuBlack}
+\DeclareOptionX{colorheadings}{%
+  \renewcommand\headingscolor{tuSecondary}
+}
 %    \begin{macrocode}
 %</option>
 %    \end{macrocode}
@@ -105,6 +109,7 @@
 % Lade Nexus-Schrift
 %    \begin{macrocode}
 \RequirePackage{nexus}
+\colorlet{tubsheadings}{\headingscolor}
 %    \end{macrocode}
 %
 %\subsection{Definition von KOMA-Fonts}
@@ -113,6 +118,9 @@
 \let\sectfont\relax
 \RequirePackage{scrbase}
 \RequirePackage{scrextend}
+\let\settubsfont\setkomafont
+\let\addtotubsfont\addtokomafont
+\let\usetubsfont\usekomafont
 %</package|leaflet>
 %    \end{macrocode}
 %
@@ -120,15 +128,16 @@
 %    \begin{macro}{title}
 % Schrifteinstellungen für Titel
 %    \begin{macrocode}
-\newkomafont{headline}{\sffamily\Huge\bfseries}
-\setkomafont{title}{\sffamily\Huge\bfseries}
+\newkomafont{headline}{\sffamily\Huge\bfseries\color{tubsheadings}}
+\setkomafont{title}{\usekomafont{headline}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
-%    \begin{macro}{headlinesamll}
+%    \begin{macro}{headlinesmall}
 % Schrifteinstellungen für kleiner Titel
 %    \begin{macrocode}
-\newkomafont{headlinesmall}{\sffamily\huge\bfseries}
+\newkomafont{headlinesmall}{\sffamily\huge\bfseries\color{tubsheadings}}
+\setkomafont{section}{\usekomafont{headlinesmall}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -136,15 +145,15 @@
 %    \begin{macro}{subtitle}
 % Schrifteinstellungen für Sub-Titel
 %    \begin{macrocode}
-\newkomafont{subheadline}{\sffamily\Large}
-\setkomafont{subtitle}{\sffamily\Large}
+\newkomafont{subheadline}{\sffamily\Large\color{tubsheadings}}
+\setkomafont{subtitle}{\usekomafont{subheadline}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
 %    \begin{macro}{subheadlinesmall}
 % Schrifteinstellungen für Sub-Titel (klein)
 %    \begin{macrocode}
-\newkomafont{subheadlinesmall}{\sffamily\large}
+\newkomafont{subheadlinesmall}{\sffamily\large\color{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -156,7 +165,7 @@
 %<*package|leaflet>
 \newkomafont{caption}{}
 \newkomafont{section}{}
-\newkomafont{intro}{\large}
+\newkomafont{intro}{\large\color{tubsheadings}}
 %</package|leaflet>
 \newkomafont{infotext}{\large}
 \newkomafont{infotextitem}{\large}
@@ -174,12 +183,14 @@
 %    \begin{macrocode}
 \RequirePackage[compact]{titlesec}
 \titleformat{\chapter}[block]
-{\normalfont\huge\sffamily\bfseries}{\thechapter}{10pt}{}
+{\usekomafont{chapter}}{\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
 %<*book|report>
-\setkomafont{chapter}{\usekomafont{headlinesmall}}% TODO: has no effect, why?
+\setkomafont{chapter}{\usekomafont{headlinesmall}}
 %</book|report>
 \setkomafont{section}{\usekomafont{subheadline}}
+\setkomafont{subsection}{\usekomafont{subheadlinesmall}}
+\addtokomafont{subsubsection}{\color{tubsheadings}}
 %    \end{macrocode}
 %
 % Aufzählungszeichen werden als Quadrate dargestellt
