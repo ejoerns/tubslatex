@@ -2,29 +2,28 @@
 
 % \section{Anwendung und Folienaufbau}
 
-Grundsätzlich handelt es sich bei der Vorlage lediglich um ein Theme für
-das beamer-Paket. An der Funktionalität von beamer wird so gut wie nichts
-geändert, sodass für allgemeine Fragen zur Präsentationserstellung mit beamer
-auf die entsprechende Dokumentation verwiesen wird. % TODO: LINK/BIB
+Grundsätzlich handelt es sich bei der Vorlage für Präsentationen lediglich um
+ein \emph{theme} für das \emph{beamer}-Paket.
+Für allgemeine Fragen zur Präsentationserstellung wir daher auf die
+entsprechende Dokumentation\cite{beamer} verwiesen.
 
-Beschrieben werden hier alle Besonderheiten des Corporate-Design-Themes, außerdem sollen
-einige damit verbundene allgemeine Hinweise gegeben werden.
+Beschrieben werden hier alle Besonderheiten des Corporate-Design-Themes.
+Außerdem sollen einige damit verbundene allgemeine Hinweise gegeben werden.
 
 Die Vorlage wird mit dem Beamer-Befehl \lstinline!\usetheme{tubs}! geladen.
 
 \section{Titelfolie}
 
-Die Titelfolie ist im Absender/Kommunikations-Bereichslayout mit
-Siegelband-Logo im Sinne der allgemeinen Gestaltungsprinzipien des
-Corporate Design gehalten.
+Die Titelfolie ist im Absender-/Kommunikations-Bereich-Layout mit
+\gls{glos:siegelbandlogo} im Sinne der allgemeinen Gestaltungsprinzipien des
+Corporate Design gehaltens.
 
-Die Kommunikationsfläche ist nach Vorlage des Gaußrasters %TODO: ref
+Die Kommunikationsfläche ist nach Vorlage des \gls{glos:gaussraster}s
 in drei Bereiche aufgeteilt:
-Ein Bildbereich, der ein Foto oder eine Grafik als Blickfang enthalten
-sollte,
-darunter der Titelbereich, der Präsentationstitel, sowie alle relevanten
-Informationen trägt
-und zum Abschluss ein einfarbiger roter Streifen.
+Ein \emph{Bildbereich}, der ein Foto oder eine Grafik als Blickfang enthalten
+sollte, darunter der \emph{Titelbereich}, der Präsentationstitel,
+sowie alle relevanten Informationen trägt
+und zum Abschluss ein einfarbiger (roter) Streifen.
 
 Zusätzlich kann in der rechten oberen Ecke des Absenderbereichs ein
 Instituts-Logo platziert werden.
@@ -45,7 +44,7 @@ Instituts-Logo platziert werden.
 \fbox{\includegraphics[width=0.9\textwidth]{examples/titelseite.pdf}}
 \end{minipage}
 
-\subsection{Verfügbare Befehle}
+\paragraph{Standardbefehle}
 
 Es können die Standardbefehle zur Titelseitenerstellung, wie
 \lstinline{\title},
@@ -80,38 +79,48 @@ und wird am unteren Rande des Bildbereiches ausgerichtet dargestellt.
 
 Im Normalfall wird als Titelgrafik allerdings eine Bild-Datei mittels
 \lstinline{\includegraphics} eingebunden werden.
-Diese kann (im Rahmen der allgemeinen Corporate Design-Richtlinien)
+Diese kann (im Rahmen der allgemeinen Corporate Design-Richtlinien)% TODO:cite?
 frei gewählt werden.
-Das eingebundene Bild wird dabei automatisch randfrei
+Das eingebundene Bild wird dabei automatisch randlos
 auf den Darstellungsbereich skaliert und zugeschnitten, sofern keine
-Standard-Optionen an \lstinline{\includegraphics} übergeben werden.
+Standard-Optionen an \lstinline{\includegraphics} übergeben werden oder
+manuell eine andere Einpassungsart gewählt wurde.
 
 Innerhalb von \lstinline!\titlegraphic{}! stehen folgende
-zusäztliche Optionen zur Einpassung des Bildes zur Verfügung:
+Optionen zur Einpassung des Bildes zur Verfügung:
 \end{sloppypar}
 
 %TODO: float-table + Link?
 \begin{desctable}
+\toprule
 \entry{\PValue{clipped}}{%
   Automatisches Abschneiden. Dies ist die \emph{Standardeinstellung}.
+  Das Bild wird dabei optimal in den Darstellungsbereich eingepasst
+  (automatische Wahl von \PValue{hclip}/\PValue{vclip}).
 }
-\entry{\PValue{clipx}}{%
-  Abschnitt horizontal.
+\entry{\PValue{hclip}}{%
+  Das Bild wird vertikal auf Höhe des Bildbereiches skaliert und (falls nötig)
+  horizontal zugeschnitten.
 }
-\entry{\PValue{clipy}}{%
-  Abschnitt vertikal.
+\entry{\PValue{vclip}}{%
+  Das Bild wird horizontal auf Breite des Bildbereiches skaliert und (falls nötig)
+  vertikal zugeschnitten.
 }
 \entry{\PValue{scaled}}{%
-  Horizontale \emph{und} vertikale Skalierung.
+  Horizontale \emph{und} vertikale Skalierung. Das Seitenverhältnis des
+  Bildes kann dabei verändert und das Bild somit verzerrt werden.
 }
 \entry{\PValue{keepsize}}{%
-  ?
+  Es wird keinerlei Skalierung oder Beschneidung durchgeführt.
 }
+\bottomrule
+\caption{Mögliche Parameter für \Macro{titlegraphic} zur
+automatische Einpassung von Titelgrafik}
 \end{desctable}
 
 \begin{Example}
   \begin{lstlisting}
-\titlegraphic{\includegraphics[scaled]{myimage.jpg}}
+\titlegraphic[scaled]{\includegraphics{myimage.jpg}}
   \end{lstlisting}
   Fügt \textit{myimage.jpg} passend in den Bildbereich ein, indem es das Bild
   horizontal und vertikal skaliert.
@@ -143,7 +152,7 @@ $16:10$ & $1:3{,}83$ \\
 
 \paragraph{Standardgrafik}
 
-Zu Testwecken oder falls kein eigenes Bild zur Hand ist,
+Zu Testzwecken oder falls kein eigenes Bild zur Hand ist,
 kann alternativ ein Standardbild eingefügt werden, das die Front
 des TU-Altgebäudes zeigt und gut mit den Standard-Folienfarben harmoniert.
 
@@ -166,7 +175,7 @@ der \lstinline!\titlegraphic{}! direkt als Argument übergeben werden kann.
 \end{Declaration}
 
 Zur manuellen Einpassung oder für das Erstellen von Grafiken mittels
-\LaTeX-Befehlen ist die Dimension des Titelgrafik-Bereichs in den
+\LaTeX-Befehlen ist die Dimension des Titelgrafik-Bereichs (Bildbereich) in den
 beiden Längen \lstinline{titlegraphicswidth} und \lstinline{titlegraphicsheight}
 hinterlegt.
 
@@ -174,16 +183,20 @@ hinterlegt.
 
 \subsection{Logo}
 
+Neben dem immer vorhandenen Siegelbandlogo der TU kann noch ein sekundäres Logo
+dargestellt werden, welches das jeweilige Institut bzw. die jeweilige Abteilung
+repräsentiert.
+
 \begin{Declaration}
   \Macro{logo}\Parameter{Bild}
 \end{Declaration}
 
 Das mittels \lstinline{\logo} eingebundene Logo wird in der rechten oberen
-Ecke des Absenderbereiches angezeigt und standardmäßig auch auf allen weiteren
-Folien im Fußbereich, sofern nicht die Option \lstinline{nologoinfoot}
+Ecke des Absenderbereichs angezeigt und standardmäßig auch auf allen weiteren
+Folien im Fußbereich, sofern nicht die Option \Option{nologoinfoot}
 verwendet wird.
 
-Das eingebundene Logo wird bei Verwendung von \lstinline!\includegraphics{}! 
+Das eingebundene Logo wird bei Verwendung von \Macro{includegraphics}
 automatisch korrekt vertikal skaliert,
 sofern keine manuelle Skalierung als Option angegeben wird.
 
@@ -204,7 +217,7 @@ sofern keine manuelle Skalierung als Option angegeben wird.
 \end{Declaration}
 
 Für allgemeine Inhalte kann auf die Höhe des Logo-Bereichs über die Länge
-\lstinline{\logoheight} zugegriffen werden.
+\Macro{logoheight} zugegriffen werden.
 
 
 \section{Inhaltsfolien}
@@ -214,7 +227,7 @@ Die Überschrift ist im Kopfbereich grau hinterlegt und im Fußbereich der Folie
 findet sich das TU-Logo, sowie eine rote Trennlinie.
 Rechts unterhalb der Trennlinie wird, wenn definiert, das Logo angezeigt.
 Ist dies nicht gewünscht, kann dies mit der Klassenoption
-\lstinline{nologoinfoot} unterdrückt werden.
+\Option{nologoinfoot} unterdrückt werden.
 
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
@@ -235,7 +248,7 @@ Ist dies nicht gewünscht, kann dies mit der Klassenoption
 \subsubsection{Hervorgehobene Folien}
 
 Einzelne wichtige Folien können extra hervorgehoben werden.
-Dazu dient die Option \lstinline{highlight},
+Dazu dient die Option \Option{highlight},
 welche einen breiteren und rot hinterlegten Titelbereich erzeugt.
 
 \begin{minipage}{0.5\textwidth}
@@ -258,18 +271,16 @@ welche einen breiteren und rot hinterlegten Titelbereich erzeugt.
 
 \subsubsection{Titellose Folien}
 
-Für besondere Fälle bei denen ein sehr breiter Darstellungsbereich benötigt
-wird, kann mit der Option \lstinline{notitle} die Titelleiste auf einzelnen
-Folien deaktiviert werden.
-Anders als bei der \lstinline{plain}-Option wird hier
-der Fußbereich normal dargestellt.
+Wir bei einer Folie kein Titel angegeben, so wird der graue Titelbereich
+nicht dargestellt.
+Ein eventuell vorhandenes Inhaltsverzeichnis wird jedoch weiterhin angezeigt!
 
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
-\begin{frame}[notitle]
+\begin{frame}
   \begin{itemize}
     \item Hier steht der Inhalt
-    \item Hier nicht
+    \item Hier auch
     \item Weitere Informationen
   \end{itemize}
 \end{frame}
