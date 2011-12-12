@@ -271,9 +271,10 @@ welche einen breiteren und rot hinterlegten Titelbereich erzeugt.
 
 \subsubsection{Titellose Folien}
 
-Wir bei einer Folie kein Titel angegeben, so wird der graue Titelbereich
+Wird bei einer Folie kein Titel angegeben, so wird der graue Titelbereich
 nicht dargestellt.
-Ein eventuell vorhandenes Inhaltsverzeichnis wird jedoch weiterhin angezeigt!
+Ein eventuell vorhandenes Inhaltsverzeichnis wird jedoch weiterhin samt
+Hintergrund angezeigt!
 
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
@@ -294,9 +295,18 @@ Ein eventuell vorhandenes Inhaltsverzeichnis wird jedoch weiterhin angezeigt!
 
 \subsubsection{Fußbereich}
 
-In der Fußbereich stehen laut Vorgabe Datum und Seitenzahl.
-Ist das einmal nicht gewollt, kann dies durch Angabe der Optionen
-\lstinline{nopagenum} bzw. \lstinline{nodate} unterdrückt werden.
+In der Fußbereich stehen standardmäßig Datum, Autor(en), (Kurz-)Titel und Seitenzahl.
+Die Ausgabe kann jedoch durch eine Reihe von Beamer-Optionen angepasst werden.
+
+\begin{Declaration}
+  \Option{nodate}\\
+  \Option{noauthor}\\
+  \Option{nopagenum}
+\end{Declaration}
+
+Diese Optionen unterdrücken jeweils die Dsrstellung eienes Elementes in der Fußzeile.
+\Option{nodate} sorgt dafür, dass das Datum nicht dargestellt wird,
+\Option{noauthor} sorgt.. %TODO: hier weiter!
 
 Autor und Titel kommen aus dem optionalen Argument von \lstinline{\author}
 und \lstinline{\title}, sodass auch Kurztitel möglich sind.

@@ -1,6 +1,7 @@
 all:
   - Befehl \tubslatex mit entsprechender Darstellung erstellen
   - hyperref-Farben?
+  - Option 'colorfonts', die Überschriften in Sekundärem Farbklang setzt!?!
 
 beamer:
   - toc bewegt sich noch bei wechsel zwischen subsections und keinen
