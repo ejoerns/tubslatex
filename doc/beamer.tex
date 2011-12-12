@@ -65,6 +65,16 @@ Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
 \lstinline{[plain]} übergeben werden,
 sonst kommt es zu einer falschen Darstellung!
 
+\begin{Declaration}
+  \Option{colorfoot}
+\end{Declaration}
+
+Mit der Beamer-Option \Option{colorfoot} wird die untere einfarbige Linie
+der Titelseite statt in rot in der Farbe des benutzten Sekundärfarbklangs
+dargestellt. Weitere Informationen zur Farbanpassung liefert
+Kapitel~\ref{beamer:sec:color}
+
+
 \subsection{Titelgrafik}
 
 \begin{Declaration}
@@ -183,7 +193,7 @@ hinterlegt.
 
 \subsection{Logo}
 
-Neben dem immer vorhandenen Siegelbandlogo der TU kann noch ein sekundäres Logo
+Neben dem immer vorhandenen Siegelband-Logo der TU kann noch ein sekundäres Logo
 dargestellt werden, welches das jeweilige Institut bzw. die jeweilige Abteilung
 repräsentiert.
 
@@ -219,15 +229,19 @@ sofern keine manuelle Skalierung als Option angegeben wird.
 Für allgemeine Inhalte kann auf die Höhe des Logo-Bereichs über die Länge
 \Macro{logoheight} zugegriffen werden.
 
-
 \section{Inhaltsfolien}
 
 Das Layout der Inhaltsfolien ist relativ schlicht und bietet viel Platz.
-Die Überschrift ist im Kopfbereich grau hinterlegt und im Fußbereich der Folien
-findet sich das TU-Logo, sowie eine rote Trennlinie.
-Rechts unterhalb der Trennlinie wird, wenn definiert, das Logo angezeigt.
-Ist dies nicht gewünscht, kann dies mit der Klassenoption
-\Option{nologoinfoot} unterdrückt werden.
+Es zeichnet sich durch einen Kopfbereich, der Folientitle und evtl. eine
+Inhaltsübersicht enthält, und einen Fußbereich, der neben Siegelband- und
+Institutslogo allgemeine Informationen zur Präsentation liefert.
+Auf den genaueren Aufbau des Kopfbereichs geht Kapitel~\ref{subsec:head},
+auf den des Fußbereichs Kapitel~\ref{subsec:foot} ein.
+% Die Überschrift ist im Kopfbereich grau hinterlegt und im Fußbereich der Folien
+% findet sich das TU-Logo, sowie eine rote Trennlinie.
+% Rechts unterhalb der Trennlinie wird, wenn definiert, das Logo angezeigt.
+% Ist dies nicht gewünscht, kann dies mit der Klassenoption
+% \Option{nologoinfoot} unterdrückt werden.
 
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
@@ -293,10 +307,83 @@ Hintergrund angezeigt!
   examples/inhaltsseite.pdf}}
 \end{minipage}
 
-\subsubsection{Fußbereich}
+\subsection{Kopfbereich}\label{subsec:head}
 
-In der Fußbereich stehen standardmäßig Datum, Autor(en), (Kurz-)Titel und Seitenzahl.
-Die Ausgabe kann jedoch durch eine Reihe von Beamer-Optionen angepasst werden.
+Der Kopfbereich der Folien besteht standardmäßig aus dem grau hinterlegten
+Folientitel. Optional kann darüber auch noch eine Inhaltsübersicht
+(Inhaltsverzeichnis) dargestellt werden,
+die auch zur Navigation im Dokument genutzt werden kann,
+
+\begin{Declaration}
+  \Option{colorhead}
+\end{Declaration}
+
+Der Kopfbereich ist normalerweise in einem hellen Grauton hinterlegt.
+Durch Verwendung der Option \Option{colorhead} wird der Hintergrund
+in der 40\%-Version der aktiven Variante des Sekundärfarbklangs gesetzt.
+Nähere Informationen zur Farbanpassung liefert das
+Kapitel~\ref{beamer:sec:color}.
+
+\subsubsection{Inhaltsübersicht}
+
+Die Inhaltsübersicht (Inhaltsverzeichnis) wird bei Verwendung rechts
+ausgerichtet als oberstes Element jeder Folie dargestellt.
+Es wird auch auf titellosen Folien angezeigt.
+
+
+\begin{Declaration}
+  \Option{tocinheader}\\
+  \Option{tinytocinheader}
+\end{Declaration}
+
+Das Inhaltsverzeichnis im Folienkopf
+wird mir der Option \Option{tocinheader} aktiviert.
+Die \Option{tinytocinheader} bewirkt dies ebenfalls,
+verwendet aber eine kleinere Schriftgröße.
+
+Angezeigt werden standardmäßig untereinander die Gliederungsebenen
+\Macro{section} und \Macro{subsection}. Dies kann mit der Option
+\Option{nosubsectionsintoc} deaktiviert werden.
+
+
+\begin{Declaration}
+  \Option{widetoc}\\
+  \Option{narrowtoc}
+\end{Declaration}
+
+Während die Option \Option{widetoc} das Inhaltsverzeichnis in der Breite
+streckt, wird es durch die Option \Option{narrowtoc} gestaucht.
+Somit kann eine flexiblere Platzausnutzung erreicht werden.
+
+\begin{Declaration}
+  \Option{nosubsectionsintoc}% TODO: nosubsectionsintoc
+\end{Declaration}
+
+Soll im Inhaltsverzeichnis des Kopfbereichs die Gliederungsebene
+\Macro{subsection} nicht mit angezeigt werden, so kann dies durch die Option
+\Option{nosubsectionsintoc} erreicht werden.
+
+Dies Option ist natürlich nur wirksam, wenn die Option
+\lstinline{tocinheader} oder \lstinline{tinytocinheader} verwendet wird.
+
+
+
+\subsection{Fußbereich}\label{subsec:foot}
+
+Der Fußbereich zeichnet sich durch das Siegelband-Logo und eine rote Trennlinie
+aus. Darunter stehen standardmäßig Informationen wie Datum, Autor(en), Präsentationstitel
+und Seitenzahl, sowie auf der rechten Seite ein Instituts-/bzw. Abteilungslogo,
+sofern definiert.
+Die konkrete Darstellung kann jedoch durch eine Reihe von Beamer-Optionen angepasst werden.
+%TODO: Details zu automat. Umbrüchen etc.?
+
+Autor und Titel werden, falls vorhanden, in ihrer Kurzversion dargestellt,
+welche jeweils bei \Macro{author} und \Macro{title} im optionalen Argument
+definiert werden kann.
+
+% Sprache
+Ändert man im Babel-Paket die Sprache, ändert sich auch automatisch
+die Sprache der Fußzeile (z.B. "`page"' statt "`Seite"', anderes Datumsformat, etc.).
 
 \begin{Declaration}
   \Option{nodate}\\
@@ -304,31 +391,33 @@ Die Ausgabe kann jedoch durch eine Reihe von Beamer-Optionen angepasst werden.
   \Option{nopagenum}
 \end{Declaration}
 
-Diese Optionen unterdrücken jeweils die Dsrstellung eienes Elementes in der Fußzeile.
+Diese Beamer-Optionen unterdrücken jeweils die Darstellung eines Elementes in der Fußzeile.
 \Option{nodate} sorgt dafür, dass das Datum nicht dargestellt wird,
-\Option{noauthor} sorgt.. %TODO: hier weiter!
+\Option{noauthor} dafür, dass der Autor nicht angezeigt und
+\Option{napagenum} dafür, dass die Seitenzahl ausgeblendet wird.
 
-Autor und Titel kommen aus dem optionalen Argument von \lstinline{\author}
-und \lstinline{\title}, sodass auch Kurztitel möglich sind.
-Ändert man im Babel-Paket die Sprache, ändert sich auch automatisch
-die Fußzeile (\textit{page} statt Seite, anderes Datumsformat).
+\begin{Declaration}
+  \Option{totalpages}
+\end{Declaration}
+
+Standardmäßig wird die Seitenzahl wie folgt dargestellt: "`Seite x"'.
+Die Option \Option{totalpages} bewirkt, dass zusätzlich die Gesamtseitenzahl
+mit eingeblendet wird: "`Seite x von y"'.
+% TODO: note lange
+
+\begin{Declaration}
+  \Option{nologoinfoot}
+\end{Declaration}
+
+Diese Beamer-Option deaktiviert die Darstellung des Institutslogos im Fußbereich.
 
 
-\subsection{Skalierbarkeit}
 
-Die beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
-andere Seitenformate gebrachte werden kann, wird vom Layout generell
-unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
-Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
-(siehe Tabelle \ref{tab:picratio}).
-
-
-\section{Farbanpassung}
+\section{Farbanpassung}\label{beamer:sec:color}
 
 Um ein individuelleres Foliendesign zu ermöglichen, können einige Elemente
 (unter Verwendung des CD-Farbkontingents)
 farblich angepasst werden.
-
 Dazu zählen die Elemente der Titelseite (mit Ausnahme des Logos),
 sowie die Hintergrundfarbe der Folientitel.
 
@@ -343,8 +432,9 @@ Kapitel~\ref{chap:tubscolors} entnommen werden.
 \subsection{Anpassung über Optionen}
 
 Über die Angabe von Farbargumenten können alle zur farblichen Anpassung
-vorgesehenen Elemente nach einem vordefinierten Farbschema unter freier Auswahl
-eines Farbklangs verändert werden.
+vorgesehenen Elemente nach einem vordefinierten \emph{Farbschema}
+verändert werden.
+Dazu kann ein Farbklang sowie eine Variante gewählt werden.
 
 Die Optionen gliedern sich in 3 Kategorien:
 \begin{itemize}
@@ -353,15 +443,60 @@ Die Optionen gliedern sich in 3 Kategorien:
   \item \emph{Helligkeit} -- Auswahl der Helligkeitsabstufung
     innerhalb des gewählten Farbklangs\\
     Optionen: \texttt{dark}, \texttt{medium}, \texttt{light}
-  \item \emph{Elemente} -- Färbung von Fußbereiche/ Kopfbereich aktivieren\\
+  \item \emph{Elemente} -- Färbung von Fußbereich/Kopfbereich aktivieren\\
     Optionen: \texttt{colorhead}, \texttt{colorfoot}
 \end{itemize}
 
 Weitere Details zu Verwendung der Optionen sind im Kapitel \ref{beamer:optionen}
 zu finden.
 
+\paragraph{Farbklang}
+Es stehen vier verschiedene Farbklänge mit aufeinander abgestimmten Farbtonwerten
+und Varianten zur Verfügung.
+
+\begin{Declaration}
+  \Option{yellow}\\
+  \Option{green}\\
+  \Option{blue}\\
+  \Option{violet}
+\end{Declaration}
+
+Mit den Optionen \Option{yellow}, \Option{green}, \Option{blue}
+oder \Option{violet} erfolgt die Auswahl des
+gelben, grünen, blauen oder violetten Farbklangs als Farbschema.
+
+\paragraph{Variante}
+Für jeden Farbklang gibt es 3 verschiedene Varianten, die sich in ihrem Ton
+und ihrer Helligkeit unterscheiden.
+
+\begin{Declaration}
+  \Option{dark}\\
+  \Option{medium}\\
+  \Option{light}
+\end{Declaration}
+
+Auswahl der hellen, mittleren bzw. dunklen Farbreihe aus gewähltem Farbklang.
+
+\begin{example}
+\lstinline!\usetheme[green,light]{tubs}! Wählt den grünen Farbklang und die
+helle Farbreihe. Damit wird das Farbschema auf hellgrün gesetzt.
+\end{example}
+
+\paragraph{Farbmodell}
+Standardmäßig werden Folien in einem optimierten RGB-Farbmodell ausgegeben.
+Bei Bedarf kann ein anderes Farbmodell zur Darstellung gewäht werden.
+
+
+\begin{Declaration}
+  \Option{rgbprint}\\
+  \Option{cmyk}
+\end{Declaration}
+
+Mit der Option \Option{rgbprint} erfolgt die Ausgabe in RGB-Druckfarben.
+Mit der Option \Option{cmyk} erfolgt die Ausgabe im CMYK-Farbmodell.
+
 \clearpage
-\paragraph{Beispiele}\hfill\\
+\subsubsection{Beispiele}
 
 % \begin{minipage}{0.55\textwidth}
 % \lstinline!\usetheme[green,dark]{tubs}!
@@ -409,25 +544,13 @@ zu finden.
   \textbackslash usetheme[blue,colorhead]\{tubs\}}
 \end{center}
 
-% \begin{minipage}{0.55\textwidth}
-% \lstinline!\usetheme[blue,colorhead]{tubs}!
-% \end{minipage}\hfill
-% \begin{minipage}{0.49\textwidth}
-% \fboxsep0mm
-% \fbox{\includegraphics[width=0.99\textwidth]{%
-%   examples/colorscheme3.pdf}}
-% \lstinline!\usetheme[blue,colorhead]{tubs}!
-% \end{minipage}\hfill
-% \begin{minipage}{0.49\textwidth}
-% \fboxsep0mm
-% \fbox{\includegraphics[width=0.99\textwidth]{%
-%   examples/colorscheme4.pdf}}
-% \lstinline!\usetheme[blue,colorhead]{tubs}!
-% \end{minipage}
-
+\clearpage
 \subsection{Anpassung über Farb-Templates}
 
-Es können folgende Farb-Templates angepasst werden:
+Eine individuellere Farbanpassung ist über die Änderung der entsprechenden
+Templates möglich.
+
+Folgende Farb-Templates können u.a. angepasst werden:
 \begin{description}
   \item[\color{tuRed100}\ttfamily titlebarsecond]
     Der Hintergrund des Grafik-Bereichs auf der Titelseite
@@ -451,111 +574,13 @@ Es können folgende Farb-Templates angepasst werden:
 Die Anpassung weiterer Elemente ist natürlich möglich,
 wird aber nicht empfohlen.
 
-\section{Template-Optionen}\label{beamer:optionen}
-
-% \subsection{Optionen}\label{optionen}
-
-Auflistung aller template-spezifischer Optionen zur Übergabe and die
-Dokumentenklasse bzw. das Beamer-theme.
-
-Die templatespezifischen Argumente sollten bevorzugt
-über \lstinline!\usetheme! übergeben werden.
-
-\subsection{Kopf-/Fußbereich}
-
-\begin{desctable}
-  \entry{\PValue{nopagenum}}{%
-    Blendet die mitlaufende Seitenzählung im Fuß der Folie aus.
-  }
-  \entry{\PValue{nodate}}{%
-    Blendet das Datum im Fuß der Folie aus.
-  }
-  \entry{\PValue{tocinheader}}{%
-    Erzeugt ein mitlaufendes Inhaltsverzeichnis im Folienkopf,
-    das auch zur Navigation im Dokument genutz werden kann
-    (entsprechend der Standard-Beamer-Klassen).
-
-    Angezeigt werden standardmäßig sections und subsubsections.
-    Sollen nur sections angezeigt werden, bitte die Option
-    \lstinline!nosubsubsectionsinheader! verwenden.
-  }
-  \entry{\PValue{tinytocinheader}}{%
-    Wie \lstinline{tocinheader}, jedoch mit kleinerer Schrift.
-
-    Kann eingesetzt werden für den Fall, dass das mit \lstinline{tocinheader}
-    erzeugte Inhaltsverzeichnis zu breit wirkt oder die Foliendimension
-    überragt.
-  }
-  \entry{\PValue{widetoc}}{%
-    Horizontal gestreckte Version des mitlaufenden Inahltsverzeichnisses.
-  }
-  \entry{\PValue{narrowtoc}}{%
-    Horizontal gestauchte Version des mitlaufenden Inahltsverzeichnisses.
-  }
-  \entry{\PValue{nosubsubsectionsinheader}}{%
-    Deaktiviert die Anzeige von subsubsections im Header.
-  
-    Nur wirksam, wenn Option \lstinline{tocinheader} oder
-    \lstinline{tinytocinheader} verwendet wird!
-  }
-  \entry{\PValue{nologoinfoot}}{%
-    Deaktiviert die Anzeige des Logos im Fußbereich.
-  }
-  \entry{\PValue{colorfoot}}{%
-    Bewirkt, dass auch die Farbe der standardmäßig rot gefärbten Fußleiste auf
-    der Titelseite dem gewählten Farbschema angepasst wird.
-  }
-  \entry{\PValue{colorhead}}{%
-    Bewirkt, dass auch die Farbe des standardmäßig hellgrau gefärbten
-    Titelhintergrunds auf jeder Inhaltsfolie
-    dem gewählten Farbschema angepasst wird.
-  }
-\end{desctable}
-
-\subsection{Farbschema}
-
-\subsubsection{Farbklang}
-
-\begin{desctable}
-  \entry{\PValue{yellow}}{%
-    Auswahl des gelben Farbklangs
-  }
-  \entry{\PValue{green}}{%
-    Auswahl des grünen Farbklangs
-  }
-  \entry{\PValue{blue}}{%
-    Auswahl des blauen Farbklangs
-  }
-  \entry{\PValue{blue}}{%
-    Auswahl des violetten Farbklangs
-  }
-\end{desctable}
-
-\subsubsection{Helligkeit}
-
-\begin{desctable}
-  \entry{\PValue{dark}}{%
-    Auswahl der hellen Farbreihe aus gewähltem Farbklang
-  }
-  \entry{\PValue{medium}}{%
-    Auswahl der mittleren Farbreihe aus gewähltem Farbklang
-  }
-  \entry{\PValue{light}}{%
-    Auswahl der dunklen Farbreihe aus gewähltem Farbklang
-  }
-\end{desctable}
-
-\subsection{Farbmodell}
-
-\begin{desctable}
-  \entry{\PValue{rgbprint}}{%
-    Ausgabe in RGB-Druckfraben.\par
-    Standardmäßig wird sonst ein auf Beamer optimiertes Farbmodell genutzt.
-  }
-  \entry{\PValue{cmyk}}{%
-    Ausgabe in CMYK-Farben.
-  }
-\end{desctable}
+% \section{Template-Optionen}\label{beamer:optionen}
+% 
+% Auflistung aller template-spezifischer Optionen zur Übergabe an die
+% Dokumentenklasse bzw. das Beamer-theme.
+% 
+% Die template-spezifischen Argumente sollten bevorzugt
+% über \lstinline!\usetheme! übergeben werden.
 
 
 \section{Hinweise}
@@ -570,6 +595,14 @@ Standard-Template verwendet werden, etc.
 
 Die Kompbination mit anderen Templates ist im allgemeinen jedoch nicht
 CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
+
+\subsection{Skalierbarkeit}
+
+Die Beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
+andere Seitenformate gebrachte werden kann, wird vom Layout generell
+unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
+Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
+(siehe Tabelle \ref{tab:picratio}).
 
 \subsection{columns-Umgebung}
 
@@ -635,7 +668,7 @@ etc.
 
 \section{Minimalbeispiel}% TODO: Anhang?!
 
-Im Folgenden ist der Code eines Minimalbeispieles aufgeführt, zusammen mit den
+Im folgenden ist der Code eines Minimalbeispiels aufgeführt, zusammen mit den
 daraus erzeugten Folien.
 
 \begin{verbatim}
