@@ -208,6 +208,9 @@
 %    \begin{key}{}{cropx}
 % Skalieren auf Höhe, Zuschneiden auf Breite
 %    \begin{macrocode}
+\define@key{tubs@titlegraphic}{hclip}[true]{
+  \renewcommand\tubs@imagefit{cropx}
+}
 \define@key{tubs@titlegraphic}{clipx}[true]{
   \renewcommand\tubs@imagefit{cropx}
 }
@@ -220,6 +223,9 @@
 %    \begin{key}{}{cropy}
 % Skalieren auf Breite, Zuschneiden auf Höhe
 %    \begin{macrocode}
+\define@key{tubs@titlegraphic}{vclip}[true]{
+  \renewcommand\tubs@imagefit{cropy}
+}
 \define@key{tubs@titlegraphic}{clipy}[true]{
   \renewcommand\tubs@imagefit{cropy}
 }
