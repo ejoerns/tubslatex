@@ -2,18 +2,19 @@
 
 Plakate können in \tubslatex mit Hilfe der Dokumentenklasse \newdocumentclass{tubsposter} erstellt werden.
 Dabei werden drei unterschiedliche Plakat-Typen unterstützt,
-zwischen denen mit der Paketoption \KOption{style}\PName{<standard/scifi/bulletin>} gewählt werden kann.
+zwischen denen mit der Klassenoption \KOption{style}\PName{<standard/scifi/bulletin>} gewählt werden kann.
 
-Dies sind zum einen Veranstaltungsplakate, welche sich am normalen Gaußraster
+Dies sind zum einen \emph{Veranstaltungsplakate},
+welche sich am normalen Gaußraster
 orientieren und als Standard-Darstellungstyp voreingestellt sind.
 
-Für die Darstellung wissenschaftlicher Inhalte gibt es ein spezielles Layout,
-das mehr Platt und Flexible für die Unterbringung von Informationen bietet.
+Für die Darstellung \emph{wissenschaftlicher} Inhalte gibt es ein spezielles Layout,
+das mehr Platz und Flexibilität für die Unterbringung von Informationen bietet.
 Es orientiert sich an einem eigenen Modulsystem und nicht am Gaußraster.
 
 Zusätzlich gibt es noch eine Unterstützung für die Erstellung einfacher
-Aushänge. Diese weisen nur einen einfachen großen Textbereich auf, der
-nach oben durch das Siegelbandlogo mit einer Trennlinie begrenzt ist.
+\emph{Aushänge}. Diese weisen nur einen einfachen großen Textbereich auf, der
+nach oben durch das Siegelband-Logo mit einer Trennlinie begrenzt ist.
 
 \begin{figure}[htp]\centering
 \fboxsep0mm
@@ -29,7 +30,7 @@ nach oben durch das Siegelbandlogo mit einer Trennlinie begrenzt ist.
   \fbox{\includegraphics[width=0.9\textwidth]{examples/posterstyle_bulletin.pdf}}
   \subcaption{Aushang (\PValue{bulletin})}
 \end{minipage}
-\caption{Die verschiedenen Plakat-Stile}
+\caption{Die verschiedenen Plakat-Typen}
 \end{figure}
 
 \begin{Declaration}
@@ -40,8 +41,8 @@ Mit \KOption{style}{standard} wird die Darstellung für Veranstaltungsplakate
 gewählt. Diese ist bereits voreingestellt und muss daher nicht explizit gewählt
 werden.
 Mit \KOption{style}{scifi} wir das Layout-System für wissenschaftliche Plakate
-geladen, was sich teilweise grundlegend von dem normalen Layout unterscheidet.
-Der Wert \KOption{style}{bulleting} erlaubt die schnelle Erstellung von
+geladen, welches sich teilweise grundlegend von dem normalen Layout unterscheidet.
+Der Wert \KOption{style}{bulletin} erlaubt die schnelle Erstellung von
 Aushängen und lädt eine relative schlichte voreingestellte Darstellung.
 
 \begin{Declaration}
@@ -50,6 +51,8 @@ Aushängen und lädt eine relative schlichte voreingestellte Darstellung.
 
 Diese Option legt fest, ob der Absenderbereich am oberen oder unteren Blattrand
 platziert werden soll. Für weitere Informationen siehe vorausgehende Kapitel.
+%TODO: ja? wo?
+%TODO: Klasse + Umgebung
 
 
 \begin{Declaration}
@@ -59,30 +62,41 @@ platziert werden soll. Für weitere Informationen siehe vorausgehende Kapitel.
   \Option{a0paper}
 \end{Declaration}
 
-Für alle Poster-Variante stehen vier Papierformate zur Auswahl für die
+Für alle Poster-Varianten stehen vier Papierformate zur Auswahl für die
 Schriftgrößen etc. vordefiniert sind und automatisch geladen werden.
 Dies sind A3, A2, A1 und A0, die mit den entsprechenden Optionen
 \Option{a3paper}, \Option{a2paper}, \Option{a1paper} bzw. \Option{a0paper}
 gewählt werden können.
 \bigskip
 
-\paragraph{Weitere Paket-Optionen:}
+Im folgenden werden die einzelnen Poster-Typen einzeln vorgestellt und beschrieben.
+
+\paragraph{Weitere Klassenoptionen:}
 
 Wie bei allen anderen \tubslatex-Klassen können auch für Poster
-die diversen verfügbaren Optionen zur Farbdarstellung verwendet werden.
+die diversen verfügbaren Optionen zur Farbdarstellung oder Schriftartwahl
+verwendet werden.
 Näheres hierzu findet sich in den vorausgehenden Kapiteln oder detaillierter
-in Kapitel~\ref{chap:tubscolors}.
+in Kapitel~\ref{chap:tubscolors} und \ref{chap:nexus}.
 
+\clearpage
 \section{Veranstaltungsplakate}
 
 Veranstaltungsplakate werden im Gaußraster gesetzt und entsprechen somit
 im Grunde allen Standarddarstellungen des Corporate Design.
 
-\begin{Declaration}
-  \KOption{style}{standard}
-\end{Declaration}
+\begin{lstlisting}
+\documentclass[style=standard]{tubsposter}
+\end{lstlisting}
 
-(Optionale) Paketoption zum Erstellung von Veranstaltungsplakaten.
+(Optionale) Klassenoption zur Erstellung von Veranstaltungsplakaten.
+
+Da das Gauß-Layoutsystem zum einen umfangreich, zum anderen auch für verschiedene Zwecke eingesetzt wird und werden kann, ist ihm ein Extra-Kapitel (\ref{chap:gausspage})
+gewidmet.
+Dies beschreibt die möglichen Befehle und Optionen ausführlich.
+Hier werden sie jeweils nur kurz angerissen.
+
+% TODO: landscape?
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -93,14 +107,19 @@ im Grunde allen Standarddarstellungen des Corporate Design.
 
 Ein neues Plakat wird mit der Umgebung \Environment{tubsposter} erstellt.
 Der optionale Parameter \PName{options} akzeptiert dabei die
-unter \ref{} beschriebenen Optionen.
+unter \ref{sec:gausspage:bglayout} beschriebenen Optionen.
 
+Der Inhalt des Posters sollte aus einem oder mehreren Segmenten bestehen,
+die jeweils aus einem oder mehreren Basis-Segmenten des Gaußrasters so
+bestehen, dass alle Basis-Segmente verwendet werden.
+%TODO: ref, link, ?
 % sender
 % bgcolor?
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{posterrow}}%
-    \OParameter{cols}\\%
+    \OParameter{options}
+    \Parameter{Höhe}\\
   \quad\dots\\
   \XMacro{end}\PParameter{posterrow}%\\
 %   \XMacro{begin}\PParameter{\Environment{posterrow*}}%
@@ -109,16 +128,49 @@ unter \ref{} beschriebenen Optionen.
 %   \XMacro{end}\PParameter{posterrow*}
 \end{Declaration}
 
-Einzelne Segmente im Gaußraster können mit der Umgebung \Environment{posterrow}
-erzeugt werden.
+Einzelne Poster-Segmente im Gaußraster können mit der Umgebung
+\Environment{posterrow} erzeugt werden.
+Dabei gibt der Parameter \PName{Höhe} die Höhe der
+\Environment{posterrow} in Basis-Segmenten des Gaußrasters an.
+Der optionale Parameter \PName{options} akzeptiert die
+unter \ref{subsec:gausspage:bgelement} beschriebenen Optionen mit
+denen zum Beispiel recht einfach eine Hintergrundfarbe oder ein Hintergrundbild
+gesetzt werden kann.
 
+\begin{figure}[!ht]
+\begin{minipage}{0.65\textwidth}
+\begin{lstlisting}
+\documentclass{tubsposter}
+\begin{document}
+\begin{tubsposter}
+\showtubslogo
+\begin{posterrow}[bgcolor=tuGreen]{3}
+\end{posterrow}
+\begin{posterrow}[bgcolor=tuOrange]{4}
+\end{posterrow}
+\begin{posterrow}[bgcolor=tuGreenDark]{1}
+\end{posterrow}
+\end{tubsposter}
+\end{document}
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.35\textwidth}
+  \fboxsep0mm
+  \fbox{\includegraphics[width=0.98\textwidth]{examples/stdposter_minimal.pdf}}
+\end{minipage}
+\caption{Minimal-Beispiel zur Verwendung von \Environment{tubsposter} und
+  \Environment{posterrow}}
+\end{figure}
+
+
+\clearpage
 \section{Wissenschaftliche Plakate}
 
-\begin{Declaration}
-  \KOption{style}{scifi}
-\end{Declaration}
+\begin{lstlisting}
+\documentclass[style=scifi]{tubsposter}
+\end{lstlisting}
 
-Paketoption zum Erstellen von wissenschaftlichen Postern.
+Klassenoption zum Erstellen von wissenschaftlichen Postern.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -143,7 +195,7 @@ angelehnt.
   \noindent\Macro{begin}\PParameter{\Environment{tubsposter}}
     \Parameter{3cm,X,5cm,X}\par
   \noindent Erzeugt 4 Modulzeilen, wobei die 1. 3cm und die 3. 5cm hoch sind.
-  Die Zeilen 2 und 4 nehmen den Restlichen verfügbaren Platz ein
+  Die Zeilen 2 und 4 nehmen den restlichen verfügbaren Platz ein
   und sind gleich hoch.
 \end{Example}
 
@@ -161,7 +213,7 @@ angelehnt.
 
 Die mit \Environment{tubsposter} angelegten Modulzeilen können nun jeweils mit
 der Umgebung \Environment{posterrow} mit Inhalt gefüllt werden.
-Dabei kann entweder direkt der gewünschte Inhalt geschrieben oder das optionale
+Dabei kann entweder direkt der gewünschte Inhalt geschrieben oder der optionale
 Parameter \PName{cols} benutzt werden.
 Dieses erlaubt die Definition zusätzlicher Spalten in der aktuellen Modulzeile.
 Es wird wieder ein kommagetrennte Liste erwartet,
@@ -205,7 +257,13 @@ Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit
 
 \end{Example}
 
+
+\clearpage
 \section{Aushänge}
+
+\begin{lstlisting}
+\documentclass[style=bulletin]{tubsposter}
+\end{lstlisting}
 
 % \section{Seitenlayout}
 
