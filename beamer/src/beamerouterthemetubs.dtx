@@ -160,8 +160,11 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{nosubsectionsinheader}
+%    \begin{key}{}{nosubsectionsintoc}
 %    \begin{macrocode}
+\DeclareOptionBeamer{nosubsectionsintoc}{%
+  \setboolean{nosubsectionsinheader}{true}%
+}
 \DeclareOptionBeamer{nosubsectionsinheader}{%
   \setboolean{nosubsectionsinheader}{true}%
 }
