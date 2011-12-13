@@ -458,18 +458,18 @@
     \hspace*{0.5\beamer@CDborderwidth}% Abstand Text<->Logo
     %
     \raisebox{-\logoheight-4pt}{%
-      \vbox to \logoheight{%
-        \vfill%
-        % Logo einfügen, wenn nicht 'nologoinfoot'-Option gewählt wurde
-        \ifthenelse{\boolean{nologoinfoot}}{}{%
-          \parbox[c]{3.5\logoheight}{%
+      \fboxsep0mm\fbox{\parbox[t]{3.5\logoheight}{%
+        \vbox to\logoheight{%
+          \vfill%
+          % Logo einfügen, wenn nicht 'nologoinfoot'-Option gewählt wurde
+          \ifthenelse{\boolean{nologoinfoot}}{}{%
             \usebeamerfont{footlinelogo}%
             \raggedleft\insertlogo%
           }%
-        }%
-        \vfill%
+          \vfill%
+        }}%
       }%
-    }
+    }%
   \end{minipage}
 }
 %    \end{macrocode}
