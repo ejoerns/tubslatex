@@ -174,6 +174,7 @@ gesetzt werden kann.
 
 \clearpage
 \section{Wissenschaftliche Plakate}
+%TODO: Optionen und Schachtelung angeben
 
 Wissenschaftliche Poster unterscheiden sich im Layout in diversen Punkten
 von allen übrigen Vorlagen. Die Darstellung ist dazu optimiert möglichst
@@ -206,12 +207,12 @@ Wissenschaftliche Poster werden unter Angabe der Optionswahl
 
 Für die Erstellung von wissenschaftlichen Plakaten wird die Umgebung
 \Environment{tubsposter} verwendet, welche
-(anders als bei Veranstaltungsplakaten) jedoch einen
+(anders als bei Veranstaltungsplakaten) einen
 zusätzlichen Parameter \PName{rows} erwartet.
-Mit diesem wird die Anzahl an Modulzeilen bestimmt, in die der Darstellungsbereich geteilt werden soll.Dies geschieht mittels einer kommagetrennten Liste,
-wobei jedes Element entweder eine Länge oder der Buchstabe 'X' sein kann.
+Mit diesem wird die Anzahl an Modulzeilen bestimmt, in die der Darstellungsbereich geteilt werden soll. Dies geschieht mittels einer kommagetrennten Liste,
+wobei jedes Element entweder eine Länge oder der Buchstabe '\texttt{X}' sein kann.
 Eine Länge legt die Höhe der jeweiligen Modulzeile genau fest,
-ein X sorgt dafür, dass alle mit X gekennzeichneten
+ein \texttt{X} sorgt dafür, dass alle mit \texttt{X} gekennzeichneten
 Zeilen den restlichen zur Verfügung stehenden Platz gleichmäßig untereinander
 aufteilen.
 Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
@@ -221,9 +222,11 @@ Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
 }
 
 \begin{minipage}{0.6\textwidth}
-\begin{Example}
+\begin{Example}\par
   \noindent\Macro{begin}\PParameter{\Environment{tubsposter}}
     \Parameter{6cm,X,4cm,X}\par
+  \quad\dots\\
+  \Macro{end}\PParameter{tubsposter}\bigskip\par
   \noindent Erzeugt 4 Modulzeilen, wobei die erste 6cm und die dritte 4cm hoch sind.
   Die Zeilen 2 und 4 nehmen den restlichen verfügbaren Platz ein
   und sind gleich hoch.
@@ -234,7 +237,8 @@ Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
   \examplegraphic[width=\textwidth,page=1]{examples/module_split.pdf}
 \end{minipage}
 
-
+Die angegebenen Modulzeilen müssen dann mit der Umgebung \Environment{posterrow}
+befüllt werden.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{posterrow}}%
@@ -247,8 +251,8 @@ Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
   \XMacro{end}\PParameter{posterrow*}
 \end{Declaration}
 
-Die mit \Environment{tubsposter} angelegten Modulzeilen können nun jeweils mit
-der Umgebung \Environment{posterrow} mit Inhalt gefüllt werden.
+Die Umgebung \Environment{posterrow} wird benutzt,
+um die mit \Environment{tubsposter} angelegten Modulzeilen mit Inhalt zu füllen.
 Dabei kann entweder direkt der gewünschte Inhalt geschrieben oder der optionale
 Parameter \PName{cols} benutzt werden.
 Dieses erlaubt die Definition zusätzlicher Spalten in der aktuellen Modulzeile.
@@ -258,15 +262,17 @@ sie die Breite und nicht die Höhe definieren.
 
 Der normale Abstand des Inhalts vom Rand der Modulbox beträgt halbe
 Rahmenbreite. Für das Einfügen von Bildern etwa kann es sinnvoll sein,
-diesen Rahmen wegzulassen. Dies geschieht mit der Sternchen-Variante
-\Environment{posterrow*}.
+diesen Rahmen wegzulassen.
+Dies geschieht mit der Sternchen-Variante \Environment{posterrow*}.
 
 
 \begin{minipage}{0.6\textwidth}
-\begin{Example}
+\begin{Example}\par
   \noindent\Macro{begin}\PParameter{\Environment{posterrow}}
     \OParameter{X,X}\par
-  \noindent Teilt eine Modulzeile in 2 Spalten auf.
+  \quad\dots\\
+  \Macro{end}\PParameter{posterrow}\bigskip\par
+  \noindent Teilt eine Modulzeile in 2 gleich große Spalten auf.
 \end{Example}
 \end{minipage}
 \hfill
@@ -290,9 +296,11 @@ Die mit \Environment{posterrow} angelegten Spalten können jeweils mit
 werden.
 
 \begin{minipage}{0.6\textwidth}
-\begin{Example}
+\begin{Example}\par
   \noindent\Macro{begin}\PParameter{\Environment{postercol}}
     \OParameter{3cm,X}\par
+  \quad\dots\\
+  \Macro{end}\PParameter{postercol}\bigskip\par
   \noindent Teilt eine Modulspalte in 2 Unterzeilen auf.
 \end{Example}
 \end{minipage}
@@ -312,16 +320,19 @@ werden.
 \end{Declaration}
 
 Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit 
-\Environment{postercol} mit Inhalt gefüllt werden.
-
-\begin{Example}
-
-\end{Example}
+\Environment{postersubrow} mit Inhalt gefüllt werden.
 
 
 \clearpage
 \section{Aushänge}
 
+Einfache Aushänge sollen möglichst einfach und schnell zu erstellen sein.
+Der Poster-Typ für Aushänge besitzt eine einfache voreingestellte Darstellung
+mit Siegelband-Logo und einer roten Trennlinie zwischen dem Inhaltsbereich
+und Absenderbereich.
+
+Aushänge werden unter Angabe der Optionswahl
+\KOption{style}\PName{bulletin} erstellt:
 \begin{lstlisting}
 \documentclass[style=bulletin]{tubsposter}
 \end{lstlisting}
