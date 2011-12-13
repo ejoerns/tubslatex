@@ -3,10 +3,18 @@ all:
   - hyperref-Farben?
   - Option 'colorfonts', die Überschriften in Sekundärem Farbklang setzt!?!
 
+tubsstyle:
+  - Option 'bgcolor' für bglayout zeigt sehr komisches Verhalten
+
 beamer:
   - toc bewegt sich noch bei wechsel zwischen subsections und keinen
   - publisher?
+  - Option, um gesamte Folienbreite nutzen zu können?
 
 doc:
   - Schriftgröße Logo?
   - Option für kleinere Überschriften?
+
+poster:
+  - Standard-Papiergröße nicht korrekt gesetzt? (pass a3paper?)
+  - Leere module werden nicht dargestellt. -> \strut?

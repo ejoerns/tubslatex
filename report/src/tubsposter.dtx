@@ -109,6 +109,8 @@
 %
 %<*option>
 %    \end{macrocode}
+%
+%    \begin{key}{}{style}
 %    \begin{macrocode}
 \newcommand{\tubs@poster@style}{poster}
 \DeclareOptionX{style}{%
@@ -126,16 +128,19 @@
     \renewcommand{\tubs@poster@style}{poster}
   }}
 }
+%    \end{macrocode}
+%    \end{key}
 %
 % TODO: place better...
-\PassOptionsToPackage{fullline}{tubsstyle}
 %    \begin{macrocode}
+\PassOptionsToPackage{fullline}{tubsstyle}
 %</option>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
 %<*body>
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
@@ -146,13 +151,19 @@
 %
 % \subsection{Poster-Befehle}
 %
-%
+%    \begin{environment}{tubsposter}
+%    \begin{environment}{posterrow}
+%    \begin{environment}{postercol}
+%    \begin{environment}{postersubrow}
+% Umgebungen zur Postererstellung. Genaue Funktion wird durch Option '|style|'
+% bestimmt.
 %    \begin{macrocode}
 \newenvironment{tubsposter}{\relax}{\relax}
 \newenvironment{posterrow}{\relax}{\relax}
 \newenvironment{postercol}{\relax}{\relax}
 \newenvironment{postersubrow}{\relax}{\relax}
 %    \end{macrocode}
+%    \end{environment}\end{environment}\end{environment}\end{environment}
 %
 %    \begin{environment}{@tubsposter}
 % Erzeugt eine neue Poster-Seite.
