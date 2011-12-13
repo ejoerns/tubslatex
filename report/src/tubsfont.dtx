@@ -121,6 +121,11 @@
 \let\settubsfont\setkomafont
 \let\addtotubsfont\addtokomafont
 \let\usetubsfont\usekomafont
+\newkomafont{caption}{}
+\newkomafont{section}{}
+\newkomafont{subsection}{}
+\newkomafont{subsubsection}{}
+\newkomafont{intro}{\large\color{tubsheadings}}
 %</package|leaflet>
 %    \end{macrocode}
 %
@@ -162,11 +167,6 @@
 \newkomafont{date}{\large}
 %<leaflet>\newkomafont{institute}{\sffamily\large}
 %<!leaflet>\newkomafont{institute}{\sffamily\fontsize{10pt}{12}\selectfont}
-%<*package|leaflet>
-\newkomafont{caption}{}
-\newkomafont{section}{}
-\newkomafont{intro}{\large\color{tubsheadings}}
-%</package|leaflet>
 \newkomafont{infotext}{\large}
 \newkomafont{infotextitem}{\large}
 \newkomafont{copytext}{\normalsize}
