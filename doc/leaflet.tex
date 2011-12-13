@@ -1,9 +1,42 @@
 \chapter{Broschüren}
 
-Mit der Klass \newdocumentclass{tubsleaflet} können dreigeteilte Broschüren
+Mit der Klasse \newdocumentclass{tubsleaflet} können dreigeteilte Broschüren
 im Corporate Design erstellt werden.
+Die Vorlage basiert auf der Klasse \texttt{leaflet}.
+Alle allgemeinen Informationen und Möglichkeiten sind daher in der
+entsprechenden Dokumentation\cite{cls:leaflet} nachzuschlagen.
+
+Die Ausgabe erfolgt zweiseitig auf DINA4-Größe.
+Andere Formate können gewählt werden, sind aber nicht voll unterstützt.
+
+\begin{important}
+  Als Papierformat sollte nicht \Option{a4paper} gewählt werden,
+  da so falsche Größen geladen werden. Die korrekte Option lautet
+  \Option{langpaper}, ist aber optional, da sie automatisch vorgeladen wird.
+\end{important}
+
 
 \begin{figure}[!ht]
-  \fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/leaflet.pdf}}
+  \examplegraphic[width=\textwidth]{examples/leaflet.pdf}
   \caption{Einfacher Flyer im CD (erste Seite)}
 \end{figure}
+
+\paragraph{Darstellungsstil}\hfill
+
+\begin{Declaration}
+  \KOption{style}\PName{<simple/none>}
+\end{Declaration}
+
+Der Darstellungsstil \PName{simple} setzt standardmäßig das Frontseiten- und das
+Rückseiten-Logo.
+Im Darstellungsstil \PName{none} werden standardmäßig keine Elemente gesetzt.
+
+Hintergrundelemente können manuell mittels \Macro{AddToBackground} gesetzt
+werden.
+
+\paragraph{Seiten}\hfill
+
+Die einzelnen Seiten können mit der Umgebung \Environment{gausspage} erstellt
+werden. Diese erlaubt das Erstellen von Seiten im Gaußraster.
+Da sie ein universelles Element von \tubslatex ist, ist ihr ein spezielles
+\href{chap:gausspage}{Kapitel} gewidmet.

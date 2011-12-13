@@ -288,7 +288,11 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 
+% Beamer-Macros
 \input{beamerug-macros}
 
-\usepackage[numbers]{natbib}
+% Bindet Grafik mit Rahmen ein
+\newcommand{\examplegraphic}[2][]{%
+  \fboxsep0mm\fbox{\includegraphics[#1]{#2}}
+}
 
