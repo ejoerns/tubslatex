@@ -1,4 +1,4 @@
-Revision: 813
+Revision: 866
 
 # Änderungen zu letzter Test-Version sind ab jetzt immer mit '+' markiert
 
@@ -11,7 +11,9 @@ Revision: 813
     Es stellt Basis-Funktionen von tubslatex zur Verfügung
     ohne Dabei Einfluss auf das Seitenlayout zu nehmen.
   - Topline etwas verbreitert
-  + Einheitliche Versionsnummerierung für alle Pakete und Klassen
+  - Einheitliche Versionsnummerierung für alle Pakete und Klassen
+  + Unterstützung für farbige Schriftdarstellung bei Überschriften
+    (u.a. Option 'colorheadings')
 
 - Dokumentenklassen
   - Zeilenspacing für 10pt und 11pt \normalsize angepasst (CD-konform)
@@ -34,6 +36,7 @@ Revision: 813
     für Aushänge hinzugefuegt
   - Optionen für Hintergrundfarbe und Hintergrundbild für Module implementiert
     (automatisch zuschneidend/skalierend)
+  - Trennliniendarstellung korrigiert (Breite)
 
 - beamer
   - Schriftgrößen 'micro' und 'nano' in 'microsize' und 'nanosize' umbenannt,
@@ -48,14 +51,20 @@ Revision: 813
     Logo ragt nicht mehr in Text,
     Autoren und Titel werden je nach Bedarf umbebrochen
   - Logo mit korrekter Farbe eingebunden (beameropt. RGB-Schema)
-  + Neu-Implementierung des Fußbereiches mit besserer Unterstützung
+  - Neu-Implementierung des Fußbereiches mit besserer Unterstützung
     für lange Autoren/Titel und Logo-Skalierung,
     damit auch weiterer Probleme behoben
+  + Paket etex wird standardmäßig geladen
+  + Trennung von Templates 'headline' und 'frametitle'
+  + Entfernung überflüssiger Längen
+  + Optionen clipx, clipy -> hclip, vclip
+  + Option 'nosubsectionsinheader' umbenannt in 'nosubsectionsintoc'
 
 - nexus
   - Striktere Behandlung der Schriftwahl Nexus/Arial, nur noch benötigte
     Pakete werden geladen
   - Optionswahl 'arial' stellt automatisch auf sffamily um
+  - \latintext-Darstellung angepasst/korrigiert
 
 - letter
   - Behandlung von leeren Felder korrigiert,
@@ -76,17 +85,19 @@ Revision: 813
     - Installer Komplett überarbeitet
     - Optionswahl lokale/systemweite Installation
     - Bessere Fallbehandlungen
-    - 64-Bit-Test und -Behandlung für registry
+    + 64-Bit-Test und -Behandlung für registry (DBG-Fenster deaktiviert)
 
 - Dokumenation
-  - Kapitel 'Plakete' erweitert
-  - Beschreibung von Kopfzeilen angepasst
-  - Kapitel 'Präsentationen' angepasst
   - Kapitel 'Gauß-Layout' erweitert und angepasst
   - chapter-Fonteinstellungen auf book und report begrenzt
   - Kapitel 'Installation' erweitert und neu sortiert
   - einige Hinweise zu Fehlerbehebungen
   - diverse Änderungen
+  + Kapitel 'Dokumente', 'Präsentationen, 'Plakate', 'Broschüren' deutlich
+    überarbeitet.
+
+- Beispiele
+  - Poster-Beispiel für 'bulletin'-Style
 
 --------------------------------------------------------------------------------
 
