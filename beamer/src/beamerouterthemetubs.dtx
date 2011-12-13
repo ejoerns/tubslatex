@@ -235,31 +235,29 @@
   \defbeamertemplate*{headline}{tubs}{%
     \usebeamerfont{frametitle}%
     \def\@headtemplate{titlelike}
-    \ifthenelse{\boolean{highlighttitle}}{% TODO...
+    % toc-Text-Farben für highlighttitle ändern
+    \ifthenelse{\boolean{highlighttitle}}{%
       \setbeamercolor*{palette quaternary}{parent=highlight}
       \setbeamercolor{palette tertiary}{fg=tuWhite}
-    }{%
-      %\def\@headtemplate{titlelike}
-    }
-%       \setbeamercolor*{palette quaternary}{use={highlight}, bg=tuBlack, fg=highlight.fg}
-%       \setbeamercolor{titlelike}{parent=palette quaternary}
-% \setbeamercolor{titlelike}{use={palette primary}}
+    }{}
     \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{titlelike}%
-      \raisebox{\depth+.05\beamer@headheight}{%
+%       \fboxsep0mm\fbox{%
+%       \raisebox{\depth+.05\beamer@headheight}{%
         \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
         \ifthenelse{\boolean{tocinheader}}{%
           {\usebeamerfont{headertoc}%
-          \vspace*{0.8ex}%
+%           \vspace*{0.8ex}%
           \insertsectionnavigationhorizontal{\textwidth}%
-            {\hskip20pt plus1filll}{\quad}%
+                  {\hskip20pt plus1filll}{\quad}%
           \ifthenelse{\boolean{nosubsectionsinheader}}{}{%
             \vspace*{-0.5mm}%
             \insertsubsectionnavigationhorizontal{\textwidth}%
-              {\hskip20pt plus1filll}{\quad}%
+                    {\hskip20pt plus1filll}{\quad}%
           }}%
         }{}%
         \vfill%
-      }}%
+      }%}%
+%       }%
     \end{beamercolorbox}%
   }%
 }{%
