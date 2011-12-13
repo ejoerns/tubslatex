@@ -85,16 +85,16 @@ in Kapitel~\ref{chap:tubscolors} und \ref{chap:nexus}.
 Veranstaltungsplakate werden im Gaußraster gesetzt und entsprechen somit
 im Grunde allen Standarddarstellungen des Corporate Design.
 
+Veranstaltungsposter werden entweder ohne Option oder
+unter Angabe der Optionswahl \KOption{style}\PName{standard} erstellt:
 \begin{lstlisting}
 \documentclass[style=standard]{tubsposter}
 \end{lstlisting}
 
-(Optionale) Klassenoption zur Erstellung von Veranstaltungsplakaten.
-
 Da das Gauß-Layoutsystem zum einen umfangreich, zum anderen auch für verschiedene Zwecke eingesetzt wird und werden kann, ist ihm ein Extra-Kapitel (\ref{chap:gausspage})
 gewidmet.
 Dies beschreibt die möglichen Befehle und Optionen ausführlich.
-Hier werden sie jeweils nur kurz angerissen.
+Hier werden sie daher jeweils nur kurz angerissen.
 
 % TODO: landscape?
 
@@ -109,9 +109,17 @@ Ein neues Plakat wird mit der Umgebung \Environment{tubsposter} erstellt.
 Der optionale Parameter \PName{options} akzeptiert dabei die
 unter \ref{sec:gausspage:bglayout} beschriebenen Optionen.
 
-Der Inhalt des Posters sollte aus einem oder mehreren Segmenten bestehen,
-die jeweils aus einem oder mehreren Basis-Segmenten des Gaußrasters so
-bestehen, dass alle Basis-Segmente verwendet werden.
+Der Inhalt des Posters sollte aus einem oder mehreren Segmenten bestehen.
+Diese können jeweils aus einem oder mehreren zusammengefassten Basis-Segmenten
+des Gaußrasters bestehen. Dabei sollten alle Basis-Segmente verwendet werden.
+
+\begin{sloppypar}
+Das Siegelband-Logo kann durch Verwendung des Befehls \Macro{showtubslogo}
+innerhalb der \Environment{tubsposter}-Umgebung angezeigt werden.
+Das Institutslogo wird analog mit \Macro{showlogo}\Parameter{Inhalt}
+dargestellt. Hierzu gibt das Kapitel~\ref{subsec:gausspage:bgelement}
+weitere Details.
+\end{sloppypar}
 %TODO: ref, link, ?
 % sender
 % bgcolor?
@@ -130,8 +138,8 @@ bestehen, dass alle Basis-Segmente verwendet werden.
 
 Einzelne Poster-Segmente im Gaußraster können mit der Umgebung
 \Environment{posterrow} erzeugt werden.
-Dabei gibt der Parameter \PName{Höhe} die Höhe der
-\Environment{posterrow} in Basis-Segmenten des Gaußrasters an.
+Dabei gibt der Parameter \PName{Höhe} die Höhe des
+Poster-Segments in Basis-Segmenten des Gaußrasters an.
 Der optionale Parameter \PName{options} akzeptiert die
 unter \ref{subsec:gausspage:bgelement} beschriebenen Optionen mit
 denen zum Beispiel recht einfach eine Hintergrundfarbe oder ein Hintergrundbild
@@ -145,6 +153,7 @@ gesetzt werden kann.
 \begin{tubsposter}
 \showtubslogo
 \begin{posterrow}[bgcolor=tuGreen]{3}
+\usekomafont{headline}Der Titel
 \end{posterrow}
 \begin{posterrow}[bgcolor=tuOrange]{4}
 \end{posterrow}
@@ -166,11 +175,26 @@ gesetzt werden kann.
 \clearpage
 \section{Wissenschaftliche Plakate}
 
+Wissenschaftliche Poster unterscheiden sich im Layout in diversen Punkten
+von allen übrigen Vorlagen. Die Darstellung ist dazu optimiert möglichst
+viel Inhalt möglichst flexibel platzieren zu können.
+
+Das Grundlayout weist einen schmaleren Absenderbereich mit einem auf 90\%
+skalierten Siegelband-Logo auf.
+Der Inhaltsbereich ist rahmenlos und komplett einfarbig hinterlegt.
+
+Der Inhalt kann in sogenannten \emph{Modulen} platziert werden.
+Dies sind Kästchen, die durch einen schmalen Abstand optisch
+voneinander getrennt sind und so die Informationseinheiten klar voneinander
+trennen.
+Die Platzierung der Module erfolgt in einem lockeren Rastersystem,
+dass die einzelnen Bereiche in Zeilen, Spalten und Unterzeilen teilen kann.
+
+Wissenschaftliche Poster werden unter Angabe der Optionswahl
+\KOption{style}\PName{scifi} erstellt:
 \begin{lstlisting}
 \documentclass[style=scifi]{tubsposter}
 \end{lstlisting}
-
-Klassenoption zum Erstellen von wissenschaftlichen Postern.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -180,24 +204,36 @@ Klassenoption zum Erstellen von wissenschaftlichen Postern.
   \XMacro{end}\PParameter{tubsposter}
 \end{Declaration}
 
-Für die Erstellung von wissenschaftlichen Plakaten wird ebenfalls die Umgebung
-\Environment{tubsposter} verwendet, welche in diesem Fall jedoch einen
+Für die Erstellung von wissenschaftlichen Plakaten wird die Umgebung
+\Environment{tubsposter} verwendet, welche
+(anders als bei Veranstaltungsplakaten) jedoch einen
 zusätzlichen Parameter \PName{rows} erwartet.
-Damit wird die Anzahl an Modulzeilen bestimmt. Dies geschieht mittels
-einer kommagetrennten Liste, wobei jedes Element entweder eine Länge
-oder der Buchstabe 'X' sein kann. Eine Länge legt die Höhe der jeweiligen
-Modulzeile genau fest, ein X sorgt dafür, dass alle mit X gekennzeichneten
+Mit diesem wird die Anzahl an Modulzeilen bestimmt, in die der Darstellungsbereich geteilt werden soll.Dies geschieht mittels einer kommagetrennten Liste,
+wobei jedes Element entweder eine Länge oder der Buchstabe 'X' sein kann.
+Eine Länge legt die Höhe der jeweiligen Modulzeile genau fest,
+ein X sorgt dafür, dass alle mit X gekennzeichneten
 Zeilen den restlichen zur Verfügung stehenden Platz gleichmäßig untereinander
-aufteilen. Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx}
-angelehnt.
+aufteilen.
+Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
 
+\newcommand{\examplegraphic}[2][]{%
+  \fboxsep0mm\fbox{\includegraphics[#1]{#2}}
+}
+
+\begin{minipage}{0.6\textwidth}
 \begin{Example}
   \noindent\Macro{begin}\PParameter{\Environment{tubsposter}}
-    \Parameter{3cm,X,5cm,X}\par
-  \noindent Erzeugt 4 Modulzeilen, wobei die 1. 3cm und die 3. 5cm hoch sind.
+    \Parameter{6cm,X,4cm,X}\par
+  \noindent Erzeugt 4 Modulzeilen, wobei die erste 6cm und die dritte 4cm hoch sind.
   Die Zeilen 2 und 4 nehmen den restlichen verfügbaren Platz ein
   und sind gleich hoch.
 \end{Example}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}\centering
+  \examplegraphic[width=\textwidth,page=1]{examples/module_split.pdf}
+\end{minipage}
+
 
 
 \begin{Declaration}
@@ -226,6 +262,18 @@ diesen Rahmen wegzulassen. Dies geschieht mit der Sternchen-Variante
 \Environment{posterrow*}.
 
 
+\begin{minipage}{0.6\textwidth}
+\begin{Example}
+  \noindent\Macro{begin}\PParameter{\Environment{posterrow}}
+    \OParameter{X,X}\par
+  \noindent Teilt eine Modulzeile in 2 Spalten auf.
+\end{Example}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}\centering
+  \examplegraphic[width=\textwidth,page=2]{examples/module_split.pdf}
+\end{minipage}
+
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{postercol}}%
     \OParameter{rows}\\%
@@ -240,6 +288,19 @@ diesen Rahmen wegzulassen. Dies geschieht mit der Sternchen-Variante
 Die mit \Environment{posterrow} angelegten Spalten können jeweils mit 
 \Environment{postercol} mit Inhalt gefüllt oder in neue Unterzeilen aufgeteilt 
 werden.
+
+\begin{minipage}{0.6\textwidth}
+\begin{Example}
+  \noindent\Macro{begin}\PParameter{\Environment{postercol}}
+    \OParameter{3cm,X}\par
+  \noindent Teilt eine Modulspalte in 2 Unterzeilen auf.
+\end{Example}
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\textwidth}\centering
+  \examplegraphic[width=\textwidth,page=3]{examples/module_split.pdf}
+\end{minipage}
+
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{postersubrow}}\\%
