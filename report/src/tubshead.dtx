@@ -320,7 +320,9 @@
 %
 % Liniendarstellung und Font-Einstellungen
 %    \begin{macrocode}
-\setheadtopline[\tubspage@borderwidth]{1pt}[]
+\iftubs@bottomsender\else%
+  \setheadtopline[\tubspage@borderwidth]{1pt}[]
+\fi%
 %
 \renewcommand{\headfont}{\normalfont\mdseries\scshape}
 \let\footfont\headfont
@@ -332,7 +334,7 @@
 %<report|book>\automark[chapter]{section}
 %<article>\automark[section]{subsection}
 \innerhead[\leftmark]{}
-\outerhead[\pagemark]{\rightmark\qquad\pagemark}
+\outersender[\pagemark]{\rightmark\qquad\pagemark}
 %    \end{macrocode}
 %
 %    \begin{macro}{\cleartubsheadings}
