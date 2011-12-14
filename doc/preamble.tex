@@ -278,13 +278,22 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \par\endgroup
 }
 
-% Umgebung 'Wichtig:' ...
+% Umgebung: 'Wichtig:' ...
 \newenvironment{important}{%
   \begin{description}
     \item[\itshape\mdseries\rmfamily Wichtig:]
 }{%
   \end{description}
 }
+
+% Umgebung: 'Hinweis'
+\newenvironment{hint}{%
+  \begin{description}
+    \item[\itshape\mdseries\rmfamily Hinweis:]
+}{%
+  \end{description}
+}
+
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 

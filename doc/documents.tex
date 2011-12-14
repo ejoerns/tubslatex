@@ -244,8 +244,15 @@ Kommunikationsbereich.
 
 Mit Hilfe des optionalen Arguments \PName{style} kann die Darstellung
 der Titelseite geändert werden, indem aus einer Reihe vordefinierter Styles
-ausgewählt wird. Eine weiterführende Erklärung findet
-sich dazu in Kapitel~\ref{sec:titlestyles}.\bigskip
+ausgewählt wird. Eine weiterführende Erklärung zu verfügbaren Style samt
+Beispielen findet sich in Kapitel~\ref{sec:titlestyles}.\bigskip
+
+\begin{hint}
+  Aktuell sind die vordefinierten Styles nur korrekt nutzbar, wenn sich der
+  Absenderbereich am oberen Blattrand befindet, was jedoch für fast alle
+  Anwendungsfälle angemessen sein sollte.
+\end{hint}
+
 
 Neben den standardmäßig definierten Elementen für Titelseiten wie \Macro{author}
 oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
@@ -964,6 +971,23 @@ Für Typografie auf farbigen Flächen gilt: Bis zu einer Abstufung von 60\% kann
 
 Weitere Hinweise zur allgemeinen Verwendung sind bitte der
 CD-Toolbox\cite{toolbox} zu entnehmen.
+
+\subsection{hyperref-Anpassung}
+
+\begin{Declaration}
+  \Option{hyperref}\\
+  \Option{hyperrefdark}
+\end{Declaration}
+
+Mit Hilfe der Klassenoption \Option{hyperref} kann ein auf \tubslatex abgestimmtes
+Farbschema für das \texttt{hyperref}-Paket geladen werden.
+Das Paket selber wird dabei nicht geladen, sondern muss manuell geladen werden.
+Somit können auch einzelne Farben und Optionen noch nach Belieben geändert werden.
+Die Anweisung lädt ebenfalls die \texttt{hyperref}-Option \Option{colorlinks}.\\
+Die Option \Option{hyperrefdark} bewirkt dasselbe wie \Option{hyperref},
+lädt jedoch ein deutlich dunkleres und damit dezenteres Farbschema vor.
+
+
 
 % TODO... later...
 % \section{Arbeiten mit \tubslatex}
