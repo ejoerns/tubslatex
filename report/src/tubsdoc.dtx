@@ -471,6 +471,40 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{hyperref}
+% Linkfarben für hyperref anpassen.
+%    \begin{macrocode}
+\DeclareOptionX{hyperref}{%
+  \PassOptionsToPackage{%
+    colorlinks,
+    linkcolor=tuRed,
+    anchorcolor=tuBlack,
+    citecolor=tuGreenDark80,
+    filecolor=tuBlue80,
+    menucolor=tuRed,
+    urlcolor=tuVioletLight
+  }{hyperref}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{hyperref}
+% Linkfarben für hyperref anpassen (dunkle Variante).
+%    \begin{macrocode}
+\DeclareOptionX{hyperrefdark}{%
+  \PassOptionsToPackage{%
+    colorlinks,
+    linkcolor=tuRed100,
+    anchorcolor=tuBlack,
+    citecolor=tuGreenDark,
+    filecolor=tuBlueDark,
+    menucolor=tuRed100,
+    urlcolor=tuViolet
+  }{hyperref}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{macrocode}
 \DeclareOptionX*{%
 %<class>  \PassOptionsToClass{\CurrentOption}{\BaseClass}
