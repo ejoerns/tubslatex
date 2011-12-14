@@ -1,20 +1,18 @@
-all:
-  - Befehl \tubslatex mit entsprechender Darstellung erstellen
-  - hyperref-Farben?
-  - Option 'colorfonts', die Überschriften in Sekundärem Farbklang setzt!?!
-
 tubsstyle:
   - Option 'bgcolor' für bglayout zeigt sehr komisches Verhalten
 
 beamer:
-  - toc bewegt sich noch bei wechsel zwischen subsections und keinen
-  - publisher?
-  - Option, um gesamte Folienbreite nutzen zu können?
+  - Option, um gesamte Folienbreite nutzen zu können? -> 0.4
 
-doc:
-  - Schriftgröße Logo?
-  - Option für kleinere Überschriften?
+tubsdoc:
+  - Option für kleinere Überschriften? -> 0.4
+  - sepline für sende=bottom aus KOKMA? -> 0.4
+  - Titelseiten für bottom=sender -> 0.4
 
 poster:
-  - Standard-Papiergröße nicht korrekt gesetzt? (pass a3paper?)
   - Leere module werden nicht dargestellt. -> \strut?
+  - KOMA-Fonts? welche nur/nicht in poster?
+
+doku:
+  - notieren, dass tubslogo inhalt nach unten verrückt?
+  - Minimalbeispiele?

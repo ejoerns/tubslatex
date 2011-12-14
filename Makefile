@@ -8,9 +8,9 @@ HG_REVISION = `hg tip --template '{rev}'`
 HG_DATE = `hg tip --template '{date|shortdate}' | tr - /`
 HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
 # tubslatex-Version
-TUBSLATEX_VERSION = 0.3-alpha3
-TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
-TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)alpha3
+TUBSLATEX_VERSION = 0.3-beta1
+TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)	#-r$(HG_REVISION)
+TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)beta1
 
 # 
 HG_TEXSTYLE = tex.hgstyle

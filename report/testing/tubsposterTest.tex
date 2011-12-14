@@ -1,60 +1,18 @@
-\documentclass[a4paper,11pt]{tubsposter}
-\usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{ae}
+\documentclass{tubsposter}
 
-\usepackage{scrpage2}
-\usepackage{amsmath}
-\usepackage{tabularx}
-\usepackage{booktabs}
-\usepackage{listings}
-\lstset{basicstyle=\ttfamily}
-\usepackage[colorlinks=true]{hyperref}
-\usepackage[ngerman]{babel}
-
-
-
-\defbgtemplate[1]{8}{%
-  \colorframe{1}{tuBlue60}
-  \colorframe{1}{tuBlue40}
-  \colorframe{1}{tuBlue20}
-  \colorframe{1}{tuBlueLight100}
-  \colorframe{1}{tuBlueLight80}
-  \colorframe{1}{tuBlueLight60}
-  \colorframe{1}{tuBlueLight40}
-  \colorframe{1}{tuBlueLight20}
-  \placetubslogo{left}
-}
+\title{bla}
+\author{blub}
 
 \begin{document}
 
-\newdynamictubsframe{title}{1}{1}{1}{1}
-\setdynamicframe*{title}{backcolor=tuBlue}
+\begin{tubsposter}
+  \begin{posterrow}{4}
+    \Huge qwertz
+  \end{posterrow}
+  \begin{posterrow}{4}
+    asdfg
+  \end{posterrow}
+\end{tubsposter}
 
-\begin{dynamiccontents*}{title}
-~
-\end{dynamiccontents*}
-~
-
-\newdynamictubsframe{contentb}{2}{1}{2}{1}
-\setdynamicframe*{contentb}{backcolor=tuGreen}
-
-\newdynamictubsframe{contentc}{3}{1}{3}{1}
-\setdynamicframe*{contentc}{backcolor=tuGreen}
-
-\newdynamictubsframe{contentd}{4}{1}{4}{1}
-\setdynamicframe*{contentd}{backcolor=tuGreen}
-
-\newdynamictubsframe{contente}{5}{1}{5}{1}
-\setdynamicframe*{contente}{backcolor=tuGreen}
-
-\newdynamictubsframe{contentf}{6}{1}{6}{1}
-\setdynamicframe*{contentf}{backcolor=tuGreen}
-
-\newdynamictubsframe{contentg}{7}{1}{5}{1}
-\setdynamicframe*{contentg}{backcolor=tuGreen}
-
-\newdynamictubsframe{contenth}{8}{1}{6}{1}
-\setdynamicframe*{contenth}{backcolor=tuGreen}
 
 \end{document}
