@@ -1,4 +1,4 @@
-Revision: 866
+Version 0.3-beta1:
 
 # Änderungen zu letzter Test-Version sind ab jetzt immer mit '+' markiert
 
@@ -12,7 +12,7 @@ Revision: 866
     ohne Dabei Einfluss auf das Seitenlayout zu nehmen.
   - Topline etwas verbreitert
   - Einheitliche Versionsnummerierung für alle Pakete und Klassen
-  + Unterstützung für farbige Schriftdarstellung bei Überschriften
+  - Unterstützung für farbige Schriftdarstellung bei Überschriften
     (u.a. Option 'colorheadings')
 
 - Dokumentenklassen
@@ -28,6 +28,7 @@ Revision: 866
   - Style-Optionswert 'printdev' hinzugefuegt
   - Neuer Befehl \cleartubsheadings zum Löschen von Kopf-/Fußzeileninhalten
   - Vertikale Positionierung in Kopfzeilen verbessert (ergab vbox-Fehler)
+  - Farbschema für hyperref mittels Optionen 'hyperref' bzw. 'hyperrefdark'
 
 - poster
   - Doppelte Option für wissenschaftliche Poster verschmolzen
@@ -54,11 +55,12 @@ Revision: 866
   - Neu-Implementierung des Fußbereiches mit besserer Unterstützung
     für lange Autoren/Titel und Logo-Skalierung,
     damit auch weiterer Probleme behoben
-  + Paket etex wird standardmäßig geladen
-  + Trennung von Templates 'headline' und 'frametitle'
-  + Entfernung überflüssiger Längen
-  + Optionen clipx, clipy -> hclip, vclip
-  + Option 'nosubsectionsinheader' umbenannt in 'nosubsectionsintoc'
+  - Paket etex wird standardmäßig geladen
+  - Trennung von Templates 'headline' und 'frametitle'
+  - Entfernung überflüssiger Längen
+  - Optionen clipx, clipy -> hclip, vclip
+  - Option 'nosubsectionsinheader' umbenannt in 'nosubsectionsintoc'
+  - hbox-Warning in footline behoben
 
 - nexus
   - Striktere Behandlung der Schriftwahl Nexus/Arial, nur noch benötigte
@@ -73,7 +75,7 @@ Revision: 866
 
 - leaflet
   - Kompatibilität mit KOMA-Fonts erhöht
-  + Problem mit institue-Font behoben
+  - Problem mit institue-Font behoben
 
 - Installation
   - deb
@@ -93,7 +95,7 @@ Revision: 866
   - Kapitel 'Installation' erweitert und neu sortiert
   - einige Hinweise zu Fehlerbehebungen
   - diverse Änderungen
-  + Kapitel 'Dokumente', 'Präsentationen, 'Plakate', 'Broschüren' deutlich
+  - Kapitel 'Dokumente', 'Präsentationen, 'Plakate', 'Broschüren' deutlich
     überarbeitet.
 
 - Beispiele
