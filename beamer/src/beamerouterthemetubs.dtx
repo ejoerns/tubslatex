@@ -519,11 +519,9 @@
 % Sie sind nur aus Kompatibilitätsgründen erhalten.
 %    \begin{macrocode}
 \newenvironment{highlightframe}[1]{%
-  \setboolean{highlighttitle}{true}%
-  \begin{frame}{#1}%
+  \begin{frame}[highlight]{#1}%
 }{%
   \end{frame}%
-  \setboolean{highlighttitle}{false}%
 }
 %    \end{macrocode}
 %
