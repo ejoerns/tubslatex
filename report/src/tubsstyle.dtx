@@ -325,11 +325,27 @@
 \newif\iftubslogo@plain\tubslogo@plainfalse
 %    \end{macrocode}
 %
+%    \begin{key}{tubslogo}{pos}
+%    \begin{macrocode}
+\define@choicekey{tubslogo}{pos}[\val\nr]{left,right,inside,outside}{%
+  \ifcase\nr\relax%
+    \global\tubslogo@rightfalse%
+  \or%
+    \global\tubslogo@righttrue%
+  \or%
+    \global\tubslogo@rightfalse%
+  \or%
+    \global\tubslogo@righttrue%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{key}{tubslogo}{left}
 % Logo-Platzierung links bzw. innen bei zweiseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{left}[true]{%
-  \global\tubslogo@rightfalse%
+  \setkeys{tubslogo}{pos=left}%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -338,7 +354,7 @@
 % Logo-Platzierung rechts bzw. außen bei zweiseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{right}[true]{%
-  \global\tubslogo@righttrue%
+  \setkeys{tubslogo}{pos=right}%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -347,7 +363,7 @@
 % Logo-Platzierung innen bzw. links bei einseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{inside}[true]{%
-  \global\tubslogo@rightfalse%
+  \setkeys{tubslogo}{pos=inside}%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -356,7 +372,7 @@
 % Logo-Platzierung außen bzw. rechts bei einseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{outside}[true]{%
-  \global\tubslogo@righttrue%
+  \setkeys{tubslogo}{pos=outside}%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -374,6 +390,10 @@
 %    \end{macrocode}
 %    \end{key}
 %
+% Standardpositionierung setzen.
+%    \begin{macrocode}
+\setkeys{tubslogo}{pos=right}{}%
+%    \end{macrocode}
 %
 %    \begin{macro}{\tubs@tubslogo}
 % \oarg{pos}\par
@@ -616,7 +636,7 @@
 % Benutzer-Kommando: Ermöglicht das Darstellen des TU-Logos.
 % Setzt das Makro |\tubs@draw@tubslogo|.
 %    \begin{macrocode}
-\newcommand{\showtubslogo}[1][left]{%
+\newcommand{\showtubslogo}[1][]{%
   \@tubs@showlogotrue%
   \renewcommand{\tubs@draw@tubslogo}{%
     \thispagestyle{empty}%
