@@ -283,7 +283,7 @@ Mit \Macro{titlepicture} kann eine Bilddatei angegeben werden, die bei
 Verwendung eines entsprechenden Styles auf der Titelseite dargestellt wird.
 Diese wird standardmäßig so skaliert und zurechtgeschnitten, dass sie den ihr
 zur Verfügung stehenden Bereich optimal ausfüllt.
-Mit der Option \Option{fitting} kann die Einpassung beeinflust werden.
+Mit der Option \Option{fitting} kann die Einpassung beeinflusst werden.
 Hier können die in Kapitel~\ref{subsec:gausspage:bgelement} beschriebenen Werte
 verwendet werden.
 
@@ -384,6 +384,22 @@ dargestellt werden.
 mit \Macro{backpageinfo} Lässt sich ganz allgemein der verbleibende
 Inhalt der Rückseite nach Belieben füllen.
 Siehe hierzu jeweils auch Kapitel~\ref{sec:backstyles}.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{backpage}}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{backpage}
+\end{Declaration}
+
+Die Umgebung \Environment{backpage} erlaubt alternativ zu
+\Macro{makebackpage} das Erstellen komplett individueller
+Rückseiten. Die Verwendung entspricht der \Environment{titlepage}-Umgebung
+(siehe vorheriges Kapitel),
+jedoch wird das Siegelbandlogo bei Verwendung standardmäßig im
+\Option{plain}-Stil dargestellt, also schriftlos.
+
+Die Einzelnen Segmente können mit der Umgebung \Environment{segment}
+erstellt werden, welche in Kapitel~\ref{sec:gausspage:kombi} näher beschrieben ist.
 
 \subsection{Vordefinierte Titel-Styles}\label{sec:titlestyles}
 
