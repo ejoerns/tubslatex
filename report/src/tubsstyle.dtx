@@ -329,7 +329,7 @@
 % Logo-Platzierung links bzw. innen bei zweiseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{left}[true]{%
-  \tubslogo@rightfalse%
+  \global\tubslogo@rightfalse%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -338,7 +338,7 @@
 % Logo-Platzierung rechts bzw. außen bei zweiseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{right}[true]{%
-  \tubslogo@righttrue%
+  \global\tubslogo@righttrue%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -347,7 +347,7 @@
 % Logo-Platzierung innen bzw. links bei einseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{inside}[true]{%
-  \tubslogo@rightfalse%
+  \global\tubslogo@rightfalse%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -356,7 +356,7 @@
 % Logo-Platzierung außen bzw. rechts bei einseitigem Layout
 %    \begin{macrocode}
 \define@key{tubslogo}{outside}[true]{%
-  \tubslogo@righttrue%
+  \global\tubslogo@righttrue%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -385,7 +385,7 @@
 % entgegengesetzten Papierseite platziert.
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo[1][]{%
-  \setkeys{tubslogo}{left,plain=false,#1}%
+  \setkeys{tubslogo}{#1}%
   \iftubslogo@right%
     \tubs@tubslogo@calcpos{right}{\tmp@posx}{\tmp@posy}%
   \else%

@@ -1,0 +1,53 @@
+\documentclass[a4paper,extramargin,violet]{tubsartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+%opening
+\titleabstract{%
+  Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi.
+  Morbi auctor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, 
+  ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat
+  ligula aliquet magna, vitae ornare odio metus a mi. Morbi ac orci et nisl 
+  hendrerit mollis.%
+}
+\titlepicture{titlepicture.jpg}
+\title{Lorem ipsum dolor sit amet}
+\subtitle{Morbi auctor lorem\vphantom{g}\\ % TODO!!!!
+Nam lacus libero}
+\logo{\includegraphics{dummy_institut.jpg}}
+% \logo{\begingroup\setkeys{Gin}{height=\headheight}This is a test.\endgroup}
+\author{Enrico Jörns}
+
+\begin{document}
+
+\begin{titlepage}
+  \showtubslogo[right]
+  \begin{segment}[bgcolor=tuViolet]{8}
+    Test
+  \end{segment}
+\end{titlepage}
+
+\begin{backpage}
+  \showtubslogo[plain]
+  \begin{segment}[bgcolor=tuViolet]{8}
+    Test
+  \end{segment}
+\end{backpage}
+
+\begin{backpage}
+  \showtubslogo[plain]
+  \begin{segment}[bgcolor=tuViolet]{8}
+    Test
+  \end{segment}
+\end{backpage}
+
+
+\begin{titlepage}
+  \showtubslogo
+  \begin{segment}[bgcolor=tuViolet]{8}
+    Test
+  \end{segment}
+\end{titlepage}
+
+\end{document}

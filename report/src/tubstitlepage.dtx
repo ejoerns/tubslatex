@@ -223,11 +223,34 @@
 % Entspricht |gausspage|-Umgebung.
 %    \begin{macrocode}
 % TODO: opt. args?
-\renewcommand\titlepage{%
+\renewenvironment{titlepage}{%
   \gausspage%
+  \setkeys{tubslogo}{}%
   \thispagestyle{empty}%
+}{%
+  \endgausspage%
 }
-\let\endtitlepage\endgausspage
+%    \end{macrocode}
+%    \end{environment}
+%
+%    \begin{environment}{backpage}
+% Definition der |backpage|-Umgebung.
+% Entspricht |gausspage|-Umgebung.
+% tubslogo wird automatisch auf 'plain' gesetzt.
+%    \begin{macrocode}
+% TODO: opt. args?
+\newenvironment{backpage}{%
+  \gausspage%
+  \setkeys{tubslogo}{plain}%
+  \thispagestyle{empty}%
+}{%
+  \endgausspage
+}
+% \renewcommand\backpage{%
+%   \gausspage%
+%   \thispagestyle{empty}%
+% }
+% \let\endbackpage\endgausspage
 %    \end{macrocode}
 %    \end{environment}
 %
