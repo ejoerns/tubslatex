@@ -200,7 +200,7 @@
 %
 % Only sections and subsections in toc
 %    \begin{macrocode}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{2}% TODO: check
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -224,9 +224,9 @@
 % Head/Foot-Farbzuordnung
 %    \begin{macrocode}
 \setbeamercolor{section in head/foot}{parent=palette secondary,fg=alerted text.fg}
-\setbeamercolor{section in head/foot shaded}{use=palette secondary,bg=palette secondary.fg}
+\setbeamercolor{section in head/foot shaded}{parent=palette secondary}
 \setbeamercolor{subsection in head/foot}{parent=section in head/foot}
-\setbeamercolor{subsection in head/foot shaded}{use=palette secondary,bg=palette secondary.fg!80}
+\setbeamercolor{subsection in head/foot shaded}{use=palette secondary,parent=palette secondary,fg=palette secondary.fg!80}
 \setbeamercolor{author in head/foot}{parent=palette tertiary}
 \setbeamercolor{date in head/foot}{parent=author in head/foot}
 \setbeamercolor{pagenum in head/foot}{parent=author in head/foot}
@@ -328,7 +328,7 @@
 %    \begin{environment}{section in head/foot shaded}
 %    \begin{macrocode}
 \defbeamertemplate*{section in head/foot shaded}{tubs}{%
-  \usebeamercolor[bg]{section in head/foot shaded}%
+  \usebeamercolor[fg]{section in head/foot shaded}%
   {\insertsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
@@ -346,7 +346,7 @@
 %    \begin{environment}{subsection in head/foot shaded}
 %    \begin{macrocode}
 \defbeamertemplate*{subsection in head/foot shaded}{tubs}{%
-  \usebeamercolor[bg]{subsection in head/foot shaded}%
+  \usebeamercolor[fg]{subsection in head/foot shaded}%
   {\insertsubsectionhead}\hspace{\beamer@tochorizontalspace}%
 }
 %    \end{macrocode}
@@ -375,10 +375,6 @@
 %    \end{environment}
 %    \end{environment}
 %
-%    \begin{macrocode}
-\setbeamercolor*{page number in sidebar}{fg=structure.fg}
-\setbeamercolor*{page number in sidebar shaded}{fg=structure.fg!40}
-%    \end{macrocode}
 %
 % Breite tubslogo: 24.7mm
 %
