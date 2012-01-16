@@ -249,8 +249,8 @@
 %    \begin{macrocode}
 \ifthenelse{\boolean{tocinheader}}{%
   \defbeamertemplate*{headline}{tubs}{%
-    \usebeamerfont{frametitle}% TODO
-    \def\@headtemplate{titlelike}
+%     \usebeamerfont{frametitle}% TODO
+%     \def\@headtemplate{titlelike}
     % toc-Text-Farben für highlighttitle ändern
     \ifthenelse{\boolean{highlighttitle}}{%
       \setbeamercolor*{section in head/foot}{parent=highlight}
@@ -259,7 +259,7 @@
     \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{section in head/foot}%
         \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
         \ifthenelse{\boolean{tocinheader}}{%
-          {\usebeamerfont{headertoc}%
+          {\usebeamerfont{section in head/foot}%
           \insertsectionnavigationhorizontal{\textwidth}%
                   {\hskip20pt plus1filll}{\quad}%
           \ifthenelse{\boolean{nosubsectionsinheader}}{}{%

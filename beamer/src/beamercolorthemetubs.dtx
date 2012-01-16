@@ -206,14 +206,15 @@
   \setbeamercolor{palette secondary}{use={palette primary},parent={palette primary}}
 }
 % palette tertiary is used for toc in header!
-\setbeamercolor{palette tertiary}{fg=tuGreen,bg=tuWhite}
-\setbeamercolor{palette quaternary}{fg=GreenLight,bg=tuOrange}
+\setbeamercolor{palette tertiary}{fg=tuBlack,bg=tuWhite}
+\setbeamercolor{palette quaternary}{use=palette tertiary, parent=palette tertiary}
 %    \end{macrocode}
 %
 %
-% Separation line
+% Separation line and logo
 %    \begin{macrocode}
 \setbeamercolor{separation line}{fg=tuRed}
+\setbeamercolor{logo}{parent=separation line}
 %    \end{macrocode}
 %
 % Titlepage bars
