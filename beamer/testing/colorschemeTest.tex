@@ -1,0 +1,102 @@
+\documentclass{beamer}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{tikz}
+
+% \usetheme[nologoinfoot]{tubs}
+\usepackage[english]{babel}
+
+\usetheme[tocinheader,colorblocks]{tubs}
+% \usecolortheme{seahorse}
+
+% \setbeamercolor{highlight}{bg=tuGreenLight}
+
+\begin{document}
+
+% Titelseite
+\title{Performance Challenges of the SCC}
+\subtitle{for a Streaming Media Application}
+\author{Max Frisch}
+\logo{Logo-Dummy}
+
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+
+\part{Teil 1}
+
+\begin{frame}
+  \partpage
+\end{frame}
+
+
+\begin{frame}{Inhalt}
+  \tableofcontents
+\end{frame}
+
+\section{section one}
+\subsection{subsection one}
+\section{section two}
+
+\begin{frame}{Itemize-Test}
+  \begin{itemize}
+    \item item one
+    \item item two
+    \begin{itemize}
+      \item subitem one
+      \item subitem two
+    \end{itemize}
+    \item item three
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[highlight]{Dummy}
+  The last word is \alert{alerted}\par
+%   The last word is an \example{example}
+  \url{Link}
+\end{frame}
+
+
+\begin{frame}{Dummy}
+  \begin{columns}
+  \column{0.3\textwidth}
+  \begin{block}{Title}
+    Eine Aufzählung:\\
+    \begin{itemize}
+      \item item one
+      \item item two
+    \end{itemize}
+  \end{block}
+  \column{0.3\textwidth}
+  \begin{exampleblock}{Title}
+    Eine Aufzählung:\\
+    \begin{itemize}
+      \item item one
+      \item item two
+    \end{itemize}
+  \end{exampleblock}
+  \column{0.3\textwidth}
+  \begin{alertblock}{Title}
+    Eine Aufzählung:\\
+    \begin{itemize}
+      \item item one
+      \item item two
+    \end{itemize}
+  \end{alertblock}
+  \end{columns}
+\end{frame}
+
+\section{Literatur}
+
+\begin{frame}{Literatur}
+\begin{thebibliography}{sodeep}
+  \bibitem{keya} Ich, Selber
+  \bibitem{keyb} Du, Auch
+\end{thebibliography}
+\end{frame}
+% \nocite{thebibliography}
+
+\end{document}
