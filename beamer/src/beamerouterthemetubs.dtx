@@ -221,6 +221,22 @@
 \mode<presentation>
 %    \end{macrocode}
 %
+% Head/Foot-Farbzuordnung
+%    \begin{macrocode}
+\setbeamercolor{section in head/foot}{parent=palette secondary,fg=alerted text.fg}
+\setbeamercolor{section in head/foot shaded}{use=palette secondary,bg=palette secondary.fg}
+\setbeamercolor{subsection in head/foot}{parent=section in head/foot}
+\setbeamercolor{subsection in head/foot shaded}{use=palette secondary,bg=palette secondary.fg!80}
+\setbeamercolor{author in head/foot}{parent=palette tertiary}
+\setbeamercolor{date in head/foot}{parent=author in head/foot}
+\setbeamercolor{pagenum in head/foot}{parent=author in head/foot}
+%    \end{macrocode}
+%
+% Title-Farbzuordnung
+%    \begin{macrocode}
+\setbeamercolor{titlelike}{parent=palette primary}
+%    \end{macrocode}
+%
 %    \begin{environment}{sidebar right}
 % Sidebar löschen
 %    \begin{macrocode}
@@ -233,20 +249,17 @@
 %    \begin{macrocode}
 \ifthenelse{\boolean{tocinheader}}{%
   \defbeamertemplate*{headline}{tubs}{%
-    \usebeamerfont{frametitle}%
+    \usebeamerfont{frametitle}% TODO
     \def\@headtemplate{titlelike}
     % toc-Text-Farben für highlighttitle ändern
     \ifthenelse{\boolean{highlighttitle}}{%
-      \setbeamercolor*{palette quaternary}{parent=highlight}
-      \setbeamercolor{palette tertiary}{fg=tuWhite}
+      \setbeamercolor*{section in head/foot}{parent=highlight}
+      \setbeamercolor{palette tertiary}{fg=white}% TODO: use from another
     }{}
-    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{titlelike}%
-%       \fboxsep0mm\fbox{%
-%       \raisebox{\depth+.05\beamer@headheight}{%
+    \begin{beamercolorbox}[dp=0mm, ht=0.45\beamer@headheight]{section in head/foot}%
         \parbox[b][0.45\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
         \ifthenelse{\boolean{tocinheader}}{%
           {\usebeamerfont{headertoc}%
-%           \vspace*{0.8ex}%
           \insertsectionnavigationhorizontal{\textwidth}%
                   {\hskip20pt plus1filll}{\quad}%
           \ifthenelse{\boolean{nosubsectionsinheader}}{}{%
@@ -256,8 +269,7 @@
           }}%
         }{}%
         \vfill%
-      }%}%
-%       }%
+      }%
     \end{beamercolorbox}%
   }%
 }{%
@@ -384,23 +396,29 @@
   % Datum + Trennstrich einfügen, Optionen beachten
   \def\tubs@insertdate{%
     \ifthenelse{\boolean{tubs@nodate}}{}{%
-      \insertdate%
+      \usebeamerfont{date in head/foot}%
+      \usebeamercolor{date in head/foot}%
+      \textcolor{fg}{\insertdate}%
     }%
   }%
   % Trennstrich + Seite einfügen, Optionen beachten
   \def\tubs@insertpage{%
     \ifthenelse{\boolean{tubs@nopagenum}}{}{%
+      \usebeamerfont{page in head/foot}%
+      \usebeamercolor{page in head/foot}%
       \ifthenelse{\boolean{tubs@totalpages}}{%
-        ~\@footsepline~\pagename~\insertframenumber~\pageof~\inserttotalframenumber%
+        ~\@footsepline~\textcolor{fg}{\pagename~\insertframenumber~\pageof~\inserttotalframenumber}%
       }{%
-        ~\@footsepline~\pagename~\insertframenumber%
+        ~\@footsepline~\textcolor{fg}{\pagename~\insertframenumber}%
       }%
     }%
   }%
   %
   \def\tubs@insertauthor{%
     \ifthenelse{\boolean{tubs@noauthor}}{}{%
-      \insertshortauthor%
+      \usebeamerfont{author in head/foot}%
+      \usebeamercolor{author in head/foot}%
+      \textcolor{fg}{\insertshortauthor}%
     }%
   }%
   %% Additional space needed to increase the calculated height of the footline

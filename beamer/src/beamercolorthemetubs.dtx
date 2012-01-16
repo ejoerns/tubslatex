@@ -199,20 +199,17 @@
 %
 % Palette
 %    \begin{macrocode}
-\setbeamercolor{palette primary}{fg=tuGreenLight,bg=tuOrange}
-\setbeamercolor{palette secondary}{use={palette tertiary},fg=palette tertiary.fg,bg=palette tertiary.bg!80}
-\setbeamercolor{palette tertiary}{use={palette quaternary}, fg=tuRed,bg=tuBlack}
+\setbeamercolor{palette primary}{fg=tuBlack,bg=tuGrey20}
 \ifthenelse{\boolean{colorhead}}{%
-  \setbeamercolor{palette quaternary}{bg=tu\tubscolor\tubscolorshade 40,fg=black}
+  \setbeamercolor{palette secondary}{bg=tu\tubscolor\tubscolorshade 40,fg=tuBlack}
 }{%
-  \setbeamercolor{palette quaternary}{bg=tuGrey20,fg=black}
+  \setbeamercolor{palette secondary}{use={palette primary},parent={palette primary}}
 }
+% palette tertiary is used for toc in header!
+\setbeamercolor{palette tertiary}{fg=tuGreen,bg=tuWhite}
+\setbeamercolor{palette quaternary}{fg=GreenLight,bg=tuOrange}
 %    \end{macrocode}
 %
-% Title
-%    \begin{macrocode}
-\setbeamercolor{titlelike}{parent=palette quaternary}
-%    \end{macrocode}
 %
 % Separation line
 %    \begin{macrocode}
