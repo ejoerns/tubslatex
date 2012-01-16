@@ -199,12 +199,12 @@
 %
 % Palette
 %    \begin{macrocode}
-\setbeamercolor{palette primary}{fg=tuBlack,bg=tuGrey20}
 \ifthenelse{\boolean{colorhead}}{%
-  \setbeamercolor{palette secondary}{bg=tu\tubscolor\tubscolorshade 40,fg=tuBlack}
+  \setbeamercolor{palette primary}{bg=tu\tubscolor\tubscolorshade 40,fg=tuBlack}
 }{%
-  \setbeamercolor{palette secondary}{use={palette primary},parent={palette primary}}
+  \setbeamercolor{palette primary}{fg=tuBlack,bg=tuGrey20}
 }
+\setbeamercolor{palette secondary}{use={palette primary},parent={palette primary}}
 % palette tertiary is used for toc in header!
 \setbeamercolor{palette tertiary}{fg=tuBlack,bg=tuWhite}
 \setbeamercolor{palette quaternary}{use=palette tertiary, parent=palette tertiary}
