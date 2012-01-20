@@ -1,0 +1,45 @@
+\documentclass{beamer}
+
+\usepackage{colortbl}
+
+% \useoutertheme{tubs}
+% \useinnertheme{tubs}
+% \usefonttheme{tubs}
+% \usecolortheme{tubs}
+
+\begin{document}
+
+\begin{frame}
+Uncovering Tagged Formulas Piecewise
+\begin{align}
+  A &= B \\
+    \uncover<2->{&= C \\}
+    \uncover<3->{&= D \\}
+    \notag
+  \end{align}
+\vskip-1.5em
+\end{frame}
+ 
+\begin{frame}
+Uncovering a Table Rowwise \newline
+% \rowcolors[]{1}{blue!20}{blue!10}
+\begin{tabular}{l!{\vrule}cccc}
+  Class & A & B & C & D \\\hline
+  X     & 1 & 2 & 3 & 4 \pause\\
+  Y     & 3 & 4 & 5 & 6 \pause\\
+  Z     &5&6&7&8
+\end{tabular}
+\end{frame}
+ 
+\begin{frame}
+Uncovering a Table Columnwise \newline
+% \rowcolors[]{1}{blue!20}{blue!10}
+\begin{tabular}{l!{\vrule}c<{\onslide<2->}c<{\onslide<3->}c<{\onslide<4->}c<{\onslide}c}
+  Class & A & B & C & D \\
+  X     & 1 & 2 & 3 & 4 \\
+  Y     & 3 & 4 & 5 & 6 \\
+  Z     &5&6&7&8
+\end{tabular}
+\end{frame}
+
+\end{document}

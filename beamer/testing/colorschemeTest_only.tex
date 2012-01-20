@@ -6,10 +6,17 @@
 % \usetheme[nologoinfoot]{tubs}
 \usepackage[english]{babel}
 
-\usetheme[tocinheader,colorblocks]{tubs}
-% \usecolortheme{seahorse}
+\useoutertheme[tocinheader]{tubs}
+% \useoutertheme{infolines}
+% \useinnertheme{tubs}
+\usefonttheme{tubs}
 
-\setbeamercolor{structure}{fg=tuGreenLight}
+\usecolortheme{tubs}
+
+
+% \setbeamercolor{highlight}{bg=tuGreenLight}
+
+\begin{document}
 
 % Titelseite
 \title{Performance Challenges of the SCC}
@@ -17,7 +24,6 @@
 \author{Max Frisch}
 \logo{Logo-Dummy}
 
-\begin{document}
 
 \begin{frame}[plain]
   \titlepage
@@ -36,10 +42,8 @@
 \end{frame}
 
 \section{section one}
-
-\section{section two}
-
 \subsection{subsection one}
+\section{section two}
 
 \begin{frame}{Itemize-Test}
   \begin{itemize}
@@ -53,13 +57,12 @@
   \end{itemize}
 \end{frame}
 
-\subsection{subsection two}
 
-\begin{frame}[highlight]{Dummy}
-  The last word is \alert{alerted}\par
-%   The last word is an \example{example}
-  \url{Link}
-\end{frame}
+% \begin{frame}[highlight]{Dummy}
+%   The last word is \alert{alerted}\par
+% %   The last word is an \example{example}
+%   \url{Link}
+% \end{frame}
 
 
 \begin{frame}{Dummy}

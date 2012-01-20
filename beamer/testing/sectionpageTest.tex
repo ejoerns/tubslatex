@@ -1,0 +1,67 @@
+\documentclass{beamer}
+
+\usepackage[utf8x]{inputenc}
+\usetheme[tocinheader]{tubs}
+\usepackage{lipsum}
+\usepackage[ngerman]{babel}
+
+\begin{document}
+
+\title{Design oder nicht sein?}
+\subtitle{Das Corporate Design in  LaTeX}
+\author{Martin Bäker\and Enrico Jörns}
+\titlegraphic{\tuDefaultTitlegraphic}
+% \logo{\includegraphics[height=\logoheight]{institut.jpg}}
+% \logo{Institut für Unkreativität\\und Schreibschwäche}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\defbeamertemplate*{section page}{tubs}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section  name}\chaptername~\insertsectionnumber}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{section title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+
+\section{Vom Aufgang}
+
+\begin{frame}[plain]
+  \partpage
+\end{frame}
+
+\begin{frame}{Title}
+  \lipsum[2]
+\end{frame}
+
+\section{Das Werden}
+
+\begin{frame}
+  \sectionpage
+\end{frame}
+
+
+\begin{frame}
+  foo
+\end{frame}
+
+\section{Vom Ende des Seins}
+
+
+
+\begin{frame}
+  foo
+\end{frame}
+
+
+
+\begin{frame}[plain]
+  \sectionpage
+\end{frame}
+
+
+\end{document}
