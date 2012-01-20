@@ -3,16 +3,20 @@ tubsstyle:
 
 beamer:
   - Option, um gesamte Folienbreite nutzen zu können? -> 0.4
+  + Bermerkung, dass Titelseiten-Inhalte vor \begin{document} gesetzt werden sollten
+    (wegen pdf-Titel)
+  + pdf-Tocdepth?
 
 tubsdoc:
   - Option für kleinere Überschriften? -> 0.4
-  - sepline für sende=bottom aus KOKMA? -> 0.4
+  - sepline für sender=bottom aus KOKMA? -> 0.4
   - Titelseiten für bottom=sender -> 0.4
 
 poster:
-  - Leere module werden nicht dargestellt. -> \strut?
+  - Leere Module werden nicht dargestellt. -> \strut?
   - KOMA-Fonts? welche nur/nicht in poster?
 
 doku:
-  - notieren, dass tubslogo inhalt nach unten verrückt?
+  - notieren, dass tubslogo Inhalt nach unten verrückt?
   - Minimalbeispiele?
+  + Notiz zu 'subtitle' (wird nicht angezeigt)

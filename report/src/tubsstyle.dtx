@@ -773,8 +773,7 @@
 %    \begin{macrocode}
 \newcommand{\bgelement}[2][]{
   \def\@current@height{#2}
-  \setkeys{bgelement}{imagefit=default}
-  \setkeys{bgelement}{#1}
+  \setkeys{bgelement}{imagefit=default,#1}
   % Führt das gespeicherte Hintergrund-Kommando mit den gespeicherten Argumenten aus.
   \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
     \expandafter\renewcommand\expandafter\tubstyle@imagefit\expandafter{%
@@ -833,6 +832,29 @@
 % so wird die Farbe tuGray20 benutzt.
 %    \begin{macrocode}
 \define@key{bglayout}{bgcolor}[tuGray20]{%
+  \g@addto@macro{\@@next@shipout}{%
+    \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
+      \put(0,\LenToUnit{\tubspage@senderheight}){{%
+        \setlength\fboxsep{0mm}\colorbox{#1}{%
+          \parbox[b][\paperheight-\tubspage@senderheight]%
+            {\paperwidth}{~}}%
+      }}%
+    }{%
+      \put(0,0){{%
+        \setlength\fboxsep{0mm}\colorbox{#1}{%
+          \parbox[b][\paperheight-\tubspage@senderheight]%
+            {\paperwidth}{~}}%
+      }}%
+    }%
+  }
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% \begin{key}{bglayout}{border}
+% Erzeugt einen farbigen Rahmen.
+%    \begin{macrocode}
+\define@key{bglayout}{border}[tuBlack]{%
   \g@addto@macro{\@@next@shipout}{%
     \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
       \put(0,\LenToUnit{\tubspage@senderheight}){{%

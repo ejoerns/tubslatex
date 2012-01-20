@@ -158,9 +158,19 @@ Die \PName{Optionen} erlauben unter anderem die Angabe der Darstellungsseite
 \end{Declaration}
 
 Mit der Logo-Option \Option{links} bzw. \Option{inside} wird das Logo auf der Seite
-links bzw. innen dargestellt. Dies ist die Standardeinstellung.
-Mit der Option \Option{rechts} bzw. \Option{outside} wird das Logo auf der
-Seite rechts bzw. außen dargestellt.
+\emph{links} bzw. \emph{innen} platziert. Dies entspricht der Standardeinstellung.
+Es ist zu beachten, dass bei zweiseitiger Darstellung (\Option{twoside})
+das Logo auf ungeraden Seiten links und auf geraden Seiten rechts platziert wird
+(also immer \emph{innenseitig}!).
+Mit der Option \Option{rechts} bzw. \Option{outside} wird das Logo auf der \emph{rechten}
+Seite bzw. \emph{außen} dargestellt.
+
+\begin{important}
+Diese Optionen beeinflussen direkt die Darstellung aller folgenden Logos.
+Diese werden entsprechend der jeweils letzten Seitenwahl gesetzt.
+Wird das erste Logo also rechts, bzw. außen platziert, so werden alle folgenden
+Logos ebenfalls rechts (bzw. im \Option{twoside}-Modus außen) platziert.
+\end{important}
 
 \begin{Declaration}
   \Option{plain}
