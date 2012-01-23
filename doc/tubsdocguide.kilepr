@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.0
-lastDocument=leaflet.tex
+lastDocument=beamer.tex
 masterDocument=
 name=tubsdocguide
 pkg_extIsRegExp=false
@@ -182,13 +182,13 @@ order=-1
 
 [item:beamer.tex]
 archive=true
-column=23
+column=45
 encoding=UTF-8
 highlight=LaTeX
-line=212
+line=308
 mode=LaTeX
-open=false
-order=4
+open=true
+order=1
 
 [item:colors.tex]
 archive=true
@@ -407,7 +407,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=104
 mode=LaTeX
-open=false
+open=true
 order=0
 
 [item:unsorted.tex]
@@ -429,8 +429,8 @@ CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:beamer.tex]
-CursorColumn=23
-CursorLine=212
+CursorColumn=45
+CursorLine=308
 
 [view-settings,view=0,item:colors.tex]
 CursorColumn=44
