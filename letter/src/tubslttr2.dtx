@@ -191,6 +191,7 @@
 }{%
   \@OldGeometryVersiontrue%
 }
+% \g@addto@macro{\letter}{}
 \geometry{%
   left=2.45cm,%
   top=3.3cm,%
@@ -203,6 +204,8 @@
 %
 % Auf Folgeseiten (nach der ersten Seite) muss der Textbereich verbreitert
 % werden, da die Spalte mit den Absenderinformationen wegfällt.
+% Bei Anfang eines Neuen Briefes muss jedoch wieder der verkleinerte
+% Textbereich verwendet werden
 % Manueller Hack, wenn geometry-Version < 5.0 ist.
 %    \begin{macrocode}
 \RequirePackage{afterpage}
@@ -211,6 +214,10 @@
     \setlength\textwidth{16cm}\onecolumn
     \onecolumn
   }
+  \newcommand*{\@firstpageGeo}{%
+    \setlength\textwidth{12.2cm}%
+    \onecolumn\onecolumn%
+  }
 \else%
   \newcommand*{\@newGeo}{%
     \newgeometry{%
@@ -218,8 +225,17 @@
       textwidth=16cm,%
       bottom=3.5cm}%
   }
+  \newcommand*{\@firstpageGeo}{%
+    \newgeometry{%
+      left=2.45cm,%
+      textwidth=12.2cm,%
+      bottom=3.5cm}%
+  }
 \fi%
+%
 \afterpage{\aftergroup\@newGeo}
+%
+\AtEndLetter{\aftergroup\@firstpageGeo}
 %    \end{macrocode}
 %
 % Die verwendete Schriftart wird entsprechend der Paketoptionen geladen
