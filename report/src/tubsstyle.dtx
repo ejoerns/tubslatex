@@ -1017,6 +1017,14 @@
 %    \end{macrocode}
 %
 %
+%    \begin{macrocode}
+\newcommand{\gausspage@clearcmd}{\clearpage}
+\define@key{gausspage}{evenpage}[true]{%
+  \renewcommand{\gausspage@clearcmd}{%
+    \clearpage\ifthispageodd{\strut\clearpage}{\clearpage}%
+  }%
+}
+%    \end{macrocode}
 %
 %
 %    \begin{environment}{tubsposter}
@@ -1027,9 +1035,10 @@
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 \newenvironment{gausspage}[1][]{%
-  \clearpage
-  \tubsboxsetup*[#1]%TODO...
-  \@layout@pre{pages=single,#1}
+  \setkeys*{gausspage}{#1}%
+  \gausspage@clearcmd%
+  \tubsboxsetup*[\XKV@rm]%TODO...
+  \@layout@pre{pages=single,\XKV@rm}
   \sffamily
 }{%
   \@layout@post

@@ -126,6 +126,22 @@
 \RequirePackage{tubscolors}
 %    \end{macrocode}
 %
+%
+%    \begin{macro}{\if@tubs@oddpage}
+% \marg{odd cmd}\marg{even cmd}\par
+% Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
+% unterschiedlich arbeiten.
+% Ist nur aktiv, wenn Option |twosided| benutzt wird.
+%    \begin{macrocode}
+\providecommand{\if@tubs@oddpage}[2]{%
+  \ifthenelse{\boolean{tubsstyle@twoside}}{%
+    \ifthispageodd{#1}{#2}%
+  }{#1}%
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%
 %    \begin{macrocode}
 \let\oldmaketitle\@maketitle
 %    \end{macrocode}
@@ -482,7 +498,7 @@
 %</article>
 %<*report|book>
 \new@back@style{plain}{}{%
-  \begin{gausspage}
+  \begin{gausspage}[evenpage]
     \showtopline
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}{1}
@@ -497,7 +513,7 @@
 %    \begin{macro}{addressinfo}
 %    \begin{macrocode}
 \new@back@style{addressinfo}{}{%
-  \begin{gausspage}
+  \begin{gausspage}[evenpage]
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondary]{2}
       \leavevmode\color{white}\tubs@tp@address
@@ -513,7 +529,7 @@
 %    \begin{macro}{info}
 %    \begin{macrocode}
 \new@back@style{info}{}{%
-  \begin{gausspage}
+  \begin{gausspage}[evenpage]
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{8}
       \tubs@tp@backinfo
@@ -526,7 +542,7 @@
 %    \begin{macro}{trisec}
 %    \begin{macrocode}
 \new@back@style{trisec}{}{%
-  \begin{gausspage}
+  \begin{gausspage}[evenpage]
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{2}
       \usekomafont{copytext}\tubs@tp@address
