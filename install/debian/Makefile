@@ -23,7 +23,7 @@ all: build copy deb
 copy: clean structure fetch
 
 deb:
-	sudo dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb
+	fakeroot dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb
 
 build:
 	make -C $(RAWTREE)
@@ -32,6 +32,7 @@ structure:
 	mkdir -p texlive-tubs
 	mkdir -p texlive-tubs/DEBIAN
 	mkdir -p texlive-tubs/$(INSTALLPATH)
+	mkdir -p texlive-tubs/usr/share/doc/texlive-tubs
 
 fetch:
 	cp -r $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
@@ -40,6 +41,11 @@ fetch:
 	cat control.template | sed 's/CONTROLVERSION/$(DEBVERSION)-$(DISTVERSION)/g' | \
 	sed 's/INSTALLSIZE/'"`du -sk --apparent-size texlive-tubs | awk  '{print $$1}' `"'/g' > control
 	cp control postinst prerm postrm texlive-tubs/DEBIAN/.
+	cp changelog.Debian.template changelog.Debian
+	cp changelog.template changelog
+	gzip -9f changelog
+	gzip -9f changelog.Debian
+	cp copyright changelog.gz changelog.Debian.gz texlive-tubs/usr/share/doc/texlive-tubs/.
 
 clean:
 	rm -rf texlive-tubs

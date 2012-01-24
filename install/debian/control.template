@@ -7,4 +7,6 @@ Priority: extra
 Depends: texlive-base, texlive-latex-extra, texlive-fonts-extra, latex-beamer, texlive-lang-german
 Maintainer: Enrico Jörns <e.joerns@tu-bs.de>
 Homepage: http://tu-braunschweig.de
-Description: LaTeX-Pakete zur Erstellung von Präsentationen und Dokumenten im Corporate Design der TU Braunschweig.
+Description: LaTeX-Vorlagen zum Corporate Design der TU Braunschweig.
+ Klassen und Pakete zur Erstellung von Präsentationen, Plakaten, Briefen
+ und Dokumenten im Corporate Design der TU Braunschweig

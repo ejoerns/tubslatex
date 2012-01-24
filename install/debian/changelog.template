@@ -1,0 +1,5 @@
+texlive-tubs (0.3-beta2)
+
+  * Made Debian package lintian clean.
+
+ -- Enrico Jörns <e.joerns@tu-bs.de>  2012-01-24
