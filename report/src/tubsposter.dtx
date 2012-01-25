@@ -110,6 +110,12 @@
 %<*option>
 %    \end{macrocode}
 %
+%
+% Merker für Landscape-Modus (für Logo-Skalierung bei scifi benötigt)
+%    \begin{macrocode}
+\newif\if@tp@landscape\@tp@landscapefalse
+%    \end{macrocode}
+%
 %    \begin{key}{}{style}
 %    \begin{macrocode}
 \newcommand{\tubs@poster@style}{poster}
@@ -119,7 +125,12 @@
   \ifthenelse{\equal{#1}{scifi}}{%
     \renewcommand{\tubs@poster@style}{scifi}
     \PassOptionsToPackage{scifiposter}{tubstypearea}
-    \PassOptionsToPackage{relscale=0.9}{tubslogo}
+    \if@tp@landscape
+      \ClassWarning{tubsposter}{landscape mode is not fully supported yet}{}
+      \PassOptionsToPackage{relscale=0.63}{tubslogo}%0.9*7/10
+    \else
+      \PassOptionsToPackage{relscale=0.9}{tubslogo}
+    \fi
     % Scifiposter haben eigene Schrift-Definitionen!
     \renewcommand*{\@fsfbs@sub}{scifi}
   }{\ifthenelse{\equal{#1}{bulletin}}{%
@@ -130,6 +141,11 @@
 }
 %    \end{macrocode}
 %    \end{key}
+%
+\DeclareOptionX{landscape}{%
+  \@tp@landscapetrue
+% TODO: support for scientific poster logo in landscape
+}
 %
 % TODO: place better...
 %    \begin{macrocode}
@@ -174,7 +190,7 @@
 %    \begin{macrocode}
 % TODO: Ersetzen durch gausspage!
 \newenvironment{@tubsposter}[1][]{%
-  \tubsboxsetup[#1]%TODO...
+  \gaussboxsetup[#1]%TODO...
   \@layout@pre{#1}
   \thispagestyle{empty}%
   \sffamily
