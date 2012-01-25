@@ -771,9 +771,11 @@
 % \oarg{options}\marg{height}\par
 % Hintergrund-Element,
 %    \begin{macrocode}
+\presetkeys{bgelement}{imagefit=default}{}
+%
 \newcommand{\bgelement}[2][]{
   \def\@current@height{#2}
-  \setkeys{bgelement}{imagefit=default,#1}
+  \setkeys*{bgelement}{#1}
   % Führt das gespeicherte Hintergrund-Kommando mit den gespeicherten Argumenten aus.
   \expandafter\g@addto@macro\expandafter\@next@shipout\expandafter{%
     \expandafter\renewcommand\expandafter\tubstyle@imagefit\expandafter{%
@@ -1039,12 +1041,11 @@
 % |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
-% TODO: check key usage....
 \newenvironment{gausspage}[1][]{%
   \setkeys*{gausspage}{#1}%
   \gausspage@clearcmd%
-  \gaussboxsetup[#1]
   \@layout@pre{pages=single,#1}
+  \gaussboxsetup[#1]%TODO...
   \sffamily
 }{%
   \@layout@post
@@ -1068,18 +1069,20 @@
 % gesetzten Boxen bzw. ihren Höhen berechnet.
 %    \begin{macrocode}
 \newenvironment{segment}[2][]{%
+  \def\@current@height{#2}% TODO: unschön
+  \setkeys*{bgelement}{#1}% Muss vorher gesetzt werden, um |\XKV@rm| nutzen zu können
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
   % TODO...
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-      \edef\@tubs@arg{[sender=bottom]{1}{\thetubs@yseg@cnt}{6}{#2}}
+      \edef\@tubs@arg{[sender=bottom,\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}
   }{%
     \if@tubs@showlogo%
-      \edef\@tubs@arg{[logosep]{1}{\thetubs@yseg@cnt}{6}{#2}}%
+      \edef\@tubs@arg{[logosep,\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}%
     \else%
-      \edef\@tubs@arg{{1}{\thetubs@yseg@cnt}{6}{#2}}
+      \edef\@tubs@arg{[\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}
     \fi%
   }
-  \bgelement[#1]{#2}
+  \bgelement{#2}
   % Erzeuge gausbox
   \expandafter\gaussbox\@tubs@arg
 }{%
