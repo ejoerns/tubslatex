@@ -127,7 +127,12 @@
 \RequirePackage[absolute]{textpos}
 %    \end{macrocode}
 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Allgemeine Optionen / Paketoptionen}\label{sec:options}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Alle hier beschriebenen Optionen sind sowohl für die |gaussbox| als
+% auch für die |scifibox| verwendbar.
 %
 %    \begin{macro}{tubsbox@bottomsender}
 % Merker für Option '|sender|'.
@@ -145,7 +150,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\tubsbox@colorbox}
-% Speichert ggf. colorbox-Kommand mit dem die Hintergrundfarbe der jeweiligen
+% Speichert ggf. colorbox-Kommando mit dem die Hintergrundfarbe der jeweiligen
 % Box gezeichnet werden soll.
 %    \begin{macrocode}
 \newcommand{\tubsbox@colorbox}{\relax}
@@ -156,7 +161,7 @@
 % \marg{odd cmd}\marg{even cmd}\par
 % Switch um Kommandos zu definieren, die für gerade und ungerade Seiten
 % unterschiedlich arbeiten.
-% Ist nur aktiv, wenn Option |twosided| benutzt wird.
+% Ist nur aktiv, wenn Option |twoside| benutzt wird.
 %    \begin{macrocode}
 \newcommand{\if@tubs@oddpage}[2]{%
   \ifthenelse{\boolean{tubsstyle@twoside}}{%
@@ -167,30 +172,36 @@
 %    \end{macro}
 %
 %
-% TODO: >>> this macro is unused!!! <<<
 %    \begin{macro}{\gaussboxsetup}
-%    \begin{macro}{\scifiboxsetup}
 % \oarg{option}\par
-% Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
-% Die Namen sind jeweils Aliase.
-% Die Stern-Variante hat die selbe Bedeutung wie der Stern bei setkeys.
+% Setzt keys für die |scifibox|.
+% Die keys werden dabei an die Familien |tubsbox.sty| und |scifibox| delegiert.
 %    \begin{macrocode}
 \newcommand*{\scifiboxsetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
-  \setrmkeys{scifibox}
-}
-\newcommand*{\gaussboxsetup}[1][]{%
-  \setkeys*{tubsbox.sty}{#1}
-  \setrmkeys{gaussbox}
+  \setkeys*{scifibox}{#1}
+  % TODO: test for unused keys
 }
 %    \end{macrocode}
-%    \end{macro}\end{macro}
+%    \end{macro}
+%
+%    \begin{macro}{\scifiboxsetup}
+% Setzt keys für die |gaussbox|
+% Die keys werden dabei an die Familien |tubsbox.sty| und |gaussbox| delegiert.
+%    \begin{macrocode}
+\newcommand*{\gaussboxsetup}[1][]{%
+  \setkeys*{tubsbox.sty}{#1}
+  \setkeys*{gaussbox}{#1}
+  % TODO: test for unused keys
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 %
 % \begin{key}{tubsbox.sty}{sender}
-% Mögliche Werte: |bottom| oder |top|.
+% Mögliche Werte: |bottom| oder |top|.\\
 % Schaltet zwischen den beiden Layoutvarianten mit Absenderbereich oben
-% und unten auf der Seite um, damit die Boxen korrekt platziert werden.\par
+% und unten auf der Seite um, damit die Boxen korrekt platziert werden.\\
 % Standardmäßig ist der Absenderbereich oben.
 %    \begin{macrocode}
 \define@choicekey{tubsbox.sty}{sender}[\var\nr]{top,bottom}{%
@@ -203,11 +214,10 @@
 %    \end{macrocode}
 %    \end{key}
 %
-% \begin{key}{tubsbox.sty}{frame}
-%   Zeichnet wenn gewünscht einen Rahmen um
-%   die jeweiligen Boxen.
-%   Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.\par
-%   Standardmäßig haben die Boxen keinen Rahmen.
+%    \begin{key}{tubsbox.sty}{frame}
+% Zeichnet wenn gewünscht einen Rahmen um die jeweiligen Boxen.\\
+% Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.\\
+% Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
 \define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}{%
   \ifcase\nr\relax
@@ -220,8 +230,8 @@
 %    \end{key}
 %
 % \begin{key}{tubsbox.sty}{bgcolor}
-%   Standard-Hintergrundfarbe der Boxen festlegen.
-%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\par
+%   Standard-Hintergrundfarbe der Boxen festlegen.\\
+%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\\
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
 \define@key{tubsbox.sty}{bgcolor}{%
@@ -240,19 +250,21 @@
 % Initialisierung mit Werten der Paket-Optionen.
 %    \begin{macrocode}
 \ProcessOptionsX\relax%
-\gaussboxsetup% TODO: needed? senseful??
 %    \end{macrocode}%
 %
-%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Gaussbox-Optionen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+%    \begin{macrocode}
+\newcommand*\tubs@gb@topsep{0mm}
+%    \end{macrocode}
 %
-% \begin{key}{tubsbox.sty}{addtopsep}
+%    \begin{key}{gaussbox}{logosep}
 % Fügt zusätzlichen Top-Innenabstand hinzu. Wenn kein Wert angegeben, wird
 % doppelte Rahmenstärke hinzugefügt. (Dies ist die Standardeinstellung für
 % die erste tubsbox auf einer Seite mit Siegelbandlogo.)
 %    \begin{macrocode}
-\newcommand*\tubs@gb@topsep{0mm}
 \define@boolkey{gaussbox}{logosep}[true]{%
   \ifKV@gaussbox@logosep%
     \renewcommand*\tubs@gb@topsep{2\tubspage@borderwidth}
@@ -264,7 +276,7 @@
 %    \end{key}
 %
 %
-% \begin{key}{tubsbox.sty}{margin}
+% \begin{key}{gaussbox}{margin}
 %   \emph{TODO}\par
 %   Führt dazu, dass \emph{innerhalb} der gaussbox ein zusätzlicher Rand
 %   in Breite der Marginale eingefügt wird.
@@ -282,6 +294,10 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Gaußraster-Box}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %    \begin{macro}{\tb@gb@setorig}
@@ -308,36 +324,6 @@
 }
 %    \end{macrocode}
 %    \end{macro}
-%
-%    \begin{macro}{\tb@sb@setorig}
-% Berechnet den Ursprung des von scifibox benutzten Koordinatensystems (neu).
-%    \begin{macrocode}
-\providecommand\tb@sb@setorig{%
-  \ifthenelse{\boolean{tubsbox@bottomsender}}{%
-    \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        \tubspage@borderwidth}%
-    }{%
-      \textblockorigin{\tubspage@borderwidth}{%
-        \tubspage@borderwidth}%
-    }%
-  }{%
-    \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        0.1429\paperheight}%
-    }{%
-      \textblockorigin{\tubspage@borderwidth}{%
-        0.1429\paperheight}% TODO: Kompatibilität mit Querformat
-    }
-  }
-}
-%    \end{macrocode}
-%    \end{macro}
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Gaußraster-Box}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 % Lege Rastermaße fest.
@@ -505,6 +491,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Modul-System}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%    \begin{macro}{\tb@sb@setorig}
+% Berechnet den Ursprung des von scifibox benutzten Koordinatensystems (neu).
+%    \begin{macrocode}
+\providecommand\tb@sb@setorig{%
+  \ifthenelse{\boolean{tubsbox@bottomsender}}{%
+    \if@tubs@oddpage{%
+      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
+        \tubspage@borderwidth}%
+    }{%
+      \textblockorigin{\tubspage@borderwidth}{%
+        \tubspage@borderwidth}%
+    }%
+  }{%
+    \if@tubs@oddpage{%
+      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
+        0.1429\paperheight}%
+    }{%
+      \textblockorigin{\tubspage@borderwidth}{%
+        0.1429\paperheight}% TODO: Kompatibilität mit Querformat
+    }
+  }
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 %
 %    \begin{macrocode}
