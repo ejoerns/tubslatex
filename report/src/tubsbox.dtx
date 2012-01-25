@@ -288,27 +288,25 @@
 %
 %
 %
-%    \begin{macro}{\tubs@gb@setorig}
-% Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems neu.
-% |\oddsidemargin|+1in+|\voffst| ist der Abstand vom linken Rand!
+%    \begin{macro}{\tb@setorig}
+% Berechnet den Ursprung des von den Boxen benutzten Koordinatensystems (neu).
 %    \begin{macrocode}
-\providecommand\tubs@gb@setorig{%
-  % TODO: this seems to be a bug, only one borderwidth should be needed
+\providecommand\tb@setorig{%
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
       \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        2\tubspage@borderwidth}%
+        \tubspage@borderwidth}%
     }{%
       \textblockorigin{\tubspage@borderwidth}{%
-        2\tubspage@borderwidth}%
+        \tubspage@borderwidth}%
     }%
   }{% 
     \if@tubs@oddpage{%
       \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        \tubspage@senderheight+\tubspage@borderwidth}%
+        \tubspage@senderheight}%
     }{%
       \textblockorigin{\tubspage@borderwidth}{%
-        \tubspage@senderheight+\tubspage@borderwidth}%
+        \tubspage@senderheight}%
     }
   }
 }
@@ -388,7 +386,7 @@
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][bgcolor=none]{%
 \setkeys*{tubsbox.sty}{#1}
-\tubs@gb@setorig
+\tb@setorig
 \setkeys*{gaussbox}{bgcolor=none,logosep=false,#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
@@ -461,16 +459,16 @@
   \end{lrbox}
   \setlength{\fboxsep}{0cm}%
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
-  \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
+%   \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
-    \raisebox{\tubspage@borderwidth}[0cm]{%
+%     \raisebox{\tubspage@borderwidth}[0cm]{%
       \tubsbox@framebox{\tubsbox@colorbox{%
         \hspace*{\tubs@gb@leftmargin}%
         \usebox{\tubs@gb@storebox}%
         \hspace*{\tubs@gb@rightmargin}%
         }}%
-      }%
-  \end{addmargin*}%
+%       }%
+%   \end{addmargin*}%
   \end{textblock}
 }
 %    \end{macrocode}
@@ -1014,7 +1012,7 @@
 % Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
 \newenvironment{@@scifibox}[3][\relax]{%
-  \tubs@gb@setorig
+  \tb@setorig
   % Argumente sichern
   \ifx#1\relax%
     \def\@current@rowheight{#2}
@@ -1064,7 +1062,7 @@
     \ifthenelse{\boolean{scifibox@showbgimage}}{%
     \begin{textblock*}{\@current@width}(%
       \tubs@sb@box@xpos,%
-      -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
+      0.05195\paperheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \tubsbox@framebox{\tubsbox@colorbox{%
           \usebox{\tubs@sb@bgimagebox}%
@@ -1073,7 +1071,7 @@
     }{}
     \begin{textblock*}{\@current@width}(%
       \tubs@sb@box@xpos,%
-      -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
+      0.05195\paperheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \tubsbox@framebox{\tubsbox@colorbox{%
           \hspace{0.5\tubs@sb@padding}%
