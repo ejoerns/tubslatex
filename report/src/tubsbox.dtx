@@ -168,8 +168,6 @@
 %
 %
 % TODO: >>> this macro is unused!!! <<<
-% TODO: bei gaussboxsetup/scifiboxsetup zusätzlich Individuelle Setzen?
-%    \begin{macro}{\tubsboxsetup}
 %    \begin{macro}{\gaussboxsetup}
 %    \begin{macro}{\scifiboxsetup}
 % \oarg{option}\par
@@ -177,21 +175,16 @@
 % Die Namen sind jeweils Aliase.
 % Die Stern-Variante hat die selbe Bedeutung wie der Stern bei setkeys.
 %    \begin{macrocode}
-\newcommand*{\tubsboxsetup}{%
-  \@ifstar%
-  \tubsboxsetupStar%
-  \tubsboxsetupNoStar%
-}
-\newcommand*{\tubsboxsetupStar}[1][]{%
+\newcommand*{\scifiboxsetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
+  \setrmkeys{scifibox}
 }
-\newcommand*{\tubsboxsetupNoStar}[1][]{%
-  \setkeys{tubsbox.sty}{#1}
+\newcommand*{\gaussboxsetup}[1][]{%
+  \setkeys*{tubsbox.sty}{#1}
+  \setrmkeys{gaussbox}
 }
-\let\gaussboxsetup=\tubsboxsetup%
-\let\scifiboxsetup=\tubsboxsetup%
 %    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}
+%    \end{macro}\end{macro}
 %
 %
 % \begin{key}{tubsbox.sty}{sender}
@@ -411,7 +404,7 @@
 %               Wertebereich: [1-6] / [1-8]
 % \end{tabularx}
 %    \begin{macrocode}
-\newenvironment{gaussbox}[5][bgcolor=none]{%
+\newenvironment{gaussbox}[5][]{%
 \setkeys*{tubsbox.sty}{#1}
 \tb@gb@setorig
 \setkeys*{gaussbox}{bgcolor=none,logosep=false,#1}
@@ -787,8 +780,7 @@
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
-  \setkeys*{scifibox}{bgcolor=tuWhite,#1}
-  \scifiboxsetup*[#1]
+  \scifiboxsetup[bgcolor=tuWhite,#1]
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}
   \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}
