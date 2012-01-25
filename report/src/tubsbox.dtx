@@ -83,7 +83,7 @@
 %
 % \begin{abstract}
 %   Diese Datei stellt die Umgebung |gaussbox| für Darstellungen im Gaußraster 
-%   und Umgebungen für Darstellungen im Modulraster zur Verfügung.
+%   und die Umgebungen |scifibox| für Darstellungen im Modulraster zur Verfügung.
 % \end{abstract}
 %
 % \tableofcontents
@@ -167,12 +167,15 @@
 %    \end{macro}
 %
 %
+% TODO: >>> this macro is unused!!! <<<
+% TODO: bei gaussboxsetup/scifiboxsetup zusätzlich Individuelle Setzen?
 %    \begin{macro}{\tubsboxsetup}
 %    \begin{macro}{\gaussboxsetup}
 %    \begin{macro}{\scifiboxsetup}
 % \oarg{option}\par
 % Aktualisiert alle durch Optionen übergebenen Einstellungen an den Boxen.
 % Die Namen sind jeweils Aliase.
+% Die Stern-Variante hat die selbe Bedeutung wie der Stern bei setkeys.
 %    \begin{macrocode}
 \newcommand*{\tubsboxsetup}{%
   \@ifstar%
@@ -761,6 +764,7 @@
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
   \setkeys*{scifibox}{bgcolor=tuWhite,#1}
+  \scifiboxsetup*[#1]
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}
   \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}
@@ -1048,8 +1052,8 @@
 % Definiere und platziere Textblock mit gespeichertem Inhalt.
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \begin{textblock*}{\@current@width}(%
-      -\tubspage@borderwidth+\tubs@sb@box@xpos,%
-      -\tubspage@borderwidth+\tubs@sb@box@ypos)%
+      \tubs@sb@box@xpos,%
+      \tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \colorbox{tuWhite}{%
           \hspace{0.5\tubs@sb@padding}%
