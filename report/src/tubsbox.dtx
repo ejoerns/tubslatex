@@ -296,18 +296,18 @@
   % TODO: this seems to be a bug, only one borderwidth should be needed
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
-      \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
+      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
         2\tubspage@borderwidth}%
     }{%
-      \textblockorigin{2\tubspage@borderwidth}{%
+      \textblockorigin{\tubspage@borderwidth}{%
         2\tubspage@borderwidth}%
     }%
   }{% 
     \if@tubs@oddpage{%
-      \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
+      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
         \tubspage@senderheight+\tubspage@borderwidth}%
     }{%
-      \textblockorigin{2\tubspage@borderwidth}{%
+      \textblockorigin{\tubspage@borderwidth}{%
         \tubspage@senderheight+\tubspage@borderwidth}%
     }
   }
@@ -762,7 +762,7 @@
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
-  \setkeys{scifibox}{bgcolor=tuWhite,#1}
+  \setkeys*{scifibox}{bgcolor=tuWhite,#1}
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}
   \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}
@@ -1060,9 +1060,10 @@
         }%
     \end{textblock*}%
   }{%
+    % Setze zusätzliche Box für Hintergrundbild, falls gewünscht
     \ifthenelse{\boolean{scifibox@showbgimage}}{%
     \begin{textblock*}{\@current@width}(%
-      -\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      \tubs@sb@box@xpos,%
       -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \tubsbox@framebox{\tubsbox@colorbox{%
@@ -1071,7 +1072,7 @@
     \end{textblock*}%
     }{}
     \begin{textblock*}{\@current@width}(%
-      -\tubspage@borderwidth+\tubs@sb@box@xpos,%
+      \tubs@sb@box@xpos,%
       -\tubspage@borderwidth+0.05195\paperheight+\tubs@sb@box@ypos)%
         \setlength\fboxsep{0mm}%
         \tubsbox@framebox{\tubsbox@colorbox{%
