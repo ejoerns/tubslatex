@@ -392,7 +392,7 @@
 %
 % Standardpositionierung setzen.
 %    \begin{macrocode}
-\setkeys{tubslogo}{pos=right}{}%
+\setkeys{tubslogo}{pos=left}%
 %    \end{macrocode}
 %
 %    \begin{macro}{\tubs@tubslogo}
@@ -1037,7 +1037,7 @@
 \newenvironment{gausspage}[1][]{%
   \setkeys*{gausspage}{#1}%
   \gausspage@clearcmd%
-  \gaussboxsetup*[\XKV@rm]%TODO...
+  \gaussboxsetup[\XKV@rm]%TODO...
   \@layout@pre{pages=single,\XKV@rm}
   \sffamily
 }{%
