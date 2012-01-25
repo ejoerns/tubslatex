@@ -1017,14 +1017,19 @@
 %    \end{macrocode}
 %
 %
+%    \begin{key}{gausspage}{evenpage}
+% Bewirkt, dass die Seite nur auf geraden Seiten dargestellt wird,
+% ansonsten wird eine Leerseite eingefügt
 %    \begin{macrocode}
 \newcommand{\gausspage@clearcmd}{\clearpage}
 \define@key{gausspage}{evenpage}[true]{%
+  % TODO: \thispagestyl{empty} ?
   \renewcommand{\gausspage@clearcmd}{%
     \clearpage\ifthispageodd{\strut\clearpage}{\clearpage}%
   }%
 }
 %    \end{macrocode}
+%    \end{key}
 %
 %
 %    \begin{environment}{tubsposter}
@@ -1034,11 +1039,12 @@
 % |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
+% TODO: check key usage....
 \newenvironment{gausspage}[1][]{%
   \setkeys*{gausspage}{#1}%
   \gausspage@clearcmd%
-  \gaussboxsetup[\XKV@rm]%TODO...
-  \@layout@pre{pages=single,\XKV@rm}
+  \gaussboxsetup[#1]
+  \@layout@pre{pages=single,#1}
   \sffamily
 }{%
   \@layout@post
