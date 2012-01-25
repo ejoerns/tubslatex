@@ -110,7 +110,6 @@
 %    \begin{macrocode}
 \def\logo@papersize{}
 \def\tubslogo@relscale{}
-\newif\if@tl@landscape\@tl@landscapefalse
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
@@ -160,15 +159,6 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{landscape}
-% Relative Skalierung [0.0 -- 1.0]
-%    \begin{macrocode}
-\DeclareOptionX{landscape}{%
-  \@tl@landscapetrue
-}
-%    \end{macrocode}
-%    \end{key}
-%
 % Fehler bei unbekannter Option
 %    \begin{macrocode}
 \DeclareOptionX*{%
@@ -210,27 +200,15 @@
 %    \end{macro}\end{macro}
 %
 %    \begin{macrocode}
-\if@tl@landscape
-  \ifthenelse{\equal{\logo@papersize}{6}}{\def\tubslogo@scale{0.6}}{%  60%
-  \ifthenelse{\equal{\logo@papersize}{5}}{\def\tubslogo@scale{0.6}}{%  70%
-  \ifthenelse{\equal{\logo@papersize}{4}}{\def\tubslogo@scale{0.7}}{% 100%
-  \ifthenelse{\equal{\logo@papersize}{3}}{\def\tubslogo@scale{1.0}}{% 140%
-  \ifthenelse{\equal{\logo@papersize}{2}}{\def\tubslogo@scale{1.4}}{% 200%
-  \ifthenelse{\equal{\logo@papersize}{1}}{\def\tubslogo@scale{2.0}}{% 280%
-  \ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{2.8}}{% 400%
-  \def\tubslogo@scale{1.0}% default
-  }}}}}}}
-\else
-  \ifthenelse{\equal{\logo@papersize}{6}}{\def\tubslogo@scale{0.6}}{%  60%
-  \ifthenelse{\equal{\logo@papersize}{5}}{\def\tubslogo@scale{0.7}}{%  70%
-  \ifthenelse{\equal{\logo@papersize}{4}}{\def\tubslogo@scale{1.0}}{% 100%
-  \ifthenelse{\equal{\logo@papersize}{3}}{\def\tubslogo@scale{1.4}}{% 140%
-  \ifthenelse{\equal{\logo@papersize}{2}}{\def\tubslogo@scale{2.0}}{% 200%
-  \ifthenelse{\equal{\logo@papersize}{1}}{\def\tubslogo@scale{2.8}}{% 280%
-  \ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{4.0}}{% 400%
-  \def\tubslogo@scale{1.0}% default
-  }}}}}}}
-\fi
+\ifthenelse{\equal{\logo@papersize}{6}}{\def\tubslogo@scale{0.6}}{%  60%
+\ifthenelse{\equal{\logo@papersize}{5}}{\def\tubslogo@scale{0.7}}{%  70%
+\ifthenelse{\equal{\logo@papersize}{4}}{\def\tubslogo@scale{1.0}}{% 100%
+\ifthenelse{\equal{\logo@papersize}{3}}{\def\tubslogo@scale{1.4}}{% 140%
+\ifthenelse{\equal{\logo@papersize}{2}}{\def\tubslogo@scale{2.0}}{% 200%
+\ifthenelse{\equal{\logo@papersize}{1}}{\def\tubslogo@scale{2.8}}{% 280%
+\ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{4.0}}{% 400%
+\def\tubslogo@scale{1.0}% default
+}}}}}}}
 %    \end{macrocode}
 %
 % paper format scale
