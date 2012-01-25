@@ -229,7 +229,7 @@
 %    \end{macrocode}
 %    \end{key}
 %
-% \begin{key}{tubsbox.sty}{bgcolor}
+%    \begin{key}{tubsbox.sty}{bgcolor}
 %   Standard-Hintergrundfarbe der Boxen festlegen.\\
 %   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\\
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
@@ -252,19 +252,36 @@
 \newcommand\tb@bottomfill{\relax}
 %    \end{macrocode}
 %
+%    \begin{key}{tubsbox.sty}{t}
+%  Inhalt in Boxen oben ausrichten.
+%    \begin{macrocode}
+\define@key{tubsbox.sty}{t}[true]{%
+  \renewcommand\tb@topfill{\relax}
+  \renewcommand\tb@bottomfill{\vfill}
+}
+%    \end{macrocode}
+%    \end{key}
 %
-% \begin{key}{tubsbox.sty}{bgcolor}
-%   Standard-Hintergrundfarbe der Boxen festlegen.\\
-%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\\
-%   Standardmäßig haben die Boxen keine Hintergrundfarbe.
+%    \begin{key}{tubsbox.sty}{c}
+%  Inhalt in Boxen vertikal zentrieren.
 %    \begin{macrocode}
 \define@key{tubsbox.sty}{c}[true]{%
-  BLABLABLUB
   \renewcommand\tb@topfill{\vfill}
   \renewcommand\tb@bottomfill{\vfill}
 }
 %    \end{macrocode}
 %    \end{key}
+%
+%    \begin{key}{tubsbox.sty}{b}
+%  Inhalt in Boxen unten ausrichten.
+%    \begin{macrocode}
+\define@key{tubsbox.sty}{b}[true]{%
+  \renewcommand\tb@topfill{\vfill}
+  \renewcommand\tb@bottomfill{\relax}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %
 % Paket-Optionen auswerten,
 % Initialisierung mit Werten der Paket-Optionen.
@@ -474,40 +491,29 @@
 \def\tubs@gb@width{#4}%
 \def\tubs@gb@height{\thetubs@gb@calcheight}%
 \begin{lrbox}{\tubs@gb@storebox}%
-  \tb@topfill%
   \begin{minipage}%
         [t]%
         [\tubs@gb@height\TPVertModule]%
         {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep-0.3mm}%
   \vspace*{\tubs@gb@toppadding}%
+  \tb@topfill%
 }{%
+  \tb@bottomfill%
   \vspace*{\tubspage@borderwidth}%
   \end{minipage}
-  \tb@bottomfill%
   \end{lrbox}
   \setlength{\fboxsep}{0cm}%
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
-%   \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
-%     \raisebox{\tubspage@borderwidth}[0cm]{%
       \tubsbox@framebox{\tubsbox@colorbox{%
         \hspace*{\tubs@gb@leftmargin}%
         \usebox{\tubs@gb@storebox}%
         \hspace*{\tubs@gb@rightmargin}%
         }}%
-%       }%
-%   \end{addmargin*}%
   \end{textblock}
 }
 %    \end{macrocode}
 %    \end{macro}
-%
-% NOTE: Nur aus Kompatibilitaetsgründen definiert!
-% Sobald wie möglich entfernen!
-%    \begin{macrocode}
-\let\tubsbox=\gaussbox
-\let\endtubsbox=\endgaussbox
-%    \end{macrocode}
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
