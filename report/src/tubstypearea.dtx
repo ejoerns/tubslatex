@@ -177,9 +177,10 @@
 %    \begin{macro}{\tubspage@communicationheight}
 % Höhe des Kommunikationsbereichs (Formathöhe abzüglich Absenderhöhe).\par
 % HINWEIS: Die auf der CD-Website beschriebenen Höhen für den Kommunikations-
-%   bereicht entspricht nicht der auf der Website definiterten Höhe des
+%   bereich entsprechen nicht der auf der Website definierten Höhe des
 %   Kommunikationsbereichs, sondern nur der Höhe nach Abzug des unteren
 %   Rahmens! (Also eigentlich der Kommunikations\emph{fläche}).
+% TODO: check definition!
 %    \begin{macrocode}
 \newlength{\tubspage@communicationheight}
 %    \end{macrocode}
@@ -301,6 +302,7 @@
   \ifthenelse{\boolean{tubspage@calconly}}{}{%
     \ifthenelse{\boolean{scifiposter}}{%
       %%% Einstellungen für wissenschaftliche Poster %%%
+      % Die Innenränder der Module betragen jeweils 0.5\tubspage@borderwidth
       \geometry{%
         left=1.5\tubspage@borderwidth,
         right=1.5\tubspage@borderwidth
@@ -314,7 +316,8 @@
       }{% Absenderbereich oben
         \geometry{%
           top=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5! (quer)
-          headsep=0.05195\paperheight+1.5\tubspage@borderwidth,% 1/7-1/11 + border
+          headheight=\tubspage@senderheight-1.5\tubspage@borderwidth,
+          headsep=0.05195\paperheight+\tubspage@borderwidth,% 1/7-1/11 + border
           bottom=1.5\tubspage@borderwidth,
         }
       }
@@ -540,7 +543,7 @@
 \DeclareOptionX{scifiposter}{%
   \setboolean{scifiposter}{true}
   \g@addto@macro{\tubspage@modifications}{%
-    \setlength{\tubspage@senderheight}{0.0909\paperheight}% ~1/11?
+    \setlength{\tubspage@senderheight}{0.0909\paperheight}% ~1/11
     \setlength{\tubspage@communicationheight}{%
       \paperheight-\tubspage@senderheight-\tubspage@borderwidth}
   }
