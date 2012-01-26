@@ -160,7 +160,9 @@
 %    \begin{macrocode}
 \newcommand{\new@title@style}[3]{%
   \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
-  \expandafter\def\csname tubs@style@content@#1\endcsname{#3}
+  \expandafter\def\csname tubs@style@content@#1\endcsname{%
+    \cleardoublepage%
+    #3}
 }
 %    \end{macrocode}
 %    \end{macro}
