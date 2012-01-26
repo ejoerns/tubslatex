@@ -171,7 +171,9 @@
 %    \begin{macrocode}
 \newcommand{\new@back@style}[3]{%
   \expandafter\def\csname tubs@backstyle@bg@#1\endcsname{#2}
-  \expandafter\def\csname tubs@backstyle@content@#1\endcsname{#3}
+  \expandafter\def\csname tubs@backstyle@content@#1\endcsname{%
+      \clearpage\ifthispageodd{\thispagestyle{empty}\strut\clearpage}{}
+    #3}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -498,7 +500,7 @@
 %</article>
 %<*report|book>
 \new@back@style{plain}{}{%
-  \begin{gausspage}[evenpage]
+  \begin{gausspage}
     \showtopline
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}{1}
@@ -513,7 +515,7 @@
 %    \begin{macro}{addressinfo}
 %    \begin{macrocode}
 \new@back@style{addressinfo}{}{%
-  \begin{gausspage}[evenpage]
+  \begin{gausspage}
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondary]{2}
       \leavevmode\color{white}\tubs@tp@address
@@ -529,7 +531,7 @@
 %    \begin{macro}{info}
 %    \begin{macrocode}
 \new@back@style{info}{}{%
-  \begin{gausspage}[evenpage]
+  \begin{gausspage}
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{8}
       \tubs@tp@backinfo
@@ -542,7 +544,7 @@
 %    \begin{macro}{trisec}
 %    \begin{macrocode}
 \new@back@style{trisec}{}{%
-  \begin{gausspage}[evenpage]
+  \begin{gausspage}
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{2}
       \usekomafont{copytext}\tubs@tp@address

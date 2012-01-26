@@ -1019,21 +1019,6 @@
 %    \end{macrocode}
 %
 %
-%    \begin{key}{gausspage}{evenpage}
-% Bewirkt, dass die Seite nur auf geraden Seiten dargestellt wird,
-% ansonsten wird eine Leerseite eingefügt
-%    \begin{macrocode}
-\newcommand{\gausspage@clearcmd}{\clearpage}
-\define@key{gausspage}{evenpage}[true]{%
-  % TODO: \thispagestyl{empty} ?
-  \renewcommand{\gausspage@clearcmd}{%
-    \clearpage\ifthispageodd{\strut\clearpage}{\clearpage}%
-  }%
-}
-%    \end{macrocode}
-%    \end{key}
-%
-%
 %    \begin{environment}{tubsposter}
 % Erzeugt eine neue Poster-Seite.
 % Steuert die Aufbaureihenfolge des Hintergrundes, indem die
@@ -1043,9 +1028,10 @@
 %    \begin{macrocode}
 \newenvironment{gausspage}[1][]{%
   \setkeys*{gausspage}{#1}%
-  \gausspage@clearcmd%
-  \@layout@pre{pages=single,#1}
-  \gaussboxsetup[#1]%TODO...
+  \let\tmp@rm\XKV@rm
+  \clearpage
+  \@layout@pre{pages=single,\tmp@rm}
+  \gaussboxsetup[\tmp@rm]%TODO...
   \sffamily
 }{%
   \@layout@post
