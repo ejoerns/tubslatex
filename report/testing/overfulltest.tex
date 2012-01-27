@@ -22,27 +22,64 @@ Well, its good!
 \geometry{top=0mm,left=0mm,right=0cm}
 \begin{document}
 
-\bglayout{%
+\bglayout[sender=bottom]{%
   \bgelement[bgcolor=tuGray20]{1}
+  \bgelement[bgcolor=tuGray40]{1}
+  \bgelement[bgcolor=tuGray20]{1}
+  \bgelement[bgcolor=tuGray40]{1}
 }
-\begin{tubsbox}{1}{1}{6}{1}
+\begin{gaussbox}[sender=bottom]{1}{1}{6}{1}
   \lipsum[1]
-\end{tubsbox}
-\begin{tubsbox}{1}{2}{3}{3}
-  \lipsum[1]
-\end{tubsbox}
-\begin{tubsbox}{4}{2}{3}{3}
-  \lipsum[1]
-\end{tubsbox}
-\begin{tubsbox}{1}{5}{2}{4}
-  \lipsum[1]
-\end{tubsbox}
-\begin{tubsbox}{3}{5}{2}{4}
-  \lipsum[1]
-\end{tubsbox}
-\begin{tubsbox}{5}{5}{2}{4}
-  \lipsum[1]
-\end{tubsbox}
+\end{gaussbox}
+\begin{gaussbox}[t,bgcolor=tuGreenLight,sender=bottom]{1}{1}{1}{1}
+  Lo\-rem ip\-sum
+\end{gaussbox}
+\begin{gaussbox}[c,bgcolor=tuGreenLight,sender=bottom]{3}{1}{1}{1}
+  do\-lor sit a\-met
+\end{gaussbox}
+\begin{gaussbox}[b,bgcolor=tuGreenLight,sender=bottom]{5}{1}{1}{1}
+  con\-sec\-te\-tuer
+\end{gaussbox}
+%
+\begin{gaussbox}[t,bgcolor=tuOrange,sender=bottom]{2}{2}{1}{1}
+  Lo\-rem ip\-sum
+\end{gaussbox}
+\begin{gaussbox}[c,bgcolor=tuOrange,sender=bottom]{4}{2}{1}{1}
+  do\-lor sit a\-met
+\end{gaussbox}
+\begin{gaussbox}[b,bgcolor=tuOrange,sender=bottom]{6}{2}{1}{1}
+  con\-sec\-te\-tuer
+\end{gaussbox}
+%
+\begin{gaussbox}[t,bgcolor=tuGreenLight,sender=bottom]{1}{3}{1}{1}
+  Lo\-rem ip\-sum
+\end{gaussbox}
+\begin{gaussbox}[c,bgcolor=tuGreenLight,sender=bottom]{3}{3}{1}{1}
+  do\-lor sit a\-met
+\end{gaussbox}
+\begin{gaussbox}[b,bgcolor=tuGreenLight,sender=bottom]{5}{3}{1}{1}
+  con\-sec\-te\-tuer
+\end{gaussbox}
+%
+\begin{gaussbox}[t,bgcolor=tuOrange,sender=bottom]{2}{5}{1}{1}
+  Lo\-rem ip\-sum
+\end{gaussbox}
+\begin{gaussbox}[c,bgcolor=tuOrange,sender=bottom]{4}{5}{1}{1}
+  do\-lor sit a\-met
+\end{gaussbox}
+\begin{gaussbox}[b,bgcolor=tuOrange,sender=bottom]{6}{5}{1}{1}
+  con\-sec\-te\-tuer
+\end{gaussbox}
+%
+\begin{gaussbox}[t,bgcolor=tuGreenLight,sender=bottom]{1}{6}{1}{3}
+  Lo\-rem ip\-sum
+\end{gaussbox}
+\begin{gaussbox}[c,bgcolor=tuGreenLight,sender=bottom]{3}{6}{1}{3}
+  do\-lor sit a\-met
+\end{gaussbox}
+\begin{gaussbox}[b,bgcolor=tuGreenLight,sender=bottom]{5}{6}{1}{3}
+  con\-sec\-te\-tuer
+\end{gaussbox}
 
 ~\clearpage
 \makeatletter

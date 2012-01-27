@@ -1,7 +1,9 @@
-\documentclass[a4paper,twoside=false,extramargin,violet]{tubsartcl}
+\documentclass[a4paper,twoside=true,extramargin,violet]{tubsreprt}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
+
+\usepackage{assert}
 
 %opening
 \titleabstract{%
@@ -15,7 +17,7 @@
 \title{Lorem ipsum dolor sit amet}
 \subtitle{Morbi auctor lorem\vphantom{g}\\ % TODO!!!!
 Nam lacus libero}
-\logo{\includegraphics{dummy_institut_large.jpg}}
+\logo{\includegraphics{dummy_institut.jpg}}
 % \logo{\begingroup\setkeys{Gin}{height=\headheight}This is a test.\endgroup}
 \author{Enrico Jörns}
 \address{(c) Technische Universität Braunschweig\\
@@ -27,29 +29,22 @@ Telefax +49 531 391-0000\\
 institut@tu-braunschweig.de\\
 www.tu-braunschweig.de}
 
-
 \begin{document}
 
-\makebackpage[plain]
+% asdf
 
-\selectSecondary{orange}
-\makebackpage[info]
-\makebackpage[addressinfo]
+\maketitle[image]
+
+asdf
+\assertPageNo{2}
+
 \makebackpage[trisec]
 
-\selectSecondary{blue}
-\makebackpage[info]
-\makebackpage[addressinfo]
-\makebackpage[trisec]
+\assertPageNo{5}
 
-\selectSecondary{green}
-\makebackpage[info]
-\makebackpage[addressinfo]
-\makebackpage[trisec]
-
-\selectSecondary{violet}
-\makebackpage[info]
-\makebackpage[addressinfo]
-\makebackpage[trisec]
 
 \end{document}
+
+%       \begin{tabularx}{\textwidth}{@{}X@{}X@{}X@{}X@{}}
+%         \fboxsep0mm\colorbox{tuSecondary}{\parbox[t][1cm]{0.2\textwidth}{~}}
+%       \end{tabularx}
