@@ -338,23 +338,25 @@
 %
 %
 %    \begin{macro}{\tb@gb@setorig}
-% Berechnet den Ursprung des von gaussbox benutzten Koordinatensystems (neu).
+% Berechnet den Ursprung des von gaussbox benutzten Koordinatensystems (neu).\\
+% Der Ursprung wird dabei horiz. auf den Beginn des Textbereichs gesetzt,
+% um mit |\TPHorizModule| das Spaltenlayout realisieren zu können.
 %    \begin{macrocode}
 \providecommand\tb@gb@setorig{%
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
+      \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
         \tubspage@borderwidth}%
     }{%
-      \textblockorigin{\tubspage@borderwidth}{%
+      \textblockorigin{2\tubspage@borderwidth}{%
         \tubspage@borderwidth}%
     }%
   }{%
     \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
+      \textblockorigin{2\tubspage@borderwidth+\tubspage@bcor}{%
         \tubspage@senderheight}%
     }{%
-      \textblockorigin{\tubspage@borderwidth}{%
+      \textblockorigin{2\tubspage@borderwidth}{%
         \tubspage@senderheight}%
     }
   }
@@ -478,39 +480,44 @@
 %
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
-\def\@inv@arg{\relax}
+\def\@inv@arg{\relax}%
 \ifthenelse{\boolean{tubsbox@bottomsender}}{%
   \def\@inv@arg{inverted}%
-}{}
-\calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcypos}{#3}
-\def\tubs@gb@ypos{\thetubs@gb@calcypos}
+}{}%
+\calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcypos}{#3}%
+\def\tubs@gb@ypos{\thetubs@gb@calcypos}%
 % 
-\calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcheight}{#3+#5}
+\calc@gauss@elementpos[\@inv@arg]{tubs@gb@calcheight}{#3+#5}%
 \addtocounter{tubs@gb@calcheight}{-\thetubs@gb@calcypos}%
 % 
 \def\tubs@gb@width{#4}%
 \def\tubs@gb@height{\thetubs@gb@calcheight}%
+%TODO: Option to set margins of boxes to 0
 \begin{lrbox}{\tubs@gb@storebox}%
   \begin{minipage}%
         [t]%
         [\tubs@gb@height\TPVertModule]%
-        {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep-0.3mm}%
+        {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep-2\tubspage@borderwidth+\tubs@gb@leftmargin+\tubs@gb@rightmargin}%
   \vspace*{\tubs@gb@toppadding}%
   \tb@topfill%
 }{%
   \tb@bottomfill%
-  \vspace*{\tubspage@borderwidth}%
-  \end{minipage}
-  \end{lrbox}
+  \vspace*{0mm}%
+  \end{minipage}%
+  \end{lrbox}%
   \setlength{\fboxsep}{0cm}%
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
+  \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
       \tubsbox@framebox{\tubsbox@colorbox{%
-        \hspace*{\tubs@gb@leftmargin}%
+%         \hspace*{\tubs@gb@leftmargin}%
+        \hspace*{\tubspage@borderwidth}%
         \usebox{\tubs@gb@storebox}%
-        \hspace*{\tubs@gb@rightmargin}%
+        \hspace*{\tubspage@borderwidth}%
+%         \hspace*{\tubs@gb@rightmargin}%
         }}%
-  \end{textblock}
+  \end{addmargin*}%
+  \end{textblock}%
 }
 %    \end{macrocode}
 %    \end{macro}
