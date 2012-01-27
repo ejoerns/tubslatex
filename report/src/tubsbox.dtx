@@ -293,6 +293,24 @@
 % \subsection{Gaussbox-Optionen}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+%
+%    \begin{macrocode}
+\newif\if@gb@nosep\@gb@nosepfalse
+%    \end{macrocode}
+%
+%    \begin{key}{gaussbox}{nosep}
+% Kein Abstand zwischen Boxen
+%    \begin{macrocode}
+\define@boolkey{gaussbox}{nosep}[true]{%
+  \ifKV@gaussbox@nosep%
+    \@gb@noseptrue%
+  \else%
+    \@gb@nosepfalse%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{macrocode}
 \newcommand*\tubs@gb@addtoppadding{0mm}
 %    \end{macrocode}
@@ -484,6 +502,13 @@
   \setlength{\tubs@gb@bottomsep}{0.5\tubspage@columnsep}
 \fi%
 %
+% Lösche Zwischenabstände, wenn nosep gewählt wurde
+\if@gb@nosep
+  \setlength{\tubs@gb@topsep}{0mm}
+  \setlength{\tubs@gb@bottomsep}{0mm}
+  \setlength{\tubs@gb@leftsep}{0mm}
+  \setlength{\tubs@gb@rightsep}{0mm}
+\else\fi
 %
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
