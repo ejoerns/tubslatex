@@ -1027,11 +1027,9 @@
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 \newenvironment{gausspage}[1][]{%
-  \setkeys*{gausspage}{#1}%
-  \let\tmp@rm\XKV@rm
   \clearpage
-  \@layout@pre{pages=single,\tmp@rm}
-  \gaussboxsetup[\tmp@rm]%TODO...
+  \@layout@pre{pages=single,#1}
+  \gaussboxsetup[#1]%TODO...
   \sffamily
 }{%
   \@layout@post
