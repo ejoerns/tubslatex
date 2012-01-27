@@ -1,0 +1,109 @@
+\documentclass[%
+  iap_de,%
+  addrfield=false,%
+  footsepline=true]{tubslttr2}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+
+\parindent0pt
+% \emergencystretch10pt \addtolength{\textheight}{2cm}
+
+\makeatletter
+
+% KOMA settings
+\@setplength{refvpos}{50mm}
+\let\raggedsignature=\raggedleft
+\setkomavar{signature}{%\centering%
+  \parbox{\textwidth}{~}
+  \rule{4.5cm}{1pt}\\
+  (\textit{Prof. Dr. A. Hangleiter})~~~~
+}
+\@setplength{firstfootvpos}{220mm}
+
+\setkomavar{firstfoot}{%
+  \rule{\textwidth}{1pt}\\
+  \vspace{2mm}\\
+  \underline{\textbf{Im Physikalischen Praktikum durchgef\"{u}hrte Versuche}}\\
+  \phantom{\tiny nix}\\
+  Pohlsches Pendel, gekoppelte Pendel und Kreisel\\
+  C${\rm _p}$/C${\rm _V}$ und Thermomotor\\
+  Wechselspannung und Wechselstrom\\
+  Franck-Hertz-Versuch und photoelektrischer Effekt\\
+  Geometrische Optik und Mikroskop\\
+  Messungen zur Radioaktivit\"{a}t\\
+}
+
+\newcommand{\wise}{Wintersemester 2010/2011\ }
+\newcommand{\sose}{Sommersemester 2011\ }
+\newcommand*{\KeinSchein}{}
+% #1 - Nachname
+% #2 - Name
+% #3 - Geschlecht [m/w]
+% #4 - Matrikelnummer
+% #5 - Datum
+% #6 - Fach [c/l/]
+% #7 - Semester [s/w]
+% #8 - Note (gerundet) [1/2/3/4/5]
+% #9 - Note
+\newcommand{\student}[9]{%
+\ifnum \number#8<5\relax
+\begin{letter}{dummy}
+  \opening{}
+  \begin{center}
+    {\Huge \sf \textbf{BESCHEINIGUNG}}\\
+    \vspace*{6mm}
+    {\Large \"{u}ber die Teilnahme am Physikalischen Praktikum}\\
+    \vspace*{2mm}
+    {\Large f\"{u}r Studierende der Fachrichtung {\if #6c Chemie \else  \if #6l Lebensmittelchemie \else Physik und Ihre Vermittlung \fi \fi} }
+  \end{center}
+  %
+  \vspace*{5mm}
+  %
+  \begin{center}
+    \large
+     \if #3m Herr~ \else Frau~ \fi \textbf{#2 #1},\\
+     \vspace{1mm}
+     geb.~am~#5, Matrikelnummer~#4
+     \par%
+  \end{center}
+  \begin{center}
+    hat im \if #7s\sose \else \wise \fi die unten aufgef\"{u}hrten Versuche\\
+    des Physikalischen Praktikums durchgef\"{u}hrt.\\
+    \vspace*{2ex}
+    \large%
+    Das Physikalische Praktikum (2 SWS) wurde mit der Note\\  %\vspace*{2mm}
+
+    \if #84 \textbf{ausreichend (#9)} \else
+        \if #83 \textbf{befriedigend (#9)} \else
+            \if #82 \textbf{gut (#9)} \else
+                \if #81 \textbf{sehr gut (#9)} \else \textbf{noch keine Note vergeben}
+                \fi
+            \fi
+        \fi
+    \fi \\ erfolgreich abgeschlossen.
+  \end{center}
+\closing{}
+\end{letter}
+%
+\else
+  \g@addto@macro\KeinSchein{\do{#2}{#1}{#4}{#5}}
+\fi
+}%
+\makeatother
+
+
+
+\begin{document}
+
+\input{ch_WS1112.list}
+
+\clearpage
+{\LARGE\sffamily Keinen Schein erhalten:}
+
+\def\do#1#2#3#4{\item #1 #2, #3, #4}
+\begin{itemize}
+\KeinSchein
+\end{itemize}
+
+\end{document}

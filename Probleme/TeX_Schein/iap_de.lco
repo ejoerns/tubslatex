@@ -1,0 +1,20 @@
+% Es existiert noch kein Logo für's IAP
+%\setkomavar{fromlogo}{\includegraphics[height=0.9\tubslogoHeight]{dummy_institut.pdf}}
+
+\setkomavar{frominstitute}{Institut f\"{u}r Angewandte Physik}
+
+\setkomavar{fromstreet}{Mendelssohnstr. 2}
+\setkomavar{fromzipcode}{38106}
+%\setkomavar{fromtown}{Braunschweig}
+\setkomavar{fromphonedirect}{8500}
+\setkomavar{fromfaxdirect}{8511}
+\setkomavar{fromurl}{www.iap.tu-bs.de}
+
+%\setkomavar{frombank}{%
+%  [Bankname]\newline
+%  [Kontonummer~000\,000\,000]\newline
+%  [BLZ~000\,000\,00]}
+%\setkomavar{fromIBAN}{DE00~00000000~0000000000}
+%\setkomavar{fromBIC}{0000 00 00}
+%\setkomavar{fromUStID}{000000000}
+%\setkomavar{fromSteuernummer}{00/000/0000}
