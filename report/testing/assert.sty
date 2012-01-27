@@ -1,0 +1,30 @@
+\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\ProvidesPackage{assert}[2012/01/27]
+
+\RequirePackage{ifthen}
+
+\newcommand{\assertionError}[1][]{%
+  \PackageError{assert}{Assertion Error! #1}{}
+}
+
+%    \marg{page}
+\newcommand{\assertPageNo}[1]{%
+  \if #1\thepage%
+  \else\assertionError[Page no #1 was expected but \thepage\space was read.]%
+  \fi%
+}
+
+%    \marg{color}
+\newcommand{\assertColor}[1]{%
+  {\color{#1}\global\edef\des@color{\current@color}}%
+  \ifthenelse{\equal{\des@color}{\current@color}}{}{%
+    \assertionError[Color \des@color was expected but \current@color\space was read.]%
+  }%
+}
+
+%    \marg{environment name}
+\newcommand{\assertInsideEnv}[1]{%
+  \ifthenelse{\equal{\@currenvir}{#1}}{}{%
+    \assertionError[Environment #1 was expected but \@currenvir\space was read.]%
+  }%
+}
