@@ -294,7 +294,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macrocode}
-\newcommand*\tubs@gb@topsep{0mm}
+\newcommand*\tubs@gb@addtoppadding{0mm}
 %    \end{macrocode}
 %
 %    \begin{key}{gaussbox}{logosep}
@@ -304,9 +304,9 @@
 %    \begin{macrocode}
 \define@boolkey{gaussbox}{logosep}[true]{%
   \ifKV@gaussbox@logosep%
-    \renewcommand*\tubs@gb@topsep{2\tubspage@borderwidth}
+    \renewcommand*\tubs@gb@addtoppadding{2\tubspage@borderwidth}
   \else%
-    \renewcommand*\tubs@gb@topsep{0mm}
+    \renewcommand*\tubs@gb@addtoppadding{0mm}
   \fi%
 }
 %    \end{macrocode}
@@ -377,6 +377,8 @@
 %    \begin{macro}{\tubs@gb@rightmargin}
 % Korrektur der Textränder links und rechts außen.
 %    \begin{macrocode}
+\newlength{\tubs@gb@topmargin}
+\newlength{\tubs@gb@toppadding}
 \newlength{\tubs@gb@leftmargin}
 \newlength{\tubs@gb@rightmargin}
 %    \end{macrocode}
@@ -389,8 +391,9 @@
 %    \begin{macrocode}
 \newlength{\tubs@gb@leftsep}
 \newlength{\tubs@gb@rightsep}
-\newlength{\tubs@gb@topmargin}
-\newlength{\tubs@gb@toppadding}
+\newlength{\tubs@gb@topsep}
+\newlength{\tubs@gb@bottomsep}
+%
 \newlength{\tubs@gb@bottommargin}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
@@ -461,9 +464,11 @@
 \ifnum#3=1
   \setlength{\tubs@gb@topmargin}{\tubspage@borderwidth}
   \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
-  \addtolength\tubs@gb@toppadding\tubs@gb@topsep
+  \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
   \setlength{\tubs@gb@bottommargin}{0mm}
+  \setlength{\tubs@gb@topsep}{0mm}
 \else
+  \setlength{\tubs@gb@topsep}{0.5\tubspage@columnsep}%TODO: oder 0.5borderwidth?
   \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
 \fi
 \setcounter{tubs@gb@lastelement}{#3+#5-1}
@@ -473,8 +478,10 @@
 \fi%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments
   \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}
+  \setlength{\tubs@gb@bottomsep}{0mm}
 \else
   \setlength{\tubs@gb@bottommargin}{0mm}
+  \setlength{\tubs@gb@bottomsep}{0.5\tubspage@columnsep}
 \fi%
 %
 %
@@ -493,28 +500,28 @@
 \def\tubs@gb@width{#4}%
 \def\tubs@gb@height{\thetubs@gb@calcheight}%
 %TODO: Option to set margins of boxes to 0
-\begin{lrbox}{\tubs@gb@storebox}%
+  \begin{lrbox}{\tubs@gb@storebox}%
   \begin{minipage}%
         [t]%
-        [\tubs@gb@height\TPVertModule]%
+        [\tubs@gb@height\TPVertModule-\tubs@gb@topsep-\tubs@gb@bottomsep]%
         {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep-2\tubspage@borderwidth+\tubs@gb@leftmargin+\tubs@gb@rightmargin}%
   \vspace*{\tubs@gb@toppadding}%
   \tb@topfill%
 }{%
+  \par%
   \tb@bottomfill%
-  \vspace*{0mm}%
+  \vspace*{\tubspage@borderwidth}%
   \end{minipage}%
   \end{lrbox}%
   \setlength{\fboxsep}{0cm}%
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
+  \vspace*{\tubs@gb@topsep}%
   \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
       \tubsbox@framebox{\tubsbox@colorbox{%
-%         \hspace*{\tubs@gb@leftmargin}%
         \hspace*{\tubspage@borderwidth}%
         \usebox{\tubs@gb@storebox}%
         \hspace*{\tubspage@borderwidth}%
-%         \hspace*{\tubs@gb@rightmargin}%
         }}%
   \end{addmargin*}%
   \end{textblock}%
