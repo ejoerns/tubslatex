@@ -1,0 +1,25 @@
+\documentclass[a3paper,13pt]{tubsposter}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\begin{document}
+
+\begin{gausspage}[sender=bottom]
+  \showtubslogo[right]
+  \showlogo{\includegraphics{dummy_institut.jpg}}
+  \begin{segment}[bgimage=infozentrum.jpg,imagefit=cropy]{4}
+    ~
+  \end{segment}
+  \begin{segment}[c,bgcolor=tuGray20]{3}
+%     \vfill
+    Diesen Text bitte vertikal zentrieren!
+%     \vfill
+  \end{segment}
+  \begin{segment}[bgcolor=tuBlueDark20,b]{1}
+    Dieser Text sollte unten ausgerichtet sein.
+  \end{segment}
+\end{gausspage}
+
+\end{document}

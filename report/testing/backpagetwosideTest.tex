@@ -1,4 +1,4 @@
-\documentclass[a4paper,extramargin,violet]{tubsartcl}
+\documentclass[a4paper,twoside=true,extramargin,violet]{tubsreprt}
 \usepackage[utf8x]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{lipsum}
@@ -11,42 +11,36 @@
   ligula aliquet magna, vitae ornare odio metus a mi. Morbi ac orci et nisl 
   hendrerit mollis.%
 }
-\titlepicture{titlepicture.jpg}
+\titlepicture{infozentrum.jpg}
 \title{Lorem ipsum dolor sit amet}
 \subtitle{Morbi auctor lorem\vphantom{g}\\ % TODO!!!!
 Nam lacus libero}
 \logo{\includegraphics{dummy_institut.jpg}}
 % \logo{\begingroup\setkeys{Gin}{height=\headheight}This is a test.\endgroup}
 \author{Enrico Jörns}
+\address{(c) Technische Universität Braunschweig\\
+Name des Instituts oder der zentralen Einrichtung\\
+Musterstr. 4 -- 5\\
+38106 Braunschweig\\
+Telefon +49 531 391-0000\\
+Telefax +49 531 391-0000\\
+institut@tu-braunschweig.de\\
+www.tu-braunschweig.de}
+
 
 \begin{document}
 
-\begin{titlepage}
-  \showtubslogo[pos=right]
-  \begin{segment}[bgcolor=tuViolet]{8}
-    Test
-  \end{segment}
-\end{titlepage}
+% asdf
 
-\begin{backpage}
-  \showtubslogo
-  \begin{segment}[bgcolor=tuViolet]{8}
-    Test
-  \end{segment}
-\end{backpage}
+\maketitle[image]
 
-\begin{titlepage}
-  \showtubslogo[pos=left]
-  \begin{segment}[bgcolor=tuViolet]{8}
-    Test
-  \end{segment}
-\end{titlepage}
+% asdf\clearpage
+asdf
 
-\begin{backpage}
-  \showtubslogo
-  \begin{segment}[bgcolor=tuViolet]{8}
-    Test
-  \end{segment}
-\end{backpage}
+\makebackpage[trisec]
 
 \end{document}
+
+%       \begin{tabularx}{\textwidth}{@{}X@{}X@{}X@{}X@{}}
+%         \fboxsep0mm\colorbox{tuSecondary}{\parbox[t][1cm]{0.2\textwidth}{~}}
+%       \end{tabularx}

@@ -1,11 +1,11 @@
-\documentclass[a3paper,style=scifi,table]{tubsposter}
+\documentclass[a3paper,landscape,style=scifi,table]{tubsposter}
 \usepackage[utf8]{inputenc}
 
 \usepackage{tabularx,booktabs}
 \usepackage{lipsum}
 
 \begin{document}
-  \begin{tubsposter}[sender=bottom]{5cm,X,5.8cm,1.5cm}
+  \begin{tubsposter}{5cm,X,5.8cm,1.5cm}
   \showlogo{\fboxsep0mm\fbox{\includegraphics{dummy_institut}}}
   \begin{posterrow}[bgcolor=tuLightGray]
     \bfseries\sffamily{\LARGE Das Corporate Design mit \LaTeX}\\[1em]
@@ -14,7 +14,7 @@
   \begin{posterrow}[X,X]
     \begin{postercol}
       {\usekomafont{subheadlinesmall}Lorem Ipsum}\\[2ex]
-      \lipsum[1-2]
+      \lipsum[1]
     \end{postercol}
     \begin{postercol}[X,X]
       \begin{postersubrow}[bgimage=infozentrum,imagefit=autoclip]
@@ -48,7 +48,7 @@
 \end{tubsposter}
 
 
-  \begin{tubsposter}{5cm,X,5.8cm,1.5cm}
+  \begin{tubsposter}[sender=bottom]{5cm,X,5.8cm,1.5cm}
   \begin{posterrow}[bgcolor=tuLightGray]
     \bfseries\sffamily{\LARGE Das Corporate Design mit \LaTeX}\\[1em]
     von Max Mustermann
@@ -56,7 +56,7 @@
   \begin{posterrow}[X,X]
     \begin{postercol}
       {\usekomafont{subheadlinesmall}Lorem Ipsum}\\[2ex]
-      \lipsum[1-2]
+      \lipsum[1]
     \end{postercol}
     \begin{postercol}[X,X]
       \begin{postersubrow}[bgimage=infozentrum,imagefit=autoclip]
