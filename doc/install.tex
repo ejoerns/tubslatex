@@ -304,15 +304,15 @@ Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
     Dies sollte im Allgemeinen \lstinline{~/Library/texmf} sein.
 %   \item[2. Dateien registrieren]
 
-  \item[3. Schriften registrieren]\hfill
+  \item[2. Schriften registrieren]\hfill
     \begin{lstlisting}
-# updmap --nomkmap --nohash --enable Map=NexusProSans.map
-# updmap --nomkmap --nohash --enable Map=NexusProSerif.map
-# updmap
+$ updmap --nomkmap --nohash --enable Map=NexusProSans.map
+$ updmap --nomkmap --nohash --enable Map=NexusProSerif.map
+$ updmap
     \end{lstlisting}
 
 
-  \item[4. Arial installieren]\hfill
+  \item[3. Arial installieren]
     Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
     nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
     eingestellt ist.
@@ -321,19 +321,18 @@ Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
     dass die benötigten Dateien automatisch herunterlädt und alle zur Installation
     nötigen Schritte durchführt.
     \begin{enumerate}[a)]
-      \item Falls nicht vorhanden kann ein Installer unter folgendem Link
+      \item Falls nicht vorhanden, kann ein Installer unter folgendem Link
         bezogen werden:
-        \url{http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts}.
+        \url{http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts}
     
         Die Installation von \lstinline{getnonfreefonts} erfolgt dann mit dem
-        Befehl\footnote{Weitere Informationen finden sich hier:\\
+        Befehl\footnote{Weitere Informationen dazu gibt es hier:\\
           \url{http://www.golatex.de/vollautomatischen-installation-einiger-nicht-freier-fonts-t5386.html}}
         \begin{lstlisting}
 # texlua install-getnonfreefonts
         \end{lstlisting}
-    \end{enumerate}
-
-    Eine lokale Installation von Arial geschieht mit Hilfe des Befehls
+        
+      \item Eine lokale Installation von Arial geschieht mit Hilfe des Befehls
     \begin{lstlisting}
 $ getnonfreefonts arial-urw
     \end{lstlisting}
@@ -341,8 +340,9 @@ $ getnonfreefonts arial-urw
     Eine systemweite Installation ist dabei mit dem Zusatz \lstinline{-sys}
     möglich.
     \begin{lstlisting}
-$ getnonfreefonts-sys arial-urw
+# getnonfreefonts-sys arial-urw
     \end{lstlisting}
+    \end{enumerate}
 
 \end{description}
 
