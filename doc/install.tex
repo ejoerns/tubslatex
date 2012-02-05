@@ -1,32 +1,33 @@
 \chapter{Installation}\label{chap:install}
 
 Aktuell wird \tubslatex in drei verschiedenen Varianten angeboten.
-Zum einen als gepackter tex-Paketaum, der sowohl lokal als auch systemweit
-entpackt werden kann. Allerdings müssen hier alle notwendigen Schritte zur 
-Installation der Schriften und Anmelden der neuen Datein manuell gemacht werden.
-Für Windows-Benutzer, die MikTeX verwenden, gibt es einen automatischen
-Installer, der alle nötigen Schritte automatisch ausführt.
-Ebenso gibt es für Debian-basierte Systeme, die texlive verwenden ein
-\texttt{.deb}-Paket, das alle Abhängigkeiten korrekt auflöst und die Vorlagen
-automatisch installiert.
 
+\begin{description}
+  \item[zip-Archiv]
+    Das einfache zip-Archiv enthält einen kompletten \TeX-Paketbaum mit
+    allen zu \tubslatex gehörenden Dateien.
+    Dieser kann universell zur manuellen Installation auf verschiedensten
+    Systemen eingesetzt werden.
+    Diese Variante ist nur für erfahrenere  \TeX-Benutzer oder aus Mangel
+    an Alternative zu empfehlen.
+  \item[Windows-Installer]
+    Der für Windows vorgesehene Installer kann bei Verwendung der
+    populären \LaTeX-Distribution MikTeX eingesetzt werden.
+    Er führt alle notwendigen Schritte automatisch aus und spart somit
+    viel Zeit und Probleme.
+  \item[deb-Paket]
+    Für debian-basierte Systeme, die texLive verwenden gibt es
+    ein komplettes deb-Paket, das aller Vorlagendateien enthält,
+    alle Abhängigkeiten korrekt auflöst und die notwendigen
+    Installationsschritte automatisch durchführt.
+\end{description}
 
-\paragraph{Manuelle Installation}
+Im Nachfolgenden werden automatische und manuelle Installation für
+die Betriebssysteme Windows, Linux und Mac in Kombination mit der
+jeweils gängigsten \LaTeX-Distribution noch einmal ausführlicher
+beschrieben.
 
-Zur manuellen Installation liegen die LaTeX-Dateien als gepacktes
-zip-Verzeichnis vor, in dem die komplette tex-Pfadstruktur oberhalb der
-texmf-Ebene enthalten ist. Konkret sind dies die Ordner
-\lstinline{doc}, \lstinline{tex} und \lstinline{fonts}.
-
-Diese können entweder lokal oder global entpackt werden.
-Für erste Variante kann der Inahlt einfach in das Verzeichnis
-\lstinline{/home/benutzername/texmf} hinein geschrieben werden.
-
-Es sei darauf hingewiesen, dass alle weiteren benötigten Pakete der
-Tex-Distribution ggf. manuell installiert werden müssen.
-MikTeX macht dies normalerweise automatisch.
-Bei texlive können unter Linux zum Beispiel die entsprechenden System-Pakete
-installiert werden.
+Für bekannte Probleme und Fehlermeldungen werden mögliche Lösungen beschrieben.
 
 \clearpage
 \section{Windows -- MiKTeX}
