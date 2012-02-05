@@ -12,7 +12,7 @@ Aktuell wird \tubslatex in drei verschiedenen Varianten angeboten.
     an Alternative zu empfehlen.
   \item[Windows-Installer]
     Der für Windows vorgesehene Installer kann bei Verwendung der
-    populären \LaTeX-Distribution MikTeX eingesetzt werden.
+    populären \LaTeX-Distribution MiKTeX eingesetzt werden.
     Er führt alle notwendigen Schritte automatisch aus und spart somit
     viel Zeit und Probleme.
   \item[deb-Paket]
@@ -29,33 +29,63 @@ beschrieben.
 
 Für bekannte Probleme und Fehlermeldungen werden mögliche Lösungen beschrieben.
 
+Generell kann man unter jedem System die Installation entweder global, 
+also für alle Benutzer, oder lokal nur für den aktuellen Benutzer vornehmen.
+Näheres ist jeweils den systemspezifischen Abschnitten zu entnehmen.
+
+
 \clearpage
 \section{Windows -- MiKTeX}
 
 \subsection{Automatische Installation}
 
-% \subsection{Windows -- MikTeX}
-
-Bei Verwendung von MikTeX unter Windows kann auf den verfügbaren Installer
-zurück gegriffen werden. Um eine fehlerfreie Installation zu ermöglichen
+Bei Verwendung von MiKTeX unter Windows kann auf den verfügbaren Installer
+zurück gegriffen werden. Um eine fehlerfreie Installation zu ermöglichen,
 sollte MiKTeX in der Version 2.9 vorhanden sein.
 Ältere Versionen werden nur bedingt unterstützt.
 
+Der Installer bietet die Wahl zwischen einer lokalen und systemweiten
+Installation.
+\begin{important}
+Im Zweifel sollte immer eine \emph{systemweite Installation}
+vorgezogen werden, da bei der lokalen Installation auch eine lokale
+Datenbank angelegt wird auf die das System fortan zugreift.
+Dies kann dazu führen, dass später installierte Pakete nicht automatisch
+erkannt werden, sondern manuell registriert werden müssen.
+\end{important}
+
 Der Installer kopiert alle benötigten Dateien in ein frei wählbares Verzeichnis
 auf der Festplatte und registriert dies automatisch als neuen texmf-Baum.
-Auch die Schriftart Nexus wird standardmäßig installiert und in 
-Font-Verwaltung registriert.
+Auch die Dokumentation und die Schriftart Nexus wird standardmäßig installiert
+und in der Font-Verwaltung registriert.
+Die Installation erlaubt, einzelne Komponenten von der Installation auszuschließen,
+die ist jedoch im Allgemeinen nicht zu empfehlen.\par
 
-% \subsection{Ubuntu/Debian -- TexLive}
+Die saubere Deinstallation kann einfach über die Windows-Softwareverwaltung 
+durchgeführt werden, in der bei der Installation ein entsprechender Eintrag
+angelegt wird.
 
+\newcommand\localinstall[1]{%
+  {\leavevmode\color{tuGray80}(#1)}%
+}
 
+\subsection{Manuelle Installation} %
 
-\subsection{Manuelle Installation}
+Beschrieben wird die \emph{systemweite Installation}.
+Die entsprechenden Befehle für die lokale Installation werden wenn nötig
+in Klammern und grauer Farbe mit erwähnt.
+
+Für die Installation ist die Eingabe von Kommandozeilenbefehlen nötig.
+Dazu sollte der Kommandozeileninterpreter von Windows gestartet
+werden (\lstinline{cmd.exe}). Für die systemweite Installation ist es
+darüber hinaus notwendig, dass der Interpreter mit
+Administratorrechten gestartet wird. % TODO: how?
 
 \begin{description}
   \item[1. Dateien Kopieren]
   
-    Alle zu installierende Dateien sollten entweder in ein bestehendes lokales
+    Alle zu installierenden Dateien sollten entweder in ein bestehendes globales
+    \localinstall{lokales}
     texmf-Verzeichnis kopiert werden oder in ein neu angelegtes Verzeichnis
     (z.\,B. \lstinline{C:\tubslatex}).
     
@@ -67,29 +97,39 @@ Font-Verwaltung registriert.
         
         Für den Fall, dass ein neues Verzeichnis angelegt wurde,
         muss dies MiKTeX noch bekannt gemacht werden.
-        Dazu sind die MiKTeX-Einstellungen\\ (Start$\to$Programme$\to$MiKTeX 2.x 
-        $\to$Maintenance$\to$Settings) aufzurufen.
+        Dazu sind die MiKTeX-Einstellungen\\
+        {\sffamily(Start$\to$Programme$\to$MiKTeX 2.x$\to$Maintenance (Admin)$\to$Settings)\\
+        \localinstall{Start$\to$Programme$\to$MiKTeX 2.x$\to$Maintenance$\to$Settings}}
+        aufzurufen.
         Im Reiter \glqq Roots\grqq\ kann der neue Pfad hinzugefügt werden.
     \end{enumerate}
 
   \item[2. Dateien registrieren]
 
-    Anschließend ist es noch ratsam den Button \glqq Refresh FNDB\grqq\
+    Anschließend ist es noch ratsam, den Button \glqq Refresh FNDB\grqq\
     zu drücken, um die Dateidatenbank zu aktualisieren. Alternativ kann auch 
-    der Konsolenbefehl \lstinline{initexmf -u} verwendet werden.
+    der Kommandozeilenbefehl
+    \begin{lstlisting}[style=cmd]
+initexmf --admin -u
+    \end{lstlisting}
+    \localinstall{\lstinline{initexmf -u}} verwendet werden.
 
   \item[3. Schriften registrieren]
-    Um die Schrift Nexus benutzen zu können, sind zunächst wie oben beschrieben
-    die benötigten Dateien zu kopieren.
+    Nachdem, wie oben beschrieben, die Font-Dateien kopiert wurden, müssen
+    diese noch registriert werden.
 
     \begin{enumerate}
 
       \item {\bfseries map-Dateien bekannt machen}
 
-      Mit dem Konsolen-Befehl \lstinline{initexmf --admin --edit-config-file updmap}
+      Mit dem Konsolen-Befehl
+      \begin{lstlisting}[style=cmd]
+initexmf --admin --edit-config-file updmap
+      \end{lstlisting}
+      \localinstall{\lstinline{initexmf --edit-config-file updmap}}
       wird ein Editor geöffnet in den folgender Text einzutragen ist:
 
-      \begin{lstlisting}
+      \begin{lstlisting}[style=file]
 Map NexusProSans.map
 Map NexusProSerif.map
       \end{lstlisting}
@@ -97,22 +137,27 @@ Map NexusProSerif.map
       \item {\bfseries Font maps updaten}
 
         Danach ist ein Update der Font-Datenbank erforderlich. Dies geschieht
-        mittels\\ \lstinline{initexmf --admin --mkmaps}. Die Konsole muss dazu
-        mit Administratorrechten gestartet werden.
+        mittels
+        \begin{lstlisting}[style=cmd]
+initexmf --admin --mkmaps
+        \end{lstlisting}
+        \localinstall{initexmf --mkmaps}.
+%         Die Konsole muss dazu mit Administratorrechten gestartet werden
+%         \localinstall{gilt nicht bei lokaler Installation}.% TODO: general note.
 
-        \paragraph{Hinweis:} Es ist auch möglich, die Datenbank im 
-          Nicht-Administrator-Modus zu erneu\-ern. Dies ist jedoch nur bei einer
-          Einzelbenutzer-Installation von MiKTeX sinnvoll. Wird
-          \lstinline{initexmf} ohne die Option \lstinline{--admin} aufgerufen,
-          so wird eine lokale map-Liste angelegt, auf die MiKTeX anschließen für
-          den aktuellen Benutzer ausschließlich zugreift.
-          Eine benutzerweite Installation von Fonts ist dann noch 
-          möglich, jedoch muss jedes mal manuell \lstinline{initexmf --mkmaps}
-          aufgerufen werden.
+%         \paragraph{Hinweis:} Es ist auch möglich, die Datenbank im 
+%           Nicht-Administrator-Modus zu erneu\-ern. Dies ist jedoch nur bei einer
+%           Einzelbenutzer-Installation von MiKTeX sinnvoll. Wird
+%           \lstinline{initexmf} ohne die Option \lstinline{--admin} aufgerufen,
+%           so wird eine lokale map-Liste angelegt, auf die MiKTeX anschließen für
+%           den aktuellen Benutzer ausschließlich zugreift.
+%           Eine benutzerweite Installation von Fonts ist dann noch 
+%           möglich, jedoch muss jedes mal manuell \lstinline{initexmf --mkmaps}
+%           aufgerufen werden.
 %           Welche map-Liste aktuell verwendet wird, lässt sich mit dem Befehl
     \end{enumerate}
 
-    Danach sollte die Installation abgeschlossen sein und alle Pakete verwendbar 
+    Danach sollte die Installation abgeschlossen und alle Pakete verwendbar 
     sein.
 \end{description}
 
@@ -135,7 +180,7 @@ die Schrift Nexus werden automatisch registriert.
 
 \subsection{Manuelle Installation}
 
-\paragraph{Lokale/systemweite Installation}
+% \paragraph{Lokale/systemweite Installation}
 
 Bei der Installation sollte man sich zuerst zwischen einer Benutzer-Installation
 und einer System-Installation entscheiden.
@@ -153,14 +198,14 @@ welche aber auch nur mit entsprechenden Rechten durchgeführt werden kann.
 Sind diese jedoch vorhanden, so ist eine \emph{systemweite Installation im
 Allgemeinen einer lokalen Installation vorzuziehen}.
 
-\begin{important}
-Die Beschreibung nennt trotz der genannten Empfehlung jeweils zuerst die
-Schritte für die lokale Installationsvariante, da systemweite Installation
-oft nur ein paar zusätzliche Suffixe bei den Befehlsnamen mit sich zieht.
-Jeder Absatz sollte daher zunächst durchgelesen werden bevor die entsprechenden
-Kommados angewendet werden.
-\end{important}
+Im Folgenden werden sowohl systemweite als auch lokale Installation einzeln
+beschrieben.
 
+\subsubsection{Systemweite Installation}
+
+\begin{important}
+  Hierfür werden root-Rechte benötigt.
+\end{important}
 
 \begin{description}
   \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
@@ -168,48 +213,67 @@ Kommados angewendet werden.
     Diese liegen dort schon in der korrekten Ordner-Struktur vor, sodass
     sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
     müssen.
-    
-    Grundsätzlich kann man sich bei der Installation entscheiden,
-    ob die Vorlagen nur Lokal für den aktuellen Benutzer oder systemweit
-    installiert werden sollen.
-    Es sei darauf hingewiesen, dass eine lokale Installation ein paar
-    Fallstricke mit sich bringt, die evtl. zu Problemen bei der späteren
-    Installation weiterer Pakete führen können.
-    
-    Entpacken als Benutzer ins lokale texmf-Verzeichnis:
-    \begin{lstlisting}
-$ unzip -d ~/texmf/ tubslatex_0.3-alpha2.zip
+    \begin{lstlisting}[style=cmd]
+# unzip -d /usr/share/texmf/ tubslatex_0.3-beta2.zip
     \end{lstlisting}
-    Oder als Root ins systemweite texmf-Verzeichnis:
-    \begin{lstlisting}
-# unzip -d /usr/share/texmf/ tubslatex_0.3-alpha2.zip
-    \end{lstlisting}
-  \item[2. Dateien registrieren]
-    Wurden die Dateien in das lokale texmf-Verzeichnis kopiert, so ist
-    in diesem Verzeichnis der Befehl
-    \begin{lstlisting}
-$ mktexlsr .
-    \end{lstlisting}
-    auszuführen.
 
-    Bei einer systemweiten Installation ist einfach
-    \begin{lstlisting}
+  \item[2. Dateien registrieren]
+    Dies geschieht mit dem Befehl
+    \begin{lstlisting}[style=cmd]
 # mktexlsr
     \end{lstlisting}
-    aufzurufen.
 
   \item[3. Schriften registrieren]\hfill
 
-    \begin{lstlisting}
+    \begin{lstlisting}[style=cmd]
+# /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+# /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+# /usr/bin/updmap-sys
+    \end{lstlisting}
+    
+  \item[4. Arial installieren]
+    Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
+    nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
+    eingestellt ist.
+    
+    Die Installation erfolgt mit Hilfe des Programms \lstinline{getnonfreefonts},
+    dass die benötigten Dateien automatisch herunterlädt und alle zur Installation
+    nötigen Schritte durchführt.
+    
+    Eine systemweite Installation von Arial geschieht mit Hilfe des Befehls
+    \begin{lstlisting}[style=cmd]
+# getnonfreefonts-sys --verbose arial-urw
+    \end{lstlisting}
+    
+\end{description}
+
+\subsubsection{Lokale Installation}
+
+\begin{description}
+  \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
+    Dateien entpackt werden.
+    Diese liegen dort schon in der korrekten Ordner-Struktur vor, sodass
+    sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
+    müssen.
+    \begin{lstlisting}[style=cmd]
+$ unzip -d ~/texmf/ tubslatex_0.3-beta2.zip
+    \end{lstlisting}
+
+  \item[2. Dateien registrieren]
+    Dies geschieht mit dem Befehl
+    \begin{lstlisting}[style=cmd]
+$ mktexlsr ~/texmf
+    \end{lstlisting}
+
+  \item[3. Schriften registrieren]\hfill
+
+    \begin{lstlisting}[style=cmd]
 $ /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
 $ /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSerif.map
 $ /usr/bin/updmap
     \end{lstlisting}
     
-    Für eine systemweite Installation muss den Befehlen jeweils der Zustatz
-    \texttt{-sys} angefügt werden (\lstinline{updmap} $\to$ \lstinline{updmap-sys}).
-  
-  \item[4. Arial installieren]\hfill
+  \item[4. Arial installieren]
     Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
     nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
     eingestellt ist.
@@ -219,26 +283,23 @@ $ /usr/bin/updmap
     nötigen Schritte durchführt.
     
     Eine Lokale Installation von Arial geschieht mit Hilfe des Befehls
-    \begin{lstlisting}
+    \begin{lstlisting}[style=cmd]
 $ getnonfreefonts --verbose arial-urw
     \end{lstlisting}
     
-    Die System-Installation ist dabei wieder mit dem Zusatz \lstinline{-sys}
-    möglich.
-
-
-
 \end{description}
 
 
+
 \newenvironment{knownissue}[1]{%
-  \paragraph{#1}\hfill
+  \item {\sffamily\bfseries#1}\hfill
   \newcommand{\solution}[1]{\noindent{\itshape ##1}}
 }{%
 }
 
 \subsection{Fehlerbehebung}
 
+\begin{itemize}
 
 \begin{knownissue}{%
   updmap bricht plötzlich ab (Fehlercode 2) / getnonfreefonts bricht ab
@@ -271,7 +332,7 @@ auch wenn die System-Map mit \lstinline{updmap-sys} upgedated wurde.
 \noindent\textit{Überprüfung:}
 
 Die Ausgabe von
-\begin{lstlisting}
+\begin{lstlisting}[style=cmd]
 kpsewhich pdftex.map
 \end{lstlisting}
 sollte einen anderen Pfad als
@@ -288,6 +349,7 @@ Installation weiterer Schriften mit \lstinline{updmap} statt
 
 \end{knownissue}
 
+\end{itemize}
 
 \clearpage
 \section{Mac OS -- TexLive}
@@ -305,8 +367,9 @@ Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
     Dies sollte im Allgemeinen \lstinline{~/Library/texmf} sein.
 %   \item[2. Dateien registrieren]
 
-  \item[2. Schriften registrieren]\hfill
-    \begin{lstlisting}
+  \item[2. Schriften registrieren]
+    In einem Terminal sind dazu folgende 3 Befehle einzugeben:
+    \begin{lstlisting}[style=cmd]
 $ updmap --nomkmap --nohash --enable Map=NexusProSans.map
 $ updmap --nomkmap --nohash --enable Map=NexusProSerif.map
 $ updmap
@@ -329,20 +392,17 @@ $ updmap
         Die Installation von \lstinline{getnonfreefonts} erfolgt dann mit dem
         Befehl\footnote{Weitere Informationen dazu gibt es hier:\\
           \url{http://www.golatex.de/vollautomatischen-installation-einiger-nicht-freier-fonts-t5386.html}}
-        \begin{lstlisting}
-# texlua install-getnonfreefonts
+        \begin{lstlisting}[style=cmd]
+$ texlua install-getnonfreefonts
         \end{lstlisting}
         
       \item Eine lokale Installation von Arial geschieht mit Hilfe des Befehls
-    \begin{lstlisting}
+    \begin{lstlisting}[style=cmd]
 $ getnonfreefonts arial-urw
     \end{lstlisting}
     
-    Eine systemweite Installation ist dabei mit dem Zusatz \lstinline{-sys}
-    möglich.
-    \begin{lstlisting}
-# getnonfreefonts-sys arial-urw
-    \end{lstlisting}
+    Eine systemweite Installation ist \emph{alternativ} mit dem Zusatz \lstinline{-sys}
+    möglich\\ (\lstinline{getnonfreefonts-sys arial-urw}).
     \end{enumerate}
 
 \end{description}

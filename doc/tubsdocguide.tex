@@ -87,54 +87,26 @@ Informationen evtl. unvollständig oder unklar!
 \newcommand{\newdocumentclass}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 \newcommand{\newpackage}[1]{\textcolor{tuRed}{\lstinline{#1}}}
 
-\include{intro} % Kapitel 'Einleitung'
+\include{intro}       % Kapitel 'Einleitung'
 
-\include{install} % Kapitel 'Installation'
+\include{install}     % Kapitel 'Installation'
 
-\chapter{Schnellstart}\label{chap:rapid}
+\include{quickstart}  % Kapitel 'Schnellstart'
 
-% TODO: Schnelleinführung Corporate Desing (Gaußraster, etc.)
-
-\paragraph{Dokumente}
-Die schnellste Methode ein Dokument im Corporate Design zu erstellen ist
-das Laden einer der zur Verfügung stehenden Dokumentenklassen.
-Für die Erstellung von Textdokumenten sind dies \newdocumentclass{tubsartcl},
-\newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook}.
-
-\paragraph{Poster}
-Die Klasse \newdocumentclass{tubsposter} kann zum Erstellen von Postern verwendet werden.
-% tubsflyer?
-
-\paragraph{Papierformat}
-Das zu verwendende Papierformat sollte dabei als optionales Argument mit
-übergeben werden. Für ein Dokument in DIN A4 ist dies \texttt{a4paper}.
-Zur Verfügung stehen alle Papierformate von A0 bis A6.
-
-Standardmäßig wird die Titelseite in Dokumenten einfach mit dem Logo und einer
-roten Trennlinie zwischen Kommunikations- und Absenderbereich versehen.
-
-\paragraph{Briefe}
-
-Die Klasse \newdocumentclass{tubslttr2} ist für die Erstellung von Briefen
-vorgesehen.
-
-\paragraph{Präsentationen}
-Um Präsentation zu erstellen existiert ein Style für \LaTeX-Beamer.
-Dieser wird einfach mit \lstinline!\usetheme{tubs}! geladen.
 
 \part{Anwenderklassen und -Pakete}
 
-\include{documents} % Kapitel: 'Dokumente'
+% \include{documents}   % Kapitel: 'Dokumente'
 
-\include{letter}    % Kapitel: 'Brief'
+% \include{letter}      % Kapitel: 'Brief'
 
-\input{beamer}      % Kapitel: 'Präsentationen'
+% \input{beamer}        % Kapitel: 'Präsentationen'
 
-\include{poster}    % Kapitel: 'Plakate'
+% \include{poster}      % Kapitel: 'Plakate'
 
-\include{leaflet}   % Kapitel: 'Broschüren'
+% \include{leaflet}     % Kapitel: 'Broschüren'
 
-\include{gausspage} % Kapitel: 'Gauß-Layout'
+% \include{gausspage}   % Kapitel: 'Gauß-Layout'
 
 \part{Basis-Pakete}
 
