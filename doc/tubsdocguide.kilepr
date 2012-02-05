@@ -187,7 +187,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=308
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:colors.tex]
@@ -302,10 +302,10 @@ order=4
 
 [item:install.tex]
 archive=true
-column=78
+column=12
 encoding=UTF-8
 highlight=LaTeX
-line=353
+line=340
 mode=LaTeX
 open=false
 order=2
@@ -402,12 +402,12 @@ order=-1
 
 [item:tubsdocguide.tex]
 archive=true
-column=0
+column=44
 encoding=UTF-8
 highlight=LaTeX
-line=104
+line=94
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:unsorted.tex]
@@ -449,8 +449,8 @@ CursorColumn=1
 CursorLine=9
 
 [view-settings,view=0,item:install.tex]
-CursorColumn=78
-CursorLine=353
+CursorColumn=12
+CursorLine=340
 
 [view-settings,view=0,item:intro.tex]
 CursorColumn=24
@@ -485,8 +485,8 @@ CursorColumn=21
 CursorLine=10
 
 [view-settings,view=0,item:tubsdocguide.tex]
-CursorColumn=0
-CursorLine=104
+CursorColumn=44
+CursorLine=94
 
 [view-settings,view=0,item:unsorted.tex]
 CursorColumn=0
