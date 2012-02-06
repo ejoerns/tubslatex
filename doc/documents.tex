@@ -1,6 +1,6 @@
 \chapter{Dokumente}
 
-Für das Erstellen von Dokumenten im Corporate Design gibt es diverse Richtlinien
+Für das Erstellen von Dokumenten im \acs{CD} gibt es diverse Richtlinien
 und Gestaltungsmöglichkeiten, die unter Einsatz von Standard-Klassen nur sehr
 mühselig einzuhalten und zu verwirklichen sind.
 Daher stellt \tubslatex drei eigene Dokumentenklassen bereit, die als Ersatz für
@@ -14,7 +14,7 @@ Einige Funktionalitäten, welche diese Klassen bieten:
   \item Angepasste Schriftart- und größe für 9pt, 10pt und 11pt
   \item Vorlagenoptimierte Darstellung von Kopf- bzw. Fußzeilen
   \item Vorlagen für Titelseiten im \gls{glos:gaussraster}
-  \item Umgebungen zur individuellen Erstellung von (Titel-)Seiten im Gauß-Raster.
+  \item Umgebungen zur individuellen Erstellung von (Titel-)Seiten im Gaußraster.
   \item Vordefinierte Farben aus der \acs{CD}-Farbpalette.
   \item Einfache Darstellungsstile für Bildschirmdarstellung und Druck
 \end{itemize}
@@ -68,7 +68,7 @@ werden im Kapitel~\ref{sec:headline} beschrieben.
 
 Eine Seite im Corporate Design unterteilt sich grundlegend in 2 Bereiche.
 Der Absenderbereich und der Kommunikationsbereich. Der Absenderbereich wird zur
-Darstellung des TU-Siegelbandlogos und des Logos eines speziellen Instituts
+Darstellung des TU-Siegelband-Logos und des Logos eines speziellen Instituts
 oder einer Abteilung verwendet. Im Textteil dient er teilweise als Bereich für
 Inhalte einer Kopf-/Fußzeile.
 
@@ -104,7 +104,7 @@ Schaltet das Dokument in Querformat-Darstellung.
 \begin{center}
   \fboxsep0mm\fbox{\includegraphics[width=0.45\textwidth]{examples/article_landscape.pdf}}\\
   Dokument im Querformat
-\end{center}
+\end{center}Absenderbereich
 
 
 \begin{important}
@@ -119,7 +119,7 @@ Schaltet das Dokument in Querformat-Darstellung.
   \KOption{sender}\PName{Position}
 \end{Declaration}
 
-Mit der Option \Option{sender} kann die Position des Absenderbereiches
+Mit der Option \Option{sender} kann die Position des Absenderbereichs
 festgelegt werden. Mit der Einstellung \OptionValue{sender}{top} wird
 der Absenderbereich am oberen Seitenende dargestellt. Dies ist auch die
 Standardeinstellung. Wählt man dagegen \OptionValue{sender}{bottom}, so
@@ -395,7 +395,7 @@ Die Umgebung \Environment{backpage} erlaubt alternativ zu
 \Macro{makebackpage} das Erstellen komplett individueller
 Rückseiten. Die Verwendung entspricht der \Environment{titlepage}-Umgebung
 (siehe vorheriges Kapitel),
-jedoch wird das Siegelbandlogo bei Verwendung standardmäßig im
+jedoch wird das Siegelband-Logo bei Verwendung standardmäßig im
 \Option{plain}-Stil dargestellt, also schriftlos.
 
 Die Einzelnen Segmente können mit der Umgebung \Environment{segment}
@@ -983,7 +983,10 @@ ist kein Wert angegeben, so wird \Macro{textwidth} verwendet.
 
 \paragraph{Hinweis zur Verwendung}
 
-Für Typografie auf farbigen Flächen gilt: Bis zu einer Abstufung von 60\% kann die Schrift in Weiß auf diesem Farbton stehen. Ab einem Tonwert von 40\% sollte die Schrift, im Sinne einer optimalen Lesbarkeit, in Schwarz dargestellt werden. 
+Für Typografie auf farbigen Flächen gilt:
+Bis zu einer Abstufung von 60\% kann die Schrift in Weiß auf diesem Farbton stehen.
+Ab einem Tonwert von 40\% sollte die Schrift,
+im Sinne einer optimalen Lesbarkeit, in Schwarz dargestellt werden. 
 
 Weitere Hinweise zur allgemeinen Verwendung sind bitte der
 CD-Toolbox\cite{toolbox} zu entnehmen.

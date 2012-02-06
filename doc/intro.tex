@@ -1,9 +1,12 @@
 \chapter{Einleitung}
 
-Das vorliegende Dokument beschreibt die Möglichkeiten von \tubslatex.
+Das vorliegende Dokument beschreibt die Verwendung die Möglichkeiten von \tubslatex.
 Mit \tubslatex\ ist im Folgenden immer die Sammlung aller Vorlagen in Form
 von \LaTeX-Paketen und -Klassen bezeichnet, welche für die Darstellung von
 Dokumenten im Corporate Design der TU Braunschweig vorgesehen sind.
+
+Das folgende Kapitel stellt zuerst die wesentlichen Elemente und Richtlinien
+des Corporate Designs vor und ... % TODO...
 
 Das Kapitel~\ref{chap:install} bietet einige kleine Hinweise, die bei
 der Installation von \tubslatex nützlich sein könnten.
@@ -28,6 +31,79 @@ Für besonders Eilige empfiehlt sich das Kapitel~\ref{chap:rapid},
 welches in aller Kürze die jeweils wichtigsten Befehle und Optionen einer Klasse
 zusammenfasst und so einen raschen Einstieg ermöglicht.
 
+\clearpage
+\section{Das Corporate Design der TU Braunschweig}
+
+\paragraph{Seitenlayout}\hfill\\
+\begin{minipage}[t]{0.45\textwidth}
+\vspace*{0pt}
+\centering\fboxsep0mm%
+\fbox{\includegraphics[width=0.85\textwidth,page=1]{examples/thecd.pdf}}
+\end{minipage}
+\begin{minipage}[t]{0.55\textwidth}
+\vspace*{0pt}
+Das Corporate Design setzt sich aus ein paar wesentlichen Elementen und
+Gestaltungsmerkmalen zusammen.
+Eine Seite teilt sich grundsätzlich in einen \emph{Absenderbereich} (1) und einen
+\emph{Kommunikationsbereich} (2).
+Das markante rote \emph{Siegelband-Logo} dient dabei als Bindeglied zwischen
+diesen beiden Bereichen. 
+Der Absenderbereich kann sowohl am oberen als auch am unteren Blattende
+platziert werden.
+Das Siegelband-Logo passt sich in seiner vertikalen Position an und kann darüber hinaus
+jeweils rechts- oder linksseitig platziert werden.
+Daraus ergeben sich insgesamt 4 Darstellungsvarianten.
+
+Der Kommunikationsbereich wird von einem Rand fester Breite eingerahmt,
+der der Gestaltung einen edlen Wiedererkennungswert verleiht und gleichzeitig
+den Inhalt absetzt, um Druck- und Kopierprobleme zu vermeiden.
+\end{minipage}\bigskip
+
+\paragraph{Absenderfeld und Gaußraster}\hfill\\
+\begin{minipage}[t]{0.45\textwidth}
+\vspace*{0pt}
+\centering\fboxsep0mm%
+\fbox{\includegraphics[width=0.85\textwidth,page=2]{examples/thecd.pdf}}
+\end{minipage}
+\begin{minipage}[t]{0.55\textwidth}
+\vspace*{0pt}
+Das im Absenderbereich befindliche \emph{Absenderfeld} (1) bietet Platz für
+einen Instituts-/Abteilungsnamen bzw. ein entsprechendes Logo.
+
+Der Kommunikationsbereich kann in einem an die gaußsche Summenformel
+angelehnten Raster (\emph{Gaußraster}) unterteilt werden.
+Dabei ergibt sich die Hohe eines Grundsegmentes ((2), (3), \ldots)
+immer aus der Summer der Höhe der beiden vorhergehenden Grundsegmente.
+Zur Darstellung können beliebig viele Grundsegmente zusammengefasst werden,
+womit sich ein zugleich flexibles aber trotzdem charakteristisches
+Gesamtbild ergibt.
+
+Das Gaußraster ist immer so ausgerichtet, dass sich das breiteste Grundsegment
+an der Grenze zum Absenderbereich befindet.
+\end{minipage}
+
+\paragraph{Schrift und Farbwelt}\hfill\\
+\begin{minipage}[t]{0.45\textwidth}
+\vspace*{0pt}
+\centering\fboxsep0mm%
+\fbox{\includegraphics[width=0.85\textwidth,page=3]{examples/thecd.pdf}}
+\end{minipage}
+\begin{minipage}[t]{0.55\textwidth}
+\vspace*{0pt}
+Zum Umfang des Corporate Design gehört neben den verschiedenen
+Gestaltungsmerkmalen auch eine unverkennbare Schrift.
+Dieses ist mit der modernen Hausschrift \emph{Nexus} gegeben, die sowohl mit als auch
+ohne Serifen in jeweils drei Schriftschnitten zur Verfügung steht.
+
+Ein weiteres wichtiges Merkmal von Dokumenten im Corporate Design sind
+die verwendeten Farben, die sich aus einer Reihe fest definierter Paletten
+zusammen setzen.
+Als wichtige Strukturfarben sind das TU-Rot, sowie Schwarz und Weiß vorgesehen.
+Zur individuellen Gestaltung stehen 4 Farbklänge (Gelb/Orange, Grün, Blau, Violett)
+mit jeweils 3 Farben und 12 Abstufungen zur Verfügung.
+\end{minipage}
+
+\clearpage
 \section{Übersicht über die Vorlagen}
 
 Die Vorlagen bauen allesamt auf Standard-\LaTeX-Klassen und Paketen auf.
@@ -39,7 +115,7 @@ den entsprechenden KOMA-Skript-Klassen auf,%
 \footnote{\texttt{tubsposter} verwendet \texttt{scrartcl}}.
 Dabei wurden einige Optionen und Befehle, die die Basis-Klassen bieten, erhalten
 und können in der ausführlichen Dokumentation zum KOMA-Skript\cite{koma-skript}
-nachgeschlagen werden.
+nachgeschlagen werden.1
 Einige Funktionalitäten wie etwa die Satzspiegelberechnung sind dagegen
 komplett ersetzt wurden.
 Die Dokumentation geht an einigen Stellen noch expliziter auf Unterschiede ein.

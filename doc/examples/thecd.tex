@@ -1,0 +1,65 @@
+\documentclass[a4paper,10pt,twoside=false,bcor=0mm]{tubsartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage{tikz, lipsum}
+
+
+\begin{document}
+
+\begin{gausspage}
+  \showtubslogo
+  \showtopline
+  \showlogo{\color{tuBlack}\raggedright\tikz \node[draw,circle,ultra thick]{\huge 1};}
+  \begin{segment}[c,bgcolor=tuGray20]{8}
+    \centering
+    \tikz \node[draw,circle,ultra thick]{\huge 2};
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \showtubslogo
+  \showlogo{\fboxsep0mm\fbox{\parbox[c][\headheight]{0.5\textwidth}{%
+    \color{tuBlack}\centering\tikz \node[draw,circle,ultra thick]{\huge 1};}}}
+  \begin{segment}[c,bgcolor=tuGray20]{1}
+    \centering
+    \tikz \node[draw,circle,ultra thick]{\huge 2};
+  \end{segment}
+  \begin{segment}[c,bgcolor=tuGray]{1}
+    \centering
+    \tikz \node[draw,circle,ultra thick]{\huge 3};
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray20]{1}
+    ~
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray]{1}
+    ~
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray20]{1}
+    ~
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray]{1}
+    ~
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray20]{1}
+    ~
+  \end{segment}
+  \begin{segment}[bgcolor=tuGray]{1}
+    ~
+  \end{segment}
+\end{gausspage}
+
+
+\begin{gausspage}
+  \showtubslogo
+  \showlogo{\includegraphics{dummy_institut}}
+  \begin{segment}[bgcolor=tuViolet]{2}
+    \color{tuWhite}\huge Lorem ipsum.
+  \end{segment}
+  \begin{segment}[c,bgcolor=tuGreenLight]{4}
+    \large\lipsum[1]
+  \end{segment}
+  \begin{segment}[bgcolor=tuViolet]{2}
+    ~
+  \end{segment}
+\end{gausspage}
+
+\end{document}
