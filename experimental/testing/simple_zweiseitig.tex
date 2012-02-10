@@ -1,0 +1,94 @@
+\documentclass{tubsartcl}
+\let\chead\relax
+\let\cfoot\relax
+
+\usepackage[utf8x]{inputenc}    
+\usepackage[box,completemulti]{automultiplechoice}    
+
+\logo{LOGO}
+\subject{Klausur}
+\title{Irgendein Fach}
+
+\begin{document}
+\onecopy{10}{    
+
+%%% beginning of the test sheet header:    
+\maketitle
+
+\noindent{\bf QCM  \hfill TEST}
+
+\vspace*{.5cm}
+\begin{minipage}{.4\linewidth}
+\centering\large\bf Test\\ Examination on Jan., 1st, 2008\end{minipage}
+\namefield{\fbox{    
+                \begin{minipage}{.5\linewidth}
+                  Firstname and lastname:
+
+                  \vspace*{.5cm}\dotfill
+                  \vspace*{1mm}
+                \end{minipage}
+         }}
+
+\begin{center}\em
+Duration : 10 minutes.
+
+  No documents allowed. The use of electronic calculators is forbidden.
+
+
+  Questions using the sign \multiSymbole{} may have
+  zero, one or several correct answers.  Other questions have a single correct answer.
+
+  Negative points may be attributed to \emph{very
+    bad} answers.
+\end{center}
+\vspace{1ex}
+
+%%% end of the header
+
+\begin{question}{Schwierigkeit}\QuestionIndicative
+\scoring{auto=0,v=-1,e=-2}
+Did you find this class easy or difficult? Please answer on a scale from 0 (very  -
+difficult) to 5
+(very easy).
+\begin{choiceshoriz}[o]
+\correctchoice{0}
+\correctchoice{1}
+\correctchoice{2}
+\correctchoice{3}
+\correctchoice{4}
+\correctchoice{5}
+\end{choiceshoriz}
+\end{question}
+
+\begin{question}{identifiant}
+Here is the question...
+\begin{choices}
+\correctchoice{The correct answer}
+\wrongchoice{A wrong answer}
+\wrongchoice{Another wrong answer}
+\end{choices}
+\end{question}
+
+\newpage
+
+\begin{question}{Bewertung}\QuestionIndicative
+\scoring{auto=0,v=-1,e=-2}
+Wie bewerten Sie die Bewertung dieser Arbeit on a scale from 0 (very  -
+difficult) to 5
+(very easy).
+\begin{choiceshoriz}[o]
+\correctchoice{0}
+\correctchoice{1}
+\correctchoice{2}
+\correctchoice{3}
+\correctchoice{4}
+\correctchoice{5}
+\end{choiceshoriz}
+\end{question}
+
+
+\clearpage    
+
+}   
+
+\end{document}

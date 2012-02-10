@@ -1,0 +1,65 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tubsautomultiplechoice}
+%
+\ifx\tubslatexVersion\undefined%
+  \RequirePackage{tubsdoc}
+\else\fi
+%
+\let\chead\relax\let\cfoot\relax
+%
+\DeclareOption*{%
+  \PassOptionsToPackage{\CurrentOption}{automultiplechoice}
+}
+\ProcessOptions\relax%
+%
+\PassOptionsToPackage{nopage}{automultiplechoice}
+\RequirePackage{automultiplechoice}
+%
+\AtBeginPage{
+  \global\advance\AMCid@check\m@ne%
+  \ifnum\AMCid@check<1\global\AMCid@check=\AMCid@checkmax\fi%
+  \AMC@pagepos%
+  \ifAMC@watermark\ifAMC@correchead\else\AMCw@terprint{\AMCw@termark}%
+  \fi\fi
+}
+%
+\AtBeginDocument{%
+\AddToShipoutPicture{%
+  \newdimen\tmp@posx%
+  \newdimen\tmp@posy%
+  \setlength{\tmp@posx}{\paperwidth-\tubspage@borderwidth-9pt}
+  \setlength{\tmp@posy}{\paperheight-\tubspage@borderwidth-9pt}
+  \put(\LenToUnit{\tubspage@borderwidth},\LenToUnit{\tmp@posy}){%
+    \AMC@LR{\he@dbas{\leavevmode\m@rque{positionHG}}}%
+  }%
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+    \AMC@LR{\he@dbas{\leavevmode\m@rque{positionHD}}}%
+  }%
+  \put(\LenToUnit{\tubspage@borderwidth},\LenToUnit{\tubspage@borderwidth}){%
+    \AMC@LR{\he@dbas{\leavevmode\m@rque{positionBG}}}%
+  }%
+  \put(\LenToUnit{\tmp@posx},\LenToUnit{\tubspage@borderwidth}){%
+    \AMC@LR{\he@dbas{\leavevmode\m@rque{positionBD}}}%
+  }%
+}
+}
+
+\bglayout{
+  \showtubslogo
+  \showtopline
+}
+
+\outerhead{\texttt{+\the\AMCid@etud/\thepage/\the\AMCid@check+}}
+
+\ihead{
+  \vfill
+  \hspace*{\tubslogoWidth}
+  \hspace*{-\tubspage@borderwidth}
+  \he@dhaut{\begin{minipage}[b]{5cm}
+    \AMCbin@begin{1}\noindent%
+    \AMC@binaryBoxes[\AMC@NCBetud]{\the\AMCid@etud}\\
+    \AMCbin@begin{2}\noindent%
+    \AMC@binaryBoxes[\AMC@NCBpage]{\thepage}\ignorespaces%
+    \AMCbin@begin{3}\AMC@binaryBoxes[\AMC@NCBcheck]{\the\AMCid@check}%
+  \end{minipage}}
+}
