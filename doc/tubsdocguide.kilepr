@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.0
-lastDocument=intro.tex
+lastDocument=install.tex
 masterDocument=
 name=tubsdocguide
 pkg_extIsRegExp=false
@@ -76,7 +76,7 @@ ReadWrite=true
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
-Indentation Mode=2
+Indentation Mode=
 Mode=LaTeX
 ReadWrite=true
 

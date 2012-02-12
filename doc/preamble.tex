@@ -3,6 +3,11 @@
 \usepackage{amsmath}
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{multind}
+\makeindex{general}
+\makeindex{cmd}
+\makeindex{option}
+\newcommand*{\Index}[3][]{\index{#2}{#3}}
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily}
 \lstdefinestyle{cmd}{%
@@ -155,13 +160,13 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 %     environment
 %   \end{description}
 %    \begin{macrocode}
-\DeclareRobustCommand*{\Macro}[1]{\mbox{\texttt{\char`\\#1}}}
+\DeclareRobustCommand*{\Macro}[1]{\index{cmd}{#1@\textbackslash#1}\mbox{\texttt{\char`\\#1}}}
 \DeclareRobustCommand*{\Option}[1]{\mbox{\texttt{#1}}}
 \DeclareRobustCommand*{\KOption}[1]{\mbox{\Option{#1}\texttt=}}
 \DeclareRobustCommand*{\OptionValue}[2]{\mbox{\texttt{#1=#2}}}
 \DeclareRobustCommand*{\FloatStyle}[1]{\mbox{\texttt{#1}}}
 \DeclareRobustCommand*{\Pagestyle}[1]{\mbox{\texttt{#1}}}
-\DeclareRobustCommand*{\Environment}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Environment}[1]{\index{cmd}{#1}\mbox{\texttt{#1}}}
 \DeclareRobustCommand*{\Counter}[1]{\mbox{\texttt{#1}}}
 \DeclareRobustCommand*{\Length}[1]{\mbox{\texttt{\char`\\#1}}}
 \DeclareRobustCommand*{\PLength}[1]{\mbox{\PValue{#1}}}

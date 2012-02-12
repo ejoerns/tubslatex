@@ -26,6 +26,9 @@ $(DOCFILE): $(DOCSRC)
 	$(PDFLATEX) $(basename $@ .pdf).tex
 	bibtex $(basename $@ .pdf)
 	makeglossaries $(basename $@ .pdf)
+	makeindex general
+	makeindex cmd
+	makeindex option
 	$(PDFLATEX) $(basename $@ .pdf).tex
 
 examples:
