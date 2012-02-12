@@ -20,6 +20,7 @@ Einige Funktionalitäten, welche diese Klassen bieten:
 \end{itemize}
 
 \paragraph{Seitenlayout}
+\Index{Seitenlayout}
 
 Der im \acs{CD} festgelegte \gls{glos:absenderbereich} findet sich sowohl auf
 Titelseiten als auch auf Inhaltsseiten (als Kopf- bzw. Fußzeile) wieder.
@@ -37,6 +38,8 @@ genauen individuellen Anpassung der Darstellung. Eine genauere Darstellung
 liefert \mbox{u.\,a.}\xspace das Kapitel~\ref{sec:pagelayout}.
 
 \paragraph{Titelseiten}
+\Index{Titelseiten}
+
 Für die Darstellung von Titelseiten stellt \tubslatex verschiedene Möglichkeiten
 zur Verfügung, die an die konventionelle Erstellung von Titelseiten angelehnt
 sind. So werden sowohl sowohl der Befehl \Macro{maketitle} als auch die Umgebung
@@ -57,14 +60,20 @@ Rückseiten zu erstellen. Kapitel~\ref{sec:titlepage} geht darauf näher ein.
 % auf dem Selben backend. Dies wird in Kapitel~\ref{sec:gausspage} ausführlicher
 % beschrieben.\bigskip
 
+\paragraph{Schrift, Kopf-/Fußzeilen}
+
 Darüber hinaus ist die Schrift Nexus, sowie alle Farben des Corporate Designs
-in allen Dokumenten vordefiniert.
+in allen Dokumenten vordefiniert. Die Alternativschrift Arial kann durch
+Angabe der Klassenoption \Option{arial} gehält werden.
 Befehle für die Erstellung von Kopf- bzw. Fußzeilen sind CD-konform angepasst und
 werden im Kapitel~\ref{sec:headline} beschrieben.
 
 
 \section{Seitenlayout}\label{sec:pagelayout}
+\Index{Seitenlayout}
 % TODO: notieren, dass auch Standard-Koma-Optionen funktionieren
+% TODO: Tabelle mit Schriftgrößen? (-> Anhang oder so)
+% TODO: Allgemein Zusammenhang Schriftgrößen -> Papiergröße erwähnen?
 
 Eine Seite im Corporate Design unterteilt sich grundlegend in 2 Bereiche.
 Der Absenderbereich und der Kommunikationsbereich. Der Absenderbereich wird zur
@@ -77,8 +86,17 @@ werden. Dies beeinflusst auch das Gaußraster, es beginnt jeweils mit dem
 größten Segment am Absenderbereich.
 \bigskip
 
-Im Folgenden werden alle \tubslatex-spezifischen Klassenoptionen beschrieben,
-die das Layout beeinflussen.
+Im Folgenden werden alle \tubslatex-Klassenoptionen beschrieben,
+die das Layout beeinflussen. Die Reihenfolge der Beschreibung richtet sich dabei
+nach einer möglichst sinnvollen Auswahlreihenfolge bei der Gestaltung des Gesamtlayouts.
+
+\paragraph{Papierformat}\hfill
+
+Das Corporate Design definiert allgemein feste Zusammenhänge zwischen dem
+verwendeten Papierformat und den zu verwendeten Basis-Schriftgrößen.
+In \tubslatex sind diese Werte größtenteils $1:1$ übernommen, jedoch
+werden für die gängigsten Dokumentenformate hier noch weitere Abstufungen 
+bereit gestellt. Details zu Schriftgrößen gibt das Kapitel~\ref{subsec:documents:fonts}
 
 \begin{Declaration}
   \Option{a0paper}\\
@@ -89,35 +107,48 @@ die das Layout beeinflussen.
   \Option{a5paper}\\
   \Option{a6paper}
 \end{Declaration}
+\OptionIndex{a0paper}
+\OptionIndex{a1paper}
+\OptionIndex{a2paper}
+\OptionIndex{a3paper}
+\OptionIndex{a4paper}
+\OptionIndex{a5paper}
+\OptionIndex{a6paper}
+\Index{Papierformat!Option}
 
-Für die Auswahl des verwendeten Papierformats stehen alle DIN A-Größen von
+Für die Auswahl des verwendeten Papierformats stehen alle DIN\,A-Größen von
 0 bis 6 zur Verfügung. Standardeinstellung ist \Option{a4paper}.
 Die Standard-Schriftgröße wird dabei jeweils automatisch mit umgestellt.
-Die verfügbaren \acs{CD}-konformen 
+Die verfügbaren \acs{CD}-konformen Schriftgrößen und die jeweils eingestellten
+Standard-Schriftgrößen können der Tabelle~\ref{table:fontsizes}
+entnommen werden.
 
 \begin{Declaration}
   \Option{landscape}
 \end{Declaration}
+\OptionIndex{landscape}
+\Index{Querformat!Option}
 
-Schaltet das Dokument in Querformat-Darstellung.
+Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
 
 \begin{center}
   \fboxsep0mm\fbox{\includegraphics[width=0.45\textwidth]{examples/article_landscape.pdf}}\\
   Dokument im Querformat
 \end{center}Absenderbereich
 
-
 \begin{important}
   Im Querformat hat das Gaußraster eine abweichende
   Segmentanzahl. Für alle gängigen Formate sind im Querformat \emph{6 Segmente}
   definiert. Daher lösen Layouts, die für hochformatige Dokumente
-  geschrieben wurden, im Querformat einen Fehler aus.
+  geschrieben wurden, im Querformat einen Fehler aus. %TODO: Fehlermeldung benennen bzw. Referenz
 \end{important}
 
+\paragraph{Inhaltsdarstellung}\hfill
 
 \begin{Declaration}
   \KOption{sender}\PName{Position}
 \end{Declaration}
+\Index{Absenderbereich!Option}
 
 Mit der Option \Option{sender} kann die Position des Absenderbereichs
 festgelegt werden. Mit der Einstellung \OptionValue{sender}{top} wird
@@ -170,6 +201,8 @@ Die zuletzt gesetzte Option hat dabei die höchste Priorität.
 \begin{Declaration}
   \KOption{bcor}\PName{Wert}
 \end{Declaration}
+\OptionIndex{marginleft}
+\Index{Bindekorrektur}
 
 Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
 Darstellungsbereichs vom inneren Formatrand.
@@ -202,6 +235,9 @@ dabei der einfachen Benutzung von \Option{twoside}.
   \Option{marginleft}\\
   \Option{marginright}
 \end{Declaration}
+\OptionIndex{marginleft}
+\OptionIndex{marginright}
+\Index{Marginale}
 
 Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
 \PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
@@ -211,6 +247,7 @@ einem Element im sechsgeteilten \gls{glos:spaltenraster} entspricht.
 \begin{Declaration}
   \Option{extramargin}
 \end{Declaration}
+\OptionIndex{extramargin}
 
 Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
 für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
@@ -672,7 +709,8 @@ werden. Näheres ist in der zugehörigen Dokumentation zu
 entnehmen\cite{koma-skript}.
 
 
-\section{Schrift}
+\section{Schrift}\label{subsec:documents:fonts}
+\Index{Schrift}
 
 Dokumente im \acs{CD} werden allgemein in der Schriftart \emph{Nexus}
 gesetzt.
@@ -681,6 +719,8 @@ gesetzt.
   \Option{nexus}\\
   \Option{arial}
 \end{Declaration}
+\Index{Schrift!Nexus}
+\Index{Schrift!Arial}
 
 Als Alternativschrift ist im \acs{CD} Arial festgelegt. Durch die Klassenoption
 \Option{arial} kann die Dokumentenschriftart auf die serifenlose Schrift
@@ -702,6 +742,12 @@ Eine Übersicht darüber bietet Tabelle~\ref{table:fontsizes}
 Auf die Verwendung einer Schriftgröße außerhalb des Definitionsbereichs sollte
 nach Möglichkeit verzichtet werden, da dies zu starken Abweichungen in der
 Größendarstellung und somit im Gesamtlayout führt.
+% \begin{important}
+%   Bei Abweichung von diesen vordefinierten Basis-Schriftgrößen kann es zu deutlichen
+%   Abweichungen bei größeren Schriftelementen (\Macro{large}, \Macro{huge}, \ldots)
+%   kommen, da die CD-Definitionen teilweise stark von den Standard-\LaTeX-Definitionen
+%   abweichen.
+% \end{important}
 
 % TODO: Hier weiter machen!
 \begin{table}\centering
