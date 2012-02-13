@@ -134,7 +134,7 @@ Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
 \begin{center}
   \fboxsep0mm\fbox{\includegraphics[width=0.45\textwidth]{examples/article_landscape.pdf}}\\
   Dokument im Querformat
-\end{center}Absenderbereich
+\end{center}
 
 \begin{important}
   Im Querformat hat das Gaußraster eine abweichende
@@ -148,6 +148,7 @@ Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
 \begin{Declaration}
   \KOption{sender}\PName{Position}
 \end{Declaration}
+\OptionIndex{sender}
 \Index{Absenderbereich!Option}
 
 Mit der Option \Option{sender} kann die Position des Absenderbereichs
@@ -159,17 +160,18 @@ wird der Absenderbereich am unteren Ende der Seite platziert
 \begin{important}
   Die Positionierung des Absenderbereichs beeinflusst die Orientierung des
   Gaußrasters. Das größte Segment wird dabei immer so gesetzt, dass es direkt
-  an den Absenderbereich anschließt und alle Folgende von absteigender Höhe sind.
+  an den Absenderbereich anschließt und alle Folgenden von absteigender Höhe sind.
 \end{important}
 
 
 \begin{Declaration}
   \KOption{style}\PName{<print/screen/printdev>}
 \end{Declaration}
+\OptionIndex{style}
 
-Die Option \Option{style} bietet die automatische Möglichkeit diverse Elemente
-des Layouts so anzupassen, dass sie die Darstellung auf dem gewünschten
-Zielmedium optimieren.
+Die Option \Option{style} bietet die Möglichkeit, diverse Elemente
+des Layouts so anzupassen, dass sie für die Darstellung auf dem gewünschten
+Zielmedium optimiert sind.
 
 Mit \OptionValue{style}{print}, was standardmäßig voreingestellt ist,
 wird die Darstellung für den Druck optimiert.
@@ -199,9 +201,32 @@ nachträglich geändert werden. Es entscheidet die Reihenfolge der Optionen.
 Die zuletzt gesetzte Option hat dabei die höchste Priorität.
 
 \begin{Declaration}
+  \KOption{twoside}\PName{bool}\\
+  \Option{oneside}
+\end{Declaration}
+\OptionIndex{twoside}
+\OptionIndex{oneside}
+\Index{zweiseitig}
+\Index{einseitig}
+
+\Index{Dokumente!einseitig}
+Für das Setzen von zweiseitigen Dokumente ist die Option \Option{twoside}
+vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
+umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
+auf der linken und rechten Seite definiert ist. Dies hat unter anderem Einfluss
+auf definierte Ränder (Bindekorrektur, Marginale) und den Inhalt der
+Kopf-/Fußzeilen.
+Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
+dabei der einfachen Benutzung von \Option{twoside}.
+
+\Index{Dokumente!zweiseitig}
+Durch Verwendung von \OptionValue{twoside}{false} oder alternativ
+von \Option{oneside} werden Dokumente einseitig gesetzt.
+
+\begin{Declaration}
   \KOption{bcor}\PName{Wert}
 \end{Declaration}
-\OptionIndex{marginleft}
+\OptionIndex{bcor}
 \Index{Bindekorrektur}
 
 Die Bindekorrektur beschreibt einen zusätzlichen Abstand des eigentlichen
@@ -216,20 +241,6 @@ Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
 Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
 mit \OptionValue{bcor}{0mm} möglich.
 
-\begin{Declaration}
-  \KOption{twoside}\PName{bool}
-\end{Declaration}
-
-Für das Setzen von zweiseitigen Dokumente ist die Option \Option{twoside}
-vorgesehen. Mit ihr wird von einseitigem Layout auf zweiseitiges Layout
-umgeschaltet, was bedeutet, dass die Innenseite eines Dokuments abwechselnd
-auf der linken und rechten Seite definiert ist. Dies hat unter anderem Einfluss
-auf definierte Ränder (Bindekorrektur, Marginale) und den Inhalt der
-Kopf-/Fußzeilen.
-
-Die Angabe eines Wertes ist Optional. \OptionValue{twoside}{true} entspricht
-dabei der einfachen Benutzung von \Option{twoside}.
-\OptionValue{twoside}{false} sorgt dagegen für die Deaktivierung der Option.
 
 \begin{Declaration}
   \Option{marginleft}\\
@@ -246,12 +257,13 @@ einem Element im sechsgeteilten \gls{glos:spaltenraster} entspricht.
 
 \begin{Declaration}
   \Option{extramargin}
-\end{Declaration}
+\end{Declaration}% TODO: Namenskonflikt mit marginleft, ..?
 \OptionIndex{extramargin}
 
+% TODO: noch woanders Präferenz für zweispaltiges Layout erwähnen?
 Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip
-für den zweispaltigen Textsatz vorgesehen ist. Dieser ist für einspaltige
-Darstellung, welche häufig Verwendung findet, jedoch deutlich zu breit.
+für den zweispaltigen Textsatz vorgesehen ist. Jedoch ist dieser für die häufig
+verwendete einspaltige darstellung deutlich zu breit.
 Die Option \Option{extramargin} definiert dafür einen Textbereich, der um
 doppelte Rahmenstärke schmaler und um einfache Rahmenstärke flacher
 ist als der herkömmliche Textbereich.
@@ -259,9 +271,11 @@ ist als der herkömmliche Textbereich.
 Dies hat keine Auswirkung auf Darstellungen, die die Umgebung
 \Environment{gausspage} benutzen.
 \end{important}
-
+% TODO: Notiz, Spaltenraster, \twocolumn, etc.
+% TODO: Rahmenstärke?
 
 \section{Titelseite}\label{sec:titlepage}
+\Index{Titelseite}
 
 Titelseiten können bei \LaTeX\ generell auf zwei verschiedene Arten erstellt
 werden; entweder mit Hilfe des Befehls \Macro{maketitle} oder mit
@@ -274,6 +288,7 @@ werden. Das Kapitel~\ref{subsec:backpages} geht hierauf näher ein.
 \begin{Declaration}
   \Macro{maketitle}\OParameter{style}
 \end{Declaration}
+\CommandIndex{maketitle}
 
 Die einfache Verwendung von \Macro{maketitle} erzeugt eine Titelseite
 mit dem TU-\gls{glos:siegelbandlogo} und einer roten Trennlinie zwischen Absender- und
@@ -299,6 +314,9 @@ oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
   \Macro{titlepicture}\OParameter{fitting}\Parameter{file}\\
   \Macro{titleabstract}\Parameter{text}
 \end{Declaration}
+\CommandIndex{logo}
+\CommandIndex{titlepicture}
+\CommandIndex{titleabstract}
 
 \begin{minipage}[t]{0.6\textwidth}
   \Macro{logo} dient zur Darstellung eines zusätzlichen Absender-Logos als Schrift
@@ -337,6 +355,7 @@ finden sich in Kapitel~\ref{sec:titlestyles}.
   \quad\dots\\
   \XMacro{end}\PParameter{titlepage}
 \end{Declaration}
+\EnvironmentIndex{titlepage}
 
 Mit der \Environment{titlepage}-Umgebung können, wie von den Standardklassen
 gewohnt, Titelseiten definiert werden. Sie bietet aber in \tubslatex noch einige
@@ -351,6 +370,9 @@ Abschnitt~\ref{chap:gausspage}.
   \Macro{showlogo}\Parameter{Inhalt}\\
   \Macro{showtopline}
 \end{Declaration}
+\CommandIndex{showtubslogo}
+\CommandIndex{showlogo}
+\CommandIndex{showtopline}
 
 Die Verwendung einer dieser Befehle innerhalb einer \Environment{titlepage}-Umgebung
 sorgt dafür, dass das entsprechende Element auf der Seite dargestellt wird.
@@ -366,6 +388,7 @@ dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
 \begin{Declaration}
   \Macro{showdesignhelper}
 \end{Declaration}
+\CommandIndex{showdesignhelper}
 
 Dieser Befehl eignet sich für die Gestaltungsphase der Titelseite.
 Er stellt alle verfügbaren Gauß-Segmente, sowie die möglichen Positionen
@@ -378,6 +401,7 @@ für Siegelbandlogo und Zweitlogo dar.
   \quad\dots\\
   \XMacro{end}\PParameter{titlerow}
 \end{Declaration}
+\EnvironmentIndex{titlerow}
 
 Die Umgebung \Environment{titlerow} erlaubt es, Titelelemente im 
 Gaußraster anzulegen. Der Parameter \PName{gaussheight} gibt dabei
@@ -415,6 +439,8 @@ Kapitel~\ref{sec:backstyles}.
   \Macro{address}\Parameter{Adressdaten}\\
   \Macro{backpageinfo}\Parameter{Inhalt}
 \end{Declaration}
+\CommandIndex{address}
+\CommandIndex{backpageinfo}
 
 Mit \Macro{address} kann eine Herausgeber-Adresse für das Dokument
 dargestellt werden.
@@ -427,6 +453,7 @@ Siehe hierzu jeweils auch Kapitel~\ref{sec:backstyles}.
   \quad\dots\\
   \XMacro{end}\PParameter{backpage}
 \end{Declaration}
+\EnvironmentIndex{backpage}
 
 Die Umgebung \Environment{backpage} erlaubt alternativ zu
 \Macro{makebackpage} das Erstellen komplett individueller
@@ -644,6 +671,9 @@ Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklan
 
 
 \section{Kopf-/Fußzeile}\label{sec:headline}
+\Index{Kopfzeile}
+\Index{Fußzeile}
+\Index{Absenderbereich}
 % \marginpar[Neu in 0.3-alpha3]{}
 
 Durch das im \acs{CD} festgeschriebene Layout ist eine klassische Behandlung von
@@ -676,6 +706,12 @@ speziellen Befehlen individuell anpassen.
   \Macro{outerfoot}\OParameter{links}\Parameter{rechts}\\
   \Macro{innerfoot}\OParameter{rechts}\Parameter{links}
 \end{Declaration}
+\CommandIndex{outersender}
+\CommandIndex{innersender}
+\CommandIndex{outerhead}
+\CommandIndex{innerhead}
+\CommandIndex{outerfoot}
+\CommandIndex{innerfoot}
 
 Mit dem Befehl \Macro{outersender}\OParameter{links}\Parameter{rechts}
 wird der Inhalt des äußeren Absenderbereichs festgelegt.
@@ -701,7 +737,7 @@ befindlichen Absenderbereichs nicht dargestellt.
 \begin{Declaration}
   \Macro{headtopline}
 \end{Declaration}
-
+\CommandIndex{headtopline}
 
 Die standardmäßig gesetzte kurze Linie am oberen äußeren Ende des
 Kopfbereichs kann mit diesem aus dem Koma-Skript stammenden Befehl verändert
@@ -731,6 +767,7 @@ Dokumentenschriftart, welche jedoch standardmäßig bereits voreingestellt ist.
 
 
 \paragraph{Schriftgröße}
+\Index{Schrift!Größe}
 % TODO: List Format <-> Default font size !?
 
 Die Standardschriftgröße bei allen DINA4-Dokumenten ist 11pt.
@@ -784,6 +821,7 @@ angepasst werden.
 \begin{Declaration}
   \Option{colorheadings}
 \end{Declaration}
+\OptionIndex{colorheadings}
 
 Diese Klassenoption stellt alle Überschriftsebenen
 (\Macro{chapter}, \ldots, \Macro{subsubsection})
@@ -804,6 +842,9 @@ benutzt werden. Eine kurze Benutzungsbeschreibung ist trotzdem sinnvoll.
   \Macro{settubsfont}\Parameter{Element}\Parameter{Befehle}\\
   \Macro{addtotubsfont}\Parameter{Element}\Parameter{Befehle}
 \end{Declaration}
+\CommandIndex{usetubsfont}
+\CommandIndex{settubsfont}
+\CommandIndex{addtotubsfont}
 
 Mit \Macro{usetubsfont} können die einzelnen Schrift-\PName{Element}e benutzt
 werden, um die aktuelle Schriftart zu ändern.

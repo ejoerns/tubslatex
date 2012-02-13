@@ -1,14 +1,29 @@
+\documentclass[%
+  a4paper,%
+  11pt,%
+  twoside=false,%
+  rgb,%
+  extramargin,%
+  parskip=half,%
+]{tubsbook}
+
 \usepackage[utf8x]{inputenc}
 \usepackage{xspace}
 \usepackage{amsmath}
+% --- Tabellen
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{longtable}
+% --- Indexing
 \usepackage{multind}
 \makeindex{general}
 \makeindex{cmd}
 \makeindex{option}
 \newcommand*{\Index}[2][]{\index{general}{#2}}
 \newcommand*{\OptionIndex}[2][]{\index{option}{#2}}
+\newcommand*{\CommandIndex}[2][]{\index{cmd}{#2@\textbackslash#2}}
+\newcommand*{\EnvironmentIndex}[2][]{\index{cmd}{#2}}
+% --- Listings
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily}
 \lstdefinestyle{cmd}{%
@@ -19,21 +34,20 @@
   frame=single,
 %   backgroundcolor=\color{tuGray20}
 }
+% --- Hyperref
 \usepackage[%
   colorlinks=true,
   linkcolor=tuRed100,
   citecolor=tuGreenDark]{hyperref}
 \usepackage[ngerman]{babel}
 \usepackage{caption, subcaption}
-\usepackage{longtable}
 
 \usepackage{enumerate,paralist}
 
 \usepackage{tikz}
 
-% glossaries
+% --- Glossar
 \usepackage[ngerman]{translator}
-%Paket laden
 \usepackage[
 nonumberlist, %keine Seitenzahlen anzeigen
 acronym,      %ein Abkürzungsverzeichnis erstellen
@@ -41,9 +55,9 @@ toc,          %Einträge im Inhaltsverzeichnis
 section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 {glossaries}
 \let\acs\gls
-%Glossar-Befehle anschalten
 \makeglossaries
 
+% --- Beschreibungs-Makros
 % Kopiert von KOMA
 \makeatletter
 \providecommand\marg[1]{%
