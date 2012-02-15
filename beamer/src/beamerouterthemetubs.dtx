@@ -297,7 +297,6 @@
             dp=0mm,%
             ht=\tubs@outer@tempwidthb]{highlight}%
       \vspace*{1em}\par%
-      %% vphantom makes sure that underlengths are always accounted for
       \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
       \vspace*{0.5em}%
     \end{beamercolorbox}%
@@ -306,10 +305,8 @@
             wd=\tubs@outer@tempwidtha,%
             dp=0mm,%
             ht=\tubs@outer@tempwidthb]{titlelike}%
-      \parbox[b][0.55\beamer@headheight-\depth-.05\beamer@headheight]{\textwidth}{%
         \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
         \vfill%
-      }%
     \end{beamercolorbox}%
   }
 }%
