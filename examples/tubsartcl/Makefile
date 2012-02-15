@@ -1,10 +1,15 @@
 PDFLIST=tubsartcl_example.pdf
 
-all: $(PDFLIST) clean
+all: $(PDFLIST) cleantemp
 
 %.pdf: %.tex
 	pdflatex $<
 	pdflatex $<
 
-clean:
+cleantemp:
 	rm -f *.log *.aux *~ *.toc
+
+clean:
+	rm -f $(PDFLIST)
+
+.PHONY: cleantemp clean

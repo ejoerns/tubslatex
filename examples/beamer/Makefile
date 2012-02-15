@@ -6,11 +6,16 @@
 
 PDFLIST = beamer_example.pdf
 
-all: $(PDFLIST) clean
+all: $(PDFLIST) cleantemp
 
 %.pdf: %.tex
 	pdflatex $<
 	pdflatex $<
 
-clean:
+cleantemp:
 	rm -f *.log *.aux *~ *.toc *.backup *.snm *.nav *.out *.vrb
+
+clean: cleantemp
+	rm -f $(PDFLIST)
+
+.PHONY: cleantemp clean

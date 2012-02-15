@@ -11,3 +11,6 @@ zip: examples
 
 examples:
 	for i in $(EXAMPLEDIRS); do make -C $$i; done
+
+clean:
+	for i in $(EXAMPLEDIRS); do make -C $$i clean; done
