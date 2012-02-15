@@ -117,6 +117,11 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% TODO: check when needed
+%    \begin{macrocode}
+%<*extra>
+%    \end{macrocode}
+%
 % Prerender unicode für author und title
 %    \begin{macrocode}
 \AfterPackage*{ucs}{%
@@ -139,6 +144,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+%</extra>
 %</default>
 %    \end{macrocode}
 %
