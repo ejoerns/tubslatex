@@ -78,3 +78,8 @@ tubsvers.inc
 *.nav
 *.snm
 *.vrb
+
+# and built ones
+*.deb
+*.exe
+*.gz
