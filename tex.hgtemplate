@@ -79,6 +79,9 @@
 %
 %    \begin{macrocode}
 %<*default>
+\RequirePackage{ifthen}
+\RequirePackage{scrlfile}%TODO: KOMA-Check?
+\RequirePackage{etoolbox}%
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -114,18 +117,24 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-% Schreibe pdf-Informationen, wenn hyperref benutzt wird.
+% Prerender unicode für author und title
 %    \begin{macrocode}
-\@ifpackageloaded{hyperref}{%
-  \PrerenderUnicode{ä,ö,ü,ß} 
-  \AtBeginDocument{
-    \hypersetup{
-      pdftitle = {\@title},
-      pdfauthor = {\@author},
-      pdfcreator = {\tubslatexVersion}
+\AfterPackage*{ucs}{%
+  \pretocmd{\author}{\PrerenderUnicode{ä,ö,ü,ß}}{}{}%
+  \pretocmd{\title}{\PrerenderUnicode{ä,ö,ü,ß}}{}{}%
+}
+%
+% Schreibe pdf-Informationen, wenn hyperref benutzt wird.\AtBeginDocument{
+  \@ifpackageloaded{hyperref}{%
+    \@ifundefined{inputencodingname}{}{%
+      \hypersetup{
+        pdftitle = {\@title},
+        pdfauthor = {\@author},
+        pdfcreator = {\tubslatexVersion}
+      }
     }
-  }
-}{}
+  }{}
+}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
