@@ -174,8 +174,11 @@
 \newcommand{\new@back@style}[3]{%
   \expandafter\def\csname tubs@backstyle@bg@#1\endcsname{#2}
   \expandafter\def\csname tubs@backstyle@content@#1\endcsname{%
-      \clearpage\ifthispageodd{\thispagestyle{empty}\strut\clearpage}{}
-    #3}
+      \clearpage%
+      \if@twoside%
+        \ifthispageodd{\thispagestyle{empty}\strut\clearpage}{}%
+      \else\fi%
+    #3}%
 }
 %    \end{macrocode}
 %    \end{macro}
