@@ -3,7 +3,7 @@
 # Erzeugt Doku-Beispiele
 #
 
-EXAMPLELIST = backstyles.pdf titlestyles.pdf article_landscape.pdf leaflet.pdf example_vars.pdf posterstyle_standard.pdf posterstyle_scifi.pdf posterstyle_bulletin.pdf gausssegments.tex
+EXAMPLELIST = backstyles.pdf titlestyles.pdf article_landscape.pdf leaflet.pdf example_vars.pdf posterstyle_standard.pdf posterstyle_scifi.pdf posterstyle_bulletin.pdf gausssegments.pdf
 EXAMPLELIST += titelseite.pdf inhaltsseite.pdf inhaltsseite_hervorgehoben.pdf colorscheme1.pdf colorscheme2.pdf colorscheme3.pdf doc_layout.pdf stdposter_minimal.pdf module_split.pdf
 
 PDFLATEX = pdflatex
