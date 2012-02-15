@@ -124,7 +124,8 @@
   \pretocmd{\title}{\PrerenderUnicode{ä,ö,ü,ß}}{}{}%
 }
 %
-% Schreibe pdf-Informationen, wenn hyperref benutzt wird.\AtBeginDocument{
+% Schreibe pdf-Informationen, wenn hyperref benutzt wird.
+\AtBeginDocument{
   \@ifpackageloaded{hyperref}{%
     \@ifundefined{inputencodingname}{}{%
       \hypersetup{
