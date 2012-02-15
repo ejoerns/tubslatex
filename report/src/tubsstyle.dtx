@@ -900,6 +900,7 @@
   \setcounter{tubs@yseg@cnt}{1}
   \setkeys{bglayout}{pages=all,#1}
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
+  \ClearShipoutPicture
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -918,7 +919,6 @@
     \showdesignhelper%
   }{}
   \tubs@draw@designhelper% TODO: keep?
-  \ClearShipoutPicture
   \ifthenelse{\boolean{tubsstyle@singlepage}}{%
     \AddToShipoutPicture*{\@next@shipout}
   }{%
