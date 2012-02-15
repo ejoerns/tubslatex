@@ -1,6 +1,41 @@
-Version 0.3-beta1:
+Version 0.3-beta2-r950 (testing):
 
-# Änderungen zu letzter Test-Version sind ab jetzt immer mit '+' markiert
+- Dokumentation
+  - Überarbeitung der Kapitel 'Einleitung' und 'Installation'
+  - Beginn von Indexerstellung
+
+Allgemein
+  - Überarbeitung des Gauss-Layout-Systems
+  - vertikale Positionierung innerhalb von gausbox mit [t,c,b] möglich
+
+- Dokuementenklassen
+  - backpage-Umgebung inkl. dazugehöriger Style-Dateien hinzugefuegt
+  - Bessere Behandlung der Logo-Positionierung
+  - 
+
+- Plakate
+  - Berechnungsfehler im Modulsystem behoben
+  - bottom-Sender für Modulsystem implementiert
+  - Landscape-Behandlung verbessert
+
+- Präsentationen
+  - Farbtemplate und dessen Verwendung überarbeitet und verbessert.
+  - transparency-Overlays entfernt
+
+- Briefklasse
+  - Korrektur der Textbreite für neue Briefe im selben Dokument
+  - Abstand des specialmail-Feldes zur backaddress vergrößert
+
+- Installation
+  - Debian-Paket besteht nun lintian-Test
+
+- Logo-Paket
+  - Dateiendung mit angegeben, für Kompatibilität mit latex
+
+- Beispiele
+  - Sekundärlogo in scifiposter_example aufgenommen
+
+Version 0.3-beta1:
 
 - Allgemein:
   - eso-pic-Warnung behoben
