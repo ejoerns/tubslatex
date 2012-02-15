@@ -114,6 +114,20 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% Schreibe pdf-Informationen, wenn hyperref benutzt wird.
+%    \begin{macrocode}
+\@ifpackageloaded{hyperref}{%
+  \PrerenderUnicode{ä,ö,ü,ß} 
+  \AtBeginDocument{
+    \hypersetup{
+      pdftitle = {\@title},
+      pdfauthor = {\@author},
+      pdfcreator = {\tubslatexVersion}
+    }
+  }
+}{}
+%    \end{macrocode}
+%
 %    \begin{macrocode}
 %</default>
 %    \end{macrocode}
