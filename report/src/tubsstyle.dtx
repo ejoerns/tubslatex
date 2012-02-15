@@ -71,7 +71,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{tubsstyle} -- 
-%   Hintergrundelemente und Poster-Definitionen für \emph{tubslatex}\thanks{This document
+%   Hintergrundelemente für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{tubsstyle}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -90,7 +90,7 @@
 % \section{Implementierung}
 %
 % Allgemein: Alle zu setzenden Elemente werden in dem Makro @next@shipout
-% gespeichert und am Ende der Layout definition zum Shipout-Picture
+% gespeichert und am Ende der Layoutdefinition zum Shipout-Picture
 % hinzugefuegt (eso-pic). Abhängig von den Optionen wird dieses dann
 % für das aktuelle shipout oder alle shipouts gesetzt. Alte Shipout-Definitionen
 % werden dann jeweils komplett gelöscht.
@@ -109,7 +109,7 @@
 %    \end{macrocode}
 %
 %    \begin{key}{}{twoside}
-% Darstellung für zweiseitiges Layout.
+% Darstellung für zweiseitiges Layout umschalten.
 %    \begin{macrocode}
 \newboolean{tubsstyle@twoside}\setboolean{tubsstyle@twoside}{false}
 \define@boolkey{tubsstyle.sty}[ts@]{twoside}[true]{%
@@ -123,6 +123,7 @@
 %    \end{key}
 %
 %    \begin{key}{}{sender}
+% Position des Absenderbereichs. Mögliche Werte: |top|, |bottom|
 %    \begin{macrocode}
 \newcommand*\tubs@ts@sender@default{top}
 \define@choicekey*{tubsstyle.sty}{sender}[\val\nr]{top,bottom}{%
@@ -138,7 +139,7 @@
 %    \end{key}
 %
 %    \begin{key}{}{fullline}
-% Top-Linie über gesamte Seitenbreite (für Aushänge, etc.)
+% Top-Linie über gesamte Seitenbreite darstellen (für Aushänge, etc.)
 %    \begin{macrocode}
 \newboolean{tubsstyle@fullline}\setboolean{tubsstyle@fullline}{false}
 \define@boolkey{tubsstyle.sty}[ts@]{fullline}[true]{%
@@ -174,6 +175,7 @@
 % Prüft, ob alte oder neue Version von eso-pic vorhanden und
 % Passt die Reihenfolge in der tubsbox und eso-pic geladen werden entsprechend
 % an.
+% Sonst würde die Reihenfolge der Darstellungsebenen vertauscht.
 %    \begin{macrocode}
 \begingroup
 \let\OldProvidesPackage\ProvidesPackage
@@ -203,7 +205,7 @@
 %    \end{macrocode}
 %
 %
-% Temporäre Längen
+% Temporäre Längen für Berechnungen
 %    \begin{macrocode}
 \newlength{\tmp@posx}
 \newlength{\tmp@posy}
@@ -215,6 +217,11 @@
 \newboolean{tubsstyle@bottomsender}\setboolean{tubsstyle@bottomsender}{false}
 \newboolean{tubsstyle@singlepage}\setboolean{tubsstyle@singlepage}{false}
 \newboolean{tubsstyle@designhelper}\setboolean{tubsstyle@designhelper}{false}
+%    \end{macrocode}
+% Merker für horizontale Positionierung und Plain-Darstellung des Siegelbandlogos
+%    \begin{macrocode}
+\newif\iftubslogo@right\tubslogo@rightfalse
+\newif\iftubslogo@plain\tubslogo@plainfalse
 %    \end{macrocode}
 %
 %
@@ -245,7 +252,7 @@
 % \subsubsection{Trennline}
 %
 %    \begin{macro}{\tubs@topline}
-% Kommando, um eine horizontale Linie am oberen Rade des Kommunikationsbereichs
+% Kommando, um eine horizontale Linie am oberen Rand des Kommunikationsbereichs
 % zu platzieren.
 %    \begin{macrocode}
 \newcommand\tubs@topline{%
@@ -281,7 +288,7 @@
 %
 %    \begin{macro}{\tubs@tubslogo@calcpos}
 % \marg{side}\marg{xlenghtvar}\marg{ylengthvar}\par
-% Berechnet Position des zu platzierenden Siegelbandlogos.
+% Berechnet Position des zu platzierenden Siegelband-Logos.
 % |side| legt die Positionierungsseite fest und sollte einer
 % der Werte 'links' oder 'rechts' sein. Mit |xlengthvar| und |ylengthvar|
 % werden Längen angegeben in die das berechnete Ergebnis gespeichert wird.
@@ -319,13 +326,8 @@
 %    \end{macro}
 %
 %
-% Merker für horizontale Positionierung und Plain-Darstellung des Siegelbandlogos
-%    \begin{macrocode}
-\newif\iftubslogo@right\tubslogo@rightfalse
-\newif\iftubslogo@plain\tubslogo@plainfalse
-%    \end{macrocode}
-%
 %    \begin{key}{tubslogo}{pos}
+% Wahl der vertikale Position des Siegelband-Logos.
 %    \begin{macrocode}
 \define@choicekey{tubslogo}{pos}[\val\nr]{left,right,inside,outside}{%
   \ifcase\nr\relax%
@@ -397,7 +399,7 @@
 %
 %    \begin{macro}{\tubs@tubslogo}
 % \oarg{pos}\par
-% Dieses Kommando fügt das TU-Logo in den Hintergrund ein.
+% Dieses Kommando fügt das TU-Siegelband-Logo in den Hintergrund ein.
 % Syntax: |\tubs@tubslogo|\oarg{pos}, wobei |pos| die horizontale Position
 % des Logos bestimmt und entweder die Werte |left| oder |right| akzeptiert.
 % Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
@@ -412,9 +414,11 @@
     \tubs@tubslogo@calcpos{left}{\tmp@posx}{\tmp@posy}%
   \fi%
   \iftubslogo@plain%
-    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\fboxsep0mm\colorbox{tuRed}{\parbox[b][\tubslogoHeight]{\tubslogoWidth}{~}}}%
+    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+      \fboxsep0mm\colorbox{tuRed}{\parbox[b][\tubslogoHeight]{\tubslogoWidth}{~}}}%
   \else%
-    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){\tubslogo}%
+    \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+      \tubslogo}%
   \fi%
 }
 %    \end{macrocode}
@@ -549,7 +553,7 @@
       % Ermittelt, ob das Bild an den Seiten oder oben und unten beschnitten
       % werden muss, um in den Darstellungsbereich zu passen
       % Dazu wird die Höhe des auf korrekte Breite skalierten Bildes
-      % mit der Höhe des Darstellungsbereichs verglichen und entsprechend
+      % mit der Höhe des Darstellu  ngsbereichs verglichen und entsprechend
       % eine crop-Option gesetzt.
       \settoheight{\@image@ycalc}{%
         \includegraphics*[width=\paperwidth-2\tubspage@borderwidth-\tubspage@bcor]{#1}}
