@@ -1,4 +1,4 @@
-Version 0.3-beta2-r950 (testing):
+Version 0.3-beta2-r970 (testing):
 
 - Dokumentation
   - Überarbeitung der Kapitel 'Einleitung' und 'Installation'
@@ -7,6 +7,8 @@ Version 0.3-beta2-r950 (testing):
 Allgemein
   - Überarbeitung des Gauss-Layout-Systems
   - vertikale Positionierung innerhalb von gausbox mit [t,c,b] möglich
+  - PDF-Metadatenerzeugung bei Verwendung von hyperref
+    (Titel, Name, Software(-Version)
 
 - Dokuementenklassen
   - backpage-Umgebung inkl. dazugehöriger Style-Dateien hinzugefuegt
@@ -21,6 +23,7 @@ Allgemein
 - Präsentationen
   - Farbtemplate und dessen Verwendung überarbeitet und verbessert.
   - transparency-Overlays entfernt
+  - Breite der Titelzeie korrigiert
 
 - Briefklasse
   - Korrektur der Textbreite für neue Briefe im selben Dokument
