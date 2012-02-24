@@ -51,6 +51,16 @@
 %</driver>
 % \fi
 %
+% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+% \newenvironment{Options}%
+%  {\begin{list}{}{%
+%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+%   \setlength{\itemsep}{-.5\parsep}
+%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%   \setlength{\leftmargin}{\labelwidth}%
+%   \addtolength{\leftmargin}{\labelsep}}%
+%   \raggedright}
+%  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 10 / 13 }{Initial version}
 % \changes{v1.0}{ 2011 / 10 / 13 }{Spacing von normalsize an CD-Vorgaben
@@ -90,14 +100,30 @@
 % 
 %
 % \subsection{Optionen}
-% Es werden zur Zeit keine Optionen zur Verfügung gestellt
 %    \begin{macrocode}
 %<*option>
 %    \end{macrocode}
+%
+%    \begin{key}{}{colorheadings}
+% Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs dar.
+%    \begin{macrocode}
 \newcommand\headingscolor{tuBlack}
 \DeclareOptionX{colorheadings}{%
   \renewcommand\headingscolor{tuSecondary}
 }
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{smallchapters}
+% Reduziert die Schriftgröße von 
+%    \begin{macrocode}
+\newif\if@tubs@tf@smallchap\@tubs@tf@smallchapfalse
+\DeclareOptionX{smallchapters}{%
+  \@tubs@tf@smallchaptrue
+}
+%    \end{macrocode}
+%    \end{key}
+
 %    \begin{macrocode}
 %</option>
 %    \end{macrocode}
@@ -187,6 +213,9 @@
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
 %<*book|report>
 \setkomafont{chapter}{\usekomafont{headlinesmall}}
+\if@tubs@tf@smallchap
+\addtokomafont{chapter}{\LARGE}
+\fi
 %</book|report>
 \setkomafont{section}{\usekomafont{subheadline}}
 \setkomafont{subsection}{\usekomafont{subheadlinesmall}}
