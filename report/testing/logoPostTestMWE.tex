@@ -1,0 +1,28 @@
+\documentclass[a4paper,11pt]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{lipsum}
+
+\title{Beispieltitel}
+\subtitle{Untertitel}
+\author{Max Mustermann}
+\logo{Institut fuer Lorem Ipsum}
+\titleabstract{\lipsum[2]}
+\titlepicture{infozentrum.jpg}
+\address{%
+  Herr Mustermann\\
+  Schlossallee 1\\
+  33333 Darmstadt}
+\backpageinfo{%
+  \lipsum[5]
+}
+
+\begin{document}
+
+\maketitle[image]%[<plain/image/imagetext>,<logo=left/right>]
+\makebackpage[plain]%[<plain/info/addressinfo>]
+
+\chapter{Ut purus elit}
+
+\lipsum[2-4]
+\end{document}

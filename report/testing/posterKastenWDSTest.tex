@@ -1,0 +1,64 @@
+\documentclass[%
+landscape,violet,
+  a3paper,% <a4paper/a2paper/a1paper/a0paper>
+  arial,style=scifi%
+  ]{tubsposter}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+%% Änderung MB:
+% \usepackage{nexusserifpro}
+% \renewcommand{\rmdefault}{nxsx}
+% \renewcommand{\sfdefault}{nxax}
+% \usepackage{ifwlogo}
+%% Ende Änderung MB:
+\begin{document}
+
+
+\begin{tubsposter}{3.5cm,X,X}
+  %% Aktiviert die horizontale Linie am oberen Ende des Kommunikationsbereichs.
+  %\showtopline
+
+  %% Stellt das TU-Logo an der gewünschten Seite (links/rechts) dar.
+  \showtubslogo[left]
+
+  %% Stellt das Institutslogo im Absenderbereich dar.
+  %\showlogo{\vspace*{-0.8cm}\ifwlogo}%}
+  %% Alternative Version des Logos mit Bild statt Text.
+  \showlogo{\fboxsep0mm\fbox{\includegraphics{dummy_institut.pdf}}}
+
+  %% Beginnt eine neuen Bereich mit der angegebenen Höhe im Gaußraster.
+  \begin{posterrow}[bgcolor=tuViolet100]
+    \vfill
+
+
+    \usekomafont{headline} \LARGE   \color{tuWhite} Wärmedämmschichten\\
+
+    \vfill
+  \end{posterrow}
+  \begin{posterrow}[X,X,X]
+\begin{postercol}
+    \large\textbf{Lebensdauer von Schichtsystemen}
+
+  \end{postercol}
+\begin{postercol}
+    \large\textbf{Wärmedämmschichten für Raketentriebwerke}
+    \begin{itemize}
+      \item Item 1
+      \item Item 2
+      \item Item 3
+    \end{itemize}
+  \end{postercol}
+\begin{postercol}
+    \large\textbf{Neue Herstellungsverfahren}
+
+    \begin{itemize}
+      \item Item 1
+      \item Item 2
+      \item Item 3
+    \end{itemize}
+  \end{postercol}
+\end{posterrow}
+\end{tubsposter}
+
+\end{document}
