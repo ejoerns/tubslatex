@@ -210,12 +210,12 @@ order=3
 
 [item:documents.tex]
 archive=true
-column=0
+column=15
 encoding=UTF-8
 highlight=LaTeX
-line=22
+line=11
 mode=LaTeX
-open=true
+open=false
 order=3
 
 [item:examples/inhaltsseite.pdf]
@@ -310,12 +310,12 @@ order=4
 
 [item:install.tex]
 archive=true
-column=4
+column=30
 encoding=UTF-8
 highlight=LaTeX
-line=390
+line=286
 mode=LaTeX
-open=true
+open=false
 order=5
 
 [item:intro.tex]
@@ -325,7 +325,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=35
 mode=LaTeX
-open=true
+open=false
 order=4
 
 [item:leaflet.tex]
@@ -380,7 +380,7 @@ order=1
 
 [item:poster.tex]
 archive=true
-column=13
+column=8
 encoding=UTF-8
 highlight=LaTeX
 line=134
@@ -390,12 +390,12 @@ order=-1
 
 [item:preamble.tex]
 archive=true
-column=25
+column=14
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=12
 mode=LaTeX
-open=true
+open=false
 order=2
 
 [item:quickstart.tex]
@@ -405,7 +405,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=30
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:tubsdocguide.kilepr]
@@ -420,12 +420,12 @@ order=-1
 
 [item:tubsdocguide.tex]
 archive=true
-column=40
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=110
+line=142
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:unsorted.tex]
@@ -455,8 +455,8 @@ CursorColumn=44
 CursorLine=9
 
 [view-settings,view=0,item:documents.tex]
-CursorColumn=0
-CursorLine=22
+CursorColumn=15
+CursorLine=11
 
 [view-settings,view=0,item:gausspage.tex]
 CursorColumn=0
@@ -467,8 +467,8 @@ CursorColumn=1
 CursorLine=9
 
 [view-settings,view=0,item:install.tex]
-CursorColumn=4
-CursorLine=390
+CursorColumn=30
+CursorLine=286
 
 [view-settings,view=0,item:intro.tex]
 CursorColumn=0
@@ -495,20 +495,20 @@ CursorColumn=29
 CursorLine=29
 
 [view-settings,view=0,item:poster.tex]
-CursorColumn=13
+CursorColumn=8
 CursorLine=134
 
 [view-settings,view=0,item:preamble.tex]
-CursorColumn=25
-CursorLine=13
+CursorColumn=14
+CursorLine=12
 
 [view-settings,view=0,item:quickstart.tex]
 CursorColumn=0
 CursorLine=30
 
 [view-settings,view=0,item:tubsdocguide.tex]
-CursorColumn=40
-CursorLine=110
+CursorColumn=0
+CursorLine=142
 
 [view-settings,view=0,item:unsorted.tex]
 CursorColumn=0
