@@ -1,4 +1,6 @@
 \chapter{Präsentationen}
+\Index{Präsentation}
+\Index{Beamer}
 
 % \section{Anwendung und Folienaufbau}
 
@@ -79,6 +81,8 @@ Kapitel~\ref{beamer:sec:color}
 
 
 \subsection{Titelgrafik}
+\Index{Titelgrafik!Beamer}
+\CommandIndex{titlegraphic}
 
 \begin{Declaration}
   \Macro{titlegraphic}\Parameter{Inhalt}
@@ -164,6 +168,8 @@ $16:10$ & $1:3{,}83$ \\
 
 
 \paragraph{Standardgrafik}
+\Index{Standardgrafik!Beamer}
+\CommandIndex{tuDefaultTitlegraphic}
 
 Zu Testzwecken oder falls kein eigenes Bild zur Hand ist,
 kann alternativ ein Standardbild eingefügt werden, das die Front
@@ -195,6 +201,8 @@ hinterlegt.
 % Das Titelbild wird generell an der unteren Kante des dafür vorgesehenen Bereichs ausgerichtet, sodass in falschem Seitenverhältnis vorliegene Bilder nach Oben 'rausgeschoben' werden.
 
 \subsection{Logo}
+\Index{Logo!Beamer}
+\Index{Sekundärlogo!Beamer}
 
 Neben dem immer vorhandenen Siegelband-Logo der TU kann noch ein sekundäres Logo
 dargestellt werden, welches das jeweilige Institut bzw. die jeweilige Abteilung
@@ -233,6 +241,8 @@ Für allgemeine Inhalte kann auf die Höhe des Logo-Bereichs über die Länge
 \Macro{logoheight} zugegriffen werden.
 
 \section{Inhaltsfolien}
+\Index{Folien!Inhalt}
+\Index{Inhaltsfolien}
 
 Das Layout der Inhaltsfolien ist relativ schlicht und bietet viel Platz.
 Es zeichnet sich durch einen Kopfbereich, der Folientitle und evtl. eine
@@ -311,6 +321,7 @@ Hintergrund angezeigt!
 \end{minipage}
 
 \subsection{Kopfbereich}\label{subsec:head}
+\Index{Kopfbereich!Beamer}
 
 Der Kopfbereich der Folien besteht standardmäßig aus dem grau hinterlegten
 Folientitel. Optional kann darüber auch noch eine Inhaltsübersicht
@@ -372,6 +383,7 @@ Dies Option ist natürlich nur wirksam, wenn die Option
 
 
 \subsection{Fußbereich}\label{subsec:foot}
+\Index{Fußbereich!Beamer}
 
 Der Fußbereich zeichnet sich durch das Siegelband-Logo und eine rote Trennlinie
 aus. Darunter stehen standardmäßig Informationen wie Datum, Autor(en), Präsentationstitel
@@ -385,7 +397,7 @@ welche jeweils bei \Macro{author} und \Macro{title} im optionalen Argument
 definiert werden kann.
 
 % Sprache
-Ändert man im Babel-Paket die Sprache, ändert sich auch automatisch
+Ändert man im Babel-Paket die Sprache, ändert sich au{caption!Beamer}ch automatisch
 die Sprache der Fußzeile (z.B. "`page"' statt "`Seite"', anderes Datumsformat, etc.).
 
 \begin{Declaration}
@@ -414,9 +426,23 @@ mit eingeblendet wird: "`Seite x von y"'.
 
 Diese Beamer-Option deaktiviert die Darstellung des Institutslogos im Fußbereich.
 
+\subsection{Inhalt}
 
+\paragraph{Beschriftung von Abbildungen}
+\Index{Abbildungen!Beamer}
+\Index{caption!Beamer}
+
+Anders als bei den Standard-Templates werden Abbildungen
+automatisch durchnummeriert.
+
+Sollte dies nicht erwünscht sein, kann dies mittels
+\begin{lstlisting}
+\setbeamertemplate{caption}[default]
+\end{lstlisting}
+deaktiviert werden.
 
 \section{Farbanpassung}\label{beamer:sec:color}
+\Index{Farben!Beamer}
 
 Um ein individuelleres Foliendesign zu ermöglichen, können einige Elemente
 (unter Verwendung des CD-Farbkontingents)

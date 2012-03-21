@@ -310,7 +310,7 @@ order=4
 
 [item:install.tex]
 archive=true
-column=4
+column=0
 encoding=UTF-8
 highlight=LaTeX
 line=390
@@ -390,7 +390,7 @@ order=-1
 
 [item:preamble.tex]
 archive=true
-column=25
+column=21
 encoding=UTF-8
 highlight=LaTeX
 line=13
@@ -467,7 +467,7 @@ CursorColumn=1
 CursorLine=9
 
 [view-settings,view=0,item:install.tex]
-CursorColumn=4
+CursorColumn=0
 CursorLine=390
 
 [view-settings,view=0,item:intro.tex]
@@ -499,7 +499,7 @@ CursorColumn=13
 CursorLine=134
 
 [view-settings,view=0,item:preamble.tex]
-CursorColumn=25
+CursorColumn=21
 CursorLine=13
 
 [view-settings,view=0,item:quickstart.tex]

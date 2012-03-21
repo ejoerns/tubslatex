@@ -11,6 +11,7 @@ tubsdoc:
   - Option für kleinere Überschriften? -> 0.4
   - sepline für sender=bottom aus KOKMA? -> 0.4
   - Titelseiten für bottom=sender -> 0.4
+  - Schriftgröße Marginale?
 
 poster:
   - Leere Module werden nicht dargestellt. -> \strut?
