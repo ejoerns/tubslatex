@@ -246,10 +246,13 @@
   \let\endtubsposter=\end@scifiposter
   \let\posterrow=\modrow
   \let\endposterrow=\endmodrow
+  \newenvironment{posterrow*}{\begin{modrow*}}{\end{modrow*}}
   \let\postercol=\modcol
   \let\endpostercol=\endmodcol
+  \newenvironment{postercol*}{\begin{modcol*}}{\end{modcol*}}
   \let\postersubrow=\modsubrow
   \let\endpostersubrow=\endmodsubrow
+  \newenvironment{postersubrow*}{\begin{modsubrow*}}{\end{modsubrow*}}
 %
 }{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
   \def\tubsposter{%
