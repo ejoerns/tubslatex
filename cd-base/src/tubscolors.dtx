@@ -88,7 +88,7 @@
 %    \begin{macrocode}
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tubscolors}[\tubslatexVersion, file v0.5 Farbschema der TU-Braunschweig]
+\ProvidesPackage{tubscolors}[\tubslatexVersion, file v0.6 Farbschema der TU-Braunschweig]
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -97,6 +97,8 @@
 \RequirePackage{xcolor}
 \RequirePackage{ifthen}
 \RequirePackage{forloop}
+\RequirePackage{etoolbox}
+\RequirePackage{scrlfile}
 %    \end{macrocode}
 %
 % Vordefinitionen für Optionswahl
@@ -750,6 +752,16 @@
 % Setze Hauptfarbe auf tuBlack.
 %    \begin{macrocode}
 \color{tuBlack}
+%    \end{macrocode}
+%
+% Patch für Soul-Paket, sodass es highlightings korrekt darstellt
+%    \begin{macrocode}
+\AfterPackage*{soul}{%
+\patchcmd{\SOUL@ulunderline}{\dimen@}{\SOUL@dimen}{}{}%
+\patchcmd{\SOUL@ulunderline}{\dimen@}{\SOUL@dimen}{}{}%
+\patchcmd{\SOUL@ulunderline}{\dimen@}{\SOUL@dimen}{}{}%
+\newdimen\SOUL@dimen%
+}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
