@@ -1,4 +1,4 @@
-Version 0.3-beta2-r970 (testing):
+Version 0.3-beta2:
 
 - Dokumentation
   - Überarbeitung der Kapitel 'Einleitung' und 'Installation'
@@ -6,19 +6,21 @@ Version 0.3-beta2-r970 (testing):
 
 Allgemein
   - Überarbeitung des Gauss-Layout-Systems
-  - vertikale Positionierung innerhalb von gausbox mit [t,c,b] möglich
+  - vertikale Positionierung innerhalb von gaussbox mit [t,c,b] möglich
   - PDF-Metadatenerzeugung bei Verwendung von hyperref
     (Titel, Name, Software(-Version)
+  - Kompatibilität mit soul-Paket verbessert
 
 - Dokuementenklassen
   - backpage-Umgebung inkl. dazugehöriger Style-Dateien hinzugefuegt
   - Bessere Behandlung der Logo-Positionierung
-  - 
+  - Option 'smallchapters' für kleinere Kapitelnamen
 
 - Plakate
   - Berechnungsfehler im Modulsystem behoben
   - bottom-Sender für Modulsystem implementiert
   - Landscape-Behandlung verbessert
+  - Sternchen-Variante für scifiposter-Modulumgebungen aktiviert
 
 - Präsentationen
   - Farbtemplate und dessen Verwendung überarbeitet und verbessert.
@@ -33,10 +35,13 @@ Allgemein
   - Debian-Paket besteht nun lintian-Test
 
 - Logo-Paket
-  - Dateiendung mit angegeben, für Kompatibilität mit latex
+  - eps-Versionen für Kompatibilität mit latex hinzugefügt
 
 - Beispiele
   - Sekundärlogo in scifiposter_example aufgenommen
+  - Wissenschafltiche Postervorlagen erweitert:
+    - Querformatiges Besipiel
+    - jeweils Beispiel mit Absenderbereich oben und unten.
 
 Version 0.3-beta1:
 
