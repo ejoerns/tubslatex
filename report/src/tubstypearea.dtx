@@ -316,10 +316,16 @@
       }{% Absenderbereich oben
         \geometry{%
           top=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5! (quer)
-          headheight=\tubspage@senderheight-1.5\tubspage@borderwidth,
           headsep=0.05195\paperheight+\tubspage@borderwidth,% 1/7-1/11 + border
           bottom=1.5\tubspage@borderwidth,
         }
+        % Allow larger headline for landscape
+        \ifthenelse{\boolean{tubspage@landscape}}{%
+          \geometry{headheight=\tubspage@senderheight-\tubspage@borderwidth}
+        }{%
+          \geometry{headheight=\tubspage@senderheight-1.5\tubspage@borderwidth}
+        }
+
       }
     }{%%% Einstellungen für normale Dokumente/poster %%%
       \geometry{%
