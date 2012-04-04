@@ -423,7 +423,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=142
+line=126
 mode=LaTeX
 open=false
 order=0
@@ -508,7 +508,7 @@ CursorLine=30
 
 [view-settings,view=0,item:tubsdocguide.tex]
 CursorColumn=0
-CursorLine=142
+CursorLine=126
 
 [view-settings,view=0,item:unsorted.tex]
 CursorColumn=0

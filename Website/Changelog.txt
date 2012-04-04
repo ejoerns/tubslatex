@@ -21,6 +21,7 @@ Allgemein
   - bottom-Sender für Modulsystem implementiert
   - Landscape-Behandlung verbessert
   - Sternchen-Variante für scifiposter-Modulumgebungen aktiviert
+  - werden nun standardmäßig in CMYK ausgegben
 
 - Präsentationen
   - Farbtemplate und dessen Verwendung überarbeitet und verbessert.
