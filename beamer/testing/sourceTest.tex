@@ -1,0 +1,43 @@
+\documentclass{beamer}
+
+\usepackage[absolute,overlay]{textpos}
+\usetheme{tubs}
+
+
+\makeatletter
+
+\setbeamercolor{framesource}{fg=gray}
+\setbeamerfont{framesource}{size=\tiny}
+
+\def\tubsbeamer@srcfieldpos{left}
+\define@key{source}{r}[true]{%
+  \def\tubsbeamer@srcfieldpos{right}%
+}
+
+\newcommand{\source}[2][]{%
+  \setkeys{source}{#1}%
+  \begin{textblock*}{\paperwidth-24.7mm-5pt-2pt}(24.7mm+5pt,\paperheight-20.7pt-9.17mm-0.5pt)
+    \begin{beamercolorbox}[ht=0.5cm,\tubsbeamer@srcfieldpos]{framesource}
+        \usebeamerfont{framesource}%
+        \usebeamercolor[fg]{framesource}%
+        Source: {#2}
+    \end{beamercolorbox}
+  \end{textblock*}%
+}
+\makeatother
+
+\begin{document}
+
+\begin{frame}
+  \frametitle{Vorstellung des neuen Instituts}
+  \includegraphics{dummy_institut.pdf}
+  \source{tu-braunschweig.de}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Vorstellung des neuen Instituts}
+  \includegraphics{dummy_institut.pdf}
+  \source[r]{tu-braunschweig.de}
+\end{frame}
+
+\end{document}
