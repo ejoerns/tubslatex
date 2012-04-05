@@ -9,8 +9,9 @@ Aktuell wird \tubslatex in drei verschiedenen Varianten angeboten.
     allen zu \tubslatex gehörenden Dateien.
     Dieser kann universell zur manuellen Installation auf verschiedensten
     Systemen eingesetzt werden.
-    Diese Variante ist nur für erfahrenere  \TeX-Benutzer oder aus Mangel
-    an Alternative zu empfehlen.
+    Diese Variante ist eher für erfahrenere \TeX-Benutzer oder bei
+    Fehlen eines automatischen Installers zu empfehlen, da Pakete
+    und Schriften manuell registriert werdens müssen.
   \item[Windows-Installer]
     Der für Windows vorgesehene Installer kann bei Verwendung der
     populären \LaTeX-Distribution MiKTeX eingesetzt werden.
@@ -18,7 +19,7 @@ Aktuell wird \tubslatex in drei verschiedenen Varianten angeboten.
     viel Zeit und Probleme.
   \item[deb-Paket]
     Für debian-basierte Systeme, die texLive verwenden gibt es
-    ein komplettes deb-Paket, das aller Vorlagendateien enthält,
+    ein komplettes deb-Paket, das alle Vorlagendateien enthält,
     alle Abhängigkeiten korrekt auflöst und die notwendigen
     Installationsschritte automatisch durchführt.
 \end{description}
@@ -60,7 +61,7 @@ erkannt werden, sondern manuell registriert werden müssen.
 \end{important}
 
 Der Installer kopiert alle benötigten Dateien in ein frei wählbares Verzeichnis
-auf der Festplatte und registriert dies automatisch als neuen texmf-Baum.
+auf der Festplatte und registriert dies automatisch als neuen texmf-Verzeichnisbaum.
 Auch die Dokumentation und die Schriftart Nexus wird standardmäßig installiert
 und in der Font-Verwaltung registriert.
 Die Installation erlaubt, einzelne Komponenten von der Installation auszuschließen,
@@ -132,14 +133,14 @@ initexmf --admin -u
 initexmf --admin --edit-config-file updmap
       \end{lstlisting}
       \localinstall{\lstinline{initexmf --edit-config-file updmap}}
-      wird ein Editor geöffnet in den folgender Text einzutragen ist:
+      wird ein Editor geöffnet in den folgende zwei Zeilen einzutragen sind:
 
       \begin{lstlisting}[style=file]
 Map NexusProSans.map
 Map NexusProSerif.map
       \end{lstlisting}
 
-      \item {\bfseries Font maps updaten}
+      \item {\bfseries Font-Maps updaten}
 
         Danach ist ein Update der Font-Datenbank erforderlich. Dies geschieht
         mittels
@@ -204,10 +205,31 @@ lokale Datenbanken angelegt werden, die fortan benutzt werden.
 Daher würden zum Beispiel Schriften, die anschließend global installiert werden,
 nicht gefunden werden, da sie nur für die globale Datenbank registriert worden wären.
 
-Dies Problem stellt sich bei einer \emph{systemweiten Installation} nicht,
+Dieses Problem stellt sich bei einer \emph{systemweiten Installation} nicht,
 welche aber auch nur mit entsprechenden Rechten durchgeführt werden kann.
 Sind diese jedoch vorhanden, so ist eine \emph{systemweite Installation im
 Allgemeinen einer lokalen Installation vorzuziehen}.
+
+\subsubsection{Benötigte Pakete}
+
+Die Vorlagen setzen ein Vorhandensein der Folgenden Pakete voraus:
+
+\begin{itemize}
+  \item texlive-base
+  \item texlive-latex-extra
+  \item texlive-fonts-extra
+  \item latex-beamer
+  \item texlive-lang-german
+\end{itemize}
+
+Falls diese nicht auf dem System installiert sind, müssen sie nachinstalliert
+werden, da sonst die Vorlagen oder Teile der Vorlagen nicht benutzbar sind.
+
+Die Installation aller Pakete kann mit folgendem Befehl durchgeführt werden:
+\begin{lstlisting}[style=cmd]
+sudo aptitude install texlive-base texlive-latex-extra \
+  texlive-fonts-extra latex-beamer texlive-lang-german
+\end{lstlisting}
 
 Im Folgenden werden sowohl systemweite als auch lokale Installation einzeln
 beschrieben.

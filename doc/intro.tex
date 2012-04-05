@@ -16,7 +16,7 @@ Der \hyperlink{part:user}{erste} Hauptteil des Dokumentes beschäftigt sich mit
 der allgemeinen Verwendung der bereitgestellten Dokumentenklassen.
 Dabei wurde versucht, für jede Klasse eine möglichst vollständige Beschreibung
 zu liefern. Da sich allerdings viele Funktionen gleichen
-(da sie auf die selben Grundfunktionen zurück greifen)
+(da sie auf die selben Grundfunktionen zurück greifen),
 sind manche Funktionen an einer Stelle nur kurz erwähnt mit einem Verweis
 auf die Stelle mit ausführlicherer Beschreibung.
 
@@ -44,14 +44,16 @@ zusammenfasst und so einen raschen Einstieg ermöglicht.
 \vspace*{0pt}
 Das Corporate Design setzt sich aus ein paar wesentlichen Elementen und
 Gestaltungsmerkmalen zusammen.
-Eine Seite teilt sich grundsätzlich in einen \emph{Absenderbereich} (1) und einen
-\emph{Kommunikationsbereich} (2).
+Eine Seite teilt sich grundsätzlich in einen \emph{Absenderbereich} (1)
+und einen \emph{Kommunikationsbereich} (2).
+\Index{Absenderbereich}\Index{Kommunikationsbereich}%
 Das markante rote \emph{Siegelband-Logo} dient dabei als Bindeglied zwischen
 diesen beiden Bereichen. 
+\Index{Siegelband-Logo}%
 Der Absenderbereich kann sowohl am oberen als auch am unteren Blattende
 platziert werden.
-Das Siegelband-Logo passt sich in seiner vertikalen Position an und kann darüber hinaus
-jeweils rechts- oder linksseitig platziert werden.
+Das Siegelband-Logo passt sich in seiner vertikalen Position an
+und kann darüber hinaus jeweils rechts- oder linksseitig platziert werden.
 Daraus ergeben sich insgesamt 4 Darstellungsvarianten.
 
 Der Kommunikationsbereich wird von einem Rand fester Breite eingerahmt,
@@ -69,12 +71,14 @@ den Inhalt absetzt, um Druck- und Kopierprobleme zu vermeiden.
 \begin{minipage}[t]{0.55\textwidth}
 \vspace*{0pt}
 Das im Absenderbereich befindliche \emph{Absenderfeld} (1) bietet Platz für
-einen Instituts-/Abteilungsnamen bzw. ein entsprechendes Logo.
+einen \mbox{Instituts-/}Abteilungsnamen bzw. ein entsprechendes Logo.
+\Index{Absenderfeld}\Index{Institutsname}%
 
 Der Kommunikationsbereich kann in einem an die gaußsche Summenformel
 angelehnten Raster (\emph{Gaußraster}) unterteilt werden.
+\Index{Gaußraster}%
 Dabei ergibt sich die Höhe eines Grundsegmentes ((2), (3), \ldots)
-immer aus der Summer der Höhe der beiden vorhergehenden Grundsegmente.
+immer aus der Summe der Höhe der beiden vorhergehenden Grundsegmente.
 Zur Darstellung können beliebig viele Grundsegmente zusammengefasst werden,
 womit sich ein zugleich flexibles aber trotzdem charakteristisches
 Gesamtbild ergibt.
@@ -93,28 +97,31 @@ an der Grenze zum Absenderbereich befindet.
 \vspace*{0pt}
 Zum Umfang des Corporate Design gehört neben den verschiedenen
 Gestaltungsmerkmalen auch eine unverkennbare Schrift.
-Dieses ist mit der modernen Hausschrift \emph{Nexus} gegeben, die sowohl mit als auch
+Diese ist mit der modernen Hausschrift \emph{Nexus} gegeben, die sowohl mit als auch
 ohne Serifen in jeweils drei Schriftschnitten zur Verfügung steht.
+\Index{Nexus}%
 
 Ein weiteres wichtiges Merkmal von Dokumenten im Corporate Design sind
 die verwendeten Farben, die sich aus einer Reihe fest definierter Paletten
 zusammen setzen.
+\Index{Farben}%
 Als wichtige Strukturfarben sind das TU-Rot, sowie Schwarz und Weiß vorgesehen.
 Zur individuellen Gestaltung stehen 4 Farbklänge (Gelb/Orange, Grün, Blau, Violett)
 mit jeweils 3 Farben und 12 Abstufungen zur Verfügung.
+\Index{Farbklang}%
 \end{minipage}
 
 \clearpage
 \section{Übersicht über die Vorlagen}
 
-Die Vorlagen bauen allesamt auf Standard-\LaTeX-Klassen und Paketen auf.
+Die Vorlagen bauen allesamt auf Standard-\LaTeX-Klassen und -Paketen auf.
 Insbesondere sind alle Dokumentenklassen von Klassen des KOMA-Skripts
 abgeleitet, was sich auch in ihrem Benennungsschema widerspiegelt.
 Konkret bauen die Vorlagen für Poster (\texttt{tubsposter}) und Dokumente
 (\texttt{tubsartcl}, \texttt{tubsreprt}, \texttt{tubsboox}) auf
 den entsprechenden KOMA-Skript-Klassen auf,%
 \footnote{\texttt{tubsposter} verwendet \texttt{scrartcl}}.
-Dabei wurden einige Optionen und Befehle, die die Basis-Klassen bieten, erhalten
+Dabei wurden einige Optionen und Befehle, die die Basisklassen bieten, erhalten
 und können in der ausführlichen Dokumentation zum KOMA-Skript\cite{koma-skript}
 nachgeschlagen werden.
 Einige Funktionalitäten wie etwa die Satzspiegelberechnung sind dagegen
