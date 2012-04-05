@@ -88,7 +88,7 @@
 %
 %    \begin{macrocode}
 %<*innertheme>
-\ProvidesPackage{beamerinnerthemetubs}[2011/09/10 v1.0 Beamer-Inner-Template TuBs]
+\ProvidesPackage{beamerinnerthemetubs}[\tubslatexVersion, v1.1 Beamer-Inner-Template TuBs]
 %    \end{macrocode}
 %
 % Lade Pakete.
@@ -307,7 +307,7 @@
 %
 %    \begin{macro}{\institute}
 %    \begin{macrocode}
-\renewcommand{\institute}[2][]{\logo{#2}}
+% \renewcommand{\institute}[2][]{\logo{#2}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -341,14 +341,20 @@
       ht=9\beamer@CDgaussunit]
       {titlebarsecond}
     \hspace*{\beamer@leftmarginwidth}
-    \parbox[b][9\beamer@CDgaussunit][c]{\beamer@titlepagetextwidth}{%
-      \vskip1.0ex\par
-      \usebeamerfont{title}\inserttitle \par%
-      \vskip0.8ex\par
-      \usebeamerfont{subtitle}\insertsubtitle \par%
-      \vskip1.6ex\par
+    \parbox[b][9\beamer@CDgaussunit]{\beamer@titlepagetextwidth}{%
+      \vskip0.5\beamer@CDborderwidth%
+      \vfil%
+      \usebeamerfont{title}\inserttitle\par%
+      \vfil%
+      \usebeamerfont{subtitle}\insertsubtitle\par%
+      \vskip 0.5ex%
+      \vfil%
       \raggedright%
-      \usebeamerfont{author}\insertauthor, \mbox{\insertdate}}
+      \usebeamerfont{author}\insertauthor, \mbox{\insertdate}\par%
+      \vfil%
+      \usebeamerfont{institute}\insertinstitute%
+      \vfil%
+    }
   \end{beamercolorbox}%
   \vskip-1pt
 

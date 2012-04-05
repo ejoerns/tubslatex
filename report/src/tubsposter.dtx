@@ -125,12 +125,6 @@
   \ifthenelse{\equal{#1}{scifi}}{%
     \renewcommand{\tubs@poster@style}{scifi}
     \PassOptionsToPackage{scifiposter}{tubstypearea}
-    \if@tp@landscape
-      \ClassWarning{tubsposter}{landscape mode is not fully supported yet}{}
-      \PassOptionsToPackage{relscale=0.63}{tubslogo}%0.9*7/10
-    \else
-      \PassOptionsToPackage{relscale=0.9}{tubslogo}
-    \fi
     % Scifiposter haben eigene Schrift-Definitionen!
     \renewcommand*{\@fsfbs@sub}{scifi}
   }{\ifthenelse{\equal{#1}{bulletin}}{%
@@ -144,6 +138,7 @@
 %
 \DeclareOptionX{landscape}{%
   \@tp@landscapetrue
+  \ClassWarning{tubsposter}{option 'landscape' used}{}
 % TODO: support for scientific poster logo in landscape
 }
 %
@@ -151,6 +146,21 @@
 %    \begin{macrocode}
 \PassOptionsToPackage{fullline}{tubsstyle}
 %</option>
+%    \end{macrocode}
+%
+% Entsprechend Kombination scifi-Style und landscape Logogröße wählen
+%    \begin{macrocode}
+%<*execoption>
+\ifthenelse{\equal{\tubs@poster@style}{scifi}}{%
+  \if@tp@landscape
+    \ClassWarning{tubsposter}{landscape mode is not fully supported yet}{}
+    \PassOptionsToPackage{relscale=0.65}{tubslogo}%~0.9/sqrt(2)
+  \else
+    \ClassWarning{tubsposter}{landscape mode is supported}{}
+    \PassOptionsToPackage{relscale=0.9}{tubslogo}
+  \fi
+}{}
+%</execoption>
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -246,10 +256,13 @@
   \let\endtubsposter=\end@scifiposter
   \let\posterrow=\modrow
   \let\endposterrow=\endmodrow
+  \newenvironment{posterrow*}{\begin{modrow*}}{\end{modrow*}}
   \let\postercol=\modcol
   \let\endpostercol=\endmodcol
+  \newenvironment{postercol*}{\begin{modcol*}}{\end{modcol*}}
   \let\postersubrow=\modsubrow
   \let\endpostersubrow=\endmodsubrow
+  \newenvironment{postersubrow*}{\begin{modsubrow*}}{\end{modsubrow*}}
 %
 }{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
   \def\tubsposter{%

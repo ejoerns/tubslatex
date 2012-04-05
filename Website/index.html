@@ -5,17 +5,41 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="keywords" content="LaTeX, Corporate Design, TU, Braunschweig, tubslatex">
 <meta name="description" content="LaTeX-Vorlagen im Corporate Design der TU Braunschweig">
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30251203-1']);
+  _gaq.push(['_setCookiePath', '/tubslatex/']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 
 <body>
 
 <p style="float:right;text-align:right;">
-  Stand: 15.02.12<br/><br/>
+  Stand: 21.03.12<br/><br/>
   <a href="http://www.twitter.com/tubslatex"><img src="http://twitter-badges.s3.amazonaws.com/twitter-c.png" alt="Folge tubslatex auf Twitter"/></a>
 </p>
 <h1>tubslatex</h1>
 
 <h3>LaTeX-Vorlagen im Corporate Design der TU Braunschweig.</h3>
+
+<div id="topnavi">
+<a href="gallery/index.html">Vorschau</a>
+&nbsp;|&nbsp;
+<a href="#releases">Download</a>
+&nbsp;|&nbsp;
+<a href="0.3-beta2/tubsdocguide.pdf">Dokumentation</a>
+</div>
+
+<br/>
 
 <div style="border:1px dashed black;padding:10px;">
 <p><a href="../mantisbt">Bugtracker</a></p>
@@ -32,12 +56,58 @@ Gast-Login:<br/>
 <br/>
 
 <div style="border:1px dashed black;padding:10px;">
-<a href="gallery/index.html">Vorschau</a>
+<h2 id="preview" style="margin:5px;">Vorschau</h2>
+<div class="imgthumbframe">
+<!--  <div class="imggroupcaption">
+    <a href="gallery/index.html">Präsentationen</a>
+  </div>-->
+  <a href="gallery/index.html#showpres"><img class="imgshow" src="gallery/beamer/beamer_example.tex_thumb-0.png"/>beamer-Theme</a>
+<!--</div>
+
+<div class="imgthumbframe">-->
+<!--  <div class="imggroupcaption">
+    <a href="gallery/index.html">Dokumente</a>
+  </div>-->
+  <a href="gallery/index.html#showdoc"><img class="imgshow" src="gallery/tubsartcl/tubsartcl_example.tex_thumb-0.png"/>tubsartcl</a>
+  <a href="gallery/index.html#showdoc"><img class="imgshow" src="gallery/tubsreprt/tubsreprt_example.tex_thumb-0.png"/>tubsreprt</a>
+<!--   <a href="gallery/index.html"><img class="imgshow" src="gallery/tubsbook/tubsbook_example.tex_thumb-0.png"/>tubsbook</a> -->
+<!--</div>
+<div style="clear:left">
+<div class="imgthumbframe">-->
+<!--  <div class="imggroupcaption">
+    <a href="gallery/index.html">Poster</a>
+  </div>-->
+  <a href="gallery/index.html#showposter"><img class="imgshow" src="gallery/tubsposter/bulletin_example.tex_thumb.png"/>tubsposter</a>
+  <a href="gallery/index.html#showposter"><img class="imgshow" src="gallery/tubsposter/tubsposter_example.tex_thumb-0.png"/>tubsposter</a>
+<!--   <a href="gallery/index.html"><img class="imgshow" src="gallery/tubsposter/tubsposter_example.tex_thumb-1.png"/>tubsposter</a> -->
+  <a href="gallery/index.html#showposter"><img class="imgshow" src="gallery/tubsposter/scifiposter_example.tex_thumb-0.png"/>tubsposter</a>
+<!--   <a href="gallery/index.html"><img class="imgshow" src="gallery/tubsposter/scifiposter_example.tex_thumb-1.png"/>tubsposter</a> -->
+  <a href="gallery/index.html#showposter"><img class="imgshow" src="gallery/tubsposter/scifiposter_example_quer.tex_thumb-0.png"/>tubsposter</a>
+<!--   <a href="gallery/index.html"><img class="imgshow" src="gallery/tubsposter/scifiposter_example_quer.tex_thumb-1.png"/>tubsposter</a> -->
+<!--</div>
+<div style="clear:left">
+<div class="imgthumbframe">
+  <div class="imggroupcaption">
+    <a href="gallery/index.html">Briefe</a>
+  </div>-->
+  <a href="gallery/index.html#showletter"><img class="imgshow" src="gallery/tubslttr2/tubslttr2_example.tex_thumb-0.png"/>tubslttr2</a>
+</div>
+<div style="clear:left"></div>
 </div>
 
-<h2 style="background:#999999;padding: 0px 5px 0px 5px;">Releases</h2>
+<h2 id="releases" style="background:#999999;padding: 0px 5px 0px 5px;">Releases</h2>
 
-<p class="releasehead" style="background:#669892;"><b>0.3-beta1</b> &nbsp;&nbsp;&nbsp; <tt style="float:right;">(2011-12-14)</tt></p>
+<p class="releasehead" style="background:#669892;"><b>0.3-beta2</b> &nbsp;&nbsp;&nbsp; <tt style="float:right;">(2012-03-21)</tt></p>
+<ul>
+  <li>Archiv <a href="0.3-beta2/tubslatex_0.3-beta2.zip">[zip]</a></li>
+  <li>Debian/Ubuntu-Paket <a href="0.3-beta2/texlive-tubs_0.3-beta2debian.deb">[deb]</a>&nbsp;&nbsp;</li>
+  <li>Windows Installer <a href="0.3-beta2/tubslatexSetup_0.3-beta2.exe">[exe]</a></li>
+</ul>
+Dokumentation: <a href="0.3-beta2/tubsdocguide.pdf">[pdf]</a><br/>
+Beipiele: <a href="0.3-beta2/tubslatex_examples.zip">[zip]</a><br/>
+Changelog: <a href="0.3-beta2/Changelog.txt">[txt]</a>
+
+<p class="releasehead"><b>0.3-beta1</b> &nbsp;&nbsp;&nbsp; <tt style="float:right;">(2011-12-14)</tt></p>
 <ul>
   <li>Archiv <a href="0.3-beta1/tubslatex_0.3-beta1.zip">[zip]</a></li>
   <li>Debian/Ubuntu-Paket <a href="0.3-beta1/texlive-tubs_0.3-beta1debian.deb">[deb]</a>&nbsp;&nbsp;</li>
