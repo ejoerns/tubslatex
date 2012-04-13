@@ -1,12 +1,25 @@
 \chapter{Schnellstart}\label{chap:rapid}
 
-% TODO: Schnelleinführung Corporate Desing (Gaußraster, etc.)
+Dieses Kapitel soll einen kurzen Schnelleinstieg in die Benutzung von
+\tubslatex bieten. Eine ausführliche Beschreibung der erwähnten
+Klassen und Funktionalitäten, sowie weiterer Möglichkeiten der Vorlagen
+bieten die entsprechenden Einzel-Kapitel.
 
-\paragraph{Dokumente}
-Die schnellste Methode ein Dokument im Corporate Design zu erstellen ist
-das Laden einer der zur Verfügung stehenden Dokumentenklassen.
-Für die Erstellung von Textdokumenten sind dies \newdocumentclass{tubsartcl},
+\section{Dokumente}
+\tubslatex bietet für die Erstellung von Textdokumenten drei auf den
+Standardklassen aufbauende Klassen. Dies sind \newdocumentclass{tubsartcl},
 \newdocumentclass{tubsreprt} und \newdocumentclass{tubsbook}.
+
+\textbf{Titelseiten} können wie in den Standardklassen mit \lstinline{\maketitle}
+erzeugt werden, ein optionales Argument bietet jedoch noch die Möglichkeit
+vordefinierte Styles zu laden.
+Mit der Umgebung \lstinline{titlepage} können individuelle Titelseiten
+im Gaußraster erstellt werden.
+
+\textbf{Rückseiten} können ähnlich den Titelseiten mit dem Befehl
+\lstinline{\makebackpage} bzw. der Umgebung \lstinline{backpage} erstellt werden.
+
+
 
 \paragraph{Poster}
 Die Klasse \newdocumentclass{tubsposter} kann zum Erstellen von Postern verwendet werden.

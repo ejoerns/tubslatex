@@ -265,13 +265,15 @@ beschrieben.
     \end{lstlisting}
     
   \item[4. Arial installieren]
-    Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
+    Falls die Schrift \emph{Arial} noch nicht installiert wurde, so sollte dies
     nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
-    eingestellt ist.
+    eingestellt ist. Sollte dies nicht erwünscht sein, kann in allen
+    Vorlagen-Klassen mit der Option \Option{nexus} sichergestellt werden,
+    das nur \emph{Nexus} als Schrift verwendet wird.
     
-    Die Installation erfolgt mit Hilfe des Programms \lstinline{getnonfreefonts},
-    dass die benötigten Dateien automatisch herunterlädt und alle zur Installation
-    nötigen Schritte durchführt.
+    Die Installation von Arial erfolgt mit Hilfe des Programms
+    \lstinline{getnonfreefonts}, das die benötigten Dateien automatisch
+    herunterlädt und alle für die Installation notwendigen Schritte durchführt.
     
     Eine systemweite Installation von Arial geschieht mit Hilfe des Befehls
     \begin{lstlisting}[style=cmd]
@@ -287,7 +289,10 @@ beschrieben.
     Dateien entpackt werden.
     Diese liegen dort schon in der korrekten Ordner-Struktur vor, sodass
     sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
-    müssen.
+    müssen. Dieses sollte im Allgemeinen \lstinline{/home/username/texmf}
+    sein. Ist es noch nicht vorhanden, so muss es zuerst erstellt werden.
+
+    Das Entpacken erfolgt dann mit dem Befehl
     \begin{lstlisting}[style=cmd]
 $ unzip -d ~/texmf/ tubslatex_0.3-beta2.zip
     \end{lstlisting}
@@ -307,13 +312,15 @@ $ updmap
     \end{lstlisting}
     
   \item[4. Arial installieren]
-    Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
+    Falls die Schrift Arial noch nicht installiert wurde, so sollte dies
     nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
-    eingestellt ist.
+    eingestellt ist. Sollte dies nicht erwünscht sein, kann in allen
+    Vorlagen-Klassen mit der Option \Option{nexus} sichergestellt werden,
+    das nur \emph{Nexus} als Schrift verwendet wird.
     
-    Die Installation erfolgt mit Hilfe des Programms \lstinline{getnonfreefonts},
-    dass die benötigten Dateien automatisch herunterlädt und alle zur Installation
-    nötigen Schritte durchführt.
+    Die Installation von Arial erfolgt mit Hilfe des Programms
+    \lstinline{getnonfreefonts}, das die benötigten Dateien automatisch
+    herunterlädt und alle für die Installation notwendigen Schritte durchführt.
     
     Eine Lokale Installation von Arial geschieht mit Hilfe des Befehls
     \begin{lstlisting}[style=cmd]
@@ -412,16 +419,18 @@ $ updmap
 
 
   \item[3. Arial installieren]
-    Falls die Schrift 'arial' noch nicht installiert wurde, so sollte dies
+    Falls die Schrift \emph{Arial} noch nicht installiert wurde, so sollte dies
     nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
-    eingestellt ist.
+    eingestellt ist. Sollte dies nicht erwünscht sein, kann in allen
+    Vorlagen-Klassen mit der Option \Option{nexus} sichergestellt werden,
+    das nur \emph{Nexus} als Schrift verwendet wird.
     
-    Die Installation erfolgt mit Hilfe des Programms \lstinline{getnonfreefonts},
-    dass die benötigten Dateien automatisch herunterlädt und alle zur Installation
-    nötigen Schritte durchführt.
+    Die Installation von Arial erfolgt mit Hilfe des Programms
+    \lstinline{getnonfreefonts}, das die benötigten Dateien automatisch
+    herunterlädt und alle für die Installation notwendigen Schritte durchführt.
     \begin{enumerate}[a)]
-      \item Falls nicht vorhanden, kann ein Installer unter folgendem Link
-        bezogen werden:
+      \item Falls das Programm \lstinline{getnonfreefonts} noch nicht vorhanden
+        ist, kann ein Installer unter folgendem Link bezogen werden:
         \url{http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts}
     
         Die Installation von \lstinline{getnonfreefonts} erfolgt dann mit dem
