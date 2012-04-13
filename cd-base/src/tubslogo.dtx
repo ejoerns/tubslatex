@@ -96,6 +96,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{ifthen}
 \RequirePackage{xkeyval}
+\RequirePackage{calc}
 %    \end{macrocode}
 %
 % Farb-Variable
@@ -147,6 +148,7 @@
 \DeclareOptionX{a2paper}{\def\logo@papersize{2}}
 \DeclareOptionX{a1paper}{\def\logo@papersize{1}}
 \DeclareOptionX{a0paper}{\def\logo@papersize{0}}
+\DeclareOptionX{custompaper}{\def\logo@papersize{c}}
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}
 %
@@ -207,8 +209,18 @@
 \ifthenelse{\equal{\logo@papersize}{2}}{\def\tubslogo@scale{2.0}}{% 200%
 \ifthenelse{\equal{\logo@papersize}{1}}{\def\tubslogo@scale{2.8}}{% 280%
 \ifthenelse{\equal{\logo@papersize}{0}}{\def\tubslogo@scale{4.0}}{% 400%
-\def\tubslogo@scale{1.0}% default
-}}}}}}}
+\ifthenelse{\equal{\logo@papersize}{c}}{% custom
+  % calculate scaling factor
+  \newdimen\temp@
+  \ifthenelse{\boolean{tubspage@landscape}}{%
+    \setlength{\temp@}{1pt*\ratio{0.3333\paperheight}{\tubslogoBaseWidth}}%
+  }{%
+    \setlength{\temp@}{1pt*\ratio{0.3333\paperwidth}{\tubslogoBaseWidth}}%
+  }%
+  \edef\tubslogo@scale{\strip@pt\temp@}% default
+}{% 400%
+  \def\tubslogo@scale{1.0}% default
+}}}}}}}}
 %    \end{macrocode}
 %
 % paper format scale

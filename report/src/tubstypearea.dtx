@@ -260,9 +260,9 @@
 %
 %    \begin{macro}{\tubspage@paper}
 % Makro zur Speicherung des ausgewählten Papierformats.
-% Standardwert: |anypaper|.
+% Standardwert: |custompaper|.
 %    \begin{macrocode}
-\def\tubspage@paper{anypaper}
+\def\tubspage@paper{custompaper}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -366,11 +366,11 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{tubstypearea.sty}{anypaper}
+%    \begin{key}{tubstypearea.sty}{custompaper}
 % Auswahl für individuelle Papiergröße (voreingestellt)
 %    \begin{macrocode}
-\DeclareOptionX{anypaper}{%
-  \def\tubspage@paper{anypaper}
+\DeclareOptionX{custompaper}{%
+  \def\tubspage@paper{custompaper}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -465,7 +465,7 @@
 %    \end{key}
 %
 %    \begin{key}{tubstypearea.sty}{sender}
-$=\,<top/bottom>$\par
+% $=\,<top/bottom>$\par
 % Bestimmt, ob Absenderbereich oben oder unten auf der Seite platziert wird.
 % Damit ändert sich der komplette Darstellungsbereich.
 %    \begin{macrocode}
@@ -481,7 +481,7 @@ $=\,<top/bottom>$\par
 % \subsubsection{Optionsverarbeitung}
 %
 %    \begin{macrocode}
-% \ExecuteOptionsX{anypaper}
+% \ExecuteOptionsX{custompaper}
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
@@ -520,8 +520,8 @@ $=\,<top/bottom>$\par
 % gewählt wurde).
 %    \begin{macrocode}
 \newcommand{\tubspage@process@paper}{%
-  \ifthenelse{\equal{\tubspage@paper}{anypaper}}{%
-    % anypaper
+  \ifthenelse{\equal{\tubspage@paper}{custompaper}}{%
+    % custompaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@borderwidth}{0.038\paperheight}
       \setlength{\tubspage@senderheight}{0.2\paperheight}% 1/5
