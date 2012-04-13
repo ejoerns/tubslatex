@@ -1,0 +1,40 @@
+\documentclass[paper=84.1cm:180cm,landscape,custompaper]{tubsposter}
+% \geometry{papersize={140cm,100cm}}
+\tubsgeometry{}
+% \documentclass[
+% %   scifiposter,
+% %   landscape,
+%   paper=180cm:84.1cm,
+% %   style=scifi,
+%   table,
+%   bgcolor=tuGreenDark80,38pt,
+%   custompaper
+%   ]{tubsposter} 
+
+\title{bla}
+\author{blub}
+
+\begin{document}
+
+\begin{tubsposter}
+  \showtubslogo
+  \showlogo{\fboxsep0mm\fbox{\includegraphics{dummy_institut}}}
+  \begin{posterrow}[bgcolor=tuOrange]{4}
+    \Huge qwertz
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tuGreenLight]{2}
+    asdfg
+  \end{posterrow}
+\end{tubsposter}
+
+\begin{tubsposter}[sender=bottom]
+  \showlogo{\fboxsep0mm\fbox{\includegraphics{dummy_institut}}}
+  \begin{posterrow}[bgcolor=tuOrange]{4}
+    \Huge qwertz
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tuGreenLight]{2}
+    asdfg
+  \end{posterrow}
+\end{tubsposter}
+
+\end{document}
