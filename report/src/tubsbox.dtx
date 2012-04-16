@@ -859,11 +859,11 @@
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
-  \scifiboxsetup[bgcolor=tuWhite,#1]
+  \scifiboxsetup[bgcolor=tuWhite,#1]%
   % reset modrow counter
-  \setcounter{tubs@sb@current@row}{0}
-  \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}
-  \tubs@sb@setelements{#2}{tubs@sb@rowlength@}
+  \setcounter{tubs@sb@current@row}{0}%
+  \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}%
+  \tubs@sb@setelements{#2}{tubs@sb@rowlength@}%
 }{%
 }
 %    \end{macrocode}
@@ -892,30 +892,30 @@
 \newenvironment{@modrow}[1][X]{%
   % setze keys
 %   \scifibox@setdefault@opts
-  \setkeys*{scifibox}{#1}
-  \edef\@remaining@keys{\XKV@rm}
+  \setkeys*{scifibox}{#1}%
+  \edef\@remaining@keys{\XKV@rm}%
   % Ersetze mit X, falls keine Länge angegeben
   \ifthenelse{\equal{\@remaining@keys}{}}{%
-    \edef\@remaining@keys{X}}{}
+    \edef\@remaining@keys{X}}{}%
   % reset modcol counter
-  \setcounter{tubs@sb@current@col}{0}
+  \setcounter{tubs@sb@current@col}{0}%
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
-  \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubspage@borderwidth}
+  \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubspage@borderwidth}%
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@collength@'
-  \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@collength@}
-  \stepcounter{tubs@sb@current@row}
+  \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@collength@}%
+  \stepcounter{tubs@sb@current@row}%
   % Wenn nur eine Spalte, dann direkt scifibox setzen
   \ifthenelse{\expandafter\equal\expandafter{\@remaining@keys}{X}}{%
-    \stepcounter{tubs@sb@current@col}
+    \stepcounter{tubs@sb@current@col}%
     \expandafter\edef\expandafter\@argI\expandafter{%
-      \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
+      \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}%
     \expandafter\edef\expandafter\@argII\expandafter{%
-      \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
-    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}
-    \def\tubs@sb@box@endcmd{\end@scifibox}
+      \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}%
+    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}%
+    \def\tubs@sb@box@endcmd{\end@scifibox}%
   }{%
-    \def\tubs@sb@box@cmd{\relax}
-    \def\tubs@sb@box@endcmd{\relax}
+    \def\tubs@sb@box@cmd{\relax}%
+    \def\tubs@sb@box@endcmd{\relax}%
   }
   \tubs@sb@box@cmd%
 }{%
@@ -977,29 +977,29 @@
   % setze keys
 %   \scifibox@setdefault@opts
   \setkeys*{scifibox}{#1}
-  \edef\@remaining@keys{\XKV@rm}
+  \edef\@remaining@keys{\XKV@rm}%
   % Ersetze mit X, falls keine Länge angegeben
   \ifthenelse{\equal{\@remaining@keys}{}}{%
-    \edef\@remaining@keys{X}}{}
+    \edef\@remaining@keys{X}}{}%
   % reset modsubrow counter
-  \setcounter{tubs@sb@current@subrow}{0}
+  \setcounter{tubs@sb@current@subrow}{0}%
   % Setze Länge auf Zeilenhöhe + Trennstrich
-  \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubspage@borderwidth}
+  \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubspage@borderwidth}%
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@subrowlength@'
-  \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@subrowlength@}
-  \stepcounter{tubs@sb@current@col}
+  \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@subrowlength@}%
+  \stepcounter{tubs@sb@current@col}%
   % Wenn nur eine Spalte, dann direkt scifibox setzen
   \ifthenelse{\expandafter\equal\expandafter{\@remaining@keys}{X}}{%
-    \stepcounter{tubs@sb@current@subrow}
+    \stepcounter{tubs@sb@current@subrow}%
     \expandafter\edef\expandafter\@argI\expandafter{%
-      \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}
+      \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}%
     \expandafter\edef\expandafter\@argII\expandafter{%
-      \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
-    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}
-    \def\tubs@sb@box@endcmd{\end@scifibox}
+      \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}%
+    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}%
+    \def\tubs@sb@box@endcmd{\end@scifibox}%
   }{%
-    \def\tubs@sb@box@cmd{\relax}
-    \def\tubs@sb@box@endcmd{\relax}
+    \def\tubs@sb@box@cmd{\relax}%
+    \def\tubs@sb@box@endcmd{\relax}%
   }
   \tubs@sb@box@cmd%
 }{%
@@ -1020,7 +1020,7 @@
   \setboolean{tubs@sb@borderless}{false}%
   \@modcol%
 }{%
-  \end@modcol
+  \end@modcol%
 }
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -1028,7 +1028,7 @@
   \setboolean{tubs@sb@borderless}{true}%
   \@modcol%
 }{%
-  \end@modcol
+  \end@modcol%
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
@@ -1045,7 +1045,7 @@
   \setboolean{tubs@sb@borderless}{false}%
   \@modsubrow%
 }{%
-  \end@modsubrow
+  \end@modsubrow%
 }
 %    \end{macrocode}
 %
@@ -1054,7 +1054,7 @@
   \setboolean{tubs@sb@borderless}{true}%
   \@modsubrow%
 }{%
-  \end@modsubrow
+  \end@modsubrow%
 }
 %    \end{macrocode}
 %    \end{environment}\end{environment}
@@ -1065,14 +1065,14 @@
 \newenvironment{@modsubrow}[1][]{%
   % setze keys
 %   \scifibox@setdefault@opts
-  \setkeys*{scifibox}{#1}
-  \stepcounter{tubs@sb@current@subrow}
+  \setkeys*{scifibox}{#1}%
+  \stepcounter{tubs@sb@current@subrow}%
   \expandafter\edef\expandafter\@oarg\expandafter{%
-    \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}
+    \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}%
   \expandafter\edef\expandafter\@argI\expandafter{%
-    \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}
+    \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}%
   \expandafter\edef\expandafter\@argII\expandafter{%
-    \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}
+    \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}%
   \@scifibox[][\@oarg]{\@argI}{\@argII}%
 }{%
   \end@scifibox%
@@ -1111,20 +1111,20 @@
 % Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
 \newenvironment{@@scifibox}[3][\relax]{%
-  \tb@sb@setorig
+  \tb@sb@setorig%
   % Argumente sichern
   \ifx#1\relax%
-    \def\@current@rowheight{#2}
+    \def\@current@rowheight{#2}%
   \else%
     \def\@current@rowheight{#1}%
   \fi%
   \def\@current@height{(#2)}%
   \def\@current@width{(#3)}% Breite der weißen Box, ohne Ränder!
   \ifthenelse{\boolean{tubs@sb@borderless}}{%
-    \setlength\tubs@sb@padding{0mm}
-  }{
-    \setlength\tubs@sb@padding{\tubspage@borderwidth}
-  }
+    \setlength\tubs@sb@padding{0mm}%
+  }{%
+    \setlength\tubs@sb@padding{\tubspage@borderwidth}%
+  }%
   % Speichere Inhalt in minipage-Box.
   \begin{lrbox}{\tubs@sb@storebox}%
     \begin{minipage}[t][\@current@height]{\@current@width-\tubs@sb@padding}%
@@ -1194,7 +1194,7 @@
 \let\end@scifibox\end@@scifibox
 %
 \newcommand\scifibox@setdefault@opts{%
-  \setkeys{scifibox}{bgcolor=tuWhite}
+  \setkeys{scifibox}{bgcolor=tuWhite}%
 }
 %    \end{macrocode}
 %
@@ -1203,7 +1203,7 @@
 \def\@scifibox@oparam[#1]{%
   \setkeys*{scifibox}{#1}%
   \setkeys*{gaussbox}{#1}%
-  \@@scifibox
+  \@@scifibox%
 }
 %    \end{macrocode}
 %
