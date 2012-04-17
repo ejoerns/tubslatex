@@ -123,6 +123,7 @@
 \RequirePackage{xkeyval}
 \RequirePackage{etoolbox}
 \RequirePackage{forloop}
+\RequirePackage{tubsdebug}
 \RequirePackage{tubstypearea}
 \RequirePackage[absolute]{textpos}
 %    \end{macrocode}
@@ -803,6 +804,7 @@
     }
     % Schreibe nun gespeicherte Längen und X-Längen in endgültiges Makro
     \ifthenelse{\equal{\tubs@sb@current@row}{X}}{%
+      \writetubslog{replace X with \the\tubs@sb@xlength}%
       \expandafter\edef\csname #2\thetubs@cnt\endcsname{%
         \the\tubs@sb@xlength%
       }%
@@ -859,10 +861,12 @@
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
 \newenvironment{modulepage}[2][]{%
+  \writetubslog{modulepage: #1, #2}%
   \scifiboxsetup[bgcolor=tuWhite,#1]%
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}%
   \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}%
+  \writetubslog{page: xfree: \the\tubs@sb@xfreespace}%
   \tubs@sb@setelements{#2}{tubs@sb@rowlength@}%
 }{%
 }
@@ -917,6 +921,7 @@
     \def\tubs@sb@box@cmd{\relax}%
     \def\tubs@sb@box@endcmd{\relax}%
   }
+  \writetubslog{modrow: xfree: \the\tubs@sb@xfreespace}%
   \tubs@sb@box@cmd%
 }{%
   \tubs@sb@box@endcmd%
@@ -1088,6 +1093,7 @@
 %    \begin{macrocode}
 \newlength{\modulewidth}
 \newlength{\moduleheight}
+\newdimen\@box@tmp% Generelle temp-Var.
 %    \end{macrocode}
 %
 %    \begin{macro}{\tubs@sb@box@xpos}
@@ -1162,6 +1168,12 @@
       \hspace{0.5\tubs@sb@padding}%
     }}%
   \end{textblock*}%
+  \writetubslog{scifibox @(\the\tubs@sb@box@xpos, \the\tubs@sb@box@ypos)}%
+  \if@tubs@dbg% DEBUGGING output!!
+  \begin{textblock*}{\@current@width}(\tubs@sb@box@xpos,\tubs@sb@box@ypos)%
+    \colorbox{tuWhite}{\the\tubs@sb@box@xpos, \the\tubs@sb@box@ypos}%
+  \end{textblock*}%
+  \fi%
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
   \ifthenelse{\equal{\@current@rowheight}{\relax}}{%
     \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
@@ -1177,11 +1189,15 @@
     }{}
   }
   % Wenn Zeile gefüllt ist, springen in nächste Zeile
-  \ifthenelse{\lengthtest{\tubs@sb@box@xpos > \textwidth}}{%
+  \setlength\@box@tmp{\textwidth+\tubspage@borderwidth}% Texthöhe + Rahmenhöhe
+  \writetubslog{width: is \the\tubs@sb@box@xpos > \the\@box@tmp ?}%
+  \ifthenelse{\lengthtest{\tubs@sb@box@xpos > \@box@tmp}}{%
     \addtolength\tubs@sb@box@ypos{\@current@rowheight+0.5\tubspage@borderwidth}%
     \setlength\tubs@sb@box@xpos{0mm}%
     % Wenn darüber hinaus Seite gefüllt ist, fange neue an!
-    \ifthenelse{\lengthtest{\tubs@sb@box@ypos > \textheight}}{%
+    \setlength\@box@tmp{\textheight+\tubspage@borderwidth}% Texthöhe + Rahmenhöhe
+    \writetubslog{height: is \the\tubs@sb@box@ypos > \the\@box@tmp ?}%
+    \ifthenelse{\lengthtest{\tubs@sb@box@ypos > \@box@tmp}}{%
       \setlength\tubs@sb@box@ypos{0mm}%
     }{}
   }{}
