@@ -142,16 +142,20 @@
 %    \begin{macrocode}
 %<*package|leaflet>
 \let\sectfont\relax
-\RequirePackage{scrbase}
-\RequirePackage{scrextend}
+\@ifundefined{KOMAClassName}{% skip for latex classes
+  \RequirePackage{scrbase}
+  \RequirePackage{scrextend}
+}{}
 \let\settubsfont\setkomafont
 \let\addtotubsfont\addtokomafont
 \let\usetubsfont\usekomafont
-\newkomafont{caption}{}
-\newkomafont{section}{}
-\newkomafont{subsection}{}
-\newkomafont{subsubsection}{}
-\newkomafont{intro}{\large\color{tubsheadings}}
+\@ifundefined{KOMAClassName}{% skip for latex classes
+  \newkomafont{caption}{}
+  \newkomafont{section}{}
+  \newkomafont{subsection}{}
+  \newkomafont{subsubsection}{}
+  \newkomafont{intro}{\large\color{tubsheadings}}
+}{}
 %</package|leaflet>
 %    \end{macrocode}
 %
