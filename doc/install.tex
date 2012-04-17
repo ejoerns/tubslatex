@@ -407,9 +407,15 @@ Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
     sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
     müssen.
     Dies sollte im Allgemeinen \lstinline{~/Library/texmf} sein.
-%   \item[2. Dateien registrieren]
 
-  \item[2. Schriften registrieren]
+  \item[2. Dateien registrieren]
+    Dies geschieht im Verzeichnis \lstinline{~/Library/texmf} mit dem Befehl
+    \begin{lstlisting}[style=cmd]
+$ mktexlsr .
+    \end{lstlisting}
+% TODO: prüfen, ob dies wirklich notwendig ist!
+
+  \item[3. Schriften registrieren]
     In einem Terminal sind dazu folgende 3 Befehle einzugeben:
     \begin{lstlisting}[style=cmd]
 $ updmap --nomkmap --nohash --enable Map=NexusProSans.map
@@ -418,7 +424,7 @@ $ updmap
     \end{lstlisting}
 
 
-  \item[3. Arial installieren]
+  \item[4. Arial installieren]
     Falls die Schrift \emph{Arial} noch nicht installiert wurde, so sollte dies
     nachgeholt werden, da sie für einige Vorlagen als Standard-Schrift
     eingestellt ist. Sollte dies nicht erwünscht sein, kann in allen
