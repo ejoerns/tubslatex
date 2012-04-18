@@ -1,14 +1,15 @@
-\documentclass[a4paper,10pt]{article}
+\documentclass[a4paper,11pt]{scrreprt}\usepackage[a4paper,fontsize=11pt,colorheadings]{tubsdoc}
+% \documentclass[a4paper,11pt]{tubsreprt}
+% \documentclass{scrreprt}
 \usepackage[utf8x]{inputenc}
 
 \usepackage{lipsum}
-% \usepackage[calconly]{tubstypearea}
-\usepackage{tubsdoc}
+\usepackage[calconly]{tubstypearea}
 
 %opening
 \title{My title}
 \author{Enrico Jörns}
-\titlepicture{infozentrum}
+% \titlepicture{infozentrum}
 
 \begin{document}
 
@@ -17,8 +18,43 @@
 %   \showtopline
 % }
 
-\maketitle[image]
+\maketitle
+
+% \setkomafont{section}{\usekomafont{subheadline}}
+% \addtokomafont{section}{\bfseries}
+\chapter{This is a chapter}
+
+\section{Bla bla}
+
+\subsection{Fününü}
 
 \lipsum[1-5]
+
+\begin{gausspage}\thispagestyle{empty}
+\begin{segment}[bgcolor=tuRed]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuBlue]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuRed]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuBlue]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuRed]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuBlue]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuRed]{1}
+Inhalt
+\end{segment}
+\begin{segment}[bgcolor=tuBlue]{1}
+\end{segment}
+\end{gausspage}
+
 
 \end{document}
