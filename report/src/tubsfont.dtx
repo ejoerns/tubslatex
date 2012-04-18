@@ -104,6 +104,16 @@
 %<*option>
 %    \end{macrocode}
 %
+%    \begin{key}{}{fontsize}
+% Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs dar.
+%    \begin{macrocode}
+\newcommand\tubs@fontsize{11pt}
+\DeclareOptionX{fontsize}{%
+  \renewcommand\tubs@fontsize{#1}
+}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{key}{}{colorheadings}
 % Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs dar.
 %    \begin{macrocode}
@@ -145,7 +155,46 @@
 \@ifundefined{KOMAClassName}{% skip for latex classes
   \RequirePackage{scrbase}
   \RequirePackage{scrextend}
-}{}
+}{%
+% (c) by Markus Kohm
+\newcommand\@loadkomafont[1]{
+  \expandafter\@defaultunits\expandafter\@tempdima#1 pt\relax\@nnil
+  \edef\@tempa{#1}%
+  \setlength{\@tempdimb}{\@tempdima}%
+  \edef\@tempb{\strip@pt\@tempdimb}%
+  \addtolength{\@tempdimb}{-10\p@}%
+  \edef\@ptsize{\strip@pt\@tempdimb}%
+  \edef\@tempa{%
+    \noexpand\makeatletter
+    \noexpand\InputIfFileExists{\@fontsizefilebase\@tempa.clo}{%
+      \noexpand\ClassInfo{\KOMAClassName}{%
+        File `\@fontsizefilebase\@tempa.clo' used to setup font sizes}%
+    }{%
+      \noexpand\InputIfFileExists{\@fontsizefilebase\@tempb pt.clo}{%
+        \noexpand\ClassInfo{\KOMAClassName}{%
+          File `\@fontsizefilebase\@tempb pt.clo' used instead of%
+          \noexpand\MessageBreak
+          file `\@fontsizefilebase\@tempa.clo' to setup font sizes}%
+      }{%
+        \noexpand\changefontsizes{#1}%
+      }%
+    }%
+    \noexpand\catcode`\noexpand\@=\the\catcode`\@
+  }%
+  \@tempa
+}
+% undef previously defined fonts TODO: does not work yet!
+\global\let\Huge\relax
+\global\let\huge\relax
+\global\let\LARGE\realx
+\global\let\Large\relax
+\global\let\large\relax
+\global\let\normalsize\relax
+\global\let\small\relax
+\global\let\footnotesize\relax
+\global\let\scriptsize\relax
+\@loadkomafont{\tubs@fontsize}
+}
 \let\settubsfont\setkomafont
 \let\addtotubsfont\addtokomafont
 \let\usetubsfont\usekomafont
@@ -563,7 +612,7 @@
 %
 %    \begin{macro}{\small}
 %    \begin{macrocode}
-\newcommand{\small}{%
+\def\small{%
    \@setfontsize\small\@xiipt{14.5}%
    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
    \abovedisplayshortskip \z@ \@plus3\p@
@@ -581,7 +630,7 @@
 %
 %    \begin{macro}{\footnotesize}
 %    \begin{macrocode}
-\newcommand{\footnotesize}{%
+\def\footnotesize{%
    \@setfontsize\footnotesize\@xipt{13.6}%
    \abovedisplayskip 11\p@ \@plus3\p@ \@minus6\p@
    \abovedisplayshortskip \z@ \@plus3\p@
@@ -652,7 +701,7 @@
 %
 %    \begin{macro}{\small}
 %    \begin{macrocode}
-\newcommand{\small}{%
+\def\small{%
    \@setfontsize\small\@xivpt{17}%
    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
    \abovedisplayshortskip \z@ \@plus3\p@
@@ -670,7 +719,7 @@
 %
 %    \begin{macro}{\footnotesize}
 %    \begin{macrocode}
-\newcommand{\footnotesize}{%
+\def\footnotesize{%
    \@setfontsize\footnotesize\@xiipt{14}%
    \abovedisplayskip 12\p@ \@plus3\p@ \@minus7\p@
    \abovedisplayshortskip \z@ \@plus3\p@
@@ -731,7 +780,7 @@
 %
 %    \begin{macro}{\normalsize}
 %    \begin{macrocode}
-\renewcommand{\normalsize}{%
+\def\normalsize{%
    \@setfontsize\normalsize\@xxvpt{35}%
    \abovedisplayskip 25\p@ \@plus6\p@ \@minus10\p@
    \abovedisplayshortskip \z@ \@plus6\p@
@@ -744,7 +793,7 @@
 %
 %    \begin{macro}{\small}
 %    \begin{macrocode}
-\newcommand{\small}{%
+\def\small{%
    \@setfontsize\small\@xxpt{25}%
    \abovedisplayskip 20\p@ \@plus5\p@ \@minus9\p@
    \abovedisplayshortskip \z@ \@plus5\p@
@@ -760,7 +809,7 @@
 %
 %    \begin{macro}{\footnotesize}
 %    \begin{macrocode}
-\newcommand{\footnotesize}{%
+\def\footnotesize{%
    \@setfontsize\footnotesize\@xviipt{22}%
    \abovedisplayskip 17\p@ \@plus4\p@ \@minus8\p@
    \abovedisplayshortskip \z@ \@plus4\p@
@@ -831,7 +880,7 @@
 %
 %    \begin{macro}{\small}
 %    \begin{macrocode}
-\newcommand{\small}{%
+\def\small{%
    \@setfontsize\small\@xxxpt{37}%
    \abovedisplayskip 30\p@ \@plus7\p@ \@minus11\p@
    \abovedisplayshortskip \z@ \@plus7\p@
@@ -847,7 +896,7 @@
 %
 %    \begin{macro}{\footnotesize}
 %    \begin{macrocode}
-\newcommand{\footnotesize}{%
+\footnotesize{%
    \@setfontsize\footnotesize\@xxvpt{30}%
    \abovedisplayskip 25\p@ \@plus6\p@ \@minus10\p@
    \abovedisplayshortskip \z@ \@plus6\p@
