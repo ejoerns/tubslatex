@@ -400,6 +400,9 @@ Installation weiterer Schriften mit \lstinline{updmap} statt
 
 Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
 
+Dazu wird ein Terminal {\sffamily(Dienstprogramme$\to$Terminal)}
+benötigt in dem die beschriebenen Befehle einzugeben sind.
+
 \begin{description}
   \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
     Dateien entpackt werden.
@@ -407,6 +410,7 @@ Diese Beschreibung erklärt zur Zeit nur die lokale Installation.
     sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
     müssen.
     Dies sollte im Allgemeinen \lstinline{~/Library/texmf} sein.
+    Ist das Verzeichnis noch nicht vorhanden, sollte es erstellt werden.
 
   \item[2. Dateien registrieren]
     Dies geschieht im Verzeichnis \lstinline{~/Library/texmf} mit dem Befehl
@@ -436,7 +440,7 @@ $ updmap
     herunterlädt und alle für die Installation notwendigen Schritte durchführt.
     \begin{enumerate}[a)]
       \item Falls das Programm \lstinline{getnonfreefonts} noch nicht vorhanden
-        ist, kann ein Installer unter folgendem Link bezogen werden:
+        ist, kann ein Installer unter folgendem Link bezogen werden:\\
         \url{http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts}
     
         Die Installation von \lstinline{getnonfreefonts} erfolgt dann mit dem
