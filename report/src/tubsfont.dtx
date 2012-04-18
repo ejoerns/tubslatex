@@ -195,16 +195,23 @@
 \global\let\scriptsize\relax
 \@loadkomafont{\tubs@fontsize}
 }
+%
 \let\settubsfont\setkomafont
 \let\addtotubsfont\addtokomafont
 \let\usetubsfont\usekomafont
-\@ifundefined{KOMAClassName}{% skip for latex classes
-  \newkomafont{caption}{}
-  \newkomafont{section}{}
-  \newkomafont{subsection}{}
-  \newkomafont{subsubsection}{}
-  \newkomafont{intro}{\large\color{tubsheadings}}
-}{}
+% Create Koma font only if not yet exists
+\providecommand\providekomafont[2]{%
+  \@ifundefined{scr@fnt@#1}{%
+    \newkomafont{#1}{#2}
+  }{}
+}
+%
+\providekomafont{caption}{}
+\providekomafont{chapter}{}
+\providekomafont{section}{}
+\providekomafont{subsection}{}
+\providekomafont{subsubsection}{}
+\providekomafont{intro}{\large\color{tubsheadings}}
 %</package|leaflet>
 %    \end{macrocode}
 %
@@ -264,12 +271,12 @@
 \titleformat{\chapter}[block]
 {\usekomafont{chapter}}{\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
-%<*book|report>
+%<*book|report|package>
 \setkomafont{chapter}{\usekomafont{headlinesmall}}
 \if@tubs@tf@smallchap
 \addtokomafont{chapter}{\LARGE}
 \fi
-%</book|report>
+%</book|report|package>
 \setkomafont{section}{\usekomafont{subheadline}}
 \setkomafont{subsection}{\usekomafont{subheadlinesmall}}
 \addtokomafont{subsubsection}{\color{tubsheadings}}
