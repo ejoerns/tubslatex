@@ -1,3 +1,23 @@
+Version 0.3-beta3-testing:
+- Dokumentation
+  - Installationshinweise für Mac OS-Installation hinzugefuegt
+
+- Allgemein
+  - Bessere Unterstützung von unbekannten Papierformaten (tubstypearea)
+
+- Plakate
+  - Berechnungsfehler für Modulsystem korrigiert
+
+- tubsdoc
+  - Paket nun auch mit KOMA-Klassen zusammen nutzbar
+  - Titelseitenstyle [plain] verfügbar
+  - Koma-Font-Definitionen verbessert/korrigiert
+
+- beamer:
+  - \institute-Befehl zeigt ursprüngliches Verhalten und wird auf
+    Titelseiten dargestellt
+  - Minimalabstand von Titlepage-Text zu Segmentobergrenze
+
 Version 0.3-beta2:
 
 - Dokumentation
@@ -11,7 +31,7 @@ Allgemein
     (Titel, Name, Software(-Version)
   - Kompatibilität mit soul-Paket verbessert
 
-- Dokuementenklassen
+- Dokumentenklassen
   - backpage-Umgebung inkl. dazugehöriger Style-Dateien hinzugefuegt
   - Bessere Behandlung der Logo-Positionierung
   - Option 'smallchapters' für kleinere Kapitelnamen
