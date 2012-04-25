@@ -109,7 +109,7 @@ font:
 
 # zippen
 zip:
-	zip -r tubslatex_$(VERSION).zip tex doc fonts
+	zip -r tubslatex_$(VERSION).tds.zip tex doc fonts
 
 # Aufräumen
 clean:
