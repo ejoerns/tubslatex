@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#if [ -x /usr/local/texlive/2012 ]; then
+#  TEXLIVEDIR=/usr/local/texlive/2012
+#elif [ -x /usr/local/texlive/2011 ]; then
+#  TEXLIVEDIR=/usr/local/texlive/2011
+#elif [ -x /usr/local/texlive/2010 ]; then
+#  TEXLIVEDIR=/usr/local/texlive/2010
+#elif [ -x /usr/local/texlive/2009 ]; then
+#  TEXLIVEDIR=/usr/local/texlive/2009
+#else
+#  echo Error: No valid installation found.
+#fi
+#
+#TEXLIVEBINDIR=$TEXLIVEDIR/bin/universal-darwin
+
+export PATH=$PATH:/usr/texbin
+
+# Update packages
+mktexlsr
+
+# Debugging output
+#pdftexmap=`kpsewhich pdftex.map`
+#echo "Found map file: $pdftexmap";
+# touch /etc/texmf/updmap.d/10local.cfg
+
+echo "Using sys variants"
+#/usr/bin/getnonfreefonts-sys --verbose arial-urw
+echo "Adding map file for NexusProSans"
+updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+echo "Adding map file for NexusProSerif"
+updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+echo "running updmap-sys"
+updmap-sys
+
+exit 0
