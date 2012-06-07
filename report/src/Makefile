@@ -18,7 +18,10 @@ PDFLATEX = pdflatex
 
 .PHONY: cleantemp clean
 
-all: src doc
+all: init src doc
+
+init:
+	mkdir -p build
 
 src: $(GENLIST)
 

@@ -22,10 +22,10 @@ DOC_FETCHDIR = $(BASEDIR)/doc
 
 .PHONY: build copy-pre copy-generated copy-other copy-doc font clean zip
 
-all: build copy font
+all: font build copy
 
 build:
-	make -C $(BASEDIR) generate
+# 	make -C $(BASEDIR) generate
 
 copy: copy-pre copy-generated copy-other copy-doc
 
@@ -106,6 +106,17 @@ font:
 
 	rm *.otf
 
+fontinstall:
+	cp  -r fonts ~/texmf/tex/.
+	touch /etc/texmf/updmap.d/10local.cfg
+	echo "Using sys variants"
+	/usr/bin/getnonfreefonts-sys --force --verbose arial-urw
+	echo "Adding map file for NexusProSans"
+	/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+	echo "Adding map file for NexusProSerif"
+	/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+	echo "running updmap-sys"
+	/usr/bin/updmap-sys
 
 # zippen
 zip:
