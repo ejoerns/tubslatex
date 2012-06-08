@@ -581,9 +581,9 @@ Templates möglich.
 
 Folgende Farb-Templates können u.a. angepasst werden:
 \begin{description}
-  \item[\color{tuRed100}\ttfamily titlebarsecond]
+  \item[\color{tuRed100}\ttfamily titlebarfirst]
     Der Hintergrund des Grafik-Bereichs auf der Titelseite
-  \item[\color{tuRed100}\ttfamily titlebarthird]
+  \item[\color{tuRed100}\ttfamily titlebarsecond]
     Der Bereich unterhalb des Grafik-Bereichs auf der Titelseite
   \item[\color{tuRed100}\ttfamily titlebarlow]
     Die schmale Fußleiste auf der Titelseite
@@ -594,8 +594,8 @@ Folgende Farb-Templates können u.a. angepasst werden:
 \example
 
 \begin{lstlisting}
+\setbeamercolor{titlebarfirst}{bg=tuBlueDark80}
 \setbeamercolor{titlebarsecond}{bg=tuBlueDark40,fg=black}
-\setbeamercolor{titlebarthird}{bg=tuBlueDark80}
 \setbeamercolor{titlebarlow}{bg=tuBlueDark80}
 \setbeamercolor{titlelike}{bg=tuBlueDark40,fg=black}
 \end{lstlisting}
@@ -625,7 +625,9 @@ Standard-Template verwendet werden, etc.
 Die Kompbination mit anderen Templates ist im allgemeinen jedoch nicht
 CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
 
-\subsection{Skalierbarkeit}
+\subsection{Skalierbarkeit (Format)}
+\Index{16:9}
+\Index{Format!Beamer}
 
 Die Beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
 andere Seitenformate gebrachte werden kann, wird vom Layout generell
@@ -633,24 +635,19 @@ unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
 Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
 (siehe Tabelle \ref{tab:picratio}).
 
+\begin{hint}
+Die Option \lstinline{aspectratio} steht erst ab beamer-Version 3.10
+zur Verfügung.
+\end{hint}
+
+
 \subsection{columns-Umgebung}
+\Index{columns-Umgebung}
 
 Die Verwendung der columns-Umgebung ist in vielen Fällen sinnvoll.
-Jedoch ist auf eine korrekte Verwendung zu achten.
-Nachfolgendes Beispiel Teilt die Folie zwar in 2 Spalten,
-jedoch werden dabei die normalen Seitenränder überschritten.
-
-\begin{lstlisting}
-\begin{columns}
-  \column{0.5\textwidth}
-  \column{0.5\textwidth}
-\end{columns}
-\end{lstlisting}
-
-Der Grund dafür ist, dass zwar 2 Spalten mit jeweils halber Textbreite erstellt
-werden, jedoch dazwischen noch ein Abstand eingefügt wird. Dies kann mit der
-Option \lstinline{onlytextwidth} verhindert werden.
-Das Beispiel wäre wie folgt zu ändern:
+Jedoch sollte die Umgebung nur mit der Option \lstinline{onlytextwidth}
+verwendet werden, da sonst ein zusätzlicher Abstand zwischen den
+Spalten hinzugefügt werden und die Gesamtbreite zu groß wird:
 
 \begin{lstlisting}[morekeywords={onlytextwidth},keywordstyle=\color{tuOrange}]
 \begin{columns}[onlytextwidth]
@@ -661,6 +658,7 @@ Das Beispiel wäre wie folgt zu ändern:
 
 
 \subsection{Listings in Folien}
+\Index{Listings!Beamer}
 
 Auch wenn dies in der beamer-Dokumentation ausdrücklich erläutert ist,
 sollte hier noch einmal erwähnt werden, dass bei Gebraucht von Listings etc.
@@ -677,14 +675,18 @@ in Folien die Option \lstinline{fragile} übergeben werden muss.
 \subsection{PDF-Titel}
 
 Die standardmäßige Erstellung des PDF-Titel von beamer ist dahingehend
-abgeändert, dass, sofern vorhanden, die Kurzversion des Präsentationstitels
+abgeändert, dass, sofern vorhanden, die \emph{Kurzversion} des Präsentationstitels
 als PDF-Titel verwendet wird.
 
-Dies ermöglicht es zum Beispiel kleine Grafiken in den Titel einzubringen und
+Die Verwendung der Kurzversion ermöglicht es zum Beispiel,
+kleine Grafiken in den Titel einzubringen und
 trotzdem einen korrekten PDF-Titel zu erhalten.
 
 
 \subsection{Zusätzliche Schriftgrößen}
+\Index{Schriftgrößen!Beamer}
+\CommandIndex{microsize}
+\CommandIndex{nanosize}
 
 Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\microsize}
 und \lstinline{\nanosize} an, die jeweils noch kleiner sind als alle restlich
