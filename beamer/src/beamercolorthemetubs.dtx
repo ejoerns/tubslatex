@@ -168,18 +168,9 @@
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}
 %
-% \paragraph{Kopf-/Fuß-Darstellung}
-%    \begin{key}{}{colorhead}
-%    \begin{key}{}{colorfoot}
-% Darstellung des Kopf- bzw. Fußbereichs in Farbe.
-%    \begin{macrocode}
-\DeclareOptionBeamer{colorhead}{\setboolean{colorhead}{true}}
-\DeclareOptionBeamer{colorfoot}{\setboolean{colorfoot}{true}}
-%    \end{macrocode}
-%    \end{key}\end{key}
 %
 % \paragraph{Block-Darstellung}
-%    \begin{key}{}{colorfoot}
+%    \begin{key}{}{colorblocks}
 %    \begin{macrocode}
 \DeclareOptionBeamer{colorblocks}{\setboolean{colorblocks}{true}}
 %    \end{macrocode}
@@ -199,12 +190,8 @@
 %
 % Palette
 %    \begin{macrocode}
-\ifthenelse{\boolean{colorhead}}{%
-  \setbeamercolor*{palette primary}{fg=tuBlack,bg=tu\tubscolor\tubscolorshade 40}
-}{%
-  \setbeamercolor*{palette primary}{fg=tuBlack,bg=tuGrey20}
-}
-\setbeamercolor*{palette secondary}{parent=palette primary}
+\setbeamercolor*{palette primary}{fg=tuBlack, bg=tuGrey20}
+\setbeamercolor*{palette secondary}{fg=tuBlack, bg=tu\tubscolor\tubscolorshade }
 % palette tertiary is used for toc in header!
 \setbeamercolor*{palette tertiary}{fg=tuBlack,bg=tuWhite}
 \setbeamercolor*{palette quaternary}{parent=palette tertiary}
@@ -213,20 +200,10 @@
 %
 % Separation line and logo
 %    \begin{macrocode}
-\setbeamercolor{separation line}{fg=tuRed}
-\setbeamercolor{logo}{parent=separation line}
+\setbeamercolor{separation line}{bg=tuRed}
+\setbeamercolor{logo}{parent=separation line}% TODO: unused!?
 %    \end{macrocode}
 %
-% Titlepage bars
-%    \begin{macrocode}
-\setbeamercolor{titlebarfirst}{bg=tu\tubscolor\tubscolorshade 80}
-\setbeamercolor{titlebarsecond}{bg=tu\tubscolor\tubscolorshade 40,fg=black}
-\ifthenelse{\boolean{colorfoot}}{%
-  \setbeamercolor{titlebarlow}{bg=tu\tubscolor\tubscolorshade 80}
-}{%
-  \setbeamercolor{titlebarlow}{bg=tuRed}
-}
-%    \end{macrocode}
 %
 % Farbe von inneren Strukturelementen
 %    \begin{macrocode}
