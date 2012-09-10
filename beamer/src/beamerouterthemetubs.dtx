@@ -274,9 +274,10 @@
 \setbeamercolor{section in head/foot shaded}{parent=titlehead}
 \setbeamercolor{subsection in head/foot}{parent=section in head/foot}
 \setbeamercolor{subsection in head/foot shaded}{use=titlehead,parent=titlehead,fg=titlehead.fg!80}
-\setbeamercolor{author in head/foot}{parent=palette tertiary}
-\setbeamercolor{date in head/foot}{parent=author in head/foot}
-\setbeamercolor{pagenum in head/foot}{parent=author in head/foot}
+\setbeamercolor{title in head/foot}{parent=palette tertiary}
+\setbeamercolor{date in head/foot}{parent=title in head/foot}
+\setbeamercolor{author in head/foot}{parent=title in head/foot}
+\setbeamercolor{pagenum in head/foot}{parent=title in head/foot}
 %    \end{macrocode}
 %
 %
@@ -460,6 +461,7 @@
   %
   \newcommand\tubs@inserttitle[1][]{%
     {%
+    \usebeamerfont{title in head/foot}%
     \usebeamercolor[fg]{title in head/foot}%
     \insertshorttitle[####1]%
     }%
