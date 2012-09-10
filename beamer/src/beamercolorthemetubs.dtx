@@ -78,7 +78,7 @@
 %
 % \begin{abstract}
 %   Diese Datei stellt das Farbschema für latex-beamer-Präsentationen im
-%   Corporate Design dar.
+%   Corporate Design bereit.
 % \end{abstract}
 %
 % \StopEventually{\PrintIndex}
@@ -116,7 +116,7 @@
 % \paragraph{Farbmodell-Optionen}
 %
 %    \begin{key}{}{rgb}
-% Standard-Option. Darstellung in Beamer-optimiertem rgb-Farbmodell.
+% Standard-Option. Darstellung in Beamer-optimiertem RGB-Farbmodell.
 %    \begin{macrocode}
 \DeclareOptionBeamer{rgb}{%
   \PassOptionsToPackage{rgbbeamer}{tubscolors}
@@ -126,7 +126,7 @@
 %    \end{key}
 %
 %    \begin{key}{}{rgbprint}
-% Druckoptimiertes rgb-Farbmodell
+% Druckoptimiertes RGB-Farbmodell
 %    \begin{macrocode}
 \DeclareOptionBeamer{rgbprint}{\PassOptionsToPackage{rgb}{tubscolors}}
 %    \end{macrocode}
@@ -170,7 +170,9 @@
 %
 %
 % \paragraph{Block-Darstellung}
+%
 %    \begin{key}{}{colorblocks}
+% Eingefärbte Blöcke verwenden.
 %    \begin{macrocode}
 \DeclareOptionBeamer{colorblocks}{\setboolean{colorblocks}{true}}
 %    \end{macrocode}
@@ -188,36 +190,90 @@
 \mode<presentation>
 %    \end{macrocode}
 %
-% Palette
+%    \begin{macro}{palette primary}
+% Primäre Palette. Wird verwendet für:
+% \begin{itemize}
+%   \item Kopfleiste
+%   \item Titelleiste
+%   \item Part-Seiten
+% \end{itemize}
+%
 %    \begin{macrocode}
 \setbeamercolor*{palette primary}{fg=tuBlack, bg=tuGrey20}
+%    \end{macrocode}
+%    \end{macro}
+%
+% \begin{macro}{palette secondary}
+% Sekundäre Palette. Wird verwendet für:
+% \begin{itemize}
+%   \item Titelseite
+% \end{itemize}
+% 
+%    \begin{macrocode}
 \setbeamercolor*{palette secondary}{fg=tuBlack, bg=tu\tubscolor\tubscolorshade }
-% palette tertiary is used for toc in header!
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{palette tertiary}
+% Tertiäre Palette. Wird verwendet für:
+% \begin{itemize}
+%   \item Fußzeile (fg)
+% \end{itemize}
+%
+%    \begin{macrocode}
 \setbeamercolor*{palette tertiary}{fg=tuBlack,bg=tuWhite}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{palette quaternary}
+% Quaternäre Palette. Wird nicht explizit verwendet.
+%
+%    \begin{macrocode}
 \setbeamercolor*{palette quaternary}{parent=palette tertiary}
 %    \end{macrocode}
+%    \end{macro}
 %
 %
-% Separation line and logo
+%    \begin{macro}{separation line}
+%    \begin{macro}{logo}
+% Farbe der Trennlinie und des Logos.
 %    \begin{macrocode}
 \setbeamercolor{separation line}{bg=tuRed}
 \setbeamercolor{logo}{parent=separation line}% TODO: unused!?
 %    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %
 %
+%    \begin{macro}{structure}
+%    \begin{macro}{highlight}
 % Farbe von inneren Strukturelementen
 %    \begin{macrocode}
 \setbeamercolor{structure}{fg=tuBlack}
 \setbeamercolor{highlight}{bg=tuRed,fg=white}
 %    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
 %
-% Text
+%    \begin{macro}{normal text}
+%    \begin{macro}{alerted text}
+%    \begin{macro}{example text}
+% Farbe von normalem, aletred und example-Text
 %    \begin{macrocode}
 \setbeamercolor{normal text}{fg=tuBlack,bg=tuWhite}
 \setbeamercolor{alerted text}{fg=tuRed}
 \setbeamercolor{example text}{fg=tuGreenDark}
 %    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
 %
+%    \begin{macro}{block body}
+%    \begin{macro}{block body alerted}
+%    \begin{macro}{block body example}
+%    \begin{macro}{block title}
+%    \begin{macro}{block title alerted}
+%    \begin{macro}{block title example}
 % Blöcke
 %    \begin{macrocode}
 \ifthenelse{\boolean{colorblocks}}{%
@@ -236,6 +292,12 @@
 \setbeamercolor{block title example}{parent=example text}
 }
 %    \end{macrocode}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
+%    \end{macro}
 %
 %    \begin{macrocode}
 \mode
