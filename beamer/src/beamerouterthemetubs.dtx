@@ -80,7 +80,7 @@
 %
 % \begin{abstract}
 %   Diese Datei stellt das outer-Theme für latex-beamer-Präsentationen im
-%   Corporate Design dar.
+%   Corporate Design bereit.
 % \end{abstract}
 %
 % \StopEventually{\PrintIndex}
@@ -341,7 +341,7 @@
             dp=0mm,%
             ht=\tubs@outer@tempwidthb]{highlight}%
       \vspace*{1em}\par%
-      \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
+      \hspace*{\beamer@leftmarginwidth}\parbox{\tubs@outer@tempwidtha-2\beamer@leftmarginwidth}{\strut\insertframetitle}%
       \vspace*{0.5em}%
     \end{beamercolorbox}%
   }{%
@@ -349,7 +349,7 @@
             wd=\tubs@outer@tempwidtha,%
             dp=0mm,%
             ht=\tubs@outer@tempwidthb]{titlelike}%
-        \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
+        \hspace*{\beamer@leftmarginwidth}\parbox{\tubs@outer@tempwidtha-2\beamer@leftmarginwidth}{\strut\insertframetitle}%
         \vfill%
     \end{beamercolorbox}%
   }
