@@ -204,8 +204,14 @@
 %    \end{key}
 %
 %    \begin{macro}{\origmaketitle}
+% Original maketitle-Version gesichert. Weiche für doc.sty-definierte
+% maketitle-Version
 %    \begin{macrocode}
-\LetLtxMacro\origmaketitle\maketitle
+\@ifpackageloaded{doc}{%
+  \let\origmaketitle\maketitle
+}{%
+  \LetLtxMacro\origmaketitle\maketitle
+}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -379,7 +385,6 @@
   \l@addto@macro\clearpage{\vspace*{2\tubspage@borderwidth}}
   \origmaketitle
   }%
-}
 }
 %</article|report|book|package>
 %    \end{macrocode}
