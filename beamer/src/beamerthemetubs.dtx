@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2011 by Enrico Jörns
+% Copyright (C) 2012 by Enrico Jörns
 % -----------------------------------
 %
 % This file may be distributed and/or modified under the
@@ -84,100 +84,208 @@
 %
 %    \begin{macrocode}
 \ProvidesPackage{beamerthemetubs}[2011/10/13 v1.1 Beamer-Template TuBs]
-%
-% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
-%
-% This program can be redistributed and/or modified under the terms
-% of the GNU Public License, version 2.
+%    \end{macrocode}   
 %
 % Modified by Martin Baeker 2010 <martin.baeker@tu-bs.de>
 % Modified by Enrico Jörns 2011 <e.joerns@tu-bs.de>
 %
-% Option nopagenum entfernt die Seitenzahl aus der Fusszeile
-%        nodate tut dasselbe mit dem Datum
-% Fontgrößen: 9pt entspricht in etwa der ppt-Vorlage
-%  Für bessere Lesbarkeit sind auch 10pt oder 11pt möglich
-%        (12pt macht z.Zt. Probleme mit mitlaufendem
-%         Inhaltsverzeichnis)
+% 
+% \subsection{Optionen}
+% 
+% \subsubsection{Font-Optionen}
 %
-%  Die Option minion kann (mit entsprechender Anpassung in
-% beamerinnertheme) verwendet werden, um zwischen unterschiedlichen
-% Fonts umzuschalten. Leider ist aber ja Arial (bzw. in LaTeX
-% Helvetica) vorgeschrieben - vielleicht gibt es ja irgendwann Nexus
-% für die Folien...
-%
-% Rechts oben kann ein mitlaufendes Inhaltsverzeichnis eingeblendet
-% werden. Dazu die Option
-%  tocinheader   angeben
-% Falls nur sections, aber keine subsections eingeblendet werden
-% sollen, zusätzlich die Option
-% nosubsectionsinheader   setzen
-% Falls die Schrift zu groß ist, kann statt der Option
-% tocinheader die Option tinytocinheader angegeben werden, die eine
-% kleinere Schriftgröße auswählt.
-%
-
-%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%
-% font options
+%    \begin{key}{}{nexus}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nexus}{%
   \PassOptionsToPackage{nexus}{beamerfontthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{arial}
+%    \begin{macrocode}
 \DeclareOptionBeamer{arial}{%
   \PassOptionsToPackage{arial}{beamerfontthemetubs}}
-% color options
+%    \end{macrocode}   
+%    \end{key}
+%
+% \subsubsection{Farb-Optionen}
+%
+%    \begin{key}{}{rgb}
+%    \begin{macrocode}
 \DeclareOptionBeamer{rgb}{%
   \PassOptionsToPackage{rgb}{beamercolorthemetubs}%
   \PassOptionsToPackage{rgb}{tubslogo}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{rgbprint}
+%    \begin{macrocode}
 \DeclareOptionBeamer{rgbprint}{%
   \PassOptionsToPackage{rgbprint}{beamercolorthemetubs}%
   \PassOptionsToPackage{rgbprint}{tubslogo}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{cmyk}
+%    \begin{macrocode}
 \DeclareOptionBeamer{cmyk}{%
   \PassOptionsToPackage{cmyk}{beamercolorthemetubs}%
   \PassOptionsToPackage{cmyk}{tubslogo}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{yellow}
+%    \begin{macrocode}
 \DeclareOptionBeamer{yellow}{%
   \PassOptionsToPackage{yellow}{beamercolorthemetubs}}% for compatibility
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{orange}
+%    \begin{macrocode}
 \DeclareOptionBeamer{orange}{%
   \PassOptionsToPackage{orange}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{green}
+%    \begin{macrocode}
 \DeclareOptionBeamer{green}{%
   \PassOptionsToPackage{green}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{blue}
+%    \begin{macrocode}
 \DeclareOptionBeamer{blue}{%
   \PassOptionsToPackage{blue}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{violet}
+%    \begin{macrocode}
 \DeclareOptionBeamer{violet}{%
   \PassOptionsToPackage{violet}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{light}
+%    \begin{macrocode}
 \DeclareOptionBeamer{light}{%
   \PassOptionsToPackage{light}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{medium}
+%    \begin{macrocode}
 \DeclareOptionBeamer{medium}{%
   \PassOptionsToPackage{medium}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{dark}
+%    \begin{macrocode}
 \DeclareOptionBeamer{dark}{%
   \PassOptionsToPackage{dark}{beamercolorthemetubs}}
+%    \end{macrocode}   
+%    \end{key}
+%
+%    \begin{key}{}{colorhead}
+%    \begin{macrocode}
 \DeclareOptionBeamer{colorhead}{%
   \PassOptionsToPackage{colorhead}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{colorfoot}
+%    \begin{macrocode}
 \DeclareOptionBeamer{colorfoot}{%
   \PassOptionsToPackage{colorfoot}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{colorblocks}
+%    \begin{macrocode}
 \DeclareOptionBeamer{colorblocks}{%
   \PassOptionsToPackage{colorblocks}{beamercolorthemetubs}}
+%    \end{macrocode}
+%    \end{key}
 %
-% layout options
+% \subsubsection{Layout-Optionen}
+%
+%    \begin{key}{}{nopagenum}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nopagenum}{%
   \PassOptionsToPackage{nopagenum}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nodate}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nodate}{%
   \PassOptionsToPackage{nodate}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{noauthor}
+%    \begin{macrocode}
 \DeclareOptionBeamer{noauthor}{%
   \PassOptionsToPackage{noauthor}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{totalpages}
+%    \begin{macrocode}
 \DeclareOptionBeamer{totalpages}{%
   \PassOptionsToPackage{totalpages}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{tocinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{tocinheader}{%
   \PassOptionsToPackage{tocinheader}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{tinytocinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{tinytocinheader}{%
   \PassOptionsToPackage{tinytocinheader}{beamerouterthemetubs}
   \PassOptionsToPackage{tinytocinheader}{beamerfontthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nosubsectionsinheader}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nosubsectionsinheader}{%
   \PassOptionsToPackage{nosubsectionsinheader}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{widetoc}
+%    \begin{macrocode}
 \DeclareOptionBeamer{widetoc}{%
   \PassOptionsToPackage{widetoc}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{narrowtoc}
+%    \begin{macrocode}
 \DeclareOptionBeamer{narrowtoc}{%
   \PassOptionsToPackage{narrowtoc}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{nologoinfoot}
+%    \begin{macrocode}
 \DeclareOptionBeamer{nologoinfoot}{
   \PassOptionsToPackage{nologoinfoot}{beamerouterthemetubs}}
+%    \end{macrocode}
+%    \end{key}
+%
+% Optionen verarbeiten
+%    \begin{macrocode}
 % \DeclareOptionBeamer*{%
 %   \PassOptionsToPackage{\CurrentOption}{beamerthemetubs}%
 % }
@@ -189,25 +297,31 @@
   \PassOptionsToClass{\CurrentOption}{beamer}%
 }
 \ProcessOptions\relax
+%    \end{macrocode}
 %
 % Hack: If available use short title for pdftitle
+%    \begin{macrocode}
 \g@addto@macro\beamer@firstminutepatches{%
   \hypersetup{%
     pdftitle={\beamer@shorttitle\ifx\insertsubtitle\@empty\else\ - \insertsubtitle\fi}}
 }
-
+%    \end{macrocode}
 %
+%    \begin{macrocode}
 \mode<presentation>
+%    \end{macrocode}
 %
-%
+% Themen einbinden
+%    \begin{macrocode}
 \usecolortheme{tubs}
 \usefonttheme{tubs}
 \useoutertheme{tubs}
 \useinnertheme{tubs}
-%
-\mode<all>
+%    \end{macrocode}
 %
 %    \begin{macrocode}
+\mode<all>
+%
 %</beamertheme>
 %    \end{macrocode}
 %
