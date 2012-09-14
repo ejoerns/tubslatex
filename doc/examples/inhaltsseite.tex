@@ -1,6 +1,6 @@
 \documentclass{beamer}
 
-\usetheme{tubs}
+\usetheme[tocinheader]{tubs}
 \usepackage[T1]{fontenc} % T1 muss für uarial!
 \usepackage[utf8x]{inputenc}
 
@@ -11,6 +11,10 @@
 \author{Max Mustermann}
 \titlegraphic{\includegraphics[width=\titlegraphicswidth]{titlepicture}}
 \logo{\includegraphics[height=\logoheight]{institut.jpg}}
+
+\section{Kapitel 1}
+\section{Kapitel 2}
+\section{Kapitel 3}
 
 \begin{frame}{Inhaltsseite}
   \begin{itemize}
@@ -28,7 +32,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[notitle]
+\begin{frame}%[notitle]
   \begin{itemize}
     \item Hier steht der Inhalt
     \item Hier nicht

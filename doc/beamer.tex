@@ -14,6 +14,16 @@ Außerdem sollen einige damit verbundene allgemeine Hinweise gegeben werden.
 
 Die Vorlage wird mit dem Beamer-Befehl \lstinline!\usetheme{tubs}! geladen.
 
+\begin{hint}\sloppy
+  Alle tubaltex-spezifischen Template-Argumente sollten nicht der Dokumentenklasse,
+  sondern bevorzugt beim Laden des entsprechendes Themes übergeben werden,
+  um eine klare und wiederverwendbare Struktur zu erhalten.
+  
+  Zum Beispiel: \lstinline!\usetheme[<Optionen>]{tubs}!
+\end{hint}
+% TODO: Template argumente von Macro-Argumenten unterscheidbar machen?
+  
+
 \section{Titelfolie}\label{sec:titelfolie}
 
 Die Titelfolie ist im Absender-/Kommunikations-Bereich-Layout mit
@@ -52,11 +62,9 @@ Es können die Standardbefehle zur Titelseitenerstellung, wie
 \lstinline{\title},
 \lstinline{\subtitle},
 \lstinline{\author},
+\lstinline{\institute},
 \lstinline{\titlegraphic}
 und \lstinline{\logo} verwendet werden.
-\begin{hint}
-  Der Befehl \Macro{institute} ist hier identisch mit dem Befehl \Macro{logo}.
-\end{hint}
 
 Die Titelseite wird normal mit \lstinline{\titlepage} erzeugt:
 
@@ -245,7 +253,7 @@ Für allgemeine Inhalte kann auf die Höhe des Logo-Bereichs über die Länge
 \Index{Inhaltsfolien}
 
 Das Layout der Inhaltsfolien ist relativ schlicht und bietet viel Platz.
-Es zeichnet sich durch einen Kopfbereich, der Folientitle und evtl. eine
+Es zeichnet sich durch einen Kopfbereich, der Folientitel und evtl. eine
 Inhaltsübersicht enthält, und einen Fußbereich, der neben Siegelband- und
 Institutslogo allgemeine Informationen zur Präsentation liefert.
 Auf den genaueren Aufbau des Kopfbereichs geht Kapitel~\ref{subsec:head},
@@ -303,6 +311,7 @@ nicht dargestellt.
 Ein eventuell vorhandenes Inhaltsverzeichnis wird jedoch weiterhin samt
 Hintergrund angezeigt!
 
+% TODO: Option notitle?
 \begin{minipage}{0.5\textwidth}
 \begin{verbatim}
 \begin{frame}
@@ -325,8 +334,10 @@ Hintergrund angezeigt!
 
 Der Kopfbereich der Folien besteht standardmäßig aus dem grau hinterlegten
 Folientitel. Optional kann darüber auch noch eine Inhaltsübersicht
-(Inhaltsverzeichnis) dargestellt werden,
-die auch zur Navigation im Dokument genutzt werden kann,
+(Inhaltsverzeichnis) dargestellt werden, 
+die auch zur Navigation im Dokument genutzt werden kann.
+Dieser Kopfbereich ist dann unabhängig vom Titelbereich und wird
+auch bei titellosen Folien dargestellt.
 
 \begin{Declaration}
   \Option{colorhead}
@@ -342,7 +353,7 @@ Kapitel~\ref{beamer:sec:color}.
 
 Die Inhaltsübersicht (Inhaltsverzeichnis) wird bei Verwendung rechts
 ausgerichtet als oberstes Element jeder Folie dargestellt.
-Es wird auch auf titellosen Folien angezeigt.
+Sie wird auch auf titellosen Folien angezeigt.
 
 
 \begin{Declaration}
@@ -370,7 +381,7 @@ streckt, wird es durch die Option \Option{narrowtoc} gestaucht.
 Somit kann eine flexiblere Platzausnutzung erreicht werden.
 
 \begin{Declaration}
-  \Option{nosubsectionsintoc}% TODO: nosubsectionsintoc
+  \Option{nosubsectionsintoc}
 \end{Declaration}
 
 Soll im Inhaltsverzeichnis des Kopfbereichs die Gliederungsebene
@@ -426,7 +437,6 @@ Die Option \Option{nodate} sorgt dafür, dass das Datum nicht dargestellt wird,
 Standardmäßig wird die Seitenzahl wie folgt dargestellt: "`Seite x"'.
 Die Option \Option{totalpages} bewirkt, dass zusätzlich die Gesamtseitenzahl
 mit eingeblendet wird: "`Seite x von y"'.
-% TODO: note lange
 
 \begin{Declaration}
   \Option{nologoinfoot}
@@ -619,7 +629,7 @@ Mit der Option \Option{cmyk} erfolgt die Ausgabe im CMYK-Farbmodell.
 \end{center}
 
 \clearpage
-\subsection{Anpassung über Farb-Templates}
+\subsection{Erweiterte Anpassung über Farb-Templates}
 
 Eine individuellere Farbanpassung ist über die Änderung der entsprechenden
 Templates möglich.
@@ -655,12 +665,14 @@ unter Angabe der Palettenbezeichnung modifiziert werden.
 \end{lstlisting}
 \end{example}
 
-\subsubsection{Einzelemente}
+\subsubsection{Einzelelemente}
 
 Neben den Paletten können natürlich auch einzeln Elemente manuell angepasst
-werden. Die wichtigsten sind in der nachfolgenden Tabelle aufgeführt
+werden. Die wichtigsten sind in der nachfolgenden Tabelle aufgeführt:
 
 \begin{tabularx}{\textwidth}{lX}
+  Bezeichner & Wirkung\\
+  \midrule
   \ttfamily titlebarfirst &
     Der Hintergrund des Grafik-Segments auf der Titelseite\\
   \ttfamily titlebarsecond &
@@ -671,6 +683,18 @@ werden. Die wichtigsten sind in der nachfolgenden Tabelle aufgeführt
     Die Kopfzeile der Inhaltsseite\\
   \ttfamily titlelike &
     Die Titelzeile der Inhaltsseite\\
+  \ttfamily block body &
+    Hintergrundfarbe von Blöcken\\
+  \ttfamily block title &
+    Titelfarbe von Blöcken\\
+  \ttfamily block body alerted &
+    Hintergrundfarbe von alerted-Blöcken\\
+  \ttfamily block title alerted &
+    Titelfarbe von alerted-Blöcken\\
+  \ttfamily block body example &
+    Hintergrundfarbe von example-Blöcken\\
+  \ttfamily block title example &
+    Titelfarbe von example-Blöcken\
 \end{tabularx}
 
 Die Anpassung weiterer Elemente ist natürlich möglich,
@@ -709,10 +733,18 @@ Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\microsize}
 und \lstinline{\nanosize} an, die jeweils noch kleiner sind als alle restlich
 verfügbaren.
 
-Sie werden intern verwendet, können aber auch bei \emph{begründeter}
-Notwendigkeit von Autoren verwendet werden, z.B. für kleinste Quellenangaben
-etc.
+Sie werden intern verwendet, können aber auch bei begründeter
+Notwendigkeit von Autoren verwendet werden,
+z.B. für kleinste Quellenangaben etc.
 
+\subsection{Elemente anpassen}
+
+Mit Hilfe der Beamer-Fonts können bei Notwendigkeit auch einzelne Elemente
+separat in ihrer Schrift angepasst werden.
+Dieses Mittel sollte jedoch mit Bedacht eingesetzt werden.
+Informationen zur Anpassung können der Dokumentation zum Beamer-Paket entnommen
+werden. Die Beschreibung modifizierbarer Elemente findet sich in der
+Paket-Dokumentation zum Font-Template.
 
 \section{Hinweise}
 
@@ -724,7 +756,7 @@ auch unabhängig voneinander verwendet werden.
 So kann zum Beispiel das color-Template in Kombination mit einem der
 Standard-Template verwendet werden, etc.
 
-Die Kompbination mit anderen Templates ist im allgemeinen jedoch nicht
+Die Kombination mit anderen Templates ist im allgemeinen jedoch nicht
 CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
 
 \subsection{Skalierbarkeit (Format)}
@@ -766,7 +798,7 @@ Auch wenn dies in der beamer-Dokumentation ausdrücklich erläutert ist,
 sollte hier noch einmal erwähnt werden, dass bei Gebraucht von Listings etc.
 in Folien die Option \lstinline{fragile} übergeben werden muss.
 
-\begin{lstlisting}
+\begin{lstlisting}[morekeywords={fragile},keywordstyle=\color{tuOrange}]
 \begin{frame}[fragile]{Titel}
   % Listings, etc.
 \end{frame}
@@ -776,7 +808,7 @@ in Folien die Option \lstinline{fragile} übergeben werden muss.
 
 \subsection{PDF-Titel}
 
-Die standardmäßige Erstellung des PDF-Titel von beamer ist dahingehend
+Die standardmäßige Erstellung des PDF-Titels von beamer ist dahingehend
 abgeändert, dass, sofern vorhanden, die \emph{Kurzversion} des Präsentationstitels
 als PDF-Titel verwendet wird.
 
