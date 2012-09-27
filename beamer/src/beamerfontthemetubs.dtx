@@ -160,27 +160,79 @@
 %
 %    \subsection{Beamerfont-Definitionen}
 %
+%    \begin{macro}{page number in sidebar}
 %    \begin{macrocode}
 \setbeamerfont*{page number in sidebar}{size=\small,series=\bfseries}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{title}
+% Schriftart des Titels auf Titelseiten
+%    \begin{macrocode}
 \setbeamerfont*{title}{series=\bfseries,size=\Large}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{subtitle}
+% Schriftart des Untertitels auf Titelseiten
+%    \begin{macrocode}
 \setbeamerfont*{subtitle}{series=\mdseries,size=\normalsize}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{author}
+% Schriftart des Autoren auf Titelseiten
+%    \begin{macrocode}
 \setbeamerfont*{author}{series=\mdseries,size=\footnotesize}
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{frametitle}
+% Schriftart des Titels auf Inhaltsseiten
+%    \begin{macrocode}
 \setbeamerfont*{frametitle}{series=\bfseries,size=\Large}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{footline}
+% Schriftart der Fußzeile auf Inhaltsseiten
+%    \begin{macrocode}
 \setbeamerfont*{footline}{series=\mdseries,size=\microsize}
+%    \end{macrocode}
+%    \end{macro}
 %
-%
+%    \begin{macro}{section in toc}
+% Schriftart für sections im mitlaufenden Inhaltsverzeichnis
+%    \begin{macrocode}
 \setbeamerfont*{section in toc}{series=\bfseries,size=\large}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{subsection in toc}
+% Schriftart für subsections im mitlaufenden Inhaltsverzeichnis
+%    \begin{macrocode}
 \setbeamerfont*{subsection in toc}{series=\mdseries,size=\normalsize}
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{footlinelogo}
+% Schriftart für für das Logo auf Inhaltsverzeichnis
+%    \begin{macrocode}
 \setbeamerfont{footlinelogo}{size=\tiny}%
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{section in head/foot}
 % Set the font for the running toc dependig on option tinytocinheader
+%    \begin{macrocode}
 \ifthenelse{\boolean{tinytocinheader}}{%
   \setbeamerfont*{section in head/foot}{series=\mdseries,size=\nanosize}%
 }{%
   \setbeamerfont*{section in head/foot}{series=\mdseries,size=\microsize}%
 }
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macrocode}
 %</fonttheme>
 %    \end{macrocode}

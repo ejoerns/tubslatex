@@ -194,7 +194,7 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{cropx}
+%    \begin{key}{}{hclip}
 % Skalieren auf Höhe, Zuschneiden auf Breite
 %    \begin{macrocode}
 \define@key{tubs@titlegraphic}{hclip}[true]{
@@ -209,7 +209,7 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{cropy}
+%    \begin{key}{}{vclip}
 % Skalieren auf Breite, Zuschneiden auf Höhe
 %    \begin{macrocode}
 \define@key{tubs@titlegraphic}{vclip}[true]{
@@ -224,7 +224,7 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{cropped}
+%    \begin{key}{}{clipped}
 % Automatisches Skalieren und Zuschneiden
 %    \begin{macrocode}
 \define@key{tubs@titlegraphic}{clipped}[true]{
@@ -251,6 +251,7 @@
 %    \end{macrocode}
 %
 %    \begin{macro}{\titlegpraphic}
+% Lädt Titelgraphik, definiert angepasste Version von |\includegraphics|
 %    \begin{macrocode}
 \renewcommand{\titlegraphic}[2][]{%
   \@orig@titlegpraphic{
@@ -281,8 +282,8 @@
 %
 %
 %    \begin{macro}{\logo}
-%    \begin{macrocode}
 % Höhe des Logos wird automatisch skaliert bei Verwendung von includegraphics
+%    \begin{macrocode}
 \renewcommand{\logo}[1]{%
   \setbeamertemplate{logo}{%
     \begingroup%
@@ -291,12 +292,6 @@
     \endgroup%
   }%
 }
-%    \end{macrocode}
-%    \end{macro}
-%
-%    \begin{macro}{\institute}
-%    \begin{macrocode}
-% \renewcommand{\institute}[2][]{\logo{#2}}
 %    \end{macrocode}
 %    \end{macro}
 %
