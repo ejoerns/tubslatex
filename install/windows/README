@@ -9,5 +9,5 @@ Benötigt:
     - nsDialogs - http://nsis.sourceforge.net/Docs/nsDialogs/Readme.html
     - LogicLib  - http://nsis.sourceforge.net/LogicLib
 
-
+Alle Plugins müssen in das NSIS/Plugins/ Verzeichnis kopiert werden
 

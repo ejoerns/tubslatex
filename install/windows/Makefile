@@ -8,7 +8,7 @@ VERSION = undefined
 
 REPODIR = ../..
 RAWTREE = $(REPODIR)/install/rawtree
-MAKENSIS = wine ~/.wine/drive_c/Programme/NSIS/makensis.exe
+MAKENSIS = wine ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe
 
 .PHONY: exe build structure fetch clean install
 
