@@ -1,10 +1,15 @@
-\documentclass[a4paper,11pt]{scrreprt}\usepackage[a4paper,fontsize=11pt,colorheadings]{tubsdoc}
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{pdfpages}
+\usepackage[a4paper,fontsize=11pt,colorheadings]{tubsdoc}
+% \documentclass[a4paper,11pt]{article}\usepackage[a4paper,fontsize=11pt,colorheadings]{tubsdoc}
 % \documentclass[a4paper,11pt]{tubsreprt}
 % \documentclass{scrreprt}
 \usepackage[utf8x]{inputenc}
 
 \usepackage{lipsum}
 \usepackage[calconly]{tubstypearea}
+
 
 %opening
 \title{My title}
@@ -13,20 +18,15 @@
 
 \begin{document}
 
-% \bglayout[pages=single]{%
-%   \showtubslogo
-%   \showtopline
-% }
-
 \maketitle
 
-% \setkomafont{section}{\usekomafont{subheadline}}
-% \addtokomafont{section}{\bfseries}
 \chapter{This is a chapter}
 
 \section{Bla bla}
 
 \subsection{Fününü}
+
+\lipsum[1-5]
 
 \lipsum[1-5]
 
