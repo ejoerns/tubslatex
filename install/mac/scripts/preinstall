@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# remove files from previous installation
+rm -rf /usr/local/texlive/texmf-local/tex/latex/tubs
+rm -rf /usr/local/texlive/texmf-local/doc/latex/tubs
+rm -rf /usr/local/texlive/texmf-local/fonts/map/dvips/Nexus
+rm -rf /usr/local/texlive/texmf-local/fonts/enc/dvips/Fontshop
+rm -rf /usr/local/texlive/texmf-local/fonts/tfm/Nexus
+rm -rf /usr/local/texlive/texmf-local/fonts/type1/Nexus
+rm -rf /usr/local/texlive/texmf-local/fonts/vf/Nexus

@@ -36,7 +36,7 @@
 % \iffalse
 %
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{tubsltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
@@ -50,17 +50,6 @@
 \end{document}
 %</driver>
 % \fi
-%
-% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
-%  {\begin{list}{}{%
-%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
-%   \setlength{\itemsep}{-.5\parsep}
-%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
-%   \setlength{\leftmargin}{\labelwidth}%
-%   \addtolength{\leftmargin}{\labelsep}}%
-%   \raggedright}
-%  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
 %
@@ -80,10 +69,22 @@
 %
 % \begin{abstract}
 %   Diese Datei stellt das outer-Theme für latex-beamer-Präsentationen im
-%   Corporate Design dar.
+%   Corporate Design bereit.
 % \end{abstract}
 %
 % \StopEventually{\PrintIndex}
+%
+% \section{Template-Einbindung}
+%
+% \begin{description}
+%   \item[Farben] Die Farben der |palette primary| werden genutzt, um
+%       die Titelleiste etc. darzustellen.
+%       Die Farben der |palette secondary| werden genutzt, um
+%       die Elemente der Titelseite darzustellen.
+%       Ist die Option |colorheads| gewählt, wird |palette primary.bg| auf
+%       40\% der Farbe |palette secondary.bg| gesetzt.
+% \end{description}
+% 
 %
 % \section{Implementierung}
 %
@@ -189,6 +190,25 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%
+% \paragraph{Kopf-/Fuß-Darstellung}
+%
+%    \begin{key}{}{colorhead}
+%    \begin{macrocode}
+\DeclareOptionBeamer{colorhead}{
+  \setbeamercolor{palette primary}{use=palette secondary,bg=palette secondary.bg!40}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{colorfoot}
+% Darstellung des Kopf- bzw. Fußbereichs in Farbe.
+%    \begin{macrocode}
+\DeclareOptionBeamer{colorfoot}{\setboolean{colorfoot}{true}}
+%    \end{macrocode}
+%    \end{key}
+%
+%
 % Optionen verarbeiten
 %    \begin{macrocode}
 \ProcessOptionsBeamer\relax
@@ -221,21 +241,34 @@
 \mode<presentation>
 %    \end{macrocode}
 %
-% Head/Foot-Farbzuordnung
+%
+% Titlepage-Farbzuordnung
 %    \begin{macrocode}
-\setbeamercolor{section in head/foot}{parent=palette secondary,fg=alerted text.fg}
-\setbeamercolor{section in head/foot shaded}{parent=palette secondary}
-\setbeamercolor{subsection in head/foot}{parent=section in head/foot}
-\setbeamercolor{subsection in head/foot shaded}{use=palette secondary,parent=palette secondary,fg=palette secondary.fg!80}
-\setbeamercolor{author in head/foot}{parent=palette tertiary}
-\setbeamercolor{date in head/foot}{parent=author in head/foot}
-\setbeamercolor{pagenum in head/foot}{parent=author in head/foot}
+\setbeamercolor{titlepage}{use={palette secondary}, parent=palette secondary}
+\setbeamercolor{titlebarfirst}{use={titlepage}, parent=titlepage, bg=titlepage.bg!80}
+\setbeamercolor{titlebarsecond}{use={titlepage}, parent=titlepage, bg=titlepage.bg!40}
+\ifthenelse{\boolean{colorfoot}}{%
+  \setbeamercolor{titlebarlow}{use={titlepage}, parent=titlepage, bg=titlepage.bg!80}
+}{%
+  \setbeamercolor{titlebarlow}{parent=separation line}
+}
 %    \end{macrocode}
 %
-% Title-Farbzuordnung
+%
+% Head/Foot-Farbzuordnung
 %    \begin{macrocode}
-\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{titlehead}{parent=palette primary}
+\setbeamercolor{titlelike}{parent=titlehead}
+\setbeamercolor{section in head/foot}{parent=titlehead,fg=alerted text.fg}
+\setbeamercolor{section in head/foot shaded}{parent=titlehead}
+\setbeamercolor{subsection in head/foot}{parent=section in head/foot}
+\setbeamercolor{subsection in head/foot shaded}{use=titlehead,parent=titlehead,fg=titlehead.fg!80}
+\setbeamercolor{title in head/foot}{parent=palette tertiary}
+\setbeamercolor{date in head/foot}{parent=title in head/foot}
+\setbeamercolor{author in head/foot}{parent=title in head/foot}
+\setbeamercolor{pagenum in head/foot}{parent=title in head/foot}
 %    \end{macrocode}
+%
 %
 %    \begin{environment}{sidebar right}
 % Sidebar löschen
@@ -297,7 +330,7 @@
             dp=0mm,%
             ht=\tubs@outer@tempwidthb]{highlight}%
       \vspace*{1em}\par%
-      \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
+      \hspace*{\beamer@leftmarginwidth}\parbox{\tubs@outer@tempwidtha-2\beamer@leftmarginwidth}{\strut\insertframetitle}%
       \vspace*{0.5em}%
     \end{beamercolorbox}%
   }{%
@@ -305,7 +338,7 @@
             wd=\tubs@outer@tempwidtha,%
             dp=0mm,%
             ht=\tubs@outer@tempwidthb]{titlelike}%
-        \hspace*{\beamer@leftmarginwidth}\strut\insertframetitle%
+        \hspace*{\beamer@leftmarginwidth}\parbox{\tubs@outer@tempwidtha-2\beamer@leftmarginwidth}{\strut\insertframetitle}%
         \vfill%
     \end{beamercolorbox}%
   }
@@ -381,7 +414,7 @@
 \newlength{\tubs@outer@tempwidthb}% used for settowidth
 \defbeamertemplate*{footline}{tubs}{%
   % Kommandos deklarieren
-  \def\@footsepline{\rule[-0.1em]{0.1em}{1em}}%
+  \def\@footsepline{\rule[-0.1em]{0.09em}{1em}}%
   % Trennwort zwischen Seitenzahl und Gesamtseitenzahl
   \def\pageof{%
     \iflanguage{ngerman}{von}{of}%
@@ -414,13 +447,21 @@
       \textcolor{fg}{\insertshortauthor}%
     }%
   }%
+  %
+  \newcommand\tubs@inserttitle[1][]{%
+    {%
+    \usebeamerfont{title in head/foot}%
+    \usebeamercolor[fg]{title in head/foot}%
+    \insertshorttitle[####1]%
+    }%
+  }%
   %% Additional space needed to increase the calculated height of the footline
   \vspace*{0.25cm}
   % TU-Logo und Sekundärlogo
   \begin{minipage}{\paperwidth}
     \logoheight=20.7pt% Höhe des Logos in Fußzeile
     %Linie zeichnen
-    {\usebeamercolor[fg]{separation line}\rule{\paperwidth}{0.4pt}}%
+    {\usebeamercolor[bg]{separation line}\rule{\paperwidth}{0.4pt}}%
     % Logo-Dimensionen (manuell)
     \newdimen\beamer@CDlogowidth%
     \newdimen\beamer@CDlogoheight%
@@ -447,13 +488,13 @@
       \parbox[t][26pt]{\@footline@textwidth}{% Höhe und Breite Textbereich
         % Prüfe, ob Inhalt in einzelne Zeile passt
         \settowidth{\tubs@outer@tempwidtha}{%
-          \tubs@insertdate\tubs@insertauthor~\@footsepline~\insertshorttitle\tubs@insertpage}%
+          \tubs@insertdate\tubs@insertauthor~\@footsepline~\tubs@inserttitle\tubs@insertpage}%
         \ifthenelse{\lengthtest{\tubs@outer@tempwidtha<\@footline@textwidth}}{% passt...
           \strut\tubs@insertdate
           \ifthenelse{\boolean{tubs@nodate}}{}{~\@footsepline~}%
           \tubs@insertauthor%
           \ifthenelse{\boolean{tubs@noauthor}}{}{~\@footsepline~}%
-          \insertshorttitle%
+          \tubs@inserttitle%
           \tubs@insertpage%
         }{% passt nicht...
           \strut\tubs@insertdate%
@@ -461,7 +502,7 @@
             \ifthenelse{\boolean{tubs@noauthor}}{}{%
               ~\@footsepline~}}%
           \tubs@insertauthor\tubs@insertpage\hfill\\%
-          \insertshorttitle[width=\@footline@textwidth]%
+          \tubs@inserttitle[width=\@footline@textwidth]%
         }%
       }%
     }%

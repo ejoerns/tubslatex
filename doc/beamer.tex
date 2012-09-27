@@ -14,7 +14,7 @@ Außerdem sollen einige damit verbundene allgemeine Hinweise gegeben werden.
 
 Die Vorlage wird mit dem Beamer-Befehl \lstinline!\usetheme{tubs}! geladen.
 
-\section{Titelfolie}
+\section{Titelfolie}\label{sec:titelfolie}
 
 Die Titelfolie ist im Absender-/Kommunikations-Bereich-Layout mit
 \gls{glos:siegelbandlogo} im Sinne der allgemeinen Gestaltungsprinzipien des
@@ -77,7 +77,7 @@ sonst kommt es zu einer falschen Darstellung!
 Mit der Beamer-Option \Option{colorfoot} wird die untere einfarbige Linie
 der Titelseite statt in rot in der Farbe des benutzten Sekundärfarbklangs
 dargestellt. Weitere Informationen zur Farbanpassung liefert
-Kapitel~\ref{beamer:sec:color}
+Kapitel~\ref{beamer:sec:color}.
 
 
 \subsection{Titelgrafik}
@@ -85,7 +85,7 @@ Kapitel~\ref{beamer:sec:color}
 \CommandIndex{titlegraphic}
 
 \begin{Declaration}
-  \Macro{titlegraphic}\Parameter{Inhalt}
+  \Macro{titlegraphic}\OParameter{Optionen}\Parameter{Inhalt}
 \end{Declaration}
 
 \begin{sloppypar}
@@ -335,7 +335,7 @@ die auch zur Navigation im Dokument genutzt werden kann,
 Der Kopfbereich ist normalerweise in einem hellen Grauton hinterlegt.
 Durch Verwendung der Option \Option{colorhead} wird der Hintergrund
 in der 40\%-Version der aktiven Variante des Sekundärfarbklangs gesetzt.
-Nähere Informationen zur Farbanpassung liefert das
+Nähere Informationen und Beispiele zur Farbanpassung liefert das
 Kapitel~\ref{beamer:sec:color}.
 
 \subsubsection{Inhaltsübersicht}
@@ -389,16 +389,24 @@ Der Fußbereich zeichnet sich durch das Siegelband-Logo und eine rote Trennlinie
 aus. Darunter stehen standardmäßig Informationen wie Datum, Autor(en), Präsentationstitel
 und Seitenzahl, sowie auf der rechten Seite ein Instituts-/bzw. Abteilungslogo,
 sofern definiert.
-Die konkrete Darstellung kann jedoch durch eine Reihe von Beamer-Optionen angepasst werden.
-%TODO: Details zu automat. Umbrüchen etc.?
+Der Inhalt der einzelnen Felder ergibt sich aus der Benutzung der in
+\chaptername~\ref{sec:titelfolie} beschriebenen Befehle.
+Die konkrete Darstellung in der Fußzeile kann jedoch durch eine Reihe von
+Beamer-Optionen zusätzlich angepasst werden.
 
 Autor und Titel werden, falls vorhanden, in ihrer Kurzversion dargestellt,
 welche jeweils bei \Macro{author} und \Macro{title} im optionalen Argument
 definiert werden kann.
 
+Die Darstellung der einzelnen Textelemente wird abhängig von deren
+jeweilige Länge durch ein dynamisches Positionierungsschema optimal
+an den verfügbaren Platz angepasst.
+%TODO: Details zu automat. Umbrüchen etc.?
+
 % Sprache
-Ändert man im Babel-Paket die Sprache, ändert sich au{caption!Beamer}ch automatisch
+Ändert man im Babel-Paket die Sprache, ändert sich auch automatisch
 die Sprache der Fußzeile (z.B. "`page"' statt "`Seite"', anderes Datumsformat, etc.).
+Vollständig unterstützt sind Deutsch und Englisch.
 
 \begin{Declaration}
   \Option{nodate}\\
@@ -407,7 +415,7 @@ die Sprache der Fußzeile (z.B. "`page"' statt "`Seite"', anderes Datumsformat, 
 \end{Declaration}
 
 Diese Beamer-Optionen unterdrücken jeweils die Darstellung eines Elementes in der Fußzeile.
-\Option{nodate} sorgt dafür, dass das Datum nicht dargestellt wird,
+Die Option \Option{nodate} sorgt dafür, dass das Datum nicht dargestellt wird,
 \Option{noauthor} dafür, dass der Autor nicht angezeigt und
 \Option{napagenum} dafür, dass die Seitenzahl ausgeblendet wird.
 
@@ -427,6 +435,39 @@ mit eingeblendet wird: "`Seite x von y"'.
 Diese Beamer-Option deaktiviert die Darstellung des Institutslogos im Fußbereich.
 
 \subsection{Inhalt}
+
+\paragraph{Blöcke}
+
+Blöcke werden in den Vorlagen bei Standardeinstellungen einfach
+mit transparentem Hintergrund mit verschiedenfarbigen Überschriften dargestellt
+wie in \figurename~\ref{subfig:stdblocks} zu sehen.
+Die Farben sind dabei dem CD-Farbschema entnommen.
+
+\begin{Declaration}
+  \Option{colorblocks}
+\end{Declaration}
+
+Für eine farblich abgesetztere Darstellung steht die Option \Option{colorblocks}
+zur Verfügung. Diese bewirkt, dass die Blöcke in farbigen Boxen dargestellt werden
+(siehe \figurename~\ref{subfig:colorblocks}).
+
+
+\begin{figure}[!ht]
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \fboxsep0mm\fbox{%
+  \includegraphics[width=0.95\textwidth,page=1]{examples/beamer_blocks.pdf}}
+  \subcaption{Standard-Blöcke}\label{subfig:stdblocks}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \fboxsep0mm\fbox{%
+  \includegraphics[width=0.95\textwidth,page=2]{examples/beamer_blocks.pdf}}
+  \subcaption{\Option{colorblocks}-Blöcke}\label{subfig:colorblocks}
+\end{minipage}
+\caption{Vergleich zwischen normaler und \Option{colorblocks}-Darstellung}
+\end{figure}
+
 
 \paragraph{Beschriftung von Abbildungen}
 \Index{Abbildungen!Beamer}
@@ -473,6 +514,7 @@ Die Optionen gliedern sich in 3 Kategorien:
     innerhalb des gewählten Farbklangs\\
     Optionen: \texttt{dark}, \texttt{medium}, \texttt{light}
   \item \emph{Elemente} -- Färbung von Fußbereich/Kopfbereich aktivieren\\
+    Diese wurden bereits in \chaptername~\ref{sec:titelfolie} und \ref{subsec:head} beschrieben.\\
     Optionen: \texttt{colorhead}, \texttt{colorfoot}
 \end{itemize}
 
@@ -484,13 +526,13 @@ Es stehen vier verschiedene Farbklänge mit aufeinander abgestimmten Farbtonwert
 und Varianten zur Verfügung.
 
 \begin{Declaration}
-  \Option{yellow}\\
+  \Option{orange}~/~\Option{yellow}\\
   \Option{green}\\
   \Option{blue}\\
   \Option{violet}
 \end{Declaration}
 
-Mit den Optionen \Option{yellow}, \Option{green}, \Option{blue}
+Mit den Optionen \Option{orange} (alternativ \Option{yellow}), \Option{green}, \Option{blue}
 oder \Option{violet} erfolgt die Auswahl des
 gelben, grünen, blauen oder violetten Farbklangs als Farbschema.
 
@@ -517,10 +559,13 @@ Bei Bedarf kann ein anderes Farbmodell zur Darstellung gewäht werden.
 
 
 \begin{Declaration}
+  \Option{rgb}\\
   \Option{rgbprint}\\
   \Option{cmyk}
 \end{Declaration}
 
+Mit der Option \Option{rgb} erfolgt die Ausgabe im Beamer-optimierten RGB-Farbmodell.
+Dies entspricht der Standardeinstellung.
 Mit der Option \Option{rgbprint} erfolgt die Ausgabe in RGB-Druckfarben.
 Mit der Option \Option{cmyk} erfolgt die Ausgabe im CMYK-Farbmodell.
 
@@ -579,29 +624,59 @@ Mit der Option \Option{cmyk} erfolgt die Ausgabe im CMYK-Farbmodell.
 Eine individuellere Farbanpassung ist über die Änderung der entsprechenden
 Templates möglich.
 
-Folgende Farb-Templates können u.a. angepasst werden:
+\subsubsection{Paletten}
+
+Das Grundfarbschema eines Beamer-Templates wird über sog. Paletten definiert.
+Es existieren eine primäre, sekundäre, tertiäre und quaternäre Palette,
+die jeweils eine bestimmte Farbgebung beeinflussen.
+
+In den \tubslatex-Vorlagen erfüllen die Paletten die folgenden Funktionen:
+
 \begin{description}
-  \item[\color{tuRed100}\ttfamily titlebarsecond]
-    Der Hintergrund des Grafik-Bereichs auf der Titelseite
-  \item[\color{tuRed100}\ttfamily titlebarthird]
-    Der Bereich unterhalb des Grafik-Bereichs auf der Titelseite
-  \item[\color{tuRed100}\ttfamily titlebarlow]
-    Die schmale Fußleiste auf der Titelseite
-  \item[\color{tuRed100}\ttfamily titlebarlike]
-    Der Hintergrund der einzelnen Folientitel
+  \item[\ttfamily palette primary]
+    Die primäre Palette definiert die Farbgebung
+    von Kopfleiste und Titelleiste auf Inhaltsfoline,
+    sowie von Part-Seiten.
+  \item[\ttfamily palette secondary]
+    Die sekundäre Palette definiert die Farbgebung der einzelnen
+    Segmente der Titelseite.
+  \item[\ttfamily palette tertiary]
+    Die tertiäre Palette definiert die Farbe der Fußzeilen-Schriftelemente.
+  \item[\ttfamily palette quaternary]
+    Die quaternäre Palette wird in den Vorlagen nicht verwendet.
 \end{description}
 
-\example
+Die Paletten können jeweils mittels \Macro{setbeamercolor}
+unter Angabe der Palettenbezeichnung modifiziert werden.
 
+\begin{example}
 \begin{lstlisting}
-\setbeamercolor{titlebarthird}{bg=tuBlueDark80}
-\setbeamercolor{titlebarsecond}{bg=tuBlueDark40,fg=black}
-\setbeamercolor{titlebarlow}{bg=tuBlueDark80}
-\setbeamercolor{titlelike}{bg=tuBlueDark40,fg=black}
+  \setbeamercolor{palette primary}{fg=tuOrange, bg=tuGreen}
 \end{lstlisting}
+\end{example}
+
+\subsubsection{Einzelemente}
+
+Neben den Paletten können natürlich auch einzeln Elemente manuell angepasst
+werden. Die wichtigsten sind in der nachfolgenden Tabelle aufgeführt
+
+\begin{tabularx}{\textwidth}{lX}
+  \ttfamily titlebarfirst &
+    Der Hintergrund des Grafik-Segments auf der Titelseite\\
+  \ttfamily titlebarsecond &
+    Das Segment unterhalb des Grafik-Segments auf der Titelseite\\
+  \ttfamily titlebarlow &
+    Die schmale Fußleiste auf der Titelseite\\
+  \ttfamily titlehead &
+    Die Kopfzeile der Inhaltsseite\\
+  \ttfamily titlelike &
+    Die Titelzeile der Inhaltsseite\\
+\end{tabularx}
 
 Die Anpassung weiterer Elemente ist natürlich möglich,
 wird aber nicht empfohlen.
+Sie können bei Bedarf den entsprechenden Paket-Dokumentationen entnommen werden.
+
 
 % \section{Template-Optionen}\label{beamer:optionen}
 % 
@@ -611,6 +686,33 @@ wird aber nicht empfohlen.
 % Die template-spezifischen Argumente sollten bevorzugt
 % über \lstinline!\usetheme! übergeben werden.
 %TODO: Hinweis zu Beamer-Option!?
+
+\section{Schrift}
+
+Die voreingestellte Standardschrift der Vorlagen ist Arial in Schriftgröße 11pt.
+Sie kann bei Bedarf auf Nexus gewechselt werden.
+
+\begin{Declaration}
+  \Option{arial}\\
+  \Option{nexus}
+\end{Declaration}
+
+Mit der Option \Option{arial} wird die Schriftart Arial verwendet.
+Die Option \Option{nexus} wählt Nexus als Schriftart aus.
+
+\subsection{Zusätzliche Schriftgrößen}
+\Index{Schriftgrößen!Beamer}
+\CommandIndex{microsize}
+\CommandIndex{nanosize}
+
+Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\microsize}
+und \lstinline{\nanosize} an, die jeweils noch kleiner sind als alle restlich
+verfügbaren.
+
+Sie werden intern verwendet, können aber auch bei \emph{begründeter}
+Notwendigkeit von Autoren verwendet werden, z.B. für kleinste Quellenangaben
+etc.
+
 
 \section{Hinweise}
 
@@ -625,7 +727,9 @@ Standard-Template verwendet werden, etc.
 Die Kompbination mit anderen Templates ist im allgemeinen jedoch nicht
 CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
 
-\subsection{Skalierbarkeit}
+\subsection{Skalierbarkeit (Format)}
+\Index{16:9}
+\Index{Format!Beamer}
 
 Die Beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
 andere Seitenformate gebrachte werden kann, wird vom Layout generell
@@ -633,24 +737,19 @@ unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
 Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
 (siehe Tabelle \ref{tab:picratio}).
 
+\begin{hint}
+Die Option \lstinline{aspectratio} steht erst ab beamer-Version 3.10
+zur Verfügung.
+\end{hint}
+
+
 \subsection{columns-Umgebung}
+\Index{columns-Umgebung}
 
 Die Verwendung der columns-Umgebung ist in vielen Fällen sinnvoll.
-Jedoch ist auf eine korrekte Verwendung zu achten.
-Nachfolgendes Beispiel Teilt die Folie zwar in 2 Spalten,
-jedoch werden dabei die normalen Seitenränder überschritten.
-
-\begin{lstlisting}
-\begin{columns}
-  \column{0.5\textwidth}
-  \column{0.5\textwidth}
-\end{columns}
-\end{lstlisting}
-
-Der Grund dafür ist, dass zwar 2 Spalten mit jeweils halber Textbreite erstellt
-werden, jedoch dazwischen noch ein Abstand eingefügt wird. Dies kann mit der
-Option \lstinline{onlytextwidth} verhindert werden.
-Das Beispiel wäre wie folgt zu ändern:
+Jedoch sollte die Umgebung nur mit der Option \lstinline{onlytextwidth}
+verwendet werden, da sonst ein zusätzlicher Abstand zwischen den
+Spalten hinzugefügt werden und die Gesamtbreite zu groß wird:
 
 \begin{lstlisting}[morekeywords={onlytextwidth},keywordstyle=\color{tuOrange}]
 \begin{columns}[onlytextwidth]
@@ -661,6 +760,7 @@ Das Beispiel wäre wie folgt zu ändern:
 
 
 \subsection{Listings in Folien}
+\Index{Listings!Beamer}
 
 Auch wenn dies in der beamer-Dokumentation ausdrücklich erläutert ist,
 sollte hier noch einmal erwähnt werden, dass bei Gebraucht von Listings etc.
@@ -677,22 +777,12 @@ in Folien die Option \lstinline{fragile} übergeben werden muss.
 \subsection{PDF-Titel}
 
 Die standardmäßige Erstellung des PDF-Titel von beamer ist dahingehend
-abgeändert, dass, sofern vorhanden, die Kurzversion des Präsentationstitels
+abgeändert, dass, sofern vorhanden, die \emph{Kurzversion} des Präsentationstitels
 als PDF-Titel verwendet wird.
 
-Dies ermöglicht es zum Beispiel kleine Grafiken in den Titel einzubringen und
+Die Verwendung der Kurzversion ermöglicht es zum Beispiel,
+kleine Grafiken in den Titel einzubringen und
 trotzdem einen korrekten PDF-Titel zu erhalten.
-
-
-\subsection{Zusätzliche Schriftgrößen}
-
-Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\microsize}
-und \lstinline{\nanosize} an, die jeweils noch kleiner sind als alle restlich
-verfügbaren.
-
-Sie werden intern verwendet, können aber auch bei \emph{begründeter}
-Notwendigkeit von Autoren verwendet werden, z.B. für kleinste Quellenangaben
-etc.
 
 
 \section{Minimalbeispiel}% TODO: Anhang?!

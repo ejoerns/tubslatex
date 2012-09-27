@@ -1,0 +1,53 @@
+\documentclass{beamer}
+
+\usetheme{tubs}
+\usepackage[T1]{fontenc} % T1 muss für uarial!
+\usepackage[utf8x]{inputenc}
+
+\begin{document}
+
+\title{Corporate Design}
+\subtitle{Jetzt mit \LaTeX}
+\author{Max Mustermann}
+\titlegraphic{\includegraphics[width=\titlegraphicswidth]{titlepicture}}
+\logo{\includegraphics[height=\logoheight]{institut.jpg}}
+
+\begin{frame}{Blöcke}
+    \begin{block}{Diest ist ein Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{block}
+  \begin{exampleblock}{Diest ist ein Example-Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{exampleblock}
+  \begin{alertblock}{Diest ist ein Alert-Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{alertblock}
+\end{frame}
+
+\setbeamercolor{block body}{bg=tuBlueDark20}
+\setbeamercolor{block body alerted}{bg=tuRed20}
+\setbeamercolor{block body example}{bg=tuGreenDark20}
+\setbeamercolor{block title}{fg=tuBlueDark,bg=tuBlueDark40}
+\setbeamercolor{block title alerted}{fg=tuRed100,bg=tuRed60}
+\setbeamercolor{block title example}{fg=tuGreenDark,bg=tuGreenDark40}
+
+
+\begin{frame}{Blöcke}
+    \begin{block}{Diest ist ein Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{block}
+  \begin{exampleblock}{Diest ist ein Example-Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{exampleblock}
+  \begin{alertblock}{Diest ist ein Alert-Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{alertblock}
+\end{frame}
+
+\end{document}
