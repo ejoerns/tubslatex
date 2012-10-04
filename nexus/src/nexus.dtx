@@ -36,7 +36,7 @@
 % \iffalse
 %
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{tubsltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
@@ -51,16 +51,6 @@
 %</driver>
 % \fi
 %
-% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
-%  {\begin{list}{}{%
-%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
-%   \setlength{\itemsep}{-.5\parsep}
-%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
-%   \setlength{\leftmargin}{\labelwidth}%
-%   \addtolength{\leftmargin}{\labelsep}}%
-%   \raggedright}
-%  {\end{list}}
 %
 % \changes{v0.2}{ 2011 / 08 / 23 }{%
 %   Initial version}
@@ -75,7 +65,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{nexus} -- 
-%   beamer-Farbschema für \emph{tubslatex}\thanks{This document
+%   CD-Schrift für \emph{tubslatex}\thanks{This document
 %   corresponds to \textsf{nexus}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -83,11 +73,115 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Diese Datei stellt das Farbschema für latex-beamer-Präsentationen im
-%   Corporate Design dar.
+%   Diese Datei stellt die Schriftart \emph{Nexus} zur Verfügung.
 % \end{abstract}
 %
 % \StopEventually{\PrintIndex}
+%
+% \section{Schriftübersicht}
+%
+% \subsection{Serif}
+% 
+% \paragraph{Normal}\hfill\\
+% {
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Italic}\hfill\\
+% {\itshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Slanted}\hfill\\
+% {\slshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{SmallCaps}\hfill\\
+% {\scshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% 
+% {\bfseries
+% \paragraph{Bold Normal}\hfill\\
+% {
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Bold Italic}\hfill\\
+% {\itshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Bold Slanted}\hfill\\
+% {\slshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Bold SmallCaps}\hfill\\
+% {\scshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% }
+% 
+% \subsection{SansSerif}
+% 
+% {\sffamily
+% \paragraph{Normal}\hfill\\
+% {
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Italic}\hfill\\
+% {\itshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Slanted}\hfill\\
+% {\slshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{SmallCaps}\hfill\\
+% {\scshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% 
+% {\bfseries
+% \paragraph{Bold Normal}\hfill\\
+% {
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Bold Italic}\hfill\\
+% {\itshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Bold Slanted}\hfill\\
+% {\slshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% \paragraph{Bold SmallCaps}\hfill\\
+% {\scshape
+% Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
+% incidunt ut labore et dolore magna aliqua.}
+% }
+% }
+% 
+%
+% \subsection{Nexus Symbol-Tabelle {\normalsize\mdseries (auszugsweise)}}
+% {
+% \parindent0mm
+% 
+% 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+% 
+% a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
+% 
+% A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+% 
+% ä, ö, ü, ß, Ä, Ö, Ü
+% 
+% *, +, -, =, \textasciitilde, \textasciicircum, , !, ", §, \$, \%, \&,
+% /, (, ), =, ?, µ, @,\{, \}, [, ]
+% }
+%
+%
+% \subsection{Typewriter- / Mathe-Font}
+% 
+% Der Typewriter-Font stammt nicht aus Nexus, sondern wird aus dem
+% \emph{TxFonts}-Satz übernommen.
+% 
+% Als Mathe-Font dient die \emph{Pazo Math}-Familie.
 %
 % \section{Implementierung}
 %
@@ -173,24 +267,48 @@
 \RequirePackage{fontenc}
 %    \end{macrocode}
 %
-% Anführungszeichen
+% 
+%    \begin{macro}{\glq}
+%    \begin{macro}{\grq}
+% Anführungszeichen deutsch -- einfach
 %    \begin{macrocode}
-%%deutsch
-%%%einfach
 \ProvideTextCommand{\glq}{LY1}{\symbol{0130}}
 \ProvideTextCommand{\grq}{LY1}{\symbol{0096}}
-%%%doppelt
+%    \end{macrocode}    
+%    \end{macro}\end{macro}
+%
+%    \begin{macro}{\glqq}
+%    \begin{macro}{\grqq}
+% Anführungszeichen deutsch -- doppelt
+%    \begin{macrocode}
 \ProvideTextCommand{\glqq}{LY1}{\symbol{0132}}
 \ProvideTextCommand{\grqq}{LY1}{\symbol{0147}}
-%%%einfach
+%    \end{macrocode}    
+%    \end{macro}\end{macro}
+%
+%    \begin{macro}{\flq}
+%    \begin{macro}{\flq}
+% Anführungszeichen französisch -- einfach
+%    \begin{macrocode}
 \ProvideTextCommand{\flq}{LY1}{\symbol{0139}}
 \ProvideTextCommand{\frq}{LY1}{\symbol{0155}}
-%%%doppelt
+%    \end{macrocode}    
+%    \end{macro}\end{macro}
+%
+%    \begin{macro}{\flqq}
+%    \begin{macro}{\frqq}
+% Anführungszeichen französisch -- doppelt
+%    \begin{macrocode}
 \ProvideTextCommand{\flqq}{LY1}{\symbol{0171}}
 \ProvideTextCommand{\frqq}{LY1}{\symbol{0187}}
+%    \end{macrocode}    
+%    \end{macro}\end{macro}
 %
+%    \begin{macro}{\textasteriskcentered}
+%    \begin{macrocode}
 \DeclareTextCommand{\textasteriskcentered}{LY1}{$*$}
 %    \end{macrocode}
+%    \end{macro}
 %
 % Nexus verwenden.
 %    \begin{macrocode}
@@ -220,8 +338,9 @@
 %    \end{macrocode}
 %
 %    \begin{macro}{\LaTeX}
-% Korrigierte Abstände für Logo unter Nexus % TODO: fix capacity error
+% Korrigierte Abstände für Logo unter Nexus
 %    \begin{macrocode}
+% TODO: fix capacity error
 % \def\LaTeX{L\kern-.32em\raise.3ex\hbox{\scalebox{0.76}{A}}\kern-.15em\TeX}%
 %    \end{macrocode}
 %    \end{macro}
