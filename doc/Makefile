@@ -5,6 +5,7 @@
 # Bekannte Probleme:
 # - Aktualisierungen in examples fuehren nicht zur
 #   Neukompilierung von tubsdocguide.
+include ../Makefile.include
 
 DOCFILE = tubsdocguide.pdf
 EXAMPLEDIR = examples
@@ -12,31 +13,29 @@ EXAMPLEDIR = examples
 # autovars
 DOCSRC := $(shell ls *.tex)
 
-# programs
-MAKE = make
-PDFLATEX = pdflatex
-BIBTEX = bibtex
-MAKEGLOSSARIES = makeglossaries
-
 .PHONY: clean cleantemp examples
 
 all: examples $(DOCFILE)
 
 $(DOCFILE): $(DOCSRC)
-	$(PDFLATEX) $(basename $@ .pdf).tex
-	bibtex $(basename $@ .pdf)
-	makeglossaries $(basename $@ .pdf)
-	makeindex general
-	makeindex cmd
-	makeindex option
-	$(PDFLATEX) $(basename $@ .pdf).tex
+	$(PDFLATEX)  $(PDFLATEX_SILENT) $(basename $@ .pdf).tex $(SILENT)
+	$(BIBTEX) $(basename $@ .pdf) $(SILENT)
+	$(MAKEGLOSSARIES) $(basename $@ .pdf) $(SILENT)
+	$(MAKEINDEX) general $(SILENT)
+	$(MAKEINDEX) cmd $(SILENT)
+	$(MAKEINDEX) option $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $(basename $@ .pdf).tex $(SILENT)
 
 examples:
 	$(MAKE) -C $(EXAMPLEDIR)
 
 cleantemp:
-	rm -f *.log *.aux *~ *.toc
+	$(ECHO) -n "Clean temporary files..."
+	$(RM) -f *~ build/*~ *.aux *.log *.glo *.idx *.out *.toc *.backup
+	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp
-	rm -f *.pdf
+	$(ECHO) -n "Clean build files..."
+	$(RM) -rf *.pdf
+	$(ECHO) -e '$(OK_STRING)'
 	$(MAKE) -C $(EXAMPLEDIR) clean

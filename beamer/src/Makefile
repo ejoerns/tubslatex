@@ -2,6 +2,7 @@
 # ---------------------------------
 # Erzeugt beamer-Pakete und Dokumentation
 #
+include ../../Makefile.include
 
 # Dateien
 STYLIST = beamercolorthemetubs.sty beamerfontthemetubs.sty beamerinnerthemetubs.sty beamerouterthemetubs.sty beamerthemetubs.sty tubsbeamersizes.sty
@@ -9,31 +10,40 @@ DTXLIST = beamercolorthemetubs.dtx beamerfontthemetubs.dtx beamerinnerthemetubs.
 INSFILE = tubsbeamer.ins
 TEXDOCFILE = tubsbeamerdoc.tex
 
-# Programme
-LATEX = latex
-PDFLATEX = pdflatex
 
 .PHONY: cleantemp clean
 
-all: src doc
+all: src
 
 src: $(STYLIST)
 
-doc: $(DTXLIST:%.dtx=%.pdf) cleantemp
-	$(PDFLATEX) $(TEXDOCFILE)
-	makeindex -s gind.ist -o tubsbeamerdoc.ind tubsbeamerdoc.idx	
-	$(PDFLATEX) $(TEXDOCFILE)
+doc: $(DTXLIST:%.dtx=%.pdf) maindoc cleantemp
+
+maindoc:
+	$(ECHO) -n 'Generating main documentation $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $(TEXDOCFILE) $(SILENT)
+	$(MAKEINDEX) -q -s gind.ist -o tubsbeamerdoc.ind tubsbeamerdoc.idx $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $(TEXDOCFILE) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 $(STYLIST): $(DTXLIST)
-	$(LATEX) $(INSFILE)
+	$(ECHO) -n 'Generating LaTeX-files for $<'...
+	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 %.pdf: %.dtx
-	$(PDFLATEX) $<
+	$(ECHO) -n 'Compiling doc for $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 # 	makeindex -s gind.ist -o $(basename $< .dtx).ind $(basename $< .dtx).idx
-	$(PDFLATEX) $<
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *~ *.aux *.log *.glo *.idx *.out *.backup
+	$(ECHO) -en 'Cleaning generated files...'
+	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.backup
+	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp
-	rm -f *.sty *.pdf
+	$(ECHO) -en 'Cleaning temporary files...'
+	$(RM) -f *.sty *.pdf
+	$(ECHO) -e '$(OK_STRING)'

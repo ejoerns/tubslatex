@@ -3,6 +3,7 @@
 # Erzeugt verschiedene tubslatex-Klassen, -Pakete und weitere Dateien,
 # sowie Dokumentation
 #
+include ../../Makefile.include
 
 # Dateien
 CLSLIST := build/tubsartcl.cls build/tubsreprt.cls build/tubsbook.cls build/tubsleaflet.cls build/tubsposter.cls
@@ -13,29 +14,42 @@ DTXLIST = tubsbox.dtx tubsdoc.dtx tubsflowfram.dtx tubsfont.dtx tubshead.dtx tub
 INSFILE = tubs.ins
 
 # Programme
-LATEX = latex
-PDFLATEX = pdflatex
 
 .PHONY: cleantemp clean
 
-all: init src doc
+# .SILENT: init clean cleantemp %.pdf
+
+all: src
 
 init:
-	mkdir -p build
+# Make sure base files are generated
+# make -C $(BASEDIR)/nexus/src src # todo: only nexus/
+# make -C $(BASEDIR)/cd-base/src src
+	$(ECHO) -n 'Create build directory...'
+	$(MKDIR) -p $(BASEDIR)/report/src/build
+	$(ECHO) -e '$(OK_STRING)'
 
-src: $(GENLIST)
+src: init $(GENLIST)
 
 doc: $(DTXLIST:%.dtx=%.pdf) cleantemp
 
 $(GENLIST): $(DTXLIST)
-	$(LATEX) $(INSFILE)
+	$(ECHO) -n 'Generating LaTeX-files for $<'...
+	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 %.pdf: %.dtx
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
+	@echo -n 'Compiling doc for $<'...
+	@pdflatex  $(PDFLATEX_SILENT) $< $(SILENT)
+	@pdflatex  $(PDFLATEX_SILENT) $< $(SILENT)
+	@echo -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *~ build/*~ *.aux *.log *.glo *.idx *.out *.toc *.backup
+	$(ECHO) -n "Clean temporary files..."
+	$(RM) -f *~ build/*~ *.aux *.log *.glo *.idx *.out *.toc *.backup
+	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp
-	rm -f build/*.clo build/*.cls build/*.sty *.pdf
+	$(ECHO) -n "Clean build files..."
+	$(RM) -rf build *.pdf
+	$(ECHO) -e '$(OK_STRING)'

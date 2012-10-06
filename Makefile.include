@@ -1,0 +1,72 @@
+# Makefile (c) 2012 by Enrico Jörns
+# ---------------------------------
+# Erstellt komplettes Release (still under construction!)
+#
+
+# hg-Version
+HG_REVISION = `hg tip --template '{rev}'`
+HG_DATE = `hg tip --template '{date|shortdate}' | tr - /`
+HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
+# tubslatex-Version
+TUBSLATEX_VERSION = 0.3-beta3
+# TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)
+TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
+TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)beta3
+
+# 
+HG_TEXSTYLE = tex.hgstyle
+HG_DTXOUT = tubsvers.inc
+
+# Verzeichnisse und Dateien
+BASEDIR = ~/CD-LaTeX
+DOCUMENTATION_DIR = doc
+DOCUMENTATION_PDF = tubsdocguide.pdf
+EXAMPLE_DIR = examples
+EXAMPLE_ZIP = tubslatex_examples.zip
+CDBASE_SRCDIR = cd-base/src
+BEAMER_SRCDIR = beamer/src
+LETTER_SRCDIR = letter/src
+NEXUS_SRCDIR = nexus/src
+REPORT_SRCDIR = report/src
+ALL_SRCDIRS = $(CDBASE_SRCDIR) $(BEAMER_SRCDIR) $(LETTER_SRCDIR) $(NEXUS_SRCDIR) $(REPORT_SRCDIR)
+INSTALL_RAW_DIR = install/rawtree
+INSTALL_ZIP = tubslatex_$(TUBSLATEX_FULLVERSION).tds.zip
+INSTALL_DEB_DIR = install/debian
+INSTALL_DEB = texlive-tubs_$(TUBSLATEX_FULLVERSION)debian.deb
+INSTALL_WIN_DIR = install/windows
+INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
+
+# Settings
+ifeq ($(VERBOSE),yes)
+else
+  Q=@
+  SILENT=1>&1 > /dev/null
+  PDFLATEX_SILENT = -interaction=batchmode 
+endif
+
+# Programme
+ECHO = @echo
+MAKE = make
+HG = $(Q)/usr/bin/hg
+SED = sed
+LATEX = $(Q)latex
+PDFLATEX = $(Q)pdflatex
+RM = $(Q)/bin/rm
+MKDIR = $(Q)mkdir
+ZIP = $(Q)zip
+MAKEINDEX = $(Q)makeindex
+BIBTEX = $(Q)bibtex
+MAKEGLOSSARIES = $(Q)makeglossaries
+CAT = $(Q)cat
+
+# Farb-Definitionen
+NO_COLOR    = \x1b[0m
+OK_COLOR    = \x1b[32;01m
+WARN_COLOR  = \x1b[33;01m
+ERROR_COLOR = \x1b[31;01m
+
+# Default strings
+OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
+ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
+WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
+DONE_STRING=$(OK_COLOR)[DONE]$(NO_COLOR)

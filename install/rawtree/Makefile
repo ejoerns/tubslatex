@@ -5,7 +5,11 @@
 #   Aufruf von 'make' erzeugt Verzeichnisbaum
 #   Aufruf von 'make copy' kopiert lediglich (bereits erzeugte) Dateien
 #   Aufruf von 'make zip' erzeugt gepackte zip
+#   Aufruf von 'make fontinstall' installiert Font-Dateien (zu Testzwecken)
 #
+include ../../Makefile.include
+# Do not print commands
+.SILENT: all
 
 VERSION = undefined
 
@@ -25,7 +29,12 @@ DOC_FETCHDIR = $(BASEDIR)/doc
 all: font build copy
 
 build:
-# 	make -C $(BASEDIR) generate
+	make -C $(CDBASE_FETCHDIR) src
+	make -C $(BEAMER_FETCHDIR) src
+	make -C $(LETTER_FETCHDIR)
+	make -C $(NEXUS_FETCHDIR)
+	make -C $(BASEDIR)/report/src/
+	make -C $(DOC_FETCHDIR)
 
 copy: copy-pre copy-generated copy-other copy-doc
 
@@ -64,7 +73,8 @@ OTFDEFAULT= --warn-missing --encoding=texnansx --feature=kern --feature=liga --f
 
 # generate fonts
 font:
-	echo -e '\t -> Serif'
+	$(ECHO) -en 'Generating font files...'
+  # Serif
 	cp $(BASEDIR)/nexus/otf-src/*.otf .
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Italic.otf 
@@ -77,7 +87,6 @@ font:
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
 	
 	# Sans Serif
-	echo -e '\t -> Sans Serif'
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Regular.otf 
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Italic $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Italic.otf 
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSans.map NexusSansPro-Regular.otf 
@@ -87,8 +96,9 @@ font:
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-BoldItalic.otf 
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSans.map NexusSansPro-Bold.otf 
 	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Bold.otf
+	$(ECHO) -e '$(OK_STRING)'
 
-	echo -e 'Copying font files...'
+	$(ECHO) -en 'Copying font files...'
 	mkdir -p fonts/enc/dvips/Fontshop/
 	mv *.enc fonts/enc/dvips/Fontshop/
 
@@ -105,26 +115,44 @@ font:
 	mv *.pfb fonts/type1/Nexus/
 
 	rm *.otf
+	
+	$(ECHO) -e '$(OK_STRING)'
 
+# Lokale Font-Installtion zu Testzwecken
 fontinstall:
+	$(ECHO) -en 'Installing font files...'
 	cp  -r fonts ~/texmf/tex/.
 	touch /etc/texmf/updmap.d/10local.cfg
-	echo "Using sys variants"
+	$(ECHO) "Using sys variants"
 	/usr/bin/getnonfreefonts-sys --force --verbose arial-urw
-	echo "Adding map file for NexusProSans"
+	$(ECHO) "Adding map file for NexusProSans"
 	/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
-	echo "Adding map file for NexusProSerif"
+	$(ECHO) "Adding map file for NexusProSerif"
 	/usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
-	echo "running updmap-sys"
+	$(ECHO) "running updmap-sys"
 	/usr/bin/updmap-sys
+	$(ECHO) -e '$(OK_STRING)'
 
 # zippen
-zip:
-	zip -r tubslatex_$(VERSION).tds.zip tex doc fonts
+zip: font build copy
+	$(ECHO) -en 'Compressing all files...'
+	$(ZIP) -r tubslatex_$(VERSION).tds.zip tex doc fonts
+	$(ECHO) -e '$(OK_STRING)'
 
 # Aufräumen
 clean:
+	$(ECHO) -en 'Cleaning...'
 	rm -rf tex
 	rm -rf doc
 	rm -rf fonts
 	rm -rf tubslatex_$(VERSION).zip
+	$(ECHO) -e '$(OK_STRING)'
+	
+rclean:
+	$(ECHO) 'Cleaning recursive...'
+	make -C $(CDBASE_FETCHDIR) clean
+	make -C $(BEAMER_FETCHDIR) clean
+	make -C $(LETTER_FETCHDIR) clean
+	make -C $(NEXUS_FETCHDIR) clean
+	make -C $(BASEDIR)/report/src/ clean
+	make -C $(DOC_FETCHDIR) clean

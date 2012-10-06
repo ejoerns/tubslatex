@@ -2,33 +2,38 @@
 # ---------------------------------
 # Erzeugt letter-Pakete und Dokumentation
 #
+include ../../Makefile.include
 
 # Dateien
 GENLIST = tubs.lco tubslttr2.cls
 DTXLIST = tubslttr2.dtx
 INSFILE = tubslttr.ins
 
-# Programme
-LATEX = latex
-PDFLATEX = pdflatex
-
 .PHONY: cleantemp clean
 
-all: src doc
+all: src
 
 src: $(GENLIST)
 
 doc: $(DTXLIST:%.dtx=%.pdf) cleantemp
 
 $(GENLIST): $(DTXLIST)
-	$(LATEX) $(INSFILE)
+	$(ECHO) -n 'Generating LaTeX-files for $<'...
+	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 %.pdf: %.dtx
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
+	$(ECHO) -n 'Compiling doc for $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *~ *.aux *.log *.glo *.idx *.out *.backup
+	$(ECHO) -en 'Cleaning generated files...'
+	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.backup
+	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp
-	rm -f *.lco *.cls *.pdf
+	$(ECHO) -en 'Cleaning temporary files...'
+	$(RM) -f *.lco *.cls *.pdf
+	$(ECHO) -e '$(OK_STRING)'

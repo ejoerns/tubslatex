@@ -3,11 +3,14 @@
 # Erzeugt fuer alle Beispiele PDFs und packt alle relevanten Dateien
 # als zip-Datei.
 #
+include ../Makefile.include
 
 EXAMPLEDIRS = beamer tubsartcl tubsreprt tubsbook tubslttr2 tubsposter
 
 zip: examples
-	zip -r tubslatex_examples.zip $(EXAMPLEDIRS)
+	$(ECHO) -n 'Compressing examples as zip...'
+	$(ZIP) -r tubslatex_examples.zip $(EXAMPLEDIRS) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 examples:
 	for i in $(EXAMPLEDIRS); do make -C $$i; done

@@ -2,6 +2,11 @@
 # ---------------------------------
 # Erstellt komplettes Release (still under construction!)
 #
+include Makefile.include
+
+V_MAJOR = 0
+V_MINOR = 3
+V_PATCH = 
 
 # hg-Version
 HG_REVISION = `hg tip --template '{rev}'`
@@ -35,19 +40,18 @@ INSTALL_DEB = texlive-tubs_$(TUBSLATEX_FULLVERSION)debian.deb
 INSTALL_WIN_DIR = install/windows
 INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
 
-# Programme
-MAKE = make
-HG = /usr/bin/hg
-SED = /bin/sed
 
 .PHONY: clean mkdir generate source sourcedoc documentation examples buildinstaller zip deb exe fetch
 
-release: generate buildinstaller mkdir fetch
+release: info generate buildinstaller mkdir fetch
+
+info:
+	$(ECHO) 'This is Version $(V_MAJOR).$(V_MINOR).$(V_PATCH)'
 
 generate: source sourcedoc documentation examples
 
 mkdir:
-	mkdir -p Website/$(TUBSLATEX_FULLVERSION)
+	$(MKDIR) -p Website/$(TUBSLATEX_FULLVERSION)
 
 documentation:
 	$(MAKE) -C $(DOCUMENTATION_DIR)
@@ -56,7 +60,7 @@ examples:
 	$(MAKE) -C $(EXAMPLE_DIR)
 
 source:
-	cat tex.hgtemplate \
+	$(CAT) tex.hgtemplate \
 	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
 	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
 	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)

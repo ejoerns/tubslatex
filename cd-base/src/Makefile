@@ -2,15 +2,12 @@
 # ---------------------------------
 # Erzeugt cd-base-Pakete und Dokumentation
 #
+include ../../Makefile.include
 
 # Dateien
 STYLIST = tubscolors.sty tubslogo.sty
 DTXLIST = tubscolors.dtx tubslogo.dtx
 INSFILE = cd-base.ins
-
-# Programme
-LATEX = latex
-PDFLATEX = pdflatex
 
 .PHONY: cleantemp clean
 
@@ -21,14 +18,22 @@ src: $(STYLIST)
 doc: $(DTXLIST:%.dtx=%.pdf)
 
 $(STYLIST): $(DTXLIST)
-	$(LATEX) $(INSFILE)
+	$(ECHO) -n 'Generating LaTeX-files for $<'...
+	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 %.pdf: %.dtx
-	$(PDFLATEX) $<
-	$(PDFLATEX) $<
+	$(ECHO) -n 'Compiling doc for $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *.aux *.glo *.idx *.out *.backup
+	$(ECHO) -en 'Cleaning generated files...'
+	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.backup
+	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp
-	rm -f *~ *.sty
+	$(ECHO) -en 'Cleaning temporary files...'
+	$(RM) -f *.sty
+	$(ECHO) -e '$(OK_STRING)'
