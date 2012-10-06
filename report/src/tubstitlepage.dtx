@@ -393,6 +393,12 @@
 %    \begin{macro}{image}
 %    \begin{macrocode}
 \new@title@style{image}{}{%
+	% For left aligned author list
+	\renewcommand*\and{%
+		\end{tabular}%
+		\hskip 1em \relax
+		\begin{tabular}[t]{@{}l}%
+	}%
   \begin{titlepage}
     \showtubslogo[\tubs@tp@logopos]
     \showlogo{\tubs@tp@logo}
@@ -405,9 +411,13 @@
       \vfill%
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary60]{3}
-      {\usekomafont{author}\@author}%
+			{\usekomafont{author}\raggedright%
+			\begin{tabular}[t]{@{}l}%
+				\@author%
+      \end{tabular}%
+      }%
       \vfill
-      {\usekomafont{date}\@date}
+      {\usekomafont{date}\@date}%
     \end{titlerow}
   \end{titlepage}
 }
@@ -417,6 +427,12 @@
 %    \begin{macro}{imagetext}
 %    \begin{macrocode}
 \new@title@style{imagetext}{}{%
+	% For left aligned author list
+	\renewcommand*\and{%
+		\end{tabular}%
+		\hskip 1em \relax
+		\begin{tabular}[t]{@{}l}%
+	}%
   \begin{titlepage}
     \showtubslogo[\tubs@tp@logopos]
     \showlogo{\tubs@tp@logo}
@@ -431,7 +447,11 @@
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary60]{1}
       \vfill%
-      {\usekomafont{author}\@author}%
+			{\usekomafont{author}\raggedright%
+			\begin{tabular}[t]{@{}l}%
+				\@author%
+      \end{tabular}%
+      }%
       \vfill
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary40]{3}
