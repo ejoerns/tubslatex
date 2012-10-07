@@ -3,9 +3,13 @@
 # Erstellt komplettes Release (still under construction!)
 #
 
+V_MAJOR = 0
+V_MINOR = 3
+V_PATCH = 
+
 # hg-Version
-HG_REVISION = `hg tip --template '{rev}'`
-HG_DATE = `hg tip --template '{date|shortdate}' | tr - /`
+HG_REVISION := $(shell hg tip --template '{rev}')
+HG_DATE := $(shell hg tip --template '{date|shortdate}' | tr - /)
 HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
 # tubslatex-Version
 TUBSLATEX_VERSION = 0.3-beta3
@@ -46,7 +50,7 @@ endif
 
 # Programme
 ECHO = @echo
-MAKE = make
+MAKE = make #TODO: check @make
 HG = $(Q)/usr/bin/hg
 SED = sed
 LATEX = $(Q)latex
@@ -58,6 +62,11 @@ MAKEINDEX = $(Q)makeindex
 BIBTEX = $(Q)bibtex
 MAKEGLOSSARIES = $(Q)makeglossaries
 CAT = $(Q)cat
+OTFTOTFM = $(Q)otftotfm
+MV = $(Q)mv
+CP = $(Q)cp
+FAKEROOT = $(Q)fakeroot
+GZIP = $(Q)gzip
 
 # Farb-Definitionen
 NO_COLOR    = \x1b[0m

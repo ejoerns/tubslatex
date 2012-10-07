@@ -4,20 +4,6 @@
 #
 include Makefile.include
 
-V_MAJOR = 0
-V_MINOR = 3
-V_PATCH = 
-
-# hg-Version
-HG_REVISION = `hg tip --template '{rev}'`
-HG_DATE = `hg tip --template '{date|shortdate}' | tr - /`
-HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
-# tubslatex-Version
-TUBSLATEX_VERSION = 0.3-beta3
-# TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)
-TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
-TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)beta3
-
 # 
 HG_TEXSTYLE = tex.hgstyle
 HG_DTXOUT = tubsvers.inc

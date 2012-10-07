@@ -18,13 +18,27 @@ DOCSRC := $(shell ls *.tex)
 all: examples $(DOCFILE)
 
 $(DOCFILE): $(DOCSRC)
+	$(ECHO) -n "Compiling documentation..."
 	$(PDFLATEX)  $(PDFLATEX_SILENT) $(basename $@ .pdf).tex $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n "Running bibtex..."
 	$(BIBTEX) $(basename $@ .pdf) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n "Running makeglossaries..."
 	$(MAKEGLOSSARIES) $(basename $@ .pdf) $(SILENT)
-	$(MAKEINDEX) general $(SILENT)
-	$(MAKEINDEX) cmd $(SILENT)
-	$(MAKEINDEX) option $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n "Generating index 'general'..."
+	$(MAKEINDEX) -q general $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n "Generating index 'cmd'..."
+	$(MAKEINDEX) -q cmd $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n "Generating index 'option'..."
+	$(MAKEINDEX) -q option $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n "Recompiling documentation..."
 	$(PDFLATEX) $(PDFLATEX_SILENT) $(basename $@ .pdf).tex $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 examples:
 	$(MAKE) -C $(EXAMPLEDIR)
