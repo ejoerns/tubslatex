@@ -8,6 +8,7 @@
 #   Aufruf von 'make fontinstall' installiert Font-Dateien (zu Testzwecken)
 #
 include ../../Makefile.include
+
 # Do not print commands
 .SILENT: all
 
@@ -28,100 +29,109 @@ DOC_FETCHDIR = $(BASEDIR)/doc
 
 all: font build copy
 
-build:
-	make -C $(CDBASE_FETCHDIR) src
-	make -C $(BEAMER_FETCHDIR) src
-	make -C $(LETTER_FETCHDIR)
-	make -C $(NEXUS_FETCHDIR)
-	make -C $(BASEDIR)/report/src/
-	make -C $(DOC_FETCHDIR)
+build: build-src build-doc
 
+build-src:
+	$(MAKE) -C $(CDBASE_FETCHDIR) src
+	$(MAKE) -C $(BEAMER_FETCHDIR) src
+	$(MAKE) -C $(LETTER_FETCHDIR) src
+	$(MAKE) -C $(NEXUS_FETCHDIR) src
+	$(MAKE) -C $(BASEDIR)/report/src/ src
+
+build-doc:
+	$(MAKE) -C $(CDBASE_FETCHDIR) doc
+	$(MAKE) -C $(BEAMER_FETCHDIR) doc
+	$(MAKE) -C $(LETTER_FETCHDIR) doc
+	$(MAKE) -C $(NEXUS_FETCHDIR) doc
+	$(MAKE) -C $(BASEDIR)/report/src/ doc
+	$(MAKE) -C $(DOC_FETCHDIR)
+	
 copy: copy-pre copy-generated copy-other copy-doc
 
 copy-pre:
-	mkdir -p tex/latex/tubs
-	mkdir -p doc/latex/tubs
+	$(MKDIR) -p tex/latex/tubs
+	$(MKDIR) -p doc/latex/tubs
 
 
 copy-generated:
-	cp -r $(NEXUS_FETCHDIR)/*.sty  tex/latex/tubs/.
-	cp -r $(CDBASE_FETCHDIR)/*.sty tex/latex/tubs/.
-	cp -r $(BEAMER_FETCHDIR)/*.sty tex/latex/tubs/.
-	cp -r $(LETTER_FETCHDIR)/*.cls tex/latex/tubs/.
-	cp -r $(LETTER_FETCHDIR)/*.lco tex/latex/tubs/.
-	cp -r $(REPORT_FETCHDIR)/*.cls tex/latex/tubs/.
-	cp -r $(REPORT_FETCHDIR)/*.sty tex/latex/tubs/.
-	cp -r $(REPORT_FETCHDIR)/*.clo tex/latex/tubs/.
+	$(CP) -r $(NEXUS_FETCHDIR)/*.sty  tex/latex/tubs/.
+	$(CP) -r $(CDBASE_FETCHDIR)/*.sty tex/latex/tubs/.
+	$(CP) -r $(BEAMER_FETCHDIR)/*.sty tex/latex/tubs/.
+	$(CP) -r $(LETTER_FETCHDIR)/*.cls tex/latex/tubs/.
+	$(CP) -r $(LETTER_FETCHDIR)/*.lco tex/latex/tubs/.
+	$(CP) -r $(REPORT_FETCHDIR)/*.cls tex/latex/tubs/.
+	$(CP) -r $(REPORT_FETCHDIR)/*.sty tex/latex/tubs/.
+	$(CP) -r $(REPORT_FETCHDIR)/*.clo tex/latex/tubs/.
 
 
 # directly copy all other needed files
 copy-other:
-	cp -r $(CDBASE_FETCHDIR)/logos tex/latex/tubs/.
-	cp -r $(BEAMER_FETCHDIR)/defaulttitlepicture.jpg tex/latex/tubs/.
-	cp -r $(NEXUS_FETCHDIR)/*.fd tex/latex/tubs/.
+	$(CP) -r $(CDBASE_FETCHDIR)/logos tex/latex/tubs/.
+	$(CP) -r $(BEAMER_FETCHDIR)/defaulttitlepicture.jpg tex/latex/tubs/.
+	$(CP) -r $(NEXUS_FETCHDIR)/*.fd tex/latex/tubs/.
 
 
 copy-doc:
-	cp -r $(NEXUS_FETCHDIR)/*.pdf  doc/latex/tubs/.
-	cp -r $(CDBASE_FETCHDIR)/*.pdf doc/latex/tubs/.
-	cp -r $(BEAMER_FETCHDIR)/*.pdf doc/latex/tubs/.
-	cp -r $(LETTER_FETCHDIR)/*.pdf doc/latex/tubs/.
-	cp -r $(REPORT_FETCHDIR)/../*.pdf doc/latex/tubs/.
-	cp -r $(DOC_FETCHDIR)/*.pdf    doc/latex/tubs/.
+	$(CP) -r $(NEXUS_FETCHDIR)/*.pdf  doc/latex/tubs/.
+	$(CP) -r $(CDBASE_FETCHDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(BEAMER_FETCHDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(LETTER_FETCHDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(REPORT_FETCHDIR)/../*.pdf doc/latex/tubs/.
+	$(CP) -r $(DOC_FETCHDIR)/*.pdf    doc/latex/tubs/.
 
-OTFDEFAULT= --warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force
+OTFDEFAULT = --warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force
+OTFDEFAULT += --tfm-directory=fonts/tfm/Nexus/
+OTFDEFAULT += --vf-directory=fonts/vf/Nexus/ 
+OTFDEFAULT += --type1-directory=fonts/type1/Nexus/
+OTFDEFAULT += --encoding-directory=fonts/enc/dvips/Fontshop/
+SERIF_OPTS = --map-file=fonts/map/dvips/NexusProSerif.map
+SANS_OPTS = --map-file=fonts/map/dvips/NexusProSans.map
+# TODO..
+SERIF_FONTLIST = NexusSerifPro-Regular NexusSerifPro-Italic NexusSerifPro-Bold NexusSerifPro-BoldItalic
+SANS_FONTLIST = NexusSansPro-Regular NexusSansPro-Italic NexusSansPro-Bold NexusSansPro-BoldItalic
+FONTLIST = $(SERIF_FONTLIST) $(SANS_FONTLIST)
 
 # generate fonts
-font:
+font: # $(FONTLIST)
+# 	$(ECHO) '$(OTFDEFAULT)'
 	$(ECHO) -en 'Generating font files...'
+	$(MKDIR) -p fonts/enc/dvips/Fontshop/
+	$(MKDIR) -p fonts/map/dvips/Nexus/
+	$(MKDIR) -p fonts/tfm/Nexus/
+	$(MKDIR) -p fonts/vf/Nexus/
+	$(MKDIR) -p fonts/type1/Nexus/
   # Serif
-	cp $(BASEDIR)/nexus/otf-src/*.otf .
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Italic.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Slanted --slant=.167  $(OTFDEFAULT)  --map-file=NexusProSerif.map NexusSerifPro-Regular.otf 
+	$(CP) $(BASEDIR)/nexus/otf-src/*.otf .
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Regular.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Italic.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SERIF_OPTS) NexusSerifPro-Regular.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Slanted --slant=.167  $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Regular.otf $(SILENT)
 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Regular  $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Italic $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-BoldItalic.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSerif.map NexusSerifPro-Bold.otf 
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Regular  $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Bold.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Italic $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-BoldItalic.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SERIF_OPTS) NexusSerifPro-Bold.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Bold.otf $(SILENT)
 	
 	# Sans Serif
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Regular.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Italic $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Italic.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSans.map NexusSansPro-Regular.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Regular.otf 
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Regular.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Italic $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Italic.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SANS_OPTS) NexusSansPro-Regular.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Slanted --slant=.167  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Regular.otf $(SILENT)
 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Regular  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Bold.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-BoldItalic.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp --map-file=NexusProSans.map NexusSansPro-Bold.otf 
-	otftotfm --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $(OTFDEFAULT) --map-file=NexusProSans.map NexusSansPro-Bold.otf
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Regular  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Bold.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-BoldItalic.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SANS_OPTS) NexusSansPro-Bold.otf $(SILENT)
+	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Bold.otf $(SILENT)
+
+	$(RM) *.otf
+
 	$(ECHO) -e '$(OK_STRING)'
 
-	$(ECHO) -en 'Copying font files...'
-	mkdir -p fonts/enc/dvips/Fontshop/
-	mv *.enc fonts/enc/dvips/Fontshop/
-
-	mkdir -p fonts/map/dvips/Nexus/
-	mv *.map fonts/map/dvips/Nexus/
-
-	mkdir -p fonts/tfm/Nexus/
-	mv *.tfm fonts/tfm/Nexus/
-
-	mkdir -p fonts/vf/Nexus/
-	mv *.vf  fonts/vf/Nexus/
-
-	mkdir -p fonts/type1/Nexus/
-	mv *.pfb fonts/type1/Nexus/
-
-	rm *.otf
-	
-	$(ECHO) -e '$(OK_STRING)'
 
 # Lokale Font-Installtion zu Testzwecken
 fontinstall:
 	$(ECHO) -en 'Installing font files...'
-	cp  -r fonts ~/texmf/tex/.
+	$(CP)  -r fonts ~/texmf/tex/.
 	touch /etc/texmf/updmap.d/10local.cfg
 	$(ECHO) "Using sys variants"
 	/usr/bin/getnonfreefonts-sys --force --verbose arial-urw
@@ -136,23 +146,25 @@ fontinstall:
 # zippen
 zip: font build copy
 	$(ECHO) -en 'Compressing all files...'
-	$(ZIP) -r tubslatex_$(VERSION).tds.zip tex doc fonts
+	$(ZIP) -r tubslatex_$(VERSION).tds.zip tex doc fonts $(SILENT)
 	$(ECHO) -e '$(OK_STRING)'
 
 # Aufräumen
 clean:
 	$(ECHO) -en 'Cleaning...'
-	rm -rf tex
-	rm -rf doc
-	rm -rf fonts
-	rm -rf tubslatex_$(VERSION).zip
+	$(RM) -rf tex
+	$(RM) -rf doc
+	$(RM) -rf fonts
+	$(RM) -rf tubslatex_$(VERSION).zip
+	$(RM) -f *.tfm *.vf *.pfb *.otf *.enc *.map
 	$(ECHO) -e '$(OK_STRING)'
-	
+
+# Kombilate löschen
 rclean:
 	$(ECHO) 'Cleaning recursive...'
-	make -C $(CDBASE_FETCHDIR) clean
-	make -C $(BEAMER_FETCHDIR) clean
-	make -C $(LETTER_FETCHDIR) clean
-	make -C $(NEXUS_FETCHDIR) clean
-	make -C $(BASEDIR)/report/src/ clean
-	make -C $(DOC_FETCHDIR) clean
+	$(MAKE) -C $(CDBASE_FETCHDIR) clean
+	$(MAKE) -C $(BEAMER_FETCHDIR) clean
+	$(MAKE) -C $(LETTER_FETCHDIR) clean
+	$(MAKE) -C $(NEXUS_FETCHDIR) clean
+	$(MAKE) -C $(BASEDIR)/report/src/ clean
+	$(MAKE) -C $(DOC_FETCHDIR) clean
