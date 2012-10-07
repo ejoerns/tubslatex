@@ -12,7 +12,7 @@ include ../../Makefile.include
 # Do not print commands
 .SILENT: all
 
-VERSION = undefined
+VERSION = $(TUBSLATEX_FULLVERSION)
 
 # Basis-Verzeichnis des Repositories
 BASEDIR=../..
@@ -21,7 +21,7 @@ BASEDIR=../..
 CDBASE_FETCHDIR = $(BASEDIR)/cd-base/src
 BEAMER_FETCHDIR = $(BASEDIR)/beamer/src
 LETTER_FETCHDIR = $(BASEDIR)/letter/src
-NEXUS_FETCHDIR  = $(BASEDIR)/nexus/src
+NEXUS_FETCHDIR  = $(BASEDIR)/nexus
 REPORT_FETCHDIR = $(BASEDIR)/report/src/build
 DOC_FETCHDIR = $(BASEDIR)/doc
 
@@ -68,7 +68,7 @@ copy-generated:
 copy-other:
 	$(CP) -r $(CDBASE_FETCHDIR)/logos tex/latex/tubs/.
 	$(CP) -r $(BEAMER_FETCHDIR)/defaulttitlepicture.jpg tex/latex/tubs/.
-	$(CP) -r $(NEXUS_FETCHDIR)/*.fd tex/latex/tubs/.
+	$(CP) -r $(NEXUS_FETCHDIR)/src/*.fd tex/latex/tubs/.
 
 
 copy-doc:
@@ -79,52 +79,10 @@ copy-doc:
 	$(CP) -r $(REPORT_FETCHDIR)/../*.pdf doc/latex/tubs/.
 	$(CP) -r $(DOC_FETCHDIR)/*.pdf    doc/latex/tubs/.
 
-OTFDEFAULT = --warn-missing --encoding=texnansx --feature=kern --feature=liga --feature=lnum --force
-OTFDEFAULT += --tfm-directory=fonts/tfm/Nexus/
-OTFDEFAULT += --vf-directory=fonts/vf/Nexus/ 
-OTFDEFAULT += --type1-directory=fonts/type1/Nexus/
-OTFDEFAULT += --encoding-directory=fonts/enc/dvips/Fontshop/
-SERIF_OPTS = --map-file=fonts/map/dvips/NexusProSerif.map
-SANS_OPTS = --map-file=fonts/map/dvips/NexusProSans.map
-# TODO..
-SERIF_FONTLIST = NexusSerifPro-Regular NexusSerifPro-Italic NexusSerifPro-Bold NexusSerifPro-BoldItalic
-SANS_FONTLIST = NexusSansPro-Regular NexusSansPro-Italic NexusSansPro-Bold NexusSansPro-BoldItalic
-FONTLIST = $(SERIF_FONTLIST) $(SANS_FONTLIST)
-
-# generate fonts
-font: # $(FONTLIST)
-# 	$(ECHO) '$(OTFDEFAULT)'
-	$(ECHO) -en 'Generating font files...'
-	$(MKDIR) -p fonts/enc/dvips/Fontshop/
-	$(MKDIR) -p fonts/map/dvips/Nexus/
-	$(MKDIR) -p fonts/tfm/Nexus/
-	$(MKDIR) -p fonts/vf/Nexus/
-	$(MKDIR) -p fonts/type1/Nexus/
-  # Serif
-	$(CP) $(BASEDIR)/nexus/otf-src/*.otf .
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Regular $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Regular.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Italic $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Italic.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SERIF_OPTS) NexusSerifPro-Regular.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Slanted --slant=.167  $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Regular.otf $(SILENT)
-
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Regular  $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Bold.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Italic $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-BoldItalic.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SERIF_OPTS) NexusSerifPro-Bold.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSerif-Bold-Slanted --slant=.167  $(OTFDEFAULT) $(SERIF_OPTS) NexusSerifPro-Bold.otf $(SILENT)
-	
-	# Sans Serif
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Regular  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Regular.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Italic $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Italic.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SANS_OPTS) NexusSansPro-Regular.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Slanted --slant=.167  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Regular.otf $(SILENT)
-
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Regular  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Bold.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Italic $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-BoldItalic.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-SmallCaps  $(OTFDEFAULT) --feature=smcp $(SANS_OPTS) NexusSansPro-Bold.otf $(SILENT)
-	$(OTFTOTFM) --no-updmap --vendor=Fontshop --name=NexusProSans-Bold-Slanted --slant=.167  $(OTFDEFAULT) $(SANS_OPTS) NexusSansPro-Bold.otf $(SILENT)
-
-	$(RM) *.otf
-
+font:
+	$(MAKE) -C $(BASEDIR)/nexus fonts
+	$(ECHO) -en 'Copying font files...'
+	$(CP) -r $(BASEDIR)/nexus/fonts .
 	$(ECHO) -e '$(OK_STRING)'
 
 
@@ -149,14 +107,18 @@ zip: font build copy
 	$(ZIP) -r tubslatex_$(VERSION).tds.zip tex doc fonts $(SILENT)
 	$(ECHO) -e '$(OK_STRING)'
 
+cleantemp:
+	$(ECHO) -en 'Cleaning temporary files...'
+	$(RM) -f *~
+	$(ECHO) -e '$(OK_STRING)'
+
 # Aufräumen
-clean:
-	$(ECHO) -en 'Cleaning...'
+clean: cleantemp
+	$(ECHO) -en 'Cleaning generated files...'
 	$(RM) -rf tex
 	$(RM) -rf doc
 	$(RM) -rf fonts
 	$(RM) -rf tubslatex_$(VERSION).zip
-	$(RM) -f *.tfm *.vf *.pfb *.otf *.enc *.map
 	$(ECHO) -e '$(OK_STRING)'
 
 # Kombilate löschen

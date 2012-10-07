@@ -50,7 +50,7 @@ endif
 
 # Programme
 ECHO = @echo
-MAKE = make #TODO: check @make
+MAKE = @make #TODO: check @make
 HG = $(Q)/usr/bin/hg
 SED = sed
 LATEX = $(Q)latex
