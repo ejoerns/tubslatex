@@ -2,15 +2,19 @@ syntax: glob
 
 cd-base/logo/TUBraunschweig_Logos/*
 cd-base/logo/*.eps
+cd-base/*.sty
 install/windows/data/*
-install/rawtree/doc/*
-install/rawtree/fonts/*
-install/rawtree/tex/*
-install/debian/texlive-tubs/*
+install/rawtree/doc
+install/rawtree/fonts
+install/rawtree/tex
+install/rawtree/*.zip
+install/debian/texlive-tubs
 install/debian/control
+install/debian/*.deb
 install/release/*
 #ignore tex generated classes and packages
-nexus/src/nexus.sty
+nexus/*.sty
+nexus/fonts
 cd-base/src/tubscolors.sty
 cd-base/src/tubslogo.sty
 beamer/src/beamercolorthemetubs.sty
@@ -43,6 +47,7 @@ Website/png/*
 Website/gallery/*
 Website/0.*
 tubsvers.inc
+Probleme
 
 # no autosave
 *~
