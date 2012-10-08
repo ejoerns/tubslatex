@@ -14,10 +14,7 @@ DIST = debian
 DISTVERSION = 0$(DIST)2
 
 # Verzeichnisse
-REPODIR = ../..
 INSTALLPATH = usr/share/texmf-texlive
-
-RAWTREE = $(REPODIR)/install/rawtree
 
 all: build copy deb
 
@@ -29,7 +26,7 @@ deb:
 	$(ECHO) -e '$(OK_STRING)'
 
 build:
-	$(MAKE) -C $(RAWTREE)
+	$(MAKE) -C $(INSTALL_RAW_DIR)
 
 structure:
 	$(ECHO) -n "Generating structure..."
@@ -41,9 +38,9 @@ structure:
 
 fetch:
 	$(ECHO) -n "Copying tex files..."
-	$(CP) -r $(RAWTREE)/tex texlive-tubs/$(INSTALLPATH)/.
-	$(CP) -r $(RAWTREE)/doc texlive-tubs/$(INSTALLPATH)/.
-	$(CP) -r $(RAWTREE)/fonts texlive-tubs/$(INSTALLPATH)/.
+	$(CP) -r $(INSTALL_RAW_DIR)/tex texlive-tubs/$(INSTALLPATH)/.
+	$(CP) -r $(INSTALL_RAW_DIR)/doc texlive-tubs/$(INSTALLPATH)/.
+	$(CP) -r $(INSTALL_RAW_DIR)/fonts texlive-tubs/$(INSTALLPATH)/.
 	$(ECHO) -e '$(OK_STRING)'
 	$(ECHO) -n "Creating deb archive files..."
 	$(CAT) control.template | sed 's/CONTROLVERSION/$(DEBVERSION)-$(DISTVERSION)/g' | \

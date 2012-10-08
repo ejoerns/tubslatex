@@ -4,11 +4,10 @@
 # Benutzung:
 #   Aufrunf von 'make' erzeugt exe-Datei ...
 
-VERSION = undefined
+include ../../Makefile.include
 
-REPODIR = ../..
-RAWTREE = $(REPODIR)/install/rawtree
-MAKENSIS = wine ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe
+VERSION = $(TUBSLATEX_FULLVERSION)
+
 
 .PHONY: exe build structure fetch clean install
 
@@ -17,23 +16,25 @@ all: build copy exe
 copy: clean structure fetch
 
 exe:
-	cat tubslatexSetup_script.nsi | sed 's/REPLACEWITHVERSION/$(VERSION)/g' > tmp.nsi
-	$(MAKENSIS) tmp.nsi
-	rm tmp.nsi
+	$(ECHO) -n 'Compiling Windows-Installer...'
+	$(CAT) tubslatexSetup_script.nsi | sed 's/REPLACEWITHVERSION/$(VERSION)/g' > tmp.nsi
+	$(MAKENSIS) tmp.nsi $(SILENT)
+	$(RM) tmp.nsi
+	$(ECHO) -e '$(DONE_STRING)'
 
 build:
-	make -C $(RAWTREE)
+	$(MAKE) -C $(INSTALL_RAW_DIR)
 
 structure:
-	mkdir -p data
+	$(MKDIR) -p data
 
 fetch:
-	cp -r $(RAWTREE)/tex data/.
-	cp -r $(RAWTREE)/doc data/.
-	cp -r $(RAWTREE)/fonts data/.
+	$(CP) -r $(INSTALL_RAW_DIR)/tex data/.
+	$(CP) -r $(INSTALL_RAW_DIR)/doc data/.
+	$(CP) -r $(INSTALL_RAW_DIR)/fonts data/.
 
 clean:
-	rm -rf data
+	$(RM) -rf data
 
 install:
-	wine tubslatexSetup_$(VERSION).exe
+	$(WINE) tubslatexSetup_$(VERSION).exe
