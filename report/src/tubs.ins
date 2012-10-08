@@ -31,8 +31,8 @@ LaTeX version 1999/12/01 or later.
 
 % --- File generation ---
 
-\generate{\file{build/tubsbook.cls}{%
-  \from{../../tubsvers.inc}{default,extra}
+\generate{\file{tubsbook.cls}{%
+  \from{../tubsvers.inc}{default,extra}
   \from{tubsdoc.dtx}{class,book,head}
   \from{tubsdoc.dtx}{class,book,option}
   \from{tubshead.dtx}{class,book,option}
@@ -45,8 +45,8 @@ LaTeX version 1999/12/01 or later.
   \from{tubsfont.dtx}{class,book,body}
 }}
 
-\generate{\file{build/tubsreprt.cls}{%
-  \from{../../tubsvers.inc}{default,extra}
+\generate{\file{tubsreprt.cls}{%
+  \from{../tubsvers.inc}{default,extra}
   \from{tubsdoc.dtx}{class,report,head}
   \from{tubsdoc.dtx}{class,report,option}
   \from{tubshead.dtx}{class,report,option}
@@ -59,8 +59,8 @@ LaTeX version 1999/12/01 or later.
   \from{tubsfont.dtx}{class,report,body}
 }}
 
-\generate{\file{build/tubsartcl.cls}{%
-  \from{../../tubsvers.inc}{default,extra}
+\generate{\file{tubsartcl.cls}{%
+  \from{../tubsvers.inc}{default,extra}
   \from{tubsdoc.dtx}{class,article,head}
   \from{tubsdoc.dtx}{class,article,option}
   \from{tubshead.dtx}{class,article,option}
@@ -73,8 +73,8 @@ LaTeX version 1999/12/01 or later.
   \from{tubsfont.dtx}{class,article,body}
 }}
 
-\generate{\file{build/tubsposter.cls}{%
-  \from{../../tubsvers.inc}{default,extra}
+\generate{\file{tubsposter.cls}{%
+  \from{../tubsvers.inc}{default,extra}
   \from{tubsdoc.dtx}{class,poster,head}
   \from{tubsdoc.dtx}{class,poster,option}
   \from{tubsfont.dtx}{class,poster,option}
@@ -86,8 +86,8 @@ LaTeX version 1999/12/01 or later.
   \from{tubsposter.dtx}{class,poster,body}
 }}
 
-\generate{\file{build/tubsleaflet.cls}{%
-  \from{../../tubsvers.inc}{default,extra}
+\generate{\file{tubsleaflet.cls}{%
+  \from{../tubsvers.inc}{default,extra}
   \from{tubsdoc.dtx}{class,leaflet,head}
   \from{tubsdoc.dtx}{class,leaflet,option}
   \from{tubshead.dtx}{class,leaflet,option}
@@ -102,87 +102,87 @@ LaTeX version 1999/12/01 or later.
 
 % --- Generate fontsize informations
 
-\generate{\file{build/tubsa040pt.clo}{%
+\generate{\file{tubsa040pt.clo}{%
   \from{tubsfont.dtx}{clo,a0}
 }}
 
 % TODO: still a hack...
-\generate{\file{build/tubsa0scifi40pt.clo}{%
+\generate{\file{tubsa0scifi40pt.clo}{%
   \from{tubsfont.dtx}{clo,a0}
 }}
 
-\generate{\file{build/tubsa125pt.clo}{%
+\generate{\file{tubsa125pt.clo}{%
   \from{tubsfont.dtx}{clo,a1}
 }}
 
 % TODO: still a hack...
-\generate{\file{build/tubsa1scifi25pt.clo}{%
+\generate{\file{tubsa1scifi25pt.clo}{%
   \from{tubsfont.dtx}{clo,a1}
 }}
 
-\generate{\file{build/tubsa218pt.clo}{%
+\generate{\file{tubsa218pt.clo}{%
   \from{tubsfont.dtx}{clo,a2}
 }}
 
 % TODO: still a hack...
-\generate{\file{build/tubsa2scifi18pt.clo}{%
+\generate{\file{tubsa2scifi18pt.clo}{%
   \from{tubsfont.dtx}{clo,a2}
 }}
 
-\generate{\file{build/tubsa313pt.clo}{%
+\generate{\file{tubsa313pt.clo}{%
   \from{tubsfont.dtx}{clo,a3}
 }}
 
 % TODO: still a hack...
-\generate{\file{build/tubsa3scifi13pt.clo}{%
+\generate{\file{tubsa3scifi13pt.clo}{%
   \from{tubsfont.dtx}{clo,a3}
 }}
 
 % A4 @ 9pt, 10pt, 11pt
 
-\generate{\file{build/tubsa49pt.clo}{%
+\generate{\file{tubsa49pt.clo}{%
   \from{tubsfont.dtx}{clo,a4,9}
 }}
 
-\generate{\file{build/tubsa410pt.clo}{%
+\generate{\file{tubsa410pt.clo}{%
   \from{tubsfont.dtx}{clo,a4,10}
 }}
 
-\generate{\file{build/tubsa411pt.clo}{%
+\generate{\file{tubsa411pt.clo}{%
   \from{tubsfont.dtx}{clo,a4,11}
 }}
 
 % A5 @ 9pt, 10pt
 
-\generate{\file{build/tubsa59pt.clo}{%
+\generate{\file{tubsa59pt.clo}{%
   \from{tubsfont.dtx}{clo,a5,9}
 }}
 
-\generate{\file{build/tubsa510pt.clo}{%
+\generate{\file{tubsa510pt.clo}{%
   \from{tubsfont.dtx}{clo,a5,10}
 }}
 
-\generate{\file{build/tubsa511pt.clo}{%
+\generate{\file{tubsa511pt.clo}{%
   \from{tubsfont.dtx}{clo,a5,11}
 }}
 
 % DIN lang @ 9pt
 
-\generate{\file{build/tubslang9pt.clo}{%
+\generate{\file{tubslang9pt.clo}{%
   \from{tubsfont.dtx}{clo,lang,9}
 }}
 
-\generate{\file{build/tubslang10pt.clo}{%
+\generate{\file{tubslang10pt.clo}{%
   \from{tubsfont.dtx}{clo,lang,10}
 }}
 
-\generate{\file{build/tubslang11pt.clo}{%
+\generate{\file{tubslang11pt.clo}{%
   \from{tubsfont.dtx}{clo,lang,11}
 }}
 
 
-\generate{\file{build/tubsdoc.sty}{%
-  \from{../../tubsvers.inc}{default,extra}
+\generate{\file{tubsdoc.sty}{%
+  \from{../tubsvers.inc}{default,extra}
   \from{tubsdoc.dtx}{package,head}
   \from{tubsdoc.dtx}{package,option}
 %   \from{tubshead.dtx}{package,option}
@@ -196,31 +196,31 @@ LaTeX version 1999/12/01 or later.
 }}
 
 
-\generate{\file{build/tubsflowfram.sty}{%
+\generate{\file{tubsflowfram.sty}{%
   \from{tubsflowfram.dtx}{package}
 }}
 
 
-\generate{\file{build/tubstypearea.sty}{%
-  \from{../../tubsvers.inc}{default}
+\generate{\file{tubstypearea.sty}{%
+  \from{../tubsvers.inc}{default}
   \from{tubstypearea.dtx}{package}
 }}
 
 
-\generate{\file{build/tubsstyle.sty}{%
-  \from{../../tubsvers.inc}{default}
+\generate{\file{tubsstyle.sty}{%
+  \from{../tubsvers.inc}{default}
   \from{tubsstyle.dtx}{package}
 }}
 
 
-\generate{\file{build/tubsbox.sty}{%
-  \from{../../tubsvers.inc}{default}
+\generate{\file{tubsbox.sty}{%
+  \from{../tubsvers.inc}{default}
   \from{tubsbox.dtx}{package}
 }}
 
 
-\generate{\file{build/tubsdebug.sty}{%
-  \from{../../tubsvers.inc}{default}
+\generate{\file{tubsdebug.sty}{%
+  \from{../tubsvers.inc}{default}
   \from{tubsdebug.dtx}{package,option}
   \from{tubsdebug.dtx}{package,body}
 }}

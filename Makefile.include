@@ -23,16 +23,36 @@ HG_DTXOUT = tubsvers.inc
 
 # Verzeichnisse und Dateien
 BASEDIR = ~/CD-LaTeX
-DOCUMENTATION_DIR = doc
-DOCUMENTATION_PDF = tubsdocguide.pdf
-EXAMPLE_DIR = examples
-EXAMPLE_ZIP = tubslatex_examples.zip
-CDBASE_SRCDIR = cd-base/src
-BEAMER_SRCDIR = beamer/src
-LETTER_SRCDIR = letter/src
-NEXUS_SRCDIR = nexus/src
-REPORT_SRCDIR = report/src
+DOCUMENTATION_DIR = $(BASEDIR)/doc
+EXAMPLE_DIR = $(BASEDIR)/examples
+CDBASE_DIR = $(BASEDIR)/cd-base
+BEAMER_DIR = $(BASEDIR)/beamer
+LETTER_DIR = $(BASEDIR)/letter
+NEXUS_DIR = $(BASEDIR)/nexus
+REPORT_DIR = $(BASEDIR)/report
+
+DOCUMENTATION_SRCDIR = $(BASEDIR)
+CDBASE_SRCDIR = $(CDBASE_DIR)/src
+BEAMER_SRCDIR = $(BEAMER_DIR)/src
+LETTER_SRCDIR = $(LETTER_DIR)/src
+NEXUS_SRCDIR = $(NEXUS_DIR)/src
+REPORT_SRCDIR = $(REPORT_DIR)/src
+
+DOCUMENTATION_BUILDDIR = $(DOCUMENTATION_DIR)
+EXAMPLE_BUILDDIR = $(EXAMPLE_DIR)
+CDBASE_BUILDDIR = $(CDBASE_DIR)
+BEAMER_BUILDDIR = $(BEAMER_DIR)
+LETTER_BUILDDIR = $(LETTER_DIR)
+NEXUS_BUILDDIR = $(NEXUS_DIR)
+REPORT_BUILDDIR = $(REPORT_DIR)
+
 ALL_SRCDIRS = $(CDBASE_SRCDIR) $(BEAMER_SRCDIR) $(LETTER_SRCDIR) $(NEXUS_SRCDIR) $(REPORT_SRCDIR)
+
+# Dateien
+DOCUMENTATION_PDF = tubsdocguide.pdf
+EXAMPLE_ZIP = tubslatex_examples.zip
+
+# Installations-Generatorverzeichnisse/-Dateien
 INSTALL_RAW_DIR = install/rawtree
 INSTALL_ZIP = tubslatex_$(TUBSLATEX_FULLVERSION).tds.zip
 INSTALL_DEB_DIR = install/debian
@@ -40,7 +60,8 @@ INSTALL_DEB = texlive-tubs_$(TUBSLATEX_FULLVERSION)debian.deb
 INSTALL_WIN_DIR = install/windows
 INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
 
-# Settings
+### Settings
+# VERBOSE(=yes)
 ifeq ($(VERBOSE),yes)
 else
   Q=@
@@ -50,11 +71,13 @@ endif
 
 # Programme
 ECHO = @echo
-MAKE = @make #TODO: check @make
+MAKE = $(Q)make #TODO: check @make
 HG = $(Q)/usr/bin/hg
 SED = sed
-LATEX = $(Q)latex
-PDFLATEX = $(Q)pdflatex
+VLATEX = latex
+LATEX = $(Q)$(VLATEX)
+VPDFLATEX = pdflatex
+PDFLATEX = $(Q)$(VPDFLATEX)
 RM = $(Q)/bin/rm
 MKDIR = $(Q)mkdir
 ZIP = $(Q)zip

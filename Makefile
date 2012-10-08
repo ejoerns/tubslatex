@@ -13,12 +13,13 @@ DOCUMENTATION_DIR = doc
 DOCUMENTATION_PDF = tubsdocguide.pdf
 EXAMPLE_DIR = examples
 EXAMPLE_ZIP = tubslatex_examples.zip
-CDBASE_SRCDIR = cd-base/src
-BEAMER_SRCDIR = beamer/src
-LETTER_SRCDIR = letter/src
-NEXUS_SRCDIR = nexus/src
-REPORT_SRCDIR = report/src
+CDBASE_SRCDIR = cd-base
+BEAMER_SRCDIR = beamer
+LETTER_SRCDIR = letter
+NEXUS_SRCDIR = nexus
+REPORT_SRCDIR = report
 ALL_SRCDIRS = $(CDBASE_SRCDIR) $(BEAMER_SRCDIR) $(LETTER_SRCDIR) $(NEXUS_SRCDIR) $(REPORT_SRCDIR)
+
 INSTALL_RAW_DIR = install/rawtree
 INSTALL_ZIP = tubslatex_$(TUBSLATEX_FULLVERSION).tds.zip
 INSTALL_DEB_DIR = install/debian
@@ -50,10 +51,10 @@ source:
 	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
 	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
 	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)
-	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i src; done
+	for i in $(ALL_SRCDIRS); do make -C $$i src; done
 
 sourcedoc:
-	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i doc; done
+	for i in $(ALL_SRCDIRS); do make -C $$i doc; done
 
 buildinstaller: zip deb exe
 
@@ -76,5 +77,5 @@ fetch:
 	cp Website/Changelog.txt             Website/$(TUBSLATEX_FULLVERSION)/.
 
 clean:
-	for i in $(ALL_SRCDIRS); do $(MAKE) -C $$i clean; done
+	for i in $(ALL_SRCDIRS); do make -C $$i clean; done
 	$(MAKE) -C $(DOCUMENTATION_DIR) clean

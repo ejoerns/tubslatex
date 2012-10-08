@@ -2,7 +2,10 @@
 # ---------------------------------
 # Erzeugt beamer-Pakete und Dokumentation
 #
-include ../../Makefile.include
+include ../Makefile.include
+
+SRCDIR = src
+BUILDDIR = build
 
 # Dateien
 STYLIST = beamercolorthemetubs.sty beamerfontthemetubs.sty beamerinnerthemetubs.sty beamerouterthemetubs.sty beamerthemetubs.sty tubsbeamersizes.sty
@@ -10,6 +13,9 @@ DTXLIST = beamercolorthemetubs.dtx beamerfontthemetubs.dtx beamerinnerthemetubs.
 INSFILE = tubsbeamer.ins
 TEXDOCFILE = tubsbeamerdoc.tex
 
+# prefix with '$(SRCDIR)/'
+DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
+INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
 .PHONY: cleantemp clean
 
@@ -17,7 +23,7 @@ all: src
 
 src: $(STYLIST)
 
-doc: $(DTXLIST:%.dtx=%.pdf) $(TEXDOCFILE:%.tex=%.pdf) cleantemp
+doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) $(TEXDOCFILE:%.tex=%.pdf) cleantemp
 
 $(TEXDOCFILE:%.tex=%.pdf):
 	$(ECHO) -n 'Generating main documentation $<'...
@@ -31,7 +37,7 @@ $(STYLIST): $(DTXLIST)
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-%.pdf: %.dtx
+%.pdf: $(SRCDIR)/%.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 # 	makeindex -s gind.ist -o $(basename $< .dtx).ind $(basename $< .dtx).idx
@@ -40,7 +46,7 @@ $(STYLIST): $(DTXLIST)
 
 cleantemp:
 	$(ECHO) -en 'Cleaning generated files...'
-	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.backup
+	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.ilg *.ind *.toc *.backup
 	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp

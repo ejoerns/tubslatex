@@ -14,16 +14,6 @@ include ../../Makefile.include
 
 VERSION = $(TUBSLATEX_FULLVERSION)
 
-# Basis-Verzeichnis des Repositories
-BASEDIR=../..
-
-#Verzeichnisse aus denen Inhalte kopiert werden müssen
-CDBASE_FETCHDIR = $(BASEDIR)/cd-base/src
-BEAMER_FETCHDIR = $(BASEDIR)/beamer/src
-LETTER_FETCHDIR = $(BASEDIR)/letter/src
-NEXUS_FETCHDIR  = $(BASEDIR)/nexus
-REPORT_FETCHDIR = $(BASEDIR)/report/src/build
-DOC_FETCHDIR = $(BASEDIR)/doc
 
 .PHONY: build copy-pre copy-generated copy-other copy-doc font clean zip
 
@@ -32,19 +22,19 @@ all: font build copy
 build: build-src build-doc
 
 build-src:
-	$(MAKE) -C $(CDBASE_FETCHDIR) src
-	$(MAKE) -C $(BEAMER_FETCHDIR) src
-	$(MAKE) -C $(LETTER_FETCHDIR) src
-	$(MAKE) -C $(NEXUS_FETCHDIR) src
-	$(MAKE) -C $(BASEDIR)/report/src/ src
+	$(MAKE) -C $(CDBASE_DIR) src
+	$(MAKE) -C $(BEAMER_DIR) src
+	$(MAKE) -C $(LETTER_DIR) src
+	$(MAKE) -C $(NEXUS_DIR) src
+	$(MAKE) -C $(REPORT_DIR) src
 
 build-doc:
-	$(MAKE) -C $(CDBASE_FETCHDIR) doc
-	$(MAKE) -C $(BEAMER_FETCHDIR) doc
-	$(MAKE) -C $(LETTER_FETCHDIR) doc
-	$(MAKE) -C $(NEXUS_FETCHDIR) doc
-	$(MAKE) -C $(BASEDIR)/report/src/ doc
-	$(MAKE) -C $(DOC_FETCHDIR)
+	$(MAKE) -C $(CDBASE_DIR) doc
+	$(MAKE) -C $(BEAMER_DIR) doc
+	$(MAKE) -C $(LETTER_DIR) doc
+	$(MAKE) -C $(NEXUS_DIR) doc
+	$(MAKE) -C $(REPORT_DIR) doc
+	$(MAKE) -C $(DOCUMENTATION_DIR)
 	
 copy: copy-pre copy-generated copy-other copy-doc
 
@@ -54,30 +44,35 @@ copy-pre:
 
 
 copy-generated:
-	$(CP) -r $(NEXUS_FETCHDIR)/*.sty  tex/latex/tubs/.
-	$(CP) -r $(CDBASE_FETCHDIR)/*.sty tex/latex/tubs/.
-	$(CP) -r $(BEAMER_FETCHDIR)/*.sty tex/latex/tubs/.
-	$(CP) -r $(LETTER_FETCHDIR)/*.cls tex/latex/tubs/.
-	$(CP) -r $(LETTER_FETCHDIR)/*.lco tex/latex/tubs/.
-	$(CP) -r $(REPORT_FETCHDIR)/*.cls tex/latex/tubs/.
-	$(CP) -r $(REPORT_FETCHDIR)/*.sty tex/latex/tubs/.
-	$(CP) -r $(REPORT_FETCHDIR)/*.clo tex/latex/tubs/.
-
+	$(ECHO) -en 'Copying generated files...'
+	$(CP) -r $(NEXUS_BUILDDIR)/*.sty  tex/latex/tubs/.
+	$(CP) -r $(CDBASE_BUILDDIR)/*.sty tex/latex/tubs/.
+	$(CP) -r $(BEAMER_BUILDDIR)/*.sty tex/latex/tubs/.
+	$(CP) -r $(LETTER_BUILDDIR)/*.cls tex/latex/tubs/.
+	$(CP) -r $(LETTER_BUILDDIR)/*.lco tex/latex/tubs/.
+	$(CP) -r $(REPORT_BUILDDIR)/*.cls tex/latex/tubs/.
+	$(CP) -r $(REPORT_BUILDDIR)/*.sty tex/latex/tubs/.
+	$(CP) -r $(REPORT_BUILDDIR)/*.clo tex/latex/tubs/.
+	$(ECHO) -e '$(OK_STRING)'
 
 # directly copy all other needed files
 copy-other:
-	$(CP) -r $(CDBASE_FETCHDIR)/logos tex/latex/tubs/.
-	$(CP) -r $(BEAMER_FETCHDIR)/defaulttitlepicture.jpg tex/latex/tubs/.
-	$(CP) -r $(NEXUS_FETCHDIR)/src/*.fd tex/latex/tubs/.
+	$(ECHO) -en 'Copying other files...'
+	$(CP) -r $(CDBASE_SRCDIR)/logos tex/latex/tubs/.
+	$(CP) -r $(BEAMER_SRCDIR)/defaulttitlepicture.jpg tex/latex/tubs/.
+	$(CP) -r $(NEXUS_SRCDIR)/*.fd tex/latex/tubs/.
+	$(ECHO) -e '$(OK_STRING)'
 
 
 copy-doc:
-	$(CP) -r $(NEXUS_FETCHDIR)/*.pdf  doc/latex/tubs/.
-	$(CP) -r $(CDBASE_FETCHDIR)/*.pdf doc/latex/tubs/.
-	$(CP) -r $(BEAMER_FETCHDIR)/*.pdf doc/latex/tubs/.
-	$(CP) -r $(LETTER_FETCHDIR)/*.pdf doc/latex/tubs/.
-	$(CP) -r $(REPORT_FETCHDIR)/../*.pdf doc/latex/tubs/.
-	$(CP) -r $(DOC_FETCHDIR)/*.pdf    doc/latex/tubs/.
+	$(ECHO) -en 'Copying documentation files...'
+	$(CP) -r $(NEXUS_BUILDDIR)/*.pdf  doc/latex/tubs/.
+	$(CP) -r $(CDBASE_BUILDDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(BEAMER_BUILDDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(LETTER_BUILDDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(REPORT_BUILDDIR)/*.pdf doc/latex/tubs/.
+	$(CP) -r $(DOCUMENTATION_BUILDDIR)/*.pdf    doc/latex/tubs/.
+	$(ECHO) -e '$(OK_STRING)'
 
 font:
 	$(MAKE) -C $(BASEDIR)/nexus fonts
