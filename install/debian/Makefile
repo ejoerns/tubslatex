@@ -5,7 +5,7 @@
 #   Aufrunf von 'make' erzeugt deb-Datei ...
 include ../../Makefile.include
 
-VERSION := $(TUBSLATEX_VERSION)
+VERSION := $(TUBSLATEX_FULLVERSION)
 DEBVERSION := $(TUBSLATEX_DEBVERSION)
 
 # Distribution the package is designed for
@@ -21,7 +21,7 @@ all: build copy deb
 copy: clean structure fetch
 
 deb:
-	$(ECHO) -n "Creating deb archive..."
+	$(ECHO) -n "Creating deb archive... 'texlive-tubs_$(VERSION)$(DIST).deb'"
 	$(FAKEROOT) dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb $(SILENT)
 	$(ECHO) -e '$(OK_STRING)'
 

@@ -21,8 +21,12 @@ TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)beta3
 HG_TEXSTYLE = tex.hgstyle
 HG_DTXOUT = tubsvers.inc
 
-# Verzeichnisse und Dateien
+# Konfigurierbare Verzeichnisse
 BASEDIR = ~/CD-LaTeX
+NSISDIR = ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe
+
+
+# Verzeichnisse
 DOCUMENTATION_DIR = $(BASEDIR)/doc
 EXAMPLE_DIR = $(BASEDIR)/examples
 CDBASE_DIR = $(BASEDIR)/cd-base
@@ -95,7 +99,7 @@ CP = $(Q)cp
 FAKEROOT = $(Q)fakeroot
 GZIP = $(Q)gzip
 WINE = $(Q)wine
-MAKENSIS = $(WINE) ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe
+MAKENSIS = $(WINE) $(NSISDIR)
 
 # Farb-Definitionen
 NO_COLOR    = \x1b[0m
