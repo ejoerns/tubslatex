@@ -341,6 +341,21 @@ $ getnonfreefonts --verbose arial-urw
 
 \begin{itemize}
 
+\begin{knownissue}{
+  Installationsprobleme, Deinstallation bricht ab mit\\
+  \glq\texttt{Unterprozess installiertes post-removal-Skript gab den Fehlerwert 1 zurück}\grq
+}
+
+Die Deinstallation kann mit folgender Sequenz trotzdem erzwungen werden:
+\begin{lstlisting}[style=cmd]
+  sudo rm /var/lib/dpkg/info/texlive-tubs.postrm
+  sudo apt-get -f install
+\end{lstlisting}
+
+
+\end{knownissue}
+
+
 \begin{knownissue}{%
   updmap bricht plötzlich ab (Fehlercode 2) / getnonfreefonts bricht ab
 }
