@@ -34,19 +34,19 @@ case "$1" in
             exit 1
         fi
         if [ -z "$varlibmap" ]; then
-            echo "Removing local map file for NexusProSans"
-            /usr/bin/updmap --nomkmap --nohash --disable NexusProSans.map || true
-            echo "Removing local map file for NexusProSerif"
-            /usr/bin/updmap --nomkmap --nohash --disable NexusProSerif.map || true
-            echo "running updmap"
-            /usr/bin/updmap
+            echo "Removing local map file for NexusProSans..."
+            /usr/bin/updmap --nomkmap --nohash --disable NexusProSans.map > /dev/null 2>&1 || true
+            echo "Removing local map file for NexusProSerif..."
+            /usr/bin/updmap --nomkmap --nohash --disable NexusProSerif.map > /dev/null 2>&1 || true
+            echo "running updmap..."
+            /usr/bin/updmap > /dev/null 2>&1 || true
         else
-            echo "Removing map file for NexusProSans"
-            /usr/bin/updmap-sys --nomkmap --nohash --disable NexusProSans.map || true
-            echo "Removing map file for NexusProSerif"
-            /usr/bin/updmap-sys --nomkmap --nohash --disable NexusProSerif.map || true
-            echo "running updmap-sys"
-            /usr/bin/updmap-sys
+            echo "Removing map file for NexusProSans..."
+            /usr/bin/updmap-sys --nomkmap --nohash --disable NexusProSans.map > /dev/null 2>&1 || true
+            echo "Removing map file for NexusProSerif..."
+            /usr/bin/updmap-sys --nomkmap --nohash --disable NexusProSerif.map > /dev/null 2>&1 || true
+            echo "running updmap-sys..."
+            /usr/bin/updmap-sys > /dev/null 2>&1 || true
         fi
 
     ;;

@@ -34,25 +34,35 @@ case "$1" in
       touch ~/.texmf-config/updmap.d/10local.cfg
 
       echo "You seem to use a local font map. Using local variants, too"
+      echo -n "Running getnonfreefonts to install arial-urw..."
       /usr/bin/getnonfreefonts --verbose arial-urw
-      echo "Adding map file for NexusProSans"
-      /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map
-      echo "Adding map file for NexusProSerif"
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      echo -n "Adding local map file for NexusProSans..."
+      /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSans.map > /dev/null 2>&1
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      echo -n "Adding local map file for NexusProSerif..."
       /usr/bin/updmap --nomkmap --nohash --enable Map=NexusProSerif.map
-      echo "running updmap"
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      echo -n "running updmap..."
       /usr/bin/updmap
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
     else
       # Touch 10local.cfg to prevent errors of buggy updmap
       touch /etc/texmf/updmap.d/10local.cfg
 
       echo "Using sys variants"
+      echo -n "Running getnonfreefonts-sys to install arial-urw..."
       /usr/bin/getnonfreefonts-sys --verbose arial-urw
-      echo "Adding map file for NexusProSans"
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      echo -n "Adding map file for NexusProSans..."
       /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
-      echo "Adding map file for NexusProSerif"
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      echo -n "Adding map file for NexusProSerif..."
       /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
-      echo "running updmap-sys"
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      echo -n "running updmap-sys..."
       /usr/bin/updmap-sys
+      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
     fi
     ;;
 
