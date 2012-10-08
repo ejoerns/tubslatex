@@ -17,9 +17,9 @@ all: src
 
 src: $(STYLIST)
 
-doc: $(DTXLIST:%.dtx=%.pdf) maindoc cleantemp
+doc: $(DTXLIST:%.dtx=%.pdf) $(TEXDOCFILE:%.tex=%.pdf) cleantemp
 
-maindoc:
+$(TEXDOCFILE:%.tex=%.pdf):
 	$(ECHO) -n 'Generating main documentation $<'...
 	$(PDFLATEX) $(PDFLATEX_SILENT) $(TEXDOCFILE) $(SILENT)
 	$(MAKEINDEX) -q -s gind.ist -o tubsbeamerdoc.ind tubsbeamerdoc.idx $(SILENT)
