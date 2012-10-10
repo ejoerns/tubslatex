@@ -406,9 +406,10 @@
     \endtitlerow
     \begin{titlerow}[bgcolor=tuSecondary80]{2}
       \sffamily\raggedright%
-      {\usekomafont{title}\@title}\bigskip\\%
-      {\usekomafont{subtitle}\@subtitle}%
+      {\usekomafont{title}\@title\par}\bigskip%
       \vfill%
+      {\usekomafont{subtitle}\@subtitle}%
+      \vfill\vfill%
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary60]{3}
 			{\usekomafont{author}\raggedright%
@@ -417,7 +418,7 @@
       \end{tabular}%
       }%
       \vfill
-      {\usekomafont{date}\@date}%
+      {\noindent\usekomafont{date}\@date}%
     \end{titlerow}
   \end{titlepage}
 }
@@ -440,9 +441,10 @@
     \endtitlerow
     \begin{titlerow}[bgcolor=tuSecondary80]{2}
       \sffamily\raggedright%
-      {\usekomafont{title}\@title}\bigskip\\%
-      {\usekomafont{subtitle}\@subtitle}%
+      {\usekomafont{title}\@title\par}\bigskip%
       \vfill%
+      {\usekomafont{subtitle}\@subtitle}%
+      \vfill\vfill%
       {\usekomafont{date}\@date}
     \end{titlerow}
     \begin{titlerow}[bgcolor=tuSecondary60]{1}
