@@ -527,10 +527,19 @@
 \def\tubs@gb@height{\thetubs@gb@calcheight}%
 %TODO: Option to set margins of boxes to 0
   \begin{lrbox}{\tubs@gb@storebox}%
+  % Store parskip and parindent to restore them in minipage
+  \newdimen\tubs@restore@parskip%
+  \newdimen\tubs@restore@parindent%
+  \tubs@restore@parskip\parskip%
+  \tubs@restore@parindent\parindent%
   \begin{minipage}%
         [t]%
         [\tubs@gb@height\TPVertModule-\tubs@gb@topsep-\tubs@gb@bottomsep]%
         {\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep-2\tubspage@borderwidth+\tubs@gb@leftmargin+\tubs@gb@rightmargin}%
+  % restore par-lengths, avoid initial parskip
+  \parskip\tubs@restore@parskip%
+  \parindent\tubs@restore@parindent%
+  \vskip-\parskip
   \vspace*{\tubs@gb@toppadding}%
   \tb@topfill%
 }{%
@@ -542,6 +551,7 @@
   \setlength{\fboxsep}{0cm}%
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
   \vspace*{\tubs@gb@topsep}%
+  \vskip-\parskip
   \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
       \tubsbox@framebox{\tubsbox@colorbox{%
