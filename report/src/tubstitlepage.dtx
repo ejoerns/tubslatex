@@ -184,7 +184,7 @@
 % \subsection{Befehle und Umgebungen zu Erstellung von Titel- und Rückseiten}
 %
 %    \begin{key}{}{logo}
-%\oarg{pos}\par
+% = \textit{<pos>}\par
 % Positionierung des Logos.
 % Mögliche Werte: |left|, |inside|, |right|, |outside|
 %    \begin{macrocode}
@@ -198,6 +198,22 @@
     \renewcommand\tubs@tp@logopos{right}
   \or
     \renewcommand\tubs@tp@logopos{right}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{title}
+% = \textit{<size>}\par
+% Option erlaubt das Anpassen der Titelgröße mit den Werten
+% |normal| für Standardgröße (headline) und |small| für
+% kleiner Größe (headlinesmall).
+%    \begin{macrocode}
+\define@choicekey*{tubs@tp}{title}[\val\nr]{normal,small}{%
+  \ifcase\nr\relax
+    \setkomafont{title}{\usekomafont{headline}}
+  \or
+    \setkomafont{title}{\usekomafont{headlinesmall}}
   \fi
 }
 %    \end{macrocode}
