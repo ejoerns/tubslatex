@@ -1,6 +1,10 @@
 Version 0.3-beta3-testing:
 - Dokumentation
   - Installationshinweise für Mac OS-Installation hinzugefuegt
+  - Paket-Dokumentationen erweitert
+
+- Dokumentenklassen
+  - \author auf CD-Titelseiten unterstützt nun \and
 
 - Allgemein
   - Bessere Unterstützung von unbekannten Papierformaten (tubstypearea)
@@ -17,6 +21,10 @@ Version 0.3-beta3-testing:
   - \institute-Befehl zeigt ursprüngliches Verhalten und wird auf
     Titelseiten dargestellt
   - Minimalabstand von Titlepage-Text zu Segmentobergrenze
+
+- Installation:
+  - postinst und postrm-Skripte des deb-Paketes korrigiert und erweitert
+  - deb-Abhängigkeiten erweitert für Kompatibilität mit Ubuntu 12.04
 
 Version 0.3-beta2:
 
