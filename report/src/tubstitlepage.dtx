@@ -386,20 +386,35 @@
 % Kommunikationsbereich.
 %    \begin{macrocode}
 %<*article|report|book|package>
+\newif\iftubs@tp@plainbacklogo% TODO: Implementierung fehlt noch (maketitle-Option?)
+\tubs@tp@plainbacklogofalse
 \new@title@style{plain}{}{%
-  % Setze background-Layout
-  \bglayout[pages=single]{%
-    \showtubslogo
-    \showtopline
-  }%
   {%
-    \l@addto@macro\titlepage{%
+    % Setze background-Layout
+    \bglayout[pages=single]{%
       \showtubslogo
       \showtopline
     }%
-  % Zusätzlicher Abstand bei maketitle
-  \l@addto@macro\clearpage{\vspace*{2\tubspage@borderwidth}}
-  \origmaketitle
+    \let\tmp@showtubslogo\showtubslogo
+    \let\tmp@showtopline\showtopline
+    \l@addto@macro\titlepage{%
+      \tmp@showtubslogo
+      \tmp@showtopline
+    }%
+    % Kompatibilität mit KOMA-twoside-Unterstützung für titlepage
+    \def\next@tpage{%
+      \endtitlepage
+      \iftubs@tp@plainbacklogo
+        \def\tmp@showtubslogo{\showtubslogo[plain]}%
+      \else
+        \let\tmp@showtubslogo\relax
+        \let\tmp@showtopline\relax
+      \fi
+      \titlepage
+    }%
+    % Zusätzlicher Abstand bei maketitle
+    \l@addto@macro\clearpage{\vspace*{2\tubspage@borderwidth}}%
+    \origmaketitle
   }%
 }
 %</article|report|book|package>
