@@ -394,16 +394,20 @@
     \bglayout[pages=single]{%
       \showtubslogo
       \showtopline
+      \showlogo{\tubs@tp@logo}%
     }%
     \let\tmp@showtubslogo\showtubslogo
     \let\tmp@showtopline\showtopline
+    \def\tmp@showlogo{\showlogo{\tubs@tp@logo}}%
     \l@addto@macro\titlepage{%
       \tmp@showtubslogo
       \tmp@showtopline
+      \tmp@showlogo
     }%
     % Kompatibilität mit KOMA-twoside-Unterstützung für titlepage
     \def\next@tpage{%
       \endtitlepage
+      \let\tmp@showlogo\relax
       \iftubs@tp@plainbacklogo
         \def\tmp@showtubslogo{\showtubslogo[plain]}%
       \else
