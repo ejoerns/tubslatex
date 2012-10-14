@@ -20,101 +20,127 @@ set -e
 case "$1" in
     configure)
 
-    if [ -x /usr/bin/mktexlsr ]; then
-      /usr/bin/mktexlsr
-    else
-      echo "Error: /usr/bin/mktexlsr not found!"
-      exit 1
+    logfile=$(mktemp -p /tmp texlive-tubs.XXXXXXXX)
+    echo -n "Running mktexlsr..."
+    if mktexlsr >> $logfile 2>&1; then
+      echo "done."
+    else 
+      echo "failed. Output has been stored in"
+      echo "$logfile"
+      echo "Please include this file if you report a bug."
     fi
-    if [ -x /usr/bin/kpsewhich ]; then
-      pdftexmap=`kpsewhich pdftex.map`
-      echo "Found map file: $pdftexmap"; # Debugging output
+
+    echo -n "Checking fontmap..."
+    if pdftexmap=`kpsewhich pdftex.map` >> $logfile 2>&1; then
+      echo "done."
+      echo "Found map file: $pdftexmap" >> $logfile
     else
-      echo "Error: /usr/bin/kpsewhich not found!"
-      exit 1
-    fi
-    if [ ! -x /usr/bin/updmap-sys ]; then
-      echo "Error: /usr/bin/updmap-sys not found!"
+      echo "failed. Output has been stored in"
+      echo "$logfile"
+      echo "Please include this file if you report a bug."
       exit 1
     fi
     
-    varlibmap=`echo $pdftexmap | grep /var/lib`
-    if [ -z "$varlibmap" ]; then
-
-      echo "You seem to use a local font map ($pdftexmap)."
-      echo "It is recommended to use a global font map for this installation"
-      echo "Do you want to delete local font map? [y/n]"
-      read yesno
-      if [ $yesno == "y" ]; then
-        echo -n "Deleting $varlibmap..."
-        rm $varlibmap
-        echo "[DONE]"
-      else
-        echo "You may need to run updmap manually after install!"
-      fi
+#    varlibmap=``
+#    echo "varlibmap: $varlibmap"
+    if [ -z `echo $pdftexmap | grep /var/lib` ]; then
+      echo ""
+      echo "Warning: You seem to use a local font map\n  ($pdftexmap)."
+      echo "Only global font maps are supported in this installation"
+      read -p "Do you want to delete local font map? [y/n]" yesno
+      case $yesno in
+        y|Y)
+          echo -n "Deleting $pdftexmap..."
+          rm -f $pdftexmap
+          echo "done."
+          ;;
+        *)
+          echo "You may need to run updmap manually after install!"
+          ;;
+      esac
     fi
 
     # Touch 10local.cfg to prevent errors of buggy updmap
     # TODO: This step might be skipped in texlive 201x
-    mkdir -p /etc/texmf/updmap.d
-    touch /etc/texmf/updmap.d/10local.cfg
+    mkdir -p /etc/texmf/updmap.d || true
+    touch /etc/texmf/updmap.d/10local.cfg || true
       
     # Check for getnonfreefonts and install if needed
-    # Is either located at /usr/bin/getnonfreefonts-sys (as symlink)
+    # Is either located at /usr/bin/getnonfreefonts (as symlink)
     # or at /usr/local/bin/getnonfreefonts
-    if ([ ! -x /usr/bin/getnonfreefonts-sys ] && [ ! -x /usr/local/bin/getnonfreefonts ]); then
-      # TODO: get getnonfreefonts
-      echo "getnonfreefonts was not found on your system."
+    if ([ ! -x /usr/bin/getnonfreefonts ] && [ ! -x /usr/local/bin/getnonfreefonts ]); then
+      echo ""
+      echo "'getnonfreefonts' was not found on your system."
       echo "Do you want automatically download and install it? [y/n]"
       read yesno
       if [ $yesno = "y" ]; then
-        wget -P /tmp http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts
-        texlua /tmp/install-getnonfreefonts
-        rm /tmp/install-getnonfreefonts
-#        /usr/bin/getnonfreefonts-sys --verbose arial-urw > /dev/null 2>&1
+	echo -n "Downloading and installing getnonfreefonts..."
+        if wget -P /tmp http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts >> $logfile 2>&1; then
+          texlua /tmp/install-getnonfreefonts >> $logfile 2>&1
+          rm -f /tmp/install-getnonfreefonts
+	  echo "done."
+        else
+          echo "failed. Output has been stored in"
+          echo "$logfile"
+          echo "Please include this file if you report a bug."
+          echo "-- You may need to install Arial later manually --"
+        fi
       else
         echo "Warning: Arial will not be installed!"
-        echo "You may need to install arial later manually"
+        echo "-- You may need to install Arial later manually --"
       fi
     fi
 
-    # Fix broken symlinks if neccessary
-    if ([ ! -x /usr/bin/getnonfreefonts-sys ] && [ -x /usr/local/bin/getnonfreefonts ]); then
-      rm -f /usr/bin/getnonfreefonts-sys
-      ln -s /usr/local/bin/getnonfreefonts /usr/bin/getnonfreefonts-sys 
-    fi
-
-    if [ -x /usr/bin/getnonfreefonts-sys ]; then
-      echo -n "Running getnonfreefonts-sys to install arial-urw..."
-      /usr/bin/getnonfreefonts-sys --verbose arial-urw > /dev/null 2>&1
-      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+    echo -n "Running getnonfreefonts to install arial-urw..."
+    if getnonfreefonts --sys --verbose arial-urw >> $logfile 2>&1; then
+      echo "done."
+    else
+      echo "failed. Output has been stored in"
+      echo "$logfile"
+      echo "Please include this file if you report a bug."
+      echo "-- You may need to install Arial later manually --"
     fi
 
     # Check for already available Mapfiles
     # (Some updmap versions fail trying to enable an active map)
-    npsans=`/usr/bin/updmap-sys --listmaps 2>&1 | grep NexusProSerif | grep -v ! | grep -v disabled || true`
-    npserif=`/usr/bin/updmap-sys --listmaps 2>&1 | grep NexusProSerif | grep -v ! | grep -v disabled || true`
+    npsans=`updmap-sys --listmaps 2>&1 | grep NexusProSerif | grep -v ! | grep -v disabled || true`
+    npserif=`updmap-sys --listmaps 2>&1 | grep NexusProSerif | grep -v ! | grep -v disabled || true`
 
     # Enable Nexus maps
     if [ -z "$npsans" ]; then
       echo -n "Adding map file for NexusProSans..."
-      /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map > /dev/null 2>&1
-      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      if updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map >> $logfile 2>&1; then
+        echo "done."
+      else
+        echo "failed.\n Output has been stored in"
+        echo "$logfile"
+        echo "Please include this file if you report a bug."
+      fi
     else
-      echo "NexusProSans already enabled, skipping..."
+      echo "NexusProSans already enabled, skipping."
     fi
     if [ -z "$npserif" ]; then
       echo -n "Adding map file for NexusProSerif..."
-      /usr/bin/updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map > /dev/null 2>&1
-      if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+      if updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map >> $logfile 2>&1; then
+        echo "done."
+      else
+        echo "failed.\n Output has been stored in"
+        echo "$logfile"
+        echo "Please include this file if you report a bug."
+      fi
     else
-      echo "NexusProSerif already enabled, skipping..."
+      echo "NexusProSerif already enabled, skipping."
     fi
 
     # Run updmap to update font db
-    echo -n "running updmap-sys..."
-    /usr/bin/updmap-sys > /dev/null 2>&1
-    if [ $? ] ; then echo '[OK]' ; else echo '[FAILED]'; fi
+    echo -n "Running updmap-sys..."
+    if updmap-sys >> $logfile 2>&1; then
+      echo "done."
+    else
+      echo "failed. Output has been stored in"
+      echo "$logfile"
+      echo "Please include this file if you report a bug."
+    fi
   ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
