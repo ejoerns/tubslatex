@@ -18,16 +18,36 @@ wobei die Letztgenannte den Regelfall darstellt.
 
 \section{Hintergrund-Layout}\label{sec:gausspage:bglayout}
 
+Ein Hintergrund-Layout kann auf zwei verschiedene weisen definiert bzw.
+gesetzt werden.
+Zum einen kann ein Layout so gesetzt werden, dass es sofort angewendet wird,
+zum anderen kann ein Layout zuerst definiert und unter einem Namen
+abgespeichert werden, um dann später dieses Layout mit Hilfe des angegebenen 
+Namen anzuwenden.
+
 \begin{Declaration}
-  \Macro{bglayout}\OParameter{Optionen}\Parameter{Layout}
+  \Macro{bglayout}\OParameter{Optionen}\Parameter{Layout-Anweisungen}
 \end{Declaration}
 
-Mit Hilfe des Befehls \Macro{bglayout} kann das Hintergrundlayout im Gaußraster gesetzt werden.
-% Dies hat in etwa dieselbe Funktionalität wie vorbedrucktes Papier.
+Mit Hilfe des Befehls \Macro{bglayout} kann das Hintergrundlayout im Gaußraster direkt gesetzt werden.
 Alle Komponenten werden im Hintergrund und unabhängig vom Inhalt der Seite
 dargestellt.
+Dies hat in etwa dieselbe Funktionalität wie vorbedrucktes Papier.
 
-Folgende \PName{Optionen} können gewählt werden:
+\begin{Declaration}
+  \Macro{defbglayout}\OParameter{Optionen}\Parameter{Name}\Parameter{Layout-Anweisungen}\\
+  \Macro{usebglayout}\Parameter{Name}
+\end{Declaration}
+
+Mit dem Befehl \Macro{defbglayout} kann ein hintergrundlayout definiert werden.
+Es wird unter der im Parameter \Parameter{Name} angegebenen Bezeichnung
+abgespeichert.
+Der Befehl \Macro{usebglayout} dient dann dazu ein unter \Parameter{Name} gespeichertes
+Layout anzuwenden.
+
+
+Für \Macro{bglayout} wie auch für \Macro{defbglayout} stehen folgende
+\PName{Optionen} zur Verfügung:
 
 \begin{Declaration}
   \KOption{sender}\PName{top/bottom}
@@ -54,10 +74,10 @@ Darstellung der verfügbaren Segmente und Logo-Positionen durch schwarze Rahmen,
 Diese Option ist hilfreich für das Design einer Seite im Gauß-Layout.
 
 
-\subsection{Elemente}\label{subsec:gausspage:bgelement}
+\subsection{Segmente}\label{subsec:gausspage:bgsegment}
 
 \begin{Declaration}
-  \Macro{bgelement}\OParameter{Darstellung}\PParameter{Höhe}
+  \Macro{bgsegment}\OParameter{Darstellung}\PParameter{Höhe}
 \end{Declaration}
 
 Erstellt ein Hintergrundelement im Gaußraster mit angegebener \PName{Höhe}.
@@ -100,37 +120,47 @@ Querformat\\ (6 Segmente)
 
 Der optionale Parameter \PName{Darstellung} kann die folgenden Einstellungen verarbeiten:
 
+\subsubsection{Füllfarbe}
 
+\vspace{-6mm}
 \begin{Declaration}
-  \KOption{bgcolor}\PName{Farbe}\\
-  \KOption{bgimage}\PName{Bild-Datei}\\
-  \KOption{imagefit}\PName{Darstellungsoption}
+  \KOption{bgcolor}\PName{Farbe}
 \end{Declaration}
 
 Mit \OptionValue{bgcolor}{Farbe} wird das Hintergrundelement mit der angegebenen
 Farbe gefüllt. Die verfügbaren Farben können Kapitel~\ref{chap:tubscolors}
 entnommen werden.
 
+\subsubsection{Hintergrundbild}
+
+\vspace{-6mm}
+\begin{Declaration}
+  \KOption{bgimage}\PName{Bild-Datei}\\
+  \KOption{imagefit}\PName{Darstellungsoption}
+\end{Declaration}
+
 Die Option \OptionValue{bgimage}{Bild-Datei} erlaubt dagegen die Darstellung
 eines Hintergrundbildes im Element.
 Da der Darstellungsbereich fest vorgegeben ist, muss das eingebundene Bild
-in diesen Bereich eingepasst werden. Dies geschieht automatisch, die Art
-der Einpassung lässt sich aber mit der Option \Option{imagefit} kontrollieren.
+in diesen Bereich eingepasst werden.
+Dazu ist jedoch kein mühsames manuelles Ausprobieren notwendig.
+Die Vorlagen verfügen über einen Algorithmus, der die Einpassung vollautomatisch
+übernimmt.
+Die Art der Einpassung lässt sich dabei mit der Option \Option{imagefit} kontrollieren.
 Sie erlaubt folgende Einstellungen:
-
 
 \begin{desctable}
 \entry{\PValue{clipped}}{%
   Automatisches randloses Zuschneiden. Dies ist die Standardeinstellung.
   Wählt abhängig von Seitenverhälntissen automatisch zwischen
-  \PValue{clipx} und \PValue{clipy}.
+  \PValue{hclip} und \PValue{vclip}.
 }
-\entry{\PValue{clipx}/\PValue{fitheight}}{%
+\entry{\PValue{hclip}/\PValue{fitheight}}{%
   Vertikale Skalierung, horizontaler Zuschnitt.
   Je nach Seitenverhälntissen von Bild und Darstellungsbereich können
   Teile des Bildes weggeschnitten werden.
 }
-\entry{\PValue{clipy}/\PValue{fitwidth}}{%
+\entry{\PValue{vclip}/\PValue{fitwidth}}{%
   Horizontale Skalierung, vertikaler Zuschnitt
   Je nach Seitenverhälntissen von Bild und Darstellungsbereich können
   Teile des Bildes weggeschnitten werden.
@@ -144,25 +174,28 @@ Sie erlaubt folgende Einstellungen:
 \end{desctable}
 % TODO: table label?
 
+\subsubsection{TU-Logo}
+
+\vspace*{-5mm}
 \begin{Declaration}
   \Macro{showtubslogo}\OParameter{Optionen}
 \end{Declaration}
 
 Bewirkt Darstellung des TU-Siegelbandlogos im aktiven Layout.
 Die \PName{Optionen} erlauben unter anderem die Angabe der Darstellungsseite
-(links/rechts).
+(left/right).
 
 \begin{Declaration}
-  \Option{links}/\Option{inside}\\
-  \Option{rechts}/\Option{outside}
+  \Option{left}/\Option{inside}\\
+  \Option{right}/\Option{outside}
 \end{Declaration}
 
-Mit der Logo-Option \Option{links} bzw. \Option{inside} wird das Logo auf der Seite
-\emph{links} bzw. \emph{innen} platziert. Dies entspricht der Standardeinstellung.
+Mit der Logo-Option \Option{left} bzw. \Option{inside} wird das Logo auf der Seite
+\emph{left} bzw. \emph{innen} platziert. Dies entspricht der Standardeinstellung.
 Es ist zu beachten, dass bei zweiseitiger Darstellung (\Option{twoside})
 das Logo auf ungeraden Seiten links und auf geraden Seiten rechts platziert wird
 (also immer \emph{innenseitig}!).
-Mit der Option \Option{rechts} bzw. \Option{outside} wird das Logo auf der \emph{rechten}
+Mit der Option \Option{right} bzw. \Option{outside} wird das Logo auf der \emph{rechten}
 Seite bzw. \emph{außen} dargestellt.
 
 \begin{important}
@@ -182,6 +215,9 @@ des Siegelbandlogos dargestellt wird.
 Dies ist vor allem für Rückseiten sinnvoll.
 
 
+\subsubsection{Instituts-Logo}
+
+\vspace*{-5mm}
 \begin{Declaration}
   \Macro{showlogo}\PParameter{Logo}
 \end{Declaration}
@@ -197,6 +233,9 @@ die Positionierung des Siegelbandlogos angepasst.
 Wird dies links bzw. innen platziert, so steht das individuelle
 Logo rechts bzw. außen.
 
+\subsubsection{Trennlinie}
+
+\vspace*{-5mm}
 \begin{Declaration}
   \Macro{showtopline}
 \end{Declaration}
@@ -207,9 +246,9 @@ im aktuellen Layout.
 \begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von bglayout}]
 \bglayout[pages=single]{%
   \showtubslogo
-  \bgelement[bgimage=mypic.jpg]{2}
-  \bgelement[bgcolor=tuGreen]{3}
-  \bgelement[bgcolor=tuGreenDark]{3}
+  \bgsegment[bgimage=mypic.jpg]{2}
+  \bgsegment[bgcolor=tuGreen]{3}
+  \bgsegment[bgcolor=tuGreenDark]{3}
 }
 \end{lstlisting}
 
@@ -244,15 +283,15 @@ mit \PName{Breite} wieviel Spalten.
   // Inhalt
 \end{gaussbox}
   \end{lstlisting}
-  Erzeugt eine Text-Box, die halbe Text-Breite aufweist und vom oberen
-  Rand aus in der Höhe 2 Segmente einnimmt.
+  Erzeugt eine Text-Box, beginnend in der ersten Zeile und Spalte,
+  mit halber Textbreite und einer Höhe von 2 Segmenten.
 \end{Example}
 
 
-\section{Kombination}\label{sec:gausspage:kombi}
+\section{Kombination / Gaußraster-Seiten}\label{sec:gausspage:kombi}
 
 Die hier vorgestellte Kombination ist für die einfache Erstellung ganzer Seiten
-inklusive Text im Gauß-Raster gedacht.
+inklusive Text im Gaußraster gedacht.
 Sie bildet auch die Basis für die Umgebungen von Veranstaltungspostern und
 für Titelseiten von Dokumenten.
 
@@ -270,8 +309,8 @@ genau gleich positioniert sind.
 
 Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausspage:bglayout}
 für \Macro{bglayout} definierten Optionen verwendet werden.
-Die Option \Option{pages} ist standardmäßig auf \PValue{single}
-eingestellt.% TODO: check
+Die Option \Option{pages} ist standardmäßig auf \PValue{all}
+voreingestellt.
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{segment}}%
@@ -284,12 +323,12 @@ eingestellt.% TODO: check
 Mit der Umgebung \Environment{segment} könnnen die einzelnen
 Segmente gesetzt werden.
 Diese gehen jeweils über die ganze Textbreite und orientieren sich
-in der vertikalen Positionierung am Interface von \Macro{bgelement}.
+in der vertikalen Positionierung am Interface von \Macro{bgsegment}.
 Die \PName{Höhe} gibt also die Anzahl der verwendete Basis-Segmente an
 und belegt diese von oben nach unten.
 
-Als \PName{Optionen} können alle in Kapitel~\ref{subsec:gausspage:bgelement}
-für \Macro{bgelement} definierten Optionen verwendet werden. % TODO: check
+Als \PName{Optionen} können alle in Kapitel~\ref{subsec:gausspage:bgsegment}
+für \Macro{bgsegment} definierten Optionen verwendet werden. % TODO: check
 
 
 \begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von gausspage}]

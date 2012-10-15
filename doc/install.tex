@@ -11,7 +11,7 @@ Aktuell wird \tubslatex in drei verschiedenen Varianten angeboten.
     Systemen eingesetzt werden.
     Diese Variante ist eher für erfahrenere \TeX-Benutzer oder bei
     Fehlen eines automatischen Installers zu empfehlen, da Pakete
-    und Schriften manuell registriert werdens müssen.
+    und Schriften manuell registriert werden müssen.
   \item[Windows-Installer]
     Der für Windows vorgesehene Installer kann bei Verwendung der
     populären \LaTeX-Distribution MiKTeX eingesetzt werden.
@@ -186,9 +186,20 @@ Genutzt werden können dafür die diversen graphischen Tools oder einfach das
 Kommandozeilenprogramm \texttt{gdebi}. Diese Programme lösen alle Abhängigkeiten
 auf und installieren sie automatisch mit.
 
-Die Installation der Dateien erfolgt in das Verzeichnis
-\lstinline{/usr/share/texmf-texlive/}. Sowohl die neuen Dateien als auch 
-die Schrift Nexus werden automatisch registriert.
+Die Installation der Dateien erfolgt in das \texttt{TEXMFLOCAL}-Verzeichnis,
+welches in der Regel \lstinline{/usr/local/share/texmf} ist.
+Sowohl die neuen Dateien als auch die Schrift Nexus werden automatisch registriert.
+Darüber hinaus wird ggf. die Schrift Arial heruntergeladen und installiert.
+% TODO: Erklären:
+% - getnonfreefonts-Download/-Installation (y/n)
+% - automatische Lösung lokaler updmap (y/n)
+
+Offiziell unterstützte Systeme:
+\begin{itemize}
+  \item Ubuntu 10.04, 11.10, 12.04
+  \item Debian 6, 7
+\end{itemize}
+
 
 \subsection{Manuelle Installation}
 \Index{updmap}
@@ -220,6 +231,7 @@ Die Vorlagen setzen ein Vorhandensein der Folgenden Pakete voraus:
   \item texlive-fonts-extra
   \item latex-beamer
   \item texlive-lang-german
+  \item texlive-extra-utils
 \end{itemize}
 
 Falls diese nicht auf dem System installiert sind, müssen sie nachinstalliert
@@ -228,7 +240,8 @@ werden, da sonst die Vorlagen oder Teile der Vorlagen nicht benutzbar sind.
 Die Installation aller Pakete kann mit folgendem Befehl durchgeführt werden:
 \begin{lstlisting}[style=cmd]
 sudo aptitude install texlive-base texlive-latex-extra \
-  texlive-fonts-extra latex-beamer texlive-lang-german
+  texlive-fonts-extra latex-beamer texlive-lang-german \
+  texlive-extra-utils
 \end{lstlisting}
 
 Im Folgenden werden sowohl systemweite als auch lokale Installation einzeln
@@ -246,22 +259,24 @@ beschrieben.
     Diese liegen dort schon in der korrekten Ordner-Struktur vor, sodass
     sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
     müssen.
+    Im Download-Verzeichnis der zip-Datei folgendes ausführen
+    (\lstinline{<VERSION>} durch Version des heruntergeladenen Archivs ersetzen):
     \begin{lstlisting}[style=cmd]
-# unzip -d /usr/share/texmf/ tubslatex_0.3-beta2.zip
+sudo unzip -d /usr/local/share/texmf/ tubslatex_<VERSION>.tds.zip
     \end{lstlisting}
 
   \item[2. Dateien registrieren]
     Dies geschieht mit dem Befehl
     \begin{lstlisting}[style=cmd]
-# mktexlsr
+sudo mktexlsr
     \end{lstlisting}
 
   \item[3. Schriften registrieren]\hfill
 
     \begin{lstlisting}[style=cmd]
-# updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
-# updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
-# updmap-sys
+sudo updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map
+sudo updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map
+sudo updmap-sys
     \end{lstlisting}
     
   \item[4. Arial installieren]
@@ -274,10 +289,18 @@ beschrieben.
     Die Installation von Arial erfolgt mit Hilfe des Programms
     \lstinline{getnonfreefonts}, das die benötigten Dateien automatisch
     herunterlädt und alle für die Installation notwendigen Schritte durchführt.
+    \begin{hint}
+      In neueren Debian-/Ubuntu-Versionen ist das Programm \texttt{getnonfreefonts}
+      nicht mehr in den Paketquellen enthalten.
+      Es muss manuell heruntergeladen und installiert werden.
+      Eine Anleitung findet sich hier:
+      \url{http://tug.org/fonts/getnonfreefonts/}
+    \end{hint}
+
     
     Eine systemweite Installation von Arial geschieht mit Hilfe des Befehls
     \begin{lstlisting}[style=cmd]
-# getnonfreefonts-sys --verbose arial-urw
+sudo getnonfreefonts-sys --verbose arial-urw
     \end{lstlisting}
     
 \end{description}
@@ -288,8 +311,8 @@ beschrieben.
   \item[1. Dateien Kopieren] Zuerst müssen alle in der Zip-Datei enthaltenen
     Dateien entpackt werden.
     Diese liegen dort schon in der korrekten Ordner-Struktur vor, sodass
-    sie lediglich in das Ziel-texmf-Verzeichnis \emph{hinein}kopiert werden
-    müssen. Dieses sollte im Allgemeinen \lstinline{/home/username/texmf}
+    sie lediglich in das Ziel-texmf-Verzeichnis (\texttt{TEXMFHOME}) \emph{hinein}kopiert werden
+    müssen. Dieses sollte im Allgemeinen \lstinline{/home/<username>/texmf}
     sein. Ist es noch nicht vorhanden, so muss es zuerst erstellt werden.
 
     Das Entpacken erfolgt dann mit dem Befehl
@@ -321,8 +344,15 @@ $ updmap
     Die Installation von Arial erfolgt mit Hilfe des Programms
     \lstinline{getnonfreefonts}, das die benötigten Dateien automatisch
     herunterlädt und alle für die Installation notwendigen Schritte durchführt.
+    \begin{hint}
+      In neueren Debian-/Ubuntu-Versionen ist das Programm \texttt{getnonfreefonts}
+      nicht mehr in den Paketquellen enthalten.
+      Es muss manuell heruntergeladen und installiert werden.
+      Eine Anleitung findet sich hier:
+      \url{http://tug.org/fonts/getnonfreefonts/}
+    \end{hint}
     
-    Eine Lokale Installation von Arial geschieht mit Hilfe des Befehls
+    Eine lokale Installation von Arial geschieht mit Hilfe des Befehls
     \begin{lstlisting}[style=cmd]
 $ getnonfreefonts --verbose arial-urw
     \end{lstlisting}
@@ -345,7 +375,6 @@ $ getnonfreefonts --verbose arial-urw
   Installationsprobleme, Deinstallation bricht ab mit\\
   \glq\texttt{Unterprozess installiertes post-removal-Skript gab den Fehlerwert 1 zurück}\grq
 }
-
 Die Deinstallation kann mit folgender Sequenz trotzdem erzwungen werden:
 \begin{lstlisting}[style=cmd]
   sudo rm /var/lib/dpkg/info/texlive-tubs.postrm
@@ -367,11 +396,11 @@ updmap teilweise lahmlegt.
 \solution{Mögliche Lösung:}
 \begin{itemize}
   \item Die Datei 10local.cfg (falls sie noch nicht vorhanden ist) manuell
-    erstellen (z.B. mit \texttt{touch}).
+    erstellen (z.B. mit \lstinline{touch /etc/texmf/updmap.d/10local.cfg}).
   \item Nicht die Option \texttt{--quiet} verwenden.
 \end{itemize}
 
-Alternativ kann auch die Zeile \lstinline{set -e} am Anfang des Skripts einfach auskommentiert werden.
+% Alternativ kann auch die Zeile \lstinline{set -e} am Anfang des Skripts einfach auskommentiert werden.
 \end{knownissue}
 
 
@@ -386,12 +415,13 @@ auch wenn die System-Map mit \lstinline{updmap-sys} upgedated wurde.
 
 \noindent\textit{Überprüfung:}
 
-Die Ausgabe von
+Wenn die Ausgabe von
 \begin{lstlisting}[style=cmd]
 kpsewhich pdftex.map
 \end{lstlisting}
-sollte einen anderen Pfad als
-\lstinline{/var/lib/texmf/fonts/map/pdftex/updmap/} liefern.
+einen anderen Pfad als
+\lstinline{/var/lib/texmf/fonts/map/pdftex/updmap/} liefert,
+wird eine lokale font-Map verwendet.
 
 \solution{Lösung 1:}
 

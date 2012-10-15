@@ -70,21 +70,24 @@ Sekundärfarbbereich. Es handelt sich dabei um eine komplett andere Farbe.
 \pagebreak
 \subsection{Sekundärfarben}
 
-\rainbow{tuYellow}
-\rainbow{tuOrange}
-\rainbow{tuRed}
+  tuOrange\ldots\\
+  \colorshow{Orange}{Light}
+  \colorshow{Orange}{Medium}
+  \colorshow{Orange}{Dark}\\[-1ex]
+  tuBlue\ldots\\
+  \colorshow{Blue}{Light}
+  \colorshow{Blue}{Medium}
+  \colorshow{Blue}{Dark}\\[-1ex]
+  tuGreen\ldots\\
+  \colorshow{Green}{Light}
+  \colorshow{Green}{Medium}
+  \colorshow{Green}{Dark}\\[-1ex]
+  tuViolet\ldots\\
+  \colorshow{Violet}{Light}
+  \colorshow{Violet}{Medium}
+  \colorshow{Violet}{Dark}
+%   \caption{Im CD definierte Farben und deren Benennung (Auszug)}
 
-\rainbow{tuGreenLight}
-\rainbow{tuGreen}
-\rainbow{tuGreenDark}
-
-\rainbow{tuBlueLight}
-\rainbow{tuBlue}
-\rainbow{tuBlueDark}
-
-\rainbow{tuVioletLight}
-\rainbow{tuViolet}
-\rainbow{tuVioletDark}
 
 Zusätzlich kann als Paketoption ein Farbklang ausgewählt werden, dessen Farben
 dann über die Werte  \\\lstinline{tuSecondaryLight},
@@ -93,11 +96,11 @@ entsprechenden Prozentualwert \\(\lstinline{tuSecondaryLight20},
 \lstinline{tuSecondaryLight40}, \ldots) angesprochen werden können.
 Dies erlaubt eine flexible Verwendung der 4 Sekundärfarbklänge.
 
-In folgendem Beispiel wurde \lstinline{green} als Farbklang ausgewählt:
+In folgendem Beispiel wurde \lstinline{blau} als Farbklang ausgewählt:
 
-\rainbow{tuSecondaryLight}
-\rainbow{tuSecondary}
-\rainbow{tuSecondaryDark}
+\colorshow{Secondary}{Light}
+\colorshow{Secondary}{Medium}
+\colorshow{Secondary}{Dark}\\[-1ex]
 
 \paragraph{Hinweise:}
 Die Farben des gelb-orange-Farbklangs können entsprechend der anderen
@@ -124,9 +127,3 @@ Für die Ausgabe in CMYK-Farben steht die Option \lstinline!cmyk! zur Verfügung
 Darüber hinaus gibt es noch ein RGB-Farbschema, das für die Ausgabe auf
 Beamern optimiert ist. Es kann über die Option \lstinline!rgbbeamer! geladen
 werden.
-
-\section{Verwendung als Paket}
-
-
-
-% Für weitere Details zu Verwendung der Argumente siehe folgender Abschnitt.

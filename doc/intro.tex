@@ -31,6 +31,12 @@ Für besonders Eilige empfiehlt sich das Kapitel~\ref{chap:rapid},
 welches in aller Kürze die jeweils wichtigsten Befehle und Optionen einer Klasse
 zusammenfasst und so einen raschen Einstieg ermöglicht.
 
+Für interessierte Anwender und Entwickler seien hier auch noch die
+aus dem Quellcode generierten Dokumentationen zu empfehlen, die bei jeder
+Version im doc-Verzeichnis mit ausgeliefert werden. Dort finden sich
+ggf. auch noch weitere Optionen und Befehle, die hier aus Gründen der
+Verwirrungsfreiheit oder inkompletten Unterstützung verschwiegen wurden.
+
 \clearpage
 \section{Das Corporate Design der TU Braunschweig}
 
@@ -74,7 +80,7 @@ Das im Absenderbereich befindliche \emph{Absenderfeld} (1) bietet Platz für
 einen \mbox{Instituts-/}Abteilungsnamen bzw. ein entsprechendes Logo.
 \Index{Absenderfeld}\Index{Institutsname}%
 
-Der Kommunikationsbereich kann in einem an die gaußsche Summenformel
+Der Kommunikationsbereich kann in einem an die gauß'sche Summenformel
 angelehnten Raster (\emph{Gaußraster}) unterteilt werden.
 \Index{Gaußraster}%
 Dabei ergibt sich die Höhe eines Grundsegmentes ((2), (3), \ldots)
@@ -121,8 +127,9 @@ Konkret bauen die Vorlagen für Poster (\texttt{tubsposter}) und Dokumente
 (\texttt{tubsartcl}, \texttt{tubsreprt}, \texttt{tubsboox}) auf
 den entsprechenden KOMA-Skript-Klassen auf,%
 \footnote{\texttt{tubsposter} verwendet \texttt{scrartcl}}.
-Dabei wurden einige Optionen und Befehle, die die Basisklassen bieten, erhalten
-und können in der ausführlichen Dokumentation zum KOMA-Skript\cite{koma-skript}
+Viele er Optionen und Befehle, die die Basisklassen bieten, können auch
+auf bei den Vorlagen verwendet werden.
+Sie können in der ausführlichen Dokumentation zum KOMA-Skript\cite{koma-skript}
 nachgeschlagen werden.
 Einige Funktionalitäten wie etwa die Satzspiegelberechnung sind dagegen
 komplett ersetzt wurden.
@@ -134,14 +141,14 @@ Diese nutzt (wie der Name vermuten lässt) die noch verhältnismäßig junge
 Klasse \texttt{scrlttr2}. Dies spiegelt sich vor allem darin wieder, dass sich
 das verwendete Interface in Teilen stark von den anderen Klassen unterscheidet.
 Die Dokumentation geht dabei hauptsächlich auf die Besonderheiten in
-\texttt{tubslatex} ein.
+\tubslatex ein.
 Für detailliertere Informationen kann hier auch wieder die Dokumentation von
 KOMA\cite{koma-skript} zu Rate gezogen werden.
 
 Für Präsentationen wird die relativ bekannte \texttt{beamer}-Klasse verwendet.
 Hier stellt \tubslatex keine eigene Klasse zur Verfügung,
 sondern bietet entsprechend der Beamer-Philosophie ein \emph{Beamer-Theme} an,
-das im Dokument geladen werden kann und so viel Flexibilität erlaubt.
+das im Dokument geladen werden kann und somit viel Flexibilität erlaubt.
 Bei der Verwendung ergeben sich daher lediglich eine minimale Anzahl an
 Veränderungen und Erweiterungen des Funktionsumfangs von beamer.
 
