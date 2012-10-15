@@ -718,24 +718,24 @@
 %               es zu starken Verzerrungen führen und sollte daher nur für
 %               Bilder eingesetz werden, deren Seitenverhältnis in etwa dem des
 %               Darstellungsbereichs entspricht.\\
-%   |cropped| & Das Bild wird so in den Darstellungsbereich eingepasst, dass
+%   |clipped| & Das Bild wird so in den Darstellungsbereich eingepasst, dass
 %               es entweder horizontal oder vertikal passend skaliert wird
 %               und in anderer Richtng (vertikal/horizontal) auf den Bereich
 %               zugeschnitten wird. \\
-%   |cropy|   & Ähnlich wie |cropped|, nur dass das Bild auf jeden Fall
+%   |vclip|   & Ähnlich wie |clipped|, nur dass das Bild auf jeden Fall
 %               horizontal skaliert und vertikal beschnitten wird.  \\
-%   |cropx|   & Wie |cropx|, nur dass das Bild vertikal skaliert und horizontal
+%   |hclip|   & Wie |vclip|, nur dass das Bild vertikal skaliert und horizontal
 %               beschnitten wird.
 % \end{tabularx}
 %
 %    \begin{macrocode}
 %
 \define@choicekey{bgelement}{imagefit}[\val\nr]{%
-        default,scaled,clipped,cropped,clipx,cropx,clipy,cropy,fitheight,fitwidth}{%
+        default,scaled,clipped,cropped,clipx,hclip,clipy,vclip,fitheight,fitwidth}{%
   \ifcase\nr\relax
     % default
     \PackageInfo{tubsstyle}{%
-      Option 'imagefit' not set. Using standard value 'cropped'.
+      Option 'imagefit' not set. Using standard value 'clipped'.
     }
     \renewcommand{\tubstyle@imagefit}{cropped}
   \or
@@ -772,6 +772,7 @@
 %
 %
 %    \begin{macro}{\bgelement}
+%    \begin{macro}{\bgsegment}
 % \oarg{options}\marg{height}\par
 % Hintergrund-Element,
 %    \begin{macrocode}
@@ -788,8 +789,9 @@
     \tubs@bg@cmd}
   \addtocounter{tubs@yseg@cnt}{#2}
 }
+\let\bgsegment\bgelement
 %    \end{macrocode}
-%    \end{macro}
+%    \end{macro}\end{macro}
 %
 %
 % \subsubsection{bglayout-Optionen}
@@ -928,7 +930,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\layout}
+%    \begin{macro}{\bglayout}
 % \oarg{options}\marg{bglayout}\par
 % Legt das darzustellende Layout mit den übergebenen Optionen (|options|)
 % und dem übergebenem Inhalt (|layout|) fest.
@@ -1023,8 +1025,10 @@
 %    \end{macrocode}
 %
 %
-%    \begin{environment}{tubsposter}
-% Erzeugt eine neue Poster-Seite.
+% \subsection{Kombination / Gaußraster-Seiten}
+%
+%    \begin{environment}{gausspage}
+% Erzeugt eine neue Gaußlayout-Seite.
 % Steuert die Aufbaureihenfolge des Hintergrundes, indem die
 % Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
 % |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
@@ -1044,7 +1048,7 @@
 %
 %    \begin{environment}{segment}
 % \oarg{options}\marg{ysegments}\par
-% Erzeugt einen neuen Inhalts-Bereich.\\
+% Erzeugt einen neues Inhalts-Segment.\\
 % |options|: Mögliche Optionen,
 % |ysegments|: Anzahl Gauß-Elemente für Höhe.
 % Mögliche Optionen:
