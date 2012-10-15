@@ -4,13 +4,18 @@
 \usepackage[ngerman]{babel}
 
 %opening
-\title{Beispieltitiel}
+\title{Beispieltitel}
 \subtitle{Untertitel}
 \author{Max Mustermann}
-\publishers{Institut fuer Lorem Ipsum} % to logo?
+\titlepicture{defaulttitlepicture}
+% \publishers{Institut fuer Lorem Ipsum} % to logo?
 
 \begin{document}
 
-\maketitle
+\makeatletter
 
+\maketitle[landscape]
+ 
+\makeatother
+ 
 \end{document}
