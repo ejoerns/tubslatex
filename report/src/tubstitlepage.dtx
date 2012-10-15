@@ -499,6 +499,42 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+% \subsubsection{Querformat}
+%
+%    \begin{macro}{landscape}
+%    \begin{macrocode}
+\new@title@style{landscape}{}{%
+  \renewcommand*\and{%
+    \end{tabular}%
+    \hskip 1em \relax
+    \begin{tabular}[t]{@{}l}%
+  }%
+  \begin{titlepage}
+    \showtubslogo[\tubs@tp@logopos]
+    \showlogo{\tubs@tp@logo}
+    \expandafter\titlerow\tubs@tp@titlepicture{2}
+    \endtitlerow
+    \begin{titlerow}[bgcolor=tuSecondary80]{3}
+      \sffamily\raggedright%
+      {\usekomafont{title}\@title\par}\bigskip%
+      \vfill%
+      {\usekomafont{subtitle}\@subtitle}%
+      \vfill\vfill%
+      {\usekomafont{author}\raggedright%
+      \begin{tabular}[t]{@{}l}%
+        \@author%
+      \end{tabular}%
+      }%
+      \vfill
+      {\noindent\usekomafont{date}\@date}%
+    \end{titlerow}
+    \begin{titlerow}[bgcolor=tuRed]{1}
+    \end{titlerow}
+  \end{titlepage}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
 % \subsection{Backpage-Styles}
 %
 %    \begin{macro}{plain}
