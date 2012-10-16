@@ -98,7 +98,7 @@ Im Folgenden werden alle \tubslatex-Klassenoptionen beschrieben,
 die das Layout beeinflussen. Die Reihenfolge der Beschreibung richtet sich dabei
 nach einer möglichst sinnvollen Auswahlreihenfolge bei der Gestaltung des Gesamtlayouts.
 
-\paragraph{Papierformat}\hfill
+\subsection{Papierformat}
 
 Das Corporate Design definiert allgemein feste Zusammenhänge zwischen dem
 verwendeten Papierformat und den zu verwendeten Basis-Schriftgrößen.
@@ -137,12 +137,8 @@ entnommen werden.
 \OptionIndex{landscape}
 \Index{Querformat!Option}
 
+\begin{minipage}{0.45\textwidth}
 Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
-
-\begin{center}
-  \fboxsep0mm\fbox{\includegraphics[width=0.45\textwidth]{examples/article_landscape.pdf}}\\
-  Dokument im Querformat
-\end{center}
 
 \begin{important}
   Im Querformat hat das Gaußraster eine abweichende
@@ -150,9 +146,22 @@ Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
   definiert. Daher lösen Layouts, die für hochformatige Dokumente
   geschrieben wurden, im Querformat einen Fehler aus. %TODO: Fehlermeldung benennen bzw. Referenz
 \end{important}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}\centering
+\fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}
+\end{minipage}
 
-\paragraph{Inhaltsdarstellung}\hfill
 
+% \begin{center}
+%   \\
+%   Dokument im Querformat
+% \end{center}
+
+
+
+\subsection{Inhaltsdarstellung}
+
+\vspace*{-6mm}
 \begin{Declaration}
   \KOption{sender}\PName{Position}
 \end{Declaration}
@@ -516,6 +525,7 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
     sowie eine Trennline zwischen Absender- und Kommunikationsbereich hinzufügt.
     \\
     Er wird benutzt, wenn kein Style explizit gewählt wurde.
+    % TODO: Kompatibel mit landscape-Modus?
     \par\bigskip
     \Macro{maketitle}\OParameter{default}
     \par\bigskip
@@ -566,6 +576,26 @@ Die folgenden Styles sind jeweils im blauen Standardfarbklang dargestellt.
     \end{compactitem}
   \end{minipage}
 
+  \begin{minipage}[t]{0.33\textwidth}
+    \null\centering\sffamily
+    \fboxsep0mm\fbox{%
+      \includegraphics[width=0.95\textwidth,page=1]{examples/titlestyle_landscape.pdf}}
+%     [default]
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.6\textwidth}
+    \paragraph{landscape}
+    Aktuell einziger Stil für querformatige Darstellung.
+    \par\bigskip
+    \Macro{maketitle}\OParameter{landscape}
+    \par\bigskip
+    Dargestellte Zusatz-Elemente:
+    \begin{compactitem}\ttfamily
+      \item logo
+      \item titlepicture
+    \end{compactitem}
+  \end{minipage}
+  
 \paragraph{Gestaltungsbeispiele:}\hfill
 
 \begin{minipage}{0.33\textwidth}\centering
@@ -677,6 +707,12 @@ Die Farbgebung ergibt sich wie bei Titelseiten aus dem aktiven Sekundärfarbklan
     \end{compactitem}
   \end{minipage}
 
+\subsection{Eigene Titelseiten-/Rückseiten-Styles definieren}
+
+Fortgeschrittenen Anwendern steht die Möglichkeit offen eigene Styles
+zu definieren und zu verwenden. Eine Beschreibung dazu liefert
+die Dokumentation zu \texttt{tubstitlepage}.
+% TODO: Hier mehr erklären, User-Befehle definieren, ...
 
 \section{Kopf-/Fußzeile}\label{sec:headline}
 \Index{Kopfzeile}
@@ -741,6 +777,12 @@ Analog dazu gibt es noch die zwei Befehle \Macro{outerfoot}
 und \Macro{innerfoot}, die selbiges Verhalten für Fußzeilen aufweisen.
 Der so festgelegte Inhalt wird dann im Falle eines am oberen Blattrand
 befindlichen Absenderbereichs nicht dargestellt.
+
+% \begin{minipage}{0.5\textwidth}
+%   \fboxsep0mm
+%   \fbox{\includegraphics[bb=100 0 200 200, clip, page=3]{examples/headsender.pdf}}
+% \end{minipage}
+
 
 \begin{Declaration}
   \Macro{headtopline}

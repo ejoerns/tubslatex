@@ -10,5 +10,14 @@ vorgesehen. Es kann zu beliebigen Dokumentenklassen als Zusatzpaket geladen
 werden und ermöglicht damit grundlegende Unterstützung von CD-Elementen.
 
 Dazu zählen unter anderem die Schriftart Nexus, die CD-Farbklänge und das
-Gauß-Layoutsystem inklusive Titelseiten-Unterstützung.
+Gauß-Layout\-system inklusive Titelseiten-Unterstützung.
 
+\paragraph{Optionen} Es werden fast alle Optionen unterstützt, die auch
+die entsprechenden Dokumentenklassen bieten. Wichtig ist hierbei,
+die gewünschten Optionen auch wirklich dem Paket und nicht (nur)
+der verwendeten Dokumentenklasse zu übergeben.
+
+\begin{lstlisting}[captionpos=b,caption={Beispiel für Verwendung von tubsdoc}]
+\documentclass[a4paper,11pt]{article}
+\usepackage[a4paper,fontsize=11pt,colorheadings]{tubsdoc}
+\end{lstlisting}

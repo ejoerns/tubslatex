@@ -50,6 +50,92 @@ angrenzende Trennlinie.
 Auch sämtliche Elemente, die die Farbe \texttt{tuRed} verwenden, werden
 in Schwarz statt in Rot dargestellt.
 
+\section{Briefe schreiben}
+
+Zum Erstellen eines Briefdokumentes gibt es einige spezielle Umgebungen und
+Kommandos, die im Folgenden vorgestellt werden.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{letter}}%
+  \OParameter{Optionen}\Parameter{Empfänger}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{letter}
+\end{Declaration}
+
+Innerhalb von \lstinline!\begin{document}! und \lstinline!\end{document}!
+können mit der Umgebung \Environment{letter} beliebig viele einzelne Briefe
+erstellt werden. Der grundlegende Aufbau eines solchen Briefes ist in
+Abbildung~\ref{fig:scrlttr2.letter} dargestellt. Die wichtigsten Befehle
+sind im Folgenden aufgelistet.
+
+\begin{Declaration}
+  \Macro{opening}\Parameter{Anrede}\\
+  \Macro{closing}\Parameter{Grußfloskel}\\
+  \Macro{ps}\\
+  \Macro{cc}\Parameter{Verteiler}\\
+  \Macro{encl}\Parameter{Anlagen}
+\end{Declaration}
+
+Die Anweisungen \Macro{opening} und \Macro{closing} sind für das Erstellen
+eines Briefes unerlässlich. Mit \Macro{opening} wird sowohl die Anrede
+festgelegt (z.B. \textit{Seehr geehrte Damen und Herren}) als auch der
+Bereich für den Brieftext begonnen.
+Dieser Bereich wird dann wiederum mit dem Befehl \Macro{closing}, über den
+man zugleich eine Grußfloskel angibt (z.B. \textit{Mit freundlichen Grüßen}),
+beendet.
+
+Der Befehl \Macro{ps} leitet einen Absatz für das Postscriptum ein.
+Mit \Macro{cc} lässt sich ein \PName{Verteiler} Angeben und
+aufzuführende \PName{Anlagen} werden im Makro \Macro{encl} angegeben.
+
+Für weitere Details zum Schreiben von Briefen wird auf die Dokumentation
+der zugrunde liegenden Klasse \lstinline{scrlttr2} verwiesen
+\cite[S.162ff]{koma-skript}.
+
+Ein vollständiges Beispieldokument findet sich in Anhang~\ref{appendix:letter}.
+
+\begin{important}
+Eine Besonderheit beim Erstellen des Brieftextes ergibt sich aus dem wechselnden
+Seitenlayout nach der ersten Seite.
+Soll mehr als eine Seite beschrieben werden, so muss nach
+dem Inhalt für die erste Seite ein \lstinline{\clearpage} eingefügt werden.
+Ansonsten kommt es zu fehlerhafter Darstellung der Textbreite des ersten
+Absatzes auf der zweiten Seite.
+\end{important}
+
+
+\begin{figure}[!ht]
+  \centering\small
+  \fbox{\parbox{.667\linewidth}{\raggedright%
+      \Macro{begin}\PParameter{letter}%
+      \OParameter{Optionen}\Parameter{Empfänger}\\
+      \dots\\[\dp\strutbox]
+      {\centering\emph{Einstellungen für diesen Brief}\\}
+      \dots\\
+      \Macro{opening}\Parameter{Anrede}\\
+    }}\\[1pt]
+  \fbox{\parbox{.667\linewidth}{\raggedright%
+      \dots\\[\dp\strutbox]
+      {\centering\emph{Brief"|text}\\}
+      \dots\\
+    }}\\[1pt]
+  \fbox{\parbox{.667\linewidth}{\raggedright%
+      \Macro{closing}\Parameter{Grußformel}\\
+      \Macro{ps}\\
+      \dots\\[\dp\strutbox]
+      {\centering\emph{Postscriptum}\\}
+      \dots\\
+      \Macro{encl}\Parameter{Anlagen}\\
+      \Macro{cc}\Parameter{Verteiler}\\
+      \Macro{end}\PParameter{letter}\\
+    }}\\[\dp\strutbox]
+  \caption[Genereller Aufbau eines einzelnen Briefes innerhalb eines
+    Briefdokuments]{Genereller Aufbau eines einzelnen Briefes
+    innerhalb eines Briefdokuments nach \cite[S.171]{koma-skript} }
+  \label{fig:scrlttr2.letter}
+\end{figure}
+
+
 \section{Variablen}\label{sec:lettervars}
 
 Diverse Inhalte jedes Briefes können mittels einer Reihe von Variablen
@@ -145,92 +231,8 @@ gesetzt.
 \label{fig:lettervarpos}
 \end{figure}\clearpage
 
-\section{Briefe schreiben}
 
-Zum Erstellen eines Briefdokumentes gibt es einige spezielle Umgebungen und
-Kommandos, die im Folgenden vorgestellt werden.
-
-\begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{letter}}%
-  \OParameter{Optionen}\Parameter{Empfänger}\\
-  \quad\dots\\
-  \XMacro{end}\PParameter{letter}
-\end{Declaration}
-
-Innerhalb von \lstinline!\begin{document}! und \lstinline!\end{document}!
-können mit der Umgebung \Environment{letter} beliebig viele einzelne Briefe
-erstellt werden. Der grundlegende Aufbau eines solchen Briefes ist in
-Abbildung~\ref{fig:scrlttr2.letter} dargestellt. Die wichtigsten Befehle
-sind im Folgenden aufgelistet.
-
-\begin{Declaration}
-  \Macro{opening}\Parameter{Anrede}\\
-  \Macro{closing}\Parameter{Grußfloskel}\\
-  \Macro{ps}\\
-  \Macro{cc}\Parameter{Verteiler}\\
-  \Macro{encl}\Parameter{Anlagen}
-\end{Declaration}
-
-Die Anweisungen \Macro{opening} und \Macro{closing} sind für das Erstellen
-eines Briefes unerlässlich. Mit \Macro{opening} wird sowohl die Anrede
-festgelegt (z.B. \textit{Seehr geehrte Damen und Herren}) als auch der
-Bereich für den Brieftext begonnen.
-Dieser Bereich wird dann wiederum mit dem Befehl \Macro{closing}, über den
-man zugleich eine Grußfloskel angibt (z.B. \textit{Mit freundlichen Grüßen}),
-beendet.
-
-Der Befehl \Macro{ps} leitet einen Absatz für das Postscriptum ein.
-Mit \Macro{cc} lässt sich ein \PName{Verteiler} Angeben und
-aufzuführende \PName{Anlagen} werden im Makro \Macro{encl} angegeben.
-
-Für weitere Details zum Schreiben von Briefen wird auf die Dokumentation
-der zugrunde liegenden Klasse \lstinline{scrlttr2} verwiesen
-\cite[S.162ff]{koma-skript}.
-
-Ein vollständiges Beispieldokument findet sich in Anhang~\ref{appendix:letter}.
-
-\begin{important}
-Eine Besonderheit beim Erstellen des Brieftextes ergibt sich aus dem wechselnden
-Seitenlayout nach der ersten Seite.
-Soll mehr als eine Seite beschrieben werden, so muss nach
-dem Inhalt für die erste Seite ein \lstinline{\clearpage} eingefügt werden.
-Ansonsten kommt es zu fehlerhafter Darstellung der Textbreite des ersten
-Absatzes auf der zweiten Seite.
-\end{important}
-
-
-\begin{figure}[!ht]
-  \centering\small
-  \fbox{\parbox{.667\linewidth}{\raggedright%
-      \Macro{begin}\PParameter{letter}%
-      \OParameter{Optionen}\Parameter{Empfänger}\\
-      \dots\\[\dp\strutbox]
-      {\centering\emph{Einstellungen für diesen Brief}\\}
-      \dots\\
-      \Macro{opening}\Parameter{Anrede}\\
-    }}\\[1pt]
-  \fbox{\parbox{.667\linewidth}{\raggedright%
-      \dots\\[\dp\strutbox]
-      {\centering\emph{Brief"|text}\\}
-      \dots\\
-    }}\\[1pt]
-  \fbox{\parbox{.667\linewidth}{\raggedright%
-      \Macro{closing}\Parameter{Grußformel}\\
-      \Macro{ps}\\
-      \dots\\[\dp\strutbox]
-      {\centering\emph{Postscriptum}\\}
-      \dots\\
-      \Macro{encl}\Parameter{Anlagen}\\
-      \Macro{cc}\Parameter{Verteiler}\\
-      \Macro{end}\PParameter{letter}\\
-    }}\\[\dp\strutbox]
-  \caption[Genereller Aufbau eines einzelnen Briefes innerhalb eines
-    Briefdokuments]{Genereller Aufbau eines einzelnen Briefes
-    innerhalb eines Briefdokuments nach \cite[S.171]{koma-skript} }
-  \label{fig:scrlttr2.letter}
-\end{figure}
-
-\section{lco-Dateien}\label{sec:lco}
+\section{lco-Dateien verwalten}\label{sec:lco}
 
 Eine Reihe von Einstellungen und definierten Variablen für das Erstellen eines
 Briefes sind meist bei allen Briefen, die man erstellt, gleichbleibend.
@@ -322,7 +324,5 @@ Dies kann einfach durch das Löschen des Inhalts der Variable
 
 
 
-
 % TODO: 
 % - Beispielbrief (-> Anhang!?)
-% - Hinweis für clearpage bei mehr als einer Seite

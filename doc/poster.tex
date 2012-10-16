@@ -352,6 +352,36 @@ Aushänge werden unter Angabe der Optionswahl
 \documentclass[style=bulletin]{tubsposter}
 \end{lstlisting}
 
+\begin{figure}[!ht]
+\begin{minipage}{0.65\textwidth}
+\begin{lstlisting}
+\documentclass[a3paper,style=bulletin]{tubsposter}
+\begin{document}
+\begin{tubsposter}
+  \vspace*{100pt}
+  {\usekomafont{headline}
+    Gait, commy nisi!\par\vspace*{1.5ex}}
+  {\itshape\huge\color{tuRed}
+    Dunt venim dolorerosto do odit
+    ametum vulla conum dolore
+    co\-nulput in vero od el\par}
+  \vfill
+  {\Large
+    Iduissit Ium do eum digna:
+    0531 123-4567}
+\end{tubsposter}
+\end{document}
+
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.35\textwidth}
+  \fboxsep0mm
+  \fbox{\includegraphics[width=0.98\textwidth]{examples/posterstyle_bulletin.pdf}}
+\end{minipage}
+\caption{Minimal-Beispiel zur Verwendung von \Environment{tubsposter}-Stil 
+  \Option{bulletin}}
+\end{figure}
+
 % \section{Seitenlayout}
 
 % margin
