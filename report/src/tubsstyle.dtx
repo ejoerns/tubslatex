@@ -1074,7 +1074,7 @@
       \edef\@tubs@arg{[\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}
     \fi%
   }
-  \bgelement{#2}
+  \bgelement[#1]{#2}%TODO: how to skip gaussbox related options?
   % Erzeuge gausbox
   \expandafter\gaussbox\@tubs@arg
 }{%
