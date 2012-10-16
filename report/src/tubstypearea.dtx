@@ -72,7 +72,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{tubstypearea} -- 
-%   typeare settings for tubslatex\thanks{This document
+%   typearea settings for tubslatex\thanks{This document
 %   corresponds to \textsf{tubstypearea}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -476,6 +476,12 @@
 }
 %    \end{macrocode}
 %    \end{key}
+%
+%    \begin{macrocode}
+\DeclareOptionX*{%
+  \PassOptionsToPackage{\CurrentOption}{geometry}
+}
+%    \end{macrocode}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsubsection{Optionsverarbeitung}

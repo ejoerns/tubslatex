@@ -198,6 +198,20 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%
+%    \begin{key}{}{paperwidth}
+%    \begin{key}{}{paperheight}
+% Zur individuellen Angabe von Papierformaten
+%    \begin{macrocode}
+\DeclareOptionX{paperwidth}{%
+  \PassOptionsToPackage{paperwidth=#1}{tubstypearea}
+}
+\DeclareOptionX{paperheight}{%
+  \PassOptionsToPackage{paperheight=#1}{tubstypearea}
+}
+%    \end{macrocode}
+%    \end{key}\end{key}
+%
 %    \begin{key}{tubsdoc.dtx}{twoside}
 % Die Option |twoside| setzt die Seiten als zweiseitiges Layout, was vor
 % allem bei verwendung der Marginalen und der Bindungskorrektur zu Tragen
