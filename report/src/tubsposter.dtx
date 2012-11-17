@@ -142,6 +142,11 @@
 % TODO: support for scientific poster logo in landscape
 }
 %
+\def\@userlogo{}%
+\define@key{tubsposter}{logo}{%
+  \gdef\@userlogo{#1}%
+}
+
 % TODO: place better...
 %    \begin{macrocode}
 \PassOptionsToPackage{fullline}{tubsstyle}
@@ -265,11 +270,17 @@
   \newenvironment{postersubrow*}{\begin{modsubrow*}}{\end{modsubrow*}}
 %
 }{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
-  \def\tubsposter{%
-    \@tubsposter%
+  \renewcommand\tubsposter[1][]{%
+    \setkeys{tubsposter}{#1}
+    \@tubsposter
     \showtubslogo[left]%
-    \showtopline%
-    \@posterrow{8}%
+    \showlogo{\@userlogo}%
+    \showtopline
+    \if@tp@landscape
+      \@posterrow{6}%
+    \else
+      \@posterrow{8}%
+    \fi
   }
   \def\endtubsposter{%
     \end@posterrow%
