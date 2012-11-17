@@ -215,6 +215,17 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{lnum}
+% Verwende Versalziffern (lining figures) anstellen von Mediävalziffern.
+% Funktioniert nur bei Nexus!
+%    \begin{macrocode}
+\newif\ifnexus@lnum\nexus@lnumfalse
+\DeclareOptionX{lnum}{%
+  \nexus@lnumtrue
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % Behandle Optionen
 %    \begin{macrocode}
 \ProcessOptionsX*\relax
@@ -313,8 +324,13 @@
 % Nexus verwenden.
 %    \begin{macrocode}
 \renewcommand*{\encodingdefault}{LY1}
-\renewcommand*{\rmdefault}{NexusProSerif}
-\renewcommand*{\sfdefault}{NexusProSans}
+\ifnexus@lnum
+  \renewcommand*{\rmdefault}{NexusProSerif-lnum}
+  \renewcommand*{\sfdefault}{NexusProSans-lnum}
+\else
+  \renewcommand*{\rmdefault}{NexusProSerif}
+  \renewcommand*{\sfdefault}{NexusProSans}
+\fi
 \renewcommand*{\ttdefault}{txtt} % with bold series!
 %    \end{macrocode}
 %

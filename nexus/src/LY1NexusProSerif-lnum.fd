@@ -1,0 +1,24 @@
+\ProvidesFile{LY1NexusProSerif-lnum.fd}[Fontshop NexusProSerif-lnum font definitions]
+\DeclareFontFamily{LY1}{NexusProSerif-lnum}{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{n}{ <-> NexusProSerif-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{sc}{ <-> NexusProSerif-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{sl}{ <-> NexusProSerif-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{it}{ <-> NexusProSerif-Italic-lnum}{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{n}{ <-> NexusProSerif-Bold-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{sc}{ <-> NexusProSerif-Bold-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{sl}{ <-> NexusProSerif-Bold-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{it}{ <-> NexusProSerif-Bold-Italic-lnum }{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{n}{ <-> ssub * NexusProSerif-lnum/b/n }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{it}{ <-> ssub * NexusProSerif-lnum/b/it }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{sc}{ <-> ssub * NexusProSerif-lnum/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{sl}{ <-> ssub * NexusProSerif-lnum/b/sl }{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{n}{ <-> ssub * NexusProSerif-lnum/b/n }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{it}{ <-> ssub * NexusProSerif-lnum/b/it }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{sc}{ <-> ssub * NexusProSerif-lnum/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{sl}{ <-> ssub * NexusProSerif-lnum/b/sl }{}
+
+\endinput
