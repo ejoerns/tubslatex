@@ -11,17 +11,18 @@ DEBVERSION := $(TUBSLATEX_DEBVERSION)
 # Distribution the package is designed for
 DIST = debian
 # Version of deb package
-DISTVERSION = 0$(DIST)2
+DISTVERSION = 0$(DIST)4
 
-# Verzeichnisse
-INSTALLPATH = usr/share/texmf-texlive
+# Installations-Verzeichnisse
+INSTALLPATH = /usr/local/share/texmf
+DOCPATH = /usr/share/doc/texlive-tubs
 
 all: build copy deb
 
 copy: clean structure fetch
 
 deb:
-	$(ECHO) -n "Creating deb archive... 'texlive-tubs_$(VERSION)$(DIST).deb'"
+	$(ECHO) -n "Creating deb archive 'texlive-tubs_$(VERSION)$(DIST).deb'..."
 	$(FAKEROOT) dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb $(SILENT)
 	$(ECHO) -e '$(OK_STRING)'
 
@@ -32,15 +33,15 @@ structure:
 	$(ECHO) -n "Generating structure..."
 	$(MKDIR) -p texlive-tubs
 	$(MKDIR) -p texlive-tubs/DEBIAN
-	$(MKDIR) -p texlive-tubs/$(INSTALLPATH)
-	$(MKDIR) -p texlive-tubs/usr/share/doc/texlive-tubs
+	$(MKDIR) -p texlive-tubs$(INSTALLPATH)
+	$(MKDIR) -p texlive-tubs$(DOCPATH)
 	$(ECHO) -e '$(OK_STRING)'
 
 fetch:
 	$(ECHO) -n "Copying tex files..."
-	$(CP) -r $(INSTALL_RAW_DIR)/tex texlive-tubs/$(INSTALLPATH)/.
-	$(CP) -r $(INSTALL_RAW_DIR)/doc texlive-tubs/$(INSTALLPATH)/.
-	$(CP) -r $(INSTALL_RAW_DIR)/fonts texlive-tubs/$(INSTALLPATH)/.
+	$(CP) -r $(INSTALL_RAW_DIR)/tex texlive-tubs$(INSTALLPATH)/.
+	$(CP) -r $(INSTALL_RAW_DIR)/doc texlive-tubs$(INSTALLPATH)/.
+	$(CP) -r $(INSTALL_RAW_DIR)/fonts texlive-tubs$(INSTALLPATH)/.
 	$(ECHO) -e '$(OK_STRING)'
 	$(ECHO) -n "Creating deb archive files..."
 	$(CAT) control.template | sed 's/CONTROLVERSION/$(DEBVERSION)-$(DISTVERSION)/g' | \
@@ -50,10 +51,13 @@ fetch:
 	$(CP) changelog.template changelog
 	$(GZIP) -9f changelog
 	$(GZIP) -9f changelog.Debian
-	$(CP) copyright changelog.gz changelog.Debian.gz texlive-tubs/usr/share/doc/texlive-tubs/.
+	$(CP) copyright changelog.gz changelog.Debian.gz texlive-tubs$(DOCPATH)/.
 	$(ECHO) -e '$(OK_STRING)'
 
-clean:
+cleantemp:
+	$(RM) -f *~
+
+clean: cleantemp
 	$(ECHO) -en 'Cleaning...'
 	$(RM) -rf texlive-tubs
 	$(RM) -f *.otf
