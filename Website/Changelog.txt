@@ -5,17 +5,31 @@ Version 0.3-beta3-testing:
 
 - Dokumentenklassen
   - \author auf CD-Titelseiten unterstützt nun \and
+  - Unterstützung von \uppertitleback und \lowertitleback für backpage style
+  - Titelseiten-Style für landscape
+  - Umfassender Optionen- und Befehlsindex
 
 - Allgemein
   - Bessere Unterstützung von unbekannten Papierformaten (tubstypearea)
+  - Seitengröße mittel Optionen 'paperwidth' und 'paperheight' teilweise einstellbar
+  - Optionsweiterleitung an bgelement korrigiert
+
+- Fonts
+  - \footnotesize-Deklaration für A0 korrigiert
+  - mathsf und mathtt fuer Nexus definiert
+  - Standard-Schnitte nutzen Mediävalziffern, Option 'lnum' für Versalziffern
 
 - Plakate
   - Berechnungsfehler für Modulsystem korrigiert
+	- Option 'logo' für Bulletin-Poster
 
 - tubsdoc
   - Paket nun auch mit KOMA-Klassen zusammen nutzbar
   - Titelseitenstyle [plain] verfügbar
   - Koma-Font-Definitionen verbessert/korrigiert
+  
+- tubsstyle:
+  - bglayout in bgsegment umbenannt (Alias erhalten)
 
 - beamer:
   - \institute-Befehl zeigt ursprüngliches Verhalten und wird auf
