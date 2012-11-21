@@ -10,7 +10,9 @@ BUILDDIR = build
 
 # Dateien
 CLSLIST := tubsartcl.cls tubsreprt.cls tubsbook.cls tubsleaflet.cls tubsposter.cls
-CLOLIST := 
+CLOLIST := tubsa040pt.clo tubsa1scifi25pt.clo tubsa313pt.clo tubsa411pt.clo tubsa511pt.clo tubslang11pt.clo
+CLOLIST += tubsa0scifi40pt.clo tubsa218pt.clo tubsa3scifi13pt.clo tubsa49pt.clo tubsa59pt.clo tubslang9pt.clo
+CLOLIST += tubsa125pt.clo tubsa2scifi18pt.clo tubsa410pt.clo tubsa510pt.clo tubslang10pt.clo
 STYLIST := tubsbox.sty tubsstyle.sty tubstypearea.sty
 GENLIST = $(CLOLIST) $(CLSLIST) $(STYLIST)
 DTXLIST = tubsbox.dtx tubsdoc.dtx tubsflowfram.dtx tubsfont.dtx tubshead.dtx tubsposter.dtx tubsstyle.dtx tubstitlepage.dtx tubstypearea.dtx
@@ -26,7 +28,10 @@ INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
 all: src
 
-src: $(GENLIST)
+src: init $(GENLIST)
+
+init:
+	$(MAKE) -C $(BASEDIR) versiondtx
 
 doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) cleantemp
 
