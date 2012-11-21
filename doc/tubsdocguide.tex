@@ -5,27 +5,26 @@
 \subtitle{Anleitung und Dokumentation}
 \author{Enrico Jörns}
 \publishers{Presse und Kommunikation} % to logo?
+\titlepicture{defaulttitlepicture}
 
 \begin{document}
 
-
 \input{glossary}
 
-
-\pagestyle{empty}
-\hfill
-\begin{center}
-\huge\color{tuRed}
-Dokument befindet sich im Aufbau!\bigskip
-
-Informationen evtl. unvollständig oder unklar!
-\end{center}
-\vspace*{3cm}
-\begin{center}
-\LARGE\tubslatexVersion
-\end{center}
-
-\newpage~\newpage
+% \pagestyle{empty}
+% \hfill
+% \begin{center}
+% \huge\color{tuRed}
+% Dokument befindet sich im Aufbau!\bigskip
+% 
+% Informationen evtl. unvollständig oder unklar!
+% \end{center}
+% \vspace*{3cm}
+% \begin{center}
+% \LARGE\tubslatexVersion
+% \end{center}
+% 
+% \newpage~\newpage
 
 \begin{titlepage}
   \showtubslogo
@@ -50,6 +49,8 @@ Informationen evtl. unvollständig oder unklar!
   \end{segment}
 \end{titlepage}
 
+% \maketitle[image]
+
 \begin{backpage}
   \showtubslogo
   \showtopline
@@ -68,7 +69,7 @@ Informationen evtl. unvollständig oder unklar!
 
 \input{preface}
 
-\pagestyle{scrheadings}% TODO:!?!?
+% \pagestyle{scrheadings}% TODO:!?!?
 
 \phantomsection % requires hyperref package
 \pdfbookmark[1]{Inhaltsverzeichnis}{toc}
@@ -101,7 +102,9 @@ Informationen evtl. unvollständig oder unklar!
 
 \include{tubsdoc}     % Kapitel: 'tubsdoc'
 
-\part{Basis-Pakete}\label{part:packages}
+\appendix
+
+\part{Interne Basis-Pakete}\label{part:packages}
 
 Dieser Abschnitt befasst sich mit den Paketen, die von den jeweiligen
 \tubslatex-Anwender\-klassen normalerweise automatisch geladen werden.
@@ -123,25 +126,26 @@ im Allgemeinen nicht erforderlich sein sollte.
 
 \include{nexus}   % Kapitel: 'Nexus'
 
-\appendix
-
 \input{unsorted}
 
-%Glossar ausgeben
+% Glossar
 \printglossary[style=altlist,title=Glossar]
 %Abkürzungen ausgeben
 \deftranslation[to=German]{Acronyms}{Abkürzungsverzeichnis}
 \printglossary[type=\acronymtype,style=long]
 
-\include{appendixletter}
+% \include{appendixletter}
 
+% Verzeichnisse
+\clearpage
+\addcontentsline{toc}{chapter}{Verzeichnisse}
 \listoffigures
-
 \bibliographystyle{alpha}
 \bibliography{lit}
 
+% Index
+\addcontentsline{toc}{chapter}{Index}
 \chapter*{Index}
-
 \printindex{general}{Allgemeiner Index}
 \printindex{cmd}{Index der Befehle und Umgebungen}
 \printindex{option}{Index der Optionen}

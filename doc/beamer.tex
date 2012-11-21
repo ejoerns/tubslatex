@@ -712,8 +712,6 @@ Sie können bei Bedarf den entsprechenden Paket-Dokumentationen entnommen werden
 %TODO: Hinweis zu Beamer-Option!?
 
 \section{Schrift}
-\OptionIndex{arial}
-\OptionIndex{nexus}
 
 Die voreingestellte Standardschrift der Vorlagen ist Arial in Schriftgröße 11pt.
 Sie kann bei Bedarf auf Nexus gewechselt werden.
@@ -728,11 +726,9 @@ Die Option \Option{nexus} wählt Nexus als Schriftart aus.
 
 \subsection{Zusätzliche Schriftgrößen}
 \Index{Schriftgrößen!Beamer}
-\CommandIndex{microsize}
-\CommandIndex{nanosize}
 
-Das font-Template legt zwei zusätzliche Schriftgrößen \lstinline{\microsize}
-und \lstinline{\nanosize} an, die jeweils noch kleiner sind als alle restlich
+Das font-Template legt zwei zusätzliche Schriftgrößen \Macro{microsize}
+und \Macro{nanosize} an, die jeweils noch kleiner sind als alle restlich
 verfügbaren.
 
 Sie werden intern verwendet, können aber auch bei begründeter
@@ -765,14 +761,14 @@ CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
 \Index{16:9}
 \Index{Format!Beamer}
 
-Die Beamer-Option \lstinline{aspectratio}, mit der die Präsentation auch auf
+Die Beamer-Option \Option{aspectratio}, mit der die Präsentation auch auf
 andere Seitenformate gebrachte werden kann, wird vom Layout generell
 unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
 Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
 (siehe Tabelle \ref{tab:picratio}).
 
 \begin{hint}
-Die Option \lstinline{aspectratio} steht erst ab beamer-Version 3.10
+Die Option \Option{aspectratio} steht erst ab beamer-Version 3.10
 zur Verfügung.
 \end{hint}
 
@@ -781,7 +777,7 @@ zur Verfügung.
 \Index{columns-Umgebung}
 
 Die Verwendung der columns-Umgebung ist in vielen Fällen sinnvoll.
-Jedoch sollte die Umgebung nur mit der Option \lstinline{onlytextwidth}
+Jedoch sollte die Umgebung nur mit der Option \Option{onlytextwidth}
 verwendet werden, da sonst ein zusätzlicher Abstand zwischen den
 Spalten hinzugefügt werden und die Gesamtbreite zu groß wird:
 
@@ -798,7 +794,7 @@ Spalten hinzugefügt werden und die Gesamtbreite zu groß wird:
 
 Auch wenn dies in der beamer-Dokumentation ausdrücklich erläutert ist,
 sollte hier noch einmal erwähnt werden, dass bei Gebraucht von Listings etc.
-in Folien die Option \lstinline{fragile} übergeben werden muss.
+in Folien die Option \Option{fragile} übergeben werden muss.
 
 \begin{lstlisting}[morekeywords={fragile},keywordstyle=\color{tuOrange}]
 \begin{frame}[fragile]{Titel}
@@ -828,7 +824,6 @@ daraus erzeugten Folien.
 \documentclass{beamer}
 
 \usetheme{tubs}
-\usepackage[T1]{fontenc}
 \usepackage[utf8x]{inputenc}
 
 \title{Corporate Design}

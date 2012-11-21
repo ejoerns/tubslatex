@@ -134,7 +134,6 @@ entnommen werden.
 \begin{Declaration}
   \Option{landscape}
 \end{Declaration}
-\OptionIndex{landscape}
 \Index{Querformat!Option}
 
 \begin{minipage}{0.45\textwidth}
@@ -151,21 +150,23 @@ Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
 \fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}
 \end{minipage}
 
+\begin{Declaration}
+  \KOption{paperwidth}\PName{Breite}\\
+  \KOption{paperheight}\PName{Höhe}
+\end{Declaration}
 
-% \begin{center}
-%   \\
-%   Dokument im Querformat
-% \end{center}
+Mit den Optionen \Option{paperwidth} und \Option{paperheight} können individuelle
+Papierformate angegeben werden.
+Diese können jedoch von den Vorlagen nur bedingt unterstützt werden.
+% TODO: Möglichkeiten und Grenzen aufzeigen
 
 
-
-\subsection{Inhaltsdarstellung}
+\subsection{Darstellungsanpassung}
 
 \vspace*{-6mm}
 \begin{Declaration}
   \KOption{sender}\PName{Position}
 \end{Declaration}
-\OptionIndex{sender}
 \Index{Absenderbereich!Option}
 
 Mit der Option \Option{sender} kann die Position des Absenderbereichs
@@ -184,7 +185,6 @@ wird der Absenderbereich am unteren Ende der Seite platziert
 \begin{Declaration}
   \KOption{style}\PName{<print/screen/printdev>}
 \end{Declaration}
-\OptionIndex{style}
 
 Die Option \Option{style} bietet die Möglichkeit, diverse Elemente
 des Layouts so anzupassen, dass sie für die Darstellung auf dem gewünschten
@@ -221,10 +221,8 @@ Die zuletzt gesetzte Option hat dabei die höchste Priorität.
   \KOption{twoside}\PName{bool}\\
   \Option{oneside}
 \end{Declaration}
-\OptionIndex{twoside}
-\OptionIndex{oneside}
-\Index{zweiseitig}
-\Index{einseitig}
+\Index{Layout!zweiseitiges}
+\Index{Layout!einseitiges}
 
 \Index{Dokumente!einseitig}
 Für das Setzen von zweiseitigen Dokumente ist die Option \Option{twoside}
@@ -258,24 +256,23 @@ Die Bindekorrektur verhindert so \zB ein 'Abschneiden' des Siegellogos.
 Soll das Dokument ohne Bindekorrektur dargestellt werden, so ist dies
 mit \OptionValue{bcor}{0mm} möglich.
 
+\subsubsection{Marginale}
 
+\vspace*{-6mm}
 \begin{Declaration}
   \Option{marginleft}\\
   \Option{marginright}
 \end{Declaration}
-\OptionIndex{marginleft}
-\OptionIndex{marginright}
 \Index{Marginale}
 
-Das setzen einer Marginale wird durch die Befehle \PName{marginleft} und
-\PName{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
+Das setzen einer Marginale wird durch die Optionen \Option{marginleft} und
+\Option{marginright} vereinfacht. Diese setzen jeweils auf der linken (inneren)
 bzw. rechten (äußeren) Seite des Dokumentes eine Marginale, deren Breite
 einem Element im sechsgeteilten \gls{glos:spaltenraster} entspricht.
 
 \begin{Declaration}
   \Option{extramargin}
 \end{Declaration}% TODO: Namenskonflikt mit marginleft, ..?
-\OptionIndex{extramargin}
 
 % TODO: noch woanders Präferenz für zweispaltiges Layout erwähnen?
 Die Vorgaben des CD definieren einen recht breiten Textbereich, der im Prinzip

@@ -5,17 +5,19 @@
   rgb,%
   extramargin,%
   parskip=half,%
-  hyperref,%
+  hyperrefdark,%
 ]{tubsbook}
 % a5paper, 9pt, no extramargin, bcor=0mm
 
 \usepackage[utf8x]{inputenc}
 \usepackage{xspace}
 \usepackage{amsmath}
+
 % --- Tabellen
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{longtable}
+
 % --- Indexing
 \usepackage{multind}
 \makeindex{general}
@@ -25,13 +27,16 @@
 \newcommand*{\OptionIndex}[2][]{\index{option}{#2}}
 \newcommand*{\CommandIndex}[2][]{\index{cmd}{#2@\textbackslash#2}}
 \newcommand*{\EnvironmentIndex}[2][]{\index{cmd}{#2}}
+
 % --- Listings
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily}
+% Stil für Kommandozeile
 \lstdefinestyle{cmd}{%
   frame=single,
   backgroundcolor=\color{tuGray20}
 }
+% Stil für Dateiinhalte
 \lstdefinestyle{file}{%
   frame=single,
 %   backgroundcolor=\color{tuGray20}
@@ -54,7 +59,7 @@
 nonumberlist, %keine Seitenzahlen anzeigen
 acronym,      %ein Abkürzungsverzeichnis erstellen
 toc,          %Einträge im Inhaltsverzeichnis
-section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
+section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 {glossaries}
 \let\acs\gls
 \makeglossaries
@@ -298,7 +303,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 \def\example{\par\smallskip\noindent\textit{Beispiel: }}
 
-% Schreibt 'Beispiel vor den folgenden Inhalt und rückt alles nach dem ersten
+% --- Umgebung: 'Beispiel'
+% Schreibt 'Beispiel' vor den folgenden Inhalt und rückt alles nach dem ersten
 % Absatz um 2em ein.
 \newenvironment{Example}{%
 \begingroup
@@ -308,7 +314,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \par\endgroup
 }
 
-% Umgebung: 'Wichtig:' ...
+% --- Umgebung: 'Wichtig:'
 \newenvironment{important}{%
   \begin{description}
     \item[\itshape\mdseries\rmfamily Wichtig:]
@@ -316,7 +322,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
   \end{description}
 }
 
-% Umgebung: 'Hinweis'
+% --- Umgebung: 'Hinweis'
 \newenvironment{hint}{%
   \begin{description}
     \item[\itshape\mdseries\rmfamily Hinweis:]

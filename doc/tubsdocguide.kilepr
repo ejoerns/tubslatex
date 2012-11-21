@@ -45,6 +45,8 @@ ReadWrite=true
 [document-settings,item:colors.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -63,6 +65,8 @@ ReadWrite=true
 [document-settings,item:gausspage.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -71,6 +75,8 @@ ReadWrite=true
 [document-settings,item:glossary.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -79,6 +85,8 @@ ReadWrite=true
 [document-settings,item:install.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=
 Mode=LaTeX
@@ -87,6 +95,8 @@ ReadWrite=true
 [document-settings,item:intro.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -103,6 +113,8 @@ ReadWrite=true
 [document-settings,item:letter.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -119,6 +131,8 @@ ReadWrite=true
 [document-settings,item:logo.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -127,6 +141,8 @@ ReadWrite=true
 [document-settings,item:nexus.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -135,6 +151,8 @@ ReadWrite=true
 [document-settings,item:poster.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -143,6 +161,8 @@ ReadWrite=true
 [document-settings,item:preamble.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -153,6 +173,16 @@ Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
 Indentation Mode=
+Mode=LaTeX
+ReadWrite=true
+
+[document-settings,item:tubsdoc.tex]
+Bookmarks=
+Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
+Highlighting=LaTeX
+Indentation Mode=normal
 Mode=LaTeX
 ReadWrite=true
 
@@ -169,6 +199,8 @@ ReadWrite=true
 [document-settings,item:unsorted.tex]
 Bookmarks=
 Encoding=UTF-8
+FoldedColumns=
+FoldedLines=
 Highlighting=LaTeX
 Indentation Mode=2
 Mode=LaTeX
@@ -196,30 +228,30 @@ order=-1
 
 [item:beamer.tex]
 archive=true
-column=24
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=702
+line=824
 mode=LaTeX
 open=false
 order=1
 
 [item:colors.tex]
 archive=true
-column=44
+column=8
 encoding=UTF-8
 highlight=LaTeX
-line=9
+line=0
 mode=LaTeX
 open=false
 order=3
 
 [item:documents.tex]
 archive=true
-column=18
+column=72
 encoding=UTF-8
 highlight=LaTeX
-line=12
+line=269
 mode=LaTeX
 open=false
 order=3
@@ -296,20 +328,20 @@ order=-1
 
 [item:gausspage.tex]
 archive=true
-column=0
+column=13
 encoding=UTF-8
 highlight=LaTeX
-line=75
+line=337
 mode=LaTeX
 open=false
 order=3
 
 [item:glossary.tex]
 archive=true
-column=1
+column=3
 encoding=UTF-8
 highlight=LaTeX
-line=9
+line=39
 mode=LaTeX
 open=false
 order=4
@@ -319,7 +351,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=390
+line=285
 mode=LaTeX
 open=false
 order=5
@@ -329,7 +361,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=35
+line=13
 mode=LaTeX
 open=false
 order=4
@@ -346,10 +378,10 @@ order=0
 
 [item:letter.tex]
 archive=true
-column=23
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=100
+line=324
 mode=LaTeX
 open=false
 order=-1
@@ -366,40 +398,40 @@ order=-1
 
 [item:logo.tex]
 archive=true
-column=0
+column=38
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=21
 mode=LaTeX
 open=false
 order=-1
 
 [item:nexus.tex]
 archive=true
-column=29
+column=35
 encoding=UTF-8
 highlight=LaTeX
-line=29
+line=13
 mode=LaTeX
 open=false
 order=1
 
 [item:poster.tex]
 archive=true
-column=13
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=134
+line=356
 mode=LaTeX
 open=false
 order=-1
 
 [item:preamble.tex]
 archive=true
-column=21
+column=14
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=7
 mode=LaTeX
 open=false
 order=2
@@ -414,6 +446,16 @@ mode=LaTeX
 open=false
 order=1
 
+[item:tubsdoc.tex]
+archive=true
+column=36
+encoding=UTF-8
+highlight=LaTeX
+line=5
+mode=LaTeX
+open=false
+order=-1
+
 [item:tubsdocguide.kilepr]
 archive=true
 column=1
@@ -426,10 +468,10 @@ order=-1
 
 [item:tubsdocguide.tex]
 archive=true
-column=24
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=110
+line=73
 mode=LaTeX
 open=false
 order=0
@@ -439,7 +481,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=14
+line=3
 mode=LaTeX
 open=false
 order=2
@@ -453,75 +495,103 @@ CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:beamer.tex]
-CursorColumn=24
-CursorLine=702
+CursorColumn=0
+CursorLine=824
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:colors.tex]
-CursorColumn=44
-CursorLine=9
+CursorColumn=8
+CursorLine=0
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:documents.tex]
-CursorColumn=18
-CursorLine=12
+CursorColumn=72
+CursorLine=269
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:gausspage.tex]
-CursorColumn=0
-CursorLine=75
+CursorColumn=13
+CursorLine=337
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:glossary.tex]
-CursorColumn=1
-CursorLine=9
+CursorColumn=3
+CursorLine=39
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:install.tex]
 CursorColumn=0
-CursorLine=390
+CursorLine=285
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:intro.tex]
 CursorColumn=0
-CursorLine=35
+CursorLine=13
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:leaflet.tex]
 CursorColumn=0
 CursorLine=0
 
 [view-settings,view=0,item:letter.tex]
-CursorColumn=23
-CursorLine=100
+CursorColumn=0
+CursorLine=324
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:lit.bib]
 CursorColumn=0
 CursorLine=15
 
 [view-settings,view=0,item:logo.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=38
+CursorLine=21
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:nexus.tex]
-CursorColumn=29
-CursorLine=29
+CursorColumn=35
+CursorLine=13
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:poster.tex]
-CursorColumn=13
-CursorLine=134
+CursorColumn=0
+CursorLine=356
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:preamble.tex]
-CursorColumn=21
-CursorLine=13
+CursorColumn=14
+CursorLine=7
+JumpList=
+ViMarks=
 
 [view-settings,view=0,item:quickstart.tex]
 CursorColumn=0
 CursorLine=30
 
+[view-settings,view=0,item:tubsdoc.tex]
+CursorColumn=36
+CursorLine=5
+JumpList=
+ViMarks=
+
 [view-settings,view=0,item:tubsdocguide.tex]
-CursorColumn=24
-CursorLine=110
+CursorColumn=0
+CursorLine=73
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:unsorted.tex]
 CursorColumn=0
-CursorLine=14
+CursorLine=3
+JumpList=
+ViMarks=
