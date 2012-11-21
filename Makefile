@@ -5,18 +5,21 @@
 include Makefile.include
 
 # 
-HG_TEXSTYLE = tex.hgstyle
-HG_DTXOUT = tubsvers.inc
+# HG_TEXSTYLE = tex.hgstyle
 
 
-.PHONY: clean mkdir generate source sourcedoc documentation examples buildinstaller zip deb exe fetch
+.PHONY: clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch
 
-release: info generate buildinstaller mkdir fetch
+release: clean generate buildinstaller mkdir fetch
 
-info:
-	$(ECHO) 'This is tubslatex Version $(TUBSLATEX_FULLVERSION)'
+generate: $(HG_DTXOUT) sourcedoc documentation examples
 
-generate: source sourcedoc documentation examples
+versiondtx:
+	$(ECHO) -e '$(WARN_COLOR)This is tubslatex Version $(TUBSLATEX_FULLVERSION)$(NO_COLOR)'
+	$(CAT) $(TEX_HGTEMPLATE) \
+	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
+	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
+	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)
 
 # TODO: make dependent from existence of directory
 mkdir:
@@ -28,11 +31,6 @@ documentation:
 examples:
 	$(MAKE) -C $(EXAMPLE_DIR)
 
-source:
-	$(CAT) tex.hgtemplate \
-	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
-	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
-	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)
 # 	for i in $(ALL_DIRS); do make -C $$i src; done
 
 sourcedoc:

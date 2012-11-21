@@ -7,10 +7,12 @@ V_MAJOR = 0
 V_MINOR = 3
 V_PATCH = 
 
+.PHONY: versiondtx
+
 # hg-Version
 HG_REVISION := $(shell hg tip --template '{rev}')
 HG_DATE := $(shell hg tip --template '{date|shortdate}' | tr - /)
-HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
+# HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
 # tubslatex-Version
 TUBSLATEX_VERSION = 0.3-beta3
 # TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)
@@ -18,8 +20,9 @@ TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
 TUBSLATEX_DEBVERSION = 1:0.3.0~r$(HG_REVISION)beta3
 
 # 
-HG_TEXSTYLE = tex.hgstyle
-HG_DTXOUT = tubsvers.inc
+# HG_TEXSTYLE = tex.hgstyle
+HG_DTXOUT = $(BASEDIR)/tubsvers.inc
+TEX_HGTEMPLATE = $(BASEDIR)/tex.hgtemplate
 
 # Konfigurierbare Verzeichnisse
 BASEDIR = ~/CD-LaTeX
@@ -112,3 +115,6 @@ OK_STRING=$(OK_COLOR)[OK]$(NO_COLOR)
 ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
 WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
 DONE_STRING=$(OK_COLOR)[DONE]$(NO_COLOR)
+
+
+HG_DTXOUT = $(BASEDIR)/tubsvers.inc
