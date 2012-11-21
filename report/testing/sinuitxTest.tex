@@ -1,0 +1,64 @@
+%%% DOKUMENTKLASSE %%%
+\documentclass[a4paper,11pt]{scrartcl}
+\usepackage[style=screen]{tubsdoc}
+
+
+% \renewcommand{\rmdefault}{lmr}
+% \renewcommand{\sfdefault}{lmss}
+% \renewcommand{\ttdefault}{lmtt}
+
+% \SetMathAlphabet{\mathbf}{normal}{OT1}{lmr}{bx}{n}
+
+% \SetMathAlphabet{\mathsf}{normal}{LY1}{NexusProSans}{m}{n}
+% \SetMathAlphabet{\mathsf}{normal}{OT1}{zplm}{m}{n}% TODO: sans for pazo? (Palatino)
+
+% \SetMathAlphabet{\mathit}{normal}{OT1}{lmr}{m}{it}
+
+% \SetMathAlphabet{\mathtt}{normal}{LY1}{txtt}{m}{n}
+
+% \SetMathAlphabet{\mathbf}{bold}  {OT1}{lmr}{bx}{n}
+% \SetMathAlphabet{\mathsf}{bold}  {OT1}{lmss}{bx}{n}
+% \SetMathAlphabet{\mathit}{bold}  {OT1}{lmr}{bx}{it}
+% \SetMathAlphabet{\mathtt}{bold}  {OT1}{lmtt}{m}{n}
+
+% \def\mathsterling{\mathit{\mathchar"70BF}}
+
+
+%%% PAKETE %%%
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{siunitx}
+
+%%% TITELSEITE %%%
+\title{Titel}
+\subtitle{Untertitel}
+\author{WAutor}
+
+
+
+%%% DOKUMENT %%%
+\begin{document}
+% \maketitle
+
+\makeatletter
+  \clearpage
+    {\Large
+%       \lineskip .5em%
+      \begin{tabular}[t]{c}
+\@author
+      \end{tabular}\par
+    }%
+  \par
+  \vskip 2em
+\makeatother
+
+% \tableofcontents
+% \section{Erste Section WWW}
+% \ldots
+\[WWWasdf\mathsf{WWWFoobar}WWWasdf\]
+\[WWWasdf\mathtt{WWWFoobar}WWWasdf\]
+\[WWWasdf\mathbf{WWWFoobar}WWWasdf\]
+% \[WWWasdf\mathfrak{WWWFoobar}WWWasdf\]
+
+% \si{5}{\metre}
+\end{document}

@@ -3,23 +3,9 @@
 \usepackage{lipsum}
 
 \usepackage[ngerman]{babel}
-%opening
-\title{Beispieltitel}
-\subtitle{Untertitel}
-\author{Max Mustermann}
-\publishers{Institut fuer Lorem Ipsum} % to logo?
-\address{%
-  TU Braunschweig\\
-  \textbf{Institut für Lorem Ipsum}\\
-  Schleinitzstraße 13\\
-  38106 Braunschweig}
-\backpageinfo{%
-Thist ist backpage \hfill with info
-\vfill
-Well, its good!
-}
 
 \geometry{top=0mm,left=0mm,right=0cm}
+
 \begin{document}
 
 \bglayout[sender=bottom]{%
@@ -27,7 +13,12 @@ Well, its good!
   \bgelement[bgcolor=tuGray40]{1}
   \bgelement[bgcolor=tuGray20]{1}
   \bgelement[bgcolor=tuGray40]{1}
+  \bgelement[bgcolor=tuGray20]{1}
+  \bgelement[bgcolor=tuGray40]{1}
+  \bgelement[bgcolor=tuGray20]{1}
+  \bgelement[bgcolor=tuGray40]{1}
 }
+
 \begin{gaussbox}[sender=bottom]{1}{1}{6}{1}
   \lipsum[1]
 \end{gaussbox}
@@ -81,10 +72,4 @@ Well, its good!
   con\-sec\-te\-tuer
 \end{gaussbox}
 
-~\clearpage
-\makeatletter
-% \begin{addmargin}{-\tubspage@borderwidth}
- \lipsum[1-2]
-% \end{addmargin}
-\makeatother
 \end{document}

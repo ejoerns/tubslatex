@@ -3,19 +3,41 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lipsum}
 
-
-\title{Test title}
-\author{Dummy author}
+\titlepicture{infozentrum}
+\title{Der Titel}
+\subtitle{Untertitel}
+\subject{Das Thema}
+\author{Dummy author\thanks{Danke Dir Heinz}}
 \address{Somewhere over the rainbow}
+\publishers{Veröffentlicher}
+
+\backpageinfo{[backpageinf] Dieser Text sollte auf der Rückseite stehen}
+\uppertitleback{[uppertitleback] Dieser Text sollte auf der Rückseite oben stehen}% TODO: doc
+\lowertitleback{[lowertitleback] Dieser Text sollte auf der Rückseite unten stehen}% TODO: doc
 
 \begin{document}
 
-\lipsum[1-9]
+\dedication{Gewidmet den Freunden der Typographie}
+
+
 \maketitle[image]
 
 \makebackpage[info]
 
 \lipsum[1-9]
 
+\end{document}
+
+
+\begin{document}
+
+% \thanks{Danke an alle}
+
+\maketitle[image]
+
+\makebackpage[info]
+
+\lipsum[1-9]
 
 \end{document}
+

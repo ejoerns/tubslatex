@@ -1,0 +1,36 @@
+%
+% Testet die Verschiedenen Optionen der imagefit-Funktion
+%
+% (c) 2012 by Enrico Jörns
+%
+\documentclass[a4paper,10pt]{tubsartcl}
+\usepackage[utf8]{inputenc}
+
+
+\begin{document}
+
+\begin{gausspage}
+  \begin{segment}[bgimage=defaulttitlepicture, imagefit=clipped]{8}
+    \Huge clipped
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgimage=defaulttitlepicture, imagefit=scaled]{8}
+    \Huge scaled
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgimage=defaulttitlepicture,imagefit=hclip]{8}
+    \Huge hclip
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgimage=defaulttitlepicture,imagefit=vclip]{8}
+    \Huge vclip
+  \end{segment}
+\end{gausspage}
+
+\end{document}

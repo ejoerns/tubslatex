@@ -1,0 +1,24 @@
+%%%%% Beispiel
+\documentclass{tubsreprt}
+\usepackage{tikz}
+
+\author{TW}
+\title{Bugreport}
+\subtitle{Minimalbeispiel}
+
+\usetikzlibrary{external}
+\tikzexternalize
+
+\begin{document}
+\maketitle[image]
+
+\begin{minipage}{\textwidth}
+\centering
+    \begin{tikzpicture}
+    \node [rectangle, draw, minimum width=15cm, minimum height=20cm]
+    {Hallo Welt!};
+    \end{tikzpicture}
+\end{minipage}
+
+\end{document}
+%%%%% ENDE
