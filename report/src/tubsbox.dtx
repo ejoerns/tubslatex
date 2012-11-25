@@ -72,7 +72,7 @@
 %
 % \begin{abstract}
 %   Diese Datei stellt die Umgebung |gaussbox| für Darstellungen im Gaußraster 
-%   und die Umgebungen |scifibox| für Darstellungen im Modulraster zur Verfügung.
+%   und die Umgebungen |modulebox| für Darstellungen im Modulraster zur Verfügung.
 % \end{abstract}
 %
 % \tableofcontents
@@ -122,7 +122,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Alle hier beschriebenen Optionen sind sowohl für die |gaussbox| als
-% auch für die |scifibox| verwendbar.
+% auch für die |modulebox| verwendbar.
 %
 %    \begin{macro}{tubsbox@bottomsender}
 % Merker für Option '|sender|'.
@@ -162,14 +162,15 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\scifiboxsetup}
+%    \begin{macro}{\moduleboxsetup}
 % \oarg{option}\par
-% Setzt keys für die |scifibox|.
-% Die keys werden dabei an die Familien |tubsbox.sty| und |scifibox| delegiert.
+% Setzt keys für die |modulebox|.
+% Die keys werden dabei an die Familien |tubsbox.sty| und |modulebox| delegiert.
 %    \begin{macrocode}
-\newcommand*{\scifiboxsetup}[1][]{%
+\newcommand*{\modulesetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
-%   \setkeys*{scifibox}{#1}
+%   \setkeys*{tubsbox}{#1}
+%   \setrmkeys{modulebox}
   % TODO: test for unused keys
 }
 %    \end{macrocode}
@@ -187,6 +188,9 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
+%
+% \subsection{Paket-Optionen}
 %
 %
 % \begin{key}{tubsbox.sty}{sender}
@@ -236,42 +240,6 @@
 %    \end{macrocode}
 %    \end{key}
 %
-% Hierin werden vfill-Kommandos gespeichert, um die vertikale Positionierung
-% des Box-Inhaltes über Optionen steuern zu können.
-%    \begin{macrocode}
-\newcommand\tb@topfill{\relax}
-\newcommand\tb@bottomfill{\relax}
-%    \end{macrocode}
-%
-%    \begin{key}{tubsbox.sty}{t}
-%  Inhalt in Boxen oben ausrichten.
-%    \begin{macrocode}
-\define@key{tubsbox.sty}{t}[true]{%
-  \renewcommand\tb@topfill{\relax}
-  \renewcommand\tb@bottomfill{\vfill}
-}
-%    \end{macrocode}
-%    \end{key}
-%
-%    \begin{key}{tubsbox.sty}{c}
-%  Inhalt in Boxen vertikal zentrieren.
-%    \begin{macrocode}
-\define@key{tubsbox.sty}{c}[true]{%
-  \renewcommand\tb@topfill{\vfill}
-  \renewcommand\tb@bottomfill{\vfill}
-}
-%    \end{macrocode}
-%    \end{key}
-%
-%    \begin{key}{tubsbox.sty}{b}
-%  Inhalt in Boxen unten ausrichten.
-%    \begin{macrocode}
-\define@key{tubsbox.sty}{b}[true]{%
-  \renewcommand\tb@topfill{\vfill}
-  \renewcommand\tb@bottomfill{\relax}
-}
-%    \end{macrocode}
-%    \end{key}
 %
 %
 % Paket-Optionen auswerten,
@@ -279,6 +247,83 @@
 %    \begin{macrocode}
 \ProcessOptionsX\relax%
 %    \end{macrocode}%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Gemeiname Optionen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Optionen der Famillie |tubsbox| sind sowohl für das Gaussraster (|gaussbox|)
+% als auch für das Modulsystem (|modulebox|) verfügbar
+%    \begin{key}{tubsbox.sty}{bgcolor}
+%   Standard-Hintergrundfarbe der Boxen festlegen.\\
+%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\\
+%   Standardmäßig haben die Boxen keine Hintergrundfarbe.%TODO?
+%    \begin{macrocode}
+\define@key{tubsbox}{bgcolor}{%
+  \ifthenelse{\equal{#1}{none}}{%
+    \renewcommand\tubsbox@colorbox{\relax}
+  }{%
+    \def\bgcolor{#1}
+    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
+  }
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubsbox}{fgcolor}
+% Legt Vordergrund- bzw. Schriftfarbe der Box fest
+%    \begin{macrocode}
+\define@key{tubsbox}{fgcolor}{
+  \ifthenelse{\equal{#1}{none}}{%
+  }{%
+    \color{#1}%
+  }
+}
+%    \end{macrocode}
+%    \end{key}
+%
+% Hierin werden vfill-Kommandos gespeichert, um die vertikale Positionierung
+% des Box-Inhaltes über Optionen steuern zu können.
+%    \begin{macrocode}
+\newcommand\tb@topfill{\relax}
+\newcommand\tb@bottomfill{\relax}
+%    \end{macrocode}
+%
+%    \begin{key}{tubsbox}{t}
+%  Inhalt in Boxen oben ausrichten.
+%    \begin{macrocode}
+\define@key{tubsbox}{t}[true]{%
+  \renewcommand\tb@topfill{\relax}
+  \renewcommand\tb@bottomfill{\vfill}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubsbox}{c}
+%  Inhalt in Boxen vertikal zentrieren.
+%    \begin{macrocode}
+\define@key{tubsbox}{c}[true]{%
+  \renewcommand\tb@topfill{\vfill}
+  \renewcommand\tb@bottomfill{\vfill}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{tubsbox}{b}
+%  Inhalt in Boxen unten ausrichten.
+%    \begin{macrocode}
+\define@key{tubsbox}{b}[true]{%
+  \renewcommand\tb@topfill{\vfill}
+  \renewcommand\tb@bottomfill{\relax}
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%
+% Default-Einstellungen für tubsboxen:
+%    \begin{macrocode}
+% \setkeys{tubsbox}{t,bgcolor=tuWhite,fgcolor=tuBlack}{}% TODO: check!
+%    \end{macrocode}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Gaussbox-Optionen}
@@ -340,16 +385,6 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{gaussbox}{fgcolor}
-%    \begin{macrocode}
-\define@key{gaussbox}{fgcolor}{
-  \ifthenelse{\equal{#1}{none}}{%
-  }{%
-    \color{#1}%
-  }
-}
-%    \end{macrocode}
-%    \end{key}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Gaußraster-Box}
@@ -572,7 +607,7 @@
 %
 %
 %    \begin{macro}{\tb@sb@setorig}
-% Berechnet den Ursprung des von scifibox benutzten Koordinatensystems (neu).
+% Berechnet den Ursprung des von modulebox benutzten Koordinatensystems (neu).
 %    \begin{macrocode}
 \providecommand\tb@sb@setorig{%
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
@@ -642,30 +677,30 @@
 %
 % Boolean für Hintergrundbild
 %    \begin{macrocode}
-\newboolean{scifibox@showbgimage}
-\setboolean{scifibox@showbgimage}{false}
+\newboolean{modulebox@showbgimage}
+\setboolean{modulebox@showbgimage}{false}
 \newcommand{\@bgimage@to@insert}{dummy}
 %    \end{macrocode}
 %
 % \subsubsection{Optionen}
 %
-%    \begin{key}{scifibox}{bgimage}
+%    \begin{key}{modulebox}{bgimage}
 % Setze Hintergrundbild.
 %    \begin{macrocode}
-\define@key{scifibox}{bgimage}[none]{%
+\define@key{modulebox}{bgimage}[none]{%
   \ifthenelse{\equal{#1}{none}}{%
-    \setboolean{scifibox@showbgimage}{false}%
+    \setboolean{modulebox@showbgimage}{false}%
   }{%
-    \setkeys{scifibox}{bgcolor=none}%
+    \setkeys{tubsbox}{bgcolor=none}%TODO?
     \renewcommand{\@bgimage@to@insert}{#1}%
-    \setboolean{scifibox@showbgimage}{true}%
+    \setboolean{modulebox@showbgimage}{true}%
   }
 }
 %    \end{macrocode}
 %    \end{key}
 %
 %
-%    \begin{key}{scifibox}{imagefit}
+%    \begin{key}{modulebox}{imagefit}
 % Einstellung der Bildeinpassung in den Darstellungsbereich.\par
 % \noindent\begin{tabularx}{\textwidth}{lX}
 %   |scaled| & Bild wird horiz. und vert. passend skaliert\\
@@ -680,7 +715,7 @@
 % TODO: rename internal cmds\\
 % TODO: add vclip, hclip
 %    \begin{macrocode}
-\define@choicekey{scifibox}{imagefit}[\val\nr]{%
+\define@choicekey{modulebox}{imagefit}[\val\nr]{%
         default,scaled,autoclip,cropped,clipx,cropx,clipy,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax% default
     \PackageInfo{tubsstyle}{%
@@ -716,26 +751,26 @@
 %   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\par
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.
 %    \begin{macrocode}
-\define@key{scifibox}{bgcolor}{% TODO: noch exakte kopie von tubsstyle.sty
-  \ifthenelse{\equal{#1}{none}}{%
-    \renewcommand\tubsbox@colorbox{\relax}
-  }{%
-    \setkeys{scifibox}{bgimage=none}
-    \def\bgcolor{#1}
-    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
-  }
-}
+% \define@key{modulebox}{bgcolor}{% TODO: noch exakte kopie von tubsstyle.sty
+%   \ifthenelse{\equal{#1}{none}}{%
+%     \renewcommand\tubsbox@colorbox{\relax}
+%   }{%
+%     \setkeys{modulebox}{bgimage=none}
+%     \def\bgcolor{#1}
+%     \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
+%   }
+% }
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{scifibox}{fgcolor}
+%    \begin{key}{modulebox}{fgcolor}
 %    \begin{macrocode}
-\define@key{scifibox}{fgcolor}{
-  \ifthenelse{\equal{#1}{none}}{%
-  }{%
-    \color{#1}%
-  }
-}
+% \define@key{modulebox}{fgcolor}{
+%   \ifthenelse{\equal{#1}{none}}{%
+%   }{%
+%     \color{#1}%
+%   }
+% }
 %    \end{macrocode}
 %    \end{key}
 %
@@ -894,7 +929,8 @@
 %    \begin{macrocode}
 \newenvironment{modcontainer}[2][]{%
   \writetubslog{modcontainer: #1, #2}%
-  \scifiboxsetup[bgcolor=tuWhite,#1]%
+  \modulesetup[bgcolor=tuWhite,#1]%
+  \setkeys{tubsbox}{t,bgcolor=tuWhite,fgcolor=tuBlack}{}% TODO: check!
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}%
   \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}%
@@ -927,8 +963,9 @@
 %    \begin{macrocode}
 \newenvironment{@modrow}[1][X]{%
   % setze keys
-%   \scifibox@setdefault@opts
-  \setkeys*{scifibox}{#1}%
+%   \modulebox@setdefault@opts
+  \setkeys*{tubsbox}{#1}%
+  \setrmkeys*{modulebox}%
   \edef\@remaining@keys{\XKV@rm}%
   % Ersetze mit X, falls keine Länge angegeben
   \ifthenelse{\equal{\@remaining@keys}{}}{%
@@ -940,15 +977,15 @@
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@collength@'
   \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@collength@}%
   \stepcounter{tubs@sb@current@row}%
-  % Wenn nur eine Spalte, dann direkt scifibox setzen
+  % Wenn nur eine Spalte, dann direkt modulebox setzen
   \ifthenelse{\expandafter\equal\expandafter{\@remaining@keys}{X}}{%
     \stepcounter{tubs@sb@current@col}%
     \expandafter\edef\expandafter\@argI\expandafter{%
       \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}%
     \expandafter\edef\expandafter\@argII\expandafter{%
       \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}%
-    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}%
-    \def\tubs@sb@box@endcmd{\end@scifibox}%
+    \def\tubs@sb@box@cmd{\@modulebox{\@argI}{\@argII}}%
+    \def\tubs@sb@box@endcmd{\end@modulebox}%
   }{%
     \def\tubs@sb@box@cmd{\relax}%
     \def\tubs@sb@box@endcmd{\relax}%
@@ -977,7 +1014,7 @@
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros
 % mit Präfix |tubs@sb@collength@|. Wenn nur eine einzelne (X)-Spalte
 % definiert wurde, bzw. das optionale Argument leer gelassen, so wird
-% direkt eine scifibox erstellt.
+% direkt eine modulebox erstellt.
 %    \begin{macrocode}
 \newcommand{\@@modrow}{%
   \@ifnextchar[{%
@@ -1012,8 +1049,9 @@
 %    \begin{macrocode}
 \newenvironment{@modcol}[1][]{%
   % setze keys
-%   \scifibox@setdefault@opts
-  \setkeys*{scifibox}{#1}
+%   \modulebox@setdefault@opts
+  \setkeys*{tubsbox}{#1}
+  \setrmkeys*{modulebox}
   \edef\@remaining@keys{\XKV@rm}%
   % Ersetze mit X, falls keine Länge angegeben
   \ifthenelse{\equal{\@remaining@keys}{}}{%
@@ -1025,15 +1063,15 @@
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@subrowlength@'
   \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@subrowlength@}%
   \stepcounter{tubs@sb@current@col}%
-  % Wenn nur eine Spalte, dann direkt scifibox setzen
+  % Wenn nur eine Spalte, dann direkt modulebox setzen
   \ifthenelse{\expandafter\equal\expandafter{\@remaining@keys}{X}}{%
     \stepcounter{tubs@sb@current@subrow}%
     \expandafter\edef\expandafter\@argI\expandafter{%
       \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}%
     \expandafter\edef\expandafter\@argII\expandafter{%
       \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}%
-    \def\tubs@sb@box@cmd{\@scifibox{\@argI}{\@argII}}%
-    \def\tubs@sb@box@endcmd{\end@scifibox}%
+    \def\tubs@sb@box@cmd{\@modulebox{\@argI}{\@argII}}%
+    \def\tubs@sb@box@endcmd{\end@modulebox}%
   }{%
     \def\tubs@sb@box@cmd{\relax}%
     \def\tubs@sb@box@endcmd{\relax}%
@@ -1101,8 +1139,9 @@
 %    \begin{macrocode}
 \newenvironment{@modsubrow}[1][]{%
   % setze keys
-%   \scifibox@setdefault@opts
-  \setkeys*{scifibox}{#1}%
+%   \modulebox@setdefault@opts
+  \setkeys*{tubsbox}{#1}%
+  \setrmkeys*{modulebox}%
   \stepcounter{tubs@sb@current@subrow}%
   \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}%
@@ -1110,9 +1149,9 @@
     \csname tubs@sb@subrowlength@\thetubs@sb@current@subrow\endcsname}%
   \expandafter\edef\expandafter\@argII\expandafter{%
     \csname tubs@sb@collength@\thetubs@sb@current@col\endcsname}%
-  \@scifibox[][\@oarg]{\@argI}{\@argII}%
+  \@modulebox[][\@oarg]{\@argI}{\@argII}%
 }{%
-  \end@scifibox%
+  \end@modulebox%
 }
 %    \end{macrocode}
 %    \end{environment}
@@ -1132,7 +1171,7 @@
 %    \begin{macro}{\tubs@sb@box@ypos}
 %    \begin{macro}{\tubs@sb@box@rowheight}
 %    \begin{macro}{\tubs@sb@box@splitrow}
-% Von |@scifibox| verwendete Längen.
+% Von |@modulebox| verwendete Längen.
 %    \begin{macrocode}
 \newlength{\tubs@sb@box@xpos}% x-Position
 \newlength{\tubs@sb@box@ypos}% y-Position
@@ -1142,13 +1181,13 @@
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
-%    \begin{macro}{@scifibox}
+%    \begin{macro}{@modulebox}
 % \oarg{rowheight}\marg{height}\marg{width}\par
 % Box für Inhalt auf wissenschaftlichen Postern (Modulsystem).
 % Dies ist unabhängig vom Gaußraster und hat schmalere Ränder als die gaussbox.
 % Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
-\newenvironment{@@scifibox}[3][\relax]{%
+\newenvironment{@@modulebox}[3][\relax]{%
   \tb@sb@setorig%
   % Argumente sichern
   \ifx#1\relax%
@@ -1169,11 +1208,13 @@
       \setlength{\moduleheight}{\@current@height}%
       \setlength{\modulewidth}{\@current@width}%
       \vspace*{0.5\tubs@sb@padding}%
+      \tb@topfill
 }{%
+      \tb@bottomfill
       \vspace*{0.5\tubs@sb@padding}%
     \end{minipage}%
   \end{lrbox}%
-  \ifthenelse{\boolean{scifibox@showbgimage}}{%
+  \ifthenelse{\boolean{modulebox@showbgimage}}{%
     \tubs@sb@calc@autoscale{\@bgimage@to@insert}%
           {\@current@width}%
           {\@current@height}%
@@ -1184,7 +1225,7 @@
   }{}
   % Definiere und platziere Textblock mit gespeichertem Inhalt.
   % Setze zusätzliche Box für Hintergrundbild, falls gewünscht
-  \ifthenelse{\boolean{scifibox@showbgimage}}{%
+  \ifthenelse{\boolean{modulebox@showbgimage}}{%
     \begin{textblock*}{\@current@width}(\tubs@sb@box@xpos,\tubs@sb@box@ypos)%
       \setlength\fboxsep{0mm}%
       \tubsbox@framebox{\tubsbox@colorbox{%
@@ -1200,7 +1241,7 @@
       \hspace{0.5\tubs@sb@padding}%
     }}%
   \end{textblock*}%
-  \writetubslog{scifibox @(\the\tubs@sb@box@xpos, \the\tubs@sb@box@ypos)}%
+  \writetubslog{modulebox @(\the\tubs@sb@box@xpos, \the\tubs@sb@box@ypos)}%
   \if@tubs@dbg% DEBUGGING output!!
   \begin{textblock*}{\@current@width}(\tubs@sb@box@xpos,\tubs@sb@box@ypos)%
     \colorbox{tuWhite}{\the\tubs@sb@box@xpos, \the\tubs@sb@box@ypos}%
@@ -1239,29 +1280,29 @@
   \global\tubs@sb@box@splitrow=\tubs@sb@box@splitrow%
 }
 % Umgebungsende
-\let\end@scifibox\end@@scifibox
+\let\end@modulebox\end@@modulebox
 %
-\newcommand\scifibox@setdefault@opts{%
-  \setkeys{scifibox}{bgcolor=tuWhite,fgcolor=tuRed}%TODO
+\newcommand\modulebox@setdefault@opts{%
+  \setkeys{tubsbox}{bgcolor=tuWhite,fgcolor=tuRed}%TODO
 }
 %    \end{macrocode}
 %
 % Behandlung von erstem optionalen Argument (keyvals)
 %    \begin{macrocode}
-\def\@scifibox@oparam[#1]{%
-  \setkeys*{scifibox}{#1}%
+\def\@modulebox@oparam[#1]{%
+  \setkeys*{modulebox}{#1}%
   \setkeys*{gaussbox}{#1}%
-  \@@scifibox%
+  \@@modulebox%
 }
 %    \end{macrocode}
 %
 % Test nach erstem optionalen Argument (keyvals)
 %    \begin{macrocode}
-\def\@scifibox{%
+\def\@modulebox{%
   \@ifnextchar[{%
-    \@scifibox@oparam%
+    \@modulebox@oparam%
   }{%
-    \@@scifibox%
+    \@@modulebox%
   }%
 }
 %    \end{macrocode}
@@ -1277,5 +1318,5 @@
 % Präfixe:
 % tubs  - allgemeiner Präfix
 % gb    - Präfix für gaussbox
-% sb    - Präfix für scifibox
+% sb    - Präfix für modulebox
 %

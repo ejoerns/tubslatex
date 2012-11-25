@@ -70,7 +70,7 @@
 %
 % \begin{abstract}
 %   Diese Datei stellt Befehle zur Verfügung, um die Basiselemente des
-%   Corporate-Design im Hintergrund des Seite darzustellen. Dies geschieht
+%   Corporate-Design im Hintergrund der Seite darzustellen. Dies geschieht
 %   unter Verwendung des Paketes |eso-pic|.
 % \end{abstract}
 %
@@ -115,7 +115,7 @@
 %    \begin{key}{}{sender}
 % Position des Absenderbereichs. Mögliche Werte: |top|, |bottom|
 %    \begin{macrocode}
-\newcommand*\tubs@ts@sender@default{top}
+\newcommand*\tubs@ts@sender@default{}
 \define@choicekey*{tubsstyle.sty}{sender}[\val\nr]{top,bottom}{%
   \ifcase\nr\relax
     \presetkeys{bglayout}{sender=top}{}
@@ -170,7 +170,7 @@
 %
 %    \begin{macrocode}
 %<*package>
-\ExecuteOptionsX{sender=top, scifiposter=false}
+\ExecuteOptionsX{sender=top, twoside=false, scifiposter=false, fullline=false}
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
@@ -1104,9 +1104,9 @@
 \newenvironment{modulepage}[1][]{%
   \clearpage
   \@layout@pre{pages=single,#1}
-  \scifiboxsetup[nosep,#1]%TODO...
+%   \modulesetup[#1]%TODO...
   \sffamily
-  \modcontainer
+  \modcontainer[#1]
 }{%
   \endmodcontainer
   \@layout@post

@@ -37,7 +37,7 @@
 % \iffalse
 %
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{tubsltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
@@ -52,16 +52,6 @@
 %</driver>
 % \fi
 %
-% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
-%  {\begin{list}{}{%
-%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
-%   \setlength{\itemsep}{-.5\parsep}
-%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
-%   \setlength{\leftmargin}{\labelwidth}%
-%   \addtolength{\leftmargin}{\labelsep}}%
-%   \raggedright}
-%  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
 %
@@ -78,8 +68,7 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Diese Datei stellt die Umgebung |gaussbox| für Darstellungen im Gaußraster 
-%   und Umgebungen für Darstellungen im Modulraster zur Verfügung.
+%   Poster-Darstellung
 % \end{abstract}
 %
 % \section{Benutzung}
@@ -204,61 +193,6 @@
 %    \end{macrocode}
 %    \end{environment}\end{environment}\end{environment}\end{environment}
 %
-%    \begin{environment}{@tubsposter}
-% Erzeugt eine neue Poster-Seite.
-% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
-% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
-% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
-% sind, zuletzt in den Hintergrund gezeichnet werden.
-%    \begin{macrocode}
-% TODO: Ersetzen durch gausspage!
-% \newenvironment{@tubsposter}[1][]{%
-%   \gaussboxsetup[nosep,#1]%TODO...
-%   \@layout@pre{#1}
-%   \thispagestyle{empty}%
-%   \sffamily
-% }{%
-%   \@layout@post
-%   ~\newpage
-% }
-%    \end{macrocode}
-%    \end{environment}
-%
-%    \begin{environment}{@scifiposter}
-%    \begin{macrocode}
-% \newenvironment{@scifiposter}[2][]{%
-%   % Setze Hintergrundlayout, setzt Standard-bgcolor
-%   \@layout@pre{bgcolor=tuSecondaryLight,#1}
-%   \sffamily
-%   \showtubslogo
-%   % Erstelle Modulseite
-%   \modulepage{#2}% TODO: just a bad hack
-% }{%
-%   \endmodulepage
-%   \@layout@post
-%   ~\newpage
-% }
-%    \end{macrocode}
-%    \end{environment}
-%
-%    \begin{environment}{@posterrow}
-% Erzeugt einen neuen Inhalts-Bereich.\\
-% Syntax: |\begin{posterrow}|\oarg{options}\marg{ysegments}\\
-% |options|: Mögliche Optionen,
-% |ysegments|: Anzahl Gauß-Elemente für Höhe.
-% Mögliche Optionen:
-% \begin{description}
-%   \item[|bgcolor|] Hintergrundfarbe
-%   \item[|bgimage|] Hintergrundbild
-% \end{description}
-% Erzeugt eine |tubsbox| mit voller Seitenbreite und angegebener Höhe.
-% Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
-% gesetzten Boxen bzw. ihren Höhen berechnet.
-%    \begin{macrocode}
-% \let\@posterrow\segment
-% \let\end@posterrow\endsegment
-%    \end{macrocode}
-%    \end{environment}
 %
 % \subsection{Zuweisung}
 %
