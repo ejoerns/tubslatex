@@ -136,17 +136,25 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{landscape}
+%    \begin{macrocode}
 \DeclareOptionX{landscape}{%
   \@tp@landscapetrue
   \ClassWarning{tubsposter}{option 'landscape' used}{}
 % TODO: support for scientific poster logo in landscape
 }
+%    \end{macrocode}
+%    \end{key}
 %
+%    \begin{key}{}{logo}
+%    \begin{macrocode}
 \def\@userlogo{}%
 \define@key{tubsposter}{logo}{%
   \gdef\@userlogo{#1}%
 }
-
+%    \end{macrocode}
+%    \end{key}
+%
 % TODO: place better...
 %    \begin{macrocode}
 \PassOptionsToPackage{fullline}{tubsstyle}
@@ -204,32 +212,32 @@
 % sind, zuletzt in den Hintergrund gezeichnet werden.
 %    \begin{macrocode}
 % TODO: Ersetzen durch gausspage!
-\newenvironment{@tubsposter}[1][]{%
-  \gaussboxsetup[nosep,#1]%TODO...
-  \@layout@pre{#1}
-  \thispagestyle{empty}%
-  \sffamily
-}{%
-  \@layout@post
-  ~\newpage
-}
+% \newenvironment{@tubsposter}[1][]{%
+%   \gaussboxsetup[nosep,#1]%TODO...
+%   \@layout@pre{#1}
+%   \thispagestyle{empty}%
+%   \sffamily
+% }{%
+%   \@layout@post
+%   ~\newpage
+% }
 %    \end{macrocode}
 %    \end{environment}
 %
 %    \begin{environment}{@scifiposter}
 %    \begin{macrocode}
-\newenvironment{@scifiposter}[2][]{%
-  % Setze Hintergrundlayout, setzt Standard-bgcolor
-  \@layout@pre{bgcolor=tuSecondaryLight,#1}
-  \sffamily
-  \showtubslogo
-  % Erstelle Modulseite
-  \modulepage[#1]{#2}
-}{%
-  \endmodulepage
-  \@layout@post
-  ~\newpage
-}
+% \newenvironment{@scifiposter}[2][]{%
+%   % Setze Hintergrundlayout, setzt Standard-bgcolor
+%   \@layout@pre{bgcolor=tuSecondaryLight,#1}
+%   \sffamily
+%   \showtubslogo
+%   % Erstelle Modulseite
+%   \modulepage{#2}% TODO: just a bad hack
+% }{%
+%   \endmodulepage
+%   \@layout@post
+%   ~\newpage
+% }
 %    \end{macrocode}
 %    \end{environment}
 %
@@ -247,8 +255,8 @@
 % Die vertikale Position im Gaußraster wird automatisch aus den zuvor 
 % gesetzten Boxen bzw. ihren Höhen berechnet.
 %    \begin{macrocode}
-\let\@posterrow\segment
-\let\end@posterrow\endsegment
+% \let\@posterrow\segment
+% \let\end@posterrow\endsegment
 %    \end{macrocode}
 %    \end{environment}
 %
@@ -257,8 +265,8 @@
 % Definiere Kommandos entsprechend gewählte Poster-Art.
 %    \begin{macrocode}
 \ifthenelse{\equal{\tubs@poster@style}{scifi}}{%
-  \let\tubsposter=\@scifiposter
-  \let\endtubsposter=\end@scifiposter
+  \let\tubsposter=\modulepage
+  \let\endtubsposter=\endmodulepage
   \let\posterrow=\modrow
   \let\endposterrow=\endmodrow
   \newenvironment{posterrow*}{\begin{modrow*}}{\end{modrow*}}
@@ -288,10 +296,10 @@
   }
 %
 }{% default
-  \let\tubsposter=\@tubsposter
-  \let\endtubsposter=\end@tubsposter
-  \let\posterrow=\@posterrow
-  \let\endposterrow=\end@posterrow
+  \let\tubsposter=\gausspage
+  \let\endtubsposter=\endgausspage
+  \let\posterrow=\segment
+  \let\endposterrow=\endsegment
   \def\postercol{\ClassError{tubsposter}{%
     Command is not supported in standard poster style!}{%
     Maybe you should choose another style with option 'style='}%

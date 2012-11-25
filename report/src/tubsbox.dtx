@@ -37,7 +37,7 @@
 % \iffalse
 %
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{tubsltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
@@ -51,17 +51,6 @@
 \end{document}
 %</driver>
 % \fi
-%
-% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
-%  {\begin{list}{}{%
-%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
-%   \setlength{\itemsep}{-.5\parsep}
-%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
-%   \setlength{\leftmargin}{\labelwidth}%
-%   \addtolength{\leftmargin}{\labelsep}}%
-%   \raggedright}
-%  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 08 / 23 }{Initial version}
 % \changes{v1.1}{ 2011 / 08 / 23 }{%
@@ -173,26 +162,27 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\gaussboxsetup}
+%    \begin{macro}{\scifiboxsetup}
 % \oarg{option}\par
 % Setzt keys für die |scifibox|.
 % Die keys werden dabei an die Familien |tubsbox.sty| und |scifibox| delegiert.
 %    \begin{macrocode}
 \newcommand*{\scifiboxsetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
-  \setkeys*{scifibox}{#1}
+%   \setkeys*{scifibox}{#1}
   % TODO: test for unused keys
 }
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\scifiboxsetup}
+%    \begin{macro}{\gaussboxsetup}
+% \oarg{option}\par
 % Setzt keys für die |gaussbox|
 % Die keys werden dabei an die Familien |tubsbox.sty| und |gaussbox| delegiert.
 %    \begin{macrocode}
 \newcommand*{\gaussboxsetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
-  \setkeys*{gaussbox}{#1}
+%   \setkeys*{gaussbox}{#1}
   % TODO: test for unused keys
 }
 %    \end{macrocode}
@@ -233,7 +223,7 @@
 %    \begin{key}{tubsbox.sty}{bgcolor}
 %   Standard-Hintergrundfarbe der Boxen festlegen.\\
 %   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\\
-%   Standardmäßig haben die Boxen keine Hintergrundfarbe.
+%   Standardmäßig haben die Boxen keine Hintergrundfarbe.%TODO?
 %    \begin{macrocode}
 \define@key{tubsbox.sty}{bgcolor}{%
   \ifthenelse{\equal{#1}{none}}{%
@@ -350,6 +340,16 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{gaussbox}{fgcolor}
+%    \begin{macrocode}
+\define@key{gaussbox}{fgcolor}{
+  \ifthenelse{\equal{#1}{none}}{%
+  }{%
+    \color{#1}%
+  }
+}
+%    \end{macrocode}
+%    \end{key}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Gaußraster-Box}
@@ -647,6 +647,7 @@
 \newcommand{\@bgimage@to@insert}{dummy}
 %    \end{macrocode}
 %
+% \subsubsection{Optionen}
 %
 %    \begin{key}{scifibox}{bgimage}
 % Setze Hintergrundbild.
@@ -665,8 +666,19 @@
 %
 %
 %    \begin{key}{scifibox}{imagefit}
-% NOTE: *crop*-Options are only kept for compatiblity reasons
-% TODO: rename internal cmds
+% Einstellung der Bildeinpassung in den Darstellungsbereich.\par
+% \noindent\begin{tabularx}{\textwidth}{lX}
+%   |scaled| & Bild wird horiz. und vert. passend skaliert\\
+%   |autoclip| & Bild wird entweder horiz. skaliert und vert. beschnitten
+%     oder vert. skaliert und horiz. beschnitten. Jeweils so, dass der
+%     Darstellungsbereich komplett ausgefüllt wird\\
+%   |clipx| & Bild wird vert. skaliert und horiz. beschnitten\\
+%   |clipy| & Bild wird horiz. skaliert und vert. beschnitten\\
+% \end{tabularx}
+%
+% NOTE: |crop|-Options are only kept for compatiblity reasons\par
+% TODO: rename internal cmds\\
+% TODO: add vclip, hclip
 %    \begin{macrocode}
 \define@choicekey{scifibox}{imagefit}[\val\nr]{%
         default,scaled,autoclip,cropped,clipx,cropx,clipy,cropy,fitheight,fitwidth}{%
@@ -716,6 +728,16 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{scifibox}{fgcolor}
+%    \begin{macrocode}
+\define@key{scifibox}{fgcolor}{
+  \ifthenelse{\equal{#1}{none}}{%
+  }{%
+    \color{#1}%
+  }
+}
+%    \end{macrocode}
+%    \end{key}
 %
 %    \begin{macrocode}
 \newcommand\tubs@sb@imagefit{cropped}
@@ -853,7 +875,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{environment}{modulepage}
+%    \begin{environment}{modcontainer}
 % \oarg{options}\marg{rows}\par
 % Extra-Umgebung für wissenschaftliche Poster mit Modulsystem.
 % Als Argument ist die gewünschte Anzahl an Modul-Zeilen anzugeben.
@@ -870,8 +892,8 @@
 % Wertet Argument-Liste aus und speichert ermittelte Längen in Makros mit Präfix
 % |tubs@sb@rowlength|.
 %    \begin{macrocode}
-\newenvironment{modulepage}[2][]{%
-  \writetubslog{modulepage: #1, #2}%
+\newenvironment{modcontainer}[2][]{%
+  \writetubslog{modcontainer: #1, #2}%
   \scifiboxsetup[bgcolor=tuWhite,#1]%
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}%
@@ -946,7 +968,7 @@
 % Umgebung mit der Modulzeilen mit Inhalt gefüllt oder
 % zusätzliche Spaltenbereiche angelegt werden können.
 % Das optionale Argument \emph{rows} hat dabei dieselbe Funktion wie
-% in |modulepage| beschrieben, allerdings definiert sie nun
+% in |modcontainer| beschrieben, allerdings definiert sie nun
 % \emph{Spalten}breiten.\par
 % Wenn nur eine einzelne (X)-Spalte definiert wurde, kann der Inhalt
 % direkt in die Umgebung geschrieben werden,
@@ -1220,7 +1242,7 @@
 \let\end@scifibox\end@@scifibox
 %
 \newcommand\scifibox@setdefault@opts{%
-  \setkeys{scifibox}{bgcolor=tuWhite}%
+  \setkeys{scifibox}{bgcolor=tuWhite,fgcolor=tuRed}%TODO
 }
 %    \end{macrocode}
 %

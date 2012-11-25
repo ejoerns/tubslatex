@@ -37,7 +37,7 @@
 % \iffalse
 %
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{tubsltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
@@ -53,16 +53,6 @@
 %</driver>
 % \fi
 %
-% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
-%  {\begin{list}{}{%
-%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
-%   \setlength{\itemsep}{-.5\parsep}
-%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
-%   \setlength{\leftmargin}{\labelwidth}%
-%   \addtolength{\leftmargin}{\labelsep}}%
-%   \raggedright}
-%  {\end{list}}
 %
 % \changes{v1.0}{ YYYY / MM / DD }{Initial version}
 %
@@ -152,6 +142,25 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{scifiposter}
+% Anpassungen für wissenschaftliches Layout
+%    \begin{macrocode}
+\def\ts@post@process{}
+\define@boolkey{tubsstyle.sty}[ts@]{scifiposter}[true]{%
+  \ifts@scifiposter
+    \def\ts@post@process{
+      \disable@keys{bglayout}{designhelper}%
+      \let\bgelement\undefined
+    }
+  \else
+    \def\ts@post@process{
+      \disable@keys{bglayout}{bgcolor}%
+    }
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % Fehler bei unbekannter Option
 %    \begin{macrocode}
 \DeclareOption*{%
@@ -161,7 +170,7 @@
 %
 %    \begin{macrocode}
 %<*package>
-\ExecuteOptionsX{sender=top}
+\ExecuteOptionsX{sender=top, scifiposter=false}
 \ProcessOptionsX*\relax
 %    \end{macrocode}
 %
@@ -838,6 +847,8 @@
 % Mit dieser Option kann der komplette Kommunikationsbereich mit einer
 % gewünschten Hintergrundfarbe gefüllt werden. Wird kein Wert mit übergeben,
 % so wird die Farbe tuGray20 benutzt.
+%
+% Diese Option ist nur für wissenschaftliche Poster zulässig!
 %    \begin{macrocode}
 \define@key{bglayout}{bgcolor}[tuGray20]{%
   \g@addto@macro{\@@next@shipout}{%
@@ -860,7 +871,7 @@
 %    \end{key}
 %
 % \begin{key}{bglayout}{border}
-% Erzeugt einen farbigen Rahmen.
+% Erzeugt einen farbigen Rahmen. %TODO: NICHT CD-konform!
 %    \begin{macrocode}
 \define@key{bglayout}{border}[tuBlack]{%
   \g@addto@macro{\@@next@shipout}{%
@@ -1083,6 +1094,32 @@
 %    \end{macrocode}
 %    \end{environment}
 %
+%    \begin{environment}{gausspage}
+% Erzeugt eine neue Gaußlayout-Seite.
+% Steuert die Aufbaureihenfolge des Hintergrundes, indem die
+% Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
+% |\tubs@draw@topline|, |\tubs@draw@tubslogo| und |tubs@draw@logo| gespeichert 
+% sind, zuletzt in den Hintergrund gezeichnet werden.
+%    \begin{macrocode}
+\newenvironment{modulepage}[1][]{%
+  \clearpage
+  \@layout@pre{pages=single,#1}
+  \scifiboxsetup[nosep,#1]%TODO...
+  \sffamily
+  \modcontainer
+}{%
+  \endmodcontainer
+  \@layout@post
+  ~\newpage
+}
+%    \end{macrocode}
+%    \end{environment}
 %
+%
+% Behandlungen für Paketende. Hier werden Optionen deaktiviert,
+% Befehle gelöscht, etc.
+%    \begin{macrocode}
+\ts@post@process
+%    \end{macrocode}
 % \Finale
 \endinput
