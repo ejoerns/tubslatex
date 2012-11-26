@@ -162,29 +162,26 @@
 %    \end{macro}
 %
 %
-%    \begin{macro}{\moduleboxsetup}
+%    \begin{macro}{\modulesetup}
 % \oarg{option}\par
 % Setzt keys für die |modulebox|.
-% Die keys werden dabei an die Familien |tubsbox.sty| und |modulebox| delegiert.
+% Die keys werden dabei an die Familien |tubsbox.sty|, |tubsbox| und |modulebox| delegiert.
+% TODO: Genaue Verwendung noch unklar.
 %    \begin{macrocode}
 \newcommand*{\modulesetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
-%   \setkeys*{tubsbox}{#1}
-%   \setrmkeys{modulebox}
-  % TODO: test for unused keys
+  \setrmkeys*{tubsbox}
+  \setrmkeys{modulebox}
 }
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\gaussboxsetup}
+%    \begin{macro}{\gausspagesetup}
 % \oarg{option}\par
-% Setzt keys für die |gaussbox|
-% Die keys werden dabei an die Familien |tubsbox.sty| und |gaussbox| delegiert.
+% Setzt Paketoptionen der familie tubsbox.sty
 %    \begin{macrocode}
-\newcommand*{\gaussboxsetup}[1][]{%
+\newcommand*{\gausspagesetup}[1][]{%
   \setkeys*{tubsbox.sty}{#1}
-%   \setkeys*{gaussbox}{#1}
-  % TODO: test for unused keys
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -230,17 +227,29 @@
 %   Standardmäßig haben die Boxen keine Hintergrundfarbe.%TODO?
 %    \begin{macrocode}
 \define@key{tubsbox.sty}{bgcolor}{%
-  \ifthenelse{\equal{#1}{none}}{%
-    \renewcommand\tubsbox@colorbox{\relax}
-  }{%
-    \def\bgcolor{#1}
-    \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
-  }
+%   \ifthenelse{\equal{#1}{none}}{%
+%     \renewcommand\tubsbox@colorbox{\relax}
+%   }{%
+%     \def\bgcolor{#1}
+%     \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
+%   }
 }
 %    \end{macrocode}
 %    \end{key}
 %
 %
+%    \begin{key}{tubsbox.sty}{nosep}
+% Kein Abstand zwischen Boxen
+%    \begin{macrocode}
+\define@boolkey{tubsbox.sty}[gb]{nosep}[true]{%
+  \ifgbnosep
+    \@gb@noseptrue%
+  \else%
+    \@gb@nosepfalse%
+  \fi%
+}
+%    \end{macrocode}
+%    \end{key}
 %
 % Paket-Optionen auswerten,
 % Initialisierung mit Werten der Paket-Optionen.
@@ -319,11 +328,6 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%
-% Default-Einstellungen für tubsboxen:
-%    \begin{macrocode}
-% \setkeys{tubsbox}{t,bgcolor=tuWhite,fgcolor=tuBlack}{}% TODO: check!
-%    \end{macrocode}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Gaussbox-Optionen}
@@ -427,28 +431,35 @@
   (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
 %    \end{macrocode}
 %
+%    \begin{macro}{\tubs@gb@topmargin}
+%    \begin{macro}{\tubs@gb@bottommargin}
+%    \begin{macro}{\tubs@gb@toppadding}
+% |\tubs@gb@toppadding| -- Abstand zwischen Text und oberer Box-Kante
+%    \begin{macrocode}
+\newlength{\tubs@gb@topmargin}
+\newlength{\tubs@gb@bottommargin}
+\newlength{\tubs@gb@toppadding}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
 %    \begin{macro}{\tubs@gb@leftmargin}
 %    \begin{macro}{\tubs@gb@rightmargin}
 % Korrektur der Textränder links und rechts außen.
 %    \begin{macrocode}
-\newlength{\tubs@gb@topmargin}
-\newlength{\tubs@gb@toppadding}
 \newlength{\tubs@gb@leftmargin}
 \newlength{\tubs@gb@rightmargin}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %    \begin{macro}{\tubs@gb@leftsep}
 %    \begin{macro}{\tubs@gb@rightsep}
-%    \begin{macro}{\tubs@gb@topmargin}
-%    \begin{macro}{\tubs@gb@toppadding}
-% Definition einiger benötigter Längen
+%    \begin{macro}{\tubs@gb@topsep}
+%    \begin{macro}{\tubs@gb@bottomsep}
+% Abstand zwischen Modulen, wenn diese mit Abstand gesetzt werden sollen
+% Der Abstand zwischen zwei Boxen ist dann die im CD festgelegte 'Stegbreite'.
 %    \begin{macrocode}
 \newlength{\tubs@gb@leftsep}
 \newlength{\tubs@gb@rightsep}
 \newlength{\tubs@gb@topsep}
 \newlength{\tubs@gb@bottomsep}
-%
-\newlength{\tubs@gb@bottommargin}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -487,63 +498,65 @@
 % \end{tabularx}
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][]{%
-\setkeys*{tubsbox.sty}{#1}
+% \setkeys*{tubsbox}{#1}
+\setkeys*{tubsbox}{#1}%
+\setrmkeys{gaussbox}%
 \tb@gb@setorig
-\setkeys*{gaussbox}{bgcolor=none,logosep=false,#1}
+% \setkeys*{gaussbox}{bgcolor=none,logosep=false,#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
 % Berechne Positionen
 \ifnum#2=1
-\setlength{\tubs@gb@leftmargin}{\tubspage@borderwidth}
-\setlength{\tubs@gb@rightmargin}{0mm}
-\setlength{\tubs@gb@leftsep}{0mm}
+\setlength{\tubs@gb@leftmargin}{\tubspage@borderwidth}%
+\setlength{\tubs@gb@rightmargin}{0mm}%
+\setlength{\tubs@gb@leftsep}{0mm}%
 \else
-\setlength{\tubs@gb@leftsep}{0.5\tubspage@columnsep}
+\setlength{\tubs@gb@leftsep}{0.5\tubspage@columnsep}%
 \fi
 %
-\setcounter{tubs@gb@lastelement}{#2-1}
+\setcounter{tubs@gb@lastelement}{#2-1}%
 \edef\tubs@gb@xpos{\thetubs@gb@lastelement}%TODO: etwas unschön...
-\addtocounter{tubs@gb@lastelement}{#4}
+\addtocounter{tubs@gb@lastelement}{#4}%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@xsegments
-  \setlength{\tubs@gb@rightmargin}{\tubspage@borderwidth}
-  \setlength{\tubs@gb@rightsep}{0mm}
+  \setlength{\tubs@gb@rightmargin}{\tubspage@borderwidth}%
+  \setlength{\tubs@gb@rightsep}{0mm}%
 \else
-  \setlength{\tubs@gb@rightmargin}{0mm}
-  \setlength{\tubs@gb@rightsep}{0.5\tubspage@columnsep}
+  \setlength{\tubs@gb@rightmargin}{0mm}%
+  \setlength{\tubs@gb@rightsep}{0.5\tubspage@columnsep}%
 \fi
 %    \end{macrocode}
 % Berechnung der oberen und unteren Ränder
 %    \begin{macrocode}
 \ifnum#3=1
-  \setlength{\tubs@gb@topmargin}{\tubspage@borderwidth}
-  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
+  \setlength{\tubs@gb@topmargin}{\tubspage@borderwidth}%
+  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
   \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
-  \setlength{\tubs@gb@bottommargin}{0mm}
-  \setlength{\tubs@gb@topsep}{0mm}
+  \setlength{\tubs@gb@bottommargin}{0mm}%
+  \setlength{\tubs@gb@topsep}{0mm}%
 \else
   \setlength{\tubs@gb@topsep}{0.5\tubspage@columnsep}%TODO: oder 0.5borderwidth?
-  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}
+  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
 \fi
-\setcounter{tubs@gb@lastelement}{#3+#5-1}
+\setcounter{tubs@gb@lastelement}{#3+#5-1}%
 % Prüfe, ob Werte korrekt
 \ifnum\value{tubs@gb@lastelement}>\tubspage@ysegments%
   \PackageError{tubstypearea}{Invalid segment number}{}%
 \fi%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments
-  \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}
-  \setlength{\tubs@gb@bottomsep}{0mm}
+  \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}%
+  \setlength{\tubs@gb@bottomsep}{0mm}%
 \else
-  \setlength{\tubs@gb@bottommargin}{0mm}
-  \setlength{\tubs@gb@bottomsep}{0.5\tubspage@columnsep}
+  \setlength{\tubs@gb@bottommargin}{0mm}%
+  \setlength{\tubs@gb@bottomsep}{0.5\tubspage@columnsep}%
 \fi%
 %
 % Lösche Zwischenabstände, wenn nosep gewählt wurde
 \if@gb@nosep
-  \setlength{\tubs@gb@topsep}{0mm}
-  \setlength{\tubs@gb@bottomsep}{0mm}
-  \setlength{\tubs@gb@leftsep}{0mm}
-  \setlength{\tubs@gb@rightsep}{0mm}
+  \setlength{\tubs@gb@topsep}{0mm}%
+  \setlength{\tubs@gb@bottomsep}{0mm}%
+  \setlength{\tubs@gb@leftsep}{0mm}%
+  \setlength{\tubs@gb@rightsep}{0mm}%
 \else\fi
 %
 %
@@ -574,7 +587,7 @@
   % restore par-lengths, avoid initial parskip
   \parskip\tubs@restore@parskip%
   \parindent\tubs@restore@parindent%
-  \vskip-\parskip
+  \vskip-\parskip%
   \vspace*{\tubs@gb@toppadding}%
   \tb@topfill%
 }{%
@@ -586,7 +599,7 @@
   \setlength{\fboxsep}{0cm}%
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
   \vspace*{\tubs@gb@topsep}%
-  \vskip-\parskip
+  \vspace*{-\parskip}%
   \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
       \tubsbox@framebox{\tubsbox@colorbox{%
@@ -746,34 +759,6 @@
 %    \end{key}
 %
 %
-% \begin{key}{tubsbox.sty}{bgcolor}
-%   Standard-Hintergrundfarbe der Boxen festlegen.
-%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\par
-%   Standardmäßig haben die Boxen keine Hintergrundfarbe.
-%    \begin{macrocode}
-% \define@key{modulebox}{bgcolor}{% TODO: noch exakte kopie von tubsstyle.sty
-%   \ifthenelse{\equal{#1}{none}}{%
-%     \renewcommand\tubsbox@colorbox{\relax}
-%   }{%
-%     \setkeys{modulebox}{bgimage=none}
-%     \def\bgcolor{#1}
-%     \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
-%   }
-% }
-%    \end{macrocode}
-%    \end{key}
-%
-%    \begin{key}{modulebox}{fgcolor}
-%    \begin{macrocode}
-% \define@key{modulebox}{fgcolor}{
-%   \ifthenelse{\equal{#1}{none}}{%
-%   }{%
-%     \color{#1}%
-%   }
-% }
-%    \end{macrocode}
-%    \end{key}
-%
 %    \begin{macrocode}
 \newcommand\tubs@sb@imagefit{cropped}
 \newcommand\@img@scale@param{}%
@@ -929,7 +914,8 @@
 %    \begin{macrocode}
 \newenvironment{modcontainer}[2][]{%
   \writetubslog{modcontainer: #1, #2}%
-  \modulesetup[bgcolor=tuWhite,#1]%
+%   \modulesetup[bgcolor=tuWhite,#1]%
+  \setkeys{tubsbox.sty}{#1}%
   \setkeys{tubsbox}{t,bgcolor=tuWhite,fgcolor=tuBlack}{}% TODO: check!
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}%

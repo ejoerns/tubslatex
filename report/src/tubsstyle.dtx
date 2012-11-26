@@ -1048,7 +1048,7 @@
 \newenvironment{gausspage}[1][]{%
   \clearpage
   \@layout@pre{pages=single,#1}
-  \gaussboxsetup[nosep,#1]%TODO...
+  \gausspagesetup[nosep,#1]
   \sffamily
 }{%
   \@layout@post
@@ -1076,16 +1076,16 @@
   \setkeys*{bgelement}{#1}% Muss vorher gesetzt werden, um |\XKV@rm| nutzen zu können
   % Sorgt dafür, dass alle Argumente erst expandiert und dann eingefügt werden!
   % TODO...
-  \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-      \edef\@tubs@arg{[sender=bottom,\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}
-  }{%
+  \def\@extra@opt{}
+  \ifthenelse{\boolean{tubsstyle@bottomsender}}{}{%
     \if@tubs@showlogo%
-      \edef\@tubs@arg{[logosep,\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}%
+      \def\@extra@opt{logosep}
     \else%
-      \edef\@tubs@arg{[\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}
+      \def\@extra@opt{}
     \fi%
   }
-  \bgelement[#1]{#2}%TODO: how to skip gaussbox related options?
+  \edef\@tubs@arg{[\@extra@opt,\XKV@rm]{1}{\thetubs@yseg@cnt}{6}{#2}}
+  \bgelement{#2}%TODO: how to skip gaussbox related options?
   % Erzeuge gausbox
   \expandafter\gaussbox\@tubs@arg
 }{%
@@ -1094,7 +1094,7 @@
 %    \end{macrocode}
 %    \end{environment}
 %
-%    \begin{environment}{gausspage}
+%    \begin{environment}{modulepage}
 % Erzeugt eine neue Gaußlayout-Seite.
 % Steuert die Aufbaureihenfolge des Hintergrundes, indem die
 % Vordergrundelemente des Hintergrundes (Logos, Linie), die in den Makros
@@ -1103,8 +1103,7 @@
 %    \begin{macrocode}
 \newenvironment{modulepage}[1][]{%
   \clearpage
-  \@layout@pre{pages=single,#1}
-%   \modulesetup[#1]%TODO...
+  \@layout@pre{pages=single,bgcolor=tuSecondaryLight,#1}
   \sffamily
   \modcontainer[#1]
 }{%
