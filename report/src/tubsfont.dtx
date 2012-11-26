@@ -115,11 +115,14 @@
 %    \end{key}
 %
 %    \begin{key}{}{colorheadings}
-% Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs dar.
+% Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs oder
+% in angegebener Farbe dar.
 %    \begin{macrocode}
 \newcommand\headingscolor{tuBlack}
-\DeclareOptionX{colorheadings}{%
-  \renewcommand\headingscolor{tuSecondary}
+\newcommand\tubs@fontcolor[1]{}
+\DeclareOptionX{colorheadings}[tuSecondary]{%
+  \renewcommand\headingscolor{#1}
+  \renewcommand\tubs@fontcolor[1]{\color{#1}}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -211,7 +214,7 @@
 \providekomafont{section}{}
 \providekomafont{subsection}{}
 \providekomafont{subsubsection}{}
-\providekomafont{intro}{\large\color{tubsheadings}}
+\providekomafont{intro}{\large\tubs@fontcolor{tubsheadings}}
 %</package|leaflet>
 %    \end{macrocode}
 %
@@ -219,7 +222,7 @@
 %    \begin{macro}{title}
 % Schrifteinstellungen für Titel
 %    \begin{macrocode}
-\newkomafont{headline}{\sffamily\Huge\bfseries\color{tubsheadings}}
+\newkomafont{headline}{\sffamily\Huge\bfseries\tubs@fontcolor{tubsheadings}}
 \setkomafont{title}{\usekomafont{headline}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
@@ -227,7 +230,7 @@
 %    \begin{macro}{headlinesmall}
 % Schrifteinstellungen für kleiner Titel
 %    \begin{macrocode}
-\newkomafont{headlinesmall}{\sffamily\huge\bfseries\color{tubsheadings}}
+\newkomafont{headlinesmall}{\sffamily\huge\bfseries\tubs@fontcolor{tubsheadings}}
 % \setkomafont{section}{\usekomafont{headlinesmall}}
 %    \end{macrocode}
 %    \end{macro}
@@ -236,7 +239,7 @@
 %    \begin{macro}{subtitle}
 % Schrifteinstellungen für Sub-Titel
 %    \begin{macrocode}
-\newkomafont{subheadline}{\sffamily\Large\bfseries\color{tubsheadings}}
+\newkomafont{subheadline}{\sffamily\Large\bfseries\tubs@fontcolor{tubsheadings}}
 \setkomafont{subtitle}{\usekomafont{subheadline}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
@@ -244,7 +247,7 @@
 %    \begin{macro}{subheadlinesmall}
 % Schrifteinstellungen für Sub-Titel (klein)
 %    \begin{macrocode}
-\newkomafont{subheadlinesmall}{\sffamily\large\bfseries\color{tubsheadings}}
+\newkomafont{subheadlinesmall}{\sffamily\large\bfseries\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -279,7 +282,7 @@
 %</book|report|package>
 \setkomafont{section}{\usekomafont{subheadline}}
 \setkomafont{subsection}{\usekomafont{subheadlinesmall}}
-\addtokomafont{subsubsection}{\color{tubsheadings}}
+\addtokomafont{subsubsection}{\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %
 % Aufzählungszeichen werden als Quadrate dargestellt
