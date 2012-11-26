@@ -114,6 +114,7 @@
   \ifthenelse{\equal{#1}{scifi}}{%
     \renewcommand{\tubs@poster@style}{scifi}
     \PassOptionsToPackage{scifiposter}{tubstypearea}
+    \PassOptionsToPackage{scifiposter}{tubsstyle}
     % Scifiposter haben eigene Schrift-Definitionen!
     \renewcommand*{\@fsfbs@sub}{scifi}
   }{\ifthenelse{\equal{#1}{bulletin}}{%

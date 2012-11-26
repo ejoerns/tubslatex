@@ -118,7 +118,7 @@
 %    \end{macrocode}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Allgemeine Optionen / Paketoptionen}\label{sec:options}
+% \subsection{Paketoptionen}\label{sec:options}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Alle hier beschriebenen Optionen sind sowohl für die |gaussbox| als
@@ -189,6 +189,10 @@
 %
 % \subsection{Paket-Optionen}
 %
+% Dummy-Option, die aktuell nur aus Designschwäche existiert.
+%    \begin{macrocode}
+\define@key{tubsbox.sty}{bgcolor}[]{}
+%    \end{macrocode}
 %
 % \begin{key}{tubsbox.sty}{sender}
 % Mögliche Werte: |bottom| oder |top|.\\
@@ -206,48 +210,11 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{tubsbox.sty}{frame}
-% Zeichnet wenn gewünscht einen Rahmen um die jeweiligen Boxen.\\
-% Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.\\
-% Standardmäßig haben die Boxen keinen Rahmen.
-%    \begin{macrocode}
-\define@choicekey{tubsbox.sty}{frame}[\val\nr]{none,fbox}{%
-  \ifcase\nr\relax
-    \def\tubsbox@framebox{\relax}
-  \or
-    \def\tubsbox@framebox{\fbox}
-  \fi
-}
-%    \end{macrocode}
-%    \end{key}
-%
-%    \begin{key}{tubsbox.sty}{bgcolor}
-%   Standard-Hintergrundfarbe der Boxen festlegen.\\
-%   Mögliche Werte sind |none|, sowie die jeweilige gewünschte Farbe.\\
-%   Standardmäßig haben die Boxen keine Hintergrundfarbe.%TODO?
-%    \begin{macrocode}
-\define@key{tubsbox.sty}{bgcolor}{%
-%   \ifthenelse{\equal{#1}{none}}{%
-%     \renewcommand\tubsbox@colorbox{\relax}
-%   }{%
-%     \def\bgcolor{#1}
-%     \renewcommand\tubsbox@colorbox{\colorbox{\bgcolor}}
-%   }
-}
-%    \end{macrocode}
-%    \end{key}
-%
 %
 %    \begin{key}{tubsbox.sty}{nosep}
-% Kein Abstand zwischen Boxen
+% Kein Abstand zwischen Boxen (erzeugt |\if@gb@nosep|)
 %    \begin{macrocode}
-\define@boolkey{tubsbox.sty}[gb]{nosep}[true]{%
-  \ifgbnosep
-    \@gb@noseptrue%
-  \else%
-    \@gb@nosepfalse%
-  \fi%
-}
+\define@boolkey{tubsbox.sty}[@gb@]{nosep}[true]{}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -258,7 +225,7 @@
 %    \end{macrocode}%
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Gemeiname Optionen}
+% \subsection{Gemeinsame Box-Optionen}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Optionen der Famillie |tubsbox| sind sowohl für das Gaussraster (|gaussbox|)
@@ -328,32 +295,38 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Gaussbox-Optionen}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%
+%    \begin{key}{tubsbox}{frame}
+% Zeichnet wenn gewünscht einen Rahmen um die jeweiligen Boxen.\\
+% Mögliche Werte: |none| - Kein Rahmen, |fbox| - einfacher Rahmen.\\
+% Standardmäßig haben die Boxen keinen Rahmen.
 %    \begin{macrocode}
-\newif\if@gb@nosep\@gb@nosepfalse
+\define@choicekey{tubsbox}{frame}[\val\nr]{none,fbox}{%
+  \ifcase\nr\relax
+    \def\tubsbox@framebox{\relax}
+  \or
+    \def\tubsbox@framebox{\fbox}
+  \fi
+}
 %    \end{macrocode}
+%    \end{key}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Gaussbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 %
 %    \begin{key}{gaussbox}{nosep}
 % Kein Abstand zwischen Boxen
 %    \begin{macrocode}
-\define@boolkey{gaussbox}{nosep}[true]{%
-  \ifKV@gaussbox@nosep%
-    \@gb@noseptrue%
-  \else%
-    \@gb@nosepfalse%
-  \fi%
-}
+\define@boolkey{gaussbox}[@gb@]{nosep}[true]{}
 %    \end{macrocode}
 %    \end{key}
 %
 %    \begin{macrocode}
 \newcommand*\tubs@gb@addtoppadding{0mm}
 %    \end{macrocode}
+%
+% \subsubsection{Optionen}
 %
 %    \begin{key}{gaussbox}{logosep}
 % Fügt zusätzlichen Top-Innenabstand hinzu. Wenn kein Wert angegeben, wird
@@ -391,7 +364,7 @@
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Gaußraster-Box}
+% \subsubsection{Box}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
@@ -498,11 +471,9 @@
 % \end{tabularx}
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][]{%
-% \setkeys*{tubsbox}{#1}
 \setkeys*{tubsbox}{#1}%
 \setrmkeys{gaussbox}%
 \tb@gb@setorig
-% \setkeys*{gaussbox}{bgcolor=none,logosep=false,#1}
 %    \end{macrocode}
 % Berechnung der linken und rechten Ränder
 %    \begin{macrocode}
@@ -949,7 +920,6 @@
 %    \begin{macrocode}
 \newenvironment{@modrow}[1][X]{%
   % setze keys
-%   \modulebox@setdefault@opts
   \setkeys*{tubsbox}{#1}%
   \setrmkeys*{modulebox}%
   \edef\@remaining@keys{\XKV@rm}%
@@ -1125,9 +1095,8 @@
 %    \begin{macrocode}
 \newenvironment{@modsubrow}[1][]{%
   % setze keys
-%   \modulebox@setdefault@opts
   \setkeys*{tubsbox}{#1}%
-  \setrmkeys*{modulebox}%
+  \setrmkeys{modulebox}%
   \stepcounter{tubs@sb@current@subrow}%
   \expandafter\edef\expandafter\@oarg\expandafter{%
     \csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname}%
@@ -1143,7 +1112,7 @@
 %    \end{environment}
 %
 %
-% \subsection{Scifibox}
+% \subsubsection{Box}
 %
 %
 % Benutzer-Längen für Höhe und Breite des akutell verwendeten Moduls
@@ -1195,6 +1164,7 @@
       \setlength{\modulewidth}{\@current@width}%
       \vspace*{0.5\tubs@sb@padding}%
       \tb@topfill
+      \strut
 }{%
       \tb@bottomfill
       \vspace*{0.5\tubs@sb@padding}%

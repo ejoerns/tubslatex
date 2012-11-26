@@ -1103,9 +1103,10 @@
 %    \begin{macrocode}
 \newenvironment{modulepage}[1][]{%
   \clearpage
-  \@layout@pre{pages=single,bgcolor=tuSecondaryLight,#1}
+  \@layout@pre{pages=single,bgcolor=tuSecondaryLight,#1}%
+  \showtubslogo
   \sffamily
-  \modcontainer[#1]
+  \modcontainer[#1]%
 }{%
   \endmodcontainer
   \@layout@post
