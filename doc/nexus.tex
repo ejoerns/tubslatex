@@ -1,11 +1,16 @@
 \chapter{Hausschrift Nexus}\label{chap:nexus}
 
+Die im CD definiert Hausschrift \emph{Nexus} wird durch das Paket
+\texttt{nexus} bereitgestellt, welches in allen verfügbaren \tubslatex-Klassen
+fest eingebunden ist.
+
 \begin{Declaration}
   \Option{nexus}\\
   \Option{aial}
 \end{Declaration}
 
-Auswahl von Schrift Nexus (Standard) oder der Ersatzschrift Arial.
+Paket-/Klassenoption zur Auswahl der Schriftfamilie.
+Zur Verfügung stehen Nexus (Standard) oder die Ersatzschrift Arial.
 
 \paragraph{Encoding}
 
@@ -120,3 +125,41 @@ incidunt ut labore et dolore magna aliqua.
 Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor
 incidunt ut labore et dolore magna aliqua.
 }
+
+
+\section*{Mediävalziffern/Versalziffern}
+\Index{Mediävalziffern}
+\Index{Versalziffern}
+\Index{Ziffern!Versal-}
+\Index{Ziffern!Mediäval-}
+
+Standardmäßig sind in Nexus \gls{glos:mediaevalziffern} definiert, das heißt Ziffern,
+die eine Ober- unt Unterlänge besitzen.
+Diese passen sich beim Mengentext besser in das Schriftbild ein.\par
+
+Alternativ können auch \gls{glos:versalziffern} verwendet werden, das heißt Ziffern,
+welche alle die selbe Höhe haben.
+\begin{center}
+\noindent\begin{tabular}{lll}
+& \bfseries Mediävalziffern & \bfseries Versalziffern\\
+\midrule
+Serif: & {\rmfamily 1,\,2,\,3,\,4,\,5,\,6,\,7,\,8,\,9,\,0} & {\rmfamily\lnum{1,\,2,\,3,\,4,\,5,\,6,\,7,\,8,\,9,\,0}}\\
+Sans-Serif: & {\sffamily 1,\,2,\,3,\,4,\,5,\,6,\,7,\,8,\,9,\,0} & {\sffamily\lnum{1,\,2,\,3,\,4,\,5,\,6,\,7,\,8,\,9,\,0}}
+\end{tabular}
+\end{center}
+
+Versalziffern können entweder mit der Paket-/Klassenoption \Option{lnum} oder dem Befehl
+\Macro{lnum} gesetzt werden.
+
+\begin{Declaration}
+  \Option{lnum}
+\end{Declaration}
+
+Die Paket-/Klassenoption \Option{lnum} wählt für das Dokument einen Schriftschnitt mit
+Versalziffern.
+
+\begin{Declaration}
+  \Macro{lnum}\Parameter{Text}
+\end{Declaration}
+
+Setzt den \Parameter{Text} mit Versalziffern.

@@ -115,13 +115,6 @@ bereit gestellt. Details zu Schriftgrößen gibt das Kapitel~\ref{subsec:documen
   \Option{a5paper}\\
   \Option{a6paper}
 \end{Declaration}
-\OptionIndex{a0paper}
-\OptionIndex{a1paper}
-\OptionIndex{a2paper}
-\OptionIndex{a3paper}
-\OptionIndex{a4paper}
-\OptionIndex{a5paper}
-\OptionIndex{a6paper}
 \Index{Papierformat!Option}
 
 Für die Auswahl des verwendeten Papierformats stehen alle DIN\,A-Größen von
@@ -856,24 +849,43 @@ geändert werden, wovon aber abgeraten wird, da sie entsprechend des CD korrekt
 definiert sind. Teilweise sind Namen auch doppelt definiert, um sowohl
 CD- als auch \LaTeX-Konventionen zu entsprechen.
 
-\paragraph{Überschriften}
-Alle Überschriftsebenen werden in einer im CD definierten
-Schriftgröße dargestellt.
-Die Darstellung erfolgt dabei in der Farbe \lstinline{tubsheadings},
-welche normalerweise auf \lstinline{tuBlack} voreingestellt ist.
-Sie kann mittels
-\Macro{colorlet}\Parameter{tubsheadings}\Parameter{{\textit Farbe}} individuell
-angepasst werden.
+\paragraph{Ziffern} Nexus verwendet normalerweise \gls{glos:mediaevalziffern}, welche
+sich meist besser in das Schriftbild einfügen als \gls{glos:versalziffern}.
+Bei Bedarf kann global oder temporär auf die Verwendung von Versalziffern
+umgestellt werden.
 
 \begin{Declaration}
-  \Option{colorheadings}
+  \Option{lnum}
 \end{Declaration}
-\OptionIndex{colorheadings}
+Die Paket-/Klassenoption \Option{lnum} wählt für das Dokument einen Schriftschnitt mit
+Versalziffern.
+
+\begin{Declaration}
+  \Macro{lnum}\Parameter{Text}
+\end{Declaration}
+Setzt den \Parameter{Text} mit Versalziffern.
+
+
+\paragraph{Überschriften}
+\Index{Überschriften}
+
+Alle Überschriftsebenen werden (bei standardmäßiger Schriftgrößenwahl)
+in einer im CD definierten Schriftgröße dargestellt.
+Die Darstellung erfolgt dabei entweder in der im Dokument eingestellten Farbe
+oder bei Verwendung der Option \Option{colorheadings} in der Farbe
+\Option{tubsheadings}.
+
+\begin{Declaration}
+  \KOption{colorheadings}\PName{Farbe}
+\end{Declaration}
+\Index{Schriftfarbe}
+\Index{Farbe!Schrift}
 
 Diese Klassenoption stellt alle Überschriftsebenen
-(\Macro{chapter}, \ldots, \Macro{subsubsection})
-in Sekundärfarbe dar, indem die Farbe \lstinline{tubsheadings} zu
-\lstinline{tuSecondary} gesetzt wird (siehe vorheriger Abschnitt).
+(\Macro{chapter}, \ldots, \Macro{subsubsection}) farbig dar.
+Wird keine \PName{Farbe} explizit angegeben, wir dafür standardmäßig die aktive
+Sekundärfarbe (siehe vorheriger Abschnitt) verwendet.
+Ansonsten wir die angegebene Farbe verwendet.
 
 \paragraph{Schriftauszeichnung}
 \begin{sloppypar}
@@ -889,9 +901,6 @@ benutzt werden. Eine kurze Benutzungsbeschreibung ist trotzdem sinnvoll.
   \Macro{settubsfont}\Parameter{Element}\Parameter{Befehle}\\
   \Macro{addtotubsfont}\Parameter{Element}\Parameter{Befehle}
 \end{Declaration}
-\CommandIndex{usetubsfont}
-\CommandIndex{settubsfont}
-\CommandIndex{addtotubsfont}
 
 Mit \Macro{usetubsfont} können die einzelnen Schrift-\PName{Element}e benutzt
 werden, um die aktuelle Schriftart zu ändern.
@@ -901,7 +910,6 @@ Auch wenn es allgemein nicht zu empfehlen ist, können die einzelnen
 \PName{Element}e auch verändert oder individuell neu definiert werden.
 Dies geschieht mit den Befehlen \Macro{addtotubsfont} bzw.
 \Macro{settubsfont}.
-
 
 
 Die folgende Liste bietet eine Übersicht über alle verfügbaren bzw.
@@ -971,6 +979,7 @@ dabei zusammengefasst dargestellt:
 
 
 \paragraph{Aufzählungszeichen}
+%TODO: farbige Aufzählungszeichen?
 
 Aufzählungszeichen für die \Environment{itemize}-Umgebung werden in \tubslatex
 als kleine Kästchen dargestellt.
