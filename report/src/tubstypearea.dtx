@@ -528,6 +528,10 @@
 %    \begin{macrocode}
 \newcommand{\tubspage@process@paper}{%
   \ifthenelse{\equal{\tubspage@paper}{custompaper}}{%
+    \ifthenelse{\lengthtest{\paperwidth>\paperheight}}{%
+      \setboolean{tubspage@landscape}{true}
+      \PassOptionsToPackage{landscape}{tubslogo}
+    }{}
     % custompaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
       \setlength{\tubspage@borderwidth}{0.038\paperheight}%
