@@ -368,6 +368,7 @@
 %
 %    \begin{key}{tubstypearea.sty}{custompaper}
 % Auswahl für individuelle Papiergröße (voreingestellt)
+% |\iftubspage@custompaper|
 %    \begin{macrocode}
 \DeclareOptionX{custompaper}{%
   \def\tubspage@paper{custompaper}
@@ -529,18 +530,18 @@
   \ifthenelse{\equal{\tubspage@paper}{custompaper}}{%
     % custompaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@borderwidth}{0.038\paperheight}
+      \setlength{\tubspage@borderwidth}{0.038\paperheight}%
       \setlength{\tubspage@senderheight}{0.2\paperheight}% 1/5
       \def\tubspage@ysegments{6}%
-      \setcounter{tubspage@vsegments}{6}
+      \setcounter{tubspage@vsegments}{6}%
     }{%
-      \setlength{\tubspage@borderwidth}{0.038\paperwidth}
+      \setlength{\tubspage@borderwidth}{0.038\paperwidth}%
       \setlength{\tubspage@senderheight}{0.14286\paperheight}% ~1/7
       \def\tubspage@ysegments{8}%
-      \setcounter{tubspage@vsegments}{8}
-    }
+      \setcounter{tubspage@vsegments}{8}%
+    }%
   \setlength{\tubspage@communicationheight}{%
-    \paperheight-\tubspage@senderheight-\tubspage@borderwidth}
+    \paperheight-\tubspage@senderheight-\tubspage@borderwidth}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a6paper}}{%
     % a6paper
