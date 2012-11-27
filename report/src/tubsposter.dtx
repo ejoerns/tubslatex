@@ -152,16 +152,18 @@
 %    \end{macrocode}
 %
 % Entsprechend Kombination scifi-Style und landscape Logogröße wählen
+% Auch wenn es nicht dokumentiert ist, wird das Logo im Querformat
+% nur mit ca. 64% seiner für das Format definierten Größe gesetzt.
 %    \begin{macrocode}
 %<*execoption>
 \ifthenelse{\equal{\tubs@poster@style}{scifi}}{%
-  \if@tp@landscape
-    \ClassWarning{tubsposter}{landscape mode is not fully supported yet}{}
-    \PassOptionsToPackage{relscale=0.65}{tubslogo}%~0.9/sqrt(2)
-  \else
-    \ClassWarning{tubsposter}{landscape mode is supported}{}
-    \PassOptionsToPackage{relscale=0.9}{tubslogo}
-  \fi
+%   \if@tp@landscape
+%     \ClassWarning{tubsposter}{landscape mode is not fully supported yet}{}
+%     \PassOptionsToPackage{relscale=0.65}{tubslogo}%~0.9/sqrt(2)
+%   \else
+%     \ClassWarning{tubsposter}{landscape mode is supported}{}
+    \PassOptionsToPackage{scifiposter}{tubslogo}
+%   \fi
 }{}
 %</execoption>
 %    \end{macrocode}
@@ -214,20 +216,21 @@
 %
 }{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
   \renewcommand\tubsposter[1][]{%
-    \setkeys{tubsposter}{#1}
-    \@tubsposter
+%     \setkeys{tubsposter}{#1}
+%     \gausspagesetup{#1}
+    \gausspage
     \showtubslogo[left]%
     \showlogo{\@userlogo}%
     \showtopline
     \if@tp@landscape
-      \@posterrow{6}%
+      \segment{6}%
     \else
-      \@posterrow{8}%
+      \segment{8}%
     \fi
   }
   \def\endtubsposter{%
-    \end@posterrow%
-    \end@tubsposter%
+    \endsegment%
+    \endgausspage%
   }
 %
 }{% default
