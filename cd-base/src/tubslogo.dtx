@@ -269,6 +269,14 @@
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}
 %
+%    \begin{key}{}{a0paper}
+% Landscape-Option
+% Defines |\iflogo@landscape|
+%    \begin{macrocode}
+\define@boolkey{tubslogo.sty}[logo@]{landscape}[true]{}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{key}{}{relscale}
 % Relative Skalierung [0.0 -- 1.0]
 %    \begin{macrocode}
@@ -329,11 +337,11 @@
 \ifthenelse{\equal{\logo@papersize}{c}}{% custom
   % calculate scaling factor
   \newdimen\temp@
-  \ifthenelse{\boolean{tubspage@landscape}}{%
+  \iflogo@landscape
     \setlength{\temp@}{1pt*\ratio{0.3333\paperheight}{\tubslogoBaseWidth}}%
-  }{%
+  \else
     \setlength{\temp@}{1pt*\ratio{0.3333\paperwidth}{\tubslogoBaseWidth}}%
-  }%
+  \fi
   \edef\tubslogo@scale{\strip@pt\temp@}% default
 }{% 400%
   \def\tubslogo@scale{1.0}% default
