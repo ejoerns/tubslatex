@@ -200,7 +200,23 @@
 %       Höhe des automatisch skalierten Logos. Siehe \lstinline{tubslogoWidth}.
 %   \end{description}
 %
+% \begin{table}\centering
+% \begin{tabular}{lll}
+% DIN A6 &  105 x 148,5 &  60\\
+% DIN lang & 210 x 100 &  60\\
+% DIN A5 & 148,5 x 210 &  70\\
+% DIN A4 & 210 x 297 &  100 (70 x 26 mm)\\
+% DIN A3 & 297 x 420 &  140\\
+% DIN A2 & 420 x 598 &  200\\
+% DIN A1 & 598 x 841 &  280\\
+% DIN A0 & 841 x 1189 & 400\\  
+% \end{tabular}
+% \caption{Größenangaben wie sie im CD definiert sind}
+% \end{table}
+% 
+%
 % \section{Implementierung}
+% TODO: check, dass logo nicht kleiner als 35% werden darf (CD-Richtlinie)
 %
 %    \begin{macrocode}
 %<*package>
@@ -285,6 +301,13 @@
 }
 %    \end{macrocode}
 %    \end{key}
+%    \begin{key}{}{relscale}
+% Setzt Logo für wissenschaftliche Poster.
+% Dort wird es mit 90% (hoch) bzw. 65% der Originalgröße gesetzt.
+%    \begin{macrocode}
+\define@boolkey{tubslogo.sty}[tubslogo@]{scifiposter}[true]{}
+%    \end{macrocode}
+%    \end{key}
 %
 % Fehler bei unbekannter Option
 %    \begin{macrocode}
@@ -309,7 +332,7 @@
 %    \end{macro}
 %    \begin{macro}{\tubslogoBaseWidth}
 %    \begin{macro}{\tubslogoBaseHeight}
-% Grunddimensionen des Siegelbandlogos (A4, unskaliert)
+% Grunddimensionen des Siegelbandlogos (A4, unskaliert) 70x26 [mm]
 %    \begin{macrocode}
 \newlength{\tubslogoBaseWidth}
 \setlength{\tubslogoBaseWidth}{70mm}
@@ -346,6 +369,17 @@
 }{% 400%
   \def\tubslogo@scale{1.0}% default
 }}}}}}}}
+%    \end{macrocode}
+%
+% Setzt Skalierungsfaktor für wissenschaftliche Plakete
+%    \begin{macrocode}
+\iftubslogo@scifiposter
+  \iflogo@landscape
+    \def\tubslogo@relscale{0.65}%
+  \else
+    \def\tubslogo@relscale{0.9}%
+  \fi
+\fi
 %    \end{macrocode}
 %
 % paper format scale
