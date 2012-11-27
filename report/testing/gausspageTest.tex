@@ -4,29 +4,49 @@
 
 \usepackage{lipsum}
 
+\parskip50mm
+
 \begin{document}
 
-\begin{gausspage}[designhelper,sender=bottom]
+\begin{gausspage}[sender=bottom,bgcolor=tuOrange]
 %   \showtopline
   \showtubslogo[right]
 %   \showlogo{Institutslogo einfügen oder Institutsname/\\
 %     zentrale Einrichtung als Text eingeben}
-  \showlogo{\includegraphics{dummy_institut.jpg}}
-  \begin{segment}[bgimage=overhigh.jpg,imagefit=vclip]{2}
-    ~
+  \showlogo{\includegraphics{dummy_institut.pdf}}
+  
+  \begin{segment}[bgimage=infozentrum.jpg,imagefit=vclip]{4}
   \end{segment}
-  \begin{segment}[bgcolor=tuGray20]{5}
-    ~
+  \begin{segment}[bgcolor=tuViolet,fgcolor=tuWhite]{2}
+    \lipsum[2]
   \end{segment}
-  \begin{segment}[bgcolor=tuBlueDark20]{1}
-    Copy 12 pt\\
-    Kisuali antux e weimi Kameran.\\
-    Quol damnarin Tropi zu klenne perdi Utilira regau socht mol sunt.\\
-    Her mitant dur Wolche to illemit drusi puzen, um brackl jaun utten. Rumber olst gumme Placke on ofen heiritate us.
-    \vfill
-    \textbf{www.tu-braunschweig.de}
+  \begin{segment}[c,bgcolor=tuOrange,fgcolor=tuWhite,frame=fbox]{1}
+    Dieser Text muss vertikal zentriert sein. Die Box sollte umrahmt sein.
+  \end{segment}
+  \begin{segment}[bgcolor=tuGreenLight]{1}
+    \fboxsep0mm\fbox{%
+      \parbox{\textwidth}{\strut\centering Diese Box füllt den Textbereich horizontal aus}%
+    }
   \end{segment}
 \end{gausspage}
 
+
+\begin{gausspage}[designhelper,sender=top]%,bgcolor=tuOrange]
+%   \showtopline
+  \showtubslogo[right]
+%   \showlogo{Institutslogo einfügen oder Institutsname/\\
+%     zentrale Einrichtung als Text eingeben}
+  \showlogo{\includegraphics{dummy_institut.pdf}}
+  
+  \begin{segment}[bgimage=infozentrum.jpg]{3}
+    \usekomafont{headlinesmall} Abstand nach oben muss 3 Rahmenbreiten betragen
+  \end{segment}
+  \begin{segment}[bgcolor=tuViolet,fgcolor=tuWhite]{2}
+    \lipsum[2]
+  \end{segment}
+  \begin{segment}[b,bgcolor=tuGreenLight]{3}
+    Dieser Text sollte unten ausgerichtet stehen!
+  \end{segment}
+\end{gausspage}
 \end{document}
 
