@@ -414,54 +414,54 @@
 %
 % \begin{table}[!ht]\centering
 % \begin{tabular}{llrrr}
-% CD-Name           & \LaTeX-Name     & 18pt  \\
+% CD-Name           & \LaTeX-Name     & normal 18pt  & scifi 18pt  \\
 % \midrule
-% Headline (groß)   & |\Huge|         & 135pt \\
-% Headline (klein)  & |\huge|         & 90pt  \\
-%                   & |\LARGE|        & 68pt  \\
-% Subheadline       & |\Large|        & 45pt  \\
-% Intro             & |\large|        & 28pt  \\
-% Copytext          & |\normalsize|   & 18pt  \\
-%                   & |\small|        & 14pt  \\
-%                   & |\footnotesize| & 12pt  \\
-%                   & |\scriptsize|   & 10pt   \\
-%                   & |\tiny|         & 8pt   \\
+% Headline (groß)   & |\Huge|         & 135pt & 65pt  \\
+% Headline (klein)  & |\huge|         & 90pt  & 50pt  \\
+%                   & |\LARGE|        & 68pt  & 45pt  \\
+% Subheadline       & |\Large|        & 45pt  & 33pt  \\
+% Intro             & |\large|        & 28pt  & 27pt  \\
+% Copytext          & |\normalsize|   & 18pt  & 18pt  \\
+%                   & |\small|        & 14pt  & 14pt  \\
+%                   & |\footnotesize| & 12pt  & 12pt  \\
+%                   & |\scriptsize|   & 12pt  & 12pt  \\
+%                   & |\tiny|         & 8pt   & 8pt
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A2 (18pt)}
 % \end{table}
 %
 % \begin{table}[!ht]\centering
 % \begin{tabular}{llrrr}
-% CD-Name           & \LaTeX-Name     & 25pt  \\
+% CD-Name           & \LaTeX-Name     & normal 25pt & scifi 25pt  \\
 % \midrule
-% Headline (groß)   & |\Huge|         & 190pt \\
-% Headline (klein)  & |\huge|         & 130pt \\
-%                   & |\LARGE|        & 95pt  \\
-% Subheadline       & |\Large|        & 60pt  \\
-% Intro             & |\large|        & 40pt  \\
-% Copytext          & |\normalsize|   & 25pt  \\
-%                   & |\small|        & 20pt  \\
-%                   & |\footnotesize| & 17pt  \\
-%                   & |\scriptsize|   & 14pt  \\
-%                   & |\tiny|         & 12pt  \\
+% Headline (groß)   & |\Huge|         & 190pt & 95pt  \\
+% Headline (klein)  & |\huge|         & 130pt & 70pt  \\
+%                   & |\LARGE|        & 95pt  & 65pt  \\
+% Subheadline       & |\Large|        & 60pt  & 47pt  \\
+% Intro             & |\large|        & 40pt  & 38pt  \\
+% Copytext          & |\normalsize|   & 25pt  & 25pt  \\
+%                   & |\small|        & 20pt  & 20pt  \\
+%                   & |\footnotesize| & 17pt  & 17pt  \\
+%                   & |\scriptsize|   & 14pt  & 14pt  \\
+%                   & |\tiny|         & 12pt  & 12pt
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A1 (25pt)}
 % \end{table}
 %
 % \begin{table}[!ht]\centering
 % \begin{tabular}{llrrr}
-% CD-Name           & \LaTeX-Name     & 40pt  \\
+% CD-Name           & \LaTeX-Name     & normal 40pt & scifi 35pt \\
 % \midrule
-% Headline (groß)   & |\Huge|         & 270pt \\
-% Headline (klein)  & |\huge|         & 180pt \\
-%                   & |\LARGE|        & 135pt \\
-% Subheadline       & |\Large|        & 90pt  \\
-% Intro             & |\large|        & 60pt  \\
-% Copytext          & |\normalsize|   & 40pt  \\
-%                   & |\small|        & 30pt  \\
-%                   & |\footnotesize| & 25pt  \\
-%                   & |\scriptsize|   & 23pt  \\
-%                   & |\tiny|         & 20pt  \\
+% Headline (groß)   & |\Huge|         & 270pt & 135pt \\
+% Headline (klein)  & |\huge|         & 180pt & 100pt \\
+%                   & |\LARGE|        & 135pt & 90pt  \\
+% Subheadline       & |\Large|        & 90pt  & 66pt  \\
+% Intro             & |\large|        & 60pt  & 54pt  \\
+% Copytext          & |\normalsize|   & 40pt  & 35pt  \\
+%                   & |\small|        & 30pt  & \\
+%                   & |\footnotesize| & 25pt  & \\
+%                   & |\scriptsize|   & 23pt  & \\
+%                   & |\tiny|         & 20pt  & \\
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A0 (40pt)}
 % \end{table}
@@ -838,7 +838,7 @@
 %    \begin{macrocode}
 \def\tiny{\@setfontsize\tiny\@viipt{9.8}}
 \def\scriptsize{\@setfontsize\scriptsize\@ixpt{12.6}}
-\def\LARGE{\@setfontsize\huge{45pt}{83}}
+\def\LARGE{\@setfontsize\huge{45pt}{54}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
@@ -916,10 +916,18 @@
 %    \begin{macro}{\Huge}
 % Definition der papierformatabhänigen Größen (A2)
 %    \begin{macrocode}
+%<*!scifi>
 \def\large{\@setfontsize\large{28pt}{37}}
 \def\Large{\@setfontsize\Large{45pt}{54}}
 \def\huge{\@setfontsize\huge{90pt}{99}}
 \def\Huge{\@setfontsize\Huge{135pt}{149}}
+%</!scifi>
+%<*scifi>
+\def\large{\@setfontsize\large{27pt}{32.4}} % Inistitut
+\def\Large{\@setfontsize\Large{33pt}{39.6}} % Modul Headline
+\def\huge{\@setfontsize\huge{50pt}{55}}     % Headline (small)
+\def\Huge{\@setfontsize\Huge{65pt}{71.5}}   % Headline
+%</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -930,7 +938,12 @@
 %    \begin{macrocode}
 \def\tiny{\@setfontsize\tiny\@viiipt{11}}
 \def\scriptsize{\@setfontsize\scriptsize\@xpt{13}}
-\def\LARGE{\@setfontsize\LARGE{68pt}{78}}
+%<*!scifi>
+\def\LARGE{\@setfontsize\LARGE{68pt}{81.6}}
+%</!scifi>
+%<*scifi>
+\def\LARGE{\@setfontsize\LARGE{45pt}{54}}
+%</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
@@ -1003,10 +1016,18 @@
 %    \begin{macro}{\Huge}
 % Definition der papierformatabhänigen Größen (A1)
 %    \begin{macrocode}
+%<*!scifi>
 \def\large{\@setfontsize\large{40pt}{52}}
 \def\Large{\@setfontsize\Large{60pt}{72}}
 \def\huge{\@setfontsize\huge{130pt}{143}}
 \def\Huge{\@setfontsize\Huge{190pt}{209}}
+%</!scifi>
+%<*scifi>
+\def\large{\@setfontsize\large{38pt}{45.6}}
+\def\Large{\@setfontsize\Large{47pt}{56.4}}
+\def\huge{\@setfontsize\huge{70pt}{71}}
+\def\Huge{\@setfontsize\Huge{95pt}{104.5}}
+%</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -1017,7 +1038,12 @@
 %    \begin{macrocode}
 \def\tiny{\@setfontsize\tiny\@xiipt{14.5}}
 \def\scriptsize{\@setfontsize\scriptsize\@xivpt{17.5}}
-\def\LARGE{\@setfontsize\LARGE{95pt}{109}}
+%<*!scifi>
+\def\LARGE{\@setfontsize\LARGE{95pt}{114}}
+%</!scifi>
+%<*scifi>
+\def\LARGE{\@setfontsize\LARGE{65pt}{78}}
+%</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %
@@ -1041,6 +1067,7 @@
 %
 %    \begin{macro}{\normalsize}
 %    \begin{macrocode}
+%<*!scifi>
 \def\normalsize{%
    \@setfontsize\normalsize{40}{56}%
    \abovedisplayskip 36\p@ \@plus8\p@ \@minus12\p@
@@ -1048,6 +1075,16 @@
    \belowdisplayshortskip 22\p@ \@plus11\p@ \@minus5\p@
    \belowdisplayskip \abovedisplayskip
    \let\@listi\@listI}
+%</!scifi>
+%<*scifi>
+\def\normalsize{%
+   \@setfontsize\normalsize{35}{45.5}%
+   \abovedisplayskip 32\p@ \@plus8\p@ \@minus10\p@
+   \abovedisplayshortskip \z@ \@plus7\p@
+   \belowdisplayshortskip 18\p@ \@plus11\p@ \@minus4\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+%</scifi>
 \normalsize
 %    \end{macrocode}
 %    \end{macro}
@@ -1090,10 +1127,18 @@
 %    \begin{macro}{\Huge}
 % Definition der papierformatabhänigen Größen (A0)
 %    \begin{macrocode}
+%<*!scifi>
 \def\large{\@setfontsize\large{60pt}{78}}
 \def\Large{\@setfontsize\Large{90pt}{108}}
 \def\huge{\@setfontsize\huge{180pt}{198}}
 \def\Huge{\@setfontsize\Huge{270pt}{297}}
+%</!scifi>
+%<*scifi>
+\def\large{\@setfontsize\large{54pt}{64.8}}
+\def\Large{\@setfontsize\Large{66pt}{79.2}}
+\def\huge{\@setfontsize\huge{100pt}{110}}
+\def\Huge{\@setfontsize\Huge{135pt}{148.5}}
+%</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -1104,7 +1149,12 @@
 %    \begin{macrocode}
 \def\tiny{\@setfontsize\tiny\@xxpt{27}}
 \def\scriptsize{\@setfontsize\scriptsize\@xxiiipt{31}}
-\def\LARGE{\@setfontsize\LARGE{135pt}{203}}
+%<*!scifi>
+\def\LARGE{\@setfontsize\LARGE{135pt}{162}}
+%</!scifi>
+%<*scifi>
+\def\LARGE{\@setfontsize\LARGE{90pt}{108}}
+%</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
 %    \begin{macrocode}
