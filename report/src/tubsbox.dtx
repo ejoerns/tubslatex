@@ -1154,7 +1154,6 @@
 % Das optionale Argument rowheight muss gesetzt werden, wenn in einer Zeile mehrere Boxen untergebracht werden sollen.
 %    \begin{macrocode}
 \newenvironment{@@modulebox}[3][\relax]{%
-  \tb@sb@setorig%
   % Argumente sichern
   \ifx#1\relax%
     \def\@current@rowheight{#2}%
@@ -1168,17 +1167,17 @@
   }{%
     \setlength\tubs@sb@padding{\tubspage@borderwidth}%
   }%
+  \newdimen\@temp@width
+  \newdimen\@temp@height
+  \setlength\@temp@height{#2}%
+  \@temp@width#3%
+  \tb@sb@setorig%
   % Speichere Inhalt in minipage-Box.
   \begin{lrbox}{\tubs@sb@storebox}%
-    \begin{minipage}[t][\@current@height]{\@current@width-\tubs@sb@padding}%
+    \begin{minipage}[t][\@current@height-\tubs@sb@padding]{\@current@width-\tubs@sb@padding}%
       \setlength{\moduleheight}{\@current@height}%
       \setlength{\modulewidth}{\@current@width}%
-      \vspace*{0.5\tubs@sb@padding}%
-      \tb@topfill
-      \strut
 }{%
-      \tb@bottomfill
-      \vspace*{0.5\tubs@sb@padding}%
     \end{minipage}%
   \end{lrbox}%
   \ifthenelse{\boolean{modulebox@showbgimage}}{%
@@ -1189,24 +1188,28 @@
       \expandafter\includegraphics\expandafter[\@img@scale@param]{%
               \@bgimage@to@insert}%
     \end{lrbox}%
-  }{}
-  % Definiere und platziere Textblock mit gespeichertem Inhalt.
-  % Setze zusätzliche Box für Hintergrundbild, falls gewünscht
-  \ifthenelse{\boolean{modulebox@showbgimage}}{%
-    \begin{textblock*}{\@current@width}(\tubs@sb@box@xpos,\tubs@sb@box@ypos)%
-      \setlength\fboxsep{0mm}%
-      \tubsbox@framebox{\tubsbox@colorbox{%
-        \usebox{\tubs@sb@bgimagebox}%
-      }}%
-    \end{textblock*}%
-  }{}
+  }{}%
+  % Setze Box mit Hintergrundbild/-farbe
   \begin{textblock*}{\@current@width}(\tubs@sb@box@xpos,\tubs@sb@box@ypos)%
-    \setlength\fboxsep{0mm}%
+    \fboxsep0mm%
     \tubsbox@framebox{\tubsbox@colorbox{%
-      \hspace{0.5\tubs@sb@padding}%
-      \usebox{\tubs@sb@storebox}%
-      \hspace{0.5\tubs@sb@padding}%
+      \vbox to \@temp@height{\usebox{\tubs@sb@bgimagebox}}%
     }}%
+  \end{textblock*}%
+  % Definiere und platziere Textblock mit gespeichertem Inhalt.
+  \begin{textblock*}{\@current@width}(\tubs@sb@box@xpos,\tubs@sb@box@ypos)%
+    \fboxsep0mm%
+    \vbox to \@temp@height{%
+      \vspace*{0.5\tubs@sb@padding}%
+      \tb@topfill
+      \hbox to \@temp@width{%
+        \hspace*{0.5\tubs@sb@padding}%
+        \usebox{\tubs@sb@storebox}%
+        \hspace*{0.5\tubs@sb@padding}%
+      }%
+      \tb@bottomfill
+      \vspace*{0.5\tubs@sb@padding}%
+    }%
   \end{textblock*}%
   \writetubslog{modulebox @(\the\tubs@sb@box@xpos, \the\tubs@sb@box@ypos)}%
   \if@tubs@dbg% DEBUGGING output!!
