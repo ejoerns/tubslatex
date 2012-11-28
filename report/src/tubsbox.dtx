@@ -270,7 +270,7 @@
 %    \begin{macrocode}
 \define@key{tubsbox}{t}[true]{%
   \renewcommand\tb@topfill{\relax}
-  \renewcommand\tb@bottomfill{\vfill}
+  \renewcommand\tb@bottomfill{\relax}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -279,8 +279,8 @@
 %  Inhalt in Boxen vertikal zentrieren.
 %    \begin{macrocode}
 \define@key{tubsbox}{c}[true]{%
-  \renewcommand\tb@topfill{\vfill}
-  \renewcommand\tb@bottomfill{\vfill}
+  \renewcommand\tb@topfill{\vfil}
+  \renewcommand\tb@bottomfill{\vfil}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -1177,7 +1177,9 @@
     \begin{minipage}[t][\@current@height-\tubs@sb@padding]{\@current@width-\tubs@sb@padding}%
       \setlength{\moduleheight}{\@current@height}%
       \setlength{\modulewidth}{\@current@width}%
+      \tb@topfill
 }{%
+      \tb@bottomfill
     \end{minipage}%
   \end{lrbox}%
   \ifthenelse{\boolean{modulebox@showbgimage}}{%
@@ -1201,13 +1203,11 @@
     \fboxsep0mm%
     \vbox to \@temp@height{%
       \vspace*{0.5\tubs@sb@padding}%
-      \tb@topfill
       \hbox to \@temp@width{%
         \hspace*{0.5\tubs@sb@padding}%
         \usebox{\tubs@sb@storebox}%
         \hspace*{0.5\tubs@sb@padding}%
       }%
-      \tb@bottomfill
       \vspace*{0.5\tubs@sb@padding}%
     }%
   \end{textblock*}%
