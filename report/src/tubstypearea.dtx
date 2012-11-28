@@ -41,6 +41,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
+\usepackage{booktabs}
 \parindent0mm
 \parskip\medskipamount
 \EnableCrossrefs
@@ -98,8 +99,30 @@
 % übereinstimmte, sondern zusätzlich deren Innenabstand zum Inhaltstext
 % berücksichtigt.
 %
-% \DescribeEnv{YOURENV}
-% Put description of |YOURENV| here.
+% \begin{table}\centering
+% \begin{tabular}{lrrr}
+% Format & Rahmenstärke & Höhe Absenderbereichs &
+% Höhe Kommunikationsbereichs \\
+% \midrule
+% DIN A6 quer & 5 & 25 & 75\\
+% DIN A6 hoch & 5 & 25 & 118\\
+% DIN lang quer & 5 & 25 & 112,5\\
+% DIN lang hoch & 5 & 30 & 175\\
+% DIN A5 quer & 5,5 & 30 & 112,5\\
+% DIN A5 hoch & 5,5 & 30 & 174,5\\
+% DIN A4 quer & 8 & 40 & 162\\
+% DIN A4 hoch & 8 & 40 & 249\\
+% DIN A3 quer & 11 & 60 & 226\\
+% DIN A3 hoch & 11 & 60 & 349\\
+% DIN A2 quer & 16 & 80 & 324\\
+% DIN A2 hoch & 16 & 80 & 498\\
+% DIN A1 quer & 22 & 120 & 452\\
+% DIN A1 hoch & 22 & 120 & 699\\
+% DIN A0 quer & 32 & 160 & 649\\
+% DIN A0 hoch & 32 & 160 & 997\\
+% \end{tabular}
+% \caption{Im CD definierte Formatwerte (jeweils in [mm])}
+% \end{table}
 %
 % \StopEventually{\PrintIndex}
 %
