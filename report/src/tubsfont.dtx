@@ -312,11 +312,11 @@
 %
 % \subsection{clo-Font-Definitionen}
 %
-% Font-Definitionen teilweise aus memoir geklaut.
+% Die Font-Definitionen sind teilweise aus der |memoir|-Klasse geliehen.
 % Schriftgrößen sind an den im CD festgelegten orientiert.
 % Die genau definierten sind dabei (wenn möglich)
 % |Huge|, |huge|, |Large|, |large|, |normalsize| und |footnotesize|.
-% Die verbleibenden Zwischengrößen sind linear interpoliert.
+% Die verbleibenden Zwischengrößen sind passen gewählt.
 % 
 %    \begin{macrocode}
 %<*clo>
@@ -324,8 +324,7 @@
 % 
 % Definition der Größen nach Vorgabe
 %
-% Verwendetes Schema:
-% \begin{center}
+% \begin{table}
 % \begin{tabular}{ll}
 % CD-Name           & Latex-Kommando  \\
 % \midrule
@@ -336,26 +335,9 @@
 % Copytext          & |\normalsize| \\
 % Bildunterschrift  & |\footnotesize|
 % \end{tabular}
-% \end{center}
-% Alle übrigen Größen wurden als Mittelwert ihrer benachbarten Größen bestimmt.
+% \caption{Mapping-Schema}
+% \end{table}
 %
-% \paragraph{Ax}
-% \begin{center}
-% \begin{tabular}{llrrr}
-% CD-Name           & \LaTeX-Name & 9pt & 10pt & 11pt  \\
-% \midrule
-% Headline (groß)   & |\Huge|   \\
-% Headline (klein)  & |\huge|   \\
-%                   & |\LARGE|  \\
-% Subheadline       & |\Large|  \\
-% Intro             & |\large|  \\
-% Copytext          & |\normalsize| \\
-%                   & |\small|  \\
-% Bildunterschrift  & |\footnotesize| \\
-%                   & |\scriptsize| \\
-%                   & |\tiny| \\
-% \end{tabular}
-% \end{center}
 %
 % \begin{table}[!ht]\centering
 % \begin{tabular}{llrrr}
@@ -463,26 +445,9 @@
 %                   & |\scriptsize|   & 23pt  & \\
 %                   & |\tiny|         & 20pt  & \\
 % \end{tabular}
-% \caption{Schriftgrößen DIN\,A0 (40pt)}
+% \caption{Schriftgrößen DIN\,A0 (40pt\,/\,35pt)}
 % \end{table}
 %
-% \begin{table}[!ht]\centering
-% \begin{tabular}{llrrr}
-% CD-Name           & \LaTeX-Name     & 13pt  \\
-% \midrule
-% Headline (groß)   & |\Huge|         & \\
-% Headline (klein)  & |\huge|         & \\
-%                   & |\LARGE|        & \\
-% Subheadline       & |\Large|        & \\
-% Intro             & |\large|        & \\
-% Copytext          & |\normalsize|   & \\
-%                   & |\small|        & \\
-% Bildunterschrift  & |\footnotesize| & \\
-%                   & |\scriptsize|   & \\
-%                   & |\tiny|         & \\
-% \end{tabular}
-% \caption{Schriftgrößen DIN\,Ax (yypt)}
-% \end{table}
 %
 % Für DIN A4 und A5 sind dieselben Grundgrößen definiert.
 %    \begin{macrocode}
@@ -774,7 +739,7 @@
 %    \begin{macro}{\normalsize}
 %    \begin{macrocode}
 \def\normalsize{%
-   \@setfontsize\normalsize\@xiiipt{18.2}
+   \@setfontsize\normalsize{13}{18.2}
    \abovedisplayskip 13\p@ \@plus3\p@ \@minus8\p@
    \abovedisplayshortskip \z@ \@plus3\p@
    \belowdisplayshortskip 7\p@ \@plus3.5\p@ \@minus3\p@
@@ -1092,7 +1057,7 @@
 %    \begin{macro}{\small}
 %    \begin{macrocode}
 \def\small{%
-   \@setfontsize\small\@xxxpt{37}%
+   \@setfontsize\small{30}{37}%
    \abovedisplayskip 30\p@ \@plus7\p@ \@minus11\p@
    \abovedisplayshortskip \z@ \@plus7\p@
    \belowdisplayshortskip 18\p@ \@plus9\p@ \@minus4\p@
@@ -1148,7 +1113,7 @@
 % Definition der interpolierten Größen (A0)
 %    \begin{macrocode}
 \def\tiny{\@setfontsize\tiny\@xxpt{27}}
-\def\scriptsize{\@setfontsize\scriptsize\@xxiiipt{31}}
+\def\scriptsize{\@setfontsize\scriptsize{23}{31}}
 %<*!scifi>
 \def\LARGE{\@setfontsize\LARGE{135pt}{162}}
 %</!scifi>
