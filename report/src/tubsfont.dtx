@@ -370,7 +370,7 @@
 %                   & |\small|        & 8pt   & 9pt   & 10pt  \\
 % Bildunterschrift  & |\footnotesize| & 7pt   & 8pt   & 9pt   \\
 %                   & |\scriptsize|   & 6pt   & 7pt   & 8pt   \\
-%                   & |\tiny|         & 4pt   & 5pt   & 6pt   \\
+%                   & |\tiny|         & 4pt   & 5pt   & 6pt
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A4}
 % \end{table}
@@ -379,16 +379,16 @@
 % \begin{tabular}{llrrr}
 % CD-Name           & \LaTeX-Name & 9pt & 10pt & 11pt  \\
 % \midrule
-% Headline (groß)   & |\Huge|         & 45pt  & 45pt  & 45pt  \\
-% Headline (klein)  & |\huge|         & 36pt  & 36pt  & 36pt  \\
-%                   & |\LARGE|        & 27pt  & 27pt  & 27pt  \\
-% Subheadline       & |\Large|        & 18pt  & 18pt  & 18pt  \\
-% Intro             & |\large|        & 14pt  & 14pt  & 14pt  \\
+% Headline (groß)   & |\Huge|         & 30pt  & 30pt  & 30pt  \\
+% Headline (klein)  & |\huge|         & 24pt  & 24pt  & 24pt  \\
+%                   & |\LARGE|        & 20pt  & 20pt  & 20pt  \\
+% Subheadline       & |\Large|        & 16pt  & 16pt  & 16pt  \\
+% Intro             & |\large|        & 13pt  & 13pt  & 13pt  \\
 % Copytext          & |\normalsize|   & 9pt   & 10pt  & 11pt  \\
 %                   & |\small|        & 8pt   & 9pt   & 10pt  \\
 % Bildunterschrift  & |\footnotesize| & 7pt   & 8pt   & 9pt   \\
 %                   & |\scriptsize|   & 6pt   & 7pt   & 8pt   \\
-%                   & |\tiny|         & 4pt   & 5pt   & 6pt   \\
+%                   & |\tiny|         & 4pt   & 5pt   & 6pt
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A5 / DIN lang}
 % \end{table}
@@ -403,11 +403,11 @@
 %                   & |\LARGE|        & 45pt  \\
 % Subheadline       & |\Large|        & 30pt  \\
 % Intro             & |\large|        & 20pt  \\
-% Copytext          & |\normalsize|   & \checkit 14pt \\
+% Copytext          & |\normalsize|   & 13pt  \\
 %                   & |\small|        & 12pt  \\
-% Bildunterschrift  & |\footnotesize| & 11pt  \\
-%                   & |\scriptsize|   & \checkit 6pt   \\
-%                   & |\tiny|         & \checkit 5pt   \\
+%                   & |\footnotesize| & 11pt  \\
+%                   & |\scriptsize|   & 9pt   \\
+%                   & |\tiny|         & 7pt   \\
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A3 (13pt)}
 % \end{table}
@@ -423,9 +423,9 @@
 % Intro             & |\large|        & 28pt  \\
 % Copytext          & |\normalsize|   & 18pt  \\
 %                   & |\small|        & 14pt  \\
-% Bildunterschrift  & |\footnotesize| & 12pt  \\
-%                   & |\scriptsize|   & \checkit 4pt   \\
-%                   & |\tiny|         & \checkit 7pt   \\
+%                   & |\footnotesize| & 12pt  \\
+%                   & |\scriptsize|   & 10pt   \\
+%                   & |\tiny|         & 8pt   \\
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A2 (18pt)}
 % \end{table}
@@ -441,7 +441,7 @@
 % Intro             & |\large|        & 40pt  \\
 % Copytext          & |\normalsize|   & 25pt  \\
 %                   & |\small|        & 20pt  \\
-% Bildunterschrift  & |\footnotesize| & 17pt  \\
+%                   & |\footnotesize| & 17pt  \\
 %                   & |\scriptsize|   & 14pt  \\
 %                   & |\tiny|         & 12pt  \\
 % \end{tabular}
@@ -459,9 +459,9 @@
 % Intro             & |\large|        & 60pt  \\
 % Copytext          & |\normalsize|   & 40pt  \\
 %                   & |\small|        & 30pt  \\
-% Bildunterschrift  & |\footnotesize| & 25pt  \\
-%                   & |\scriptsize|   & \checkit 26pt\\
-%                   & |\tiny|         & 21pt  \\
+%                   & |\footnotesize| & 25pt  \\
+%                   & |\scriptsize|   & 23pt  \\
+%                   & |\tiny|         & 20pt  \\
 % \end{tabular}
 % \caption{Schriftgrößen DIN\,A0 (40pt)}
 % \end{table}
@@ -660,6 +660,7 @@
 %    \end{macro}\end{macro}\end{macro}
 %
 % \paragraph{A5, DIN}
+% TODO: Institute-Fontsize ist eigentlich 10pt
 %    \begin{macrocode}
 %<*a5|lang>
 %    \end{macrocode}
@@ -681,9 +682,19 @@
 %    \begin{macro}{\scriptsize}
 % Definition der interpolierten Größen (A5/DIN lang)
 %    \begin{macrocode}
-\def\LARGE{\@setfontsize\LARGE{20pt}{26}}
-\def\tiny{\@setfontsize\tiny\@vpt{6}}
+%<*9>
+\def\tiny{\@setfontsize\tiny\@ivpt{5.2}}
 \def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
+%</9>
+%<*10>
+\def\tiny{\@setfontsize\tiny\@vpt{6}}
+\def\scriptsize{\@setfontsize\scriptsize\@viipt{9}}
+%</10>
+%<*11>
+\def\tiny{\@setfontsize\tiny\@vipt{7.8}}
+\def\scriptsize{\@setfontsize\scriptsize\@viiipt{10.4}}
+%</11>
+\def\LARGE{\@setfontsize\LARGE{20pt}{26}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
@@ -763,7 +774,7 @@
 %    \begin{macro}{\normalsize}
 %    \begin{macrocode}
 \def\normalsize{%
-   \@setfontsize\normalsize\@xivpt{17.5}% TODO!
+   \@setfontsize\normalsize\@xiiipt{18.2}
    \abovedisplayskip 13\p@ \@plus3\p@ \@minus8\p@
    \abovedisplayshortskip \z@ \@plus3\p@
    \belowdisplayshortskip 7\p@ \@plus3.5\p@ \@minus3\p@
@@ -825,8 +836,8 @@
 %    \begin{macro}{\scriptsize}
 %    \begin{macro}{\LARGE}
 %    \begin{macrocode}
-\def\tiny{\@setfontsize\tiny\@vpt{6}}
-\def\scriptsize{\@setfontsize\scriptsize\@vipt{7}}
+\def\tiny{\@setfontsize\tiny\@viipt{9.8}}
+\def\scriptsize{\@setfontsize\scriptsize\@ixpt{12.6}}
 \def\LARGE{\@setfontsize\huge{45pt}{83}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
@@ -917,8 +928,8 @@
 %    \begin{macro}{\LARGE}
 % Definition der interpolierten Größen (A2)
 %    \begin{macrocode}
-\def\tiny{\@setfontsize\tiny\@viipt{9}}
-\def\scriptsize{\@setfontsize\scriptsize\@ivpt{12}}
+\def\tiny{\@setfontsize\tiny\@viiipt{11}}
+\def\scriptsize{\@setfontsize\scriptsize\@xpt{13}}
 \def\LARGE{\@setfontsize\LARGE{68pt}{78}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
@@ -1091,8 +1102,8 @@
 %    \begin{macro}{\LARGE}
 % Definition der interpolierten Größen (A0)
 %    \begin{macrocode}
-\def\tiny{\@setfontsize\tiny\@xxipt{26}}
-\def\scriptsize{\@setfontsize\scriptsize\@xxvipt{31}}
+\def\tiny{\@setfontsize\tiny\@xxpt{27}}
+\def\scriptsize{\@setfontsize\scriptsize\@xxiiipt{31}}
 \def\LARGE{\@setfontsize\LARGE{135pt}{203}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
