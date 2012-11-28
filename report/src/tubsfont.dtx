@@ -36,12 +36,13 @@
 % \iffalse
 %
 %<*driver>
-\documentclass[11pt]{ltxdoc}
+\documentclass[11pt]{tubsltxdoc}
 % \usepackage[a4paper,marginleft]{tubsdoc}
 \usepackage[ngerman,english]{babel}
 \usepackage[utf8]{inputenc}
 \RequirePackage{xkeyval}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
+\usepackage{booktabs}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -51,16 +52,6 @@
 %</driver>
 % \fi
 %
-% \newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
-% \newenvironment{Options}%
-%  {\begin{list}{}{%
-%   \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
-%   \setlength{\itemsep}{-.5\parsep}
-%   \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
-%   \setlength{\leftmargin}{\labelwidth}%
-%   \addtolength{\leftmargin}{\labelsep}}%
-%   \raggedright}
-%  {\end{list}}
 %
 % \changes{v1.0}{ 2011 / 10 / 13 }{Initial version}
 % \changes{v1.0}{ 2011 / 10 / 13 }{Spacing von normalsize an CD-Vorgaben
@@ -81,7 +72,7 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Put text here.
+%   Schrift-Definitionen für alle tubslatex-Klassen und -Pakete.
 % \end{abstract}
 %
 %
@@ -105,7 +96,7 @@
 %    \end{macrocode}
 %
 %    \begin{key}{}{fontsize}
-% Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs dar.
+%
 %    \begin{macrocode}
 \newcommand\tubs@fontsize{11pt}
 \DeclareOptionX{fontsize}{%
@@ -128,7 +119,7 @@
 %    \end{key}
 %
 %    \begin{key}{}{smallchapters}
-% Reduziert die Schriftgröße von 
+% Reduziert die Schriftgröße von Überschriften (chapter)
 %    \begin{macrocode}
 \newif\if@tubs@tf@smallchap\@tubs@tf@smallchapfalse
 \DeclareOptionX{smallchapters}{%
@@ -214,7 +205,7 @@
 \providekomafont{section}{}
 \providekomafont{subsection}{}
 \providekomafont{subsubsection}{}
-\providekomafont{intro}{\large\tubs@fontcolor{tubsheadings}}
+\providekomafont{intro}{\large\tubs@fontcolor{tubsheadings}}%TODO: mdseries???
 %</package|leaflet>
 %    \end{macrocode}
 %
@@ -251,6 +242,12 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{author}
+%    \begin{macro}{date}
+%    \begin{macro}{institute}
+%    \begin{macro}{infotext}
+%    \begin{macro}{infotextitem}
+%    \begin{macro}{copytext}
 %    \begin{macrocode}
 \newkomafont{author}{\sffamily\LARGE}
 \newkomafont{date}{\large}
@@ -259,13 +256,22 @@
 \newkomafont{infotext}{\large}
 \newkomafont{infotextitem}{\large}
 \newkomafont{copytext}{\normalsize}
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%    \begin{macro}{\newtubsfont}
+%    \begin{macro}{\usetubsfont}
+%    \begin{macro}{\settubsfont}
+% Aliase für Koma-Befehle
+%    \begin{macrocode}
 \let\newtubsfont\newkomafont
 \let\usetubsfont\usekomafont
 \let\settubsfont\setkomafont
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}
 %
+%    \begin{macrocode}
 \setkomafont{caption}{\small}
 %    \end{macrocode}
-%
 %
 % Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund
 % des tief hängenden Textbereichs überflüssig ist.
@@ -306,7 +312,6 @@
 %
 % \subsection{clo-Font-Definitionen}
 %
-%
 % Font-Definitionen teilweise aus memoir geklaut.
 % Schriftgrößen sind an den im CD festgelegten orientiert.
 % Die genau definierten sind dabei (wenn möglich)
@@ -319,24 +324,172 @@
 % 
 % Definition der Größen nach Vorgabe
 %
-% Verwendetes Schema:\medskip\\
+% Verwendetes Schema:
+% \begin{center}
 % \begin{tabular}{ll}
 % CD-Name           & Latex-Kommando  \\
-% \hline
+% \midrule
 % Headline (groß)   & |\Huge|   \\
 % Headline (klein)  & |\huge|   \\
 % Subheadline       & |\Large|  \\
 % Intro             & |\large|  \\
 % Copytext          & |\normalsize| \\
 % Bildunterschrift  & |\footnotesize|
-% \end{tabular}\medskip\\
+% \end{tabular}
+% \end{center}
 % Alle übrigen Größen wurden als Mittelwert ihrer benachbarten Größen bestimmt.
+%
+% \paragraph{Ax}
+% \begin{center}
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name & 9pt & 10pt & 11pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|   \\
+% Headline (klein)  & |\huge|   \\
+%                   & |\LARGE|  \\
+% Subheadline       & |\Large|  \\
+% Intro             & |\large|  \\
+% Copytext          & |\normalsize| \\
+%                   & |\small|  \\
+% Bildunterschrift  & |\footnotesize| \\
+%                   & |\scriptsize| \\
+%                   & |\tiny| \\
+% \end{tabular}
+% \end{center}
+%
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name & 9pt & 10pt & 11pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & 45pt  & 45pt  & 45pt  \\
+% Headline (klein)  & |\huge|         & 36pt  & 36pt  & 36pt  \\
+%                   & |\LARGE|        & 27pt  & 27pt  & 27pt  \\
+% Subheadline       & |\Large|        & 18pt  & 18pt  & 18pt  \\
+% Intro             & |\large|        & 14pt  & 14pt  & 14pt  \\
+% Copytext          & |\normalsize|   & 9pt   & 10pt  & 11pt  \\
+%                   & |\small|        & 8pt   & 9pt   & 10pt  \\
+% Bildunterschrift  & |\footnotesize| & 7pt   & 8pt   & 9pt   \\
+%                   & |\scriptsize|   & 6pt   & 7pt   & 8pt   \\
+%                   & |\tiny|         & 4pt   & 5pt   & 6pt   \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,A4}
+% \end{table}
+%
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name & 9pt & 10pt & 11pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & 45pt  & 45pt  & 45pt  \\
+% Headline (klein)  & |\huge|         & 36pt  & 36pt  & 36pt  \\
+%                   & |\LARGE|        & 27pt  & 27pt  & 27pt  \\
+% Subheadline       & |\Large|        & 18pt  & 18pt  & 18pt  \\
+% Intro             & |\large|        & 14pt  & 14pt  & 14pt  \\
+% Copytext          & |\normalsize|   & 9pt   & 10pt  & 11pt  \\
+%                   & |\small|        & 8pt   & 9pt   & 10pt  \\
+% Bildunterschrift  & |\footnotesize| & 7pt   & 8pt   & 9pt   \\
+%                   & |\scriptsize|   & 6pt   & 7pt   & 8pt   \\
+%                   & |\tiny|         & 4pt   & 5pt   & 6pt   \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,A5 / DIN lang}
+% \end{table}
+%
+% \newcommand{\checkit}{\color{tuRed}}
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name     & 13pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & 90pt  \\
+% Headline (klein)  & |\huge|         & 60pt  \\
+%                   & |\LARGE|        & 45pt  \\
+% Subheadline       & |\Large|        & 30pt  \\
+% Intro             & |\large|        & 20pt  \\
+% Copytext          & |\normalsize|   & \checkit 14pt \\
+%                   & |\small|        & 12pt  \\
+% Bildunterschrift  & |\footnotesize| & 11pt  \\
+%                   & |\scriptsize|   & \checkit 6pt   \\
+%                   & |\tiny|         & \checkit 5pt   \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,A3 (13pt)}
+% \end{table}
+%
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name     & 18pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & 135pt \\
+% Headline (klein)  & |\huge|         & 90pt  \\
+%                   & |\LARGE|        & 68pt  \\
+% Subheadline       & |\Large|        & 45pt  \\
+% Intro             & |\large|        & 28pt  \\
+% Copytext          & |\normalsize|   & 18pt  \\
+%                   & |\small|        & 14pt  \\
+% Bildunterschrift  & |\footnotesize| & 12pt  \\
+%                   & |\scriptsize|   & \checkit 4pt   \\
+%                   & |\tiny|         & \checkit 7pt   \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,A2 (18pt)}
+% \end{table}
+%
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name     & 25pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & 190pt \\
+% Headline (klein)  & |\huge|         & 130pt \\
+%                   & |\LARGE|        & 95pt  \\
+% Subheadline       & |\Large|        & 60pt  \\
+% Intro             & |\large|        & 40pt  \\
+% Copytext          & |\normalsize|   & 25pt  \\
+%                   & |\small|        & 20pt  \\
+% Bildunterschrift  & |\footnotesize| & 17pt  \\
+%                   & |\scriptsize|   & 14pt  \\
+%                   & |\tiny|         & 12pt  \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,A1 (25pt)}
+% \end{table}
+%
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name     & 40pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & 270pt \\
+% Headline (klein)  & |\huge|         & 180pt \\
+%                   & |\LARGE|        & 135pt \\
+% Subheadline       & |\Large|        & 90pt  \\
+% Intro             & |\large|        & 60pt  \\
+% Copytext          & |\normalsize|   & 40pt  \\
+%                   & |\small|        & 30pt  \\
+% Bildunterschrift  & |\footnotesize| & 25pt  \\
+%                   & |\scriptsize|   & \checkit 26pt\\
+%                   & |\tiny|         & 21pt  \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,A0 (40pt)}
+% \end{table}
+%
+% \begin{table}[!ht]\centering
+% \begin{tabular}{llrrr}
+% CD-Name           & \LaTeX-Name     & 13pt  \\
+% \midrule
+% Headline (groß)   & |\Huge|         & \\
+% Headline (klein)  & |\huge|         & \\
+%                   & |\LARGE|        & \\
+% Subheadline       & |\Large|        & \\
+% Intro             & |\large|        & \\
+% Copytext          & |\normalsize|   & \\
+%                   & |\small|        & \\
+% Bildunterschrift  & |\footnotesize| & \\
+%                   & |\scriptsize|   & \\
+%                   & |\tiny|         & \\
+% \end{tabular}
+% \caption{Schriftgrößen DIN\,Ax (yypt)}
+% \end{table}
 %
 % Für DIN A4 und A5 sind dieselben Grundgrößen definiert.
 %    \begin{macrocode}
 %<*a4|a5|lang>
 %    \end{macrocode}
 %
+% \paragraph{A4, A5, DIN}
 %    \begin{macro}{\normalsize}
 %    \begin{macrocode}
 %<*9>
@@ -541,7 +694,7 @@
 % NOTE: This code is currently mainly copied from scrsize10pt.clo and not
 % fulle adapted to 9pt yet
 % TODO: check if this is needed!!!
-% \paragraph{A4, A5, DIN, A3, A2, A1}
+% \paragraph{A4, A5, DIN, A3, A2, A1, A0}
 %    \begin{macrocode}
 %<*a4|a5|lang|a3|a2|a1|a0>
 %    \end{macrocode}
