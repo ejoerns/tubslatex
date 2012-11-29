@@ -334,6 +334,36 @@
 \renewcommand*{\ttdefault}{txtt} % with bold series!
 %    \end{macrocode}
 %
+%    \begin{macro}{\lnum}
+% Setzt Argument mit Versalziffern
+%    \begin{macrocode}
+\newcommand\lnum[1]{%
+  \def\@test{NexusProSerif}
+  \ifx\f@family\@test%
+    \fontfamily{NexusProSerif-lnum}%
+  \else
+    \fontfamily{NexusProSans-lnum}%
+  \fi
+  \selectfont #1
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\oldstylenums}
+% Setzt Argument mit Mediävalziffern
+%    \begin{macrocode}
+\renewcommand{\oldstylenums}[1]{%
+  \def\@test{NexusProSerif-lnum}
+  \ifx\f@family\@test%
+    \fontfamily{NexusProSerif}%
+  \else
+    \fontfamily{NexusProSans}%
+  \fi
+  \selectfont #1
+}
+%    \end{macrocode}
+%    \end{macro}
+%
 % mathsf und mathtt passend definieren
 %    \begin{macrocode}
 \SetMathAlphabet{\mathsf}{normal}{LY1}{NexusProSans}{m}{n}
