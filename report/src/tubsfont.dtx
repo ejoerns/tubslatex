@@ -305,6 +305,41 @@
 \parskip\medskipamount
 %</poster>
 %    \end{macrocode}
+%
+%    \begin{macro}{\@sec@cmd}
+%    \begin{macrocode}
+\newcommand\@sec@cmd[2]{{\raggedsection\usekomafont{#1}#2\par}}
+%    \end{macrocode}
+%    \end{macro}
+%    \begin{macro}{\headline}
+%    \begin{macro}{\subheadline}
+%    \begin{macrocode}
+\define@boolkey{sec@cmd}{small}[true]{}%
+\let\headline\@undefined
+\newcommand\headline[2][]{%
+  \setkeys{sec@cmd}{small=false,#1}%
+  \ifKV@sec@cmd@small
+    \@sec@cmd{headlinesmall}{#2}%
+  \else
+    \@sec@cmd{headline}{#2}%
+  \fi
+}
+%
+\let\subheadline\@undefined
+\newcommand\subheadline[2][]{%
+  \setkeys{sec@cmd}{small=false,#1}%
+  \ifKV@sec@cmd@small
+    \@sec@cmd{subheadlinesmall}{#2}%
+  \else
+    \@sec@cmd{subheadline}{#2}%
+  \fi
+}
+% \newcommand\intro[1]{%
+%   \@sec@cmd{intro}{#1}%
+% }
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}
+%
 %    \begin{macrocode}
 %</body>
 %    \end{macrocode}
