@@ -1,15 +1,15 @@
 \ProvidesFile{LY1NexusProSans-lnum.fd}[Fontshop NexusProSans-lnum font definitions]
 \DeclareFontFamily{LY1}{NexusProSans-lnum}{}
 
-\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{n}{ <-> NexusProSans-lnum-Regular }{}
-\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{sc}{ <-> NexusProSans-lnum-SmallCaps }{}
-\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{sl}{ <-> NexusProSans-lnum-Slanted }{}
-\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{it}{ <-> NexusProSans-lnum-Italic}{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{n}{ <-> NexusProSans-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{sc}{ <-> NexusProSans-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{sl}{ <-> NexusProSans-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{it}{ <-> NexusProSans-Italic-lnum }{}
 
-\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{n}{ <-> NexusProSans-lnum-Bold-Regular }{}
-\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{sc}{ <-> NexusProSans-lnum-Bold-SmallCaps }{}
-\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{sl}{ <-> NexusProSans-lnum-Bold-Slanted }{}
-\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{it}{ <-> NexusProSans-lnum-Bold-Italic}{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{n}{ <-> NexusProSans-Bold-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{sc}{ <-> NexusProSans-Bold-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{sl}{ <-> NexusProSans-Bold-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{it}{ <-> NexusProSans-Bold-Italic-lnum }{}
 
 \DeclareFontShape{LY1}{NexusProSans-lnum}{bx}{n}{ <-> ssub * NexusProSans-lnum/b/n }{}
 \DeclareFontShape{LY1}{NexusProSans-lnum}{bx}{sc}{ <-> ssub * NexusProSans-lnum/b/sc }{}
