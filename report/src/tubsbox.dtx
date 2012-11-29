@@ -1172,11 +1172,17 @@
   \setlength\@temp@height{#2}%
   \@temp@width#3%
   \tb@sb@setorig%
+  \newdimen\tubs@restore@parskip%
+  \newdimen\tubs@restore@parindent%
+  \tubs@restore@parskip\parskip%
+  \tubs@restore@parindent\parindent%
   % Speichere Inhalt in minipage-Box.
   \begin{lrbox}{\tubs@sb@storebox}%
     \begin{minipage}[t][\@current@height-\tubs@sb@padding]{\@current@width-\tubs@sb@padding}%
       \setlength{\moduleheight}{\@current@height}%
       \setlength{\modulewidth}{\@current@width}%
+      \parskip\tubs@restore@parskip%
+      \parindent\tubs@restore@parindent%
       \tb@topfill
 }{%
       \tb@bottomfill
