@@ -4,9 +4,9 @@
 
 \usepackage{lipsum}
 
-\parskip50mm
-
 \begin{document}
+
+\fboxsep50mm
 
 \begin{gausspage}[sender=bottom,bgcolor=tuOrange]
 %   \showtopline
@@ -17,8 +17,14 @@
   
   \begin{segment}[bgimage=infozentrum.jpg,imagefit=vclip]{4}
   \end{segment}
+  \parsep0mm\itemsep0mm
   \begin{segment}[bgcolor=tuViolet,fgcolor=tuWhite]{2}
-    \lipsum[2]
+%   \setlength\parskip{0mm}
+    \begin{itemize}
+      \item Erster Aufzählungspunkt
+      \item Zweiter Aufzählungspunkt
+      \item Dritter Aufzählungspunkt
+    \end{itemize}
   \end{segment}
   \begin{segment}[c,bgcolor=tuOrange,fgcolor=tuWhite,frame=fbox]{1}
     Dieser Text muss vertikal zentriert sein. Die Box sollte umrahmt sein.

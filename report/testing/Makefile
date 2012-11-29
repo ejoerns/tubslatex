@@ -2,6 +2,7 @@
 # ---------------------------------
 # Erzeugt Testfiles
 #
+include ../../Makefile.include
 
 MAKE = make
 PDFLATEX = pdflatex
@@ -20,11 +21,12 @@ TESTFILES = $(shell ls *.tex)
 test: $(TESTFILES:%.tex=%.pdf) cleantemp
 
 %.pdf: %.tex
-	@echo 'Generating $<...'
+	$(ECHO) 'Generating $<...'
 	@$(PDFLATEX) --interaction batchmode $< > /dev/null || ( echo '[FAILED]' || true )
+# 	$(ECHO) -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *.log *.aux *~ *.toc
+	rm -f *.log *.aux *.out *~ *.toc
 
 clean: cleantemp
 	rm -f *.pdf
