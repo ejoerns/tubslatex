@@ -26,6 +26,9 @@ src: $(STYLIST)
 
 doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf)
 
+test:
+	$(MAKE) -C test
+
 $(STYLIST): $(DTXLIST)
 	$(ECHO) -n 'Generating LaTeX-files for $<'...
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
