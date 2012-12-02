@@ -371,7 +371,8 @@
 %
 %    \begin{macro}{\let@tubscolor}
 %\marg{Zielname}\marg{Quellname}\par
-% Kopiert Farbdefinitionen in tubslatex-Namenskonvention.\\
+% Kopiert Farbdefinitionen in tubslatex-Namenskonvention.
+% (Präfix '|tubs|' bzw. '|tu|')\\
 % Beispiel: |\let@tubscolor{GreenMedium}{Green}|
 %    \begin{macrocode}
 \newcommand\let@tubscolor[2]{%
@@ -422,21 +423,6 @@
 \fi
 \definecolor{tubsWhite}{cmyk}{0.0,0.0,0.0,0.0}
 \definecolor{tuWhite}{cmyk}{0.0,0.0,0.0,0.0}
-%    \end{macrocode}
-%
-% \paragraph {Grautöne}
-%    \begin{macrocode}
-\let@tubscolor{Gray}{Black}
-% \colorlet{tuGray100}{tuBlack}
-% \colorlet{tuGray80}{tuBlack!80}
-% \colorlet{tuGray60}{tuBlack!60}
-% \colorlet{tuGray40}{tuBlack!40}
-% \colorlet{tuGray20}{tuBlack!20}
-% \colorlet{tubsGray100}{tubsBlack}
-% \colorlet{tubsGray80}{tubsBlack!80}
-% \colorlet{tubsGray60}{tubsBlack!60}
-% \colorlet{tubsGray40}{tubsBlack!40}
-% \colorlet{tubsGray20}{tubsBlack!20}
 %    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill
@@ -491,29 +477,34 @@
 %
 % \paragraph{Primärfarben}
 %    \begin{macrocode}
-\iftc@mono
-  \definecolor{tuRed}{RGB}{8,8,8}
-  \definecolor{tubsRed}{RGB}{8,8,8}
-\else
-  \definecolor{tuRed}{RGB}{190,30,60}
-  \definecolor{tubsRed}{RGB}{190,30,60}
-\fi
 \create@tubscolor{Black}{0,0,0}% TODO: nicht doch (8,8,8)?
-\definecolor{tuWhite}{RGB}{255,255,255}
+\iftc@mono
+  \definecolor{tubsRed}{RGB}{tubsBlack}
+  \definecolor{tuRed}{RGB}{tuBlack}
+\else
+  \definecolor{tubsRed}{RGB}{190,30,60}
+  \definecolor{tuRed}{RGB}{190,30,60}
+\fi
 \definecolor{tubsWhite}{RGB}{255,255,255}
+\definecolor{tuWhite}{RGB}{255,255,255}
 %    \end{macrocode}
 %
-% \paragraph{Grautöne}
-%    \begin{macrocode}
-\let@tubscolor{Gray}{Black}
-%    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill\\
 % \docColor{Gelb-Orange}
 %    \begin{macrocode}
 \create@tubscolor{Yellow}{RGB}{255,205,0}
 \create@tubscolor{Orange}{RGB}{250,110,0}
-\create@tubscolor{Red}{RGB}{176,0,70}
+\definecolor{tuRed100}{RGB}{176,0,70}
+\colorlet{tuRed80}{tuRed100!80}
+\colorlet{tuRed60}{tuRed100!60}
+\colorlet{tuRed40}{tuRed100!40}
+\colorlet{tuRed20}{tuRed100!20}
+\definecolor{tubsRed100}{RGB}{176,0,70}
+\colorlet{tubsRed80}{tubsRed100!80}
+\colorlet{tubsRed60}{tubsRed100!60}
+\colorlet{tubsRed40}{tubsRed100!40}
+\colorlet{tubsRed20}{tubsRed100!20}
 %    \end{macrocode}
 % \docColor{Grün}
 %    \begin{macrocode}
@@ -549,17 +540,22 @@
 \definecolor{tuWhite}{RGB}{255,255,255}
 %    \end{macrocode}
 %
-% \paragraph{Grautöne}
-%    \begin{macrocode}
-\let@tubscolor{Gray}{Black}
-%    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill\\
 % \docColor{Gelb-Orange}
 %    \begin{macrocode}
 \create@tubscolor{Yellow}{RGB}{255,200,41}
 \create@tubscolor{Orange}{RGB}{225,109,0}
-\create@tubscolor{Red}{RGB}{113,28,47}
+\definecolor{tuRed100}{RGB}{113,28,47}
+\colorlet{tuRed80}{tuRed100!80}
+\colorlet{tuRed60}{tuRed100!60}
+\colorlet{tuRed40}{tuRed100!40}
+\colorlet{tuRed20}{tuRed100!20}
+\definecolor{tubsRed100}{RGB}{113,28,47}
+\colorlet{tubsRed80}{tubsRed100!80}
+\colorlet{tubsRed60}{tubsRed100!60}
+\colorlet{tubsRed40}{tubsRed100!40}
+\colorlet{tubsRed20}{tubsRed100!20}
 %    \end{macrocode}
 % \docColor{Grün}
 %    \begin{macrocode}
@@ -582,6 +578,11 @@
 %    \end{macrocode}
 %
 % \subsection{Farbdefinitionen -- Aliasse}
+%
+% Grautöne
+%    \begin{macrocode}
+\let@tubscolor{Gray}{Black}
+%    \end{macrocode}
 %
 %% Yellow/red auch als |orangeLight| bzw. |orangeDark| verwendbar
 %    \begin{macrocode}
@@ -618,6 +619,7 @@
 %
 % |tuGray60| auch unter dem Namen |tuGray| verwendbar.
 % |tuGray20| auch unter dem Namen |tuLightGray| verwendbar.
+% (überschreibt vorherige Definitionen!)
 %    \begin{macrocode}
 \colorlet{tuGray}{tuGray60}
 \colorlet{tuLightGray}{tuGray20}
@@ -625,7 +627,7 @@
 \colorlet{tubsLightGray}{tubsGray20}
 %    \end{macrocode}
 
-% Allow british english for gray
+% Erlaubt BE für 'gray'
 %    \begin{macrocode}
 \let@tubscolor{Grey}{Gray}
 \colorlet{tuLightGrey}{tuLightGray}
@@ -649,6 +651,10 @@
 \colorlet{tuSecondaryMedium#2}{tu#1Medium#2}%
 \colorlet{tuSecondary#2}{tu#1Medium#2}%
 \colorlet{tuSecondaryDark#2}{tu#1Dark#2}%
+\colorlet{tubsSecondaryLight#2}{tubs#1Light#2}%
+\colorlet{tubsSecondaryMedium#2}{tubs#1Medium#2}%
+\colorlet{tubsSecondary#2}{tubs#1Medium#2}%
+\colorlet{tubsSecondaryDark#2}{tubs#1Dark#2}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -664,6 +670,10 @@
 \colorlet{tuSecondaryMedium}{tu#1Medium100}%
 \colorlet{tuSecondary}{tu#1Medium100}%
 \colorlet{tuSecondaryDark}{tu#1Dark100}%
+\colorlet{tubsSecondaryLight}{tubs#1Light100}%
+\colorlet{tubsSecondaryMedium}{tubs#1Medium100}%
+\colorlet{tubsSecondary}{tubs#1Medium100}%
+\colorlet{tubsSecondaryDark}{tubs#1Dark100}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -723,7 +733,7 @@
 %
 % Setze Hauptfarbe auf tuBlack.
 %    \begin{macrocode}
-\color{tuBlack}
+\color{tubsBlack}
 %    \end{macrocode}
 %
 % Patch für Soul-Paket, sodass es highlightings korrekt darstellt
