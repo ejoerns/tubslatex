@@ -532,12 +532,15 @@
 \selectcolormodel{rgb}
 \iftc@mono
   \definecolor{tuRed}{RGB}{0,0,0}
+  \definecolor{tubsRed}{RGB}{0,0,0}
 \else
   \definecolor{tuRed}{RGB}{190,30,60}
+  \definecolor{tubsRed}{RGB}{190,30,60}
 \fi
 % \definecolor{tuBlack}{RGB}{0,0,0}
 \create@tubscolor{Black}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
+\definecolor{tubsWhite}{RGB}{255,255,255}
 %    \end{macrocode}
 %
 %
@@ -718,6 +721,18 @@
 \colorbox{tu#2#340}{\hbox to 0.188\cshowwidth{\vphantom{Fg}#3{}40\hfill}}% 
 \colorbox{tu#2#320}{\hbox to 0.188\cshowwidth{\vphantom{Fg}#3{}20\hfill}}\\% 
 }}
+\newcommand\tubs@colorbox[4][\relax]{% TODO: use this!
+  \setlength{\cshowwidth}{\textwidth}%TODO...
+  \ifx#1\relax
+    \colorlet{fglbg}{tuBlack}%
+  \else
+    \colorlet{fglbg}{#1}%
+  \fi
+  \colorbox{tubs#2#3#4}{\hbox to 0.188\cshowwidth{%
+    \color{fglbg}%
+    \vphantom{Fg}#3{}#4\hfill}%
+  }%
+}
 \newcommand{\tubscolorshow}[3][\relax]{{\noindent\sffamily%
 \if#1\relax\setlength{\cshowwidth}{\textwidth}\else\setlength{\cshowwidth}{#1}\fi
 \colorlet{fglbg}{black}
