@@ -590,11 +590,13 @@
 %% Yellow/red auch als |orangeLight| bzw. |orangeDark| verwendbar
 %    \begin{macrocode}
 \let@tubscolor{OrangeLight}{Yellow}
+\colorlet{tuOrangeDark}{tuRed100}
 \colorlet{tuOrangeDark100}{tuRed100}
 \colorlet{tuOrangeDark80}{tuRed80}
 \colorlet{tuOrangeDark60}{tuRed60}
 \colorlet{tuOrangeDark40}{tuRed40}
 \colorlet{tuOrangeDark20}{tuRed20}
+\colorlet{tubsOrangeDark}{tubsRed100}
 \colorlet{tubsOrangeDark100}{tubsRed100}
 \colorlet{tubsOrangeDark80}{tubsRed80}
 \colorlet{tubsOrangeDark60}{tubsRed60}
@@ -605,20 +607,28 @@
 %% Definiere: Alle Medium-Farben auch mit Zusatz  Medium zugreifbar
 %    \begin{macrocode}
 \let@tubscolor{OrangeMedium}{Orange}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 \let@tubscolor{GreenMedium}{Green}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 \let@tubscolor{BlueMedium}{Blue}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
 \let@tubscolor{VioletMedium}{Violet}
 %    \end{macrocode}
 %
+% Präfix-Versionen
+%    \begin{macrocode}
+\let@tubscolor{LightOrange}{OrangeLight}
+\let@tubscolor{LightGreen}{GreenLight}
+\let@tubscolor{LightBlue}{BlueLight}
+\let@tubscolor{LightViolet}{VioletLight}
+%
+\let@tubscolor{MediumOrange}{OrangeMedium}
+\let@tubscolor{MediumGreen}{GreenMedium}
+\let@tubscolor{MediumBlue}{BlueMedium}
+\let@tubscolor{MediumViolet}{VioletMedium}
+%
+\let@tubscolor{DarkOrange}{OrangeDark}
+\let@tubscolor{DarkGreen}{GreenDark}
+\let@tubscolor{DarkBlue}{BlueDark}
+\let@tubscolor{DarkViolet}{VioletDark}
+%    \end{macrocode}
 %
 % |tuGray60| auch unter dem Namen |tuGray| verwendbar.
 % |tuGray20| auch unter dem Namen |tuLightGray| verwendbar.
@@ -626,15 +636,19 @@
 %    \begin{macrocode}
 \colorlet{tuGray}{tuGray60}
 \colorlet{tuLightGray}{tuGray20}
+\colorlet{tuGrayLight}{tuGray20}
 \colorlet{tubsGray}{tubsGray60}
 \colorlet{tubsLightGray}{tubsGray20}
+\colorlet{tubsGrayLight}{tubsGray20}
 %    \end{macrocode}
 
 % Erlaubt BE für 'gray'
 %    \begin{macrocode}
 \let@tubscolor{Grey}{Gray}
 \colorlet{tuLightGrey}{tuLightGray}
+\colorlet{tuGreyLight}{tuGrayLight}
 \colorlet{tubsLightGrey}{tubsLightGray}
+\colorlet{tubsGreyLight}{tubsGrayLight}
 %    \end{macrocode}
 %
 %
