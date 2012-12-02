@@ -101,6 +101,8 @@
 %
 % \StopEventually{\PrintIndex}
 %
+% \tableofcontents
+%
 % \section{Verfügbare Farben}
 % 
 % Der Farbklang der TU-Braunschweig ist in eine Primär- und einen
@@ -338,9 +340,13 @@
 \ProcessOptionsX*\relax% Behandelt auch Optionen der Dokumentenklasse!
 %    \end{macrocode}
 %
-% \subsection{Farbdefinitionen -- Farbmodelle}
+% \subsection{Generatormakros}
 %
 %
+%    \begin{macro}{\create@tubscolor}
+% \marg{Name}\marg{Farbmodell}\marg{Wert}\par
+% Erstellt Farbe in tubslatex-Namenskonvention (Präfix '|tubs|' bzw. '|tu|')
+% inklusive aller 20\%-Abstufungsvarianten
 %    \begin{macrocode}
 \newcommand\tubs@color@prefix{tubs}
 \newcommand\tubs@color@compprefix{tu}
@@ -361,7 +367,35 @@
   \colorlet{\current@basename20}{\current@basename!20}
 }
 %    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macro}{\let@tubscolor}
+%\marg{Zielname}\marg{Quellname}\par
+% Kopiert Farbdefinitionen in tubslatex-Namenskonvention.\\
+% Beispiel: |\let@tubscolor{GreenMedium}{Green}|
+%    \begin{macrocode}
+\newcommand\let@tubscolor[2]{%
+  \def\from@basename{\tubs@color@prefix#2}
+  \def\to@basename{\tubs@color@prefix#1}
+  \colorlet{\to@basename}{\from@basename}
+  \colorlet{\to@basename 100}{\from@basename 100}
+  \colorlet{\to@basename 80}{\from@basename 80}
+  \colorlet{\to@basename 60}{\from@basename 60}
+  \colorlet{\to@basename 40}{\from@basename 40}
+  \colorlet{\to@basename 20}{\from@basename 20}
+  \def\from@basename{\tubs@color@compprefix#2}
+  \def\to@basename{\tubs@color@compprefix#1}
+  \colorlet{\to@basename}{\from@basename}
+  \colorlet{\to@basename 100}{\from@basename 100}
+  \colorlet{\to@basename 80}{\from@basename 80}
+  \colorlet{\to@basename 60}{\from@basename 60}
+  \colorlet{\to@basename 40}{\from@basename 40}
+  \colorlet{\to@basename 20}{\from@basename 20}
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+% \subsection{Farbdefinitionen -- Farbmodelle}
 %
 % \subsubsection{CMYK}
 %    \begin{macrocode}
@@ -392,21 +426,22 @@
 %
 % \paragraph {Grautöne}
 %    \begin{macrocode}
-\colorlet{tuGray100}{tuBlack}
-\colorlet{tuGray80}{tuBlack!80}
-\colorlet{tuGray60}{tuBlack!60}
-\colorlet{tuGray40}{tuBlack!40}
-\colorlet{tuGray20}{tuBlack!20}
-\colorlet{tubsGray100}{tubsBlack}
-\colorlet{tubsGray80}{tubsBlack!80}
-\colorlet{tubsGray60}{tubsBlack!60}
-\colorlet{tubsGray40}{tubsBlack!40}
-\colorlet{tubsGray20}{tubsBlack!20}
+\let@tubscolor{Gray}{Black}
+% \colorlet{tuGray100}{tuBlack}
+% \colorlet{tuGray80}{tuBlack!80}
+% \colorlet{tuGray60}{tuBlack!60}
+% \colorlet{tuGray40}{tuBlack!40}
+% \colorlet{tuGray20}{tuBlack!20}
+% \colorlet{tubsGray100}{tubsBlack}
+% \colorlet{tubsGray80}{tubsBlack!80}
+% \colorlet{tubsGray60}{tubsBlack!60}
+% \colorlet{tubsGray40}{tubsBlack!40}
+% \colorlet{tubsGray20}{tubsBlack!20}
 %    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill
 %
-% \newcommand{\docColor}[1]{\noindent\textbf{\itshape #1}\\}
+% \newcommand{\docColor}[1]{\noindent\textbf{\itshape #1}}
 %
 % \docColor{Gelb-Orange}
 % Note: tubsRed needs to be defined manually to not overwrite |tubsRed|!
@@ -458,124 +493,45 @@
 %    \begin{macrocode}
 \iftc@mono
   \definecolor{tuRed}{RGB}{8,8,8}
+  \definecolor{tubsRed}{RGB}{8,8,8}
 \else
   \definecolor{tuRed}{RGB}{190,30,60}
+  \definecolor{tubsRed}{RGB}{190,30,60}
 \fi
-\definecolor{tuBlack}{RGB}{0,0,0}
+\create@tubscolor{Black}{0,0,0}% TODO: nicht doch (8,8,8)?
 \definecolor{tuWhite}{RGB}{255,255,255}
+\definecolor{tubsWhite}{RGB}{255,255,255}
 %    \end{macrocode}
 %
 % \paragraph{Grautöne}
 %    \begin{macrocode}
-\definecolor{tuGray100}{RGB}{8,8,8}
-\definecolor{tuGray80}{RGB}{95,95,95}
-\definecolor{tuGray60}{RGB}{150,150,150}
-\definecolor{tuGray40}{RGB}{192,192,192}
-\definecolor{tuGray20}{RGB}{221,221,221}
+\let@tubscolor{Gray}{Black}
 %    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill\\
 % \docColor{Gelb-Orange}
-% \textit{light (yellow)}
 %    \begin{macrocode}
-\definecolor{tuYellow100}{RGB}{255,205,0}
-\definecolor{tuYellow80}{RGB}{255,220,77}
-\definecolor{tuYellow60}{RGB}{255,230,127}
-\definecolor{tuYellow40}{RGB}{255,240,178}
-\definecolor{tuYellow20}{RGB}{255,245,204}
-%    \end{macrocode}
-% \textit{medium}
-%    \begin{macrocode}
-\definecolor{tuOrange100}{RGB}{250,110,0}
-\definecolor{tuOrange80}{RGB}{252,154,77}
-\definecolor{tuOrange60}{RGB}{252,182,127}
-\definecolor{tuOrange40}{RGB}{252,211,178}
-\definecolor{tuOrange20}{RGB}{254,226,204}
-%    \end{macrocode}
-% \textit{dark (red)}
-%    \begin{macrocode}
-\definecolor{tuRed100}{RGB}{176,0,70}
-\definecolor{tuRed80}{RGB}{192,51,107}
-\definecolor{tuRed60}{RGB}{215,127,162}
-\definecolor{tuRed40}{RGB}{235,191,209}
-\definecolor{tuRed20}{RGB}{243,217,227}
+\create@tubscolor{Yellow}{RGB}{255,205,0}
+\create@tubscolor{Orange}{RGB}{250,110,0}
+\create@tubscolor{Red}{RGB}{176,0,70}
 %    \end{macrocode}
 % \docColor{Grün}
-% \textit{light}
 %    \begin{macrocode}
-\definecolor{tuGreenLight100}{RGB}{198,238,0}
-\definecolor{tuGreenLight80}{RGB}{215,243,77}
-\definecolor{tuGreenLight60}{RGB}{226,246,127}
-\definecolor{tuGreenLight40}{RGB}{238,250,178}
-\definecolor{tuGreenLight20}{RGB}{244,252,204}
-%    \end{macrocode}
-% \textit{medium}
-%    \begin{macrocode}
-\definecolor{tuGreen100}{RGB}{137,164,0}
-\definecolor{tuGreen80}{RGB}{173,191,77}
-\definecolor{tuGreen60}{RGB}{196,209,127}
-\definecolor{tuGreen40}{RGB}{219,228,178}
-\definecolor{tuGreen20}{RGB}{231,237,204}
-%    \end{macrocode}
-% \textit{dark}
-%    \begin{macrocode}
-\definecolor{tuGreenDark100}{RGB}{0,113,86}
-\definecolor{tuGreenDark80}{RGB}{77,156,137}
-\definecolor{tuGreenDark60}{RGB}{140,191,179}
-\definecolor{tuGreenDark40}{RGB}{191,219,213}
-\definecolor{tuGreenDark20}{RGB}{218,234,231}
-%
-% \create@tubscolor{GreenDark}{RGB}{0,113,86}
+\create@tubscolor{GreenLight}{RGB}{198,238,0}
+\create@tubscolor{Green}{RGB}{137,164,0}
+\create@tubscolor{GreenDark}{RGB}{0,113,86}
 %    \end{macrocode}
 % \docColor{Blau}
-% \textit{light}
 %    \begin{macrocode}
-\definecolor{tuBlueLight100}{RGB}{124,205,230}
-\definecolor{tuBlueLight80}{RGB}{164,220,238}
-\definecolor{tuBlueLight60}{RGB}{189,230,242}
-\definecolor{tuBlueLight40}{RGB}{215,240,247}
-\definecolor{tuBlueLight20}{RGB}{229,245,250}
-%    \end{macrocode}
-% \textit{medium}
-%    \begin{macrocode}
-\definecolor{tuBlue100}{RGB}{0,128,180}
-\definecolor{tuBlue80}{RGB}{77,166,203}
-\definecolor{tuBlue60}{RGB}{140,198,221}
-\definecolor{tuBlue40}{RGB}{191,223,236}
-\definecolor{tuBlue20}{RGB}{217,236,244}
-%    \end{macrocode}
-% \textit{dark}
-%    \begin{macrocode}
-\definecolor{tuBlueDark100}{RGB}{0,83,116}
-\definecolor{tuBlueDark80}{RGB}{64,126,151}
-\definecolor{tuBlueDark60}{RGB}{140,177,192}
-\definecolor{tuBlueDark40}{RGB}{191,212,220}
-\definecolor{tuBlueDark20}{RGB}{217,229,234}
+\create@tubscolor{BlueLight}{RGB}{124,205,230}
+\create@tubscolor{Blue}{RGB}{0,128,180}
+\create@tubscolor{BlueDark}{RGB}{0,83,116}
 %    \end{macrocode}
 % \docColor{Violet}
-% \textit{light}
 %    \begin{macrocode}
-\definecolor{tuVioletLight100}{RGB}{204,0,153}
-\definecolor{tuVioletLight80}{RGB}{222,89,189}
-\definecolor{tuVioletLight60}{RGB}{235,153,214}
-\definecolor{tuVioletLight40}{RGB}{245,204,235}
-\definecolor{tuVioletLight20}{RGB}{250,229,245}
-%    \end{macrocode}
-% \textit{medium}
-%    \begin{macrocode}
-\definecolor{tuViolet100}{RGB}{118,0,118}
-\definecolor{tuViolet80}{RGB}{152,64,152}
-\definecolor{tuViolet60}{RGB}{186,127,186}
-\definecolor{tuViolet40}{RGB}{214,178,214}
-\definecolor{tuViolet20}{RGB}{235,217,235}
-%    \end{macrocode}
-% \textit{dark}
-%    \begin{macrocode}
-\definecolor{tuVioletDark100}{RGB}{118,0,84}
-\definecolor{tuVioletDark80}{RGB}{156,77,136}
-\definecolor{tuVioletDark60}{RGB}{193,140,178}
-\definecolor{tuVioletDark40}{RGB}{221,191,212}
-\definecolor{tuVioletDark20}{RGB}{235,217,230}
+\create@tubscolor{VioletLight}{RGB}{204,0,153}
+\create@tubscolor{Violet}{RGB}{118,0,118}
+\create@tubscolor{VioletDark}{RGB}{118,0,84}
 }{%
 %    \end{macrocode}
 %
@@ -588,17 +544,14 @@
 \else
   \definecolor{tuRed}{RGB}{190,30,60}
 \fi
-\definecolor{tuBlack}{RGB}{0,0,0}
+% \definecolor{tuBlack}{RGB}{0,0,0}
+\create@tubscolor{Black}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
 %    \end{macrocode}
 %
 % \paragraph{Grautöne}
 %    \begin{macrocode}
-\definecolor{tuGray100}{RGB}{0,0,0}
-\colorlet{tuGray80}{tuGray100!80}
-\colorlet{tuGray60}{tuGray100!60}
-\colorlet{tuGray40}{tuGray100!40}
-\colorlet{tuGray20}{tuGray100!20}
+\let@tubscolor{Gray}{Black}
 %    \end{macrocode}
 %
 % \paragraph{Sekundärfarben}\hfill\\
@@ -632,98 +585,51 @@
 %
 %% Yellow/red auch als |orangeLight| bzw. |orangeDark| verwendbar
 %    \begin{macrocode}
-\colorlet{tuOrangeLight100}{tuYellow100}
-\colorlet{tuOrangeLight80}{tuYellow80}
-\colorlet{tuOrangeLight60}{tuYellow60}
-\colorlet{tuOrangeLight40}{tuYellow40}
-\colorlet{tuOrangeLight20}{tuYellow20}
+\let@tubscolor{OrangeLight}{Yellow}
 \colorlet{tuOrangeDark100}{tuRed100}
 \colorlet{tuOrangeDark80}{tuRed80}
 \colorlet{tuOrangeDark60}{tuRed60}
 \colorlet{tuOrangeDark40}{tuRed40}
 \colorlet{tuOrangeDark20}{tuRed20}
+\colorlet{tubsOrangeDark100}{tubsRed100}
+\colorlet{tubsOrangeDark80}{tubsRed80}
+\colorlet{tubsOrangeDark60}{tubsRed60}
+\colorlet{tubsOrangeDark40}{tubsRed40}
+\colorlet{tubsOrangeDark20}{tubsRed20}
 %    \end{macrocode}
 %
 %% Definiere: Alle Medium-Farben auch mit Zusatz  Medium zugreifbar
 %    \begin{macrocode}
-\colorlet{tuOrangeMedium100}{tuOrange100}
-\colorlet{tuOrangeMedium80}{tuOrange80}
-\colorlet{tuOrangeMedium60}{tuOrange60}
-\colorlet{tuOrangeMedium40}{tuOrange40}
-\colorlet{tuOrangeMedium20}{tuOrange20}
+\let@tubscolor{OrangeMedium}{Orange}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\colorlet{tuGreenMedium100}{tuGreen100}
-\colorlet{tuGreenMedium80}{tuGreen80}
-\colorlet{tuGreenMedium60}{tuGreen60}
-\colorlet{tuGreenMedium40}{tuGreen40}
-\colorlet{tuGreenMedium20}{tuGreen20}
+\let@tubscolor{GreenMedium}{Green}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\colorlet{tuBlueMedium100}{tuBlue100}
-\colorlet{tuBlueMedium80}{tuBlue80}
-\colorlet{tuBlueMedium60}{tuBlue60}
-\colorlet{tuBlueMedium40}{tuBlue40}
-\colorlet{tuBlueMedium20}{tuBlue20}
+\let@tubscolor{BlueMedium}{Blue}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\colorlet{tuVioletMedium100}{tuViolet100}
-\colorlet{tuVioletMedium80}{tuViolet80}
-\colorlet{tuVioletMedium60}{tuViolet60}
-\colorlet{tuVioletMedium40}{tuViolet40}
-\colorlet{tuVioletMedium20}{tuViolet20}
+\let@tubscolor{VioletMedium}{Violet}
 %    \end{macrocode}
 %
-% Alle 100%-Farben ohne Prozentzahl verwendbar
-% Ausnahme: tuRed100 kann nicht tuRed sein
-%    \begin{macrocode}
-\colorlet{tuYellow}{tuYellow100}
-\colorlet{tuOrangeLight}{tuOrangeLight100}
-\colorlet{tuOrangeMedium}{tuOrangeMedium100}
-\colorlet{tuOrange}{tuOrangeMedium100}
-\colorlet{tuOrangeDark}{tuOrangeDark100}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\colorlet{tuGreenLight}{tuGreenLight100}
-\colorlet{tuGreenMedium}{tuGreenMedium100}
-\colorlet{tuGreen}{tuGreenMedium100}
-\colorlet{tuGreenDark}{tuGreenDark100}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\colorlet{tuBlueLight}{tuBlueLight100}
-\colorlet{tuBlueMedium}{tuBlueMedium100}
-\colorlet{tuBlue}{tuBlueMedium100}
-\colorlet{tuBlueDark}{tuBlueDark100}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-\colorlet{tuVioletLight}{tuVioletLight100}
-\colorlet{tuVioletMedium}{tuVioletMedium100}
-\colorlet{tuViolet}{tuVioletMedium100}
-\colorlet{tuVioletDark}{tuVioletDark100}
-%    \end{macrocode}
 %
 % |tuGray60| auch unter dem Namen |tuGray| verwendbar.
 % |tuGray20| auch unter dem Namen |tuLightGray| verwendbar.
 %    \begin{macrocode}
 \colorlet{tuGray}{tuGray60}
 \colorlet{tuLightGray}{tuGray20}
+\colorlet{tubsGray}{tubsGray60}
+\colorlet{tubsLightGray}{tubsGray20}
 %    \end{macrocode}
 
 % Allow british english for gray
 %    \begin{macrocode}
-\colorlet{tuGrey}{tuGray}
+\let@tubscolor{Grey}{Gray}
 \colorlet{tuLightGrey}{tuLightGray}
-\colorlet{tuGrey100}{tuGray100}
-\colorlet{tuGrey80}{tuGray80}
-\colorlet{tuGrey60}{tuGray60}
-\colorlet{tuGrey40}{tuGray40}
-\colorlet{tuGrey20}{tuGray20}
+\colorlet{tubsLightGrey}{tubsLightGray}
 %    \end{macrocode}
 %
 %
