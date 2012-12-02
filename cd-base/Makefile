@@ -18,7 +18,7 @@ DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
 INSLIST := $(patsubst %,$(SRCDIR)/%,$(INSLIST))
 
 
-.PHONY: cleantemp clean
+.PHONY: cleantemp clean test
 
 all: src cleantemp
 

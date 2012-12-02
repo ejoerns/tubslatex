@@ -4,20 +4,19 @@
 #
 include ../../Makefile.include
 
-.PHONY: clean cleantemp
-
 TESTFILES = $(shell ls test*.tex)
+
+.PHONY: clean cleantemp test $(TESTFILES)
 
 test: $(TESTFILES:%.tex=%.pdf) cleantemp
 
 %.pdf: %.tex
-	$(ECHO) 'Running test $<...'
-	@$(PDFLATEX) --interaction batchmode $< > /dev/null || ( echo '[FAILED]' || true )
-# 	$(ECHO) -e '$(DONE_STRING)'
+	$(ECHO) -n 'Running test $<...'
+	@$(PDFLATEX) --interaction batchmode $< > /dev/null && echo '[OK]' || (echo '[FAILED]' && false)
 
 cleantemp:
-	rm -f *.log *.aux *.out *~ *.toc
+	$(RM) -f *.log *.aux *.out *~ *.toc
 
 clean: cleantemp
-	rm -f *.pdf
+	$(RM) -f *.pdf
 
