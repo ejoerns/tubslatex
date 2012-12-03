@@ -332,12 +332,12 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 % }
 
 % --- Umgebung: 'Hinweis'
-\newenvironment{hint}{%
-  \begin{description}
-    \item[\itshape\mdseries\rmfamily Hinweis:]
-}{%
-  \end{description}
-}
+% \newenvironment{hint}{%
+%   \begin{description}
+%     \item[\itshape\mdseries\rmfamily Hinweis:]
+% }{%
+%   \end{description}
+% }
 
 
 % \newenvironment{newimportant}[1][\hsize]
@@ -387,6 +387,11 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
   \endemphlist
 }
 
+\newenvironment{hint}{%
+  \emphlist{tuBlue}{Hinweis}
+}{%
+  \endemphlist
+}
 
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 
