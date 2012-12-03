@@ -6,7 +6,8 @@
   extramargin,%
   parskip=half,%
   hyperrefdark,%
-  lnum%
+  lnum,%
+  colorheadings=tubsOrange
 ]{tubsbook}
 % a5paper, 9pt, no extramargin, bcor=0mm
 
@@ -209,6 +210,7 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
     )}}
 \DeclareRobustCommand*{\PParameter}[1]{\texttt{\{#1\}}}
 \DeclareRobustCommand*{\POParameter}[1]{\texttt{[#1]}}
+\DeclareRobustCommand*{\Color}[1]{\mbox{\texttt{#1}}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -316,10 +318,13 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \par\endgroup
 }
 
+\reversemarginpar\setlength{\marginparwidth}{0.5cm}% TODO: needs fix?
 % --- Umgebung: 'Wichtig:'
 \newenvironment{important}{%
   \begin{description}
     \item[\itshape\mdseries\rmfamily Wichtig:]
+      \leavevmode\marginpar{\LARGE\bfseries\sffamily\textcolor{tuGrey}{%
+      \raisebox{-1ex}{!}}}
 }{%
   \end{description}
 }

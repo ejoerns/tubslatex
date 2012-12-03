@@ -10,7 +10,8 @@ orientieren und als Standard-Darstellungstyp voreingestellt sind.
 
 Für die Darstellung \emph{wissenschaftlicher} Inhalte gibt es ein spezielles Layout,
 das mehr Platz und Flexibilität für die Unterbringung von Informationen bietet.
-Es orientiert sich an einem eigenen Modulsystem und nicht am Gaußraster.
+Es orientiert sich an einem eigenen \gls{glos:modulsystem} und nicht am
+\gls{glos:gaussraster}.
 
 Zusätzlich gibt es noch eine Unterstützung für die Erstellung einfacher
 \emph{Aushänge}. Diese weisen nur einen einfachen großen Textbereich auf, der
@@ -37,13 +38,16 @@ nach oben durch das Siegelband-Logo mit einer Trennlinie begrenzt ist.
   \KOption{style}\PName{<standard/scifi/bulletin>}
 \end{Declaration}
 
+Mit der Klassenoption \KOption{style}\PName{Typ} kann zwischen
+den verschiedenen Plakattypen gewählt werden.
 Mit \KOption{style}{standard} wird die Darstellung für Veranstaltungsplakate
 gewählt. Diese ist bereits voreingestellt und muss daher nicht explizit gewählt
 werden.
 Mit \KOption{style}{scifi} wir das Layout-System für wissenschaftliche Plakate
-geladen, welches sich teilweise grundlegend von dem normalen Layout unterscheidet.
+(Modulsystem) geladen, welches sich teilweise grundlegend von
+dem normalen (Gaussraster-)Layout unterscheidet.
 Der Wert \KOption{style}{bulletin} erlaubt die schnelle Erstellung von
-Aushängen und lädt eine relative schlichte voreingestellte Darstellung.
+Aushängen und lädt eine relative schlichte, voreingestellte Darstellung.
 
 \begin{Declaration}
   \KOption{sender}\PName{top/bottom}
@@ -53,6 +57,24 @@ Diese Option legt fest, ob der Absenderbereich am oberen oder unteren Blattrand
 platziert werden soll. Für weitere Informationen siehe vorausgehende Kapitel.
 %TODO: ja? wo?
 %TODO: Klasse + Umgebung
+
+
+\subsubsection{Papierformate}% TODO: fix level
+
+Prinzipiell stehen dem Anwender alle DIN-Formate von A0 bis A5 zu Verfügung.
+Für Plakate sind jedoch speziell die Formate A0 bis A3 vorgesehen.
+
+Da auf wissenschaftlichen Plakate in der Regel mehr Informationen untergebracht
+werden müssen als auf normalen Veranstaltungsplakaten, gibt es hierfür
+speziell angepasste Schriftgrößen für die Formate A0 bis A2.
+
+\begin{important}
+Es wird generell dazu geraten, \emph{nur} das gewünschte Papierformat
+anzugeben und \emph{keine explizite Schriftgrößenwahl} vorzunhemen.
+Dies stellt sicher, dass (sofern möglich) die korrekten Schriftgrößen
+automatisch passend zum angegebendne Papierformat geladen werden.
+\end{important}
+
 
 
 \begin{Declaration}
@@ -78,13 +100,28 @@ Papierformate gibt Tabelle~\ref{table:fontsizes}.
   Diese liegen nur für die Formate A3, A2, A1 und A0 vor.
 \end{important}
 
-\paragraph{Individuelle Papiergrößen}
-
-
+\paragraph{Individuelle Papierformate}
+\Index{Format!inidviduell}
+\Index{Papierformat!individuell}
 
 Die Vorlagen unterstützen auch weitgehend die Angabe individueller Papiergrößen.
-Dazu sollte die Darstellungsgröße mit der Option \Option{papersize}.
+Dazu kann die Darstellungsgröße mit den folgenden Klassenoptionen
+gewählt werden:
+\begin{Declaration}
+\KOption{paper}\PValue{width:height}\\
+\KOption{paperwidth}\PValue{width}\\
+\KOption{paperheight}\PValue{height}
+\end{Declaration}
 
+Die Maße des Posters werden automatisch CD-konform an das eingestellte
+Papierformat angepasst.
+Auch das Siegelband wird entsprechend skaliert und gesetzt. 
+% TODO: What happens to Text size?
+
+\begin{Declaration}
+  \Macro{headline}\\
+  \Macro{subheadline}
+\end{Declaration}
 
 
 \paragraph{Weitere Klassenoptionen:}
@@ -194,6 +231,7 @@ gesetzt werden kann.
 \clearpage
 \section{Wissenschaftliche Plakate}
 %TODO: Optionen und Schachtelung angeben
+% - A2, A1, A0
 
 Wissenschaftliche Poster unterscheiden sich im Layout in diversen Punkten
 von allen übrigen Vorlagen. Die Darstellung ist dazu optimiert möglichst
@@ -396,3 +434,17 @@ Aushänge werden unter Angabe der Optionswahl
 % \section{Befehle}
 
 % \section{Optionen}
+
+\begin{table}\centering
+\begin{tabular}{lll}
+      & Dokumente/Plakate & wissenschaftl.\\
+\midrule
+A0    & 40pt  & 35pt  \\
+A1    & 25pt  & 25pt  \\
+A2    & 18pt  & 18pt  \\
+A3    & 13pt  & --    \\
+A4    & 9pt, 10pt, 11pt & --\\
+A5/lang & 9pt, 10pt, 11pt & --\\
+\end{tabular}
+\caption{Übersicht über verfügbare Schriftgrößen}
+\end{table}

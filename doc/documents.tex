@@ -132,18 +132,19 @@ entnommen werden.
 \begin{minipage}{0.45\textwidth}
 Die Option \Option{landscape} schaltet das Dokument in Querformat-Darstellung.
 
-\begin{important}
+% \begin{important}
   Im Querformat hat das Gaußraster eine abweichende
   Segmentanzahl. Für alle gängigen Formate sind im Querformat \emph{6 Segmente}
   definiert. Daher lösen Layouts, die für hochformatige Dokumente
   geschrieben wurden, im Querformat einen Fehler aus. %TODO: Fehlermeldung benennen bzw. Referenz
-\end{important}
+% \end{important}
 \end{minipage}\hfill
 \begin{minipage}{0.5\textwidth}\centering
 \fboxsep0mm\fbox{\includegraphics[width=\textwidth]{examples/article_landscape.pdf}}
 \end{minipage}
 
 \begin{Declaration}
+  \KOption{paper}\PName{Breite:Höhe}\\
   \KOption{paperwidth}\PName{Breite}\\
   \KOption{paperheight}\PName{Höhe}
 \end{Declaration}
@@ -152,7 +153,8 @@ Mit den Optionen \Option{paperwidth} und \Option{paperheight} können individuel
 Papierformate angegeben werden.
 Diese können jedoch von den Vorlagen nur bedingt unterstützt werden.
 % TODO: Möglichkeiten und Grenzen aufzeigen
-
+% - landscape-Option nicht unterstützt? oder nicht genutzt?
+% TODO: Hinweis, dass bis Koma 3.01 Höhe:Breite galt?
 
 \subsection{Darstellungsanpassung}
 
@@ -887,6 +889,19 @@ Wird keine \PName{Farbe} explizit angegeben, wir dafür standardmäßig die akti
 Sekundärfarbe (siehe vorheriger Abschnitt) verwendet.
 Ansonsten wir die angegebene Farbe verwendet.
 
+% TODO: place here?
+\begin{Declaration}
+  \Option{smallchapters}
+\end{Declaration}
+Die standardmäßig vorgesehen Schriftgröße für Überschriften der Ebene \Macro{chapter}
+kann besonders bei längeren Überschriften zu starken Platzproblemen führen.
+Wer daher lieber kleinere Überschriften bevorzugt, kann mit der Klassenoption
+\Option{smallchapters} auf eine kleinere CD-konforme Variante der Überschriften
+umschalten.
+% TODO: allgemeine Erklärung der Verwendung von Klassenoptionen?
+% - Gesamtauflistug der verfügbaren Optionen?s
+% - Erklärung für tubsdoc, welche nutzbar, welche nichtß
+
 \paragraph{Schriftauszeichnung}
 \begin{sloppypar}
 Die Schriften für die verschiedenen Elemente sind als benannte Schrift-Elemente
@@ -1024,16 +1039,8 @@ CD-Standardfarben. Sie ist für den Druck zu bevorzugen.
   Bei der Verwendung von \Option{cmyk} ist zu beachten,
   dass das die Farbe Schwarz (\texttt{tuBlack})
   aus den Farbdefinitionen der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht,
-  was in der Bildschirmdarstellung allgemein als dunkles grau wirkt. Dies
-  gilt somit auch für den Text im Dokument und ist normal.
-
-  Sollte dagegen die Ausgabe aus dem Drucker zu hell erscheinen, so kann dies
-  durch einen manuelle Anpassung der Farbe \texttt{tuBlack} korrigiert werden,
-  indem zusätzlich die CMY-Farben benutzt werden. Dies kann jedoch auch zu
-  schlechteren Druckergebnissen durch übermäßigen Tinteneinsatz führen!
-  
-  Beispiel zur Umdefinierung:
-  \lstinline!\definecolor{tuBlack}{CMYK}{0.5,0.5,0.5,1.0}!
+  was in der Bildschirmdarstellung allgemein als dunkles grau wirkt.
+  Hinweise hierzu finden sich in Abschnit~\ref{sec:richblack}.
 \end{important}
 
 \begin{Declaration}

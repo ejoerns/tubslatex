@@ -9,8 +9,9 @@
 
 Die Farbdefinitionen in \tubslatex werden vom Paket \newpackage{tubscolors}
 zur Verfügung gestellt. Die folgende Beschreibung bezieht sich
-auf den Funktionsumfang des Paketes. Das Paket ist in allen verfügbaren
-Klassen bereits korrekt eingebunden.
+auf den Funktionsumfang dieses Paketes.
+Da das Paket aber in allen verfügbaren \tubslatex-Klassen fest eingebunden ist,
+gelten die Erklärungen auch allgemein.
 
 \newcommand{\rainbow}[2][\relax]{{\noindent\sffamily\footnotesize%
 \ifx#1\relax\colorlet{fglbg}{black}\else\colorlet{fglbg}{#1}\fi
@@ -40,89 +41,209 @@ in 4 Farbklänge (Gelb-Orange, Grün, Blau und Violett) mit je 3 Basisfarben
 aufgeteilt sind.
 Alle Sekundärfarben können in 20-Prozent-Schritten aufgehellt werden.
 
-Die Namen über die die einzelnen Farben angesprochen werden können, sind in den
-Beispielfeldern angegeben.
+\subsection{Benennungsschema}
+
+Alle Farben tragen das Präsfix \texttt{tubs} vor Ihrem Namen.
+Der eigentliche Farbname setzt sich zusammen aus dem Namen
+des Sekundärfarbklangs
+(\texttt{Orange}, \texttt{Blue}, \texttt{Green}, \texttt{Violet}) 
+und einer Farbvariante
+(\texttt{Light}, \texttt{Medium}, \texttt{Dark})
+gefolgt von der Prozentzahl ihrer Helligkeitsstufe
+(\texttt{20}, \texttt{40}, \texttt{60}, \texttt{80}, \texttt{100}).
+
+Die Farben können sowoh in Präfix-Notation
+(\Color{tubs\textsf{<Variante>}\textsf{<Klang>}80})
+als auch in Postfix-Notation (\Color{tubs\textmd{<Klang>}\textmd{<Variante>}80})
+angegeben werden.
+
+\begin{example}
+  Die helle Variante des Blau in 60\%iger Helligkeit kann also
+  über den Namen \Color{tubsBlueLight60} als auch
+  \Color{tubsLightBlue60} gewählt werden.
+\end{example}
+
+Vereinfachte Varianten der Benennung gibt es unter anderem für die 100\%-Varianten.
+Hier kann die Prozentzahl weggelassen werden.
+\begin{important}
+Die Primärfarbe \Color{tubsRed} ist \emph{nicht} identisch mit \Color{tubsRed100}
+aus dem gelb-orange-Sekundärfarbbereich.
+In diesem speziellen Fall handelt es sich um verschiedene Farben.
+\end{important}
+Auch für die \texttt{Medium}-Varianten ist kein Präfix/Postfix notwendig.
+\begin{example}
+  Die Medium-Variante des Grün in 100\%iger Helligkeit kann vereinfacht
+  mit \Color{tubsGreen} bezeichnet werden.
+\end{example}
+
+Die drei Primärfarben rot, schwarz und weiß sind unter den Namen
+\Color{tubsRed}, \Color{tubsBlack} und \Color{tubsWhite} verfügbar.
+
+Im Folgenden werden die zu Verfügung stehenden Farben aufgelistet.
+Die Standardnamen über die die einzelnen Farben angesprochen werden können,
+sind in den Beispielfeldern angegeben.
 
 \subsection{Primärfarben}
 
 {\sffamily\footnotesize%
-\colorbox{tuRed}{\hbox to 0.188\textwidth{%
-  \vphantom{Fg}tuRed\hfill}}%
-\colorbox{tuBlack}{\hbox to 0.188\textwidth{%
-  \color{white}\vphantom{Fg}tuBlack\hfill}}%
-\fcolorbox{tuBlack}{tuWhite}{\hbox to 0.188\textwidth{%
-  \vphantom{Fg}tuWhite\hfill}}\\%
+\colorbox{tubsRed}{\hbox to 0.188\textwidth{%
+  \vphantom{Fg}tubsRed\hfill}}%
+\colorbox{tubsBlack}{\hbox to 0.188\textwidth{%
+  \color{white}\vphantom{Fg}tubsBlack\hfill}}%
+\fcolorbox{tubsBlack}{tuWhite}{\hbox to 0.188\textwidth{%
+  \vphantom{Fg}tubsWhite\hfill}}\\%
 }
 
-\rainbow[tuWhite]{tuGray}
+\rainbow[tuWhite]{tubsGray}
 
-Zur Vereinfachung sind noch die Farben \lstinline{tuGray} und
-\lstinline{tuLightGrey} definiert, die den Farben \lstinline{tuGray60} und
-\lstinline{tuGray20} entsprechen.
+Zur Vereinfachung sind noch die Farben \Color{tubsGray} und
+\Color{tubsLightGrey} definiert, die den Farben \Color{tubsGray60} und
+\Color{tubsGray20} entsprechen.
 
 Alle Graytöne sind darüber hinaus auch in britischer Schreibweise nutzbar
-(\lstinline{tuGrey}).
+(\Color{tubsGrey}).
 
-\paragraph{Hinweis:}
-\lstinline{tuRed} ist nicht zu verwechseln mit \lstinline{tuRed100} aus dem
-Sekundärfarbbereich. Es handelt sich dabei um eine komplett andere Farbe.
 
 \pagebreak
 \subsection{Sekundärfarben}
-  tuOrange\ldots\\
+  tubsOrange\ldots\\
   \colorshow{Orange}{Light}
   \colorshow{Orange}{Medium}
   \colorshow{Orange}{Dark}\\[-1ex]
-  tuBlue\ldots\\
+  tubsBlue\ldots\\
   \colorshow{Blue}{Light}
   \colorshow{Blue}{Medium}
   \colorshow{Blue}{Dark}\\[-1ex]
-  tuGreen\ldots\\
+  tubsGreen\ldots\\
   \colorshow{Green}{Light}
   \colorshow{Green}{Medium}
   \colorshow{Green}{Dark}\\[-1ex]
-  tuViolet\ldots\\
+  tubsViolet\ldots\\
   \colorshow{Violet}{Light}
   \colorshow{Violet}{Medium}
   \colorshow{Violet}{Dark}
 %   \caption{Im CD definierte Farben und deren Benennung (Auszug)}
 
 
-Zusätzlich kann als Paketoption ein Farbklang ausgewählt werden, dessen Farben
-dann über die Werte  \\\lstinline{tuSecondaryLight},
-\lstinline{tuSecondaryMedium}, \lstinline{tuSecondaryDark}, sowie die
-entsprechenden Prozentualwert \\(\lstinline{tuSecondaryLight20},
-\lstinline{tuSecondaryLight40}, \ldots) angesprochen werden können.
-Dies erlaubt eine flexible Verwendung der 4 Sekundärfarbklänge.
-
-In folgendem Beispiel wurde \lstinline{blau} als Farbklang ausgewählt:
-
-\colorshow{Secondary}{Light}
-\colorshow{Secondary}{Medium}
-\colorshow{Secondary}{Dark}\\[-1ex]
-
-\paragraph{Hinweise:}
-Die Farben des gelb-orange-Farbklangs können entsprechend der anderen
-Farbmodelle auch noch einheitlich über die Alternativnamen
-\lstinline{tuOrangeLight}, \lstinline{tuOrange},
-\lstinline{tuOrangeDark}, sowie de entsprechenden Prozentwerte aufgerufen
-werden.
-
-Außerdem können jeweils die mittleren Farbwerte der Farbklänge auch über den
-Zusatz \lstinline{Medium} angesprochen werden (statt \lstinline{tuGreen100} auch
-\lstinline{tuGreenMedium100}).
-
-Bei allen 100-Prozent-Farben (außer \lstinline{tuRed}) kann die
-Zahl weggelassen werden (statt \lstinline{tuGreenLight100} auch 
-\lstinline{tuGreenLight}).
+% \begin{example}
+% In folgendem Beispiel wurde \lstinline{blau} als Farbklang ausgewählt:
+% 
+% tubsSecondary\ldots\\
+% \colorshow{Secondary}{Light}
+% \colorshow{Secondary}{Medium}
+% \colorshow{Secondary}{Dark}\\[-1ex]
+% \end{example}
 
 \subsection{Farbmodelle}
 
-In den Paketoptionen kann zwischen 3 Farbmodellen gewählt werden.
-Das Standardmodell stellt die CD-konformen RGB-Farbwerte zur Verfügung.
+Die Farben sind für 3 Farbmodelle (RGB, RGB beamer-optimiert, CMYK) definiert.
+Das gewünschte Farmodell kann durch Klassen- bzw. Paketoptionen gewählt werden.
+Die einzelnen Klassen haben bereits das jeweils passende Farbmodell voreingestellt.
 
-Für die Ausgabe in CMYK-Farben steht die Option \lstinline!cmyk! zur Verfügung.
+Zusätzlich kann eine Mono-Variante gewählt werden, die die Farbe
+\Color{tusbRed} automatisch als Schwarz darstellt.
 
-Darüber hinaus gibt es noch ein RGB-Farbschema, das für die Ausgabe auf
-Beamern optimiert ist. Es kann über die Option \lstinline!rgbbeamer! geladen
-werden.
+
+\clearpage
+\section{Verwendung/Farbwahl}
+\sloppy
+
+Die TU-Farben können nach dem oben erläuterten Schema abgerufen und verwendet
+werden wie jede andere Farbe auch.
+
+\paragraph{Haupt-Sekundärfarbklang}\label{sec:secondary}
+
+Die Farben des aktuell gewählten Haupt-Sekundärfarbklangs können zusätzlich
+über die Namen \Color{tuSecondaryLight},
+\Color{tuSecondaryMedium}, \Color{tuSecondaryDark}, sowie die
+entsprechenden Prozentualwert \Color{tuSecondaryLight20},
+\Color{tuSecondaryLight40}, \ldots) angesprochen werden können.
+Dies erlaubt eine flexible Verwendung der 4 Sekundärfarbklänge.
+
+Die Wahl der Haupt-Sekundärfarbklangs erfolgt entweder über die weiter
+unten beschriebenen Klassen-/Paketoptionen oder innerhalb des Dokumentes auch
+mit dem Befehl \Macro{selectsecondary}.
+
+\paragraph{Fettes Schwarz}\label{sec:richblack}
+
+  Bei der Verwendung des CMYK-Farbraums ist zu beachten,
+  dass das die Farbe Schwarz (\Color{tubsBlack})
+  aus den Farbdefinitionen der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht,
+  was in der Bildschirmdarstellung allgemein als dunkles grau wirkt. Dies
+  gilt somit auch für den Text im Dokument und ist normal.
+
+  Sollte dagegen die Ausgabe aus dem Drucker zu hell erscheinen, so kann dies
+  entweder durch Verwendung der Klassen-/Paketoption \Option{trueblack}
+  (siehe folgendes Kapitel) oder durch einen manuelle Anpassung der Farbe
+  \Color{tubsBlack} korrigiert werden,
+  indem zusätzlich die CMY-Farben benutzt werden.
+  Zu beachten ist jedoch, dass dies im Druck zu schlechteren Ergebnissen
+  durch übermäßigen Tinteneinsatz führen kann!
+  
+  \begin{example}
+    \lstinline!\definecolor{tubsBlack}{CMYK}{0.5,0.5,0.5,1.0}!
+  \end{example}
+
+
+\subsection{Paket-/Klasenoptionen und Befehle}
+
+\begin{Declaration}
+  \Option{rgb}\\
+  \Option{rgbbeamer}\\
+  \Option{cmyk}\\[1ex]
+  \Option{mono}
+\end{Declaration}
+
+Die Option \Option{rgb} bewirkt eine Darstellung der Farben im vordefinierten
+RGB-Farbprofil.
+Die Option \Option{rgbbeamer} lädt ein Beamer-optimierts RGB-Farbprofil.
+Mit der Option \Option{cmyk} wird das CMYK-Farbprofil geladen.
+Die Zusatz-Option \Option{mono} bewirkt eine Darstellung der Farbe
+\Color{tubsRed} als \Color{tubsBlack} im aktuell gewählten Farbprofil.
+Dies kann insbesondere für schwarz-weiß Kopiervorlagen in Verbindung
+mit der schwarzen Siegelbandlogo-Variante sinnvoll sein.
+
+
+\begin{Declaration}
+  \Option{trueblack}
+\end{Declaration}
+
+Definiert die Farbe \Color{tubsBlack} bei Verwendung des CMYK-Farbprofils
+in ein sog. "`fettes Schwarz"' um. Siehe dazu auch Abschnitt~\ref{sec:richblack}.
+
+\begin{Declaration}
+  \Option{orange}\\
+  \Option{green}\\
+  \Option{blue}\\
+  \Option{violet}
+\end{Declaration}
+
+Mit diesen Optionen kann der Standard-Sekundärfarbklang des Dokumentes gewählt
+werden. Der jeweils geladene Sekundärfarbklang ergibt sich aus dem Namen
+der Option.
+Die Farben des Sekundärfarbklangs können wie in Abschnitt~\ref{sec:secondary}
+beschrieben benutzt werden.
+
+\begin{Declaration}
+  \Macro{selectsecondary}\Parameter{Farbklang}
+\end{Declaration}
+
+Befehl zur Wahl des Haupt-Sekundärfarbklangs. Als Option für \PName{Farbklang}
+sind die Werte \PValue{orange}, \PValue{green}, \PValue{blue} und \PValue{violet}
+erlaubt.
+
+\begin{Declaration}
+  \Macro{tubscolorshow}\Parameter{Farbe}\Parameter{Variante}
+\end{Declaration}
+
+Zeigt farbige Boxen mit allen Helligkeitsstufen der angegebenen Farbklang-Variante.
+\begin{example}
+ Die Ausgabe von \lstinline!\tubscolorshow{Blue}{Light}! sieht beispielsweise
+ wie folgt aus:\\
+ \tubscolorshow{Blue}{Light}
+\end{example}
+
+\fussy
+
+
+
