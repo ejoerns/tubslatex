@@ -1,7 +1,7 @@
 \chapter{Hausschrift Nexus}\label{chap:nexus}
 
-Die im CD definiert Hausschrift \emph{Nexus} wird durch das Paket
-\texttt{nexus} bereitgestellt, welches in allen verfügbaren \tubslatex-Klassen
+Die im \acs{CD} definiert Hausschrift \emph{Nexus} wird durch das Paket
+\newpackage{nexus} bereitgestellt, welches in allen verfügbaren \tubslatex-Klassen
 fest eingebunden ist.
 
 \begin{Declaration}
@@ -159,7 +159,10 @@ Die Paket-/Klassenoption \Option{lnum} wählt für das Dokument einen Schriftsch
 Versalziffern.
 
 \begin{Declaration}
-  \Macro{lnum}\Parameter{Text}
+  \Macro{lnum}\Parameter{Text}\\
+  \Macro{oldstylenums}\Parameter{Text}
 \end{Declaration}
 
-Setzt den \Parameter{Text} mit Versalziffern.
+Der Befehl \Macro{lnum} setzt den \PName{Text} immer mit Versalziffern.
+Der Befehl \Macro{oldstylenums} bewirkt das Gegenteil und
+setzt den \PName{Text} immer mit Mediävalziffern.

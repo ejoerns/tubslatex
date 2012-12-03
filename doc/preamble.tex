@@ -15,6 +15,8 @@
 \usepackage{xspace}
 \usepackage{amsmath}
 
+\usepackage{framed}
+
 % --- Tabellen
 \usepackage{tabularx}
 \usepackage{booktabs}
@@ -305,29 +307,29 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \g@addto@macro{\tubslatex}{\xspace}
 \makeatother
 
-\def\example{\par\smallskip\noindent\textit{Beispiel: }}
+% \def\example{\par\smallskip\noindent\textit{Beispiel: }}
 
 % --- Umgebung: 'Beispiel'
 % Schreibt 'Beispiel' vor den folgenden Inhalt und rückt alles nach dem ersten
 % Absatz um 2em ein.
-\newenvironment{Example}{%
-\begingroup
-\leftskip2em
-\par\smallskip\noindent\hspace*{-2em}\textit{Beispiel: }
-}{%
-\par\endgroup
-}
+% \newenvironment{Example}{%
+% \begingroup
+% \leftskip2em
+% \par\smallskip\noindent\hspace*{-2em}\textit{Beispiel: }
+% }{%
+% \par\endgroup
+% }
 
 \reversemarginpar\setlength{\marginparwidth}{0.5cm}% TODO: needs fix?
 % --- Umgebung: 'Wichtig:'
-\newenvironment{important}{%
-  \begin{description}
-    \item[\itshape\mdseries\rmfamily Wichtig:]
-      \leavevmode\marginpar{\LARGE\bfseries\sffamily\textcolor{tuGrey}{%
-      \raisebox{-1ex}{!}}}
-}{%
-  \end{description}
-}
+% \newenvironment{important}{%
+%   \begin{description}
+%     \item[\itshape\mdseries\rmfamily Wichtig:]
+%       \leavevmode\marginpar{\LARGE\bfseries\sffamily\textcolor{tuGrey}{%
+%       \raisebox{-1ex}{!}}}
+% }{%
+%   \end{description}
+% }
 
 % --- Umgebung: 'Hinweis'
 \newenvironment{hint}{%
@@ -338,10 +340,56 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 }
 
 
+% \newenvironment{newimportant}[1][\hsize]
+% {%
+%     \def\FrameCommand
+%     {%
+%         {\color{red}\vrule width 3pt~~}%
+%         \hspace{0pt}%must no space.
+%         \fboxsep=0mm
+% %         \colorbox{yellow}%
+%     }%
+%     \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+%     \begin{description}
+%       \item[Beispiel:]
+% }
+% {
+%     \end{description}
+%     \endMakeFramed}
+
+\usepackage{lipsum} 
+
+%\marg{Farbe}\marg{Label}
+\newenvironment{emphlist}[2]{%
+  \def\FrameCommand{{\color{#1}\vrule width 3pt \hspace{8pt}}}%
+  \MakeFramed {\advance\hsize-\width \FrameRestore}%
+   \vspace{-\parskip}%
+   \begingroup
+  \list{\sffamily\itshape #2:}{}%
+  \item
+  }{%
+  \endlist
+  \endgroup
+  \endMakeFramed
+   \vspace{-\parskip}%
+  }
+  
+\newenvironment{important}{%
+  \emphlist{tuRed}{Wichtig}
+}{%
+  \endemphlist
+}
+
+
+\newenvironment{example}{%
+  \emphlist{tuGreen}{Beispiel}
+}{%
+  \endemphlist
+}
+
+
 \newcommand{\zB}{\mbox{z.\,B.}\xspace}
 
-% Beamer-Macros
-\input{beamerug-macros}
 
 % Bindet Grafik mit Rahmen ein
 \newcommand{\examplegraphic}[2][]{%
