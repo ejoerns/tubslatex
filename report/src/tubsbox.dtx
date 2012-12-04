@@ -559,11 +559,12 @@
   % restore par-lengths, avoid initial parskip
   \parskip\tubs@restore@parskip%
   \parindent\tubs@restore@parindent%
+  \vspace*{-\parskip}%
 }{%
   \par%
   \end{minipage}%
   \end{lrbox}%
-  \setlength{\fboxsep}{0cm}%
+  \setlength{\fboxsep}{0cm}% needed here??
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
   \vspace*{\tubs@gb@topsep}%
   \vspace*{-\parskip}%
@@ -571,7 +572,7 @@
   \newdimen\temp@b
   \setlength\temp@{\tubs@gb@height\TPVertModule-\tubs@gb@topsep-\tubs@gb@bottomsep}%
   \setlength\temp@b{\tubs@gb@width\TPHorizModule-\tubs@gb@leftsep-\tubs@gb@rightsep+\tubs@gb@leftmargin+\tubs@gb@rightmargin}%
-  \begin{addmargin*}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
+  \begin{addmargin}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
     \noindent\hspace*{\tubs@gb@leftsep}%
       \fboxsep0mm%
       \tubsbox@framebox{\tubsbox@colorbox{%
@@ -587,7 +588,7 @@
           \vspace*{\tubspage@borderwidth}%
         }%
       }}%
-  \end{addmargin*}%
+  \end{addmargin}%
   \end{textblock}%
 }
 %    \end{macrocode}
