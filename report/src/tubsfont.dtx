@@ -64,7 +64,7 @@
 % \DoNotIndex{ list of control sequences }
 %
 % \title{\textsf{tubsfont} -- 
-%   font definitions for tubslatex\thanks{This document
+%   Font-Definitionen für tubslatex\thanks{This document
 %   corresponds to \textsf{tubsfont}~\fileversion,
 %   dated \filedate.}}
 % \author{Enrico Jörns \\ \texttt{e dot joerns at tu minus bs dot de}}
@@ -72,7 +72,7 @@
 % \maketitle
 %
 % \begin{abstract}
-%   Schrift-Definitionen für alle tubslatex-Klassen und -Pakete.
+%   Schrift-Definitionen für alle tubslatex-Dokumentenklassen und -Pakete.
 % \end{abstract}
 %
 %
@@ -93,7 +93,7 @@
 % \subsection{Optionen}
 %    \begin{macrocode}
 %<*option>
-%    \end{macrocode}
+%    \end{macrocode
 %
 %    \begin{key}{}{fontsize}
 %
@@ -139,6 +139,7 @@
 % Lade Nexus-Schrift
 %    \begin{macrocode}
 \RequirePackage{nexus}
+\RequirePackage{xcolor}
 \colorlet{tubsheadings}{\headingscolor}
 %    \end{macrocode}
 %
@@ -189,17 +190,34 @@
 \global\let\scriptsize\relax
 \@loadkomafont{\tubs@fontsize}
 }
+%    \end{macrocode}
 %
+%    \begin{macro}{\newtubsfont}
+%    \begin{macro}{\settubsfont}
+%    \begin{macro}{\addtotubsfont}
+%    \begin{macro}{\usetubsfont}
+% Aliase für Koma-Befehle
+%    \begin{macrocode}
+\let\newtubsfont\newkomafont
 \let\settubsfont\setkomafont
 \let\addtotubsfont\addtokomafont
 \let\usetubsfont\usekomafont
-% Create Koma font only if not yet exists
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}
+%
+%    \begin{macro}{\providetubsfont}
+%    \begin{macrocode}
+% Erstellt Koma-Font nur, wenn dieser noch nicht existiert
 \providecommand\providekomafont[2]{%
   \@ifundefined{scr@fnt@#1}{%
     \newkomafont{#1}{#2}
   }{}
 }
+\let\providetubsfont\providekomafont
+%    \end{macrocode}
+%    \end{macro}
 %
+%    \begin{macrocode}
 \providekomafont{caption}{}
 \providekomafont{chapter}{}
 \providekomafont{section}{}
@@ -258,19 +276,12 @@
 \newkomafont{copytext}{\normalsize}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
-%    \begin{macro}{\newtubsfont}
-%    \begin{macro}{\usetubsfont}
-%    \begin{macro}{\settubsfont}
-% Aliase für Koma-Befehle
-%    \begin{macrocode}
-\let\newtubsfont\newkomafont
-\let\usetubsfont\usekomafont
-\let\settubsfont\setkomafont
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}
 %
 %    \begin{macrocode}
 \setkomafont{caption}{\small}
+%    \end{macrocode}
+%    \begin{macrocode}
+\setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
 %    \end{macrocode}
 %
 % Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund
@@ -291,19 +302,21 @@
 \addtokomafont{subsubsection}{\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %
+%
 % Aufzählungszeichen werden als Quadrate dargestellt
 %    \begin{macrocode}
 \renewcommand{\labelitemi}{\rule[0.1em]{0.4em}{0.4em}}
 \renewcommand{\labelitemii}{\rule[0.1em]{0.3em}{0.3em}}
 %    \end{macrocode}
 %
-% Standardeinstellung für Poster: kein Absatzeinzung, dafür
-% Zeilenabstand
+% Standardeinstellung für Poster und Flyer:
+% kein Absatzeinzung, dafür Zeilenabstand
 %    \begin{macrocode}
-%<*poster> 
+%<*poster|leaflet> 
 \parindent0mm
 \parskip\medskipamount
-%</poster>
+% \PassOptionsToPackage{}{parskip=full} ?
+%</poster|leaflet>
 %    \end{macrocode}
 %
 %    \begin{macro}{\@sec@cmd}
@@ -313,6 +326,8 @@
 %    \end{macro}
 %    \begin{macro}{\headline}
 %    \begin{macro}{\subheadline}
+% \oarg{small}\marg{Text}\par
+% Darstellung von headlines und subheadlines nach CD-Vorgaben
 %    \begin{macrocode}
 \define@boolkey{sec@cmd}{small}[true]{}%
 \let\headline\@undefined
@@ -338,7 +353,7 @@
 %   \@sec@cmd{intro}{#1}%
 % }
 %    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}
+%    \end{macro}\end{macro}
 %
 %    \begin{macrocode}
 %</body>
@@ -359,7 +374,7 @@
 % 
 % Definition der Größen nach Vorgabe
 %
-% \begin{table}
+% \begin{table}\centering
 % \begin{tabular}{ll}
 % CD-Name           & Latex-Kommando  \\
 % \midrule
@@ -370,13 +385,13 @@
 % Copytext          & |\normalsize| \\
 % Bildunterschrift  & |\footnotesize|
 % \end{tabular}
-% \caption{Mapping-Schema}
+% \caption{Allgemeines Mapping-Schema}
 % \end{table}
 %
 %
 % \begin{table}[!ht]\centering
 % \begin{tabular}{llrrr}
-% CD-Name           & \LaTeX-Name & 9pt & 10pt & 11pt  \\
+% CD-Name           & \LaTeX-Name     & 9pt & 10pt & 11pt  \\
 % \midrule
 % Headline (groß)   & |\Huge|         & 45pt  & 45pt  & 45pt  \\
 % Headline (klein)  & |\huge|         & 36pt  & 36pt  & 36pt  \\
