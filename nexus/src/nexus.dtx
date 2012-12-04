@@ -266,9 +266,13 @@
 }
 %    \end{macrocode}
 %
+%    \begin{macrocode}
+\let\lnum\relax
+%    \end{macrocode}
+%
 % Behandlung für Option 'nexus'
 %    \begin{macrocode}
-\else%
+\else
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -337,14 +341,17 @@
 %    \begin{macro}{\lnum}
 % Setzt Argument mit Versalziffern
 %    \begin{macrocode}
-\newcommand\lnum[1]{%
-  \def\@test{NexusProSerif}
+\newcommand\lnum{%
+  \def\@test{NexusProSerif}%
   \ifx\f@family\@test%
     \fontfamily{NexusProSerif-lnum}%
   \else
     \fontfamily{NexusProSans-lnum}%
   \fi
-  \selectfont #1
+  \selectfont
+}
+\newcommand\textlnum[1]{%
+  {\lnum #1}%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -352,14 +359,17 @@
 %    \begin{macro}{\oldstylenums}
 % Setzt Argument mit Mediävalziffern
 %    \begin{macrocode}
-\renewcommand{\oldstylenums}[1]{%
-  \def\@test{NexusProSerif-lnum}
+\newcommand\onum{%
+  \def\@test{NexusProSerif-lnum}%
   \ifx\f@family\@test%
     \fontfamily{NexusProSerif}%
   \else
     \fontfamily{NexusProSans}%
   \fi
-  \selectfont #1
+  \selectfont
+}
+\renewcommand{\oldstylenums}[1]{%
+  {\onum #1}%
 }
 %    \end{macrocode}
 %    \end{macro}
