@@ -408,14 +408,6 @@
   (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
 %    \end{macrocode}
 %
-%    \begin{macro}{\tubs@gb@topmargin}
-%    \begin{macro}{\tubs@gb@bottommargin}
-% |\tubs@gb@toppadding| -- Abstand zwischen Text und oberer Box-Kante
-%    \begin{macrocode}
-\newlength{\tubs@gb@topmargin}
-\newlength{\tubs@gb@bottommargin}
-%    \end{macrocode}
-%    \end{macro}\end{macro}
 %    \begin{macro}{\tubs@gb@toppadding}
 %    \begin{macro}{\tubs@gb@toppadding}
 %    \begin{macro}{\tubs@gb@toppadding}
@@ -426,28 +418,6 @@
 \newlength{\tubs@gb@bottompadding}
 \newlength{\tubs@gb@leftpadding}
 \newlength{\tubs@gb@rightpadding}
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}
-%
-%    \begin{macro}{\tubs@gb@leftmargin}
-%    \begin{macro}{\tubs@gb@rightmargin}
-% Korrektur der Textränder links und rechts außen.
-%    \begin{macrocode}
-% \newlength{\tubs@gb@leftmargin}
-% \newlength{\tubs@gb@rightmargin}
-%    \end{macrocode}
-%    \end{macro}\end{macro}
-%    \begin{macro}{\tubs@gb@leftsep}
-%    \begin{macro}{\tubs@gb@rightsep}
-%    \begin{macro}{\tubs@gb@topsep}
-%    \begin{macro}{\tubs@gb@bottomsep}
-% Abstand zwischen Modulen, wenn diese mit Abstand gesetzt werden sollen
-% Der Abstand zwischen zwei Boxen ist dann die im CD festgelegte 'Stegbreite'.
-%    \begin{macrocode}
-% \newlength{\tubs@gb@leftsep}
-% \newlength{\tubs@gb@rightsep}
-% \newlength{\tubs@gb@topsep}
-% \newlength{\tubs@gb@bottomsep}
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
@@ -494,13 +464,9 @@
 %    \begin{macrocode}
 % Berechne Positionen
 \ifnum#2=1% Segment beginnt bei erster column?
-% \setlength{\tubs@gb@leftmargin}{\tubspage@borderwidth}%
-\setlength{\tubs@gb@leftpadding}{\tubspage@borderwidth}%
-% \setlength{\tubs@gb@rightmargin}{0mm}%
-% \setlength{\tubs@gb@leftsep}{0mm}%
+  \setlength{\tubs@gb@leftpadding}{\tubspage@borderwidth}%
 \else
-% \setlength{\tubs@gb@leftsep}{0.5\tubspage@columnsep}%
-\setlength\tubs@gb@leftpadding{0.5\tubspage@columnsep}%TODO: configurable
+  \setlength\tubs@gb@leftpadding{0.5\tubspage@columnsep}%TODO: configurable
 \fi
 %
 \setcounter{tubs@gb@lastelement}{#2-1}%
@@ -508,48 +474,28 @@
 \addtocounter{tubs@gb@lastelement}{#4}%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@xsegments% Segment endet bei letzter column?
   \setlength{\tubs@gb@rightpadding}{\tubspage@borderwidth}%
-%   \setlength{\tubs@gb@rightmargin}{\tubspage@borderwidth}%
-%   \setlength{\tubs@gb@rightsep}{0mm}%
 \else
-%   \setlength{\tubs@gb@rightmargin}{0mm}%
-%   \setlength{\tubs@gb@rightsep}{0.5\tubspage@columnsep}%
   \setlength\tubs@gb@rightpadding{0.5\tubspage@columnsep}%TODO: configurable
 \fi
 %    \end{macrocode}
 % Berechnung der oberen und unteren Ränder
 %    \begin{macrocode}
 \ifnum#3=1%
-%   \setlength{\tubs@gb@topmargin}{\tubspage@borderwidth}%
   \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
   \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
-%   \setlength{\tubs@gb@bottommargin}{0mm}%
-%   \setlength{\tubs@gb@topsep}{0mm}%
 \else
-%   \setlength{\tubs@gb@topsep}{0.5\tubspage@columnsep}%TODO: oder 0.5borderwidth?
-  \setlength\tubs@gb@toppadding{0.5\tubspage@columnsep}%TODO: configurable
-%   \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
+  \setlength\tubs@gb@toppadding{\tubspage@borderwidth}%TODO: allow 0.5\tubspage@columnsep, too?
 \fi
 \setcounter{tubs@gb@lastelement}{#3+#5-1}%
 % Prüfe, ob Werte korrekt
 \ifnum\value{tubs@gb@lastelement}>\tubspage@ysegments%
   \PackageError{tubstypearea}{Invalid segment number}{}%
-\fi%
+\fi
 \ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments
-%   \setlength{\tubs@gb@bottommargin}{\tubspage@borderwidth}%
-%   \setlength{\tubs@gb@bottomsep}{0mm}%
+  \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%
 \else
-  \setlength{\tubs@gb@bottommargin}{0mm}%
-%   \setlength{\tubs@gb@bottomsep}{0.5\tubspage@columnsep}%
+  \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%TODO: allow 0.5\tubspage@columnsep, too?
 \fi%
-%
-% Lösche Zwischenabstände, wenn nosep gewählt wurde
-% \if@gb@nosep
-%   \setlength{\tubs@gb@topsep}{0mm}%
-%   \setlength{\tubs@gb@bottomsep}{0mm}%
-%   \setlength{\tubs@gb@leftsep}{0mm}%
-%   \setlength{\tubs@gb@rightsep}{0mm}%
-% \else\fi
-%
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}%
@@ -567,10 +513,10 @@
 %TODO: Option to set margins of boxes to 0
   \begin{lrbox}{\tubs@gb@storebox}%
   % Store parskip and parindent to restore them in minipage
-  \newdimen\tubs@restore@parskip%
-  \newdimen\tubs@restore@parindent%
-  \tubs@restore@parskip\parskip%
-  \tubs@restore@parindent\parindent%
+  \newdimen\tubs@restore@parskip
+  \newdimen\tubs@restore@parindent
+  \tubs@restore@parskip\parskip
+  \tubs@restore@parindent\parindent
   \begin{minipage}%
         [t]%
         {\tubs@gb@width\TPHorizModule-\tubs@gb@leftpadding-\tubs@gb@rightpadding}% boxwidth minus text padding
@@ -584,29 +530,26 @@
   \end{lrbox}%
   \setlength{\fboxsep}{0cm}% needed here??
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
-%   \vspace*{\tubs@gb@topsep}%
   \vspace*{-\parskip}%
   \newdimen\temp@
   \newdimen\temp@b
   \setlength\temp@{\tubs@gb@height\TPVertModule}%
   \setlength\temp@b{\tubs@gb@width\TPHorizModule}%
-%   \begin{addmargin}[-\tubs@gb@leftmargin]{-\tubs@gb@rightmargin}%
-    \noindent%\hspace*{\tubs@gb@leftsep}%
-      \fboxsep0mm%
-      \tubsbox@framebox{\tubsbox@colorbox{% inner paddings are set *only* here!
-        \vbox to \temp@{%
-          \vspace*{\tubs@gb@toppadding}%
-          \tb@topfill
-          \hbox to \temp@b{%
-            \hspace*{\tubs@gb@leftpadding}% TODO: settable width
-            \fbox{\usebox{\tubs@gb@storebox}}%
-            \hspace*{\tubs@gb@rightpadding}% TODO: settable width
-          }%
-          \tb@bottomfill
-          \vspace*{\tubs@gb@bottompadding}%
-        }%
-      }}%
-%   \end{addmargin}%
+  \noindent
+  \fboxsep0mm%
+  \tubsbox@framebox{\tubsbox@colorbox{% inner paddings are set *only* here!
+    \vbox to \temp@{%
+      \vspace*{\tubs@gb@toppadding}%
+      \tb@topfill
+      \hbox to \temp@b{%
+        \hspace*{\tubs@gb@leftpadding}%
+        \usebox{\tubs@gb@storebox}%
+        \hspace*{\tubs@gb@rightpadding}%
+      }%
+      \tb@bottomfill
+      \vspace*{\tubs@gb@bottompadding}%
+    }%
+  }}%
   \end{textblock}%
 }
 %    \end{macrocode}
