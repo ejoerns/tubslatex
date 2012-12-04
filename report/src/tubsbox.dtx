@@ -364,6 +364,13 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{gaussbox}{fullsize}
+% Definiert |\ifKV@gaussbox@fullsize|
+%    \begin{macrocode}
+\define@boolkey{gaussbox}{fullsize}[true]{}
+%    \end{macrocode}
+%    \end{key}
+%
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsubsection{Box}
@@ -473,7 +480,11 @@
 \edef\tubs@gb@xpos{\thetubs@gb@lastelement}%TODO: etwas unschön...
 \addtocounter{tubs@gb@lastelement}{#4}%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@xsegments% Segment endet bei letzter column?
-  \setlength{\tubs@gb@rightpadding}{\tubspage@borderwidth}%
+  \ifKV@gaussbox@fullsize
+    \setlength{\tubs@gb@rightpadding}{0mm}%
+  \else
+    \setlength{\tubs@gb@rightpadding}{\tubspage@borderwidth}%
+  \fi
 \else
   \setlength\tubs@gb@rightpadding{0.5\tubspage@columnsep}%TODO: configurable
 \fi
@@ -481,21 +492,37 @@
 % Berechnung der oberen und unteren Ränder
 %    \begin{macrocode}
 \ifnum#3=1%
-  \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
-  \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
+  \ifKV@gaussbox@fullsize
+    \setlength{\tubs@gb@rightpadding}{0mm}%
+  \else
+    \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
+    \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
+  \fi
 \else
-  \setlength\tubs@gb@toppadding{\tubspage@borderwidth}%TODO: allow 0.5\tubspage@columnsep, too?
+  \ifKV@gaussbox@fullsize
+    \setlength\tubs@gb@toppadding{0.5\tubspage@columnsep}%
+  \else
+    \setlength\tubs@gb@toppadding{\tubspage@borderwidth}%
+  \fi
 \fi
 \setcounter{tubs@gb@lastelement}{#3+#5-1}%
 % Prüfe, ob Werte korrekt
 \ifnum\value{tubs@gb@lastelement}>\tubspage@ysegments%
   \PackageError{tubstypearea}{Invalid segment number}{}%
 \fi
-\ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments
-  \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%
+\ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments% Letztes Segment?
+  \ifKV@gaussbox@fullsize
+    \setlength{\tubs@gb@bottompadding}{0mm}%
+  \else
+    \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%
+  \fi
 \else
-  \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%TODO: allow 0.5\tubspage@columnsep, too?
-\fi%
+  \ifKV@gaussbox@fullsize
+    \setlength{\tubs@gb@bottompadding}{0.5\tubspage@columnsep}%
+  \else
+    \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%TODO: allow 0.5\tubspage@columnsep, too?
+  \fi
+\fi
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
 \def\@inv@arg{\relax}%
@@ -524,6 +551,9 @@
   \parskip\tubs@restore@parskip%
   \parindent\tubs@restore@parindent%
   \vspace*{-\parskip}%
+  \setkeys{Gin}{
+    width=\tubs@gb@width\TPHorizModule-\tubs@gb@leftpadding-\tubs@gb@rightpadding,
+    height=\tubs@gb@height\TPVertModule-\tubs@gb@toppadding-\tubs@gb@bottompadding}%
 }{%
   \par%
   \end{minipage}%
