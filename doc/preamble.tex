@@ -148,6 +148,31 @@ section=chapter]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 }
 \newcommand*{\start@Declaration}{\hspace{-1em}}
 \newcommand*{\after@Declaration}{}
+
+% \begin{macro}{\textsfrm}
+%   Something like |\emph| using |\textsf| and |\textrm| instead of |\textit|
+%   and |\textup|.
+%    \begin{macrocode}
+\newcommand*{\textsfrm}[1]{%
+  \begingroup
+    \edef\@tempa{\sfdefault}%
+    \ifx\@tempa\f@family\textrm{#1}\else\textsf{#1}\fi
+  \endgroup
+}
+%    \end{macrocode}
+% \end{macro}
+
+% \begin{macro}{\File}
+% \begin{macro}{\Class}
+% \begin{macro}{\Package}
+%   Some markup macros for files with special meanings.
+\DeclareRobustCommand*{\File}[1]{\mbox{\texttt{#1}}}
+\DeclareRobustCommand*{\Class}[1]{\mbox{\textsfrm{#1}}}
+\DeclareRobustCommand*{\Package}[1]{\mbox{\textsfrm{#1}}}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+
 % \begin{macro}{\Macro}
 % \begin{macro}{\Option}
 % \begin{macro}{\KOption}
