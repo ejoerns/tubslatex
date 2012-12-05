@@ -724,7 +724,7 @@
 % Anwender-Makro zum Anzeigen der Farbabstufungen einer Reihe eines arblankgs
 %    \begin{macrocode}
 \newlength{\cshowwidth}
-\newcommand{\colorshow}[3][\relax]{{\noindent\sffamily%
+\newcommand{\colorshow}[3][\relax]{{\noindent\sffamily\small%
 \if#1\relax\setlength{\cshowwidth}{\textwidth}\else\setlength{\cshowwidth}{#1}\fi
 \colorlet{fglbg}{black}
 \colorbox{tu#2#3100}{\hbox to 0.188\cshowwidth{%

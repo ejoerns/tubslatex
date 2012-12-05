@@ -259,7 +259,10 @@
 \DeclareOptionX{rgbbeamer}{\def\tubs@logo@file{TUBraunschweig_RGB_beamer}}
 \DeclareOptionX{hks}{\def\tubs@logo@file{TUBraunschweig_SC}}
 \DeclareOptionX{cmyk}{\def\tubs@logo@file{TUBraunschweig_4C}}
-\DeclareOptionX{mono}{\def\tubs@logo@file{TUBraunschweig_B}}
+\DeclareOptionX{mono}{\def\tubs@logo@file{TUBraunschweig_B_true}}
+\define@boolkey{tubslogo.sty}[tubslogo@]{trueblack}[true]{%
+  \PackageWarning{tubslogo}{Option 'trueblack' not supported yet.}
+}
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}\end{key}\end{key}
 %
@@ -281,11 +284,18 @@
 \DeclareOptionX{a2paper}{\def\logo@papersize{2}}
 \DeclareOptionX{a1paper}{\def\logo@papersize{1}}
 \DeclareOptionX{a0paper}{\def\logo@papersize{0}}
-\DeclareOptionX{custompaper}{\def\logo@papersize{c}}
 %    \end{macrocode}
 %    \end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}\end{key}
 %
-%    \begin{key}{}{a0paper}
+%    \begin{key}{}{custompaper}
+% Wahl für freie Papiergrößen. Der Skalierungsfaktor wird dann automatisch
+% anhand der Seitenmaße berechnet.
+%    \begin{macrocode}
+\DeclareOptionX{custompaper}{\def\logo@papersize{c}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{landscape}
 % Landscape-Option
 % Defines |\iflogo@landscape|
 %    \begin{macrocode}
@@ -301,9 +311,10 @@
 }
 %    \end{macrocode}
 %    \end{key}
-%    \begin{key}{}{relscale}
+%    \begin{key}{}{scifiposter}
 % Setzt Logo für wissenschaftliche Poster.
-% Dort wird es mit 90% (hoch) bzw. 65% der Originalgröße gesetzt.
+% Dort wird es mit 90\% (hochformat) bzw. 65\% (querformat)
+% der Originalgröße gesetzt.
 %    \begin{macrocode}
 \define@boolkey{tubslogo.sty}[tubslogo@]{scifiposter}[true]{}
 %    \end{macrocode}
@@ -323,6 +334,12 @@
 %    \end{macrocode}
 %
 % \subsection{Bearbeitung}
+%
+%    \begin{macrocode}
+\iftubslogo@trueblack
+% TODO:...
+\fi
+%    \end{macrocode}
 %
 %    \begin{macro}{\tubslogo@width}
 % Logo-Dimensionen
