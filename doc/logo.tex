@@ -55,27 +55,30 @@ Mit \Macro{tubslogoAbs} kann über den Parameter \PName{Breite} dagegen
 zusätzlich eine individuell gewählte absolute Breite angegeben werden.
 
 
-\section{Paket-Optionen}
+\section{Paket-/Klasenoptionen und Befehle}
 
 \subsection{Farbmodell}\label{options:color}
 
 \begin{Declaration}
   \Option{rgb}\\
+  \Option{rgbbeamer}\\
   \Option{cmyk}\\
   \Option{hsk}\\
   \Option{mono}
 \end{Declaration}
 
-Die Option \Option{rgb} bewirkt eine Darstellung des Logos in rgb-Farben.
+Die Option \Option{rgb} bewirkt eine Darstellung des Logos in RGB-Farben.
 Dies ist die Standardeinstellung.
+Mit \Option{rgbbeamer} wird eine Beamer-optimierte RGB-Variante gewählt.
 Die Option \Option{cmyk} bewirkt eine Darstellung in cmyk-Druckfarben,
 \Option{hks} wählt die Spezialfarbe \emph{HKS 15}.
 Mit der Option \Option{mono} wird eine schwarz-weiß-Version des Logos geladen.
 
-\subsection{Papiergröße}\label{options:papersize}
+\subsection{Papierformat}\label{options:papersize}
 
 \begin{Declaration}
   \Option{a6paper}\\
+  \Option{langpaper}\\
   \Option{a5paper}\\
   \Option{a4paper}\\
   \Option{a3paper}\\
@@ -96,25 +99,59 @@ Standardmäßig sind dies:
   A0  & 400\% der Basisgröße   \\
 \end{tabular}
 
+\begin{Declaration}
+  \Option{custompaper}
+\end{Declaration}
+Die Option \Option{custompaper} ist für die Verwendung in Verbindung mit
+individuellen Papierformaten vorgesehen.
+Sie bewirkt, dass der Skalierungsfaktor für das Logo automatisch anhand
+der Seitenbreite und -höhe bestmöglich ermittelt wird.
 
-\clearpage
-\section{Befehle}
+\begin{Declaration}
+  \Option{landscape}
+\end{Declaration}
+Gibt an, ob das Dokument im Querformat oder im Hochformat dargestellt wird.
+Diese Information ist unter anderem zu korrekten Berechnung der Logogröße
+bei individuellen Papierformaten und bei wissenschaftlichen Plataken notwendig.
+
+\begin{Declaration}
+  \Option{scifiposter}
+\end{Declaration}
+Für wissenschaftliche Poster wird das Logo verkleinert dargestellt.
+Im Hochformat wird es auf 90\%, im Querformat auf 65\% der für das Format
+definierten Größe skaliert.
+Die Option \Option{scifiposter} aktiviert diese Anpassung.
+
+
+\begin{Declaration}
+  \KOption{relscale}\PName{Faktor}
+\end{Declaration}
+
+Erlaubt eine \emph{zusätzliche} individuelle Skalierung basierend auf
+der formatabhängigen ausgewählten Logogröße. Diese Option sollte allerdings
+nur mit Bedacht eingesetzt werden, da das Ergebnis unter Umständen nicht mehr
+CD-konform ist.
+
+% \clearpage
+% \section{Befehle}
+\subsection{Logo setzen}\label{options:papersize}
 
 \begin{Declaration}
   \Macro{tubslogo}\OParameter{Breite rel.}
 \end{Declaration}\label{cmd:tubslogo}
 
-%   \item[\color{tuRed}\mdseries\ttfamily \textbackslash tubslogo%
-%     {[\textcolor{tuGreenDark}{\sffamily\itshape $<$Breite rel.$>$}]}]
 Erzeugt ein Logo, dass entsprechend des durch Angabe der Papiergröße
 gewählten Skalierungsfaktors skaliert wird.
 
 Wird das optionale Argument {\sffamily\itshape $<$Breite rel.$>$}
 verwendet, so kann ein freier Skalierungsfaktor ausgehend von der
-Standardgröße für DINA4-Dokumente ($70$mm$\times 26$mm) übergeben werden.
+Standardgröße für \mbox{DIN\,A4}-Dokumente ($70$mm$\times 26$mm) übergeben werden.
 
-\lstinline!\tubslogo[0.6]! erzeugt beispielsweise ein auf 60\% der 
+\begin{example}
+\lstinline!\tubslogo[0.6]! erzeugt ein auf 60\% der 
 Standardgröße für DINA4-Dokumente skaliertes Logo.
+\end{example}
+
 
 \begin{Declaration}
   \Macro{tubslogoAbs}\PParameter{Breite abs.}

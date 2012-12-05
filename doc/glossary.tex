@@ -5,7 +5,7 @@
 }
 \newglossaryentry{glos:gaussraster}{%
   name={Gau\ss raster},
-  description={Auf der gaußschen Summenformel basierende Unterteilung der Seite
+  description={Auf der \glslink{glos:summenformel}{gauß'schen Summenformel} basierende Unterteilung der Seite
     in Segmente. Benachbarte Segmente können beliebig zusammen gefasst werden}
 }
 \newglossaryentry{glos:modulsystem}{%
@@ -56,9 +56,23 @@
   description={Auf der Grundlinie ausgerichtete Ziffern ohne Ober- und Unterlängen.
   Sie fügen sich daher meist schlechter in Schriftbild ein als \gls{glos:mediaevalziffern}}
 }
-
+\newglossaryentry{glos:dinlang}{%
+  name={DIN lang},
+  description={Bezeichnet hier ein Format von $1/3$ der Blattgröße \mbox{DIN\,A4},
+  wie es zum Beispiel für Flyer (doppelt gefaltet) häufig verwendet wird.}
+}
+\newglossaryentry{glos:summenformel}{%
+  name={Gauß'sche Summenformel},
+  description={Berechnungsgrundlage für die formatübergreifende
+  vertikale Aufteilung des Kommunikationsbereichs im CD (siehe \gls{glos:gaussraster}).
+  \[1 + 2 + 3 + 4 + \ldots + n = \sum_{k=1}^n k = \frac{n(n+1)}{2}\]}
+}
 
 %Akronyme
 \newacronym{CD}{CD}{Corporate Design}
-\newacronym{CMYK}{CMYK}{Cyan, Magenta, Yellow, Key}
+\newglossaryentry{CMYK}{%
+  type=\acronymtype,
+  name={CMYK},
+  description={Cyan, Magenta, Yellow, Key (siehe \gls{glos:cmyk})}
+}
 \newacronym{RGB}{RBG}{Red, Green, Blue}
