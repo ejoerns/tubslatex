@@ -318,7 +318,7 @@
 %    \begin{key}{gaussbox}{nosep}
 % Kein Abstand zwischen Boxen
 %    \begin{macrocode}
-\define@boolkey{gaussbox}[@gb@]{nosep}[true]{}
+% \define@boolkey{gaussbox}[@gb@]{nosep}[true]{}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -337,25 +337,6 @@
 %    \begin{macrocode}
 \define@boolkey{gaussbox}{logosep}[true]{%
   \def\tubs@gb@toppadding@outer{3\tubspage@borderwidth}
-}
-%    \end{macrocode}
-%    \end{key}
-%
-%
-% \begin{key}{gaussbox}{margin}
-%   \emph{TODO}\par
-%   Führt dazu, dass \emph{innerhalb} der gaussbox ein zusätzlicher Rand
-%   in Breite der Marginale eingefügt wird.
-%    \begin{macrocode}
-\define@choicekey{gaussbox}{margin}[\val\nr]{left,right,both}{%
-  \PackageError{tubsbox}{Option 'margin' is not yet supported}{}
-  \ifcase\nr\relax
-    %TODO
-  \or
-    %TODO
-  \or
-    %TODO
-  \fi
 }
 %    \end{macrocode}
 %    \end{key}
@@ -597,9 +578,16 @@
   \parskip\tubs@restore@parskip%
   \parindent\tubs@restore@parindent%
   \vspace*{-\parskip}%
-  \setkeys{Gin}{
-    width=\tubs@gb@width\TPHorizModule-\tubs@gb@leftpadding-\tubs@gb@rightpadding,
-    height=\tubs@gb@height\TPVertModule-\tubs@gb@toppadding-\tubs@gb@bottompadding}%
+  % Standard-Version von |\includegraphics| mit imagefit-Version ersetzen, wenn keine Argumente angegeben
+  \let\oldincludegraphics\includegraphics
+  \renewcommand\includegraphics[2][\relax]{%
+    \ifx##1\relax
+      \tubs@sb@calc@autoscale{##2}{\tubs@gb@width\TPHorizModule-\tubs@gb@leftpadding-\tubs@gb@rightpadding}{\tubs@gb@height\TPVertModule-\tubs@gb@toppadding-\tubs@gb@bottompadding}%
+      \expandafter\oldincludegraphics\expandafter[\@img@scale@param]{##2}%
+    \else
+      \oldincludegraphics[##1]{##2}%
+    \fi
+  }%
 }{%
   \par%
   \end{minipage}%
@@ -746,7 +734,7 @@
 % TODO: rename internal cmds\\
 % TODO: add vclip, hclip
 %    \begin{macrocode}
-\define@choicekey{modulebox}{imagefit}[\val\nr]{%
+\define@choicekey{tubsbox}{imagefit}[\val\nr]{%
         default,scaled,autoclip,cropped,clipx,cropx,clipy,cropy,fitheight,fitwidth}{%
   \ifcase\nr\relax% default
     \PackageInfo{tubsstyle}{%
