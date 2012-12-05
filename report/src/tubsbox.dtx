@@ -336,11 +336,7 @@
 % die erste tubsbox auf einer Seite mit Siegelbandlogo.)
 %    \begin{macrocode}
 \define@boolkey{gaussbox}{logosep}[true]{%
-  \ifKV@gaussbox@logosep%
-    \renewcommand*\tubs@gb@addtoppadding{2\tubspage@borderwidth}
-  \else%
-    \renewcommand*\tubs@gb@addtoppadding{0mm}
-  \fi%
+  \def\tubs@gb@toppadding@outer{3\tubspage@borderwidth}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -364,10 +360,67 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{gaussbox}{fullsize}
-% Definiert |\ifKV@gaussbox@fullsize|
+%    \begin{key}{gaussbox}{outerpadding}
+% Setzt äußeres Padding der gaussbox
 %    \begin{macrocode}
-\define@boolkey{gaussbox}{fullsize}[true]{}
+\define@choicekey{gaussbox}{outerpadding}[\val\nr]{%
+        default,none,vnone,hnone}{%
+  \ifcase\nr\relax% default
+  \or% kein Außen-Padding
+    \def\tubs@gb@toppadding@outer{0mm}%
+    \def\tubs@gb@bottompadding@outer{0mm}%
+    \def\tubs@gb@leftpadding@outer{0mm}%
+    \def\tubs@gb@rightpadding@outer{0mm}%
+  \or% keine Abstände zum Blattrand
+    \def\tubs@gb@toppadding@outer{0mm}%
+    \def\tubs@gb@bottompadding@outer{0mm}%
+  \or% Innenabstände auf columnsep
+    \def\tubs@gb@leftpadding@outer{0mm}%
+    \def\tubs@gb@rightpadding@outer{0mm}%
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{gaussbox}{innerpadding}
+% Setzt inneres Padding der gaussbox
+%    \begin{macrocode}
+\define@choicekey{gaussbox}{innerpadding}[\val\nr]{%
+        default,columnsep,none,vnone,hnone}{%
+  \ifcase\nr\relax% default
+  \or% Innenabstände auf columnsep
+    \def\tubs@gb@toppadding@inner{0.5\tubspage@columnsep}%
+    \def\tubs@gb@bottompadding@inner{0.5\tubspage@columnsep}%
+  \or% Alle Innenabstände auf 0
+    \def\tubs@gb@toppadding@inner{0mm}%
+    \def\tubs@gb@bottompadding@inner{0mm}%
+    \def\tubs@gb@leftpadding@inner{0mm}
+    \def\tubs@gb@rightpadding@inner{0mm}
+  \or% Alle vertikalen Innenabstände auf 0
+    \def\tubs@gb@toppadding@inner{0mm}%
+    \def\tubs@gb@bottompadding@inner{0mm}%
+  \or% Alle horizontalen Innenabstände auf 0
+    \def\tubs@gb@leftpadding@inner{0mm}
+    \def\tubs@gb@rightpadding@inner{0mm}
+  \fi
+}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{gaussbox}{padding}
+% Setzt Padding der gaussbox
+%    \begin{macrocode}
+\define@choicekey{gaussbox}{padding}[\val\nr]{%
+        default,minimal,none}{%
+  \ifcase\nr\relax% default
+  \or% Abstände normal minimal
+    \setkeys{gaussbox}{outerpadding=none}%
+    \setkeys{gaussbox}{innerpadding=columnsep}%
+  \or% Alle Abstände auf 0
+    \setkeys{gaussbox}{outerpadding=none}%
+    \setkeys{gaussbox}{innerpadding=none}%
+  \fi
+}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -463,6 +516,17 @@
 % \end{tabularx}
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][]{%
+% Innere Padding-Werte (durch Optionen anpassbar)
+\def\tubs@gb@toppadding@inner{\tubspage@borderwidth}%
+\def\tubs@gb@bottompadding@inner{\tubspage@borderwidth}%
+\def\tubs@gb@leftpadding@inner{0.5\tubspage@columnsep}%
+\def\tubs@gb@rightpadding@inner{0.5\tubspage@columnsep}%
+% Äußere Padding-Werte (durch Optionen anpassbar)
+\def\tubs@gb@toppadding@outer{\tubspage@borderwidth}%
+\def\tubs@gb@bottompadding@outer{\tubspage@borderwidth}%
+\def\tubs@gb@leftpadding@outer{\tubspage@borderwidth}%
+\def\tubs@gb@rightpadding@outer{\tubspage@borderwidth}%
+%
 \setkeys*{tubsbox}{#1}%
 \setrmkeys{gaussbox}%
 \tb@gb@setorig
@@ -471,57 +535,39 @@
 %    \begin{macrocode}
 % Berechne Positionen
 \ifnum#2=1% Segment beginnt bei erster column?
-  \setlength{\tubs@gb@leftpadding}{\tubspage@borderwidth}%
+  \setlength\tubs@gb@leftpadding{\tubs@gb@leftpadding@outer}%
 \else
-  \setlength\tubs@gb@leftpadding{0.5\tubspage@columnsep}%TODO: configurable
+  \setlength\tubs@gb@leftpadding{\tubs@gb@leftpadding@inner}%
 \fi
 %
 \setcounter{tubs@gb@lastelement}{#2-1}%
 \edef\tubs@gb@xpos{\thetubs@gb@lastelement}%TODO: etwas unschön...
 \addtocounter{tubs@gb@lastelement}{#4}%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@xsegments% Segment endet bei letzter column?
-  \ifKV@gaussbox@fullsize
-    \setlength{\tubs@gb@rightpadding}{0mm}%
-  \else
-    \setlength{\tubs@gb@rightpadding}{\tubspage@borderwidth}%
-  \fi
+  \setlength{\tubs@gb@rightpadding}{\tubs@gb@rightpadding@outer}%
 \else
-  \setlength\tubs@gb@rightpadding{0.5\tubspage@columnsep}%TODO: configurable
+  \setlength\tubs@gb@rightpadding{\tubs@gb@rightpadding@inner}%
 \fi
 %    \end{macrocode}
 % Berechnung der oberen und unteren Ränder
 %    \begin{macrocode}
 \ifnum#3=1%
-  \ifKV@gaussbox@fullsize
-    \setlength{\tubs@gb@rightpadding}{0mm}%
-  \else
-    \setlength{\tubs@gb@toppadding}{\tubspage@borderwidth}%
-    \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
-  \fi
+  \setlength\tubs@gb@toppadding{\tubs@gb@toppadding@outer}% Erstes Segment?
+%   \addtolength\tubs@gb@toppadding\tubs@gb@addtoppadding
 \else
-  \ifKV@gaussbox@fullsize
-    \setlength\tubs@gb@toppadding{0.5\tubspage@columnsep}%
-  \else
-    \setlength\tubs@gb@toppadding{\tubspage@borderwidth}%
-  \fi
+  \setlength\tubs@gb@toppadding{\tubs@gb@toppadding@inner}%
 \fi
+%
 \setcounter{tubs@gb@lastelement}{#3+#5-1}%
 % Prüfe, ob Werte korrekt
 \ifnum\value{tubs@gb@lastelement}>\tubspage@ysegments%
   \PackageError{tubstypearea}{Invalid segment number}{}%
 \fi
+%
 \ifnum\value{tubs@gb@lastelement}=\tubspage@ysegments% Letztes Segment?
-  \ifKV@gaussbox@fullsize
-    \setlength{\tubs@gb@bottompadding}{0mm}%
-  \else
-    \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%
-  \fi
+  \setlength{\tubs@gb@bottompadding}{\tubs@gb@bottompadding@outer}%
 \else
-  \ifKV@gaussbox@fullsize
-    \setlength{\tubs@gb@bottompadding}{0.5\tubspage@columnsep}%
-  \else
-    \setlength{\tubs@gb@bottompadding}{\tubspage@borderwidth}%TODO: allow 0.5\tubspage@columnsep, too?
-  \fi
+  \setlength{\tubs@gb@bottompadding}{\tubs@gb@bottompadding@inner}%
 \fi
 %
 % Makro |\@inv@arg| wird benutzt, um Argument 'inverted' zu übergeben
