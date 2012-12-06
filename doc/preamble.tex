@@ -31,6 +31,10 @@
 \newcommand*{\OptionIndex}[2][]{\index{option}{#2}}
 \newcommand*{\CommandIndex}[2][]{\index{cmd}{#2@\textbackslash#2}}
 \newcommand*{\EnvironmentIndex}[2][]{\index{cmd}{#2}}
+\newcommand\indexbf[1]{\textbf{\hyperpage{#1}}}% to be used as \index{bla|indexbf}
+
+% --- Abbildungen
+\addtokomafont{caption}{\sffamily}
 
 % --- Listings
 \usepackage{listings}

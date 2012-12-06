@@ -1,4 +1,5 @@
 \chapter{Farben}\label{chap:tubscolors}
+\Index{Farben|indexbf}
 
 \newcommand{\classoptionitem}[1][ ]{
   \item[\mdseries{\ttfamily%
@@ -42,8 +43,9 @@ aufgeteilt sind.
 Alle Sekundärfarben können in 20-Prozent-Schritten aufgehellt werden.
 
 \subsection{Benennungsschema}
+\Index{Farben!Benennungsschema}
 
-Alle Farben tragen das Präsfix \texttt{tubs} vor Ihrem Namen.
+Alle Farben tragen das Präfix \texttt{tubs} vor Ihrem Namen.
 Der eigentliche Farbname setzt sich zusammen aus dem Namen
 des Sekundärfarbklangs
 (\texttt{Orange}, \texttt{Blue}, \texttt{Green}, \texttt{Violet}) 
@@ -54,7 +56,7 @@ gefolgt von der Prozentzahl ihrer Helligkeitsstufe
 
 Die Farben können sowoh in Präfix-Notation
 (\Color{tubs\textsf{<Variante>}\textsf{<Klang>}80})
-als auch in Postfix-Notation (\Color{tubs\textmd{<Klang>}\textmd{<Variante>}80})
+als auch in Suffix-Notation (\Color{tubs\textmd{<Klang>}\textmd{<Variante>}80})
 angegeben werden.
 
 \begin{example}
@@ -70,7 +72,7 @@ Die Primärfarbe \Color{tubsRed} ist \emph{nicht} identisch mit \Color{tubsRed10
 aus dem gelb-orange-Sekundärfarbbereich.
 In diesem speziellen Fall handelt es sich um verschiedene Farben.
 \end{important}
-Auch für die \texttt{Medium}-Varianten ist kein Präfix/Postfix notwendig.
+Auch für die \texttt{Medium}-Varianten ist kein Präfix/Suffix notwendig.
 \begin{example}
   Die Medium-Variante des Grün in 100\%iger Helligkeit kann vereinfacht
   mit \Color{tubsGreen} bezeichnet werden.
@@ -84,6 +86,8 @@ Die Standardnamen über die die einzelnen Farben angesprochen werden können,
 sind in den Beispielfeldern angegeben.
 
 \subsection{Primärfarben}
+\Index{Primärfarben}
+\Index{Farben!Primär-}
 
 {\sffamily\footnotesize%
 \colorbox{tubsRed}{\hbox to 0.188\textwidth{%
@@ -106,6 +110,9 @@ Alle Graytöne sind darüber hinaus auch in britischer Schreibweise nutzbar
 
 \pagebreak
 \subsection{Sekundärfarben}
+\Index{Sekundärfarben}
+\Index{Farben!Sekundär-}
+
   tubsOrange\ldots\\
   \colorshow{Orange}{Light}
   \colorshow{Orange}{Medium}
@@ -135,12 +142,13 @@ Alle Graytöne sind darüber hinaus auch in britischer Schreibweise nutzbar
 % \end{example}
 
 \subsection{Farbmodelle}
+\Index{Farbmodelle}
 
 Die Farben sind für 3 Farbmodelle (\acrshort{RGB}, RGB beamer-optimiert, \acrshort{CMYK}) definiert.
 Das gewünschte Farmodell kann durch Klassen- bzw. Paketoptionen gewählt werden.
 Die einzelnen Klassen haben bereits das jeweils passende Farbmodell voreingestellt.
 
-Zusätzlich kann eine Mono-Variante gewählt werden, die die Farbe
+Zusätzlich kann eine Monochrom-Variante gewählt werden, die die Farbe
 \Color{tusbRed} automatisch als Schwarz darstellt.
 
 
@@ -167,27 +175,53 @@ unten beschriebenen Klassen-/Paketoptionen oder innerhalb des Dokumentes auch
 mit dem Befehl \Macro{selectsecondary}.
 
 \paragraph{Fettes Schwarz}\label{sec:richblack}
+\Index{rich black|indexbf}
+\Index{Schwarz!fettes|indexbf}
 
-  Bei der Verwendung des CMYK-Farbraums ist zu beachten,
-  dass das die Farbe Schwarz (\Color{tubsBlack})
-  aus den Farbdefinitionen der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht,
-  was in der Bildschirmdarstellung allgemein als dunkles grau wirkt. Dies
-  gilt somit auch für den Text im Dokument und ist normal.
+Bei der Verwendung des CMYK-Farbraums ist zu beachten,
+dass das die Farbe Schwarz (\Color{tubsBlack})
+der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht,
+was in der Bildschirmdarstellung meist nur als sehr dunkles grau wahrgenommen wird.
+Dies gilt somit auch für den Text im Dokument und ist normal.
+Für Bildschirmdarstellung wird immer das RGB-Farbprofil empfohlen.
 
-  Sollte dagegen die Ausgabe aus dem Drucker zu hell erscheinen, so kann dies
-  entweder durch Verwendung der Klassen-/Paketoption \Option{trueblack}
-  (siehe folgendes Kapitel) oder durch einen manuelle Anpassung der Farbe
-  \Color{tubsBlack} korrigiert werden,
-  indem zusätzlich die CMY-Farben benutzt werden.
-  Zu beachten ist jedoch, dass dies im Druck zu schlechteren Ergebnissen
-  durch übermäßigen Tinteneinsatz führen kann!
+\begin{figure}[!ht]
+\centering
+{\selectcolormodel{cmyk}
+\colorbox[cmyk]{0,0,0,1}{\parbox[t][2cm]{3cm}{\vfill\centering\sffamily\color{tubsWhite} tubsBlack\vfill}}%
+\qquad
+\colorbox[cmyk]{0.75,0.68,0.67,0.9}{\parbox[t][2cm]{3cm}{\vfill\centering\sffamily\color{tubsWhite} tubsRichBlack\vfill}}%
+}
+\caption{Vergleich der Farben \Color{tubsBlack} und \Color{tubsRichBlack} im CMYK-Farbraum}
+\end{figure}
+
+
+Im CMYK-Druck dagegen wird es mit der Key-Patrone gedruckt und daher korrekt
+als Schwarz ausgegeben.
+Sollte trotz dessen die Ausgabe aus dem Drucker zu hell erscheinen,
+so kann dies entweder durch Verwendung der Klassen-/Paketoption \Option{richblack}
+(siehe folgendes Kapitel) oder durch einen manuelle Anpassung der Farbe
+\Color{tubsBlack} korrigiert werden, indem ein sogenanntes
+\emph{Fettes Schwarz} (rich black) verwendet wird.
+Dabei werden zusätzlich die CMY-Farben benutzt, um ein möglichst dunkles
+Schwarz zu mischen. Die Standarddefinition der Option \Option{richblack}
+entspricht dies  einer Mischung von 75\%C, 68\%M, 67\%Y, 90\%K.
+Alternativ kann auch die definierte Farbe \Color{tubsRichBlack} verwendet werden.
+
+Zu beachten ist jedoch, dass diese Farbe im Druck ggf. zu unsaubereren
+Ergebnissen durch den übermäßigen Tinteneinsatz führen kann!
   
-  \begin{example}
-    \lstinline!\definecolor{tubsBlack}{CMYK}{0.5,0.5,0.5,1.0}!
-  \end{example}
+\begin{example}
+  Manuelle Umdefinierung von \Color{tubsBlack}:\\
+  \lstinline!\definecolor{tubsBlack}{CMYK}{0.5,0.5,0.5,1.0}!
+\end{example}
 
 
-\subsection{Paket-/Klasenoptionen und Befehle}
+\subsection{Paket-/Klassenoptionen und Befehle}
+\Index{RGB}
+\Index{RGB!Beamer}
+\Index{CMYK}
+\Index{monochrom}
 
 \begin{Declaration}
   \Option{rgb}\\
@@ -207,7 +241,7 @@ mit der schwarzen Siegelbandlogo-Variante sinnvoll sein.
 
 
 \begin{Declaration}
-  \Option{trueblack}
+  \Option{richblack}
 \end{Declaration}
 
 Definiert die Farbe \Color{tubsBlack} bei Verwendung des CMYK-Farbprofils
