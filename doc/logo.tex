@@ -1,7 +1,7 @@
 \chapter{Das Siegelbandlogo}
 
 Die verschiedenen Farbvarianten des Siegelbandlogos in \tubslatex werden
-vom Paket \lstinline{tubslogo} zur Verfügung gestellt.
+vom Paket \Package{tubslogo} zur Verfügung gestellt.
 Die folgende Beschreibung bezieht sich auf den Funktionsumfang des Paketes.
 Das Paket ist in allen verfügbaren Klassen bereits korrekt eingebunden.
 
@@ -19,19 +19,30 @@ Die Auwahl erfolgt dabei über Paketoptionen
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_4C}
-  \subcaption{Logo in Standardgröße (CMYK)}
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_RGB_beamer}
+  \subcaption{Logo in Standardgröße (RGB, beamer)}
 \end{minipage}
 
 \begin{minipage}{0.5\textwidth}
   \centering
-  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_SC}
-  \subcaption{Logo in Standardgröße (HKS 15)}
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_4C}
+  \subcaption{Logo in Standardgröße (CMYK)}
 \end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_SC}
+  \subcaption{Logo in Standardgröße (HSK\,15)}
+\end{minipage}
+
 \begin{minipage}{0.5\textwidth}
   \centering
   \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_B}
   \subcaption{Logo in Standardgröße (schwarz)}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+  \centering
+  \includegraphics[width=\tubslogoBaseWidth]{TUBraunschweig_B_true}
+  \subcaption{Logo in Standardgröße (schwarz, fett)}
 \end{minipage}
 \caption{Verfügbare Farbversionen der Logos}
 \end{figure}
@@ -91,6 +102,7 @@ Standardmäßig sind dies:
 
 \begin{tabular}{lr}
   A6  & 60\% der Basisgröße   \\
+  Lang& 60\% der Basisgröße   \\
   A5  & 70\% der Basisgröße   \\
   A4  & 100\% der Basisgröße  \\
   A3  & 140\% der Basisgröße  \\

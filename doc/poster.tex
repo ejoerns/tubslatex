@@ -1,4 +1,6 @@
 \chapter{Plakate}
+\Index{Plakate|indexbf}
+\Index{Poster}
 
 Plakate können in \tubslatex mit Hilfe der Dokumentenklasse \newdocumentclass{tubsposter} erstellt werden.
 Dabei werden drei unterschiedliche Plakat-Typen unterstützt,
@@ -95,10 +97,10 @@ Wird kein Papierformat angegeben, wird automatisch A4 gewählt.
 Eine Übersicht über die vordefinierten Schriftgrößen für die einzelnen
 Papierformate gibt Tabelle~\ref{table:fontsizes}.
 
-\begin{important}
+\begin{hint}
   Für wissenschaftliche Plakate gibt es spezielle Schriftgrößen-Definitionen.
-  Diese liegen nur für die Formate A3, A2, A1 und A0 vor.
-\end{important}
+  Diese liegen nur für die Formate A2, A1 und A0 vor.
+\end{hint}
 
 \paragraph{Individuelle Papierformate}
 \Index{Format!inidviduell}
@@ -118,10 +120,28 @@ Papierformat angepasst.
 Auch das Siegelband wird entsprechend skaliert und gesetzt. 
 % TODO: What happens to Text size?
 
+\subsubsection{Schriftauszeichnung}
+
+Für die verschiedenen Gliederungsebenen der Plakate gibt es vordefiniert
+Fontelemente, die sicherstellen, dass sowohl die richtige Schriftgröße
+als auch die korrekte Art und Auszeichnung gesetzt wird.
+
+Eine Übesichtsliste über alle definierten Font-Elemente, welche auch
+für Plakate gültig ist, findet sich in \tablename~\ref{tbl:documents:komafonts}.
+Die Benutzung wird in \chaptername~\ref{par:documents:schriftauszeichnung} erläutert.
+% TODO: Modul-Elemente?
+
+% TODO: place where??
 \begin{Declaration}
-  \Macro{headline}\\
-  \Macro{subheadline}
+  \Macro{headline}\OParameter{small}\PParameter{Text}\\
+  \Macro{subheadline}\OParameter{small}\PParameter{Text}
 \end{Declaration}
+
+Für die Darstellung von Überschriften stehen die vereinfachenden
+Befehle \Macro{headline} und \Macro{subheadline} zur Verfügung,
+die zusätzlich noch eine korrekte Ausrichtung (rechts flatternd) sicherstellen.
+Die zusätzliche Option \Option{small} wechselt auf die jeweils alternativ
+definierte Version mit kleinerer Schriftgröße.
 
 
 \paragraph{Weitere Klassenoptionen:}
@@ -137,6 +157,8 @@ Im folgenden werden die einzelnen Poster-Typen einzeln vorgestellt und beschrieb
 
 \clearpage
 \section{Veranstaltungsplakate}
+\Index{Veranstaltungsplakate}
+\Index{Plakate!Veranstaltungs-}
 
 Veranstaltungsplakate werden im Gaußraster gesetzt und entsprechen somit
 im Grunde allen Standarddarstellungen des Corporate Design.
@@ -230,6 +252,8 @@ gesetzt werden kann.
 
 \clearpage
 \section{Wissenschaftliche Plakate}
+\Index{Plakate!wissenschaftlich}
+\Index{Wissenschaftliche Plakate}
 %TODO: Optionen und Schachtelung angeben
 % - A2, A1, A0
 
@@ -266,10 +290,12 @@ Für die Erstellung von wissenschaftlichen Plakaten wird die Umgebung
 \Environment{tubsposter} verwendet, welche
 (anders als bei Veranstaltungsplakaten) einen
 zusätzlichen Parameter \PName{rows} erwartet.
-Mit diesem wird die Anzahl an Modulzeilen bestimmt, in die der Darstellungsbereich geteilt werden soll. Dies geschieht mittels einer kommagetrennten Liste,
+Mit diesem wird die Anzahl an Modulzeilen bestimmt,
+in die derDarstellungsbereich geteilt werden soll.
+Dies geschieht mittels einer kommagetrennten Liste,
 wobei jedes Element entweder eine Länge oder der Buchstabe '\texttt{X}' sein kann.
 Eine Länge legt die Höhe der jeweiligen Modulzeile genau fest,
-ein \texttt{X} sorgt dafür, dass alle mit \texttt{X} gekennzeichneten
+ein \Option{X} sorgt dafür, dass alle mit \Option{X} gekennzeichneten
 Zeilen den restlichen zur Verfügung stehenden Platz gleichmäßig untereinander
 aufteilen.
 Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.

@@ -863,7 +863,7 @@ Die Paket-/Klassenoption \Option{lnum} wählt für das Dokument einen Schriftsch
 Versalziffern.
 
 \begin{Declaration}
-  \Macro{lnum}\Parameter{Text}
+  \Macro{textlnum}\Parameter{Text}
 \end{Declaration}
 Setzt den \Parameter{Text} mit Versalziffern.
 
@@ -902,7 +902,9 @@ umschalten.
 % - Gesamtauflistug der verfügbaren Optionen?s
 % - Erklärung für tubsdoc, welche nutzbar, welche nichtß
 
-\paragraph{Schriftauszeichnung}
+\paragraph{Schriftauszeichnung}\label{par:documents:schriftauszeichnung}
+\Index{Schriftauszeichnung|indexbf}
+
 \begin{sloppypar}
 Die Schriften für die verschiedenen Elemente sind als benannte Schrift-Elemente
 definiert und können so einfach und universell verwendet werden.
@@ -990,6 +992,7 @@ dabei zusammengefasst dargestellt:
 }
 \bottomrule
 \caption{In \tubslatex-Dokumentenklassen definierte Schriften (KOMA-Fonts)}
+\label{tbl:documents:komafonts}
 \end{desctable}
 
 
@@ -1035,13 +1038,19 @@ schwarz dargestellt.
 Diese Klassenoption erwirkt eine CMYK-Darstellung des Siegelbandlogos und der
 CD-Standardfarben. Sie ist für den Druck zu bevorzugen.
 
-\begin{important}
+\begin{hint}
+  \Index{rich black}
+  \Index{Schwarz!fettes}
   Bei der Verwendung von \Option{cmyk} ist zu beachten,
-  dass das die Farbe Schwarz (\texttt{tuBlack})
-  aus den Farbdefinitionen der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht,
-  was in der Bildschirmdarstellung allgemein als dunkles grau wirkt.
-  Hinweise hierzu finden sich in Abschnit~\ref{sec:richblack}.
-\end{important}
+  dass das die Farbe Schwarz (\texttt{tubsBlack})
+  der Mischung 0\%C, 0\%M, 0\%Y, 100\%K entspricht.
+  In der Bildschirmdarstellung wirkt es allgemein als dunkles grau,
+  im CMYK-Druck wird es jedoch als Schwarz gedruckt.
+  Es kann trotzdem teilweise gewünscht sein, ein sog. \emph{Fettes Schwarz}
+  (rich black) zu verwenden.
+  Dies kann mit der Option \Option{richblack} erreicht werden.
+  Ausführlichere Hinweise hierzu finden sich in Abschnit~\ref{sec:richblack}.
+\end{hint}
 
 \begin{Declaration}
   \Option{rgb}
@@ -1059,11 +1068,11 @@ roten Primärfarbe (\texttt{tuRed}) des CD definierten Elemente schwarz dar.
 Sie entscheidet dabei \emph{nicht} über das verwendete Farbmodell (RGB/CMYK).
 \begin{important}
   Bei der Verwendung von \Option{mono} in Verbindung mit \Option{cmyk}
-  ist zu beachten, dass das die Farbe Schwarz (\texttt{tuBlack})
+  ist zu beachten, dass das die Farbe Schwarz (\texttt{tubsBlack})
   aus den Farbdefinitionen (wie oben beschrieben) nicht dem 'wirklichen' Schwarz
   des Siegelbandlogos entspricht.
   Im Zweifelsfall ist also eine Verwendung des RGB-Farbmodells in Verbindung
-  mit \Option{mono} oder eine Neudefinition von \texttt{tuBlack} vorzuziehen.
+  mit \Option{mono} oder eine Neudefinition von \texttt{tubsBlack} vorzuziehen.
 \end{important}
 
 \subsection{Farbschema}
