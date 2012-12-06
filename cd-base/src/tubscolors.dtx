@@ -298,16 +298,22 @@
 %    \end{key}
 %
 %    \begin{key}{}{trueblack}
+%    \begin{key}{}{richblack}
 % Stellt CMYK-Schwarz als 'richtiges' Schwarz dar, also nicht als
-% 100%K-Farbe.
+% 100%K-Farbe, sondern als CMYK-Farbmischung.
+% Die Stanardmischung ist: C:75\%, M:68\%, Y:67\%, K:90\%.
 % Diese Option zeigt nur Auswirkung in Verbindung mit der Option |cmyk|.
 %    \begin{macrocode}
 \DeclareOptionX{trueblack}[0.75,0.68,0.67,0.90]{%
   \tc@trueblacktrue
   \def\tc@trueblackval{#1}
 }
+\DeclareOptionX{richblack}[0.75,0.68,0.67,0.90]{%
+  \tc@trueblacktrue
+  \def\tc@trueblackval{#1}
+}
 %    \end{macrocode}
-%    \end{key}
+%    \end{key}\end{key}
 %
 %    \begin{key}{}{orange}
 %    \begin{key}{}{green}
@@ -409,6 +415,7 @@
 %   Dies ist kein Fehler, sondern liegt in der Natur des Sache, dass
 %   Schwarz als 100%K definiert ist.
 %    \begin{macrocode}
+\create@tubscolor{RichBlack}{cmyk}{\tc@trueblackval}
 \iftc@trueblack
   \create@tubscolor{Black}{cmyk}{\tc@trueblackval}
 \else
@@ -477,6 +484,7 @@
 %
 % \paragraph{Primärfarben}
 %    \begin{macrocode}
+\create@tubscolor{RichBlack}{RGB}{0,0,0}% Nur für Kompatibilität!
 \create@tubscolor{Black}{RGB}{0,0,0}% TODO: nicht doch (8,8,8)?
 \iftc@mono
   \definecolor{tubsRed}{RGB}{tubsBlack}
@@ -537,7 +545,7 @@
   \definecolor{tuRed}{RGB}{190,30,60}
   \definecolor{tubsRed}{RGB}{190,30,60}
 \fi
-% \definecolor{tuBlack}{RGB}{0,0,0}
+\create@tubscolor{RichBlack}{RGB}{0,0,0}% Nur für Kompatibilität!
 \create@tubscolor{Black}{RGB}{0,0,0}
 \definecolor{tuWhite}{RGB}{255,255,255}
 \definecolor{tubsWhite}{RGB}{255,255,255}
