@@ -1,6 +1,7 @@
 \chapter{Plakate}
 \Index{Plakate|indexbf}
 \Index{Poster}
+% TODO: Note: mehrere Plakate pro Dokument möglich!
 
 Plakate können in \tubslatex mit Hilfe der Dokumentenklasse \newdocumentclass{tubsposter} erstellt werden.
 Dabei werden drei unterschiedliche Plakat-Typen unterstützt,
@@ -51,33 +52,34 @@ dem normalen (Gaussraster-)Layout unterscheidet.
 Der Wert \KOption{style}{bulletin} erlaubt die schnelle Erstellung von
 Aushängen und lädt eine relative schlichte, voreingestellte Darstellung.
 
-\begin{Declaration}
-  \KOption{sender}\PName{top/bottom}
-\end{Declaration}
 
-Diese Option legt fest, ob der Absenderbereich am oberen oder unteren Blattrand
-platziert werden soll. Für weitere Informationen siehe vorausgehende Kapitel.
-%TODO: ja? wo?
-%TODO: Klasse + Umgebung
+\section{Format und Darstellung}
 
+Allen Plakatvarianten gleich sind die grundlegenden Varianten in der Formatwahl,
+die am Anfang eines jede Plakatdesignprozeses stehen sollten.
+Dazu gehören unter anderem:
 
-\subsubsection{Papierformate}% TODO: fix level
+\begin{itemize}
+  \item Papierformat [DIN\;Ax / individuell]
+  \item Ausrichtung [Hoch- / Querformat]
+  \item Position des Absenderbereichs [oben / unten]
+  \item Position des Siegelbandlogos [links / rechts]
+\end{itemize}
+
+Daraus ergeben sich eine Vielzahl von Variationsmöglichkeiten.
+Wie die einzelnen Optionen gewählt werden können, wird im folgenden
+allgemein erläutert.
+Auf die Positionierung des Siegelbandlogos gehen die Plakattyp-spezifischen
+Kapitel näher ein.% TODO: so ok?
+
+\subsection*{Papierformat}%
 
 Prinzipiell stehen dem Anwender alle DIN-Formate von A0 bis A5 zu Verfügung.
 Für Plakate sind jedoch speziell die Formate A0 bis A3 vorgesehen.
 
-Da auf wissenschaftlichen Plakate in der Regel mehr Informationen untergebracht
-werden müssen als auf normalen Veranstaltungsplakaten, gibt es hierfür
-speziell angepasste Schriftgrößen für die Formate A0 bis A2.
-
-\begin{important}
-Es wird generell dazu geraten, \emph{nur} das gewünschte Papierformat
-anzugeben und \emph{keine explizite Schriftgrößenwahl} vorzunhemen.
-Dies stellt sicher, dass (sofern möglich) die korrekten Schriftgrößen
-automatisch passend zum angegebenen Papierformat geladen werden.
-\end{important}
-
-
+% Da auf wissenschaftlichen Plakaten in der Regel mehr Informationen untergebracht
+% werden müssen als auf normalen Veranstaltungsplakaten, gibt es hierfür
+% speziell angepasste Schriftgrößen für die Formate A0 bis A2.
 
 \begin{Declaration}
   \Option{a4paper}\\
@@ -95,7 +97,14 @@ gewählt werden können.
 Wird kein Papierformat angegeben, wird automatisch A4 gewählt.
 
 Eine Übersicht über die vordefinierten Schriftgrößen für die einzelnen
-Papierformate gibt Tabelle~\ref{table:fontsizes}.
+Papierformate gibt \tablename~\ref{table:fontsizes}.
+
+\begin{hint}
+Es wird generell dazu geraten, \emph{nur} das gewünschte Papierformat
+anzugeben und \emph{keine explizite Schriftgrößenwahl} vorzunhemen.
+Dies stellt sicher, dass (sofern möglich) die korrekten Schriftgrößen
+automatisch passend zum angegebenen Papierformat geladen werden.
+\end{hint}
 
 \begin{hint}
   Für wissenschaftliche Plakate gibt es spezielle Schriftgrößen-Definitionen.
@@ -120,10 +129,47 @@ Papierformat angepasst.
 Auch das Siegelband wird entsprechend skaliert und gesetzt. 
 % TODO: What happens to Text size?
 
-\subsubsection{Schriftauszeichnung}
+\subsection*{Ausrichtung}
+
+Wenn keine Option angegeben ist, werden Plakate im Hochformat (portrait)
+dargestellt.
+
+\begin{Declaration}
+  \Option{landscape}
+\end{Declaration}
+
+Die Option \Option{landscape} erlaubt die Umschaltung auf eine
+querformatige Darstellung.
+
+\begin{hint}
+Die Wahl der Ausrichtung hat unter anderem bei Veranstaltungsplakaten
+Einfluss auf die Anzahl der verfügbaren Gauß-Segmente.
+Währen im Hochformat 8 Segmente vorgesehen sind, sind es im Querformat nur
+6. Dies muss bei der Layout-Entwicklung berücksichtigt werden.
+\end{hint}
+
+\subsection*{Position des Absenderbereichs}
+
+Der Absenderbereich ist der weiß hinterlegte freie Platz am oberen oder
+unteren Seitenende.
+Er wird ausschließlich zur Darstellung eines speziellen Absenders
+(ein Institut oder eine zentrale Einrichtung der TU) verwendet.
+
+\begin{Declaration}
+  \KOption{sender}\PName{top/bottom}
+\end{Declaration}
+
+Die Option \Option{sender} legt fest, ob der Absenderbereich am oberen (\PValue{top})
+oder unteren (\PValue{bottom} Blattrand platziert werden soll.
+
+Die Position des Absenderbereichs kontrolliert beim Gauß-Layout auch die
+Reihenfolge der Segmentaufteilung.
+Für weitere Informationen siehe \chaptername~\ref{sec:intro:dascddertubs}:
+
+\subsection*{Schriftauszeichnung}
 
 Für die verschiedenen Gliederungsebenen der Plakate gibt es vordefiniert
-Fontelemente, die sicherstellen, dass sowohl die richtige Schriftgröße
+Font-Elemente, die sicherstellen, dass sowohl die richtige Schriftgröße
 als auch die korrekte Art und Auszeichnung gesetzt wird.
 
 Eine Übesichtsliste über alle definierten Font-Elemente, welche auch
@@ -163,18 +209,20 @@ Im folgenden werden die einzelnen Poster-Typen einzeln vorgestellt und beschrieb
 Veranstaltungsplakate werden im Gaußraster gesetzt und entsprechen somit
 im Grunde allen Standarddarstellungen des Corporate Design.
 
-Veranstaltungsposter werden entweder ohne Option oder
-unter Angabe der Optionswahl \KOption{style}\PName{standard} erstellt:
+Veranstaltungsposter sind die Standarddarstellung, wenn als Klassenoption
+kein bestimmter Poster-Stil gewählt wurde. Sie können aber auch explizit
+unter Angabe der Optionswahl \KOption{style}\PName{standard} gewählt werden:
 \begin{lstlisting}
 \documentclass[style=standard]{tubsposter}
 \end{lstlisting}
 
-Da das Gauß-Layoutsystem zum einen umfangreich, zum anderen auch für verschiedene Zwecke eingesetzt wird und werden kann, ist ihm ein Extra-Kapitel (\ref{chap:gausspage})
-gewidmet.
+Da das Gauß-Layoutsystem zum einen umfangreich, zum anderen auch für
+verschiedenste Dokumentenklassen eingesetzt wird,
+ist ihm ein Extra-Kapitel (\ref{chap:gausspage}) gewidmet.
 Dies beschreibt die möglichen Befehle und Optionen ausführlich.
-Hier werden sie daher jeweils nur kurz angerissen.
+Hier werden sie daher jeweils nur verkürzt erläutert.
+Eine Lektüre des genannten Kapitels empfiehlt sich daher in jedem Fall.
 
-% TODO: landscape?
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
@@ -203,19 +251,19 @@ weitere Details.
 % bgcolor?
 
 \begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{posterrow}}%
+  \XMacro{begin}\PParameter{\Environment{modrow}}%
     \OParameter{options}
     \Parameter{Höhe}\\
   \quad\dots\\
-  \XMacro{end}\PParameter{posterrow}%\\
-%   \XMacro{begin}\PParameter{\Environment{posterrow*}}%
+  \XMacro{end}\PParameter{modrow}%\\
+%   \XMacro{begin}\PParameter{\Environment{modrow*}}%
 %     \OParameter{cols}\\%
 %   \quad\dots\\
-%   \XMacro{end}\PParameter{posterrow*}
+%   \XMacro{end}\PParameter{modrow*}
 \end{Declaration}
 
 Einzelne Poster-Segmente im Gaußraster können mit der Umgebung
-\Environment{posterrow} erzeugt werden.
+\Environment{modrow} erzeugt werden.
 Dabei gibt der Parameter \PName{Höhe} die Höhe des
 Poster-Segments in Basis-Segmenten des Gaußrasters an.
 Der optionale Parameter \PName{options} akzeptiert die
@@ -230,13 +278,13 @@ gesetzt werden kann.
 \begin{document}
 \begin{tubsposter}
 \showtubslogo
-\begin{posterrow}[bgcolor=tuGreen]{3}
+\begin{modrow}[bgcolor=tuGreen]{3}
 \usekomafont{headline}Der Titel
-\end{posterrow}
-\begin{posterrow}[bgcolor=tuOrange]{4}
-\end{posterrow}
-\begin{posterrow}[bgcolor=tuGreenDark]{1}
-\end{posterrow}
+\end{modrow}
+\begin{modrow}[bgcolor=tuOrange]{4}
+\end{modrow}
+\begin{modrow}[bgcolor=tuGreenDark]{1}
+\end{modrow}
 \end{tubsposter}
 \end{document}
 \end{lstlisting}
@@ -246,7 +294,7 @@ gesetzt werden kann.
   \fbox{\includegraphics[width=0.98\textwidth]{examples/stdposter_minimal.pdf}}
 \end{minipage}
 \caption{Minimal-Beispiel zur Verwendung von \Environment{tubsposter} und
-  \Environment{posterrow}}
+  \Environment{modrow}}
 \end{figure}
 
 
@@ -255,60 +303,85 @@ gesetzt werden kann.
 \Index{Plakate!wissenschaftlich}
 \Index{Wissenschaftliche Plakate}
 %TODO: Optionen und Schachtelung angeben
-% - A2, A1, A0
 
 Wissenschaftliche Poster unterscheiden sich im Layout in diversen Punkten
-von allen übrigen Vorlagen. Die Darstellung ist dazu optimiert möglichst
+von allen übrigen Vorlagen. Die Darstellung ist dazu optimiert, möglichst
 viel Inhalt möglichst flexibel platzieren zu können.
 
-Das Grundlayout weist einen schmaleren Absenderbereich mit einem auf 90\%
-skalierten Siegelband-Logo auf.
-Der Inhaltsbereich ist rahmenlos und komplett einfarbig hinterlegt.
+Die Grundaufteilung in einen Absernder- und einen Kommunikationsbereich 
+bleibt erhalten.
+Jedoch wird der Absenderbereich zu Gunsten eines vergrößerten Kommunikationsbereichs
+schmaler dargestellt mit einem auf 90\% (Hochformat) der Standardgröße
+skalierten Siegelbandlogo versehen.
+Der Kommunikationsbereich ist rahmenlos und komplett einfarbig hinterlegt.
 
-Der Inhalt kann in sogenannten \emph{Modulen} platziert werden.
-Dies sind Kästchen, die durch einen schmalen Abstand optisch
-voneinander getrennt sind und so die Informationseinheiten klar voneinander
-trennen.
-Die Platzierung der Module erfolgt in einem lockeren Rastersystem,
-dass die einzelnen Bereiche in Zeilen, Spalten und Unterzeilen teilen kann.
-
-Wissenschaftliche Poster werden unter Angabe der Optionswahl
+Wissenschaftliche Poster werden immer unter Angabe der \Class{tubsposter}-Klassenoption
 \KOption{style}\PName{scifi} erstellt:
 \begin{lstlisting}
 \documentclass[style=scifi]{tubsposter}
 \end{lstlisting}
 
+\subsection{Modulsystem}
+
+Der Inhalt auf wissenschaftlichen Plakaten wird in sogenannten \emph{Modulen}
+platziert.
+Dies sind Kästen unterschiedlicher Größe, die durch einen schmalen Abstand optisch
+voneinander getrennt sind und so die Informationseinheiten klar voneinander
+abgrenzen.
+
+Die Platzierung der Module erfolgt in \tubslatex in einem lockeren Rastersystem.
+Dazu wird der Kommunikationsbereich zuerst vertikal in mehrere Blöcke (Modulzeilen)
+beliebiger Höhe aufgeteilt, die jedoch zusammen den Inhaltsbereich
+komplett ausfüllen müssen.
+Jeder dieser einzelnen Blöcke kann dann bei Bedarf unabhängig von den anderen
+wieder in unterschiedlich große Bereiche (Modulspalten) unterteilt unterteilt werden.
+dass die einzelnen Bereiche in Zeilen, Spalten und Unterzeilen teilen kann.
+Entsprechend können auch die Modulspalten wieder vertikal geteilt werden.
+Eine tiefere Schachtelung ist aktuell leider nicht möglich.
+
+
+Im Folgenden wird die Benutzung des Modulrasters genauer erläutert.
+
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{tubsposter}}%
-    \OParameter{options}%
-    \Parameter{rows}\\
+    \OParameter{Optionen}%
+    \Parameter{Aufteilung}\\
   \quad\dots\\
   \XMacro{end}\PParameter{tubsposter}
 \end{Declaration}
 
-Für die Erstellung von wissenschaftlichen Plakaten wird die Umgebung
-\Environment{tubsposter} verwendet, welche
-(anders als bei Veranstaltungsplakaten) einen
-zusätzlichen Parameter \PName{rows} erwartet.
+Zur Erstellung eines wissenschaftlichen Plakates wird die Umgebung
+\Environment{tubsposter} verwendet, welche -- anders als bei Veranstaltungsplakaten --
+einen zusätzlichen Parameter \PName{Aufteilung} erwartet.
 Mit diesem wird die Anzahl an Modulzeilen bestimmt,
-in die derDarstellungsbereich geteilt werden soll.
-Dies geschieht mittels einer kommagetrennten Liste,
-wobei jedes Element entweder eine Länge oder der Buchstabe '\texttt{X}' sein kann.
-Eine Länge legt die Höhe der jeweiligen Modulzeile genau fest,
-ein \Option{X} sorgt dafür, dass alle mit \Option{X} gekennzeichneten
-Zeilen den restlichen zur Verfügung stehenden Platz gleichmäßig untereinander
-aufteilen.
-Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
+in die der Darstellungsbereich geteilt werden soll.
+Dies geschieht mittels einer kommagetrennten Liste nach folgendem Prinzip,
+das an die Tabellen-Umgebung \Environment{tabularx} angelehnt ist:
+\begin{itemize}
+  \item Jedes Element kann entweder eine \emph{Länge} oder der Buchstabe \Option{X} sein
+  \item Die Anzahl der Elemente bestimmt die Anzahl der Modulzeilen
+  \item Die Reihenfolge der Elemente entspricht der Reihenfolge der Modulzeilen
+  \item Eine \emph{Länge} gibt an wie hoch die jeweilige Modulzeile sein soll
+  \item Ein \Option{X} teilt den Restplatz gleichmäßig auf alle mit
+    \Option{X} gewählten Modulzeilen auf.
+\end{itemize}
+
+\begin{hint}
+Es empfiehlt sich, immer mindestens ein \Option{X} zu verwenden, da sonst
+eine korrekte Aufteilung des verfügbaren Platzes manuell berechnet werden
+müsste.
+\end{hint}
+
 
 \begin{minipage}{0.6\textwidth}
-\begin{example}\par
+\begin{example}~\par
   \noindent\Macro{begin}\PParameter{\Environment{tubsposter}}
     \Parameter{6cm,X,4cm,X}\par
   \quad\dots\\
   \Macro{end}\PParameter{tubsposter}\bigskip\par
-  \noindent Erzeugt 4 Modulzeilen, wobei die erste 6cm und die dritte 4cm hoch sind.
-  Die Zeilen 2 und 4 nehmen den restlichen verfügbaren Platz ein
-  und sind gleich hoch.
+  \noindent Definiert 4 Modulzeilen, wobei die erste 6cm und die dritte 4cm hoch sind.
+  Die Zeilen 2 und 4 nehmen dann jeweils die Hälfte des restlichen 
+  noch zur Verfügung stehenden Platzes ein.
 \end{example}
 \end{minipage}
 \hfill
@@ -316,41 +389,47 @@ Dieses Vorgehen ist an die Tabellen-Umgebung \Environment{tabularx} angelehnt.
   \examplegraphic[width=\textwidth,page=1]{examples/module_split.pdf}
 \end{minipage}
 
-Die angegebenen Modulzeilen müssen dann mit der Umgebung \Environment{posterrow}
-befüllt werden.
+Damit die definierten Modulzeilen nun auch wirklich dargestellt werden,
+müssen sie mit Inhalt gefüllt werden. Dies geschieht mit der Umgebung
+\Environment{modrow}, welche im folgenden erläutert wird.
 
 \begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{posterrow}}%
-    \OParameter{cols}\\%
+  \XMacro{begin}\PParameter{\Environment{modrow}}%
+    \OParameter{Optionen,Aufteilung}\\%
   \quad\dots\\
-  \XMacro{end}\PParameter{posterrow}\\
-  \XMacro{begin}\PParameter{\Environment{posterrow*}}%
-    \OParameter{cols}\\%
+  \XMacro{end}\PParameter{modrow}\\
+  \XMacro{begin}\PParameter{\Environment{modrow*}}%
+    \OParameter{Optionen,Aufteilung}\\%
   \quad\dots\\
-  \XMacro{end}\PParameter{posterrow*}
+  \XMacro{end}\PParameter{modrow*}
 \end{Declaration}
 
-Die Umgebung \Environment{posterrow} wird benutzt,
+Die Umgebung \Environment{modrow} wird benutzt,
 um die mit \Environment{tubsposter} angelegten Modulzeilen mit Inhalt zu füllen.
-Dabei kann entweder direkt der gewünschte Inhalt geschrieben oder der optionale
-Parameter \PName{cols} benutzt werden.
-Dieses erlaubt die Definition zusätzlicher Spalten in der aktuellen Modulzeile.
-Es wird wieder ein kommagetrennte Liste erwartet,
-deren Elemente dieselbe Bedeutung haben wie bereits beschrieben, außer, dass
-sie die Breite und nicht die Höhe definieren.
+Die Box kann entweder direkt mit dem gewünschten Text-Inhalt gefüllt werden
+oder der optionale Parameter \PName{Aufteilung} wird benutzt, um
+eine weitere Aufteilung zu erwirken.
 
-Der normale Abstand des Inhalts vom Rand der Modulbox beträgt halbe
-Rahmenbreite. Für das Einfügen von Bildern etwa kann es sinnvoll sein,
-diesen Rahmen wegzulassen.
-Dies geschieht mit der Sternchen-Variante \Environment{posterrow*}.
+Als \PName{Aufteilung} wird wieder eine kommagetrennte Liste erwartet,
+Deren Elemente haben dieselbe Bedeutung wie bereits beschrieben, außer, dass
+sie nun zusätzliche \emph{Modulspalten} in der aktuellen Modulzeile definieren.
 
+Wird die Box mit Inhalt gefüllt, beträgt der normale Abstand des Inhalts
+vom Rand der Modulbox halbe Rahmenbreite.
+
+Die Sternchen-Variante \Environment{modrow*} verhält sich identisch mit
+der normalen Variant, bloß, dass der Inhalt hier ohne Abstand zum Rand der Box
+dargestellt wird. 
+% Dies ist zum Beispiel für das Einfügen von Bildern etwa kann es sinnvoll sein,
+% diesen Rahmen wegzulassen. -> bgimage
+% TODO: Optionen beschreiben
 
 \begin{minipage}{0.6\textwidth}
-\begin{example}\par
-  \noindent\Macro{begin}\PParameter{\Environment{posterrow}}
+\begin{example}~\par
+  \noindent\Macro{begin}\PParameter{\Environment{modrow}}
     \OParameter{X,X}\par
   \quad\dots\\
-  \Macro{end}\PParameter{posterrow}\bigskip\par
+  \Macro{end}\PParameter{modrow}\bigskip\par
   \noindent Teilt eine Modulzeile in 2 gleich große Spalten auf.
 \end{example}
 \end{minipage}
@@ -360,26 +439,29 @@ Dies geschieht mit der Sternchen-Variante \Environment{posterrow*}.
 \end{minipage}
 
 \begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{postercol}}%
-    \OParameter{rows}\\%
+  \XMacro{begin}\PParameter{\Environment{modcol}}%
+    \OParameter{Optionen,Aufteilung}\\%
   \quad\dots\\
-  \XMacro{end}\PParameter{postercol}\\
-  \XMacro{begin}\PParameter{\Environment{postercol*}}%
-    \OParameter{rows}\\%
+  \XMacro{end}\PParameter{modcol}\\
+  \XMacro{begin}\PParameter{\Environment{modcol*}}%
+    \OParameter{Optionen,Aufteilung}\\%
   \quad\dots\\
-  \XMacro{end}\PParameter{postercol*}
+  \XMacro{end}\PParameter{modcol*}
 \end{Declaration}
 
-Die mit \Environment{posterrow} angelegten Spalten können jeweils mit 
-\Environment{postercol} mit Inhalt gefüllt oder in neue Unterzeilen aufgeteilt 
-werden.
+Die mit \Environment{modrow} angelegten Spalten können jeweils mit 
+\Environment{modcol} mit Inhalt gefüllt oder wiederum in neue Unterzeilen
+aufgeteilt werden.
+
+Die Sternchen-Variante \Environment{modcol*} erlaubt wieder eine
+randlose Darstellung des Inhalts.
 
 \begin{minipage}{0.6\textwidth}
-\begin{example}\par
-  \noindent\Macro{begin}\PParameter{\Environment{postercol}}
+\begin{example}~\par
+  \noindent\Macro{begin}\PParameter{\Environment{modcol}}
     \OParameter{3cm,X}\par
   \quad\dots\\
-  \Macro{end}\PParameter{postercol}\bigskip\par
+  \Macro{end}\PParameter{modcol}\bigskip\par
   \noindent Teilt eine Modulspalte in 2 Unterzeilen auf.
 \end{example}
 \end{minipage}
@@ -390,16 +472,18 @@ werden.
 
 
 \begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{postersubrow}}\\%
+  \XMacro{begin}\PParameter{\Environment{modsubrow}}\\%
   \quad\dots\\
-  \XMacro{end}\PParameter{postersubrow}\\
-  \XMacro{begin}\PParameter{\Environment{postersubrow*}}\\%
+  \XMacro{end}\PParameter{modsubrow}\\
+  \XMacro{begin}\PParameter{\Environment{modsubrow*}}\\%
   \quad\dots\\
-  \XMacro{end}\PParameter{postersubrow*}
+  \XMacro{end}\PParameter{modsubrow*}
 \end{Declaration}
 
-Die mit \Environment{postercol} angelegten Unterzeilen können jeweils mit 
-\Environment{postersubrow} mit Inhalt gefüllt werden.
+Die mit \Environment{modcol} angelegten Unterzeilen können jeweils mit 
+\Environment{modsubrow} mit Inhalt gefüllt werden.
+
+Es ist aktuell keine weitere Unterteilung möglich.
 
 
 \clearpage
