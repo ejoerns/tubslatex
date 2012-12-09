@@ -1,4 +1,4 @@
-\chapter{Gauß-Layout-System}\label{chap:gausspage}
+\chapter{Gauß-Layout-System}\label{sec:gausslayout}
 
 Dieses Kapitel beschreibt das allgemeine Layoutsystem zur Erstellung von
 Inhalten und Hintergründen im Gaußraster des Corporate Designs.
@@ -16,7 +16,7 @@ zu nutzen:
 \end{itemize}
 wobei die Letztgenannte den Regelfall darstellt.
 
-\section{Hintergrund-Layout}\label{sec:gausspage:bglayout}
+\section{Hintergrund-Layout}\label{sec:gausslayout:bglayout}
 
 Ein Hintergrund-Layout kann auf zwei verschiedene weisen definiert bzw.
 gesetzt werden.
@@ -33,7 +33,7 @@ Mit Hilfe des Befehls \Macro{bglayout} kann das Hintergrundlayout im Gaußraster
 Alle Komponenten werden im Hintergrund und unabhängig vom Inhalt der Seite
 dargestellt.
 Dies hat in etwa dieselbe Funktionalität wie vorbedrucktes Papier.
-Zur Verwendung siehe auch Listing~\ref{listing:bglayout}.
+Zur Verwendung siehe auch Listing~\ref{lst:bglayout}.
 
 \begin{Declaration}
   \Macro{defbglayout}\OParameter{Optionen}\Parameter{Name}\Parameter{Layout-Anweisungen}\\
@@ -75,7 +75,7 @@ Darstellung der verfügbaren Segmente und Logo-Positionen durch schwarze Rahmen,
 Diese Option ist hilfreich für das Design einer Seite im Gauß-Layout.
 
 
-\subsection{Segmente}\label{sec:gausspage:bgsegment}
+\subsection{Segmente}\label{sec:gausslayout:bgsegment}
 
 \begin{Declaration}
   \Macro{bgsegment}\OParameter{Darstellung}\PParameter{Höhe}
@@ -128,7 +128,7 @@ Der optionale Parameter \PName{Darstellung} kann die folgenden Einstellungen ver
 \end{Declaration}
 
 Mit \OptionValue{bgcolor}{Farbe} wird das Hintergrundelement mit der angegebenen
-Farbe gefüllt. Die verfügbaren Farben können Kapitel~\ref{chap:tubscolors}
+Farbe gefüllt. Die verfügbaren Farben können Kapitel~\ref{sec:tubscolors}
 entnommen werden.
 
 \subsubsection{Hintergrundbild}
@@ -171,7 +171,7 @@ Sie erlaubt folgende Einstellungen:
   Dabei kann jedoch das Seitenverhältnis stark verändert und somit 
   das Bild verzerrt werden.
 }
-\end{desctable}\label{tbl:gausspage:imagefitoptions}
+\end{desctable}\label{tbl:gausslayout:imagefitoptions}
 
 
 \subsection{Darstellungselemente}
@@ -244,7 +244,7 @@ Logo rechts bzw. außen.
 Bewirkt Darstellung einer Trennlinie zwischen Absender und Kommunikationsbereich
 im aktuellen Layout.
 
-\begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von bglayout},label=listing:bglayout]
+\begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von bglayout},label=lst:bglayout]
 \bglayout[pages=single]{%
   \showtubslogo
   \bgsegment[bgimage=mypic.jpg]{2}
@@ -339,7 +339,7 @@ wobei \Option{innerpadding} die Abstände \emph{zwischen} Gauss-Boxen
 und \Option{outerpadding} die Abstände zum \emph{Seitenrand} kontrolliert.
 
 Die möglichen Werte für die Option \Option{padding} sind in 
-\tablename~\ref{tab:gausspage:padding} aufgeführt.
+\tablename~\ref{tbl:gausslayout:padding} aufgeführt.
 
 \begin{table}[!ht]
 \begin{desctable}
@@ -359,12 +359,12 @@ Die möglichen Werte für die Option \Option{padding} sind in
 \caption[{Mögliche Werte für Option \Option{padding}}]%
   {Mögliche Werte für Option \Option{padding} zur
     Kontrolle des Abstandes von Gauss-Boxen}
-  \label{tab:gausspage:padding}
+  \label{tbl:gausslayout:padding}
 \end{table}
 
 Die möglichen Werte für \Option{innerpadding} und \Option{outerpadding}
-stehen in \tablename~\ref{tab:gausspage:innerpadding} bzw.
-\tablename~\ref{tab:gausspage:outerpadding}.
+stehen in \tablename~\ref{tbl:gausslayout:innerpadding} bzw.
+\tablename~\ref{tbl:gausslayout:outerpadding}.
 
 \begin{table}[!ht]
 \begin{desctable}
@@ -389,7 +389,7 @@ stehen in \tablename~\ref{tab:gausspage:innerpadding} bzw.
 \caption[{Mögliche Werte für Option \Option{innerpadding}}]%
   {Mögliche Werte für Option \Option{innerpadding} zur
     Kontrolle des Abstandes zwischen Gauss-Boxen}
-  \label{tab:gausspage:innerpadding}
+  \label{tbl:gausslayout:innerpadding}
 \end{table}
 
 \begin{table}[!ht]
@@ -410,7 +410,7 @@ stehen in \tablename~\ref{tab:gausspage:innerpadding} bzw.
 \caption[{Mögliche Werte für Option \Option{outerpadding}}]%
   {Mögliche Werte für Option \Option{outerpadding} zur
     Kontrolle des Abstandes von Gauss-Boxen zum Kommunikationsbereich}
-  \label{tab:gausspage:outerpadding}
+  \label{tbl:gausslayout:outerpadding}
 \end{table}
 
 \begin{Declaration}
@@ -432,7 +432,7 @@ innerhalb der Gauss-Box ausgewählt werden.
 Die Option \KOption{frame}\PName{Box} fügt einen Rahmen um den Textbereich
 ein.% none, fbox, ..?
 
-\section{Kombination / Gaußraster-Seiten}\label{sec:gausspage:kombi}
+\section{Kombination / Gaußraster-Seiten}\label{sec:gausslayout:gausspage}
 
 Die hier vorgestellte Kombination ist für die einfache Erstellung ganzer Seiten
 inklusive Text im Gaußraster gedacht.
@@ -451,7 +451,7 @@ und die Textboxen zu einem Interface, das dem Standard-Anwendungsfall für
 das Gauß-Layout gerecht wird, da Textboxen und Hintergrund im Regelfall
 genau gleich positioniert sind.
 
-Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausspage:bglayout}
+Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausslayout:bglayout}
 für \Macro{bglayout} definierten Optionen verwendet werden.
 Die Option \Option{pages} ist standardmäßig auf \PValue{all}
 voreingestellt.
@@ -471,7 +471,7 @@ in der vertikalen Positionierung am Interface von \Macro{bgsegment}.
 Die \PName{Höhe} gibt also die Anzahl der verwendete Basis-Segmente an
 und belegt diese von oben nach unten.
 
-Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausspage:bgsegment}
+Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausslayout:bgsegment}
 für \Macro{bgsegment} definierten Optionen verwendet werden. % TODO: check
 
 
@@ -495,12 +495,12 @@ für \Macro{bgsegment} definierten Optionen verwendet werden. % TODO: check
   \fboxsep0mm
   \begin{minipage}{0.35\textwidth}
     \fbox{\includegraphics[width=\textwidth,page=1]{examples/gausssegments.pdf}}
-    \subcaption{Absenderbereicht oben}\label{fig:gausspage:topsender}
+    \subcaption{Absenderbereicht oben}\label{fig:gausslayout:topsender}
   \end{minipage}
   \quad
   \begin{minipage}{0.35\textwidth}
     \fbox{\includegraphics[width=\textwidth,page=2]{examples/gausssegments.pdf}}
-    \subcaption{Absenderbereicht unten}\label{fig:gausspage:bottomsender}
+    \subcaption{Absenderbereicht unten}\label{fig:gausslayout:bottomsender}
   \end{minipage}
   \caption{Gaußraster mit möglichen Logo-Positionen}\label{fig:gausspage}
 \end{figure}

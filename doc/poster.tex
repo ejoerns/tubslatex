@@ -196,7 +196,7 @@ Wie bei allen anderen \tubslatex-Klassen können auch für Plakate
 die diversen verfügbaren Optionen zur Farbdarstellung oder Schriftartwahl
 verwendet werden.
 Näheres hierzu findet sich in den vorausgehenden Kapiteln oder detaillierter
-in \chaptername~\ref{chap:tubscolors} und \ref{chap:nexus}.
+in \chaptername~\ref{sec:tubscolors} und \ref{sec:nexus}.
 \bigskip
 
 Im folgenden werden die einzelnen Plakat-Typen einzeln vorgestellt und beschrieben.
@@ -218,7 +218,7 @@ unter Angabe der Optionswahl \KOption{style}\PName{standard} gewählt werden:
 
 Da das Gauß-Layoutsystem zum einen umfangreich, zum anderen auch für
 verschiedenste Dokumentenklassen eingesetzt wird,
-ist ihm ein Extra-Kapitel (\ref{chap:gausspage}) gewidmet.
+ist ihm ein Extra-Kapitel (\ref{sec:gausslayout}) gewidmet.
 Dies beschreibt die möglichen Befehle und Optionen ausführlich.
 Hier werden sie daher jeweils nur verkürzt erläutert.
 Eine Lektüre des genannten Kapitels empfiehlt sich daher in jedem Fall.
@@ -233,7 +233,7 @@ Eine Lektüre des genannten Kapitels empfiehlt sich daher in jedem Fall.
 
 Ein neues Plakat wird mit der Umgebung \Environment{tubsposter} erstellt.
 Der optionale Parameter \PName{Optionen} akzeptiert dabei die
-unter \ref{sec:gausspage:bglayout} beschriebenen Optionen.
+unter \ref{sec:gausslayout:bglayout} beschriebenen Optionen.
 
 Der Inhalt des Plakats sollte aus einem oder mehreren Segmenten bestehen.
 Diese können jeweils aus einem oder mehreren zusammengefassten Basis-Segmenten
@@ -243,7 +243,7 @@ des Gaußrasters bestehen. Dabei sollten alle Basis-Segmente verwendet werden.
 Das Siegelband-Logo kann durch Verwendung des Befehls \Macro{showtubslogo}
 innerhalb der \Environment{tubsposter}-Umgebung angezeigt werden.
 Das Institutslogo wird analog mit \Macro{showlogo}\Parameter{Inhalt}
-dargestellt. Hierzu gibt das Kapitel~\ref{sec:gausspage:bgsegment}
+dargestellt. Hierzu gibt das Kapitel~\ref{sec:gausslayout:bgsegment}
 weitere Details.
 \end{sloppypar}
 %TODO: ref, link, ?
@@ -267,7 +267,7 @@ Einzelne Plakat-Segmente im Gaußraster können mit der Umgebung
 Dabei gibt der Parameter \PName{Höhe} die Höhe des
 Plakat-Segments in Basis-Segmenten des Gaußrasters an.
 Der optionale Parameter \PName{Optionen} akzeptiert die
-unter \ref{sec:gausspage:bgsegment} beschriebenen Optionen mit
+unter \ref{sec:gausslayout:bgsegment} beschriebenen Optionen mit
 denen zum Beispiel recht einfach eine Hintergrundfarbe oder ein Hintergrundbild
 gesetzt werden kann.
 
@@ -411,7 +411,7 @@ Hintergrundfarbe des Plakates gewählt werden.
 \end{Declaration}
 
 Mit der Option \Option{bgcolor}, die als Argument alle verfügbaren
-Farben akzeptiert (siehe \chaptername~\ref{chap:tubscolors}), kann die
+Farben akzeptiert (siehe \chaptername~\ref{sec:tubscolors}), kann die
 Hintergrundfarbe des Plakates individuell gesetzt werden.
 
 \paragraph{Modulzeilen}~\par
@@ -610,7 +610,7 @@ Mit der Option \Option{bgcolor} kann eine Hintergrundfarbe für das
 jeweilige Modul festgelegt werden. Als Argument können alle in \tubslatex
 definierten Farben übergeben werden.
 Eine allgemeine Übersicht über die Farbdarstellung ist in
-\chaptername~\ref{chap:tubscolors} zu finden.
+\chaptername~\ref{sec:tubscolors} zu finden.
 
 Die Vordergrundfarbe wird analog zur Hintergrundfarbe mit der
 Option \Option{fgcolor} gewählt.
@@ -638,7 +638,7 @@ sodass es randlos in den Darstellungsbereich passt.
 Weitere Einpassungsvarianten können mit der Option \Option{imagefit}
 gewählt werden.
 Die Option \Option{imagefit} akzeptiert die Werte, die in
-\tablename~\ref{tbl:gausspage:imagefitoptions} aufgeführt und erklärt sind.
+\tablename~\ref{tbl:gausslayout:imagefitoptions} aufgeführt und erklärt sind.
 
 \clearpage
 \section{Aushänge}
