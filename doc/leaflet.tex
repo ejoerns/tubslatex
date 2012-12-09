@@ -20,27 +20,112 @@ Andere Formate können gewählt werden, sind aber nicht voll unterstützt.
 \begin{figure}[!ht]
   \examplegraphic[width=\textwidth]{examples/leaflet.pdf}
   \caption{Einfacher Flyer im CD (erste Seite)}
+  \label{fig:leaflet:example}
 \end{figure}
 
-\paragraph{Darstellungsstil}\hfill
+% TODO: wird aktuell nicht richtig unterstützt
+% \paragraph{Darstellungsstil}\hfill
+% 
+% \begin{Declaration}
+%   \KOption{style}\PName{<simple/none>}
+% \end{Declaration}
+% 
+% Der Darstellungsstil \PName{simple} setzt standardmäßig das Frontseiten- und das
+% Rückseiten-Logo.
+% Im Darstellungsstil \PName{none} werden standardmäßig keine Elemente gesetzt.
+% 
+% Hintergrundelemente können manuell mittels \Macro{AddToBackground} gesetzt
+% werden.
 
-\begin{Declaration}
-  \KOption{style}\PName{<simple/none>}
-\end{Declaration}
-
-Der Darstellungsstil \PName{simple} setzt standardmäßig das Frontseiten- und das
-Rückseiten-Logo.
-Im Darstellungsstil \PName{none} werden standardmäßig keine Elemente gesetzt.
-
-Hintergrundelemente können manuell mittels \Macro{AddToBackground} gesetzt
-werden.
-
-\paragraph{Seiten}\hfill
+\section{Seitenerstellung}
 
 Die einzelnen Seiten können wie bei den anderen Dokumentenklassen
 mit der Umgebung \Environment{gausspage} erstellt werden.
 Diese erlaubt das Erstellen von Seiten im Gaußraster.
-Da sie ein universelles Element von \tubslatex ist, ist ihr ein spezielles
-\href{sec:gausslayout}{Kapitel} gewidmet.
+Da sie ein universelles Element von \tubslatex ist, kann hier auf die
+allgemeinene Beschreiung in \chaptername~\ref{sec:gausslayout:gausspage}
+verwiesen werden.
 
-Die korrekte Darstellungsreihenfolge der Seiten wird automatisch gesetzt. % TODO....
+\paragraph{Reihenfolge}\hfill
+
+Die verschiedenen Seiten des Flyers müssen in der Reihenfolge
+geschrieben werden in der sie später gelesen werden sollen.
+Die korrekte Darstellungsreihenfolge der Seiten für den Druck
+wird automatisch gesetzt.
+Die Reihenfolge geht dabei von der Deckseite des Flyers
+über die Innenseite des aufgeklappten Flyers bis hin zur Rückseite
+des aufgeklappten Flyers.
+Die Seite, die im zugefalteten Zustand der Titelseite gegenüberliegt,
+ist somit auch die zuletzt einzugebende Seite. Anschaulich wird dies
+in \figurename~\ref{fig:leaflet:pageorder} dargestellt.
+
+Zu beachten ist auch, dass in \Class{leaflet} die Ausgabe der zweiten 
+Seite standardmäßig überkopf erfolgt.
+Ist dies nicht gewünscht, kann dies mit der Klassenoption
+\Option{notumble} deaktiviert werden.
+
+\begin{figure}[!ht]
+\begin{minipage}{0.475\textwidth}
+\fboxsep0mm%
+\fbox{\includegraphics[width=\textwidth,page=1]{examples/tubsleaflet_order}}
+\end{minipage}%
+\hfill
+\begin{minipage}{0.475\textwidth}
+\fboxsep0mm%
+\fbox{\includegraphics[width=\textwidth,page=2]{examples/tubsleaflet_order}}
+\end{minipage}
+\caption{Ausgabereihenfolge und -orientierung der einzelnen Seiten, wobei 
+die Zahl der Seitenposition im tex-Dokument entspricht.}
+\label{fig:leaflet:pageorder}
+\end{figure}
+
+\section{leaflet-Klassenoptionen}
+
+Zur einfacheren Orientierung werden hier einmal kurz die wichtigsten Optionen,
+die die Klasse \Class{leaflet}, welche die Basisklasse von \Class{tubsleaflet}
+ist, zur Verfügung stellt.
+
+\begin{Declaration}
+  \Option{notumble}
+\end{Declaration}
+Normalerweise wird die zweite zu druckende A4-Seite auf dem Kopf stehend erzeugt,
+um in einigen Fällen den Druck zu erleichtern.
+Sollte dies Verhalten nicht gewünscht sein, kann es mit der Option
+\Option{notumble} deaktiviert werden, sodass beide Seiten normal (lesbar)
+ausgegeben werden.
+
+\begin{Declaration}
+  \Option{nofoldmark}
+\end{Declaration}
+Um das Falten zu erleichtern werden an den Faltpositionen Falzmarken
+eingezeichnet. Sollen diese nicht dargestellt werden, kann ihre
+Darstellung mit der Option \Option{nofoldmark} deaktiviert werden.
+
+\begin{Declaration}
+  \Option{portrait}
+\end{Declaration}
+
+Standardmäßig werden die Seiten im PDF im Querformat ausgegeben.
+Mit der Option \Option{portrait} werden die PDF-Seiten im Hochformat dargestellt.
+Das Format des Inhalts verändert sich dagegen nicht.
+
+\begin{Declaration}
+  \Option{nocombine}
+\end{Declaration}
+Normalerweise werden die einzelnen Flyer-Seiten kombiniert auf 2 A4-Seiten
+ausgegeben, um sie so einfach ausdrucken und falten zu können.
+Mit der Option \Option{nocombine} wird dagegen für jede Flyer-Seite eine
+einzelne pdf-Seite erzeugt.
+
+\begin{Declaration}
+  \Option{frontside}\\
+  \Option{backside}\\
+  \Option{bothsides}
+\end{Declaration}
+Diese Optionen steuern, welche Seiten im PDF ausgegeben werden sollen.
+Normal werden Vorder- und Rückseite ausgegeben, was der Optionen
+\Option{bothsides} entspricht.
+Soll nur die Vorderseite erzegut werden, kann dies mit der Option
+\Option{frontside} bewirkt werden.
+Soll nur die Rückseite erzeugt werden, kann dies mit der Option
+\Option{backside} bewirkt werden.
