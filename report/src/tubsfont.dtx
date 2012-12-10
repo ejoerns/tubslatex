@@ -143,6 +143,18 @@
 \colorlet{tubsheadings}{\headingscolor}
 %    \end{macrocode}
 %
+%    \begin{macro}{\providetubsfont}
+% Erstellt Koma-Font nur, wenn dieser noch nicht existiert
+%    \begin{macrocode}
+\providecommand\providekomafont[2]{%
+  \@ifundefined{scr@fnt@#1}{%
+    \newkomafont{#1}{#2}
+  }{}
+}
+\let\providetubsfont\providekomafont
+%    \end{macrocode}
+%    \end{macro}
+%
 %\subsection{Definition von KOMA-Fonts}
 %    \begin{macrocode}
 %<*package|leaflet>
@@ -192,6 +204,17 @@
 }
 %    \end{macrocode}
 %
+%
+%    \begin{macrocode}
+\providekomafont{caption}{}
+\providekomafont{chapter}{}
+\providekomafont{section}{}
+\providekomafont{subsection}{}
+\providekomafont{subsubsection}{}
+%</package|leaflet>
+\providekomafont{intro}{}
+%    \end{macrocode}
+%
 %    \begin{macro}{\newtubsfont}
 %    \begin{macro}{\settubsfont}
 %    \begin{macro}{\addtotubsfont}
@@ -204,28 +227,6 @@
 \let\usetubsfont\usekomafont
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
-%
-%    \begin{macro}{\providetubsfont}
-%    \begin{macrocode}
-% Erstellt Koma-Font nur, wenn dieser noch nicht existiert
-\providecommand\providekomafont[2]{%
-  \@ifundefined{scr@fnt@#1}{%
-    \newkomafont{#1}{#2}
-  }{}
-}
-\let\providetubsfont\providekomafont
-%    \end{macrocode}
-%    \end{macro}
-%
-%    \begin{macrocode}
-\providekomafont{caption}{}
-\providekomafont{chapter}{}
-\providekomafont{section}{}
-\providekomafont{subsection}{}
-\providekomafont{subsubsection}{}
-\providekomafont{intro}{\large\tubs@fontcolor{tubsheadings}}%TODO: mdseries???
-%</package|leaflet>
-%    \end{macrocode}
 %
 %    \begin{macro}{headline}
 %    \begin{macro}{title}
@@ -281,7 +282,8 @@
 \setkomafont{caption}{\small}
 %    \end{macrocode}
 %    \begin{macrocode}
-\setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
+\providekomafont{pagenumber}{}
+% \setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
 %    \end{macrocode}
 %
 % Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund
@@ -300,6 +302,7 @@
 \setkomafont{section}{\usekomafont{subheadline}}
 \setkomafont{subsection}{\usekomafont{subheadlinesmall}}
 \addtokomafont{subsubsection}{\tubs@fontcolor{tubsheadings}}
+\setkomafont{intro}{\large\tubs@fontcolor{tubsheadings}}%TODO: mdseries???
 %    \end{macrocode}
 %
 %
