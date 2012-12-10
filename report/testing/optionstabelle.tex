@@ -1,0 +1,23 @@
+\documentclass[a4paper,10pt]{tubsartcl}
+\usepackage[utf8]{inputenc}
+
+\usepackage{booktabs}
+
+\begin{document}
+
+\newcommand\yes{x}
+\newcommand\no{--}
+\newcommand\tbd{(x)}% to bee done
+\newcommand\un{?}% unknown
+
+\begin{tabular}{@{\,\ttfamily}lcccc}
+  \bfseries Option & \bfseries modulepage & \bfseries gausspage & \bfseries segment & \bfseries module\\
+  \midrule
+  bgcolor & \yes & \yes & \yes & \yes\\
+  bgimage & \yes & \yes & \yes & \yes\\
+  t/c/b   & \un  & \un  & \yes & \tbd\\
+  frame   & \un  & \un  & \un  & \tbd\\
+\end{tabular}
+
+
+\end{document}
