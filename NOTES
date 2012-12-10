@@ -1,0 +1,32 @@
+Hintergrundfarbe und Hintergrundbild nur für bglaoyut dokumentieren
+
+Nur mit gaussboxen geht z.B. kein TU-Logo!
+Daher ist auch der Nutzen von bgcolor fraglich!
+-> Option nosep nur vollständigkeitshalber
+
+Wichtig ist aber die Option für Randfreiheit zu allen Seiten!?	
+
+
+und warum the fuck (wtf) kann man nach einer einzigen gaussbox keinen umbruch machen??+
+
+
+Die Abstände bei den Kopfzeilen (zur Linie) sehen noch etwas groß aus
+
+Muss ich bei {gaussbox} ein Dummy-Zeichen in den Hintergrund malen, damit die Umbrüche vernünftig funktionieren??
+
+
+Sollte man das logo nicht auch ohne eine extra-umgebung anzeigen lassen können?..
+-> Kann man :-P
+\bglayout{
+	\shotubslogo[options]
+	\showlogo{foo}
+}
+
+Hat \bgsegment keine Options-Validierung?
+
+Satzraster heißt das Teil in der Breite?
+
+Spaltenraster auch mit designhelper?
+
+
+- Horizontaler Abstand *zwischen* Modulen ist immer columnsep!

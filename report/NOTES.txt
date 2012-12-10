@@ -1,6 +1,0 @@
-[CHECK]
-
-\and in author-angabe nicht unterstützt!?!
-
----
-

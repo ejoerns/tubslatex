@@ -1,0 +1,19 @@
+updmap ... --enable Map=NexusProSerif.map
+gibt Fehlerwert 1 zurück, wenn Map schon aktiviert ist.
+
+-> Gilt bei Debian 6.0.6 nicht? (updmap 2009-07-23)
+-> Bei Ubuntu schon (updmap 2009-07-23)
+-> ???
+
+--disable gibt im nicht-quiet-Modus immer 0 zurück
+
+--disable gibt im --quiet-Modus immer 1 zurück und
+funktioniert nicht
+
+--enable gibt im --quiet Modus immer 1 zurück und
+funktioniert nicht
+
+---
+
+Was soll passieren, wenn die Maps bei Installation bereits vorhanden sind?
+-> Abfrage?
