@@ -22,7 +22,7 @@ INSLIST := $(patsubst %,$(SRCDIR)/%,$(INSLIST))
 
 all: src cleantemp
 
-src: $(STYLIST)
+src: $(STYLIST) cleantemp
 
 doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf)
 

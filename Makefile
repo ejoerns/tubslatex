@@ -10,9 +10,9 @@ include Makefile.include
 
 .PHONY: clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch
 
-release: clean generate buildinstaller mkdir fetch
+release: clean buildinstaller mkdir fetch
 
-generate: $(HG_DTXOUT) sourcedoc documentation examples
+# generate: $(HG_DTXOUT) sourcedoc documentation examples
 
 versiondtx:
 	$(ECHO) -e '$(WARN_COLOR)This is tubslatex Version $(TUBSLATEX_FULLVERSION)$(NO_COLOR)'
@@ -39,15 +39,15 @@ sourcedoc:
 buildinstaller: zip deb exe
 
 zip:
-	$(MAKE) -C $(INSTALL_RAW_DIR)
+# 	$(MAKE) -C $(INSTALL_RAW_DIR)
 	$(MAKE) -C $(INSTALL_RAW_DIR) zip
 
 deb:
-	$(MAKE) -C $(INSTALL_DEB_DIR) copy
+# 	$(MAKE) -C $(INSTALL_DEB_DIR)
 	$(MAKE) -C $(INSTALL_DEB_DIR) deb
 
 exe:
-	$(MAKE) -C $(INSTALL_WIN_DIR) copy
+# 	$(MAKE) -C $(INSTALL_WIN_DIR)
 	$(MAKE) -C $(INSTALL_WIN_DIR) exe
 
 fetch:
@@ -65,3 +65,6 @@ clean:
 # 	$(MAKE) -C $(DOCUMENTATION_DIR) clean
 	$(RM) -f *~
 
+cleantemp:
+	for i in $(ALL_DIRS); do make -C $$i cleantemp; done
+	$(RM) -f *~
