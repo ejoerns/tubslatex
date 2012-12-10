@@ -7,6 +7,12 @@ Veranstaltungsplakaten Anwendung. Die hier beschriebenen Befehle und Optionen
 können daher in weiten Teilen auf alle Konstrukte in \tubslatex angewendet
 werden, die im Gauß-Layout dargestellt werden.
 
+Eine Grundkenntnis über den allgemeinen Aufbau von Seiten im Corporate
+Design bzw. im Gaußraster ist für das Verständnis hilfreich.
+Eine kurze allgemeine Einleitung ist in \chaptername~\ref{sec:intro:dascddertubs}
+zusammengestellt. Für einen umfassenden Überblick sei hier auf \cite{toolbox}
+verwiesen.
+
 Es gibt grundlegend drei verschiedene Möglichkeiten das Gauß-Layout-System
 zu nutzen:
 \begin{itemize}
@@ -14,38 +20,300 @@ zu nutzen:
   \item Verwendung von Textboxen,
   \item Kombination von Hintergrundelementen und Textboxen,
 \end{itemize}
-wobei die Letztgenannte den Regelfall darstellt.
+wobei die Letztgenannte den Regelfall darstellt und daher im folgenden Kapitel
+zuerst beschrieben wird.
 
+
+% TODO: note \thispagestyle{}?
+
+\clearpage
+\section{Gaußraster-Seiten}\label{sec:gausslayout:gausspage}
+
+Die hier vorgestellte Umgebung zum Erstellen von Seiten im Gaußraster des
+Corporate Design ist eine Kombination aus den in den Folgekapiteln
+erläuterten Möglichkeiten Hintergrundlayouts und Gaußraster-Textboxen 
+zu erstellen. In den Beschreibungen einiger Elemente wird daher für eine
+detailliertere Erklärung auf die folgenden Kapitel verwiesen.
+
+Die vorgestellte Umgebung wird in vielen Teilen der Vorlagen eingesetzt
+und bildet eines der Basis-Elemente der Vorlagen
+Sie bildet zum Beispiel unter anderem die Basis für die Erstellung von
+Veranstaltungsplakaten und wird in den automatischen Titelseiten für Dokumenten
+genutzt.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{gausspage}}%
+    \OParameter{Optionen}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{gausspage}
+\end{Declaration}
+
+Jede \Environment{gausspage}-Umgebung leitet eine komplette eigenständige
+Seite ein innerhalb derer ein am Gaußraster orientiertes Seitenlyout
+definiert werden kann.
+
+Als \PName{Optionen} können alle in \chaptername~\ref{sec:gausslayout:bglayout:options}
+für \Macro{bglayout} definierten Optionen verwendet werden.
+Die Option \Option{pages} ist standardmäßig auf \PValue{single}
+voreingestellt.
+
+Innerhalb der Umgebung können alle Standardelemente
+des CD dargestellt werden. Dazu gehören das Siegelbandlogo,
+ggf. eine rote Trennlinie zwischen Absender- und Kommunikationsbereich,
+sowie ein mögliches Sekunär-/Institutslogo.
+Der eigentliche Seiteninhalt wird mit der Umgebung \Environment{segment} gesetzt.
+
+
+\begin{Declaration}
+  \Macro{showtubslogo}\OParameter{Optionen}\\
+  \Macro{showlogo}\PParameter{Logo}\\
+  \Macro{showtopline}
+\end{Declaration}
+
+Mit dem Befehl \Macro{showtubslogo} wird die Darstellung des Siegelbandlogos
+auf der aktuellen Seite bewirkt. Ein optionaler Parameter kontrolliert
+Darstellungsseite und Darstellungsart.
+
+Der Befehl \Macro{showlogo} wird verwendet um sein sekundäres Logo
+eines Instituts oder einer zentralen Einrichtung im Absenderbereich
+darzustellen. Dies kann sowohl eine Grafik als auch ein
+(bei zentralen obligatorischer) einfacher Text sein.
+
+Mit \Macro{showtopline} wird eine horizontal rote Trennlinie zwischen
+Absender- und Kommunikationsbereich eingefügt.
+
+Zu allen drei Befehlen ist eine ausführlichere Beschreibung
+in \chaptername~\ref{sec:gausslayout:bglayout:elemente} zu finden.
+
+\begin{Declaration}
+  \XMacro{begin}\PParameter{\Environment{segment}}%
+    \OParameter{Optionen}
+    \Parameter{Höhe}\\
+  \quad\dots\\
+  \XMacro{end}\PParameter{segment}
+\end{Declaration}
+
+Mit der Umgebung \Environment{segment} könnnen die einzelnen
+Segmente gesetzt werden.
+Diese gehen jeweils über die ganze Textbreite.
+Der Parameter \PName{Höhe} gibt die Anzahl der Basis-Segmente an, die
+das Segment umfassen soll.
+Die Basis-Segmente werden dabei von den \Environment{segment}-Umgebungen
+von oben nach unten belegt.
+Illustriert wird dies in \figurename~\ref{fig:gausslayout:segment:beispiel}.
+
+\begin{figure}[!ht]
+\begin{minipage}[b]{0.3\textwidth}\fboxsep0mm
+\begin{lstlisting}[escapechar=@]
+\begin{gausspage}
+  \begin{segment}{@\textcolor{tubsRed}{3}@}
+    ...
+  \end{segment}
+  \begin{segment}{@\textcolor{tubsRed}{4}@}
+    ...
+  \end{segment}
+  \begin{segment}{@\textcolor{tubsRed}{1}@}
+    ...
+  \end{segment}
+\end{gausspage}
+\end{lstlisting}%
+\subcaption{Aufteilung}
+\label{fig:gausslayout:segment:beispiel:code}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.32\textwidth}\fboxsep0mm
+  \fbox{\includegraphics[width=\textwidth,page=3]{examples/gausssegments.pdf}}
+%     \subcaption{Absenderbereich oben}\label{fig:gausslayout:topsender}
+  \subcaption{Basis-Segmente}
+  \label{fig:gausslayout:segment:beispiel:basis}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.32\textwidth}\fboxsep0mm
+  \fbox{\includegraphics[width=\textwidth,page=4]{examples/gausssegments.pdf}}
+%     \subcaption{Absenderbereich oben}\label{fig:gausslayout:topsender}
+  \subcaption{Segment-Aufteilung}
+  \label{fig:gausslayout:segment:beispiel:aufteilung}
+\end{minipage}
+\caption{Beispiel zur Aufteilung der Basis-Segmente (b)
+  mit der \Environment{segment}-Umgebung (a)
+  in Ausgabe-Segmente (c)}
+\label{fig:gausslayout:segment:beispiel}
+\end{figure}
+
+
+% Als \PName{Optionen} können sowohl alle in \chaptername~\ref{sec:gausslayout:bgsegment}
+% für \Macro{bgsegment} definierten Optionen als auch alle in \chaptername~\ref{sec:gausslayout:gaussbox} für
+% die \Environment{gaussbox}-Umgebung definierten Optionen verwendet werden.
+
+\paragraph{Vorder-/Hintergrundfarbe}\hfill
+
+\begin{Declaration}
+  \KOption{bgcolor}\PName{Farbe}\\
+  \KOption{fgcolor}\PName{Farbe}
+\end{Declaration}
+
+Mit der Option \Option{bgcolor} kann eine Hintergrundfarbe für das
+jeweilige Segment festgelegt werden. Als Argument können alle in \tubslatex
+definierten Farben übergeben werden.
+Eine allgemeine Übersicht über die Farbdarstellung ist in
+\chaptername~\ref{sec:tubscolors} zu finden.
+
+Die Vordergrundfarbe wird analog zur Hintergrundfarbe mit der
+Option \Option{fgcolor} gewählt.
+Die Vordergrundfarbe beeinflusst unter anderem die Farbe des Textes.
+
+
+\paragraph{Hintergrundbild}\hfill
+
+\begin{Declaration}
+  \KOption{bgimage}\PName{Bild-Datei}\\
+  \KOption{imagefit}\PName{Darstellungsoption}
+\end{Declaration}
+
+% TODO: just a text copy
+Die Option \OptionValue{bgimage}{Bild-Datei} erlaubt die Darstellung
+eines Hintergrundbildes im aktuellen Element.
+Da der Darstellungsbereich fest vorgegeben ist, muss das eingebundene Bild
+in diesen Bereich eingepasst werden.
+Dazu ist jedoch kein mühsames manuelles Ausprobieren notwendig.
+Die Vorlagen verfügen über einen Algorithmus, der die Einpassung vollautomatisch
+übernimmt.
+Die Art der Einpassung lässt sich dabei mit der Option \Option{imagefit} kontrollieren.
+%
+Mögliche Werte sind in \tablename~\ref{tbl:gausslayout:imagefitoptions} erläutert.
+
+\figurename~\ref{fig:gausslayout:imagefitexample} zeigt beispielhaft die Funktionalität
+der automatischen Einpassung.
+
+\makeatletter
+{%
+\fboxsep0mm
+\newcommand\imgscaleexample[3]{%
+%   \def\tubs@sb@imagefit{#1}%
+  \setkeys{tubsbox}{imagefit=#3}%
+  \tubs@sb@calc@autoscale{examples/infozentrum}{#1}{#2}%
+  \fbox{\parbox[t][#2]{#1}{%
+    \expandafter\includegraphics\expandafter[\@img@scale@param]{infozentrum}}%
+  }
+}
+\begin{figure}[!ht]
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{\textwidth}{2cm}{autoclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{autoclip}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{\textwidth}{2cm}{scaled}%
+  \subcaption{\KOption{imagefit}\PValue{scaled}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{\textwidth}{2cm}{hclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{hclip}}%
+\end{minipage}\\[1ex]
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{2cm}{\textwidth}{autoclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{autoclip}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{2cm}{\textwidth}{scaled}%
+  \subcaption{\KOption{imagefit}\PValue{scaled}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{2cm}{\textwidth}{vclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{vclip}}%
+\end{minipage}
+\caption{Beispiele zur Verwendung der automatischen Einpassung in \tubslatex}
+\label{fig:gausslayout:imagefitexample}
+\end{figure}
+
+}
+\makeatother
+
+\paragraph{Vertikale Textausrichtung}\hfill
+
+\begin{Declaration}
+  \Option{t}\\
+  \Option{c}\\
+  \Option{b}
+\end{Declaration}
+
+% TODO: just a text copy
+Mit diesen Optionen lässt sich die vertikale Ausrichtung des Textes innerhalb
+der Box festlegen. Die Option \Option{t} entspricht dem Standardverhalten und richtet
+den Inhalt am \emph{oberen} Rand des Inhaltsbereichs der Box aus.
+Die Option \Option{c} bewirkt eine vertikale Zentrierung des Inhaltes in des Box.
+Mir der Option \Option{b} wird der Inhalt am \emph{unteren} Rand des
+Inhaltsbereichs der Box ausgerichtet.
+
+
+% \begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von gausspage}]
+% \begin{gausspage}{%
+%   \showtubslogo
+%   \begin{segment}[bgimage=mypic.jpg]{2}
+%     // Inhalt
+%   \end{segment}
+%   \begin{segment}[bgcolor=tuGreen]{3}
+%     // Inhalt
+%   \end{segment}
+%   \begin{segment}[bgcolor=tuGreenDark]{3}
+%     // Inhalt
+%   \end{segment}
+% }
+% \end{lstlisting}
+
+% TODO: place? ref?
+
+\clearpage
 \section{Hintergrund-Layout}\label{sec:gausslayout:bglayout}
 
-Ein Hintergrund-Layout kann auf zwei verschiedene weisen definiert bzw.
+Ein Hintergrund-Layout kann auf zwei verschiedene Weisen definiert bzw.
 gesetzt werden.
 Zum einen kann ein Layout so gesetzt werden, dass es sofort angewendet wird,
 zum anderen kann ein Layout zuerst definiert und unter einem Namen
 abgespeichert werden, um dann später dieses Layout mit Hilfe des angegebenen 
-Namen anzuwenden.
+Namen anzuwenden. Letzteres ist zum Beispiel für individuelle Vorlagen
+nützlich.
 
 \begin{Declaration}
-  \Macro{bglayout}\OParameter{Optionen}\Parameter{Layout-Anweisungen}
+  \Macro{bglayout}\OParameter{Optionen}\PParameter{Layout-Anweisungen}
 \end{Declaration}
 
-Mit Hilfe des Befehls \Macro{bglayout} kann das Hintergrundlayout im Gaußraster direkt gesetzt werden.
-Alle Komponenten werden im Hintergrund und unabhängig vom Inhalt der Seite
-dargestellt.
-Dies hat in etwa dieselbe Funktionalität wie vorbedrucktes Papier.
-Zur Verwendung siehe auch Listing~\ref{lst:bglayout}.
+Mit Hilfe des Befehls \Macro{bglayout} kann das Hintergrundlayout
+im Gaußraster direkt gesetzt werden.
+Die darzustellenden Komponenten und Segmente werdem im Parameter
+\PName{Layout-Anweisungen} übergeben.
+Die Benutzung von Segmenten ist in \chaptername~\ref{sec:gausslayout:bgsegment}
+erläutert.
+Die Art der Darstellung kann über den Parameter \PName{Optionen} angepasst werden.
+Gültige Optionen sind weiter unten aufgelistet.
+
+Alle gesetzten Komponenten werden im Hintergrund und unabhängig vom Inhalt der Seite
+dargestellt. Dies hat in etwa dieselbe Funktionalität wie vorbedrucktes Papier.
+Ein Beispiel zur Verwendung von \Macro{bglayout} liefert auch
+\lstlistingname~\ref{lst:bglayout}.
+
+
+\begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von bglayout},label=lst:bglayout]
+\bglayout[pages=single]{%
+  \showtubslogo
+  \bgsegment[bgimage=mypic.jpg]{2}
+  \bgsegment[bgcolor=tuGreen]{3}
+  \bgsegment[bgcolor=tuGreenDark]{3}
+}
+\end{lstlisting}
+
 
 \begin{Declaration}
   \Macro{defbglayout}\OParameter{Optionen}\Parameter{Name}\Parameter{Layout-Anweisungen}\\
   \Macro{usebglayout}\Parameter{Name}
 \end{Declaration}
 
-Mit dem Befehl \Macro{defbglayout} kann ein hintergrundlayout definiert werden.
-Es wird unter der im Parameter \Parameter{Name} angegebenen Bezeichnung
+\begin{sloppypar}
+Mit dem Befehl \Macro{defbglayout} kann ein Hintergrundlayout vordefiniert werden.
+Es wird unter der im Parameter \PName{Name} angegebenen Bezeichnung
 abgespeichert.
-Der Befehl \Macro{usebglayout} dient dann dazu ein unter \Parameter{Name} gespeichertes
+Der Befehl \Macro{usebglayout} dient dann dazu, ein unter \PName{Name} gespeichertes
 Layout anzuwenden.
+\end{sloppypar}
 
+\subsubsection{Optionen}\label{sec:gausslayout:bglayout:options}
 
 Für \Macro{bglayout} wie auch für \Macro{defbglayout} stehen folgende
 \PName{Optionen} zur Verfügung:
@@ -54,9 +322,32 @@ Für \Macro{bglayout} wie auch für \Macro{defbglayout} stehen folgende
   \KOption{sender}\PName{top/bottom}
 \end{Declaration}
 
-Steuert die Positionierung des Absenderbereiches.
+Steuert die Positionierung des \glslink{glos:absenderbereich}{Absenderbereichs}.
 Der Wert \PValue{top} platziert den Absenderbereich am oberen,
 der Wert \PValue{bottom} am unteren Ende des Blattes.
+
+\begin{hint}
+  Die Position des Absenderbereichs hat Einfluss auf die Darstellungsreihenfolge
+  der Gauß-Segmente. Das jeweils größte Segment befindet sich immer 
+  benachbart zum Absenderbereich.
+  Wird der Absenderbereich nach unten gesetzt, ist das kleinste Segment oben
+  und das größte Segment unten.
+\end{hint}
+
+\begin{figure}[!ht]\centering
+  \fboxsep0mm
+  \begin{minipage}{0.35\textwidth}
+    \fbox{\includegraphics[width=\textwidth,page=1]{examples/gausssegments.pdf}}
+    \subcaption{Absenderbereich oben\\ (\KOption{sender}\PName{top})}\label{fig:gausslayout:topsender}
+  \end{minipage}
+  \quad
+  \begin{minipage}{0.35\textwidth}
+    \fbox{\includegraphics[width=\textwidth,page=2]{examples/gausssegments.pdf}}
+    \subcaption{Absenderbereich unten\\ (\KOption{sender}\PName{bottom})}\label{fig:gausslayout:bottomsender}
+  \end{minipage}
+  \caption{Gaußraster für Absenderbereich oben bzw. unten mit Basis-Segmenten
+  und möglichen Logo-Positionen}\label{fig:gausspage}
+\end{figure}
 
 \begin{Declaration}
   \KOption{pages}\PName{all/single}
@@ -71,8 +362,11 @@ wird.
   \Option{designhelper}
 \end{Declaration}
 
-Darstellung der verfügbaren Segmente und Logo-Positionen durch schwarze Rahmen, abhängig von der Platzierung des Absenderbereiches.
-Diese Option ist hilfreich für das Design einer Seite im Gauß-Layout.
+Besonders für den Designprozess ist die Option \Option{designhelper}
+hilfreich. Er bewirkt eine Darstellung der verfügbaren Segmente und
+Siegelbandlogo-Positionen durch schwarze Rahmen,
+abhängig von der Platzierung des Absenderbereiches.
+Dies kann als Hilfe für die Segmentaufteilung benutzt werden.
 
 
 \subsection{Segmente}\label{sec:gausslayout:bgsegment}
@@ -90,7 +384,8 @@ entweder nach unten kleiner (Absender oben) oder größer (Absender unten).
 
 \noindent\begin{minipage}{0.4\textwidth}
 Pro Seite stehen allgemein maximal 8 (Hochformat) bzw. 6 (Querformat)
-Segmente zur Verfügung. Werden mehr belegt, so kommt es zu einer Fehlermeldung.
+Segmente zur Verfügung. Werden mehr belegt als verfügbar,
+so kommt es zu einer Fehlermeldung.
 \end{minipage}
 \begin{minipage}{0.6\textwidth}\centering
 \begin{minipage}[b]{0.4\textwidth}\centering
@@ -120,7 +415,7 @@ Querformat\\ (6 Segmente)
 
 Der optionale Parameter \PName{Darstellung} kann die folgenden Einstellungen verarbeiten:
 
-\subsubsection{Hintergrund-/Vordergrundfarbe}
+\subsubsection{Hintergrundfarbe}
 
 \vspace{-6mm}
 \begin{Declaration}
@@ -128,8 +423,8 @@ Der optionale Parameter \PName{Darstellung} kann die folgenden Einstellungen ver
 \end{Declaration}
 
 Mit \OptionValue{bgcolor}{Farbe} wird das Hintergrundelement mit der angegebenen
-Farbe gefüllt. Die verfügbaren Farben können Kapitel~\ref{sec:tubscolors}
-entnommen werden.
+Farbe gefüllt. Die im Corporate Design vordefiniert Farben können
+Kapitel~\ref{sec:tubscolors} entnommen werden.
 
 \subsubsection{Hintergrundbild}
 
@@ -139,8 +434,8 @@ entnommen werden.
   \KOption{imagefit}\PName{Darstellungsoption}
 \end{Declaration}
 
-Die Option \OptionValue{bgimage}{Bild-Datei} erlaubt dagegen die Darstellung
-eines Hintergrundbildes im Element.
+Die Option \OptionValue{bgimage}{Bild-Datei} erlaubt die Darstellung
+eines Hintergrundbildes im aktuellen Element.
 Da der Darstellungsbereich fest vorgegeben ist, muss das eingebundene Bild
 in diesen Bereich eingepasst werden.
 Dazu ist jedoch kein mühsames manuelles Ausprobieren notwendig.
@@ -174,13 +469,15 @@ Sie erlaubt folgende Einstellungen:
 \end{desctable}\label{tbl:gausslayout:imagefitoptions}
 
 
-\subsection{Darstellungselemente}
+\subsection{Darstellungselemente}\label{sec:gausslayout:bglayout:elemente}
 \subsubsection{TU-Logo}
+
 
 \vspace*{-5mm}
 \begin{Declaration}
   \Macro{showtubslogo}\OParameter{Optionen}
-\end{Declaration}
+\end{Declaration}%
+\vspace*{-2.6cm}\hfill\tubslogoAbs{5.38cm}
 
 Bewirkt Darstellung des TU-Siegelbandlogos im aktiven Layout.
 Die \PName{Optionen} erlauben unter anderem die Angabe der Darstellungsseite
@@ -191,26 +488,36 @@ Die \PName{Optionen} erlauben unter anderem die Angabe der Darstellungsseite
   \Option{right}/\Option{outside}
 \end{Declaration}
 
-Mit der Logo-Option \Option{left} bzw. \Option{inside} wird das Logo auf der Seite
-\emph{left} bzw. \emph{innen} platziert. Dies entspricht der Standardeinstellung.
+Mit der Siegelbandlogo-Option \Option{left} bzw. \Option{inside} wird das Siegelband
+auf der Seite \emph{links} bzw. \emph{innen} platziert.
+Dies entspricht der Standardeinstellung.
 Es ist zu beachten, dass bei zweiseitiger Darstellung (\Option{twoside})
-das Logo auf ungeraden Seiten links und auf geraden Seiten rechts platziert wird
+das Siegelband auf ungeraden Seiten links und auf geraden Seiten rechts platziert wird
 (also immer \emph{innenseitig}!).
-Mit der Option \Option{right} bzw. \Option{outside} wird das Logo auf der \emph{rechten}
+Mit der Option \Option{right} bzw. \Option{outside} wird das Siegelband auf der \emph{rechten}
 Seite bzw. \emph{außen} dargestellt.
 
-\begin{important}
-Diese Optionen beeinflussen direkt die Darstellung aller folgenden Logos.
+Die Position des Siegelbandlogos bestimmt gleichzeitig auch die Position
+des Sekundär-/Institutslogos.
+Dieses wird immer auf der entgegengesetzten Seite platziert.
+
+\begin{hint}
+Diese Optionen beeinflussen ebenfalls direkt die Darstellung aller möglicherweise
+folgender Logos.
 Diese werden entsprechend der jeweils letzten Seitenwahl gesetzt.
 Wird das erste Logo also rechts, bzw. außen platziert, so werden alle folgenden
 Logos ebenfalls rechts (bzw. im \Option{twoside}-Modus außen) platziert.
-\end{important}
+\end{hint}
 
+\vspace*{1cm}
 \begin{Declaration}
   \Option{plain}
 \end{Declaration}
+{\fboxsep0mm
+  \vspace*{-2.6cm}\hfill\colorbox{tubsRed}{\parbox[b][2cm]{5.38cm}{~}}%
+}
 
-Die Logo-Option \Option{plain} bewirkt, dass nicht das Logo selber,
+Die Siegelbandlogo-Option \Option{plain} bewirkt, dass nicht das Logo selber,
 sondern stattdessen eine gleichgroße einfarbige Fläche in der Farbe
 des Siegelbandlogos dargestellt wird.
 Dies ist vor allem für Rückseiten sinnvoll.
@@ -223,10 +530,10 @@ Dies ist vor allem für Rückseiten sinnvoll.
   \Macro{showlogo}\PParameter{Logo}
 \end{Declaration}
 
-Bewirkt Darstellung eines Individuellen Logos im aktuellen Layout.
-\PName{Logo} kann dabei entweder einfacher Text oder auch ein 
+Bewirkt Darstellung eines individuellen Logos im aktuellen Layout.
+\PName{Logo} kann dabei entweder einfacher Text oder auch ein
 mit \Macro{includegraphics} eingebundenes Bild sein.
-In diesem Fall wird eine Eingebundene Grafik automatisch auf die korrekte
+In diesem Fall wird eine eingebundene Grafik automatisch auf die korrekte
 Höhe skaliert (solange in den Optionen nicht anders angegeben).
 
 Die Positionierung wird automatisch an die Position des Absenderbereichs und
@@ -241,20 +548,18 @@ Logo rechts bzw. außen.
   \Macro{showtopline}
 \end{Declaration}
 
-Bewirkt Darstellung einer Trennlinie zwischen Absender und Kommunikationsbereich
-im aktuellen Layout.
+Bewirkt Darstellung einer roten Trennlinie zwischen Absender- und Kommunikationsbereich.
 
-\begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von bglayout},label=lst:bglayout]
-\bglayout[pages=single]{%
-  \showtubslogo
-  \bgsegment[bgimage=mypic.jpg]{2}
-  \bgsegment[bgcolor=tuGreen]{3}
-  \bgsegment[bgcolor=tuGreenDark]{3}
-}
-\end{lstlisting}
+\begin{hint}
+  Die Trennlinie sollte aus optischen Aspekten nur in Verbindung
+  mit einem weißen Hintergrund dargestellt werden.
+  Farbige Segmente bewirken schon von sich aus eine sichtbare Trennung zwischen 
+  Absender- und Kommunikationsbereich.
+\end{hint}
 
 
-\section{Text-Boxen}
+\clearpage
+\section{Text-Boxen}\label{sec:gausslayout:gaussbox}
 
 \begin{Declaration}
   \XMacro{begin}\PParameter{\Environment{gaussbox}}%
@@ -269,7 +574,8 @@ im aktuellen Layout.
 
 Mit \Environment{gaussbox} können einfache Boxen im Gaußraster gesetzt werden,
 die unabhängig vom Seiteninhalt an der festgelegten Position gesetzt werden.
-Neben der vertikalen Größe kann auch eine horizontale Größe im Spaltenraster
+Neben der vertikalen Größe kann auch eine horizontale Größe im
+\gls{glos:spaltenraster}
 definiert werden, also mit einer Unterteilung in 6 Spalten.
 
 Der Wert \PName{vPos} gibt dabei das Start-Segment im Gaußraster an
@@ -288,6 +594,8 @@ mit \PName{Breite} wieviel Spalten.
   mit halber Textbreite (3 Spalten) und einer Höhe von 2 Segmenten.
 \end{example}
 
+% \subsection{Inhaltsdarstellungs-Optionen}
+
 \subsubsection{Vertikale Text-Positionierung}
 
 \begin{Declaration}
@@ -303,11 +611,31 @@ Die Option \Option{c} bewirkt eine vertikale Zentrierung des Inhaltes in des Box
 Mir der Option \Option{b} wird der Inhalt am \emph{unteren} Rand des
 Inhaltsbereichs der Box ausgerichtet.
 
+\begin{Declaration}
+  \KOption{fgcolor}\PName{Farbe}\\
+  \KOption{frame}\PName{Box}
+\end{Declaration}
+
+Mit \KOption{fgcolor}\PName{Farbe} kann die Vordergrund- bzw. Textfarbe
+innerhalb der Gauss-Box ausgewählt werden.
+Die Option \KOption{frame}\PName{Box} fügt einen Rahmen um den Textbereich
+ein.% none, fbox, ..?
+
+
 \subsubsection{Bilder}
 
 \begin{Declaration}
   \KOption{imagefit}\PName{Option}
 \end{Declaration}
+
+Bestimmt die automatische Einpassung für Bilder.
+Bei Verwendung des Befehls \Macro{includegraphics} ohne optionale
+Argumente wird eine automatische Einpassung in den Darstellungsbereich
+erwirkt.
+Die Art der Einpassung wird mit der Option \Option{imagefit} kontrolliert.
+Gültige Werte sind der \tablename~\ref{tbl:gausslayout:imagefitoptions}
+zu entnehmen.
+
 
 \subsubsection{Darstellungsbereich anpassen}
 
@@ -422,85 +750,3 @@ des Textes zum oberen Rand des Kommunikationsbereich mindestens
 dreifache Rahmenbreite betragen. Dies Option \Option{logosep} bewirkt,
 dass der obere Abstand der Gauss-Box zum Segmentrand 3 Rahmenbreiten beträgt.
 
-\begin{Declaration}
-  \KOption{fgcolor}\PName{Farbe}\\
-  \KOption{frame}\PName{Box}
-\end{Declaration}
-
-Mit \KOption{fgcolor}\PName{Farbe} kann die Vordergrund- bzw. Textfarbe
-innerhalb der Gauss-Box ausgewählt werden.
-Die Option \KOption{frame}\PName{Box} fügt einen Rahmen um den Textbereich
-ein.% none, fbox, ..?
-
-\section{Kombination / Gaußraster-Seiten}\label{sec:gausslayout:gausspage}
-
-Die hier vorgestellte Kombination ist für die einfache Erstellung ganzer Seiten
-inklusive Text im Gaußraster gedacht.
-Sie bildet auch die Basis für die Umgebungen von Veranstaltungsplakaten und
-für Titelseiten von Dokumenten.
-
-\begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{gausspage}}%
-    \OParameter{Optionen}\\
-  \quad\dots\\
-  \XMacro{end}\PParameter{gausspage}
-\end{Declaration}
-
-Die Umgebung \Environment{gausspage} kombiniert das Hintergrund-Layout
-und die Textboxen zu einem Interface, das dem Standard-Anwendungsfall für
-das Gauß-Layout gerecht wird, da Textboxen und Hintergrund im Regelfall
-genau gleich positioniert sind.
-
-Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausslayout:bglayout}
-für \Macro{bglayout} definierten Optionen verwendet werden.
-Die Option \Option{pages} ist standardmäßig auf \PValue{all}
-voreingestellt.
-
-\begin{Declaration}
-  \XMacro{begin}\PParameter{\Environment{segment}}%
-    \OParameter{Optionen}
-    \Parameter{Höhe}\\
-  \quad\dots\\
-  \XMacro{end}\PParameter{segment}
-\end{Declaration}
-
-Mit der Umgebung \Environment{segment} könnnen die einzelnen
-Segmente gesetzt werden.
-Diese gehen jeweils über die ganze Textbreite und orientieren sich
-in der vertikalen Positionierung am Interface von \Macro{bgsegment}.
-Die \PName{Höhe} gibt also die Anzahl der verwendete Basis-Segmente an
-und belegt diese von oben nach unten.
-
-Als \PName{Optionen} können alle in Kapitel~\ref{sec:gausslayout:bgsegment}
-für \Macro{bgsegment} definierten Optionen verwendet werden. % TODO: check
-
-
-\begin{lstlisting}[captionpos=b,caption={Beispiel-Nutzung von gausspage}]
-\begin{gausspage}{%
-  \showtubslogo
-  \begin{segment}[bgimage=mypic.jpg]{2}
-    // Inhalt
-  \end{segment}
-  \begin{segment}[bgcolor=tuGreen]{3}
-    // Inhalt
-  \end{segment}
-  \begin{segment}[bgcolor=tuGreenDark]{3}
-    // Inhalt
-  \end{segment}
-}
-\end{lstlisting}
-
-% TODO: place? ref?
-\begin{figure}\centering
-  \fboxsep0mm
-  \begin{minipage}{0.35\textwidth}
-    \fbox{\includegraphics[width=\textwidth,page=1]{examples/gausssegments.pdf}}
-    \subcaption{Absenderbereicht oben}\label{fig:gausslayout:topsender}
-  \end{minipage}
-  \quad
-  \begin{minipage}{0.35\textwidth}
-    \fbox{\includegraphics[width=\textwidth,page=2]{examples/gausssegments.pdf}}
-    \subcaption{Absenderbereicht unten}\label{fig:gausslayout:bottomsender}
-  \end{minipage}
-  \caption{Gaußraster mit möglichen Logo-Positionen}\label{fig:gausspage}
-\end{figure}
