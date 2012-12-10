@@ -462,22 +462,11 @@
 %    \end{macrocode}
 %
 %    \begin{key}{tubsdoc.dtx}{style}
-% Diese Option erzeugt Formatierung entsprechend der Konventionen für
-% wissenschaftliche Plakate
+% Darstellungsstil in Flyern
 %    \begin{macrocode}
-\DeclareOptionX{style}{%
-  \ifthenelse{\equal{#1}{simple}}{%
-    \AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
-    \AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
-  }{\ifthenelse{\equal{#1}{none}}{%
-    \relax
-  }{%
-    \ClassError{tubsleaflet.cls}{%
-      Invalid parameter for option 'style'
-    }{%
-      Allowed parameters: 'simple', 'none'
-    }
-  }}
+\def\tubsleaflet@style{none}
+\DeclareOptionX{style}[none]{%
+  \def\tubsleaflet@style{#1}%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -581,6 +570,19 @@
 %<*leaflet>
 \renewcommand*\foldmarkrule{.3mm}
 \renewcommand*\foldmarklength{5mm}
+%
+\ifthenelse{\equal{\tubsleaflet@style}{simple}}{%
+  \AddToBackground{1}{\tubs@topline\tubs@tubslogo[left]}
+  \AddToBackground{6}{\tubs@topline\tubs@tubslogo[right,plain]}
+}{\ifthenelse{\equal{\tubsleaflet@style}{none}}{%
+  \relax
+}{%
+  \ClassError{tubsleaflet.cls}{%
+    Invalid parameter for option 'style'
+  }{%
+    Allowed parameters: 'simple', 'none'
+  }
+}}
 %</leaflet>
 %    \end{macrocode}
 %
