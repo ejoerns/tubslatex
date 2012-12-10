@@ -1,0 +1,33 @@
+\documentclass[a4paper,bcor=0mm]{tubsartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+\newcommand\testtubsfont[1]{%
+\usetubsfont{#1}%
+\noindent Dies ist ein Text der Schriftauszeichnung \emph{\textcolor{red}{#1}}\par
+}
+
+\begin{document}
+
+\testtubsfont{headline}
+\testtubsfont{headlinesmall}
+\testtubsfont{subheadline}
+\testtubsfont{subheadlinesmall}
+\testtubsfont{intro}
+\testtubsfont{infotext}
+\testtubsfont{infotextitem}
+\testtubsfont{copytext}
+
+% \testtubsfont{chapter}
+\testtubsfont{section}
+\testtubsfont{subsection}
+\testtubsfont{subsubsection}
+\testtubsfont{caption}
+
+\testtubsfont{title}
+\testtubsfont{subtitle}
+\testtubsfont{author}
+\testtubsfont{date}
+
+\end{document}
