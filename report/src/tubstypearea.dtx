@@ -190,6 +190,19 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\tubspage@borderwidth}
+% Auch wenn es im CD (noch) nicht beschrieben ist, wird für
+% wissenschaftliche Plakate im Querformat die für das nächstkleinere DIN-Format
+% definierte Rangröße verwendet.
+% Der Innenabstand der Boxen ist dagegen jedoch unverändert die hälfte
+% der Randbreite des verwendeten  Formats.
+% Daher wird die borderwidth entsprechend verändert und zusätzlich
+% |\tubspage@module@padding| definiert, um die Innenabstände zu behandeln.
+%    \begin{macrocode}
+\newlength{\tubspage@module@padding}
+%    \end{macrocode}
+%    \end{macro}
+
 %    \begin{macro}{\tubspage@senderheight}
 % Höhe des Absenderbereichs (Formatrand bis Anfang
 % Kommunikationsbereich).
@@ -567,6 +580,7 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}%
     }%
+  \setlength{\tubspage@module@padding}{0.7\tubspage@borderwidth}% TODO: hack...
   \setlength{\tubspage@communicationheight}{%
     \paperheight-\tubspage@senderheight-\tubspage@borderwidth}%
   }{%
@@ -581,6 +595,7 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
+    \setlength{\tubspage@module@padding}{5mm}%
     \setlength{\tubspage@borderwidth}{5mm}%
     \setlength{\tubspage@senderheight}{25mm}%
   }{%
@@ -597,7 +612,9 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
+    \setlength{\tubspage@module@padding}{5mm}%
     \setlength{\tubspage@borderwidth}{5mm}%
+    % TODO: senderheight??
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a5paper}}{%
     % a5paper
@@ -610,6 +627,7 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
+    \setlength{\tubspage@module@padding}{5.5mm}%
     \setlength{\tubspage@borderwidth}{5.5mm}%
     \setlength{\tubspage@senderheight}{30mm}%
   }{%
@@ -624,6 +642,7 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
+    \setlength{\tubspage@module@padding}{8mm}%
     \setlength{\tubspage@borderwidth}{8mm}%
     \setlength{\tubspage@senderheight}{40mm}%
   }{%
@@ -638,6 +657,7 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
+    \setlength{\tubspage@module@padding}{11mm}%
     \setlength{\tubspage@borderwidth}{11mm}%
     \setlength{\tubspage@senderheight}{60mm}%
   }{%
@@ -652,7 +672,12 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
-    \setlength{\tubspage@borderwidth}{16mm}%
+    \setlength{\tubspage@module@padding}{8mm}%
+    \ifthenelse{\boolean{scifiposter}\and\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@borderwidth}{11mm}%
+    }{%
+      \setlength{\tubspage@borderwidth}{16mm}%
+    }
     \setlength{\tubspage@senderheight}{80mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a1paper}}{%
@@ -666,7 +691,12 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
-    \setlength{\tubspage@borderwidth}{22mm}%
+    \setlength{\tubspage@module@padding}{11mm}%
+    \ifthenelse{\boolean{scifiposter}\and\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@borderwidth}{16mm}%
+    }{%
+      \setlength{\tubspage@borderwidth}{22mm}%
+    }
     \setlength{\tubspage@senderheight}{120mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a0paper}}{%
@@ -680,7 +710,12 @@
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
-    \setlength{\tubspage@borderwidth}{32mm}%
+    \setlength{\tubspage@module@padding}{16mm}%
+    \ifthenelse{\boolean{scifiposter}\and\boolean{tubspage@landscape}}{%
+      \setlength{\tubspage@borderwidth}{22mm}%
+    }{%
+      \setlength{\tubspage@borderwidth}{32mm}%
+    }
     \setlength{\tubspage@senderheight}{160mm}%
   }{}}}}}}}}}
 }
