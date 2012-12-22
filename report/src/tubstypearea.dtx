@@ -716,21 +716,31 @@
   % Layout nur setzen, wenn Option 'calconly' nicht benutzt
   \ifthenelse{\boolean{tubspage@calconly}}{}{%
     \ifthenelse{\boolean{scifiposter}}{%
-      %%% Einstellungen für wissenschaftliche Poster %%%
+%    \end{macrocode}
+% \textbf{Einstellungen für wissenschaftliche Poster}\\[1ex]
+% Horizontales Seitenlayout
+%    \begin{macrocode}
       % Die Innenränder der Module betragen jeweils 0.5\tubspage@borderwidth
       \geometry{%
         left=1.5\tubspage@borderwidth,
         right=1.5\tubspage@borderwidth
       }
+%    \end{macrocode}
+% Vertikales Seitenlayout
+%    \begin{macrocode}
+      % Abstand des Modulbereichs zum Formatrand auf der Seite
+      % des verkleinerten Absenderbereichs.
       \ifthenelse{\boolean{tubspage@bottomsender}}{%
-        % Absenderbereich unten (TESTING! TODO)
+        % Absenderbereich unten
         \geometry{%
-          bottom=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5! (quer)
           top=1.5\tubspage@borderwidth,
+          bottom=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7
+          headheight=0mm,nohead,
+          footskip=\tubspage@senderheight,%TODO: check
         }
       }{% Absenderbereich oben
         \geometry{%
-          top=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7, TODO: 1/5! (quer)
+          top=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7
           headsep=0.05195\paperheight+\tubspage@borderwidth,% 1/7-1/11 + border
           bottom=1.5\tubspage@borderwidth,
         }
@@ -742,11 +752,18 @@
         }
 
       }
-    }{%%% Einstellungen für normale Dokumente/poster %%%
+    }
+%    \end{macrocode}
+% \textbf{Einstellungen für normale Dokumente/poster}
+%    \begin{macrocode}
+    {
       \geometry{%
           columnsep=\tubspage@columnsep,
           bindingoffset=\tubspage@bcor
       }
+%    \end{macrocode}
+% Horizontales Seitenlayout
+%    \begin{macrocode}
       \ifthenelse{\boolean{tubspage@extramargin}}{%
         % Extra breite Ränder
         \geometry{%
@@ -759,6 +776,9 @@
           right=2\tubspage@borderwidth
         }
       }
+%    \end{macrocode}
+% Vertikales Seitenlayout
+%    \begin{macrocode}
       \ifthenelse{\boolean{tubspage@bottomsender}}{%
         % Absenderbereich unten
         \geometry{%
@@ -782,6 +802,9 @@
           \geometry{bottom=3\tubspage@borderwidth}
         }{}
       }
+%    \end{macrocode}
+% Marginalen setzen
+%    \begin{macrocode}
       % Marginale links
       \ifthenelse{\boolean{tubspage@marginleft}}{%
         \geometry{%
