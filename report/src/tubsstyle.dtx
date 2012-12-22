@@ -113,16 +113,16 @@
 %    \end{key}
 %
 %    \begin{key}{}{sender}
-% Position des Absenderbereichs. Mögliche Werte: |top|, |bottom|
+% Option bestimmt Position des Kommunikationsbereichs und Orientierung
+% des Rasters. Mögliche Werte: |top|, |bottom|\par
+% Diese Information wird im shipout gespeichert!
 %    \begin{macrocode}
-\newcommand*\tubs@ts@sender@default{}
+\newboolean{tubsstyle@bottomsender}\setboolean{tubsstyle@bottomsender}{false}
 \define@choicekey*{tubsstyle.sty}{sender}[\val\nr]{top,bottom}{%
   \ifcase\nr\relax
-    \presetkeys{bglayout}{sender=top}{}
-    \renewcommand*{\tubs@ts@sender@default}{top}
+    \setboolean{tubsstyle@bottomsender}{false}
   \or
-    \presetkeys{bglayout}{sender=bottom}{}
-    \renewcommand*{\tubs@ts@sender@default}{bottom}
+    \setboolean{tubsstyle@bottomsender}{true}
   \fi
 }
 %    \end{macrocode}
@@ -149,7 +149,7 @@
 \define@boolkey{tubsstyle.sty}[ts@]{scifiposter}[true]{%
   \ifts@scifiposter
     \def\ts@post@process{
-      \disable@keys{bglayout}{designhelper}%
+      \disable@keys[tubs]{bglayout}{designhelper}%
       \let\bgelement\undefined
     }
   \else
@@ -223,7 +223,6 @@
 % Flags für Optionen.
 %    \begin{macrocode}
 \newboolean{tubsstyle@logoright}\setboolean{tubsstyle@logoright}{false}
-\newboolean{tubsstyle@bottomsender}\setboolean{tubsstyle@bottomsender}{false}
 \newboolean{tubsstyle@singlepage}\setboolean{tubsstyle@singlepage}{false}
 \newboolean{tubsstyle@designhelper}\setboolean{tubsstyle@designhelper}{false}
 %    \end{macrocode}
@@ -805,21 +804,6 @@
 %
 % \subsubsection{bglayout-Optionen}
 %
-%    \begin{key}{bglayout}{sender}
-% Option bestimmt Position des Kommunikationsbereichs und Orientierung
-% des Rasters.\par
-% Diese Information wird im shipout gespeichert!
-%    \begin{macrocode}
-\define@choicekey*{bglayout}{sender}[\val\nr]{top,bottom}{%
-  \ifcase\nr\relax
-    \setboolean{tubsstyle@bottomsender}{false}
-  \or
-    \setboolean{tubsstyle@bottomsender}{true}
-  \fi
-}
-%    \end{macrocode}
-%    \end{key}
-%
 %    \begin{key}{bglayout}{pages}
 % Option legt fest auf welchen Seiten das definierte Layout zu sehen
 % sein soll. Mögliche Werte sind |all| für alle folgenden Seiten oder |single|
@@ -836,8 +820,9 @@
 %    \end{key}
 %
 %    \begin{key}{bglayout}{designhelper}
+% Defines if |\iftubs@bglayout@designhelper|.
 %    \begin{macrocode}
-\define@key{bglayout}{designhelper}[true]{%
+\define@boolkey[tubs]{bglayout}{designhelper}[true]{%
   \setboolean{tubsstyle@designhelper}{true}
 }
 %    \end{macrocode}
@@ -911,7 +896,9 @@
   \def\@@next@shipout{} % Makro to set content after keys
   \def\@layout@preset{}
   \setcounter{tubs@yseg@cnt}{1}
-  \setkeys{bglayout}{pages=all,#1}
+  \setkeys*{tubsstyle.sty}{#1}
+  \edef\tmp@KV{{bglayout}{pages=all,\XKV@rm}}
+  \expandafter\setkeys\tmp@KV
   \g@addto@macro{\@next@shipout}{\@@next@shipout}
   \ClearShipoutPicture
 }
