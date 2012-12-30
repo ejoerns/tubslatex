@@ -200,10 +200,13 @@
 \define@key{tubs@titlegraphic}{hclip}[true]{
   \renewcommand\tubs@imagefit{cropx}
 }
-\define@key{tubs@titlegraphic}{clipx}[true]{
+\define@key{tubs@titlegraphic}{fitheight}[true]{
   \renewcommand\tubs@imagefit{cropx}
 }
-\define@key{tubs@titlegraphic}{cropx}[true]{
+\define@key{tubs@titlegraphic}{clipx}[true]{% obsolete
+  \renewcommand\tubs@imagefit{cropx}
+}
+\define@key{tubs@titlegraphic}{cropx}[true]{% obsolete
   \renewcommand\tubs@imagefit{cropx}
 }
 %    \end{macrocode}
@@ -215,10 +218,13 @@
 \define@key{tubs@titlegraphic}{vclip}[true]{
   \renewcommand\tubs@imagefit{cropy}
 }
-\define@key{tubs@titlegraphic}{clipy}[true]{
+\define@key{tubs@titlegraphic}{fitwidth}[true]{
   \renewcommand\tubs@imagefit{cropy}
 }
-\define@key{tubs@titlegraphic}{cropy}[true]{
+\define@key{tubs@titlegraphic}{clipy}[true]{% obsolete
+  \renewcommand\tubs@imagefit{cropy}
+}
+\define@key{tubs@titlegraphic}{cropy}[true]{% obsolete
   \renewcommand\tubs@imagefit{cropy}
 }
 %    \end{macrocode}
