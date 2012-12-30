@@ -80,23 +80,14 @@
 %
 % \section{Implementierung}
 %
-%    \begin{macrocode}
-%<*class>
-%    \end{macrocode}
-%
-%
-%    \begin{macrocode}
-%</class>
-%    \end{macrocode}
-% 
 %
 % \subsection{Optionen}
 %    \begin{macrocode}
 %<*option>
-%    \end{macrocode
+%    \end{macrocode}
 %
-%    \begin{key}{}{fontsize}
-%
+%    \begin{key}{tubsfont.sty}{colorheadings}
+% foo
 %    \begin{macrocode}
 \newcommand\tubs@fontsize{11pt}
 \DeclareOptionX{fontsize}{%
@@ -105,7 +96,7 @@
 %    \end{macrocode}
 %    \end{key}
 %
-%    \begin{key}{}{colorheadings}
+%    \begin{key}{tubsfont.sty}{colorheadings}
 % Stellt Überschriften in Farbe des aktuellen Sekundärfarbklangs oder
 % in angegebener Farbe dar.
 %    \begin{macrocode}
@@ -231,9 +222,10 @@
 %    \begin{macro}{headline}
 %    \begin{macro}{title}
 % Schrifteinstellungen für Titel
+% Hinweis: title wird nicht von Option |colorheadings| beeinflusst.
 %    \begin{macrocode}
-\newkomafont{headline}{\sffamily\Huge\bfseries\tubs@fontcolor{tubsheadings}}
-\setkomafont{title}{\usekomafont{headline}}
+\setkomafont{title}{\sffamily\Huge\bfseries}
+\newkomafont{headline}{\usekomafont{title}\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
@@ -247,10 +239,11 @@
 %
 %    \begin{macro}{subheadline}
 %    \begin{macro}{subtitle}
-% Schrifteinstellungen für Sub-Titel
+% Schrifteinstellungen für Sub-Titel.
+% Hinweis: subtitle wird nicht von Option |colorheadings| beeinflusst.
 %    \begin{macrocode}
-\newkomafont{subheadline}{\sffamily\Large\bfseries\tubs@fontcolor{tubsheadings}}
-\setkomafont{subtitle}{\usekomafont{subheadline}}
+\setkomafont{subtitle}{\sffamily\Large\bfseries}
+\newkomafont{subheadline}{\usekomafont{subtitle}\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
@@ -1175,8 +1168,8 @@
 %</scifi>
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}
-%    \begin{macrocode}
 %
+%    \begin{macrocode}
 %</a0>
 %    \end{macrocode}
 %
