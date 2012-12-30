@@ -15,18 +15,18 @@ include ../../Makefile.include
 VERSION = $(TUBSLATEX_FULLVERSION)
 
 
-.PHONY: build copy-pre copy-generated copy-other copy-doc font clean zip
+.PHONY: build copy-pre copy-generated copy-other copy-doc font cleantemp clean zip
 
 all: font build copy
 
 build: build-src build-doc
 
 build-src:
-	$(MAKE) -C $(CDBASE_DIR) src
-	$(MAKE) -C $(BEAMER_DIR) src
-	$(MAKE) -C $(LETTER_DIR) src
-	$(MAKE) -C $(NEXUS_DIR) src
-	$(MAKE) -C $(REPORT_DIR) src
+	$(MAKE) -BC $(CDBASE_DIR) src
+	$(MAKE) -BC $(BEAMER_DIR) src
+	$(MAKE) -BC $(LETTER_DIR) src
+	$(MAKE) -BC $(NEXUS_DIR) src
+	$(MAKE) -BC $(REPORT_DIR) src
 
 build-doc:
 	$(MAKE) -C $(CDBASE_DIR) doc

@@ -22,22 +22,29 @@ INSFILE = tubs.ins
 DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
 INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
+TARGET_FILE = update.tmp
 
 # Programme
 .PHONY: cleantemp clean
 
 all: src
 
-src: init $(GENLIST)
+src: init $(GENLIST) $(TARGET_FILE)
+
+# Lösche TARGET_FILE, wenn Änderung entdeckt
+%.sty: $(DTXLIST)
+	$(RM) -f $(TARGET_FILE)
 
 init:
 	$(MAKE) -C $(BASEDIR) versiondtx
 
 doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) cleantemp
 
-$(GENLIST): $(DTXLIST)
-	$(ECHO) -n 'Generating LaTeX-files for $<'...
+# Neu komipilieren, wenn TARGET_FILE nicht existiert
+$(TARGET_FILE):
+	$(ECHO) -n 'Generating LaTeX-files...'
 	$(Q)TEXINPUTS=.//:$$TEXINPUTS $(VLATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
+	$(TOUCH) $(TARGET_FILE)
 	$(ECHO) -e '$(DONE_STRING)'
 
 %.pdf: $(SRCDIR)/%.dtx
