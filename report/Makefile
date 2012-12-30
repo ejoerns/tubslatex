@@ -32,7 +32,7 @@ all: src
 src: init $(GENLIST) $(TARGET_FILE)
 
 # Lösche TARGET_FILE, wenn Änderung entdeckt
-%.sty: $(DTXLIST)
+%.sty %.clo %.cls: $(DTXLIST)
 	$(RM) -f $(TARGET_FILE)
 
 init:

@@ -90,6 +90,7 @@ LATEX = $(Q)$(VLATEX)
 VPDFLATEX = pdflatex
 PDFLATEX = $(Q)$(VPDFLATEX)
 RM = $(Q)/bin/rm
+TOUCH = $(Q)touch
 MKDIR = $(Q)mkdir
 ZIP = $(Q)zip
 MAKEINDEX = $(Q)makeindex
