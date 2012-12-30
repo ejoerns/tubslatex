@@ -1,7 +1,7 @@
 \input{preamble}
 
 %opening
-\title{\tubslatex -- Das CorporateDesign in \LaTeX}
+\title{\tubslatex\ - Das CorporateDesign in \LaTeX}
 \subtitle{Anleitung und Dokumentation}
 \author{Enrico Jörns}
 \publishers{Presse und Kommunikation} % to logo?
@@ -102,10 +102,10 @@
 
 \include{tubsdoc}     % Kapitel: 'tubsdoc'
 
-
-\appendix
-
-\part{Interne Basis-Pakete}\label{part:packages}
+\part{Allgemeine Basis-Elemente}
+% \appendix
+% 
+% \part{Interne Basis-Pakete}\label{part:packages}
 
 Dieser Abschnitt befasst sich mit den Paketen, die von den jeweiligen
 \tubslatex-Anwender\-klassen normalerweise automatisch geladen werden.
@@ -121,15 +121,20 @@ All diese Pakete sind so konzipiert, dass sie auch unabhängig von den
 Klassen und Paketen aus \tubslatex eingesetzt werden können, auch wenn dies
 im Allgemeinen nicht erforderlich sein sollte.
 
+\include{gausspage}   % Kapitel: 'Gauß-Layout'
+
 \include{colors}  % Kapitel: 'Farben'
 
 \include{logo}    % Kapitel: 'Logo'
 
 \include{nexus}   % Kapitel: 'Nexus'
 
-\include{gausspage}   % Kapitel: 'Gauß-Layout'
+\appendix
+\addpart{\appendixname}
 
-\input{unsorted}
+% \input{unsorted}
+
+\input{examples}
 
 % Glossar
 \printglossary[style=altlist,title=Glossar]
@@ -143,6 +148,7 @@ im Allgemeinen nicht erforderlich sein sollte.
 \clearpage
 \addcontentsline{toc}{chapter}{Verzeichnisse}
 \listoffigures
+\lstlistoflistings
 \bibliographystyle{alpha}
 \bibliography{lit}
 

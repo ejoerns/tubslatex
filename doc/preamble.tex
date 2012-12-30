@@ -7,6 +7,7 @@
   parskip=half,%
   hyperrefdark,%
   lnum,%
+  violet,
   colorheadings=tubsOrange
 ]{tubsbook}
 % a5paper, 9pt, no extramargin, bcor=0mm
@@ -38,7 +39,16 @@
 
 % --- Listings
 \usepackage{listings}
-\lstset{basicstyle=\ttfamily}
+\lstset{%
+  basicstyle=\ttfamily,
+  literate={Ö}{{\"O}}1
+          {Ä}{{\"A}}1
+          {Ü}{{\"U}}1
+          {ß}{{\ss}}1
+          {ü}{{\"u}}1
+          {ä}{{\"a}}1
+          {ö}{{\"o}}1
+}
 % Stil für Kommandozeile
 \lstdefinestyle{cmd}{%
   frame=single,

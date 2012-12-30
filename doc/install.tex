@@ -231,7 +231,9 @@ Die Vorlagen setzen ein Vorhandensein der Folgenden Pakete voraus:
   \item texlive-fonts-extra
   \item latex-beamer
   \item texlive-lang-german
+  \item texlive-fonts-recommended
   \item texlive-extra-utils
+  \item cm-super
 \end{itemize}
 
 Falls diese nicht auf dem System installiert sind, müssen sie nachinstalliert
@@ -240,8 +242,8 @@ werden, da sonst die Vorlagen oder Teile der Vorlagen nicht benutzbar sind.
 Die Installation aller Pakete kann mit folgendem Befehl durchgeführt werden:
 \begin{lstlisting}[style=cmd]
 sudo aptitude install texlive-base texlive-latex-extra \
-  texlive-fonts-extra latex-beamer texlive-lang-german \
-  texlive-extra-utils
+  texlive-fonts-extra latex-beamer texlive-fonts-recommended \
+  texlive-lang-german texlive-extra-utils cm-super
 \end{lstlisting}
 
 Im Folgenden werden sowohl systemweite als auch lokale Installation einzeln
