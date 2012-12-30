@@ -183,14 +183,14 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubspage@borderwidth}
+%    \begin{macro}{\tubsborderwidth}
 % Breite des äußeren weißen Rahmens.
 %    \begin{macrocode}
-\newlength{\tubspage@borderwidth}
+\newlength{\tubsborderwidth}
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubspage@borderwidth}
+%    \begin{macro}{\tubsborderwidth}
 % Auch wenn es im CD (noch) nicht beschrieben ist, wird für
 % wissenschaftliche Plakate im Querformat die für das nächstkleinere DIN-Format
 % definierte Rangröße verwendet.
@@ -203,11 +203,11 @@
 %    \end{macrocode}
 %    \end{macro}
 
-%    \begin{macro}{\tubspage@senderheight}
+%    \begin{macro}{\tubssenderheight}
 % Höhe des Absenderbereichs (Formatrand bis Anfang
 % Kommunikationsbereich).
 %    \begin{macrocode}
-\newlength{\tubspage@senderheight}
+\newlength{\tubssenderheight}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -218,7 +218,7 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubspage@communicationheight}
+%    \begin{macro}{\tubscommunicationheight}
 % Höhe des Kommunikationsbereichs (Formathöhe abzüglich Absenderhöhe).\par
 % HINWEIS: Die auf der CD-Website beschriebenen Höhen für den Kommunikations-
 %   bereich entsprechen nicht der auf der Website definierten Höhe des
@@ -226,7 +226,7 @@
 %   Rahmens! (Also eigentlich der Kommunikations\emph{fläche}).
 % TODO: check definition!
 %    \begin{macrocode}
-\newlength{\tubspage@communicationheight}
+\newlength{\tubscommunicationheight}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -234,7 +234,7 @@
 % Breite des Inhaltsbereichs. Entspricht Formatbreite abzüglich Ränder (2) und
 % Bindekorrektur.
 %    \begin{macrocode}
-\newlength{\tubspage@contentwidth}
+\newlength{\tubspage@contentwidth}% TODO: used?
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -260,25 +260,25 @@
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubspage@columnsep}
+%    \begin{macro}{\tubscolumnsep}
 % Platz zwischen Spalten im Spalten-Layout.
 % Dieser ist unabhängig von der verwendeten Papiergröße
 %    \begin{macrocode}
-\newlength{\tubspage@columnsep}
+\newlength{\tubscolumnsep}
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubspage@gaussheight}
+%    \begin{macro}{\tubsgaussbaseheight}
 % Höhe des kleinsten Elementes im Gaußlayout (Ausgangswert für alle Elemente).
 %    \begin{macrocode}
-\newlength{\tubspage@gaussheight}
+\newlength{\tubsgaussbaseheight}
 %    \end{macrocode}
 %    \end{macro}
 %
-%    \begin{macro}{\tubspage@columnwidth}
+%    \begin{macro}{\tubscolumnwidth}
 % Breite einer Spalte im Spaltenlayout.
 %    \begin{macrocode}
-\newlength{\tubspage@columnwidth}
+\newlength{\tubscolumnwidth}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -476,7 +476,7 @@
 %
 %
 %    \begin{key}{tubstypearea.sty}{extramargin}
-% Seitenränder werden um |\tubspage@borderwidth| verbreitert,
+% Seitenränder werden um |\tubsborderwidth| verbreitert,
 % damit der ansonsten recht breite Textbereich schmaler wird.
 %    \begin{macrocode}
 \DeclareOptionX{extramargin}{%
@@ -493,9 +493,9 @@
 \DeclareOptionX{scifiposter}{%
   \setboolean{scifiposter}{true}
   \g@addto@macro{\tubspage@modifications}{%
-    \setlength{\tubspage@senderheight}{0.0909\paperheight}% ~1/11
-    \setlength{\tubspage@communicationheight}{%
-      \paperheight-\tubspage@senderheight-\tubspage@borderwidth}
+    \setlength{\tubssenderheight}{0.0909\paperheight}% ~1/11
+    \setlength{\tubscommunicationheight}{%
+      \paperheight-\tubssenderheight-\tubsborderwidth}
   }
 }
 %    \end{macrocode}
@@ -570,153 +570,153 @@
     }{}
     % custompaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@borderwidth}{0.038\paperheight}%
-      \setlength{\tubspage@senderheight}{0.2\paperheight}% 1/5
+      \setlength{\tubsborderwidth}{0.038\paperheight}%
+      \setlength{\tubssenderheight}{0.2\paperheight}% 1/5
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}%
     }{%
-      \setlength{\tubspage@borderwidth}{0.038\paperwidth}%
-      \setlength{\tubspage@senderheight}{0.14286\paperheight}% ~1/7
+      \setlength{\tubsborderwidth}{0.038\paperwidth}%
+      \setlength{\tubssenderheight}{0.14286\paperheight}% ~1/7
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}%
     }%
-  \setlength{\tubspage@module@padding}{0.7\tubspage@borderwidth}% TODO: hack...
-  \setlength{\tubspage@communicationheight}{%
-    \paperheight-\tubspage@senderheight-\tubspage@borderwidth}%
+  \setlength{\tubspage@module@padding}{0.7\tubsborderwidth}% TODO: hack...
+  \setlength{\tubscommunicationheight}{%
+    \paperheight-\tubssenderheight-\tubsborderwidth}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a6paper}}{%
     % a6paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{75mm}%
+      \setlength{\tubscommunicationheight}{75mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{118mm}%
+      \setlength{\tubscommunicationheight}{118mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{5mm}%
-    \setlength{\tubspage@borderwidth}{5mm}%
-    \setlength{\tubspage@senderheight}{25mm}%
+    \setlength{\tubsborderwidth}{5mm}%
+    \setlength{\tubssenderheight}{25mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{langpaper}}{%
     % langpaper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{112.5mm}%
-      \setlength{\tubspage@senderheight}{25mm}%
+      \setlength{\tubscommunicationheight}{112.5mm}%
+      \setlength{\tubssenderheight}{25mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }{%
-      \setlength{\tubspage@communicationheight}{175mm}%
-      \setlength{\tubspage@senderheight}{30mm}%
+      \setlength{\tubscommunicationheight}{175mm}%
+      \setlength{\tubssenderheight}{30mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{5mm}%
-    \setlength{\tubspage@borderwidth}{5mm}%
+    \setlength{\tubsborderwidth}{5mm}%
     % TODO: senderheight??
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a5paper}}{%
     % a5paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{112.5mm}%
+      \setlength{\tubscommunicationheight}{112.5mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{174.5mm}%
+      \setlength{\tubscommunicationheight}{174.5mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{5.5mm}%
-    \setlength{\tubspage@borderwidth}{5.5mm}%
-    \setlength{\tubspage@senderheight}{30mm}%
+    \setlength{\tubsborderwidth}{5.5mm}%
+    \setlength{\tubssenderheight}{30mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a4paper}}{%
     % a4paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{162mm}%
+      \setlength{\tubscommunicationheight}{162mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{249mm}%
+      \setlength{\tubscommunicationheight}{249mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{8mm}%
-    \setlength{\tubspage@borderwidth}{8mm}%
-    \setlength{\tubspage@senderheight}{40mm}%
+    \setlength{\tubsborderwidth}{8mm}%
+    \setlength{\tubssenderheight}{40mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a3paper}}{%
     % a3paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{226mm}%
+      \setlength{\tubscommunicationheight}{226mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{349mm}%
+      \setlength{\tubscommunicationheight}{349mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{11mm}%
-    \setlength{\tubspage@borderwidth}{11mm}%
-    \setlength{\tubspage@senderheight}{60mm}%
+    \setlength{\tubsborderwidth}{11mm}%
+    \setlength{\tubssenderheight}{60mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a2paper}}{%
     % a2paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{324mm}%
+      \setlength{\tubscommunicationheight}{324mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{498mm}%
+      \setlength{\tubscommunicationheight}{498mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{8mm}%
     \ifthenelse{\boolean{scifiposter}\and\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@borderwidth}{11mm}%
+      \setlength{\tubsborderwidth}{11mm}%
     }{%
-      \setlength{\tubspage@borderwidth}{16mm}%
+      \setlength{\tubsborderwidth}{16mm}%
     }
-    \setlength{\tubspage@senderheight}{80mm}%
+    \setlength{\tubssenderheight}{80mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a1paper}}{%
     % a1paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{649mm}%
+      \setlength{\tubscommunicationheight}{649mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{699mm}%
+      \setlength{\tubscommunicationheight}{699mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{11mm}%
     \ifthenelse{\boolean{scifiposter}\and\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@borderwidth}{16mm}%
+      \setlength{\tubsborderwidth}{16mm}%
     }{%
-      \setlength{\tubspage@borderwidth}{22mm}%
+      \setlength{\tubsborderwidth}{22mm}%
     }
-    \setlength{\tubspage@senderheight}{120mm}%
+    \setlength{\tubssenderheight}{120mm}%
   }{%
   \ifthenelse{\equal{\tubspage@paper}{a0paper}}{%
     % a0paper
     \ifthenelse{\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@communicationheight}{649mm}%
+      \setlength{\tubscommunicationheight}{649mm}%
       \def\tubspage@ysegments{6}%
       \setcounter{tubspage@vsegments}{6}
     }{%
-      \setlength{\tubspage@communicationheight}{997mm}%
+      \setlength{\tubscommunicationheight}{997mm}%
       \def\tubspage@ysegments{8}%
       \setcounter{tubspage@vsegments}{8}
     }
     \setlength{\tubspage@module@padding}{16mm}%
     \ifthenelse{\boolean{scifiposter}\and\boolean{tubspage@landscape}}{%
-      \setlength{\tubspage@borderwidth}{22mm}%
+      \setlength{\tubsborderwidth}{22mm}%
     }{%
-      \setlength{\tubspage@borderwidth}{32mm}%
+      \setlength{\tubsborderwidth}{32mm}%
     }
-    \setlength{\tubspage@senderheight}{160mm}%
+    \setlength{\tubssenderheight}{160mm}%
   }{}}}}}}}}}
 }
 %    \end{macrocode}
@@ -728,18 +728,18 @@
 % Bereich, ist also nicht mit der Kommunikationsfläche identisch!
 %    \begin{macrocode}
 \newcommand{\tubspage@calclayout}{%
-  \setlength{\tubspage@columnsep}{5mm}
+  \setlength{\tubscolumnsep}{5mm}
   % inner geometry
   \setcounter{tubspage@gausssum}{%
     \tubspage@ysegments*(\tubspage@ysegments+1)/2}
   % dimension is a hack..
-  \setlength{\tubspage@columnwidth}{%
+  \setlength{\tubscolumnwidth}{%
     (\textwidth)*\ratio{1mm}{\tubspage@xsegments mm}}%TODO: might cause problems
-  \setlength{\tubspage@gaussheight}{%
-    (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
-  \setlength{\tubspage@headheight}{\tubspage@senderheight-2\tubspage@borderwidth}
+  \setlength{\tubsgaussbaseheight}{%
+    (\tubscommunicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+  \setlength{\tubspage@headheight}{\tubssenderheight-2\tubsborderwidth}
   \setlength{\tubspage@contentwidth}{%
-    \paperwidth-2\tubspage@borderwidth-\tubspage@bcor}
+    \paperwidth-2\tubsborderwidth-\tubspage@bcor}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -755,10 +755,10 @@
 % \textbf{Einstellungen für wissenschaftliche Poster}\\[1ex]
 % Horizontales Seitenlayout
 %    \begin{macrocode}
-      % Die Innenränder der Module betragen jeweils 0.5\tubspage@borderwidth
+      % Die Innenränder der Module betragen jeweils 0.5\tubsborderwidth
       \geometry{%
-        left=1.5\tubspage@borderwidth,
-        right=1.5\tubspage@borderwidth
+        left=1.5\tubsborderwidth,
+        right=1.5\tubsborderwidth
       }
 %    \end{macrocode}
 % Vertikales Seitenlayout
@@ -768,22 +768,22 @@
       \ifthenelse{\boolean{tubspage@bottomsender}}{%
         % Absenderbereich unten
         \geometry{%
-          top=1.5\tubspage@borderwidth,
-          bottom=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7
+          top=1.5\tubsborderwidth,
+          bottom=0.1429\paperheight+0.5\tubsborderwidth, % 1/7
           headheight=0mm,nohead,
-          footskip=\tubspage@senderheight,%TODO: check
+          footskip=\tubssenderheight,%TODO: check
         }
       }{% Absenderbereich oben
         \geometry{%
-          top=0.1429\paperheight+0.5\tubspage@borderwidth, % 1/7
-          headsep=0.05195\paperheight+\tubspage@borderwidth,% 1/7-1/11 + border
-          bottom=1.5\tubspage@borderwidth,
+          top=0.1429\paperheight+0.5\tubsborderwidth, % 1/7
+          headsep=0.05195\paperheight+\tubsborderwidth,% 1/7-1/11 + border
+          bottom=1.5\tubsborderwidth,
         }
         % Allow larger headline for landscape
         \ifthenelse{\boolean{tubspage@landscape}}{%
-          \geometry{headheight=\tubspage@senderheight-\tubspage@borderwidth}
+          \geometry{headheight=\tubssenderheight-\tubsborderwidth}
         }{%
-          \geometry{headheight=\tubspage@senderheight-1.5\tubspage@borderwidth}
+          \geometry{headheight=\tubssenderheight-1.5\tubsborderwidth}
         }
 
       }
@@ -793,7 +793,7 @@
 %    \begin{macrocode}
     {
       \geometry{%
-          columnsep=\tubspage@columnsep,
+          columnsep=\tubscolumnsep,
           bindingoffset=\tubspage@bcor
       }
 %    \end{macrocode}
@@ -802,13 +802,13 @@
       \ifthenelse{\boolean{tubspage@extramargin}}{%
         % Extra breite Ränder
         \geometry{%
-          left=3\tubspage@borderwidth,
-          right=3\tubspage@borderwidth
+          left=3\tubsborderwidth,
+          right=3\tubsborderwidth
         }
       }{% Standardwerte für Ränder
         \geometry{%
-          left=2\tubspage@borderwidth,
-          right=2\tubspage@borderwidth
+          left=2\tubsborderwidth,
+          right=2\tubsborderwidth
         }
       }
 %    \end{macrocode}
@@ -818,23 +818,23 @@
         % Absenderbereich unten
         \geometry{%
           headheight=0mm,nohead,
-          headsep=\tubspage@borderwidth,
-          top=2\tubspage@borderwidth,
-          bottom=\tubspage@senderheight+\tubspage@borderwidth,
-          footskip=\tubspage@senderheight
+          headsep=\tubsborderwidth,
+          top=2\tubsborderwidth,
+          bottom=\tubssenderheight+\tubsborderwidth,
+          footskip=\tubssenderheight
         }
         \ifthenelse{\boolean{tubspage@extramargin}}{%
-          \geometry{top=3\tubspage@borderwidth}
+          \geometry{top=3\tubsborderwidth}
         }{}
       }{% Absenderbereich oben
         \geometry{%
-          headheight=\tubspage@senderheight-2\tubspage@borderwidth,
-          headsep=1.5\tubspage@borderwidth,
-          top=\tubspage@senderheight+\tubspage@borderwidth,
-          bottom=2\tubspage@borderwidth
+          headheight=\tubssenderheight-2\tubsborderwidth,
+          headsep=1.5\tubsborderwidth,
+          top=\tubssenderheight+\tubsborderwidth,
+          bottom=2\tubsborderwidth
         }
         \ifthenelse{\boolean{tubspage@extramargin}}{%
-          \geometry{bottom=3\tubspage@borderwidth}
+          \geometry{bottom=3\tubsborderwidth}
         }{}
       }
 %    \end{macrocode}
@@ -843,16 +843,16 @@
       % Marginale links
       \ifthenelse{\boolean{tubspage@marginleft}}{%
         \geometry{%
-          lmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
-          marginparsep=\tubspage@columnsep,
-          marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
+          lmargin=\tubscolumnwidth+2\tubsborderwidth+0.5\tubscolumnsep,
+          marginparsep=\tubscolumnsep,
+          marginparwidth=\tubscolumnwidth-0.5\tubscolumnsep}
       }{}
       % Marginale rechts
       \ifthenelse{\boolean{tubspage@marginright}}{%
         \geometry{%
-          rmargin=\tubspage@columnwidth+2\tubspage@borderwidth+0.5\tubspage@columnsep,
-          marginparsep=\tubspage@columnsep,
-          marginparwidth=\tubspage@columnwidth-0.5\tubspage@columnsep}
+          rmargin=\tubscolumnwidth+2\tubsborderwidth+0.5\tubscolumnsep,
+          marginparsep=\tubscolumnsep,
+          marginparwidth=\tubscolumnwidth-0.5\tubscolumnsep}
       }{}
       % Zweiseitiges Layout
       \ifthenelse{\boolean{tubspage@twosided}}{%

@@ -336,7 +336,7 @@
 % die erste tubsbox auf einer Seite mit Siegelbandlogo.)
 %    \begin{macrocode}
 \define@boolkey{gaussbox}{logosep}[true]{%
-  \def\tubs@gb@toppadding@outer{3\tubspage@borderwidth}
+  \def\tubs@gb@toppadding@outer{3\tubsborderwidth}
 }
 %    \end{macrocode}
 %    \end{key}
@@ -370,8 +370,8 @@
         default,columnsep,none,vnone,hnone}{%
   \ifcase\nr\relax% default
   \or% Innenabstände auf columnsep
-    \def\tubs@gb@toppadding@inner{0.5\tubspage@columnsep}%
-    \def\tubs@gb@bottompadding@inner{0.5\tubspage@columnsep}%
+    \def\tubs@gb@toppadding@inner{0.5\tubscolumnsep}%
+    \def\tubs@gb@bottompadding@inner{0.5\tubscolumnsep}%
   \or% Alle Innenabstände auf 0
     \def\tubs@gb@toppadding@inner{0mm}%
     \def\tubs@gb@bottompadding@inner{0mm}%
@@ -419,19 +419,19 @@
 \providecommand\tb@gb@setorig{%
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        \tubspage@borderwidth}%
+      \textblockorigin{\tubsborderwidth+\tubspage@bcor}{%
+        \tubsborderwidth}%
     }{%
-      \textblockorigin{\tubspage@borderwidth}{%
-        \tubspage@borderwidth}%
+      \textblockorigin{\tubsborderwidth}{%
+        \tubsborderwidth}%
     }%
   }{%
     \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        \tubspage@senderheight}%
+      \textblockorigin{\tubsborderwidth+\tubspage@bcor}{%
+        \tubssenderheight}%
     }{%
-      \textblockorigin{\tubspage@borderwidth}{%
-        \tubspage@senderheight}%
+      \textblockorigin{\tubsborderwidth}{%
+        \tubssenderheight}%
     }
   }
 }
@@ -444,9 +444,9 @@
 % der Breite des Rahmens. TODO: needs fix for bcor??
 %    \begin{macrocode}
 \setlength{\TPHorizModule}{%
-  (\paperwidth-2\tubspage@borderwidth-\tubspage@bcor)*\ratio{1mm}{\tubspage@xsegments mm}}
+  (\paperwidth-2\tubsborderwidth-\tubspage@bcor)*\ratio{1mm}{\tubspage@xsegments mm}}
 \setlength{\TPVertModule}{%
-  (\tubspage@communicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
+  (\tubscommunicationheight)*\ratio{1mm}{\value{tubspage@gausssum} mm}}
 %    \end{macrocode}
 %
 %    \begin{macro}{\tubs@gb@toppadding}
@@ -498,15 +498,15 @@
 %    \begin{macrocode}
 \newenvironment{gaussbox}[5][]{%
 % Innere Padding-Werte (durch Optionen anpassbar)
-\def\tubs@gb@toppadding@inner{\tubspage@borderwidth}%
-\def\tubs@gb@bottompadding@inner{\tubspage@borderwidth}%
-\def\tubs@gb@leftpadding@inner{0.5\tubspage@columnsep}%
-\def\tubs@gb@rightpadding@inner{0.5\tubspage@columnsep}%
+\def\tubs@gb@toppadding@inner{\tubsborderwidth}%
+\def\tubs@gb@bottompadding@inner{\tubsborderwidth}%
+\def\tubs@gb@leftpadding@inner{0.5\tubscolumnsep}%
+\def\tubs@gb@rightpadding@inner{0.5\tubscolumnsep}%
 % Äußere Padding-Werte (durch Optionen anpassbar)
-\def\tubs@gb@toppadding@outer{\tubspage@borderwidth}%
-\def\tubs@gb@bottompadding@outer{\tubspage@borderwidth}%
-\def\tubs@gb@leftpadding@outer{\tubspage@borderwidth}%
-\def\tubs@gb@rightpadding@outer{\tubspage@borderwidth}%
+\def\tubs@gb@toppadding@outer{\tubsborderwidth}%
+\def\tubs@gb@bottompadding@outer{\tubsborderwidth}%
+\def\tubs@gb@leftpadding@outer{\tubsborderwidth}%
+\def\tubs@gb@rightpadding@outer{\tubsborderwidth}%
 %
 \setkeys*{tubsbox}{#1}%
 \setrmkeys{gaussbox}%
@@ -631,18 +631,18 @@
 \providecommand\tb@sb@setorig{%
   \ifthenelse{\boolean{tubsbox@bottomsender}}{%
     \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
-        \tubspage@borderwidth}%
+      \textblockorigin{\tubsborderwidth+\tubspage@bcor}{%
+        \tubsborderwidth}%
     }{%
-      \textblockorigin{\tubspage@borderwidth}{%
-        \tubspage@borderwidth}%
+      \textblockorigin{\tubsborderwidth}{%
+        \tubsborderwidth}%
     }%
   }{%
     \if@tubs@oddpage{%
-      \textblockorigin{\tubspage@borderwidth+\tubspage@bcor}{%
+      \textblockorigin{\tubsborderwidth+\tubspage@bcor}{%
         0.1429\paperheight}%
     }{%
-      \textblockorigin{\tubspage@borderwidth}{%
+      \textblockorigin{\tubsborderwidth}{%
         0.1429\paperheight}% TODO: Kompatibilität mit Querformat
     }
   }
@@ -898,7 +898,7 @@
       tubs@sb@tmplength@\thetubs@sb@elementcount\endcsname{#1}%
   }
   % Ziehe zusätzlich Stegbreite ab.
-  \addtolength{\tubs@sb@xfreespace}{-0.5\tubspage@borderwidth}
+  \addtolength{\tubs@sb@xfreespace}{-0.5\tubsborderwidth}
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -927,7 +927,7 @@
   \setkeys{tubsbox}{t,bgcolor=tuWhite,fgcolor=tuBlack}{}% TODO: check!
   % reset modrow counter
   \setcounter{tubs@sb@current@row}{0}%
-  \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubspage@borderwidth}%
+  \setlength{\tubs@sb@xfreespace}{\textheight+1.5\tubsborderwidth}%
   \writetubslog{page: xfree: \the\tubs@sb@xfreespace}%
   \tubs@sb@setelements{#2}{tubs@sb@rowlength@}%
 }{%
@@ -966,7 +966,7 @@
   % reset modcol counter
   \setcounter{tubs@sb@current@col}{0}%
   % Setze Länge auf Textbreite + linker und rechter Rand + Stegkorrektur
-  \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubspage@borderwidth}%
+  \setlength{\tubs@sb@xfreespace}{\textwidth+1.5\tubsborderwidth}%
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@collength@'
   \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@collength@}%
   \stepcounter{tubs@sb@current@row}%
@@ -1052,7 +1052,7 @@
   % reset modsubrow counter
   \setcounter{tubs@sb@current@subrow}{0}%
   % Setze Länge auf Zeilenhöhe + Trennstrich
-  \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubspage@borderwidth}%
+  \expandafter\setlength\expandafter\tubs@sb@xfreespace\expandafter{\csname tubs@sb@rowlength@\thetubs@sb@current@row\endcsname+0.5\tubsborderwidth}%
   % Parse Komma-Liste und speichere Längen mit Präfix 'tubs@sb@subrowlength@'
   \expandafter\tubs@sb@setelements\expandafter{\@remaining@keys}{tubs@sb@subrowlength@}%
   \stepcounter{tubs@sb@current@col}%
@@ -1251,26 +1251,26 @@
   \fi%
   % Prüfe, ob Zeile gesplittet werden soll (opt. Arg. != \relax)
   \ifthenelse{\equal{\@current@rowheight}{\relax}}{%
-    \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubsborderwidth}%
   }{%
     \setlength\tubs@sb@box@rowheight{\@current@rowheight}
-    \addtolength\tubs@sb@box@ypos{\@current@height+0.5\tubspage@borderwidth}%
-    \addtolength\tubs@sb@box@splitrow{\@current@height+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@sb@box@ypos{\@current@height+0.5\tubsborderwidth}%
+    \addtolength\tubs@sb@box@splitrow{\@current@height+0.5\tubsborderwidth}%
     % Wenn Zeilenhöhe ausgefüllt, normal weiter machen...
     \ifthenelse{\lengthtest{\tubs@sb@box@splitrow > \tubs@sb@box@rowheight}}{%
-      \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubspage@borderwidth}%
+      \addtolength\tubs@sb@box@xpos{\@current@width+0.5\tubsborderwidth}%
       \addtolength\tubs@sb@box@ypos{-\tubs@sb@box@splitrow}%
       \setlength\tubs@sb@box@splitrow{0mm}%
     }{}
   }
   % Wenn Zeile gefüllt ist, springen in nächste Zeile
-  \setlength\@box@tmp{\textwidth+\tubspage@borderwidth}% Texthöhe + Rahmenhöhe
+  \setlength\@box@tmp{\textwidth+\tubsborderwidth}% Texthöhe + Rahmenhöhe
   \writetubslog{width: is \the\tubs@sb@box@xpos > \the\@box@tmp ?}%
   \ifthenelse{\lengthtest{\tubs@sb@box@xpos > \@box@tmp}}{%
-    \addtolength\tubs@sb@box@ypos{\@current@rowheight+0.5\tubspage@borderwidth}%
+    \addtolength\tubs@sb@box@ypos{\@current@rowheight+0.5\tubsborderwidth}%
     \setlength\tubs@sb@box@xpos{0mm}%
     % Wenn darüber hinaus Seite gefüllt ist, fange neue an!
-    \setlength\@box@tmp{\textheight+\tubspage@borderwidth}% Texthöhe + Rahmenhöhe
+    \setlength\@box@tmp{\textheight+\tubsborderwidth}% Texthöhe + Rahmenhöhe
     \writetubslog{height: is \the\tubs@sb@box@ypos > \the\@box@tmp ?}%
     \ifthenelse{\lengthtest{\tubs@sb@box@ypos > \@box@tmp}}{%
       \setlength\tubs@sb@box@ypos{0mm}%

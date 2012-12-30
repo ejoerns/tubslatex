@@ -315,13 +315,13 @@
 %
 % Breite des Kopfbereiches einstellen
 %    \begin{macrocode}
-\setheadwidth[-1in-\hoffset-\oddsidemargin+\tubspage@bcor+2\tubspage@borderwidth]{\paperwidth-4\tubspage@borderwidth-\tubspage@bcor}
+\setheadwidth[-1in-\hoffset-\oddsidemargin+\tubspage@bcor+2\tubsborderwidth]{\paperwidth-4\tubsborderwidth-\tubspage@bcor}
 %    \end{macrocode}
 %
 % Liniendarstellung und Font-Einstellungen
 %    \begin{macrocode}
 \iftubs@bottomsender\else%
-  \setheadtopline[\tubspage@borderwidth]{1pt}[]
+  \setheadtopline[\tubsborderwidth]{1pt}[]
 \fi%
 %
 \renewcommand{\headfont}{\normalfont\mdseries\scshape}
