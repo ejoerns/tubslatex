@@ -5,7 +5,7 @@
 #
 include ../Makefile.include
 
-EXAMPLEDIRS = beamer tubsartcl tubsreprt tubsbook tubslttr2 tubsposter tubsleaflet
+EXAMPLEDIRS = beamer tubsdoc tubsartcl tubsreprt tubsbook tubslttr2 tubsposter tubsleaflet
 
 zip: examples
 	$(ECHO) -n 'Compressing examples as zip...'

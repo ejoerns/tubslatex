@@ -4,7 +4,6 @@
 \usepackage{tabularx}
 \usepackage{lipsum}
 
-
 \begin{document}
   \begin{tubsposter}[bgcolor=tubsGreenLight]{5.0cm,X,8.0cm,2.1cm}
   \showlogo{Institutslogo einfügen oder Institutsname/
@@ -52,8 +51,8 @@
       5   & 42   & 23   & 42   & 23   & 23   & 4711 \\
     \end{tabularx}
   \end{posterrow*}
-  \begin{modrow}[bgcolor=tubsViolet]
-    \bfseries\raggedleft\textcolor{tubsWhite}{\copyright 2012 TU Braunschweig}
+  \begin{modrow}[bgcolor=tubsViolet,fgcolor=tubsWhite]
+    \bfseries\raggedleft\copyright 2012 TU Braunschweig
   \end{modrow}
   \end{tubsposter}
 
@@ -79,12 +78,13 @@
       \subheadline{Lorem ipsum dolor}
       \begin{itemize}
         \item Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-        \item Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis.
+        \item Ut purus elit, vestibulum ut, placerat ac, adipiscing felis.
           Curabitur dictum gravida mauris.
-        \item Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
+        \item Nam arcu libero, nonummy eget, consectetuer id, vulputate magna.
           Donec vehicula augue eu neque.
         \item Pellentesque habitant morbi tristique
-          senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. 
+          senectus et netus et malesuada fames ac turpis egestas.
+          Mauris ut leo. 
       \end{itemize}
     \end{postercol}
     \begin{postercol}[bgimage=infozentrum]
