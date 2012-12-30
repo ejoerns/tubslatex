@@ -149,7 +149,7 @@
 \define@boolkey{tubsstyle.sty}[ts@]{scifiposter}[true]{%
   \ifts@scifiposter
     \def\ts@post@process{
-      \disable@keys[tubs]{bglayout}{designhelper}%
+      \disable@keys{bglayout}{designhelper}%
       \let\bgelement\undefined
     }
   \else
@@ -446,13 +446,13 @@
   \def\@ragged{\raggedleft}%
   % Berechene y-Position, abhängig von Raster-Orientierung (topdown/bottomsender)
   \ifthenelse{\boolean{tubsstyle@bottomsender}}{%
-    \setlength{\tmp@posy}{%
-      \paperheight%
-      -(2\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight)%
-      -(\tubspage@senderheight-2\tubspage@borderwidth)}%
+    \setlength{\tmp@posy}{\tubspage@borderwidth}%1
   }{%
-    \setlength{\tmp@posy}{%
-      2\tubspage@borderwidth+\thetubspage@gausssum\tubspage@gaussheight}%
+    \ifts@scifiposter
+      \setlength{\tmp@posy}{\tubspage@communicationheight+1.5\tubspage@borderwidth}%1
+    \else
+      \setlength{\tmp@posy}{\tubspage@communicationheight+2\tubspage@borderwidth}%1
+    \fi
   }%
   % calculate x pos of logo and line depending on oddness
   \if@tubs@oddpage{%
@@ -471,9 +471,15 @@
     }%
   }%
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
-    \parbox[b][\tubspage@senderheight-2\tubspage@borderwidth][c]%
+    \newdimen\tmp@logoheight
+    \ifts@scifiposter
+      \setlength\tmp@logoheight{\tubspage@senderheight-1.5\tubspage@borderwidth}
+    \else
+      \setlength\tmp@logoheight{\tubspage@senderheight-2\tubspage@borderwidth}
+    \fi
+    \parbox[b][\tmp@logoheight][c]%
       {0.5\paperwidth-0.5\tubspage@bcor-\tubspage@borderwidth}{%
-      \setkeys{Gin}{height=\headheight,width=0.5\textwidth,keepaspectratio}%
+      \setkeys{Gin}{height=\tmp@logoheight,width=0.5\textwidth,keepaspectratio}%
       \usekomafont{institute}\@ragged%
       \leavevmode\color{tuRed}#1%
     }%
@@ -822,7 +828,7 @@
 %    \begin{key}{bglayout}{designhelper}
 % Defines if |\iftubs@bglayout@designhelper|.
 %    \begin{macrocode}
-\define@boolkey[tubs]{bglayout}{designhelper}[true]{%
+\define@boolkey{bglayout}{designhelper}[true]{%
   \setboolean{tubsstyle@designhelper}{true}
 }
 %    \end{macrocode}
