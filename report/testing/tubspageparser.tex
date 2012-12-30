@@ -1,0 +1,46 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage[utf8]{inputenc}
+
+
+\begin{document}
+
+
+\makeatletter
+%    \begin{macro}{loadtubspagefile}
+% defines:
+% - tubssenderheight
+% - tubscommunicationheight
+% - tubsborderwidth
+% - tubspsegments
+% - tubslsegments
+%    \begin{macrocode}
+\newcommand\loadtubspagefile[1]{%
+\begingroup
+  \def\def@tubs@width##1##2{% arg1: name, arg2: length
+    \global\expandafter\newlength\csname tubs##1\endcsname
+    \global\expandafter\setlength\csname tubs##1\endcsname{##2}%
+  }%
+  \def\def@tubs@cmd##1##2{%
+    \global\expandafter\def\csname tubs##1\endcsname{##2}%
+  }%
+  \def\senderheight##1{\def@tubs@width{senderheight}{##1}}%
+  \def\communicationheight##1{\def@tubs@width{communicationheight}{##1}}%
+  \def\borderwidth##1{\def@tubs@width{borderwidth}{##1}}%
+  \def\psegments##1{\def@tubs@cmd{psegments}{##1}}%
+  \def\lsegments##1{\def@tubs@cmd{lsegments}{##1}}%
+  %
+  \input{#1.tps}% include tps file
+\endgroup
+}
+%    \end{macrocode}
+%    \end{macro}
+\makeatother
+
+
+\loadtubspagefile{tubsa4}%
+
+And now, here are the results:
+\the\tubssenderheight
+
+
+\end{document}
