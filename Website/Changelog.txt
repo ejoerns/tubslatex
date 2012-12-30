@@ -1,7 +1,8 @@
-Version 0.3-beta3-testing:
+Version 1.0:
 - Dokumentation
   - Installationshinweise für Mac OS-Installation hinzugefuegt
   - Paket-Dokumentationen erweitert
+  - Erklärung zu Gauss-Layoutsystem, Plakaten und Flyern deutlich erweitert
 
 - Dokumentenklassen
   - \author auf CD-Titelseiten unterstützt nun \and
@@ -13,15 +14,32 @@ Version 0.3-beta3-testing:
   - Bessere Unterstützung von unbekannten Papierformaten (tubstypearea)
   - Seitengröße mittel Optionen 'paperwidth' und 'paperheight' teilweise einstellbar
   - Optionsweiterleitung an bgelement korrigiert
+  - Gauss-Boxen:
+    - Platzierungsfehler behoben
+    - imagefit-Funktionalität hinzugefügt
+    - Optionen für Innenabstände
+    - vertikale Positionierung korrigiert
+  - Modul-Boxen:
+    - Umgebung scifibox in modulebox umbenannt
+    - parskip- und parindent-Wiederherstellung
+    - verbesserte Implementierung
+  - automatische Erkennung von individuellen Hoch-/Querformaten
+  - verbesserte Behandlung unbekannter Formate
 
 - Fonts
   - \footnotesize-Deklaration für A0 korrigiert
   - mathsf und mathtt fuer Nexus definiert
-  - Standard-Schnitte nutzen Mediävalziffern, Option 'lnum' für Versalziffern
+  - Standard-Schnitte nutzen Mediävalziffern, Option 'lnum' für Versalziffern,
+    Befehl \oldstylefigures angepasst, \textlnum eingefuehrt
+  - Befehle \headline und \subheadline eingefuehrt
+  - institute-Font auf \bfseries gesetzt
+  - Farbeinstellungen bei CD-Schriften werden nur bei Option aktiviert
 
 - Plakate
   - Berechnungsfehler für Modulsystem korrigiert
-	- Option 'logo' für Bulletin-Poster
+  - Option 'logo' für Bulletin-Poster
+  - Korrekte Schriftgrößendefinitionen angelegt
+  - korrigierte Logo-Darstellung (landscape)
 
 - tubsdoc
   - Paket nun auch mit KOMA-Klassen zusammen nutzbar
@@ -30,6 +48,10 @@ Version 0.3-beta3-testing:
   
 - tubsstyle:
   - bglayout in bgsegment umbenannt (Alias erhalten)
+  
+- tubscolors:
+  - Farben mit Präfix tubs~
+  - Zusätzliche Farbe tubsRichBlack
 
 - beamer:
   - \institute-Befehl zeigt ursprüngliches Verhalten und wird auf
@@ -39,6 +61,10 @@ Version 0.3-beta3-testing:
 - Installation:
   - postinst und postrm-Skripte des deb-Paketes korrigiert und erweitert
   - deb-Abhängigkeiten erweitert für Kompatibilität mit Ubuntu 12.04
+
+- Besipiel-Dateien:
+  - tubsleaflet-Beispiel hinzugefuegt
+  - Plakat-Besipiele überarbeitet
 
 Version 0.3-beta2:
 
