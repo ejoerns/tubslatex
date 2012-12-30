@@ -1,0 +1,33 @@
+\documentclass[style=scifi,cmyk,a0paper]{tubsposter}
+
+\usepackage{lipsum}
+
+\begin{document}
+\begin{tubsposter}[bgcolor=tuBlue40]{X}
+    \showtubslogo
+    \showlogo{\includegraphics{dummy_institut.pdf}}
+    
+    \begin{posterrow}[bgcolor=tuWhite,20cm,20cm,X,X]
+        \begin{postercol}
+        \makeatletter
+        \the\tubspage@borderwidth
+        \the\tubspage@module@padding
+        \makeatother
+        \end{postercol}
+        
+        \begin{postercol}
+          \lipsum[2]
+        \end{postercol}
+        
+        \begin{postercol}
+
+        \end{postercol}
+        
+        \begin{postercol}
+        
+        \end{postercol}
+        
+    \end{posterrow}
+    
+\end{tubsposter}
+\end{document}
