@@ -26,6 +26,7 @@ log() {
     # Expand escaped characters, wrap at 70 chars, indent wrapped lines
     echo "$2" | fold -w70 -s | sed '2~1s/^/  /' >&3 || true
   fi
+  echo "$2" | fold -w70 -s | sed '2~1s/^/  /' >> $logfile || true
 }
 
 #--- Checks for either wget or curl and stores result in 'download_cmd'
@@ -119,7 +120,7 @@ process_arguments() {
 download_tds_zip() {
   check_downloader
   echo -n "Downloading zipped tds file..."
-  if $download_cmd $zipurl > $unzipdir/texlive_tubs.zip 2>$logfile; then
+  if $download_cmd $zipurl > $unzipdir/texlive_tubs.zip 2>>$logfile; then
     echo "done."
   else
     echo "failed."
@@ -130,18 +131,14 @@ download_tds_zip() {
 
 #-------------------------------------------------------------------------------
 
-process_arguments $@
-
-check_sudo
-
 # generate temporary logfile
 logfile=$(mktemp -p /tmp texlive-tubs.log.XXXXXXXX)
 chmod 777 $logfile
 
+# Process user arguments
+process_arguments $@
 
-
-#-------------------------------------------------------------------------------
-
+check_sudo
 
 # create tmpdir
 unzipdir=$(mktemp -d /tmp/texlive-tubs.XXXXXXXX)
@@ -157,28 +154,27 @@ fi
 
 # extract
 echo -n "Extracting..."
-if unzip $unzipdir/texlive_tubs.zip -d $unzipdir >$logfile 2>&1; then
+if unzip $unzipdir/texlive_tubs.zip -d $unzipdir >> $logfile 2>&1; then
 	echo "done."
 else
 	echo "failed."
 	log_e "Unable to extract zip archive $unzipdir/texlive_tubs.zip"
+	rm -rf $unzipdir || true
 	exit 1
 fi
 rm -f $unzipdir/texlive_tubs.zip
-
-exit 0
-
 
 
 # Check if tlmgr is available
 status=0
 command -v tlmgr >/dev/null 2>&1 || status=1
 if [ $status = 0 ]; then
-  echo "tlmgr installed, but not yet supported"
+  log_i "tlmgr installed, but not yet supported"
 else
   log_d "tlmgr not installed"
 fi
 
+exit 0
 
 # Check if apt-get is available and allow automatic package installation
 status=0
@@ -203,31 +199,35 @@ if [ $status = 0 ]; then
       ;;
   esac
 else
-	log_d "apt-get not found"
+  log_d "apt-get not found"
 fi
 
 
 # get TEXMFLOCAL path
-if texmfdir=$(kpsewhich --var-value TEXMFLOCAL; then
+if texmfdir=$(kpsewhich --var-value TEXMFLOCAL); then
   log_d "TEXMFLOCAL found: $texmfdir"
 else
   # TODO: handle?
   log_e "TEXMFLOCAL not found!"
+  rm -rf $unzipdir || true
   exit 1
 fi
 
-if [ ! -d doc ] || [ ! -d fonts ] || [ ! -d tex ]; then
-	log_e "Did not find all required directories"
-	exit 1
+if [ ! -d $unzipdir/doc ] || [ ! -d $unzipdir/fonts ] || [ ! -d $unzipdir/tex ]; then
+  log_e "Did not find all required directories. Broken tds."
+  rm -rf $unzipdir || true
+  exit 1
 else
-	log_d "directories ok"
+  log_d "directories ok"
 fi
 
 echo -n "Copying files to TEXMFLOCAL..."
 if cp -r $unzipdir/doc $unzipdir/fonts $unzipdir/tex $texmfdir/.; then
   echo "done."
+  rm -rf $unzipdir || true
 else
   echo "failed."
+  rm -rf $unzipdir || true
   exit 1
 fi
 
