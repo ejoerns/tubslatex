@@ -62,7 +62,7 @@ check_downloader() {
   exit 1
 }
 
-# check if sudo is available
+#--- checks if sudo is available
 check_sudo() {
   rootrun=""
   if sudo -v >/dev/null 2>&1; then
@@ -78,6 +78,7 @@ check_sudo() {
   fi
 }
 
+#--- shows short usage page
 print_usage() {
   echo "tubslatex Installer"
   echo ""
@@ -91,6 +92,7 @@ print_usage() {
   echo "    -d    Show Debug output"
 }
 
+#--- Processes command line arguments
 process_arguments() {
   zipurl=""
 
@@ -110,13 +112,6 @@ process_arguments() {
       ;;
     esac
   done
-  
-  if [ -z $zipurl ]; then
-    log_e "No filename given"
-    echo ""
-    print_usage
-    exit 1;
-  fi
 }
 
 #--- Downloads $zipurl to $unzipdir
@@ -177,6 +172,21 @@ chmod 777 $logfile
 process_arguments $@
 
 check_sudo
+
+if [ -z $zipurl ]; then
+  log_i "No explicit tubslatex archive given"
+  read -p "Do you want to install the latest stable release automatically? (y/n)" yesno
+  case $yesno in
+    y|Y)
+      zipurl=http://enricojoerns.de/tubslatex/tubslatex_latest_stable.tds.zip
+      ;;
+    *)
+      echo "Nothing will be done.\nUse -h option for usage information"
+      exit 1
+      ;;
+  esac
+fi
+
 check_previous_tubslatex
 
 # create tmpdir
