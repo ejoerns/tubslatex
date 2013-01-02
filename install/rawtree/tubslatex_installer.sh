@@ -75,7 +75,16 @@ check_sudo() {
 }
 
 print_usage() {
-  echo "Usage: sh install.sh [-v] filename.tds.zip"
+  echo "tubslatex Installer"
+  echo ""
+  echo "Syntax: sh install.sh [option] <path/to/tubslatex.tds.zip>"
+  echo ""
+  echo "where <path/to/tubslatex.tds.zip> can be both"
+  echo "a local and a remote file (http(s)/ftp)"
+  echo ""
+  echo "OPTIONS:"
+  echo "    -h    Show this help page"
+  echo "    -d    Show Debug output"
 }
 
 process_arguments() {
@@ -84,18 +93,23 @@ process_arguments() {
   for var in "$@"
   do
     case "$var" in
-    "-v")
+    "-d")
       verbosity=4
       log_d "verbosity on"
       ;;
+    "-h")
+      print_usage
+      exit 0
+      ;;
     *)
-#       zipurl=http://enricojoerns.de/tubslatex/0.3-beta3-r1190/tubslatex_0.3-beta3-r1190.tds.zip
       zipurl=$var
       ;;
     esac
   done
   
   if [ -z $zipurl ]; then
+    log_e "No filename given"
+    echo ""
     print_usage
     exit 1;
   fi
