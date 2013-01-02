@@ -1,8 +1,11 @@
 #! /bin/sh
-# postinst script for latex-beamer
 #
-# see: dh_installdeb(1)
+# tubslatex installer script
+#
+# (c) 2013 by Enrico Jörns
+#
 
+# Halt on error
 set -e
 
 error_occured=0
@@ -176,8 +179,6 @@ process_arguments $@
 check_sudo
 check_previous_tubslatex
 
-exit 0
-
 # create tmpdir
 unzipdir=$(mktemp -d /tmp/texlive-tubs.XXXXXXXX)
 
@@ -217,8 +218,8 @@ fi
 status=0
 command -v apt-get >/dev/null 2>&1 || status=1
 if [ $status = 0 ]; then
-	echo "apt-get was found on your system."
-	read -p "Do you want to automatically install dependencies? [y/n]" yesno
+  echo "apt-get was found on your system."
+  read -p "Do you want to install required dependencies now? [y/n]" yesno
   case $yesno in
     y|Y)
       echo -n "Running apt-get. This may take some time..."
@@ -232,7 +233,7 @@ if [ $status = 0 ]; then
       fi
       ;;
     *)
-      log_w "You may need to install tex packages manually after install!"
+      log_w "You may need to install tex packages manually!"
       ;;
   esac
 else
@@ -290,8 +291,6 @@ else
   error_occured=1
 fi
     
-#    varlibmap=``
-#    echo "varlibmap: $varlibmap"
 if [ -z `echo $pdftexmap | grep /var/lib` ]; then
   echo ""
   echo "Warning: You seem to use a local font map\n  ($pdftexmap)."
@@ -394,19 +393,12 @@ else
   error_occured=1
 fi
 
-
-# delete temp file if empty
-# if [ -s $FILE ]; then
-#   log_d "$logfile has data."
-# else
-#   log_d "$logfile is empty. Will be deleted"
-#   rm -f $logfile
-# fi
-
 if [ error_occured = 1 ]; then
   log_w "An error occured during installation."
   echo "See log $logfile for further information"
 else
+  echo "---"
+  echo "tubslatex was installed successfully"
   log_d "Output has been stored in $logfile"
 fi;
 
