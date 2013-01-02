@@ -17,14 +17,14 @@ DISTVERSION = 0$(DIST)4
 INSTALLPATH = /usr/local/share/texmf
 DOCPATH = /usr/share/doc/texlive-tubs
 
-all: build copy deb
+all: build deb
 
-copy: clean structure fetch
-
-deb:
+deb: copy
 	$(ECHO) -n "Creating deb archive 'texlive-tubs_$(VERSION)$(DIST).deb'..."
 	$(FAKEROOT) dpkg -b ./texlive-tubs texlive-tubs_$(VERSION)$(DIST).deb $(SILENT)
 	$(ECHO) -e '$(OK_STRING)'
+
+copy: clean structure fetch
 
 build:
 	$(MAKE) -C $(INSTALL_RAW_DIR)

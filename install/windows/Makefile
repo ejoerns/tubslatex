@@ -11,16 +11,19 @@ VERSION = $(TUBSLATEX_FULLVERSION)
 
 .PHONY: exe build structure fetch clean install
 
-all: build copy exe
+# Compile, copy and create exe
+all: build exe
 
-copy: clean structure fetch
-
-exe:
+# Only copy files, then create exe (no compile!)
+exe: copy
 	$(ECHO) -n 'Compiling Windows-Installer...'
 	$(CAT) tubslatexSetup_script.nsi | sed 's/REPLACEWITHVERSION/$(VERSION)/g' > tmp.nsi
 	$(MAKENSIS) tmp.nsi $(SILENT)
 	$(RM) tmp.nsi
 	$(ECHO) -e '$(DONE_STRING)'
+
+# Clean up, and copy compiled files from 'raw' directory
+copy: clean structure fetch
 
 build:
 	$(MAKE) -C $(INSTALL_RAW_DIR)
