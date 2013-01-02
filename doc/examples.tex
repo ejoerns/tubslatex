@@ -12,8 +12,42 @@
   numberblanklines=false
 }%
 
-\chapter{Beispiel-Listings}
+\chapter{Beispiele}
 
+Im Folgenden sind einige Beispiele zur Benutzung der verschiedenen
+Klassen aufgeführt.
+
+\section{tubsreprt}
+
+  \lstinputlisting[
+    caption={Beispiel für ein Dokument mit \Class{tubsreprt}},
+    label=lst:examples:report]%
+    {../examples/tubsreprt/tubsreprt_example.tex}
+
+  \begin{figure}\centering
+    \begin{minipage}{0.49\textwidth}
+    \fbox{\includegraphics[width=\textwidth,page=1]%
+      {../examples/tubsreprt/tubsreprt_example.pdf}}
+    \end{minipage}\hfill
+    \begin{minipage}{0.49\textwidth}
+    \fbox{\includegraphics[width=\textwidth,page=2]%
+      {../examples/tubsreprt/tubsreprt_example.pdf}}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+    \fbox{\includegraphics[width=\textwidth,page=3]%
+      {../examples/tubsreprt/tubsreprt_example.pdf}}
+    \end{minipage}\hfill
+    \begin{minipage}{0.49\textwidth}
+    \fbox{\includegraphics[width=\textwidth,page=4]%
+      {../examples/tubsreprt/tubsreprt_example.pdf}}
+    \end{minipage}
+    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:report}}
+    \label{fig:examples:report}
+  \end{figure}
+
+%-----------------------------------------------------------------------------
+
+\clearpage
 \section{tubslttr2}\label{sec:examples:letter}
 
   \lstinputlisting[%
@@ -27,6 +61,7 @@
     label=lst:examples:letter:mustermann]%
     {../examples/tubslttr2/mustermann.lco}
   
+\clearpage
   \lstinputlisting[%
     caption={Beispielbrief mit \Class{tubslttr2} unter Verwendung der
     individuellen lco-Datei aus \lstlistingname~\ref{lst:examples:letter:mustermann}},
@@ -43,60 +78,11 @@
       {../examples/tubslttr2/tubslttr2_example.pdf}}
     \end{minipage}
     \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:letter}}
-    \label{fig:examples:tubsposter}
+    \label{fig:examples:letter:mustermann}
   \end{figure}
 
-\clearpage
-\section{tubsposter}
-
-  \lstinputlisting[
-    linerange={1-42},
-    caption={Beispiel für ein Veranstaltungsplakat mit \Class{tubsposter}},
-    label=lst:examples:tubsposter]%
-    {../examples/tubsposter/tubsposter_example.tex}
-
-
-  \begin{figure}[!ht]\centering
-    \fbox{\includegraphics[width=0.8\textwidth,page=1]%
-      {../examples/tubsposter/tubsposter_example.pdf}}
-    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:tubsposter}}
-    \label{fig:examples:tubsposter}
-  \end{figure}
+%-----------------------------------------------------------------------------
   
-  \lstinputlisting[
-    linerange={1-6,59-100},
-    caption={Beispiel für ein wissenschaftliches Plakat mit \Class{tubsposter}},
-    label=lst:examples:scifiposter]%
-    {../examples/tubsposter/scifiposter_example.tex}
-
-  \begin{figure}[!ht]\centering
-    \fbox{\includegraphics[width=0.8\textwidth,page=2]%
-      {../examples/tubsposter/scifiposter_example.pdf}}
-    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:scifiposter}}
-    \label{fig:examples:tubsposter}
-  \end{figure}
-
-\clearpage
-\section{tubsleaflet}
-
-  \lstinputlisting[
-    caption={Beispiel für einen Flyer mit \Class{tubsleaflet}},
-    label=lst:examples:leaflet]%
-    {../examples/tubsleaflet/tubsleaflet-example.tex}
-  
-    \begin{figure}
-    \begin{minipage}{\textwidth}\centering
-    \fbox{\includegraphics[width=0.8\textwidth,page=1]%
-      {../examples/tubsleaflet/tubsleaflet-example.pdf}}
-    \end{minipage}\\[1ex]
-    \begin{minipage}{\textwidth}\centering
-    \fbox{\includegraphics[width=0.8\textwidth,page=2]%
-      {../examples/tubsleaflet/tubsleaflet-example.pdf}}
-    \end{minipage}
-    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:leaflet}}
-    \label{fig:examples:tubsposter}
-  \end{figure}
-
 \clearpage
 \section{beamer-Theme}
 
@@ -124,36 +110,63 @@
       {../examples/beamer/beamer_example.pdf}}
     \end{minipage}
     \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:beamer}}
-    \label{fig:examples:tubsposter}
+    \label{fig:examples:beamer}
   \end{figure}
 
+%-----------------------------------------------------------------------------
+
 \clearpage
-\section{tubsreprt}
+\section{tubsposter}
 
   \lstinputlisting[
-    caption={Beispiel für ein Dokument mit \Class{tubsreprt}},
-    label=lst:examples:report]%
-    {../examples/tubsreprt/tubsreprt_example.tex}
+    linerange={1-42},
+    caption={Beispiel für ein Veranstaltungsplakat mit \Class{tubsposter}},
+    label=lst:examples:tubsposter]%
+    {../examples/tubsposter/tubsposter_example.tex}
 
-  \begin{figure}\centering
-    \begin{minipage}{0.49\textwidth}
-    \fbox{\includegraphics[width=\textwidth,page=1]%
-      {../examples/tubsreprt/tubsreprt_example.pdf}}
-    \end{minipage}\hfill
-    \begin{minipage}{0.49\textwidth}
-    \fbox{\includegraphics[width=\textwidth,page=2]%
-      {../examples/tubsreprt/tubsreprt_example.pdf}}
-    \end{minipage}
-    \begin{minipage}{0.49\textwidth}
-    \fbox{\includegraphics[width=\textwidth,page=3]%
-      {../examples/tubsreprt/tubsreprt_example.pdf}}
-    \end{minipage}\hfill
-    \begin{minipage}{0.49\textwidth}
-    \fbox{\includegraphics[width=\textwidth,page=4]%
-      {../examples/tubsreprt/tubsreprt_example.pdf}}
-    \end{minipage}
-    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:report}}
+
+  \begin{figure}[!ht]\centering
+    \fbox{\includegraphics[width=0.8\textwidth,page=1]%
+      {../examples/tubsposter/tubsposter_example.pdf}}
+    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:tubsposter}}
     \label{fig:examples:tubsposter}
+  \end{figure}
+  
+\clearpage
+  \lstinputlisting[
+    linerange={1-6,59-100},
+    caption={Beispiel für ein wissenschaftliches Plakat mit \Class{tubsposter}},
+    label=lst:examples:scifiposter]%
+    {../examples/tubsposter/scifiposter_example.tex}
+
+  \begin{figure}[!ht]\centering
+    \fbox{\includegraphics[width=0.8\textwidth,page=2]%
+      {../examples/tubsposter/scifiposter_example.pdf}}
+    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:scifiposter}}
+    \label{fig:examples:scifiposter}
+  \end{figure}
+
+%-----------------------------------------------------------------------------
+
+\clearpage
+\section{tubsleaflet}
+
+  \lstinputlisting[
+    caption={Beispiel für einen Flyer mit \Class{tubsleaflet}},
+    label=lst:examples:leaflet]%
+    {../examples/tubsleaflet/tubsleaflet-example.tex}
+  
+    \begin{figure}
+    \begin{minipage}{\textwidth}\centering
+    \fbox{\includegraphics[width=0.8\textwidth,page=1]%
+      {../examples/tubsleaflet/tubsleaflet-example.pdf}}
+    \end{minipage}\\[1ex]
+    \begin{minipage}{\textwidth}\centering
+    \fbox{\includegraphics[width=0.8\textwidth,page=2]%
+      {../examples/tubsleaflet/tubsleaflet-example.pdf}}
+    \end{minipage}
+    \caption{Ausgabe-Beispiel zu \lstlistingname~\ref{lst:examples:leaflet}}
+    \label{fig:examples:leaflet}
   \end{figure}
 
 }

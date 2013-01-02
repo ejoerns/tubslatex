@@ -1,5 +1,6 @@
 % \chapter{Anhang}
 
+\def\foo{
 \section{Kompatibilität zu anderen Paketen}
 
 \begin{description}
@@ -10,3 +11,23 @@
     Das xcolor-Paket wird von allen Vorlagen bereits eingebunden.
     % todo: table & other options?
 \end{description}
+}
+
+\chapter{Längendefinitionen}
+
+\begin{tabularx}{\textwidth}{lX}
+  \Length{tubssenderheight}  &
+    Höhe des Absenderbereichs\\
+  \Length{tubscommunicationheight} &
+    Höhe des Kommunikationsbereichs\\
+  \Length{tubsborderwidth}  &
+    Breite des Rahmens\\
+%   \Length{tubssegmentheight} &
+%     Höhe des aktuellen Segments\\
+  \Length{tubscolumnsep} &
+    Abstand von Spalten im Spaltenlayout\\
+  \Length{tubsgaussbaseheight}  &
+    Basishöhe des kleinsten Gauß-Segements\\
+  \Length{tubscolumnwidth}  &
+    Breite einer Spalte im Spaltenlayout.
+\end{tabularx}

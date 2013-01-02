@@ -183,8 +183,8 @@ Für debian-basierte Systeme wie Ubuntu oder Debian selber steht ein
 \texttt{.deb}-Paket zur Verfügung, das einfach mit Hilfe eines Paketmanagers
 installiert werden kann.
 Genutzt werden können dafür die diversen graphischen Tools oder einfach das
-Kommandozeilenprogramm \texttt{gdebi}. Diese Programme lösen alle Abhängigkeiten
-auf und installieren sie automatisch mit.
+Kommandozeilenprogramm \texttt{gdebi}. Die benötigten Abhängigkeiten
+werden automatisch aufgelöst und mit installiert.
 
 Die Installation der Dateien erfolgt in das \texttt{TEXMFLOCAL}-Verzeichnis,
 welches in der Regel \lstinline{/usr/local/share/texmf} ist.
@@ -202,8 +202,14 @@ Offiziell unterstützte Systeme:
 
 
 \subsection{Manuelle Installation}
-\Index{updmap}
+% \Index{updmap}
 % \paragraph{Lokale/systemweite Installation}
+
+
+Die Vorlagen sind sowohl in der CD-Toolbox\footnote{\urltoolbox}
+als auch auf der Projektseite\footnote{\urltubslatex} als gezippte
+TDS (Tex-Verzeichnisstruktur) erhältlich.
+Dies erlaubt die manuelle Installation in nahezu allen \LaTeX-Distributionen.
 
 Bei der Installation sollte man sich zuerst zwischen einer Benutzer-Installation
 und einer System-Installation entscheiden.
@@ -241,7 +247,7 @@ werden, da sonst die Vorlagen oder Teile der Vorlagen nicht benutzbar sind.
 
 Die Installation aller Pakete kann mit folgendem Befehl durchgeführt werden:
 \begin{lstlisting}[style=cmd]
-sudo aptitude install texlive-base texlive-latex-extra \
+sudo apt-get install texlive-base texlive-latex-extra \
   texlive-fonts-extra latex-beamer texlive-fonts-recommended \
   texlive-lang-german texlive-extra-utils cm-super
 \end{lstlisting}
@@ -252,7 +258,11 @@ beschrieben.
 \subsubsection{Systemweite Installation}
 
 \begin{important}
-  Hierfür werden root-Rechte benötigt.
+  Hierfür werden root-Rechte benötigt. Dies wird in den Beispielen mit
+  dem \lstinline{sudo}-Befehl erreicht, was jedoch erfordert, dass der
+  aktuelle Benutzer in der gleichnamigen Gruppe \lstinline{sudo} sein muss.\par
+  Alternativ kann auch mit einem \lstinline{root}-Terminal gearbeitet
+  werden.
 \end{important}
 
 \begin{description}
