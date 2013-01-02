@@ -8,9 +8,9 @@ include Makefile.include
 # HG_TEXSTYLE = tex.hgstyle
 
 
-.PHONY: clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch
+.PHONY: clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch versiondtx
 
-release: clean buildinstaller mkdir fetch
+release: clean versiondtx buildinstaller mkdir fetch
 
 # generate: $(HG_DTXOUT) sourcedoc documentation examples
 
