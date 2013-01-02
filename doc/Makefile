@@ -15,7 +15,7 @@ DOCSRC := $(shell ls *.tex)
 
 .PHONY: clean cleantemp examples
 
-all: examples $(DOCFILE)
+all: cleantemp examples $(DOCFILE)
 
 $(DOCFILE): $(DOCSRC)
 	$(ECHO) -n "Compiling documentation..."
@@ -36,7 +36,8 @@ $(DOCFILE): $(DOCSRC)
 	$(ECHO) -n "Generating index 'option'..."
 	$(MAKEINDEX) -q option $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
-	$(ECHO) -n "Recompiling documentation..."
+	$(ECHO) -n "Recompiling documentation twice..."
+	$(PDFLATEX) $(PDFLATEX_SILENT) $(basename $@ .pdf).tex $(SILENT)
 	$(PDFLATEX) $(PDFLATEX_SILENT) $(basename $@ .pdf).tex $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
