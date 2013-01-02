@@ -5,6 +5,8 @@
 
 set -e
 
+error_occured=0
+
 exec 3>&2 # logging stream (file descriptor 3) defaults to STDERR
 verbosity=2 # default to show warnings
 silent_lvl=0
@@ -50,7 +52,7 @@ fi
 status=0
 command -v tlmgr >/dev/null 2>&1 || status=1
 if [ $status = 0 ]; then
-  echo "tlmgr installed, but not yet supported :)"
+  echo "tlmgr installed, but not yet supported"
 else
   log_d "tlmgr not installed"
 fi
@@ -64,15 +66,14 @@ if [ $status = 0 ]; then
 	read -p "Do you want to automatically install dependencies? [y/n]" yesno
   case $yesno in
     y|Y)
-      echo -n "Running apt-get..."
-      if apt-get -y installx texlive-base texlive-latex-extra \
+      echo -n "Running apt-get. This may take some time..."
+      if apt-get -y install texlive-base texlive-latex-extra \
           texlive-fonts-extra latex-beamer texlive-fonts-recommended \
-          texlive-lang-german texlive-extra-utils cm-super >> $logfile 2>&1; then
+          texlive-lang-german texlive-extra-utils cm-super | tee $logfile; then
         echo "done."
       else
-        echo "failed. Output has been stored in"
-        echo "$logfile"
-        echo "Please include this file if you report a bug."
+        echo "failed."
+        error_occured=1
       fi
       ;;
     *)
@@ -82,8 +83,6 @@ if [ $status = 0 ]; then
 else
 	log_d "apt-get not found"
 fi
-
-exit 0
 
 
 # get TEXMFLOCAL path
@@ -109,6 +108,7 @@ else
   echo "failed. Output has been stored in"
   echo "$logfile"
   echo "Please include this file if you report a bug."
+	error_occured=1
 fi
 
 echo -n "Checking fontmap..."
@@ -120,6 +120,7 @@ else
   echo "$logfile"
   echo "Please include this file if you report a bug."
   exit 1
+  error_occured=1
 fi
     
 #    varlibmap=``
@@ -136,7 +137,8 @@ if [ -z `echo $pdftexmap | grep /var/lib` ]; then
       echo "done."
       ;;
     *)
-      echo "You may need to run updmap manually after install!"
+      log_w "You may need to run updmap manually after install!"
+      error_occured=0
       ;;
   esac
 fi
@@ -180,6 +182,7 @@ else
   echo "$logfile"
   echo "Please include this file if you report a bug."
   echo "-- You may need to install Arial later manually --"
+  error_occured=1
 fi
 
 # Check for already available Mapfiles
@@ -221,15 +224,24 @@ else
   echo "failed. Output has been stored in"
   echo "$logfile"
   echo "Please include this file if you report a bug."
+  error_occured=1
 fi
 
 
 # delete temp file if empty
-if [[ -s $FILE ]] ; then
-  log_d "$logfile has data."
+# if [ -s $FILE ]; then
+#   log_d "$logfile has data."
+# else
+#   log_d "$logfile is empty. Will be deleted"
+#   rm -f $logfile
+# fi
+
+if [ error_occured = 1 ]; then
+  log_w "An error occured during installation."
+  echo "See log $logfile for further information"
 else
-  log_d "$logfile is empty. Will be deleted"
-  rm -f $logfile
-fi ;
+  log_d "Output has been stored in $logfile"
+fi;
+
 
 exit 0
