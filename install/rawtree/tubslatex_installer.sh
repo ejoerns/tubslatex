@@ -129,6 +129,41 @@ download_tds_zip() {
   fi
 }
 
+#--- Checks for previous tubslatex installations
+check_previous_tubslatex() {
+  tubsartcl=$(kpsewhich tubsartcl.cls) || true
+  if [ ! -z $tubsartcl ]; then
+    log_w "Previous installation of tubslatex was found!"
+    # Checks for installation directory
+    case $tubsartcl in
+      $(kpsewhich --var-value TEXMFLOCAL || "null")*)
+        echo "Installed in TEXMFLOCAL"
+      ;;
+      $(kpsewhich --var-value TEXMFHOME || "null")*)
+        echo "Installed in TEXMFHOME"
+      ;;
+      $(kpsewhich --var-value TEXMFDIST || "null")*)
+        echo "Installed in TEXMFDIST"
+      ;;
+      $(kpsewhich --var-value TEXMFMAIN || "null")*)
+        echo "Installed in TEXMFMAIN"
+      ;;
+      *)
+      echo "Installed in $(echo $tubsartcl | sed 's/tubsartcl.cls//g' || true)"
+      ;;
+    esac
+    read -p "Do yout want to overwrite it? (y/n)" yesno
+    case $yesno in
+      y|Y)
+        ;;
+      *)
+        echo "Nothing will be done."
+        exit 1
+        ;;
+    esac
+  fi;
+}
+
 #-------------------------------------------------------------------------------
 
 # generate temporary logfile
@@ -139,6 +174,9 @@ chmod 777 $logfile
 process_arguments $@
 
 check_sudo
+check_previous_tubslatex
+
+exit 0
 
 # create tmpdir
 unzipdir=$(mktemp -d /tmp/texlive-tubs.XXXXXXXX)
@@ -174,7 +212,6 @@ else
   log_d "tlmgr not installed"
 fi
 
-exit 0
 
 # Check if apt-get is available and allow automatic package installation
 status=0
