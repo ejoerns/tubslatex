@@ -3,10 +3,11 @@
 # Erstellt komplettes Release (still under construction!)
 #
 
-V_MAJOR = 0
-V_MINOR = 3
-V_PATCH = 
-V_STAGE = beta3
+V_MAJOR = 1
+V_MINOR = 0
+V_PATCH = 0
+V_STAGE = RC1
+RELEASE = Y
 
 .PHONY: versiondtx
 
@@ -16,9 +17,12 @@ HG_DATE := $(shell hg tip --template '{date|shortdate}' | tr - /)
 # HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
 # tubslatex-Version
 TUBSLATEX_VERSION = $(V_MAJOR).$(V_MINOR)-$(V_STAGE)
-# TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)
-TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
-TUBSLATEX_DEBVERSION = 1:$(V_MAJOR).$(V_MINOR).$(V_PATCH)~r$(HG_REVISION)$(V_STAGE)
+ifeq ($(RELEASE),Y)
+  TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)
+else
+  TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
+endif
+TUBSLATEX_DEBVERSION = 1:$(V_MAJOR).$(V_MINOR).$(V_PATCH)~$(V_STAGE)-r$(HG_REVISION)
 
 # 
 # HG_TEXSTYLE = tex.hgstyle

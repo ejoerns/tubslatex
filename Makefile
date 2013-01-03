@@ -57,6 +57,7 @@ fetch:
 	$(CP) $(INSTALL_RAW_DIR)/$(INSTALL_ZIP) Website/$(TUBSLATEX_FULLVERSION)/.
 	$(CP) $(INSTALL_DEB_DIR)/$(INSTALL_DEB) Website/$(TUBSLATEX_FULLVERSION)/.
 	$(CP) $(INSTALL_WIN_DIR)/$(INSTALL_EXE) Website/$(TUBSLATEX_FULLVERSION)/.
+	$(CP) $(INSTALL_RAW_DIR)/tubslatex_installer.sh  Website/$(TUBSLATEX_FULLVERSION)/.
 	$(CP) Website/Changelog.txt             Website/$(TUBSLATEX_FULLVERSION)/.
 	$(ECHO) -e '$(DONE_STRING)'
 
