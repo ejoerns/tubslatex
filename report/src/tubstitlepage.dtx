@@ -392,11 +392,11 @@
   {%
     % Setze background-Layout
     \bglayout[pages=single]{%
-      \showtubslogo
+      \showtubslogo[\tubs@tp@logopos]
       \showtopline
       \showlogo{\tubs@tp@logo}%
     }%
-    \let\tmp@showtubslogo\showtubslogo
+    \def\tmp@showtubslogo{\showtubslogo[\tubs@tp@logopos]}
     \let\tmp@showtopline\showtopline
     \def\tmp@showlogo{\showlogo{\tubs@tp@logo}}%
     \l@addto@macro\titlepage{%
