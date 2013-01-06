@@ -438,7 +438,13 @@
 %</class>
     % Zusätzlicher Abstand bei maketitle
     \l@addto@macro\clearpage{\vspace*{2\tubsborderwidth}}%
+    % Makros sichern (werden bei KOMAs \maketitle ueberschrieben!)
+    \let\save@uppertitleback\@uppertitleback
+    \let\save@lowertitleback\@lowertitleback
     \origmaketitle
+    % Makros wiederherstellen
+    \global\let\@uppertitleback\save@uppertitleback
+    \global\let\@lowertitleback\save@lowertitleback
   }%
 }
 %</article|report|book|package>
