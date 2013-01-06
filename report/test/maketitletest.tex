@@ -1,0 +1,30 @@
+%--
+%-- This document can only be compiled with the corresponding test script!
+%--
+\documentclass[a4paper,twoside]{#DOCCLASS#}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{lipsum}
+
+\logo{\fboxsep0mm\fbox{\includegraphics{dummy_institut}}}
+\title{Dies ist der Titel}
+\subtitle{Dies ist der Untertitel}
+\author{Author One\and Author Two\and Author Three}
+\titlepicture{infozentrum}
+%
+\uppertitleback{Hier eine Info für die obere Rückseite}
+\lowertitleback{Hier eine Info für die untere Rückseite}
+\address{TU Braunschweig\\ Studentenweg 6\\ 38106 Braunschweig}
+\backpageinfo{Dies ist die Information für die Rückseite}
+\titleabstract{Dies ist ein netter abstract-Text, der auf der Vorderseite
+stehen soll und das Dokument mit ein paar netten Floskeln kurz beschreiben
+soll.}
+
+\begin{document}
+
+\maketitle[#TITLESTYLE#]
+\makebackpage[#BACKSTYLE#]
+
+\lipsum[1]\par\lipsum[2]
+
+\end{document}

@@ -1,0 +1,40 @@
+\documentclass[a4paper,10pt]{tubsreprt}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlueLight]{4}
+    Text normal (SOLL: oben)
+  \end{segment}
+  \begin{segment}[b,bgcolor=tuBlueLight60]{4}
+    Text SOLL: unten
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlueLight]{4}
+    Text normal (SOLL: oben)
+    \vfill
+    Text nach vfill (SOLL: unten)
+  \end{segment}
+  \begin{segment}[c,bgcolor=tuBlueLight60]{4}
+    Text mittig (SOLL: centered)
+  \end{segment}
+\end{gausspage}
+
+\begin{gausspage}
+  \begin{segment}[bgcolor=tuBlueLight]{4}
+    Text normal (SOLL: oben)
+    \vfill
+    Text nach 1. vfill (SOLL: mittig)
+    \vfill
+    Text nach 2. vfill (SOLL: unten)
+  \end{segment}
+  \begin{segment}[c,bgcolor=tuBlueLight60]{4}
+    \vfill
+    Text centered, nach vfill (SOLL: unten)
+  \end{segment}
+\end{gausspage}
+
+\end{document}          
