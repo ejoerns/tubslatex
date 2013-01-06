@@ -588,7 +588,9 @@
       \oldincludegraphics[##1]{##2}%
     \fi
   }%
+  \noindent\ignorespaces
 }{%
+  \ignorespacesafterend
   \par%
   \end{minipage}%
   \end{lrbox}%
@@ -1210,7 +1212,9 @@
       \parskip\tubs@restore@parskip%
       \parindent\tubs@restore@parindent%
       \tb@topfill
+      \noindent\ignorespaces
 }{%
+      \ignorespacesafterend
       \tb@bottomfill
     \end{minipage}%
   \end{lrbox}%
