@@ -1,4 +1,3 @@
-
 % \iffalse meta-comment
 %
 % Copyright (C) 2011 by Enrico Jörns
@@ -357,6 +356,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\titlepicture}
+%    \begin{macro}{\titlegraphic}
 % \oarg{scale option}\marg{picture}\par
 % Erlaubt ein Bild zu definieren, dass auf die Titelseite gesetzt werden soll.
 % Ob es gesetzt wird, ist abhängig vom gewählten Titelstil.
@@ -364,7 +364,9 @@
 \newcommand{\titlepicture}[2][cropped]{%
   \renewcommand{\tubs@tp@titlepicture}{[bgimage=#2,imagefit=#1]}
 }
+\let\titlegraphic\titlepicture
 %    \end{macrocode}
+%    \end{macro}
 %    \end{macro}
 %
 %    \begin{macro}{\titleabstract}
@@ -405,6 +407,7 @@
       \tmp@showlogo
     }%
     % Kompatibilität mit KOMA-twoside-Unterstützung für titlepage
+%<*package>
     \def\next@tpage{%
       \endtitlepage
       \let\tmp@showlogo\relax
@@ -416,6 +419,10 @@
       \fi
       \titlepage
     }%
+%</package>
+%<*class>
+    \@twosidefalse% Prevents from generating automatic backpage
+%</class>
     % Zusätzlicher Abstand bei maketitle
     \l@addto@macro\clearpage{\vspace*{2\tubsborderwidth}}%
     \origmaketitle
@@ -545,7 +552,7 @@
     \showtopline
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}{1}
-      \tubs@tp@address
+      \noindent\tubs@tp@address
     \end{segment}
   \end{gausspage}
 }
@@ -556,7 +563,7 @@
     \showtopline
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}{1}
-      \tubs@tp@address
+      \noindent\tubs@tp@address
     \end{segment}
   \end{gausspage}
 }
@@ -573,10 +580,10 @@
       \leavevmode\color{white}\tubs@tp@address
     \end{segment}
     \begin{segment}[bgcolor=tuSecondaryLight]{6}
-      \@uppertitleback\par
-      \tubs@tp@backinfo
+      \noindent\@uppertitleback\par
+      \noindent\tubs@tp@backinfo
       \vfill
-      \@lowertitleback
+      \noindent\@lowertitleback
     \end{segment}
   \end{gausspage}
 }
@@ -589,10 +596,10 @@
   \begin{gausspage}
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{8}
-      \@uppertitleback\par
-      \tubs@tp@backinfo
+      \noindent\@uppertitleback\par
+      \noindent\tubs@tp@backinfo
       \vfill
-      \@lowertitleback
+      \noindent\@lowertitleback
     \end{segment}
   \end{gausspage}
 }
@@ -605,7 +612,7 @@
   \begin{gausspage}
     \showtubslogo[\tubs@tp@logopos,plain]
     \begin{segment}[bgcolor=tuSecondaryLight]{2}
-      \usekomafont{copytext}\tubs@tp@address
+      \usekomafont{copytext}\noindent\tubs@tp@address
     \end{segment}
     \begin{segment}[bgcolor=tuSecondaryDark]{3}
       ~
