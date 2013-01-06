@@ -573,6 +573,7 @@
   \tubs@restore@parindent\parindent
   \begin{minipage}%
         [t]%
+        [\tubs@gb@height\TPVertModule-\tubs@gb@toppadding-\tubs@gb@bottompadding]%
         {\tubs@gb@width\TPHorizModule-\tubs@gb@leftpadding-\tubs@gb@rightpadding}% boxwidth minus text padding
   % restore par-lengths, avoid initial parskip
   \parskip\tubs@restore@parskip%
@@ -588,15 +589,18 @@
       \oldincludegraphics[##1]{##2}%
     \fi
   }%
+  \tb@topfill
   \noindent\ignorespaces
 }{%
   \ignorespacesafterend
+  \tb@bottomfill
   \par%
   \end{minipage}%
   \end{lrbox}%
   \setlength{\fboxsep}{0cm}% needed here??
   \begin{textblock}{\tubs@gb@width}(\tubs@gb@xpos,\tubs@gb@ypos)%
   \vspace*{-\parskip}%
+  \vspace*{\tubs@gb@toppadding}%
   \newdimen\temp@
   \newdimen\temp@b
   \setlength\temp@{\tubs@gb@height\TPVertModule}%
@@ -604,16 +608,10 @@
   \noindent
   \fboxsep0mm%
   \tubsbox@framebox{\tubsbox@colorbox{% inner paddings are set *only* here!
-    \vbox to \temp@{%
-      \vspace*{\tubs@gb@toppadding}%
-      \tb@topfill
-      \hbox to \temp@b{%
-        \hspace*{\tubs@gb@leftpadding}%
-        \usebox{\tubs@gb@storebox}%
-        \hspace*{\tubs@gb@rightpadding}%
-      }%
-      \tb@bottomfill
-      \vspace*{\tubs@gb@bottompadding}%
+    \hbox to \temp@b{%
+      \hspace*{\tubs@gb@leftpadding}%
+      \usebox{\tubs@gb@storebox}%
+      \hspace*{\tubs@gb@rightpadding}%
     }%
   }}%
   \end{textblock}%
