@@ -218,6 +218,13 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{}{notubslogo}
+% Deaktiviert die Darstellung des Siegelbandlogos
+%    \begin{macrocode}
+\define@boolkey{tubs@tp}{notubslogo}[true]{}
+%    \end{macrocode}
+%    \end{key}
+%
 %    \begin{macro}{\origmaketitle}
 % Original maketitle-Version gesichert. Weiche für doc.sty-definierte
 % maketitle-Version
@@ -235,7 +242,7 @@
 % Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][]{%
-  \setkeys*{tubs@tp}{logo=left,#1}
+  \setkeys*{tubs@tp}{logo=left,#1}%
   \ifthenelse{\equal{\XKV@rm}{}}{%
     \csname tubs@style@content@\style@select\endcsname%
     \csname tubs@style@bg@\style@select\endcsname%
@@ -251,8 +258,14 @@
 % Kommando um Rückseiten im CD zu erzeugen.
 %    \begin{macrocode}
 \newcommand{\makebackpage}[1][\style@select]{%
-  \expandafter\csname tubs@backstyle@bg@#1\endcsname%
-  \expandafter\csname tubs@backstyle@content@#1\endcsname%
+  \setkeys*{tubs@tp}{#1}%
+  \ifthenelse{\equal{\XKV@rm}{}}{%
+    \csname tubs@backstyle@content@\style@select\endcsname%
+    \csname tubs@backstyle@bg@\style@select\endcsname%
+  }{%
+    \csname tubs@backstyle@content@\XKV@rm\endcsname%
+    \csname tubs@backstyle@bg@\XKV@rm\endcsname%
+  }
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -546,28 +559,24 @@
 %
 %    \begin{macro}{plain}
 %    \begin{macrocode}
-%<*article>
 \new@back@style{plain}{}{%
   \begin{gausspage}
-    \showtopline
-    \showtubslogo[\tubs@tp@logopos,plain]
-    \begin{segment}{1}
-      \noindent\tubs@tp@address
+    \ifKV@tubs@tp@notubslogo\else
+      \showtopline
+      \showtubslogo[\tubs@tp@logopos,plain]%
+    \fi
+    \begin{segment}{8}%
+      \noindent\tubs@tp@address\par
+      \noindent\begin{minipage}[t]{\textwidth}%
+        \@uppertitleback
+      \end{minipage}\par
+      \vfill
+      \noindent\begin{minipage}[b]{\textwidth}%
+        \noindent\@lowertitleback
+      \end{minipage}%
     \end{segment}
   \end{gausspage}
 }
-%</article>
-%<*report|book>
-\new@back@style{plain}{}{%
-  \begin{gausspage}
-    \showtopline
-    \showtubslogo[\tubs@tp@logopos,plain]
-    \begin{segment}{1}
-      \noindent\tubs@tp@address
-    \end{segment}
-  \end{gausspage}
-}
-%</report|book>
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -575,7 +584,9 @@
 %    \begin{macrocode}
 \new@back@style{addressinfo}{}{%
   \begin{gausspage}
-    \showtubslogo[\tubs@tp@logopos,plain]
+    \ifKV@tubs@tp@notubslogo\else
+      \showtubslogo[\tubs@tp@logopos,plain]
+    \fi
     \begin{segment}[bgcolor=tuSecondary]{2}
       \leavevmode\color{white}\tubs@tp@address
     \end{segment}
@@ -594,7 +605,9 @@
 %    \begin{macrocode}
 \new@back@style{info}{}{%
   \begin{gausspage}
-    \showtubslogo[\tubs@tp@logopos,plain]
+    \ifKV@tubs@tp@notubslogo\else
+      \showtubslogo[\tubs@tp@logopos,plain]
+    \fi
     \begin{segment}[bgcolor=tuSecondaryLight]{8}
       \noindent\@uppertitleback\par
       \noindent\tubs@tp@backinfo
@@ -610,7 +623,9 @@
 %    \begin{macrocode}
 \new@back@style{trisec}{}{%
   \begin{gausspage}
-    \showtubslogo[\tubs@tp@logopos,plain]
+    \ifKV@tubs@tp@notubslogo\else
+      \showtubslogo[\tubs@tp@logopos,plain]
+    \fi
     \begin{segment}[bgcolor=tuSecondaryLight]{2}
       \usekomafont{copytext}\noindent\tubs@tp@address
     \end{segment}
