@@ -473,9 +473,9 @@
   \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
     \newdimen\tmp@logoheight
     \ifts@scifiposter
-      \setlength\tmp@logoheight{\tubssenderheight-1.5\tubsborderwidth}
+      \setlength\tmp@logoheight{\tubssenderheight-1.5\tubsborderwidth}%
     \else
-      \setlength\tmp@logoheight{\tubssenderheight-2\tubsborderwidth}
+      \setlength\tmp@logoheight{\tubssenderheight-2\tubsborderwidth}%
     \fi
     \parbox[b][\tmp@logoheight][c]%
       {0.5\paperwidth-0.5\tubspage@bcor-\tubsborderwidth}{%
