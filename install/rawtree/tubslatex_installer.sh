@@ -27,9 +27,25 @@ log_d() { log $dbg_lvl "DEBUG: $1"; }
 log() {
   if [ $verbosity -ge $1 ]; then
     # Expand escaped characters, wrap at 70 chars, indent wrapped lines
-    echo "$2" | fold -w70 -s | sed '2~1s/^/  /' >&3 || true
+    echo "$2" | fold -w80 -s >&3 || true
   fi
-  echo "$2" | fold -w70 -s | sed '2~1s/^/  /' >> $logfile || true
+  echo "$2" | fold -w80 -s >> $logfile || true
+}
+
+check_os() {
+  OS_NAME=""
+  case "$(uname)" in
+    "Darwin")
+      OS_NAME="Darwin"
+      log_d "OS found: Darwin"
+      ;;
+    "Linux")
+      OS_NAME="Linux"
+      log_d "OS found: Linux"
+      ;;
+    *)
+      log_d "OS unknown: $(uname)"
+  esac
 }
 
 #--- Checks for either wget or curl and stores result in 'download_cmd'
@@ -165,12 +181,13 @@ check_previous_tubslatex() {
 #-------------------------------------------------------------------------------
 
 # generate temporary logfile
-logfile=$(mktemp -p /tmp texlive-tubs.log.XXXXXXXX)
+logfile=$(mktemp /tmp/texlive-tubs.log.XXXXXXXX)
 chmod 777 $logfile
 
 # Process user arguments
 process_arguments $@
 
+check_os
 check_sudo
 
 if [ -z $zipurl ]; then
@@ -225,6 +242,7 @@ fi
 
 
 # Check if apt-get is available and allow automatic package installation
+if [ "$OS_NAME" = "Linux" ]; then
 status=0
 command -v apt-get >/dev/null 2>&1 || status=1
 if [ $status = 0 ]; then
@@ -249,6 +267,7 @@ if [ $status = 0 ]; then
 else
   log_d "apt-get not found"
 fi
+fi
 
 
 # get TEXMFLOCAL path
@@ -270,7 +289,7 @@ else
 fi
 
 echo -n "Copying files to TEXMFLOCAL..."
-if cp -r $unzipdir/doc $unzipdir/fonts $unzipdir/tex $texmfdir/.; then
+if $rootrun cp -r $unzipdir/doc $unzipdir/fonts $unzipdir/tex $texmfdir/.; then
   echo "done."
   rm -rf $unzipdir || true
 else
@@ -324,10 +343,12 @@ fi
 $rootrun mkdir -p /etc/texmf/updmap.d || true
 $rootrun touch /etc/texmf/updmap.d/10local.cfg || true
       
-# Check for getnonfreefonts and install if needed
-# Is either located at /usr/bin/getnonfreefonts (as symlink)
-# or at /usr/local/bin/getnonfreefonts
-if ([ ! -x /usr/bin/getnonfreefonts ] && [ ! -x /usr/local/bin/getnonfreefonts ]); then
+# Check if getnonfreefonts is available
+status=0
+command -v getnonfreefonts >/dev/null 2>&1 || status=1
+if [ $status = 0 ]; then
+  log_d "getnonfreefonts found"
+else
   echo ""
   echo "'getnonfreefonts' was not found on your system."
   echo "Do you want automatically download and install it? [y/n]"
