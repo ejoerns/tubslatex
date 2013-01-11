@@ -384,7 +384,7 @@ fi
 
 # Check for already available Mapfiles
 # (Some updmap versions fail trying to enable an active map)
-npsans=`updmap-sys --listmaps 2>&1 | grep NexusProSerif | grep -v ! | grep -v disabled || true`
+npsans=`updmap-sys --listmaps 2>&1 | grep NexusProSans | grep -v ! | grep -v disabled || true`
 npserif=`updmap-sys --listmaps 2>&1 | grep NexusProSerif | grep -v ! | grep -v disabled || true`
 
 # Enable Nexus maps
