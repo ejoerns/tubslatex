@@ -166,6 +166,26 @@ Function analyzeMiktex
   ${EndIf}
 FunctionEnd
 
+Var tubslatexVersion ; Previous installation of tubslatex
+Var tubslatexInstall ; Previous installation of tubslatex
+
+Function analyzeTubslatex
+  ; check if exists
+  ; should be: SHCTX "Software\tubslatex" "InstallDir"
+  EnumRegKey $tubslatexVersion HKLM Software\tubslatex 0
+  ${If} $tubslatexVersion == ""
+    ; check in HKCU
+    EnumRegKey $tubslatexVersion HKCU Software\tubslatex 0
+    ${If} $tubslatexVersion == ""
+      LogText "previous tubslatex not found"
+    ${Else}
+      LogText "previous tubslatex $tubslatexVersion user installation detected."
+    ${EndIf}
+  ${Else}
+    LogText "previous tubslatex $tubslatexVersion system-wide installation detected."
+  ${EndIf}
+FunctionEnd
+
 
 ; StrContains
 ; This function does a case sensitive searches for an occurrence of a substring in a string. 
@@ -240,9 +260,10 @@ Function getMiktexInstallPath
     ReadRegStr $R0 HKCU "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexInstall"
   ${EndIf}
   StrCmp $R0 "" 0 installDirReady
+    DetailPrint "MiKTeX installation directory could not be detected, trying default..."
     StrCpy $R0 "$PROGRAMFILES\MiKTeX $miktexVersion"
   InstallDirReady:
-;  messageBox MB_OK " Ok, MiKTeX is installed in $R0"
+  LogText "MiKTeX might be installed in $R0"
   !define MiktexInstallPath $R0
 FunctionEnd
 
@@ -363,12 +384,34 @@ FunctionEnd
 Var UpdmapDir
 
 ;-------------------------------------------------------------------------------
+; Initial Section (hidden)
+;-------------------------------------------------------------------------------
+Section "-preinstall"
+
+  ;; enables install logging
+  LogSet On
+  
+  ;; check for os bit version (32/64)
+  ${If} ${RunningX64}
+    DetailPrint "64 Bit Windows detected"
+    SetRegView 64
+  ${Else}
+    DetailPrint "32 Bit Windows detected"
+    SetRegView 32
+  ${EndIf}
+
+  ;; check miktex installation
+  Call analyzeMiktex
+  ;; check for previous tubslatex installation
+  Call analyzeTubslatex
+  
+SectionEnd
+
+
+;-------------------------------------------------------------------------------
 ; Installer Sections
 ;-------------------------------------------------------------------------------
 Section "Nexus" SecNexus
-
-  ;; enables install logging
-  LogSet on ; not working, NSIS_CONFIG_LOG not defined
 
   ;; Make sure that updmap.cfg exists, switch for local/global
   StrCpy $UpdmapDir "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
@@ -403,9 +446,6 @@ SectionEnd
 ;-------------------------------------------------------------------------------
 Section "Dokumentation" SecDoc
 
-  ;; enables install logging
-  LogSet on ; not working, NSIS_CONFIG_LOG not defined
-
   ;; files to copy
   SetOutPath "$INSTDIR"
   DetailPrint "Copying documentation files..."
@@ -418,9 +458,6 @@ SectionEnd
 ; tex Section
 ;-------------------------------------------------------------------------------
 Section "tubslatex" SecTubslatex
-
-  ;; enables install logging
-  LogSet on ; not working, NSIS_CONFIG_LOG not defined
 
   ;; files to copy
   SetOutPath "$INSTDIR"
@@ -436,14 +473,10 @@ Section "tubslatex" SecTubslatex
 
 SectionEnd
 
-
 ;-------------------------------------------------------------------------------
 ; Post Install Section
 ;-------------------------------------------------------------------------------
 Section "-postinst" SecPostInstall
-
-  ;; enables install logging
-  LogSet on ; not working, NSIS_CONFIG_LOG not defined
 
   Call getMiktexInstallPath
   Call addLocaltexmf
@@ -451,6 +484,7 @@ Section "-postinst" SecPostInstall
   ; Write program Information for later use
   WriteRegStr SHCTX "Software\tubslatex" "InstallDir" $INSTDIR
   WriteRegStr SHCTX "Software\tubslatex" "InstallMode" $MultiUser.InstallMode
+  WriteRegStr SHCTX "Software\tubslatex" "Version" "1.0" ; Testing only!
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -471,20 +505,11 @@ SectionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function .onInit
 
-  ; check for os bit version (32/64)
-  ${If} ${RunningX64}
-;    messageBox MB_OK "64 Bit Windows detected"
-    SetRegView 64
-  ${Else}
-;    messageBox MB_OK "32 Bit Windows detected"
-    SetRegView 32
-  ${EndIf}
 
 
   !insertmacro MULTIUSER_INIT
   ; TODO: place after install selection
   ;!insertmacro MUI_LANGDLL_DISPLAY
-  Call analyzeMiktex
 
 ;  # call userInfo plugin to get user info.
 ;  userInfo::getAccountType
