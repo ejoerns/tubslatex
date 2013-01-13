@@ -74,6 +74,7 @@ Var desiredInstallType
 !define MUI_DIRECTORYPAGE_TEXT_TOP $(STRING_DIRECTORYPAGE_TEXT_TOP)
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
+!define MUI_FINISHPAGE_NOAUTOCLOSE
 !insertmacro MUI_PAGE_FINISH
 
 ;; Uninstall Pages
@@ -89,8 +90,8 @@ Var desiredInstallType
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "German"
 
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexVersion.$\r$\nDo you want to continue installing Version ${VERSION}?"
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexVersion.$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\nDo you want to continue installing Version ${VERSION}?"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?"
 
 LangString STRING_TEXT_ALLUSERS ${LANG_ENGLISH} "Install for all users (global)"
 LangString STRING_TEXT_ALLUSERS ${LANG_GERMAN} "Für alle Benutzer installieren (global)"
@@ -110,8 +111,8 @@ LangString STRING_MB_LOCALDB_FOUND ${LANG_GERMAN} "Warnung! Lokale Datenbank gef
 LangString STRING_MB_NOMIKTEX ${LANG_ENGLISH} "Error: MiKTeX not installed, cancelling installation"
 LangString STRING_MB_NOMIKTEX ${LANG_GERMAN} "Fehler: Keine vorhandene MiKTeX-Installation gefunden, Installation wird abgebrochen."
 
+LangString STRING_MB_UPDWRITE_FAILED ${LANG_ENGLISH} "Error while writing updmap.cfg!"
 LangString STRING_MB_UPDWRITE_FAILED ${LANG_GERMAN} "Fehler beim Schreiben der updmap.cfg!"
-LangString STRING_MB_UPDWRITE_FAILED ${LANG_GERMAN} "Error while writing updmap.cfg!"
 
 ;--------------------------------
 ;Functions
@@ -191,31 +192,24 @@ Function analyzeMiktex
   ${EndIf}
 FunctionEnd
 
-Var tubslatexVersion ; Previous installation of tubslatex
-Var tubslatexInstall ; Previous installation of tubslatex
+Var tubslatexPreVersion ; Version of prevoious tubslatex install
+Var tubslatexPreSHCTX ; Shell context of previous tubslatex install
 
 Function analyzeTubslatex
   ; check if exists
-  ; should be: SHCTX "Software\tubslatex" "InstallDir"
-  ReadRegStr $tubslatexVersion HKLM "Software\tubslatex" "Version"
-  ${If} $tubslatexVersion == ""
+  ReadRegStr $tubslatexPreVersion HKLM "${TUBSLATEX_UNINST_REGDIR}" "DisplayVersion"
+  ${If} $tubslatexPreVersion == ""
     ; check in HKCU
-    ReadRegStr $tubslatexVersion HKCU "Software\tubslatex" "Version"
-    ${If} $tubslatexVersion == ""
+    ReadRegStr $tubslatexPreVersion HKCU "${TUBSLATEX_UNINST_REGDIR}" "Version"
+    ${If} $tubslatexPreVersion == ""
       LogText "previous tubslatex not found"
     ${Else}
-      LogText "previous tubslatex $tubslatexVersion user installation detected."
+      StrCpy $tubslatexPreSHCTX "HKCU"
+      LogText "previous tubslatex $tubslatexPreVersion user installation detected."
     ${EndIf}
   ${Else}
-    LogText "previous tubslatex $tubslatexVersion system-wide installation detected."
-  ${EndIf}
-
-  ; show message box if previous version was found
-  ${If} $tubslatexVersion != ""
-    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDYES noabort
-      DetailPrint "STOP: User aborted installation."
-      Abort
-    noabort:
+    StrCpy $tubslatexPreSHCTX "HKLM"
+    LogText "previous tubslatex $tubslatexPreVersion system-wide installation detected."
   ${EndIf}
 FunctionEnd
 
@@ -415,6 +409,7 @@ FunctionEnd
 
 
 Var UpdmapDir
+Var preUninstallString
 
 ;-------------------------------------------------------------------------------
 ; Initial Section (hidden)
@@ -426,6 +421,16 @@ Section "-preinstall"
   
   ;; check miktex installation
   Call analyzeMiktex
+
+  ;; Uninstall previous version
+  DetailPrint "Uninstalling previous Version of tubslatex..."
+  ${If} $tubslatexPreSHCTX == "HKLM"
+    ReadRegStr $preUninstallString HKLM "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
+  ${Else}
+    ReadRegStr $preUninstallString HKCU "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
+  ${EndIf}
+  Exec "$preUninstallString /S"
+
   
 SectionEnd
 
@@ -571,6 +576,14 @@ FunctionEnd
 Function myGuiInit
   ;; check for previous tubslatex installation
   Call analyzeTubslatex
+  
+  ; show message box if previous version was found
+  ${If} $tubslatexPreVersion != ""
+    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDYES noabort
+      DetailPrint "STOP: User aborted installation."
+      Abort
+    noabort:
+  ${EndIf}
 FunctionEnd
 
 
@@ -587,30 +600,41 @@ FunctionEnd
 ;-------------------------------------------------------------------------------
 Section "Uninstall"
 
+  ;; check for os bit version (32/64)
+  ${If} ${RunningX64}
+    DetailPrint "64 Bit Windows detected"
+    SetRegView 64
+  ${Else}
+    DetailPrint "32 Bit Windows detected"
+    SetRegView 32
+  ${EndIf}
+
   Delete "$INSTDIR\Uninstall.exe"
 
+  DetailPrint "Removing files..."
   RMDir /r "$INSTDIR"
 
-	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
-	Push "NexusProSans.map"
+  DetailPrint "Deleting font maps..."
+  Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
+  Push "NexusProSans.map"
   Call un.disableUpdmaps
-	Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
-	Push "NexusProSerif.map"
+  Push "$APPDATA\MiKTeX\$miktexVersion\miktex\config\updmap.cfg"
+  Push "NexusProSerif.map"
   Call un.disableUpdmaps
   
+  DetailPrint "Updating database..."
   ${If} $MultiUser.InstallMode == AllUsers
     ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
   ${Else}
     ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
   ${EndIf}
 
-  DeleteRegKey /ifempty SHCTX "Software\tubslatex"
-  
+  DetailPrint "Cleaning registry..."
+  DeleteRegKey SHCTX "${TUBSLATEX_REGDIR}"
   ;; Delete from windows uninstall list
-	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex"
+  DeleteRegKey SHCTX "${TUBSLATEX_UNINST_REGDIR}"
 
 SectionEnd
 
-; TODO: Test + Behandlung alter tusblatex-Installation?
 ; TODO: user roots aus MiKTeX bei Deinstallation cond. entfernen
 
