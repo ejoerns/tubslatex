@@ -155,9 +155,13 @@ Function analyzeMiktex
       MessageBox MB_OK "MiKTeX not installed, cancelling installation"
       Abort "MiKTeX not installed, cancelling installation"
     ${Else}
+      LogText "MiKTeX $miktexVersion user installation detected."
+      DetailPrint "MiKTeX $miktexVersion user installation detected."
       StrCpy $miktexInstall "UserInstall"
     ${EndIf}
   ${Else}
+    LogText "MiKTeX $miktexVersion system-wide installation detected."
+    DetailPrint "MiKTeX $miktexVersion system-wide installation detected."
     StrCpy $miktexInstall "CommonInstall"
   ${EndIf}
 FunctionEnd
@@ -252,10 +256,12 @@ Function addLocaltexmf
   ;; Test if MiKTeX installdir was selected, skip if true
   StrCmp ${MiktexInstallPath} $INSTDIR skipRootsUpdate
     ;; This part backs up already existing local texmf root paths and adds the new one
+    LogText "Installation in custom texmf directory"
     ReadRegStr $R0 SHCTX "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexRoots"
     ;; Test if directory ist already listed in UserRoots, skip if true
     ${StrContains} $R1 $INSTDIR $R0
     StrCmp $R1 "" 0 skipRootsUpdate
+      LogText "Adding $R1 to MikTeX root paths"
       WriteRegStr SHCTX "Software\MiKTeX.org\MiKTeX\$miktexVersion\Core" "$miktexRoots" "$INSTDIR;$R0"
   skipRootsUpdate:
 FunctionEnd
@@ -360,16 +366,21 @@ Var UpdmapDir
 ; Installer Sections
 ;-------------------------------------------------------------------------------
 Section "Nexus" SecNexus
-	;; Make sure that updmap.cfg exists, switch for local/global
+
+  ;; enables install logging
+  LogSet on ; not working, NSIS_CONFIG_LOG not defined
+
+  ;; Make sure that updmap.cfg exists, switch for local/global
   StrCpy $UpdmapDir "$APPDATA\MiKTeX\$miktexVersion\miktex\config\"
   SetOutPath $UpdmapDir
-	FileOpen $9 "updmap.cfg" w
-	FileClose $9
+  FileOpen $9 "updmap.cfg" w
+  FileClose $9
 
   SetOutPath "$INSTDIR"
 	FILE /r data\fonts
 
 	;; enable updmaps
+  DetailPrint "Enabling Nexus font maps..."
 	Push "$UpdmapDir\updmap.cfg"
 	Push "NexusProSans.map"
 	Call enableUpdmaps
@@ -378,6 +389,7 @@ Section "Nexus" SecNexus
 	Call enableUpdmaps
 
 	;; run font update
+  DetailPrint "Updating font database..."
 	${If} $MultiUser.InstallMode == AllUsers
   	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
 	${Else}
@@ -391,8 +403,12 @@ SectionEnd
 ;-------------------------------------------------------------------------------
 Section "Dokumentation" SecDoc
 
+  ;; enables install logging
+  LogSet on ; not working, NSIS_CONFIG_LOG not defined
+
   ;; files to copy
   SetOutPath "$INSTDIR"
+  DetailPrint "Copying documentation files..."
 	FILE /r data\doc
 
 SectionEnd
@@ -404,13 +420,14 @@ SectionEnd
 Section "tubslatex" SecTubslatex
 
   ;; enables install logging
-  ;LogSet on ; not working, NSIS_CONFIG_LOG not defined
+  LogSet on ; not working, NSIS_CONFIG_LOG not defined
 
   ;; files to copy
   SetOutPath "$INSTDIR"
 	FILE /r data\tex
 
 	;; run file db update script
+  DetailPrint "Updating fndb..."
   ${If} $MultiUser.InstallMode == AllUsers
   	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
   ${Else}
@@ -424,6 +441,10 @@ SectionEnd
 ; Post Install Section
 ;-------------------------------------------------------------------------------
 Section "-postinst" SecPostInstall
+
+  ;; enables install logging
+  LogSet on ; not working, NSIS_CONFIG_LOG not defined
+
   Call getMiktexInstallPath
   Call addLocaltexmf
 
