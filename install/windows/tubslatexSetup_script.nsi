@@ -1,33 +1,46 @@
 ;; Tubslatex Installer
-;; Written by Enrico Joerns
+;; (c) 2013 by Enrico Joerns
+;;
 
+;; Project definitions
 !define NAME    "tubslatex"
 !define VERSION REPLACEWITHVERSION
+!define TUBSLATEX_UNINST_REGDIR "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
+!define TUBSLATEX_REGDIR "Software\	${NAME}"
 
 ;--------------------------------
-;Include Modern UI
+;General
 
-;;; mulit user settings
+;; Name and file
+Name "${NAME}"
+BrandingText "TU Braunschweig" ; TODO: used?
+
+OutFile "${NAME}Setup_${VERSION}.exe"
+
+
+;--------------------------------
+; Modern UI pre-settings
+
+;; mult user settings
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
 ;; Page texts
 !define MULTIUSER_INSTALLMODEPAGE_TEXT_TOP "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
 !define MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS "Für alle Benutzer installieren (global)"
 !define MULTIUSER_INSTALLMODEPAGE_TEXT_CURRENTUSER "Nur für diesen Benutzer installieren (lokal)"
-; installation default subdir
-!define MULTIUSER_INSTALLMODE_INSTDIR "tubslatex"
-; registry keys
-!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "Software\tubslatex"
+;; installation default subdir
+!define MULTIUSER_INSTALLMODE_INSTDIR "${NAME}"
+;; registry keys
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "${TUBSLATEX_REGDIR}"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME "InstallMode"
-!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\tubslatex"
+!define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "${TUBSLATEX_REGDIR}"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME "InstallDir"
-; mode handler function
+;; mode handler function
 !define MULTIUSER_INSTALLMODE_FUNCTION setInstallMode
-; request highest possible execution level
+;; request highest possible execution level
 !define MULTIUSER_EXECUTIONLEVEL Highest
 
-
-; load libs
+;; load libs
 !include "x64.nsh"
 !include MultiUser.nsh
 !include "MUI2.nsh"
@@ -38,30 +51,9 @@
 
 
 ;--------------------------------
-;General
-
-;; Name and file
-Name "${NAME}"
-OutFile "${NAME}Setup_${VERSION}.exe"
-
-;; Default installation folder
-;InstallDir "$PROGRAMFILES\tubslatex"
-
-;; Get installation folder from registry if available
-;InstallDirRegKey HKCU "Software\tubslatex" ""
-
-;; Request application privileges for Windows Vista / 7
-;RequestExecutionLevel admin
-
-
-;--------------------------------
 ;Interface Settings
 
 !define MUI_ABORTWARNING
-
-; Directory page
-!define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
-
 
 ;--------------------------------
 ;Pages
@@ -69,19 +61,24 @@ OutFile "${NAME}Setup_${VERSION}.exe"
 Var checkSecondCall
 Var desiredInstallType
 
-; Install Pages
+;; Install Pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MULTIUSER_PAGE_INSTALLMODE 
 !insertmacro MUI_PAGE_COMPONENTS 
+;; Directory page
+!define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
-; Uninstall Pages
+
+;; Uninstall Pages
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
+;--------------------------------
+;Functions
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Function for page jump
@@ -192,7 +189,6 @@ Function analyzeTubslatex
       Abort
     noabort:
   ${EndIf}
-
 FunctionEnd
 
 
@@ -474,28 +470,53 @@ SectionEnd
 ;-------------------------------------------------------------------------------
 ; Post Install Section
 ;-------------------------------------------------------------------------------
+
 Section "-postinst" SecPostInstall
 
   Call getMiktexInstallPath
   Call addLocaltexmf
 
-  ; Write program Information for later use
-  WriteRegStr SHCTX "Software\tubslatex" "InstallDir" $INSTDIR
-  WriteRegStr SHCTX "Software\tubslatex" "InstallMode" $MultiUser.InstallMode
-  WriteRegStr SHCTX "Software\tubslatex" "Version" ${VERSION}
+  ;; Write program Information for later use
+  WriteRegStr SHCTX "${TUBSLATEX_REGDIR}" "InstallDir" $INSTDIR
+  WriteRegStr SHCTX "${TUBSLATEX_REGDIR}" "InstallMode" $MultiUser.InstallMode
+  WriteRegStr SHCTX "${TUBSLATEX_REGDIR}" "Version" ${VERSION}
 
-  ;Create uninstaller
+  ;; Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
-	;; register uninstaller for windows uninstall manager
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\tubslatex" "DisplayVersion" "${VERSION}"
+  ;; register uninstaller for windows uninstall manager
+  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
+  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayVersion" "${VERSION}"
 SectionEnd
+
+
+;--------------------------------
+;Language strings
+
+LangString DESC_SecNexus ${LANG_ENGLISH} "Nexus-Schrift"
+LangString DESC_SecNexus ${LANG_GERMAN} "Nexus font"
+
+LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
+LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
+
+LangString DESC_SecDoc ${LANG_ENGLISH} "tubslatex documentation"
+LangString DESC_SecDoc ${LANG_GERMAN} "tubslatex-Dokumentation"
+
+LangString DESC_AbortInstallation ${LANG_ENGLISH} "MiKTeX not installed. Canceling installation"
+LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. Installation wird abgebrochen."
+
+
+;Assign language strings to sections
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecNexus} $(DESC_SecNexus)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecDoc} $(DESC_SecDoc)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
+
 
 ;--------------------------------
 ;Installer Functions
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; .onInit
@@ -512,38 +533,15 @@ Function .onInit
     SetRegView 32
   ${EndIf}
 
+  ;; Check user privileges
+  !insertmacro MULTIUSER_INIT
+  ;; Show language dialog
+  !insertmacro MUI_LANGDLL_DISPLAY
+
   ;; check for previous tubslatex installation
   Call analyzeTubslatex
 
-  !insertmacro MULTIUSER_INIT
-  ; TODO: place after install selection
-  ;!insertmacro MUI_LANGDLL_DISPLAY
-
-;  # call userInfo plugin to get user info.
-;  userInfo::getAccountType
-;  # pop the result from the stack into $0
-;  pop $0
-;  StrCpy $userrights "admin"
-;  strCmp $0 "Admin" +3
-;		StrCpy $userrights "user"
-;		messageBox MB_OK "Info: Installer started without admin privileges. Only local install will be possible."
-
 FunctionEnd
-
-;--------------------------------
-;Descriptions
-
-;Language strings
-LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
-LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
-
-LangString DESC_AbortInstallation ${LANG_ENGLISH} "MiKTeX not installed. Canceling installation"
-LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. Installation wird abgebrochen."
-  
-;Assign language strings to sections
-!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecTubslatex} $(DESC_SecTubslatex)
-!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
