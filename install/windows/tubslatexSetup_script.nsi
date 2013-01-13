@@ -8,6 +8,8 @@
 !define TUBSLATEX_UNINST_REGDIR "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
 !define TUBSLATEX_REGDIR "Software\	${NAME}"
 
+
+
 ;--------------------------------
 ;General
 
@@ -25,9 +27,9 @@ OutFile "${NAME}Setup_${VERSION}.exe"
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
 ;; Page texts
-!define MULTIUSER_INSTALLMODEPAGE_TEXT_TOP "Es ist zu beachten, dass eine lokale Installation eine lokale Datenbank anlegt und somit globale Änderungen fortan ignoriert werden."
-!define MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS "Für alle Benutzer installieren (global)"
-!define MULTIUSER_INSTALLMODEPAGE_TEXT_CURRENTUSER "Nur für diesen Benutzer installieren (lokal)"
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_TOP "$(STRING_INSTALLMODEPAGE_TEXT_TOP)"
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_ALLUSERS "$(STRING_TEXT_ALLUSERS)"
+!define MULTIUSER_INSTALLMODEPAGE_TEXT_CURRENTUSER "$(STRING_TEXT_CURRENTUSER)"
 ;; installation default subdir
 !define MULTIUSER_INSTALLMODE_INSTDIR "${NAME}"
 ;; registry keys
@@ -39,6 +41,9 @@ OutFile "${NAME}Setup_${VERSION}.exe"
 !define MULTIUSER_INSTALLMODE_FUNCTION setInstallMode
 ;; request highest possible execution level
 !define MULTIUSER_EXECUTIONLEVEL Highest
+;; Add custom function to .onGUIInit
+!define MUI_CUSTOMFUNCTION_GUIINIT myGuiInit
+
 
 ;; load libs
 !include "x64.nsh"
@@ -66,7 +71,7 @@ Var desiredInstallType
 !insertmacro MULTIUSER_PAGE_INSTALLMODE 
 !insertmacro MUI_PAGE_COMPONENTS 
 ;; Directory page
-!define MUI_DIRECTORYPAGE_TEXT_TOP "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
+!define MUI_DIRECTORYPAGE_TEXT_TOP $(STRING_DIRECTORYPAGE_TEXT_TOP)
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -76,6 +81,37 @@ Var desiredInstallType
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
+
+;--------------------------------
+;Languages
+
+
+!insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "German"
+
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexVersion.$\r$\nDo you want to continue installing Version ${VERSION}?"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexVersion.$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?"
+
+LangString STRING_TEXT_ALLUSERS ${LANG_ENGLISH} "Install for all users (global)"
+LangString STRING_TEXT_ALLUSERS ${LANG_GERMAN} "Für alle Benutzer installieren (global)"
+
+LangString STRING_TEXT_CURRENTUSER ${LANG_ENGLISH} "Install for current user only (local)"
+LangString STRING_TEXT_CURRENTUSER ${LANG_GERMAN} "Nur für diesen Benutzer installieren (lokal)"
+
+LangString STRING_DIRECTORYPAGE_TEXT_TOP ${LANG_ENGLISH} "The contents my be installed in the MiKTeX installation directory. $\rBut it is recommended to choose a seperate folder or an already existing local TeX tree for installation."
+LangString STRING_DIRECTORYPAGE_TEXT_TOP ${LANG_GERMAN} "Die Inhalte können im MiKTeX-Hauptverzeichnis installiert werden. $\rEs wird aber empfohlen ein unabhängiges Verzeichnis oder ein bereits vorhandenes lokales TeX-Verzeichnis zu wählen."
+
+LangString STRING_INSTALLMODEPAGE_TEXT_TOP ${LANG_ENGLISH} "Note: A local installation will create a local database. As a result, global changes will be ignored henceforth."
+LangString STRING_INSTALLMODEPAGE_TEXT_TOP ${LANG_GERMAN} "Hinweis: Eine lokale Installation legt eine lokale Datenbank an, wodurch globale Änderungen fortan ignoriert werden."
+
+LangString STRING_MB_LOCALDB_FOUND ${LANG_ENGLISH} "Warning! Found local database!$\rSystem-wide installation my cause problems.$\r$\rDo you want to continue?"
+LangString STRING_MB_LOCALDB_FOUND ${LANG_GERMAN} "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?"
+
+LangString STRING_MB_NOMIKTEX ${LANG_ENGLISH} "Error: MiKTeX not installed, cancelling installation"
+LangString STRING_MB_NOMIKTEX ${LANG_GERMAN} "Fehler: Keine vorhandene MiKTeX-Installation gefunden, Installation wird abgebrochen."
+
+LangString STRING_MB_UPDWRITE_FAILED ${LANG_GERMAN} "Fehler beim Schreiben der updmap.cfg!"
+LangString STRING_MB_UPDWRITE_FAILED ${LANG_GERMAN} "Error while writing updmap.cfg!"
 
 ;--------------------------------
 ;Functions
@@ -112,7 +148,7 @@ Function setInstallMode
     ; Names of registry keys
     StrCpy $miktexRoots "CommonRoots"
     IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
-      MessageBox MB_YESNO "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?" IDYES noskip
+      MessageBox MB_YESNO "$(STRING_MB_LOCALDB_FOUND)" IDYES noskip
         StrCpy $R9 0 ;
         Call RelGotoPage
         Abort
@@ -123,14 +159,6 @@ Function setInstallMode
     StrCpy $miktexRoots "UserRoots"
   ${EndIf}
 FunctionEnd
-
-
-;--------------------------------
-;Languages
-
-!insertmacro MUI_LANGUAGE "English"
-!insertmacro MUI_LANGUAGE "German"
-
 
 ;--------------------------------
 ;Functions
@@ -149,7 +177,7 @@ Function analyzeMiktex
     ; check in HKCU
     EnumRegKey $miktexVersion HKCU Software\MiKTeX.org\MiKTeX 0
     ${If} $miktexVersion == ""
-      MessageBox MB_OK "MiKTeX not installed, cancelling installation"
+      MessageBox MB_OK "$(STRING_MB_NOMIKTEX)"
       Abort "MiKTeX not installed, cancelling installation"
     ${Else}
       LogText "MiKTeX $miktexVersion user installation detected."
@@ -184,7 +212,7 @@ Function analyzeTubslatex
 
   ; show message box if previous version was found
   ${If} $tubslatexVersion != ""
-    MessageBox MB_YESNO "Previous version of tubslatex detected: $tubslatexVersion.$\r$\nDo you want to continue installing Version ${VERSION}?" IDYES noabort
+    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDYES noabort
       DetailPrint "STOP: User aborted installation."
       Abort
     noabort:
@@ -350,7 +378,7 @@ Function enableUpdmaps
 	;; add map
 	${WriteToFile} "Map $R0$\r$\n" $R1
 	IfErrors 0 +2
-		messageBox MB_OK "Error while writing updmap.cfg!"
+		messageBox MB_OK "$(STRING_MB_UPDWRITE_FAILED)"
 FunctionEnd
 
 
@@ -506,7 +534,6 @@ LangString DESC_SecDoc ${LANG_GERMAN} "tubslatex-Dokumentation"
 LangString DESC_AbortInstallation ${LANG_ENGLISH} "MiKTeX not installed. Canceling installation"
 LangString DESC_AbortInstallation ${LANG_GERMAN} "MiKTeX ist nicht installiert. Installation wird abgebrochen."
 
-
 ;Assign language strings to sections
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${SecNexus} $(DESC_SecNexus)
@@ -537,10 +564,13 @@ Function .onInit
   !insertmacro MULTIUSER_INIT
   ;; Show language dialog
   !insertmacro MUI_LANGDLL_DISPLAY
+  
+FunctionEnd
 
+
+Function myGuiInit
   ;; check for previous tubslatex installation
   Call analyzeTubslatex
-
 FunctionEnd
 
 
