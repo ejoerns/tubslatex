@@ -172,10 +172,10 @@ Var tubslatexInstall ; Previous installation of tubslatex
 Function analyzeTubslatex
   ; check if exists
   ; should be: SHCTX "Software\tubslatex" "InstallDir"
-  EnumRegKey $tubslatexVersion HKLM Software\tubslatex 0
+  ReadRegStr $tubslatexVersion HKLM "Software\tubslatex" "Version"
   ${If} $tubslatexVersion == ""
     ; check in HKCU
-    EnumRegKey $tubslatexVersion HKCU Software\tubslatex 0
+    ReadRegStr $tubslatexVersion HKCU "Software\tubslatex" "Version"
     ${If} $tubslatexVersion == ""
       LogText "previous tubslatex not found"
     ${Else}
@@ -184,6 +184,15 @@ Function analyzeTubslatex
   ${Else}
     LogText "previous tubslatex $tubslatexVersion system-wide installation detected."
   ${EndIf}
+
+  ; show message box if previous version was found
+  ${If} $tubslatexVersion != ""
+    MessageBox MB_YESNO "Previous version of tubslatex detected: $tubslatexVersion.$\r$\nDo you want to continue installing Version ${VERSION}?" IDYES noabort
+      DetailPrint "STOP: User aborted installation."
+      Abort
+    noabort:
+  ${EndIf}
+
 FunctionEnd
 
 
@@ -391,19 +400,8 @@ Section "-preinstall"
   ;; enables install logging
   LogSet On
   
-  ;; check for os bit version (32/64)
-  ${If} ${RunningX64}
-    DetailPrint "64 Bit Windows detected"
-    SetRegView 64
-  ${Else}
-    DetailPrint "32 Bit Windows detected"
-    SetRegView 32
-  ${EndIf}
-
   ;; check miktex installation
   Call analyzeMiktex
-  ;; check for previous tubslatex installation
-  Call analyzeTubslatex
   
 SectionEnd
 
@@ -484,7 +482,7 @@ Section "-postinst" SecPostInstall
   ; Write program Information for later use
   WriteRegStr SHCTX "Software\tubslatex" "InstallDir" $INSTDIR
   WriteRegStr SHCTX "Software\tubslatex" "InstallMode" $MultiUser.InstallMode
-  WriteRegStr SHCTX "Software\tubslatex" "Version" "1.0" ; Testing only!
+  WriteRegStr SHCTX "Software\tubslatex" "Version" ${VERSION}
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -505,7 +503,17 @@ SectionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function .onInit
 
+  ;; check for os bit version (32/64)
+  ${If} ${RunningX64}
+    DetailPrint "64 Bit Windows detected"
+    SetRegView 64
+  ${Else}
+    DetailPrint "32 Bit Windows detected"
+    SetRegView 32
+  ${EndIf}
 
+  ;; check for previous tubslatex installation
+  Call analyzeTubslatex
 
   !insertmacro MULTIUSER_INIT
   ; TODO: place after install selection
