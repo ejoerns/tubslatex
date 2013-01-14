@@ -75,6 +75,7 @@ Var desiredInstallType
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !define MUI_FINISHPAGE_NOAUTOCLOSE
+!define MUI_FINISHPAGE_TEXT $(STRING_FINISHPAGE_TEXT)
 !insertmacro MUI_PAGE_FINISH
 
 ;; Uninstall Pages
@@ -90,8 +91,8 @@ Var desiredInstallType
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "German"
 
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\nDo you want to continue installing Version ${VERSION}?"
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\n$\r$\nDo you want to continue installing Version ${VERSION}?$\r$\n(Previous version will be uninstalled.)"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\n$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?$\r$\n(Vorherige Version wird deinstalliert.)"
 
 LangString STRING_TEXT_ALLUSERS ${LANG_ENGLISH} "Install for all users (global)"
 LangString STRING_TEXT_ALLUSERS ${LANG_GERMAN} "Für alle Benutzer installieren (global)"
@@ -113,6 +114,9 @@ LangString STRING_MB_NOMIKTEX ${LANG_GERMAN} "Fehler: Keine vorhandene MiKTeX-In
 
 LangString STRING_MB_UPDWRITE_FAILED ${LANG_ENGLISH} "Error while writing updmap.cfg!"
 LangString STRING_MB_UPDWRITE_FAILED ${LANG_GERMAN} "Fehler beim Schreiben der updmap.cfg!"
+
+LangString STRING_FINISHPAGE_TEXT ${LANG_ENGLISH} "tubslatex was installed on your computer.$\r$\n$\r$\nInstallation log was saved in $INSTDIR\install.log.$\r$\nPlease send this file if you report a bug."
+LangString STRING_FINISHPAGE_TEXT ${LANG_GERMAN} "tubslatex wurde auf Ihrem Computer installiert.$\r$\n$\r$\nInstallations-Log wurde in $INSTDIR\install.log gespeichert$\r$\nBitte senden Sie diese Datei mit, wenn Sie einen Fehler berichten."
 
 ;--------------------------------
 ;Functions
@@ -527,8 +531,8 @@ SectionEnd
 ;--------------------------------
 ;Language strings
 
-LangString DESC_SecNexus ${LANG_ENGLISH} "Nexus-Schrift"
-LangString DESC_SecNexus ${LANG_GERMAN} "Nexus font"
+LangString DESC_SecNexus ${LANG_ENGLISH} "Nexus font"
+LangString DESC_SecNexus ${LANG_GERMAN} "Nexus-Schrift"
 
 LangString DESC_SecTubslatex ${LANG_ENGLISH} "This includes the whole tubslatex installation."
 LangString DESC_SecTubslatex ${LANG_GERMAN} "Enthält die gesamtes tubslatex-Installation."
