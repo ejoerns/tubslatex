@@ -689,7 +689,7 @@
 %    \begin{macro}{\tubstyle@imagefit}
 % Speicher für die imagefit-Option
 %    \begin{macrocode}
-\newcommand{\tubstyle@imagefit}{\relax}
+\newcommand{\tubstyle@imagefit}{cropped}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -790,8 +790,6 @@
 % \oarg{options}\marg{height}\par
 % Hintergrund-Element,
 %    \begin{macrocode}
-\presetkeys{bgelement}{imagefit=default}{}
-%
 \newcommand{\bgelement}[2][]{
   \def\@current@height{#2}
   \setkeys*{bgelement}{#1}
