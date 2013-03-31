@@ -16,6 +16,8 @@ DISTVERSION = 0$(DIST)4
 # Installations-Verzeichnisse
 INSTALLPATH = /usr/local/share/texmf
 DOCPATH = /usr/share/doc/texlive-tubs
+# Lintian Override Path
+LINOVRDPATH = /usr/share/lintian/overrides
 
 all: build deb
 
@@ -35,6 +37,7 @@ structure:
 	$(MKDIR) -p texlive-tubs/DEBIAN
 	$(MKDIR) -p texlive-tubs$(INSTALLPATH)
 	$(MKDIR) -p texlive-tubs$(DOCPATH)
+	$(MKDIR) -p texlive-tubs$(LINOVRDPATH)
 	$(ECHO) -e '$(OK_STRING)'
 
 fetch:
@@ -46,12 +49,15 @@ fetch:
 	$(ECHO) -n "Creating deb archive files..."
 	$(CAT) control.template | sed 's/CONTROLVERSION/$(DEBVERSION)-$(DISTVERSION)/g' | \
 	$(SED) 's/INSTALLSIZE/'"`du -sk --apparent-size texlive-tubs | awk  '{print $$1}' `"'/g' > control
-	$(CP) control postinst prerm postrm texlive-tubs/DEBIAN/.
+	$(CP) lintian-overrides-texlive-tubs texlive-tubs$(LINOVRDPATH)/texlive-tubs
+	$(CP) control postinst prerm postrm templates texlive-tubs/DEBIAN/.
 	$(CP) changelog.Debian.template changelog.Debian
 	$(CP) changelog.template changelog
 	$(GZIP) -9f changelog
 	$(GZIP) -9f changelog.Debian
 	$(CP) copyright changelog.gz changelog.Debian.gz texlive-tubs$(DOCPATH)/.
+	find texlive-tubs/usr ! -type d -exec chmod 644 {} \;
+	find texlive-tubs/usr -type d -exec chmod 755 {} \;
 	$(ECHO) -e '$(OK_STRING)'
 
 cleantemp:

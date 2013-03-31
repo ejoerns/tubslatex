@@ -1,0 +1,6 @@
+Template: texlive-tubs/installgetnonfreefonts
+Type: boolean
+Description: Automatically download and install 'getnonfreefonts' (recommended)?
+ 'getnonfreefonts' was not found on your system.
+ If you want support for Arial font this programm is required.
+

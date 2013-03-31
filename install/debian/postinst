@@ -17,6 +17,8 @@ set -e
 # the debian-policy package
 #
 
+. /usr/share/debconf/confmodule
+
 case "$1" in
     configure)
 
@@ -30,36 +32,6 @@ case "$1" in
       echo "Please include this file if you report a bug."
     fi
 
-    echo -n "Checking fontmap..."
-    if pdftexmap=`kpsewhich pdftex.map` >> $logfile 2>&1; then
-      echo "done."
-      echo "Found map file: $pdftexmap" >> $logfile
-    else
-      echo "failed. Output has been stored in"
-      echo "$logfile"
-      echo "Please include this file if you report a bug."
-      exit 1
-    fi
-    
-#    varlibmap=``
-#    echo "varlibmap: $varlibmap"
-    if [ -z `echo $pdftexmap | grep /var/lib` ]; then
-      echo ""
-      echo "Warning: You seem to use a local font map\n  ($pdftexmap)."
-      echo "Only global font maps are supported in this installation"
-      read -p "Do you want to delete local font map? [y/n]" yesno
-      case $yesno in
-        y|Y)
-          echo -n "Deleting $pdftexmap..."
-          rm -f $pdftexmap
-          echo "done."
-          ;;
-        *)
-          echo "You may need to run updmap manually after install!"
-          ;;
-      esac
-    fi
-
     # Touch 10local.cfg to prevent errors of buggy updmap
     # TODO: This step might be skipped in texlive 201x
     mkdir -p /etc/texmf/updmap.d || true
@@ -69,11 +41,11 @@ case "$1" in
     # Is either located at /usr/bin/getnonfreefonts (as symlink)
     # or at /usr/local/bin/getnonfreefonts
     if ([ ! -x /usr/bin/getnonfreefonts ] && [ ! -x /usr/local/bin/getnonfreefonts ]); then
-      echo ""
-      echo "'getnonfreefonts' was not found on your system."
-      echo "Do you want automatically download and install it? [y/n]"
-      read yesno
-      if [ $yesno = "y" ]; then
+      db_input high texlive-tubs/installgetnonfreefonts || true
+      db_go
+
+      db_get texlive-tubs/installgetnonfreefonts
+      if [ "$RET" = "true" ]; then
 	echo -n "Downloading and installing getnonfreefonts..."
         if wget -P /tmp http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts >> $logfile 2>&1; then
           texlua /tmp/install-getnonfreefonts >> $logfile 2>&1

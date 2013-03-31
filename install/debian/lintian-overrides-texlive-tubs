@@ -1,0 +1,6 @@
+# We allow it to install in /usr/local
+texlive-tubs binary: dir-in-usr-local
+texlive-tubs binary: file-in-usr-local
+texlive-tubs binary: file-in-unusual-dir
+texlive-tubs binary: no-debconf-config
+
