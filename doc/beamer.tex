@@ -166,6 +166,8 @@ Einpassung nicht besonders kritisch. Jedoch wird durch ein korrektes Verhältnis
 sicher gestellt, dass keine wichtigen Teile des Bildes abgeschnitten werden.
 In Tabelle \ref{tbl:picratio} sind daher Bild-Seiten\-verhältnisse für
 verschiedene Seitenverhältnisse der Präsentation aufgeführt.
+Für die Wahl der Seitenverhältnisse stellt \Class{beamer} die Option
+\Option{aspectratio} zur Verfügung (siehe auch \chaptername~\ref{sec:beamer:hints:scale}):
 
 \begin{table}[ht]
 \centering
@@ -419,6 +421,7 @@ Beamer-Optionen zusätzlich angepasst werden.
 Autor und Titel werden, falls vorhanden, in ihrer Kurzversion dargestellt,
 welche jeweils bei \Macro{author} und \Macro{title} im optionalen Argument
 definiert werden kann.
+% TODO: Kurzversion erklären?
 
 Die Darstellung der einzelnen Textelemente wird abhängig von deren
 jeweilige Länge durch ein dynamisches Positionierungsschema optimal
@@ -768,15 +771,25 @@ Standard-Template verwendet werden, etc.
 Die Kombination mit anderen Templates ist im allgemeinen jedoch nicht
 CorporateDesign-konform, weswegen davon \emph{ausdrücklich} abgeraten wird.
 
-\subsection{Skalierbarkeit (Format)}
+\subsection{Skalierbarkeit (Format)}\label{sec:beamer:hints:scale}
 \Index{16:9}
 \Index{Format!Beamer}
 
-Die Beamer-Option \Option{aspectratio}, mit der die Präsentation auch auf
-andere Seitenformate gebrachte werden kann, wird vom Layout generell
-unterstützt, jedoch ist zu bedenken, dass dafür ein Titelbild in einem anderen
-Seitenverhältnis benötigt wird, wenn es verlustfrei dargestellt werden soll
+\begin{Declaration}
+  \KOption{aspectratio}\PValue{<43,1610,169,32,\ldots>}
+\end{Declaration}
+
+Mit der Standard-Beamer-Option \Option{aspectratio}, kann die Präsentation auch auf
+andere Seitenformate gebrachte werden.
+Dies wird vom Layout generell unterstützt, jedoch ist zu bedenken,
+dass dafür eventuell ein Titelbild in einem anderen
+Seitenverhältnis benötigt wird, wenn es weitgehend verlustfrei dargestellt werden soll
 (siehe Tabelle \ref{tbl:picratio}).
+
+Der Wert \PValue{43} entspricht dem voreingestellten Seitenverhältnis $4:3$,
+der Wert \PValue{169} entspricht dem Verhältnis $16:9$ und \PValue{1610}
+dem Verhältnis $16:10$. Weitere Werte können der offiziellen
+\Class{beamer}-Dokumentation\cite{beamer} entnommen werden.
 
 \begin{hint}
 Die Option \Option{aspectratio} steht erst ab beamer-Version 3.10
