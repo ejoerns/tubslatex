@@ -47,9 +47,10 @@ case "$1" in
       db_get texlive-tubs/installgetnonfreefonts
       if [ "$RET" = "true" ]; then
 	echo -n "Downloading and installing getnonfreefonts..."
-        if wget -P /tmp http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts >> $logfile 2>&1; then
-          texlua /tmp/install-getnonfreefonts >> $logfile 2>&1
-          rm -f /tmp/install-getnonfreefonts
+        texluatmp=$(mktemp -p /tmp install-getnonfreefonts.XXXXXXXX)
+        if wget http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts -O $texluatmp >> $logfile 2>&1; then
+          texlua $texluatmp >> $logfile 2>&1
+          rm -f $texluatmp
 	  echo "done."
         else
           echo "failed. Output has been stored in"
@@ -84,7 +85,8 @@ case "$1" in
       if updmap-sys --nomkmap --nohash --enable Map=NexusProSans.map >> $logfile 2>&1; then
         echo "done."
       else
-        echo "failed.\n Output has been stored in"
+        echo "failed."
+        echo "Output has been stored in"
         echo "$logfile"
         echo "Please include this file if you report a bug."
       fi
@@ -96,7 +98,8 @@ case "$1" in
       if updmap-sys --nomkmap --nohash --enable Map=NexusProSerif.map >> $logfile 2>&1; then
         echo "done."
       else
-        echo "failed.\n Output has been stored in"
+        echo "failed."
+        echo "Output has been stored in"
         echo "$logfile"
         echo "Please include this file if you report a bug."
       fi

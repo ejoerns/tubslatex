@@ -56,8 +56,8 @@ fetch:
 	$(GZIP) -9f changelog
 	$(GZIP) -9f changelog.Debian
 	$(CP) copyright changelog.gz changelog.Debian.gz texlive-tubs$(DOCPATH)/.
-	find texlive-tubs/usr ! -type d -exec chmod 644 {} \;
-	find texlive-tubs/usr -type d -exec chmod 755 {} \;
+	$(Q)find texlive-tubs/usr ! -type d -exec chmod 644 {} \;
+	$(Q)find texlive-tubs/usr -type d -exec chmod 755 {} \;
 	$(ECHO) -e '$(OK_STRING)'
 
 cleantemp:

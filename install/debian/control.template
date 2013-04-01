@@ -4,7 +4,7 @@ Architecture: all
 Installed-Size: INSTALLSIZE
 Section: tex
 Priority: extra
-Depends: texlive-base, texlive-latex-extra, texlive-fonts-extra, latex-beamer, texlive-lang-german, texlive-fonts-recommended, texlive-extra-utils, cm-super, wget
+Depends: debconf, texlive-base, texlive-latex-extra, texlive-fonts-extra, latex-beamer, texlive-lang-german, texlive-fonts-recommended, texlive-extra-utils, cm-super, wget
 Maintainer: Enrico Jörns <e.joerns@tu-bs.de>
 Homepage: http://tu-braunschweig.de
 Description: LaTeX-Vorlagen zum Corporate Design der TU Braunschweig.

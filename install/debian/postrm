@@ -19,46 +19,54 @@ set -e
 
 
 case "$1" in
-    purge|remove|abort-install|abort-upgrade|disappear)
-      logfile=$(mktemp -p /tmp texlive-tubs.XXXXXXXX)
-      echo -n "Running mktexlsr..."
-      if mktexlsr >> $logfile 2>&1; then
-        echo "done."
-      else 
-        echo "failed. Output has been stored in"
-        echo "$logfile"
-        echo "Please include this file if you report a bug."
-      fi
+  purge|remove|abort-install|abort-upgrade|disappear)
+    logfile=$(mktemp -p /tmp texlive-tubs.XXXXXXXX)
+    echo -n "Running mktexlsr..."
+    if mktexlsr >> $logfile 2>&1; then
+      echo "done."
+    else 
+      echo "failed. Output has been stored in"
+      echo "$logfile"
+      echo "Please include this file if you report a bug."
+    fi
 
-      echo -n "Removing map file for NexusProSans..."
-      if updmap-sys --nomkmap --nohash --disable NexusProSans.map > $logfile 2>&1; then
-	echo "done."
-      else
-        echo "failed."
-      fi
-      echo -n "Removing map file for NexusProSerif..."
-      if updmap-sys --nomkmap --nohash --disable NexusProSerif.map > $logfile 2>&1; then
-	echo "done."
-      else
-        echo "failed."
-      fi
+    echo -n "Removing map file for NexusProSans..."
+    if updmap-sys --nomkmap --nohash --disable NexusProSans.map > $logfile 2>&1; then
+      echo "done."
+    else
+      echo "failed."
+    fi
+    echo -n "Removing map file for NexusProSerif..."
+    if updmap-sys --nomkmap --nohash --disable NexusProSerif.map > $logfile 2>&1; then
+      echo "done."
+    else
+      echo "failed."
+    fi
 
-      echo -n "Running updmap-sys..."
-      if updmap-sys > $logfile 2>&1; then
-	echo "done."
-      else
-        echo "failed."
-      fi
-      
-      echo "Output has been stored in $logfile"
+    echo -n "Running updmap-sys..."
+    if updmap-sys > $logfile 2>&1; then
+      echo "done."
+    else
+      echo "failed."
+    fi
+
+    #!/bin/bash
+    set -e
+
+    # Source debconf library.
+    . /usr/share/debconf/confmodule
+    # Remove my changes to the db.
+    db_purge
+
+    echo "Output has been stored in $logfile"
 
     ;;
-    upgrade|failed-upgrade)
-        # nothing to to...
+  upgrade|failed-upgrade)
+    # nothing to to...
     ;;
-    *)
-        echo "postrm called with unknown argument \`$1'" >&2
-        exit 1
+  *)
+    echo "postrm called with unknown argument \`$1'" >&2
+    exit 1
 
 esac
 
