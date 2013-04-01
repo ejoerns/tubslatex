@@ -1,11 +1,1 @@
-You need the program 'otftotfm' which can be installed
-using this command:
-
-sudo aptitude install lcdf-typetools
-
----
-
-!! To install fonts on your system type
-$ make font
-$ sudo make fontinstall
-
+Um die Vorlagen zu installieren Script install.sh als root ausführen.
