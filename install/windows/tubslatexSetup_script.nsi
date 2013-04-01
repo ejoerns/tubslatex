@@ -505,7 +505,7 @@ Section "tubslatex" SecTubslatex
 SectionEnd
 
 ;-------------------------------------------------------------------------------
-; Post Install Section
+; Post Install Section (hidden)
 ;-------------------------------------------------------------------------------
 
 Section "-postinst" SecPostInstall
@@ -523,6 +523,7 @@ Section "-postinst" SecPostInstall
 
   ;; register uninstaller for windows uninstall manager
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
+  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "Publisher" "TU Braunschweig"
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayVersion" "${VERSION}"
 SectionEnd
