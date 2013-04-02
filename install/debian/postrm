@@ -17,6 +17,12 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+if [ "$1" = "purge" -a -e /usr/share/debconf/confmodule ]; then
+  # Source debconf library.
+  . /usr/share/debconf/confmodule
+  # Remove my changes to the db.
+  db_purge
+fi
 
 case "$1" in
   purge|remove|abort-install|abort-upgrade|disappear)
@@ -50,20 +56,13 @@ case "$1" in
       echo "failed."
     fi
 
-    #!/bin/bash
-    set -e
-
-    # Source debconf library.
-    . /usr/share/debconf/confmodule
-    # Remove my changes to the db.
-    db_purge
-
     echo "Output has been stored in $logfile"
-
     ;;
+
   upgrade|failed-upgrade)
     # nothing to to...
     ;;
+ 
   *)
     echo "postrm called with unknown argument \`$1'" >&2
     exit 1
@@ -72,3 +71,4 @@ esac
 
 
 exit 0
+
