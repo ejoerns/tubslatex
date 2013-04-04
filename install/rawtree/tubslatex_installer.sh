@@ -208,6 +208,7 @@ check_previous_tubslatex
 
 # create tmpdir
 unzipdir=$(mktemp -d /tmp/texlive-tubs.XXXXXXXX)
+log_d "unzipdir dir is $unzipdir"
 
 # download
 if [ ! -f $zipurl ]; then
@@ -220,7 +221,7 @@ fi
 
 # extract
 echo -n "Extracting..."
-if unzip $unzipdir/texlive_tubs.zip -d $unzipdir >> $logfile 2>&1; then
+if unzip -o $unzipdir/texlive_tubs.zip -d $unzipdir >> $logfile 2>&1; then
 	echo "done."
 else
 	echo "failed."
