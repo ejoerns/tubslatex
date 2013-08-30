@@ -21,7 +21,10 @@ INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
 all: src
 
-src: $(STYLIST)
+src: init $(STYLIST)
+
+init:
+	$(MAKE) -C $(BASEDIR) versiondtx
 
 doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) $(TEXDOCFILE:%.tex=%.pdf) cleantemp
 

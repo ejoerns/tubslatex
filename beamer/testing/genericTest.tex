@@ -1,0 +1,264 @@
+% Offizielle Beispieldatei für beamer-Vorlage aus tubslatex Version 0.3beta2
+\documentclass[fleqn,11pt,aspectratio=169]{beamer}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usetheme[%
+  %cmyk,%<rgbprint>,          Auswahl des Farbmodells
+  blue,%<orange/green/violet> Auswahl des Sekundärfarbklangs
+  dark,%<light,medium>        Auswahl der Helligkeit
+  %colorhead,%    Farbig hinterlegte Kopfleiste
+  %colorfoot,%    Farbig hinterlegt Fußleiste auf Titelseite
+  colorblocks,%   Blöcke Farbig hinterlegen
+  %nopagenum,%    Keine Seitennumer in Fußzeile
+  %nodate,%       Kein Datum in Fußleiste
+  tocinheader,%   Inhaltsverzeichnis in Kopfleiste
+  %tinytocinheader,% kleines Kopfleisten-Inhaltsverzeichnis
+  %widetoc,%      breites Kopfleisten-Inhaltsverzeichnis
+  %narrowtoc,%    schmales Kopfleisten-Inhaltsverzeichnis
+  %nosubsectionsinheader,%  Keine subsections im Kopfleisten-Inhaltsverzeichnis
+  %nologoinfoot,% Kein Logo im Fußbereich darstellen
+  ]{tubs}
+
+% Titelseite
+\title{Meine Pr\"asentation}
+\subtitle{Das Corporate Design in  \LaTeX}
+\author{Max Mustermann}
+% Titelgrafik, automatisch beschnitten, Weitere Optionen: <scaled/cropx/cropy>
+% \titlegraphic[cropped]{\includegraphics{infozentrum.jpg}}
+\titlegraphic[scaled]{\includegraphics{titlepicture.jpg}}
+
+% Logo, dass auf Titelseiten oben rechts und auf Inthaltsseiten unten rechts
+% dargestellt wird. Es wird jeweils automatisch skliert
+\logo{\includegraphics{dummy_institut.pdf}}
+
+\begin{document}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Check: vertikale Logo-Ausrichtung, Logo-Umbruch
+%        Umbruch und Ausrichtung des Titel-Textes
+{%
+\logo{Etwas längeres Text-Logo, das umgebrochen werden sollte.}
+\title{Jetzt mal mit einem deutlich längeren Titel, der umgebrochen werden muss}
+\begin{frame}[plain]
+\titlepage
+\end{frame}}
+
+% Check: vertikale Text-Ausrichtung
+%        Komma nach Name unerwünscht
+{\title{Titel ohne Untertitel und ohne Datum}
+\subtitle{}
+\date{}
+\begin{frame}[plain]
+\titlepage
+\end{frame}}
+
+\part{Erster Teil}
+
+\begin{frame}[plain]
+  \partpage
+\end{frame}
+
+
+\section{Kapitel 1}
+
+\begin{frame}{Inhalt}
+\tableofcontents
+\end{frame}
+
+\subsection{Irgendein sehr sehr langer Kapitelname}
+
+\begin{frame}{}
+Titellose Folie
+\end{frame}
+
+\begin{frame}{Zeichentest}
+a,b,c,d,e,f,g,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+
+A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
+
+Ä,Ö,Ü,ä,ö,ü,ß
+
+1,2,3,4,5,6,7,8,9,0
+
+°,!,",`,§,\$,\%,\&,/,(,),=,?,+,*,\#,',-,\_,.,:,;,\{,\},[,],<,>,|,\~,\textbackslash
+\end{frame}
+
+\subsection{Logos}
+
+% Check: vertikale Zentrierung
+{\logo{Dieser Text sollte\\ vertikal zentriert sein}
+\begin{frame}{Text-Logo}
+\end{frame}}
+
+% Check: Umbruch
+{\logo{a b c d e f g h i j k l m n o p q r s t u v w x y z}
+\begin{frame}{Text-Logo -- Umbruch}
+\end{frame}}
+
+\begin{frame}{Hier steht der Titel der Folie}
+Wir beginnen mit einer Aufzählung
+\begin{itemize}
+  \item Aufzählzeichen werden als Quadrate dargestellt
+  \begin{itemize}
+    \item Unterpunkte ebenfalls
+    \item Allerdings etwas kleiner
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\section{Kapitel 2}
+
+\begin{frame}{Itemize-Test}
+  \begin{itemize}
+    \item Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+    \item At vero eos et accusam et justo duo dolores et ea rebum.
+      \begin{itemize}
+        \item Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+          dolor sit amet!
+          \begin{itemize}
+            \item Nam eget dui.
+            \item Maecenas tempus, tellus eget condimentum rhoncus, sem quam
+              semper libero, sit amet adipiscing sem neque sed ipsum.
+          \end{itemize}
+        \item Duis leo
+      \end{itemize}
+    \item Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. 
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Unterkapitel 1}
+
+
+\begin{frame}{Mathe-Test}
+  Gaußsche Summenformel:
+  \[1 + 2 + 3 + 4 + \ldots + n = \sum_{k=1}^n k = \frac{n(n+1)}{2}\]
+  Faltung:
+  \[(f*g)(\xi) := \int_{\mathbb{R}^n} f(y)g(\xi-y)\mathrm{d}y\]
+\end{frame}
+
+
+\part{Zweiter Teil -- Hier machen wir den Titel auch einmal etwas länger}
+
+
+\begin{frame}
+  \partpage
+\end{frame}
+
+
+\section{Ende}
+
+
+\begin{frame}{Farbklänge}\small
+  Farbklänge tuOrange\ldots, tuBlue\ldots, tuGreen\ldots, tuViolet\ldots\\\tiny
+  \colorshow[0.95\textwidth]{Orange}{Dark}%
+  \colorshow[0.95\textwidth]{Orange}{Medium}%
+  \colorshow[0.95\textwidth]{Orange}{Light}~\\
+  \colorshow[0.95\textwidth]{Blue}{Dark}%
+  \colorshow[0.95\textwidth]{Blue}{Medium}%
+  \colorshow[0.95\textwidth]{Blue}{Light}~\\
+  \colorshow[0.95\textwidth]{Green}{Dark}%
+  \colorshow[0.95\textwidth]{Green}{Medium}%
+  \colorshow[0.95\textwidth]{Green}{Light}~\\
+  \colorshow[0.95\textwidth]{Violet}{Dark}%
+  \colorshow[0.95\textwidth]{Violet}{Medium}
+  \colorshow[0.95\textwidth]{Violet}{Light}
+\end{frame}
+
+
+\begin{frame}{Farbtest}
+  \color{tuRed}
+  Dies ist ein Text in tuRed.
+
+  \color{tuSecondaryDark80}
+  Dies ist ein Text in tuSecondaryDark80.
+
+  \color{tuSecondaryLight}
+  Dies ist ein Text in tuSecondaryLight.
+\end{frame}
+
+\begin{frame}{Verwendung von Spalten}
+  \begin{columns}[onlytextwidth]
+    \column{0.5\textwidth}
+      Dies ist die erste Spalte.
+      Die Angabe der Option \texttt{[onlytextwidth]}
+      sorgt dafür, dass die Spaltenbreite korrekt eingehalten wird.
+    \column{0.5\textwidth}
+      Dies ist die zweite Spalte mit weiteren Informationen.
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Verwendung von Spalten}
+  \begin{columns}[onlytextwidth]
+    \column{0.5\textwidth}
+      Hier steht etwas sinnloser Text, der notfalls auch einen
+      Zusammenhang zum nebenstehenden Bild haben könnte
+    \column{0.5\textwidth}
+      \centering
+      \begin{figure}
+        \includegraphics[width=0.9\textwidth]{infozentrum.jpg}
+        \caption{Dies ist ein Bild von Mr. X}
+      \end{figure}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Blöcke}
+  \begin{block}{Diest ist ein Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{block}
+  \begin{exampleblock}{Diest ist ein Example-Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{exampleblock}
+  \begin{alertblock}{Diest ist ein Alert-Block}
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+  \end{alertblock}
+\end{frame}
+
+
+\begin{frame}[fragile]{Quellcode}
+Quellcode-Frames müssen immer die Option \texttt{[fragile]} tragen.
+  \begin{verbatim}
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  cout << "Hello World!";
+}
+  \end{verbatim}
+\end{frame}
+
+
+% Check: Farbgebung und Abstände
+\begin{frame}[highlight]{Wichtig}
+Diese Folie ist wichtig!
+\end{frame}
+
+% Check: Abstände links und rechts
+\begin{frame}{Hier kommt ein \hfill hfill}
+Hier ist auch ein \hfill hfill
+\end{frame}
+
+% Check: Umbruch, Abstände
+\begin{frame}{Nicht wichtig aber mit sehr sehr langem und ausgedehntem Titel, der über mehrere Zeilen geht}
+Diese Folie ist nicht wichtig!
+\end{frame}
+
+% Check: Farben des Titels
+{\setbeamercolor{palette primary}{bg=tuGreen, fg=tuBlue}
+\begin{frame}{Änderung an der Farbpalette}
+Der Titel müsste in tuGreen (bg) und tuBlue (fg) gefärbt sein
+\end{frame}
+}
+
+\end{document}

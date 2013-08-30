@@ -80,6 +80,21 @@ check_downloader() {
   exit 1
 }
 
+
+check_texlive() {
+  # check for kpsewhich
+  status=0
+  command -v kpsewhich >/dev/null 2>&1 || status=1
+  if [ $status = 0 ]; then
+    log_d "kpsewhich found"
+    return 0
+  fi
+  
+  log_e "Program 'kpsewhich' not found."
+  log_e "Be sure to use texlive or mactex!"
+  exit 1
+}
+
 #--- checks if sudo is available
 check_sudo() {
   rootrun=""
@@ -190,6 +205,7 @@ chmod 777 $logfile
 process_arguments $@
 
 check_os
+check_texlive
 check_sudo
 
 if [ -z $zipurl ]; then

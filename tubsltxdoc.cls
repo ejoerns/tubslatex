@@ -13,3 +13,6 @@
   \addtolength{\leftmargin}{\labelsep}}%
   \raggedright}
  {\end{list}}
+
+\parindent0mm
+\parskip\medskipamount

@@ -17,29 +17,12 @@ nexus/*.sty
 nexus/fonts
 cd-base/src/tubscolors.sty
 cd-base/src/tubslogo.sty
-beamer/src/beamercolorthemetubs.sty
-beamer/src/beamerfontthemetubs.sty
-beamer/src/beamerinnerthemetubs.sty
-beamer/src/beamerouterthemetubs.sty
-beamer/src/beamerthemetubs.sty
-beamer/src/tubsbeamersizes.sty
+beamer/*.sty
 letter/src/tubs.lco
 letter/src/tubslttr2.cls
-report/src/build
-report/src/tubsa49pt.clo
-report/src/tubsa59pt.clo
-report/src/tubsartcl.cls
-report/src/tubsbook.cls
-report/src/tubsdin9pt.clo
-report/src/tubsflowfram.sty
-report/src/tubsposter.cls
-report/src/tubsreprt.cls
-report/src/*.clo
-report/src/tubsdoc.sty
-report/src/tubsstyle.sty
-report/src/tubstypearea.sty
-report/src/tubsbox.sty
-report/src/tubstitlepage.sty
+report/*.cls
+report/*.sty
+report/*.clo
 examples/tubslatex_examples.zip
 doc/examples/gallery/*
 doc/examples/png/*
@@ -83,6 +66,7 @@ Probleme
 *.nav
 *.snm
 *.vrb
+*.lco
 
 # and built ones
 *.deb

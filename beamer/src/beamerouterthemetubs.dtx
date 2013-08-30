@@ -242,6 +242,15 @@
 %    \end{macrocode}
 %
 %
+%    \begin{macrocode}
+% \newcommand<>\insertsource{null}
+% \newcommand<>\source[1]{%
+% %   \gdef\insertsource{}
+%   \only#2{\renewcommand<>\insertsource{#1}}%
+%   insertsource is: \insertsource
+% }
+%    \end{macrocode}
+%
 % Titlepage-Farbzuordnung
 %    \begin{macrocode}
 \setbeamercolor{titlepage}{use={palette secondary}, parent=palette secondary}
@@ -468,6 +477,9 @@
     \newdimen\@footline@textwidth%
     \beamer@CDlogowidth=24.7mm%
     \beamer@CDlogoheight=9.17mm%
+%     %
+%     \hspace*{-\textwidth}\hspace{\beamer@CDlogowidth}\hspace{5pt}%
+%     \raisebox{3pt}{\parbox[b]{\textwidth-\beamer@CDlogowidth-5pt-\beamer@CDborderwidth}{\raggedleft\strut\insertsource}\hspace*{\beamer@CDborderwidth}}%
     % Wieder auf Zeilenanfang
     \hspace*{-\paperwidth}%
     % Siegelbandlogo

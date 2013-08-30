@@ -113,7 +113,7 @@ clean: cleantemp
 	$(RM) -rf tex
 	$(RM) -rf doc
 	$(RM) -rf fonts
-	$(RM) -rf tubslatex_$(VERSION).zip
+	$(RM) -rf tubslatex_$(VERSION).tds.zip
 	$(ECHO) -e '$(OK_STRING)'
 
 # Kombilate löschen

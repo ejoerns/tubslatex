@@ -219,12 +219,19 @@
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
 %
+%    \begin{macro}{absheadline}
+% Basis-Font für alle Überschriften
+%    \begin{macrocode}
+\newkomafont{absheadline}{\sffamily\bfseries\lnum}
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macro}{headline}
 %    \begin{macro}{title}
 % Schrifteinstellungen für Titel
 % Hinweis: title wird nicht von Option |colorheadings| beeinflusst.
 %    \begin{macrocode}
-\setkomafont{title}{\sffamily\Huge\bfseries}
+\setkomafont{title}{\usekomafont{absheadline}\Huge}
 \newkomafont{headline}{\usekomafont{title}\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
@@ -232,7 +239,7 @@
 %    \begin{macro}{headlinesmall}
 % Schrifteinstellungen für kleiner Titel
 %    \begin{macrocode}
-\newkomafont{headlinesmall}{\sffamily\huge\bfseries\tubs@fontcolor{tubsheadings}}
+\newkomafont{headlinesmall}{\usekomafont{absheadline}\huge\tubs@fontcolor{tubsheadings}}
 % \setkomafont{section}{\usekomafont{headlinesmall}}
 %    \end{macrocode}
 %    \end{macro}
@@ -242,7 +249,7 @@
 % Schrifteinstellungen für Sub-Titel.
 % Hinweis: subtitle wird nicht von Option |colorheadings| beeinflusst.
 %    \begin{macrocode}
-\setkomafont{subtitle}{\sffamily\Large\bfseries}
+\setkomafont{subtitle}{\usekomafont{absheadline}\Large}
 \newkomafont{subheadline}{\usekomafont{subtitle}\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
@@ -250,7 +257,8 @@
 %    \begin{macro}{subheadlinesmall}
 % Schrifteinstellungen für Sub-Titel (klein)
 %    \begin{macrocode}
-\newkomafont{subheadlinesmall}{\sffamily\large\bfseries\tubs@fontcolor{tubsheadings}}
+\newkomafont{subheadlinesmall}{\usekomafont{absheadline}\large\tubs@fontcolor{
+tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}
 %

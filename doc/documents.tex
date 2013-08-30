@@ -295,7 +295,7 @@ Darüber hinaus können auch Rückseiten automatisch bzw. manuell eingefügt
 werden. Das Kapitel~\ref{subsec:backpages} geht hierauf näher ein.
 
 \begin{Declaration}
-  \Macro{maketitle}\OParameter{style}
+  \Macro{maketitle}\OParameter{style,Optionen}
 \end{Declaration}
 \CommandIndex{maketitle}
 
@@ -314,6 +314,7 @@ Beispielen findet sich in Kapitel~\ref{sec:titlestyles}.\bigskip
   Anwendungsfälle angemessen sein sollte.
 \end{hint}
 
+% TODO: Hinweis zu Schriftgrößen-Option?
 
 Neben den standardmäßig definierten Elementen für Titelseiten wie \Macro{author}
 oder \Macro{title} werden in \tubslatex noch ein paar Zusätzliche definiert.
@@ -484,6 +485,7 @@ Style-Namens als Option von \Macro{maketitle} verwendet werden können
 \begin{Declaration}
   \KOption{logo}\PName{Position}
 \end{Declaration}
+% TODO: rename to 'tubslogo' ?
 
 Bei allen Styles kann die Darstellungsseite des Siegelbandlogos
 (und somit auch des Zweitlogos) durch Angabe der Option
@@ -491,6 +493,25 @@ Bei allen Styles kann die Darstellungsseite des Siegelbandlogos
 Mögliche Werte sind \PValue{left} bzw. \PValue{inside} für die Darstellung
 auf der linken bzw. inneren Blattseite und \PValue{right} bzw. \PValue{outside}
 für die Darstellung auf der rechten bzw. äußeren Blattseite.
+
+\begin{Declaration}
+  \Option{notubslogo}
+\end{Declaration}
+
+Mit dieser Option kann die Darstellung des Siegelbandlogos auf der
+Titelseite komplett deaktiviert werden.
+
+
+\begin{Declaration}
+  \KOption{title}\PName{normal/small}
+\end{Declaration}
+
+Im Vergleich zu den Standardklassen ist die voreingestellte Schriftgröße
+für die Überschrift recht groß. Um diese etwas kleiner darzustellen,
+kann die Option \KOption{titel}\PValue{small} verwendet werden.
+Diese verwendet statt der normalen Schrift (headline) die kleinere
+Alternativ-Version (subheadline).
+
 
 \paragraph{Farbe}
 Da als Darstellungsfarbe der \gls{glos:sekundaerfarbklang} verwendet wird,

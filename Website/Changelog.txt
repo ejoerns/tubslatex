@@ -1,4 +1,28 @@
-Version 1.0:
+Version 1.0-RC2:
+- Allgemein
+  - Korrektur in horizontaler Sekundaerlogopositionierung
+  - Erster Absatz in gaussbox wird nicht eingerueckt
+  - definierte vertikale Hoehe in gaussbox fuer vfill-Verwendung
+  - Optionsbehandlung fuer 'imagefit' korrigiert
+  - Benennung von eps-RGB Siegelbandlogo korrigiert
+
+- Dokumentenklassen
+  - Logopositionierung fuer plain-Style
+  - Korrektur in twoside-Behandlung bei Titelseiten
+  - Einrueckungen auf Titelseiten korrigiert
+  - \titlegraphic als Alias fuer titlepicture
+  - plain-Stil fuer tubsdoc wieder verfuegbar gemacht
+  - Wiederherstellung von @upptertitleback und @lowertitleback fuer plain-Stil
+
+- Installation
+  - Unix Install-Script verbessert
+  - Weitreichende funktionale Ueberarbeitung des Windows-Installers
+  - Verbositaet fuer Windows-Installer verbessert, Logfile zu Debuggingzwecken
+  - Debian-Paket verbessert (Lintian-Check fehlerfrei), Verwendung von debconf
+    statt read, Test auf lokale fontmap zurueckgenommen
+
+
+Version 1.0-RC1:
 - Dokumentation
   - Installationshinweise für Mac OS-Installation hinzugefuegt
   - Paket-Dokumentationen erweitert

@@ -1,0 +1,57 @@
+\documentclass[a4paper,11pt,parskip=full]{tubsartcl}
+\usepackage[utf8]{inputenc}
+
+%opening
+\title{}
+\author{}
+
+\begin{document}
+
+% Testen von \textlnum und \oldstylenums:
+\large
+
+\section*{Argumentkommandos}
+\subsection*{rmfamily}
+\rmfamily
+Mediävalziffern: 1,2,3,4,5,6,7,8,0\\
+Mediävalziffern: \oldstylenums{1,2,3,4,5,6,7,8,0}\\
+Versalziffern: \textlnum{1,2,3,4,5,6,7,8,9,0}
+
+\subsection*{sffamily}
+\sffamily
+Mediävalziffern: 1,2,3,4,5,6,7,8,0\\
+Mediävalziffern: \oldstylenums{1,2,3,4,5,6,7,8,0}\\
+Versalziffern: \textlnum{1,2,3,4,5,6,7,8,9,0}
+
+% Testen von \lnum und \onum:
+
+\section*{Schalter-Kommandos}
+\subsection*{sffamily}
+
+\newkomafont{myfont}{\sffamily}
+
+{\usekomafont{myfont} Hier sind es Mediävalziffern: 0,1,2,3,4,5,6,7,8,9\\}
+\addtokomafont{myfont}{\mdseries\lnum}
+{\usekomafont{myfont} Hier sind es Versalziffern: 0,1,2,3,4,5,6,7,8,9\\}
+Hier sind es wieder Mediävalziffern: 0,1,2,3,4,5,6,7,8,9
+
+{\usekomafont{myfont} Hier sind es Versalziffern: 0,1,2,3,4,5,6,7,8,9\\}
+{\usekomafont{myfont} Hier sind es Mediävalziffern: \onum 0,1,2,3,4,5,6,7,8,9}
+
+Mix: \textlnum{1,2,3,\oldstylenums{4,5,6},7,8,9}
+
+\subsection*{rmfamily}
+
+\addtokomafont{myfont}{\rmfamily}
+
+{\usekomafont{myfont} Hier sind es Mediävalziffern: 0,1,2,3,4,5,6,7,8,9\\}
+\addtokomafont{myfont}{\mdseries\lnum}
+{\usekomafont{myfont} Hier sind es Versalziffern: 0,1,2,3,4,5,6,7,8,9\\}
+Hier sind es wieder Mediävalziffern: 0,1,2,3,4,5,6,7,8,9
+
+{\usekomafont{myfont} Hier sind es Versalziffern: 0,1,2,3,4,5,6,7,8,9\\}
+{\usekomafont{myfont} Hier sind es Mediävalziffern: \onum 0,1,2,3,4,5,6,7,8,9}
+
+Mix: \textlnum{1,2,3,\oldstylenums{4,5,6},7,8,9}
+
+\end{document}

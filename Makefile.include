@@ -6,7 +6,7 @@
 V_MAJOR = 1
 V_MINOR = 0
 V_PATCH = 0
-V_STAGE = RC1
+V_STAGE = RC2
 RELEASE = Y
 
 .PHONY: versiondtx
@@ -109,6 +109,7 @@ FAKEROOT = $(Q)fakeroot
 GZIP = $(Q)gzip
 WINE = $(Q)wine
 MAKENSIS = $(WINE) $(NSISDIR)
+CHMOD = $(Q)chmod
 
 # Farb-Definitionen
 NO_COLOR    = \x1b[0m

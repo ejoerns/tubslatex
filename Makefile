@@ -63,7 +63,7 @@ fetch:
 
 clean:
 	for i in $(ALL_DIRS); do make -C $$i clean; done
-# 	$(MAKE) -C $(DOCUMENTATION_DIR) clean
+	$(MAKE) -C $(DOCUMENTATION_DIR) clean
 	$(RM) -f *~
 
 cleantemp:
