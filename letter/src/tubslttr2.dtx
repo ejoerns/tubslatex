@@ -233,8 +233,7 @@
   }
 \fi%
 %
-\afterpage{\aftergroup\@newGeo}
-%
+\AtBeginLetter{\afterpage{\aftergroup\aftergroup\@newGeo}}
 \AtEndLetter{\aftergroup\@firstpageGeo}
 %    \end{macrocode}
 %
