@@ -209,7 +209,10 @@
 % Manueller Hack, wenn geometry-Version < 5.0 ist.
 %    \begin{macrocode}
 \RequirePackage{afterpage}
-\if@OldGeometryVersion%
+% TODO: Verwendung von \newgeometry ergibt aus unerfindlichen Gründen
+% nicht das gewünschte Ergebnis, daher wird vorerst in jedem Fall der alte Fix
+% verwendet.
+\iftrue%
   \newcommand*{\@newGeo}{%
     \setlength\textwidth{16cm}\onecolumn
     \onecolumn
