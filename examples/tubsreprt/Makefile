@@ -1,15 +1,19 @@
+include ../../Makefile.include
+
 PDFLIST=tubsreprt_example.pdf
 
 all: $(PDFLIST) cleantemp
 
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
+	$(ECHO) -n 'Compiling example file $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *.log *.aux *~ *.toc
+	$(RM) -f *.log *.aux *~ *.toc
 
-clean: cleantemp
-	rm -f $(PDFLIST)
+clean:
+	$(RM) -f $(PDFLIST)
 
 .PHONY: cleantemp clean

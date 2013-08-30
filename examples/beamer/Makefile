@@ -3,19 +3,22 @@
 # Erzeugt PDFs und entfernt anschliessend erzeugte Dateien,
 # die nicht benoetigt werden
 #
+include ../../Makefile.include
 
 PDFLIST = beamer_example.pdf
 
 all: $(PDFLIST) cleantemp
 
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
+	$(ECHO) -n 'Compiling example file $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
 
 cleantemp:
-	rm -f *.log *.aux *~ *.toc *.backup *.snm *.nav *.out *.vrb
+	$(RM) -f *.log *.aux *~ *.toc *.backup *.snm *.nav *.out *.vrb
 
 clean: cleantemp
-	rm -f $(PDFLIST)
+	$(RM) -f $(PDFLIST)
 
 .PHONY: cleantemp clean

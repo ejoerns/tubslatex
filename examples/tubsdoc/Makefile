@@ -1,6 +1,6 @@
 include ../../Makefile.include
 
-PDFLIST=tubsartcl_example.pdf
+PDFLIST=tubsdoc_example.pdf
 
 all: $(PDFLIST) cleantemp
 

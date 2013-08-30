@@ -1,16 +1,19 @@
-# Makefile (c) 2011 by Enrico Jörns
-# ---------------------------------
-# Erzeugt PDFs und entfernt anschliessend erzeugte Dateien,
-# die nicht benoetigt werden
-#
+include ../../Makefile.include
 
 PDFLIST=tubslttr2_example.pdf
 
-all: $(PDFLIST) clean
+all: $(PDFLIST) cleantemp
 
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
+	$(ECHO) -n 'Compiling example file $<'...
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+
+cleantemp:
+	$(RM) -f *.log *.aux *~ *.toc
 
 clean:
-	rm -f *.log *.aux *~ *.toc
+	$(RM) -f $(PDFLIST)
+
+.PHONY: cleantemp clean
