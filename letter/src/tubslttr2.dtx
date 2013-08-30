@@ -504,9 +504,9 @@ Deutschland\\
 ~\\~\\
 % \@ifpackagelater{scrbase}{2011/06/16}{%
 \if@OldKomaVersion%
-Datum: \usekomavar{fixdate}\\
+\datename:~\usekomavar{fixdate}\\
 \else%
-Datum: \usekomavar{date}\\
+\datename:~\usekomavar{date}\\
 \fi%
 % }{%
 % }%
@@ -571,8 +571,35 @@ Datum: \usekomavar{date}\\
 }
 \@setplength{firstfootvpos}{27.5cm}
 \RequirePackage{lastpage}
-\@fix@firstfoot{Seite \thepage\ von \pageref{LastPage}}
-\@fix@nextfoot{Seite \thepage\ von \pageref{LastPage}\hfill}
+\def\pageof{%
+  \iflanguage{ngerman}{von}{of}%
+}%
+%
+% Fuer mehrere Briefe in einem Dokument brauchen wir ein label nach jedem
+% Brief, um die Seitenzahl zu bekommen.
+%
+\newcounter{setlettercount}%
+\setcounter{setlettercount}{1}%
+%
+\newcounter{uselettercount}%
+\let\oldopening\opening%
+\renewcommand\opening[1]{%
+  \stepcounter{uselettercount}%
+  \oldopening{#1}%
+}%
+\let\oldclosing\closing
+\renewcommand\closing[1]{%
+  \oldclosing{#1}%
+  \edef\@lblname{letter\arabic{setlettercount}}%
+  \label{\@lblname}%
+  \stepcounter{setlettercount}%
+}%
+\@fix@firstfoot{%
+  \edef\@lblname{letter\arabic{uselettercount}}%
+  \pagename~\thepage~\pageof~\pageref{\@lblname}}%
+\@fix@nextfoot{%
+  \edef\@lblname{letter\arabic{uselettercount}}%
+  \pagename~\thepage~\pageof~\pageref{\@lblname}\hfill}%
 %    \end{macrocode}
 %
 %    \begin{macrocode}
