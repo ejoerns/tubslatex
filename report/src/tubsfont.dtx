@@ -222,7 +222,7 @@
 %    \begin{macro}{absheadline}
 % Basis-Font für alle Überschriften
 %    \begin{macrocode}
-\newkomafont{absheadline}{\sffamily\bfseries\lnum}
+\newkomafont{absheadline}{\sffamily\bfseries}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -285,6 +285,25 @@ tubsheadings}}
 %    \begin{macrocode}
 \providekomafont{pagenumber}{}
 % \setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
+
+
+% Versalziffern sind Standard in enumerations
+% TODO: bisher nur quick\&dirty (TM)
+\preto\labelenumi{\lnum}
+\preto\labelenumii{\lnum}
+\preto\labelenumiii{\lnum}
+
+% Versalziffern sind Standard in sections
+% TODO: bisher nur quick\&dirty (TM)
+%<book|report|package>\renewcommand*{\thechapter}{\protect\lnum\arabic{chapter}}
+\renewcommand*{\thesection}{\protect\lnum\arabic{section}}
+\renewcommand*{\thesubsection}{\protect\lnum\arabic{subsection}}
+\renewcommand*{\thesubsubsection}{\protect\lnum\arabic{subsubsection}}
+
+% Versalziffern sind Standard in Tabellen
+\preto\@tabular{\lnum}
+\preto\LT@array{\lnum}
+
 %    \end{macrocode}
 %
 % Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund

@@ -272,7 +272,7 @@
 %
 % Behandlung für Option 'nexus'
 %    \begin{macrocode}
-\else
+\else% -> \ifnexus@usearial
 %    \end{macrocode}
 %
 % Lade benötigte Pakete
@@ -339,7 +339,7 @@
 %    \end{macrocode}
 %
 %    \begin{macro}{\lnum}
-% Setzt Argument mit Versalziffern
+% Schaltet auf Versalziffern (newstyle/lining numbers) um.
 %    \begin{macrocode}
 \newcommand\lnum{%
   \def\@test{NexusProSerif}%
@@ -350,6 +350,12 @@
   \fi
   \selectfont
 }
+%    \end{macrocode}
+%    \end{macro}
+
+%    \begin{macro}{\textlnum}
+% Setzt Text mit Versalziffern
+%    \begin{macrocode}
 \newcommand\textlnum[1]{%
   {\lnum #1}%
 }
@@ -357,7 +363,7 @@
 %    \end{macro}
 %
 %    \begin{macro}{\oldstylenums}
-% Setzt Argument mit Mediävalziffern
+% Schaltet auf Mediävalziffern (oldstyle/text numbers) um.
 %    \begin{macrocode}
 \newcommand\onum{%
   \def\@test{NexusProSerif-lnum}%
@@ -368,6 +374,13 @@
   \fi
   \selectfont
 }
+
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\oldstylenums}
+% Setzt Text mit Mediävalziffern
+%    \begin{macrocode}
 \renewcommand{\oldstylenums}[1]{%
   {\onum #1}%
 }
