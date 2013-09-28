@@ -239,6 +239,16 @@
 %
 % Arial und passende Pakete laden
 %    \begin{macrocode}
+\IfFileExists{uarial.sty}{}{%
+  \PackageError{nexus}{You requested to use the Arial font^^J
+  \space which could not be detected on your system.^^J^^J
+  \space Please install 'non free font' uarial}{%
+  You can use the 'getnonfreefonts' tool for that.^^J^^J
+   \space wget -q http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts^^J
+   \space texlua ./install-getnonfreefonts^^J
+   \space sudo getnonfreefonts-sys --verbose arial-urw
+  }
+}
 \RequirePackage[scaled]{uarial} % for T1 encoding
 \RequirePackage[OT1]{eulervm}% don't know why OT1 is required here, but it is.
 \PassOptionsToPackage{T1}{fontenc}
