@@ -292,15 +292,15 @@ tubsheadings}}
 \preto\labelenumi{\lnum}
 \preto\labelenumii{\lnum}
 \preto\labelenumiii{\lnum}
-
-% Versalziffern sind Standard in sections
-% TODO: bisher nur quick\&dirty (TM)
+%
+%% Versalziffern sind Standard in sections
+%% TODO: bisher nur quick\&dirty (TM)
 %<book|report|package>\renewcommand*{\thechapter}{\protect\lnum\arabic{chapter}}
 \renewcommand*{\thesection}{\protect\lnum\arabic{section}}
 \renewcommand*{\thesubsection}{\protect\lnum\arabic{subsection}}
 \renewcommand*{\thesubsubsection}{\protect\lnum\arabic{subsubsection}}
-
-% Versalziffern sind Standard in Tabellen
+%
+%% Versalziffern sind Standard in Tabellen
 \preto\@tabular{\lnum}
 \preto\LT@array{\lnum}
 

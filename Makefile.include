@@ -11,9 +11,9 @@ RELEASE = Y
 
 .PHONY: versiondtx
 
-# hg-Version
-HG_REVISION := $(shell hg tip --template '{rev}')
-HG_DATE := $(shell hg tip --template '{date|shortdate}' | tr - /)
+# vcs-Version
+HG_REVISION := $(shell git log --oneline | wc -l)
+HG_DATE := $(shell git log -1 --pretty=format:"%ad" --date=short | sed 's!-!/!g')
 # HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
 # tubslatex-Version
 TUBSLATEX_VERSION = $(V_MAJOR).$(V_MINOR)-$(V_STAGE)

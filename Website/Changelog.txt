@@ -1,3 +1,23 @@
+Version 1.0-RC3:
+- Briefklasse
+  - Verbesserte Behandlung fuer mehrere Briefe in selbem Dokument
+    - Seitenzahl wird korrekt gesetzt
+    - Seitenbreite auf Folgeseiten wird korrekt gesetzt
+  - Unterstützung von englischer Ausgabe für Seitenzahl und Datumsangabe
+
+- Beamer
+  - Farbstufe der block-title-Hintergrundfarbe von 60 auf 40 korrigiert
+  - Versionsnummer in Konsolenausgabe
+
+- Dokumentenklassen
+  - Ueberschriften, Tabellen und enumerations verwenden Versalziffern
+
+- Briefklasse
+  - Koma-Variable 'fromuniversity' erlaubt Modifikation des Uni-Namens
+
+- Installation
+  - Skript testet Verfuegbarkeit von kpsewhich
+
 Version 1.0-RC2:
 - Allgemein
   - Korrektur in horizontaler Sekundaerlogopositionierung
