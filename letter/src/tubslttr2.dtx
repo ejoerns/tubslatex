@@ -316,6 +316,7 @@
 % Anlegen von weiteren Komavariablen zur Unterstützung der lco-Dateien
 % Instituts-Adresse
 %    \begin{macrocode}
+\newkomavar{fromuniversity}
 \newkomavar{frominstitute}
 \newkomavar{fromdepartment}
 \newkomavar{fromstreet}
@@ -342,9 +343,11 @@
 \newkomavar{fromSteuernummer}
 %    \end{macrocode}
 %
-% Setze standardmäßig Braunschweig als Stadt
+% Setze standardmäßig 'Braunschweig' als Stadt
+% und 'Technische Universität Braunschweig' als Uni
 %    \begin{macrocode}
 \setkomavar{fromtown}{Braunschweig}
+\setkomavar{fromuniversity}{Technische Universit\"at\linebreak[1] Braunschweig}
 %    \end{macrocode}
 %
 % Kompatiblitätshack für KOMA-Skript-Version < 3.09a
@@ -480,7 +483,7 @@
   \setkomavar{fromfax}{Fax +49\,(0)\,531\,391-\usekomavar{fromfaxdirect}}}%
 %
 \footnotesize\sffamily
-Technische Universit\"at\\Braunschweig\\
+\usekomavar{fromuniversity}\\
 \textbf{\usekomavar{frominstitute}}\\
 \ifkomavarempty{fromdepartment}{%
   \relax%
@@ -540,10 +543,10 @@ Deutschland\\
 %    \begin{macrocode}
 \setkomavar{backaddress}{%
   \parbox{8.5cm}{%
-    Technische Universit\"at Braunschweig%
+    \usekomavar{fromuniversity}%
     \ifkomavarempty{frominstitute}{\relax}{~|\ \usekomavar{frominstitute}}\\
     \ifkomavarempty{fromstreet}{\relax}{\usekomavar{fromstreet}~|\ }%
-    \usekomavar{fromzipcode}~\usekomavar{fromtown}\ |\ Deutschland}
+    \usekomavar{fromzipcode}~\usekomavar{fromtown}\ |\ Deutschland}%
 }
 %    \end{macrocode}
 %
@@ -553,9 +556,9 @@ Deutschland\\
   \vbox to\headheight{%
     \vfill%
     \parbox{12.2cm}{%
-      \usekomafont{fromaddress}Technische Universit\"at Braunschweig\\
-      {\bfseries\usekomavar{frominstitute}}\\
-      \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}
+      \usekomafont{fromaddress}\usekomavar{fromuniversity}\\%
+      {\bfseries\usekomavar{frominstitute}}\\%
+      \ifkomavarempty{fromdepartment}{\relax}{\usekomavar{fromdepartment}}%
     }%
     \vfill%
   }%
