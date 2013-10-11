@@ -8,7 +8,8 @@
 include ../Makefile.include
 
 DOCFILE = tubsdocguide.pdf
-EXAMPLEDIR = examples
+EXAMPLEDIR = ../examples
+DOC_EXAMPLEDIR = examples
 
 # autovars
 DOCSRC := $(shell ls *.tex)
@@ -43,6 +44,7 @@ $(DOCFILE): $(DOCSRC)
 
 examples:
 	$(MAKE) -C $(EXAMPLEDIR)
+	$(MAKE) -C $(DOC_EXAMPLEDIR)
 
 cleantemp:
 	$(ECHO) -n "Clean temporary files..."

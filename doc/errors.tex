@@ -1,0 +1,36 @@
+\chapter{Fehlerbehebung}
+
+% [1] - Fehlerklasse (warning/error/..)
+% {2} - Fehlermeldung
+% {3} - Beschreibung Auslöser
+% {4} - Beschreibung Lösung
+% {5} - Referenzen
+\newcommand\errormsg[5][error]{%
+  %\begin{description}
+    %\item[#1]\hfill\\
+  %\begin{addmargin}[0cm]{0cm}%
+    \begin{tabularx}{\textwidth}{lX}%
+      \sffamily\textbf{[#1]}\\
+      Meldung: & \texttt{#2}\\
+      Auslöser: & #3\\
+      Lösung: & #4 (Siehe S. \ref{#5})%
+    \end{tabularx}%
+  %\end{addmargin}%
+  %\end{description}
+}
+
+\errormsg[warning]{%
+  LaTeX Font Warning: Font shape `T1/NexusProSerif-lnum/m/sc' undefined
+}{%
+  Wahrscheinlich lädt die Präambel das Paket 'fontenc' mit T1-Kodierung.
+  Nexus liegt allerdings nur in LY1-Kodierung vor.
+}{%
+  Zeile \texttt{\textbackslash usepackage[T1]\{fontenc\}} löschen.
+  %Die Vorlagen machen ein Laden des Paketes 'fontenc' allgemein unnötig.
+}{sec:nexus}
+
+% Liste 'verbotener' Pakete
+% - fontenc
+% - 
+
+
