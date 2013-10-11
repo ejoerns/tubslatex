@@ -351,9 +351,9 @@
 %    \begin{macro}{\lnum}
 % Schaltet auf Versalziffern (newstyle/lining numbers) um.
 %    \begin{macrocode}
+\def\cmp@nexserif{NexusProSerif}%
 \newcommand\lnum{%
-  \def\@test{NexusProSerif}%
-  \ifx\f@family\@test%
+  \ifx\f@family\cmp@nexserif%
     \fontfamily{NexusProSerif-lnum}%
   \else
     \fontfamily{NexusProSans-lnum}%
