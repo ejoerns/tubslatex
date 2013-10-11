@@ -295,10 +295,10 @@ tubsheadings}}
 %
 %% Versalziffern sind Standard in sections
 %% TODO: bisher nur quick\&dirty (TM)
-%<book|report|package>\renewcommand*{\thechapter}{\protect\lnum\arabic{chapter}}
-\renewcommand*{\thesection}{\protect\lnum\arabic{section}}
-\renewcommand*{\thesubsection}{\protect\lnum\arabic{subsection}}
-\renewcommand*{\thesubsubsection}{\protect\lnum\arabic{subsubsection}}
+%<book|report|package>\ifdefined\thechapter\let\@old@thechapter\thechapter\gdef\thechapter{\lnum\@old@thechapter}\fi
+\let\@old@thesection\thesection\renewcommand*{\thesection}{\lnum\@old@thesection}
+\let\@old@thesubsection\thesubsection\renewcommand*{\thesubsection}{\lnum\@old@thesubsection}
+\let\@old@thesubsubsection\thesubsubsection\renewcommand*{\thesubsubsection}{\lnum\@old@thesubsubsection}
 %
 %% Versalziffern sind Standard in Tabellen
 \preto\@tabular{\lnum}
