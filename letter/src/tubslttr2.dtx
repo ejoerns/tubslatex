@@ -214,11 +214,13 @@
 % verwendet.
 \iftrue%
   \newcommand*{\@newGeo}{%
-    \setlength\textwidth{16cm}\onecolumn
-    \onecolumn
+    \setlength\textwidth{16cm}%
+    \global\textwidth=\textwidth\relax
+    \onecolumn\onecolumn
   }
   \newcommand*{\@firstpageGeo}{%
     \setlength\textwidth{12.2cm}%
+    \global\textwidth=\textwidth\relax
     \onecolumn\onecolumn%
   }
 \else%
@@ -425,12 +427,10 @@
   \newcommand\@fix@firsthead[1]{\firsthead{#1}}
   \newcommand\@fix@nexthead[1]{\nexthead{#1}}
   \newcommand\@fix@firstfoot[1]{\firstfoot{#1}}
-  \newcommand\@fix@nextfoot[1]{\nextfoot{#1}}
 \else%
   \newcommand\@fix@firsthead[1]{\setkomavar{firsthead}{#1}}
   \newcommand\@fix@nexthead[1]{\setkomavar{nexthead}{#1}}
   \newcommand\@fix@firstfoot[1]{\setkomavar{firstfoot}{#1}}
-  \newcommand\@fix@nextfoot[1]{\setkomavar{nextfoot}{#1}}
 \fi
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
@@ -599,12 +599,24 @@ Deutschland\\
   \label{\@lblname}%
   \stepcounter{setlettercount}%
 }%
+% Darstellung als 'Seite x von y'
+\renewcommand*{\pagemark}{{%
+    \edef\@lblname{letter\arabic{uselettercount}}%
+    \usekomafont{pagenumber}%
+    \pagename\ %
+    \thepage\ %
+    \pageof\ %
+    \pageref{\@lblname}}}
+% Darstellung der Seitenzahl auch auf der ersten Seite
+% TODO: Deaktivierungsoption?
 \@fix@firstfoot{%
-  \edef\@lblname{letter\arabic{uselettercount}}%
-  \pagename~\thepage~\pageof~\pageref{\@lblname}}%
-\@fix@nextfoot{%
-  \edef\@lblname{letter\arabic{uselettercount}}%
-  \pagename~\thepage~\pageof~\pageref{\@lblname}\hfill}%
+  \ifnum\@pageat>2
+    \parbox[c]{\textwidth}{%
+      \ifcase\@pageat\or\or\or\raggedright\or\centering\or\raggedleft\fi
+      \strut\pagemark%
+      }%
+  \fi
+}%
 %    \end{macrocode}
 %
 %    \begin{macrocode}
