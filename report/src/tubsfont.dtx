@@ -318,18 +318,47 @@ tubsheadings}}
 \preto\labelenumiii{\lnum}
 %    \end{macrocode}
 %
+% Versalziffern in part
+%    \begin{macrocode}
+\providecommand*{\partformat}{\partname~\lnum\thepart\autodot}
+%    \end{macrocode}
+%
 % Versalziffern titlesec chapter\\
 % TODO: bisher nur quick\&dirty (TM)
 %    \begin{macrocode}
+%<*book|report|package>
 \RequirePackage[compact]{titlesec}
 \titleformat{\chapter}[block]
 {\usekomafont{chapter}}{\lnum\thechapter}{10pt}{}
 \titlespacing*{\chapter}{0pt}{0pt}{30pt}
+%</book|report|package>
+%    \end{macrocode}
+%
+% Versalziffern in chapter
+%    \begin{macrocode}
+%<*book|report|package>
+% TODO: Behandlung von tubsdoc fehlt noch
+\providecommand*{\chapterformat}{}%
+\renewcommand*{\chapterformat}{%
+  \mbox{\chapappifchapterprefix{\nobreakspace}\lnum\thechapter\autodot\enskip}%
+}
+%</book|report|package>
+%    \end{macrocode}
+%
+% Versalziffern in chaptermark
+%    \begin{macrocode}
+%<*book|report|package>
+\providecommand*\chaptermarkformat{}%
+\renewcommand*\chaptermarkformat{\chapappifchapterprefix{\ }%
+  \lnum\thechapter\autodot\enskip}
+%</book|report|package>
 %    \end{macrocode}
 %
 % Versalziffern in allen sections
 %    \begin{macrocode}
-\renewcommand*{\@seccntformat}[1]{%
+\providecommand*\@seccntformat[1]{}%
+\providecommand*{\othersectionlevelsformat}[3]{#3\enskip} % HERE!
+\renewcommand*\@seccntformat[1]{%
    \protect\othersectionlevelsformat{#1}{%
      \expandafter\aftergroup\noexpand\@gobble}{\lnum\csname the#1\endcsname}%
 }
@@ -337,24 +366,13 @@ tubsheadings}}
 %
 % Versalziffern in sectionmark
 %    \begin{macrocode}
-\renewcommand*\sectionmarkformat{\lnum\thesection\autodot\enskip}
-%    \end{macrocode}
-%
-% Versalziffern in chapter
-%    \begin{macrocode}
-\renewcommand*{\chapterformat}{%
-  \mbox{\chapappifchapterprefix{\nobreakspace}\lnum\thechapter\autodot\enskip}%
-}
-%    \end{macrocode}
-%
-% Versalziffern in chaptermark
-%    \begin{macrocode}
-\renewcommand*\chaptermarkformat{\chapappifchapterprefix{\ }%
-  \lnum\thechapter\autodot\enskip}
+\providecommand*\sectionmarkformat{}%
+\renewcommand*\sectionmarkformat{\lnum\thesection\autodot\enskip}%
 %    \end{macrocode}
 %
 % Versalziffern in figure
 %    \begin{macrocode}
+\providecommand*\figureformat{}%
 \renewcommand*{\figureformat}{%
   \figurename~\lnum\thefigure%
   \autodot%
@@ -363,33 +381,30 @@ tubsheadings}}
 %
 % Versalziffern in table 
 %    \begin{macrocode}
+\providecommand*\tableformat{}%
 \renewcommand*{\tableformat}{%
   \tablename~\lnum\thetable%
   \autodot%
 }
 %    \end{macrocode}
 %
-% Versalziffern in part
-%    \begin{macrocode}
-\renewcommand*{\partformat}{\partname~\lnum\thepart\autodot}
-%    \end{macrocode}
-%
 % Versalziffern in toc
 %    \begin{macrocode}
-\renewcommand*{\numberline@prefix}{\lnum}
+\providecommand*\numberline@prefix{}%
+\renewcommand*{\numberline@prefix}{\lnum}%
 %    \end{macrocode}
 %
 % Versalziffern in listings caption and line numbering
 %    \begin{macrocode}
-\AtBeginDocument{%
-  \def\fnum@lstlisting{%
-  \lstlistingname
-  \ifx\lst@@caption\@empty\else~\lnum\thelstlisting\fi}%
-}%
+\AfterPackage{listings}{%
+  \AtBeginDocument{%
+    \def\fnum@lstlisting{%
+    \lstlistingname
+    \ifx\lst@@caption\@empty\else~\lnum\thelstlisting\fi}%
+  }%
 %
-\AfterEndPreamble{%
+  \let\@orig@lst@numberstyle\lst@numberstyle
   \lst@AddToHook{Init}{
-    \let\@orig@lst@numberstyle\lst@numberstyle
     \gdef\lst@numberstyle{\@orig@lst@numberstyle\lnum}%
   }%
 }%
