@@ -575,7 +575,6 @@ Deutschland\\
   \@addtoplength{firstfootwidth}{-4.9cm}%
 }
 \@setplength{firstfootvpos}{27.5cm}
-\RequirePackage{lastpage}
 \def\pageof{%
   \iflanguage{ngerman}{von}{of}%
 }%
@@ -592,12 +591,12 @@ Deutschland\\
   \stepcounter{uselettercount}%
   \oldopening{#1}%
 }%
-\let\oldclosing\closing
-\renewcommand\closing[1]{%
-  \oldclosing{#1}%
+\let\oldendletter\endletter
+\renewcommand\endletter{%
   \edef\@lblname{letter\arabic{setlettercount}}%
   \label{\@lblname}%
   \stepcounter{setlettercount}%
+  \oldendletter
 }%
 % Darstellung als 'Seite x von y'
 \renewcommand*{\pagemark}{{%
