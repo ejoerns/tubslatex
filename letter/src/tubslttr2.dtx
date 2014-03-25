@@ -242,7 +242,8 @@
 \AtEndLetter{\aftergroup\@firstpageGeo}
 %    \end{macrocode}
 %
-% Die verwendete Schriftart wird entsprechend der Paketoptionen geladen
+% Die verwendete Schriftart wird entsprechend der Paketoptionen geladen.
+% Es wird standardmäßig sans-serif verwendet.
 %    \begin{macrocode}
 \providecommand{\ifarial}{\iffalse}
 \ifarial
@@ -252,6 +253,7 @@
 %   \RequirePackage{courier}
 \else
   \RequirePackage{nexus}
+  \renewcommand{\familydefault}{\sfdefault}
 \fi
 %    \end{macrocode}
 % Die Basispakete des Corporate Design werden geladen.
@@ -378,7 +380,6 @@
 \setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
 \setkomafont{foldmark}{\color{tuRed}}
-\AtBeginLetter{\sffamily}
 %    \end{macrocode}
 %
 % Absatzeinstellungen: Keine Einrückung am Absatzbeginn,
