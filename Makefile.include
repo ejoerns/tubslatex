@@ -5,9 +5,9 @@
 
 V_MAJOR = 1
 V_MINOR = 0
-V_PATCH = 0
+V_PATCH = 1
 #V_STAGE = RC2
-RELEASE = N
+RELEASE = Y
 
 .PHONY: versiondtx
 
