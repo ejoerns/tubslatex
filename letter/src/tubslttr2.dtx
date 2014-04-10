@@ -156,7 +156,7 @@
 %    \begin{macrocode}
 \LoadClass{scrlttr2}[2011/06/16]
 \@ifpackagelater{scrbase}{2011/06/16}{}{%
-%   \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
+  \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
 }
 %    \end{macrocode}
 %
@@ -365,6 +365,7 @@
   \newsavebox{\@fixdate}
   \let\oldopening\opening
   \renewcommand\opening[1]{%
+    \stepcounter{uselettercount}% Setze counter fuer page reference
     \sbox{\@fixdate}{\footnotesize\sffamily\usekomavar{date}}
     \setkomavar{fixdate}{\usebox{\@fixdate}}
     \setkomavar{date}{}
@@ -583,15 +584,12 @@ Deutschland\\
 % Fuer mehrere Briefe in einem Dokument brauchen wir ein label nach jedem
 % Brief, um die Seitenzahl zu bekommen.
 %
+% Speicher fuer lettercount
 \newcounter{setlettercount}%
+% Benutzung von lettercount
+\newcounter{uselettercount}%
 \setcounter{setlettercount}{1}%
 %
-\newcounter{uselettercount}%
-\let\oldopening\opening%
-\renewcommand\opening[1]{%
-  \stepcounter{uselettercount}%
-  \oldopening{#1}%
-}%
 \let\oldendletter\endletter
 \renewcommand\endletter{%
   \edef\@lblname{letter\arabic{setlettercount}}%
