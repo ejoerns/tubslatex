@@ -106,7 +106,7 @@
       \fi
     }
   \fi
-  \check@tubslatexVersion{$HG_DATE$ v$VERSION$-r$HG_REV$ tubslatex}%
+  \check@tubslatexVersion{$VCS_DATE$ v$VERSION$-r$VCS_REV$ tubslatex}%
 \endgroup
 %    \end{macrocode}
 %

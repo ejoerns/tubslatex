@@ -7,34 +7,38 @@ V_MAJOR = 1
 V_MINOR = 0
 V_PATCH = 0
 #V_STAGE = RC2
-RELEASE = Y
+RELEASE = N
 
 .PHONY: versiondtx
 
 # vcs-Version
-HG_REVISION := $(shell git log --oneline | wc -l)
-HG_DATE := $(shell git log -1 --pretty=format:"%ad" --date=short | sed 's!-!/!g')
-# HG_TEXREVISION = tip --style $(HG_TEXSTYLE)
+VCS_VERSION := $(shell git describe --tags --always --long)
+# vcs-Commit count
+VCS_REVISION := $(shell git rev-list HEAD --count)
+# vcs-Datum
+VCS_DATE := $(shell git log -1 --pretty=format:"%ad" --date=short | sed 's!-!/!g')
+# VCS_TEXREVISION = tip --style $(VCS_TEXSTYLE)
 # tubslatex-Version
 ifeq ($(V_STAGE),)
-  TUBSLATEX_VERSION = $(V_MAJOR).$(V_MINOR)
+  TUBSLATEX_VERSION = $(V_MAJOR).$(V_MINOR).$(V_PATCH)
 else
-  TUBSLATEX_VERSION = $(V_MAJOR).$(V_MINOR)-$(V_STAGE)
+  TUBSLATEX_VERSION = $(V_MAJOR).$(V_MINOR).$(V_PATCH)-$(V_STAGE)
 endif
 ifeq ($(RELEASE),Y)
   TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)
 else
-  TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(HG_REVISION)
+  $(info WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOT?)
+  TUBSLATEX_FULLVERSION = $(TUBSLATEX_VERSION)-r$(VCS_REVISION)
 endif
 ifeq ($(V_STAGE),)
-  TUBSLATEX_DEBVERSION = 1:$(V_MAJOR).$(V_MINOR).$(V_PATCH)-r$(HG_REVISION)
+  TUBSLATEX_DEBVERSION = 1:$(V_MAJOR).$(V_MINOR).$(V_PATCH)-r$(VCS_REVISION)
 else
-  TUBSLATEX_DEBVERSION = 1:$(V_MAJOR).$(V_MINOR).$(V_PATCH)~$(V_STAGE)-r$(HG_REVISION)
+  TUBSLATEX_DEBVERSION = 1:$(V_MAJOR).$(V_MINOR).$(V_PATCH)~$(V_STAGE)-r$(VCS_REVISION)
 endif
 
 # 
-# HG_TEXSTYLE = tex.hgstyle
-HG_DTXOUT = $(BASEDIR)/tubsvers.inc
+# VCS_TEXSTYLE = tex.hgstyle
+VCS_DTXOUT = $(BASEDIR)/tubsvers.inc
 TEX_HGTEMPLATE = $(BASEDIR)/tex.hgtemplate
 
 # Konfigurierbare Verzeichnisse
@@ -132,4 +136,4 @@ WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
 DONE_STRING=$(OK_COLOR)[DONE]$(NO_COLOR)
 
 
-HG_DTXOUT = $(BASEDIR)/tubsvers.inc
+VCS_DTXOUT = $(BASEDIR)/tubsvers.inc
