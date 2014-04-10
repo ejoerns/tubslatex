@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2011 by Enrico Jörns
+% Copyright (C) 2011-2014 by Enrico Jörns
 % -----------------------------------
 %
 % This file may be distributed and/or modified under the
@@ -83,7 +83,7 @@
 %    \begin{macrocode}
 %<*class>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{tubslttr2}[2011/09/22 v0.1a tubslttr2]
+\ProvidesClass{tubslttr2}[\tubslatexVersion\space TU Braunschweig letter class]
 %    \end{macrocode}
 %
 %
@@ -156,7 +156,7 @@
 %    \begin{macrocode}
 \LoadClass{scrlttr2}[2011/06/16]
 \@ifpackagelater{scrbase}{2011/06/16}{}{%
-%   \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
+  \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
 }
 %    \end{macrocode}
 %
@@ -214,11 +214,13 @@
 % verwendet.
 \iftrue%
   \newcommand*{\@newGeo}{%
-    \setlength\textwidth{16cm}\onecolumn
-    \onecolumn
+    \setlength\textwidth{16cm}%
+    \global\textwidth=\textwidth\relax
+    \onecolumn\onecolumn
   }
   \newcommand*{\@firstpageGeo}{%
     \setlength\textwidth{12.2cm}%
+    \global\textwidth=\textwidth\relax
     \onecolumn\onecolumn%
   }
 \else%
@@ -240,7 +242,8 @@
 \AtEndLetter{\aftergroup\@firstpageGeo}
 %    \end{macrocode}
 %
-% Die verwendete Schriftart wird entsprechend der Paketoptionen geladen
+% Die verwendete Schriftart wird entsprechend der Paketoptionen geladen.
+% Es wird standardmäßig sans-serif verwendet.
 %    \begin{macrocode}
 \providecommand{\ifarial}{\iffalse}
 \ifarial
@@ -250,6 +253,7 @@
 %   \RequirePackage{courier}
 \else
   \RequirePackage{nexus}
+  \renewcommand{\familydefault}{\sfdefault}
 \fi
 %    \end{macrocode}
 % Die Basispakete des Corporate Design werden geladen.
@@ -361,6 +365,7 @@
   \newsavebox{\@fixdate}
   \let\oldopening\opening
   \renewcommand\opening[1]{%
+    \stepcounter{uselettercount}% Setze counter fuer page reference
     \sbox{\@fixdate}{\footnotesize\sffamily\usekomavar{date}}
     \setkomavar{fixdate}{\usebox{\@fixdate}}
     \setkomavar{date}{}
@@ -376,7 +381,6 @@
 \setkomafont{pageheadfoot}{\sffamily}
 \setkomafont{backaddress}{\bfseries\sffamily}
 \setkomafont{foldmark}{\color{tuRed}}
-\AtBeginLetter{\sffamily}
 %    \end{macrocode}
 %
 % Absatzeinstellungen: Keine Einrückung am Absatzbeginn,
@@ -425,12 +429,10 @@
   \newcommand\@fix@firsthead[1]{\firsthead{#1}}
   \newcommand\@fix@nexthead[1]{\nexthead{#1}}
   \newcommand\@fix@firstfoot[1]{\firstfoot{#1}}
-  \newcommand\@fix@nextfoot[1]{\nextfoot{#1}}
 \else%
   \newcommand\@fix@firsthead[1]{\setkomavar{firsthead}{#1}}
   \newcommand\@fix@nexthead[1]{\setkomavar{nexthead}{#1}}
   \newcommand\@fix@firstfoot[1]{\setkomavar{firstfoot}{#1}}
-  \newcommand\@fix@nextfoot[1]{\setkomavar{nextfoot}{#1}}
 \fi
 %    \end{macrocode}
 %    \end{macro}\end{macro}\end{macro}\end{macro}
@@ -575,7 +577,6 @@ Deutschland\\
   \@addtoplength{firstfootwidth}{-4.9cm}%
 }
 \@setplength{firstfootvpos}{27.5cm}
-\RequirePackage{lastpage}
 \def\pageof{%
   \iflanguage{ngerman}{von}{of}%
 }%
@@ -583,28 +584,37 @@ Deutschland\\
 % Fuer mehrere Briefe in einem Dokument brauchen wir ein label nach jedem
 % Brief, um die Seitenzahl zu bekommen.
 %
+% Speicher fuer lettercount
 \newcounter{setlettercount}%
+% Benutzung von lettercount
+\newcounter{uselettercount}%
 \setcounter{setlettercount}{1}%
 %
-\newcounter{uselettercount}%
-\let\oldopening\opening%
-\renewcommand\opening[1]{%
-  \stepcounter{uselettercount}%
-  \oldopening{#1}%
-}%
-\let\oldclosing\closing
-\renewcommand\closing[1]{%
-  \oldclosing{#1}%
+\let\oldendletter\endletter
+\renewcommand\endletter{%
   \edef\@lblname{letter\arabic{setlettercount}}%
   \label{\@lblname}%
   \stepcounter{setlettercount}%
+  \oldendletter
 }%
+% Darstellung als 'Seite x von y'
+\renewcommand*{\pagemark}{{%
+    \edef\@lblname{letter\arabic{uselettercount}}%
+    \usekomafont{pagenumber}%
+    \pagename\ %
+    \thepage\ %
+    \pageof\ %
+    \pageref{\@lblname}}}
+% Darstellung der Seitenzahl auch auf der ersten Seite
+% TODO: Deaktivierungsoption?
 \@fix@firstfoot{%
-  \edef\@lblname{letter\arabic{uselettercount}}%
-  \pagename~\thepage~\pageof~\pageref{\@lblname}}%
-\@fix@nextfoot{%
-  \edef\@lblname{letter\arabic{uselettercount}}%
-  \pagename~\thepage~\pageof~\pageref{\@lblname}\hfill}%
+  \ifnum\@pageat>2
+    \parbox[c]{\textwidth}{%
+      \ifcase\@pageat\or\or\or\raggedright\or\centering\or\raggedleft\fi
+      \strut\pagemark%
+      }%
+  \fi
+}%
 %    \end{macrocode}
 %
 %    \begin{macrocode}

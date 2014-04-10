@@ -134,19 +134,50 @@
 \colorlet{tubsheadings}{\headingscolor}
 %    \end{macrocode}
 %
-%    \begin{macro}{\providetubsfont}
-% Erstellt Koma-Font nur, wenn dieser noch nicht existiert
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Eigene Font-Definitionsbefehle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%    \begin{macro}{\newtubsfont}
+% Erstellt Koma-Font nur, wenn dieser noch nicht existiert,
+% ansonten wird der bestehende Koma-Font neu gesetzt
 %    \begin{macrocode}
-\providecommand\providekomafont[2]{%
-  \@ifundefined{scr@fnt@#1}{%
-    \newkomafont{#1}{#2}
-  }{}
+\newcommand\newtubsfont[3][\relax]{%
+  \@ifundefined{scr@fnt@#2}{%
+    \typeout{#2 undefined}
+    \newkomafont[#1]{#2}{#3}%
+  }{%
+    \typeout{#2 defined}
+    \setkomafont{#2}{#3}
+  }
 }
-\let\providetubsfont\providekomafont
 %    \end{macrocode}
 %    \end{macro}
 %
-%\subsection{Definition von KOMA-Fonts}
+%    \begin{macro}{\addtotubsfont}
+% Häntgt Definitionen nur an, wenn entsprechender Koma-Font existiert,
+% ansonsten wird ignoriert.
+%    \begin{macrocode}
+\newcommand*\addtotubsfont[2]{%
+  \@ifundefined{scr@fnt@#1}{}{%
+    \addtokomafont{#1}{#2}
+  }
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\settubsfont}
+%    \begin{macro}{\usetubsfont}
+% Aliase für weiter Koma-Font-Befehle
+%    \begin{macrocode}
+\let\settubsfont\setkomafont
+\let\usetubsfont\usekomafont
+%    \end{macrocode}
+%    \end{macro}\end{macro}
+%
+%\subsection{Fonts laden}
+%
 %    \begin{macrocode}
 %<*package|leaflet>
 \let\sectfont\relax
@@ -197,32 +228,19 @@
 %
 %
 %    \begin{macrocode}
-\providekomafont{caption}{}
-\providekomafont{chapter}{}
-\providekomafont{section}{}
-\providekomafont{subsection}{}
-\providekomafont{subsubsection}{}
 %</package|leaflet>
-\providekomafont{intro}{}
+\newtubsfont{intro}{}
 %    \end{macrocode}
 %
-%    \begin{macro}{\newtubsfont}
-%    \begin{macro}{\settubsfont}
-%    \begin{macro}{\addtotubsfont}
-%    \begin{macro}{\usetubsfont}
-% Aliase für Koma-Befehle
-%    \begin{macrocode}
-\let\newtubsfont\newkomafont
-\let\settubsfont\setkomafont
-\let\addtotubsfont\addtokomafont
-\let\usetubsfont\usekomafont
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Font-Definitionen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %    \begin{macro}{absheadline}
 % Basis-Font für alle Überschriften
 %    \begin{macrocode}
-\newkomafont{absheadline}{\sffamily\bfseries}
+\newtubsfont{absheadline}{\sffamily\bfseries}
 %    \end{macrocode}
 %    \end{macro}
 %
@@ -231,15 +249,15 @@
 % Schrifteinstellungen für Titel
 % Hinweis: title wird nicht von Option |colorheadings| beeinflusst.
 %    \begin{macrocode}
-\setkomafont{title}{\usekomafont{absheadline}\Huge}
-\newkomafont{headline}{\usekomafont{title}\tubs@fontcolor{tubsheadings}}
+\newtubsfont{title}{\usekomafont{absheadline}\Huge}
+\newtubsfont{headline}{\usekomafont{title}\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
 %    \begin{macro}{headlinesmall}
 % Schrifteinstellungen für kleiner Titel
 %    \begin{macrocode}
-\newkomafont{headlinesmall}{\usekomafont{absheadline}\huge\tubs@fontcolor{tubsheadings}}
+\newtubsfont{headlinesmall}{\usekomafont{absheadline}\huge\tubs@fontcolor{tubsheadings}}
 % \setkomafont{section}{\usekomafont{headlinesmall}}
 %    \end{macrocode}
 %    \end{macro}
@@ -249,15 +267,15 @@
 % Schrifteinstellungen für Sub-Titel.
 % Hinweis: subtitle wird nicht von Option |colorheadings| beeinflusst.
 %    \begin{macrocode}
-\setkomafont{subtitle}{\usekomafont{absheadline}\Large}
-\newkomafont{subheadline}{\usekomafont{subtitle}\tubs@fontcolor{tubsheadings}}
+\newtubsfont{subtitle}{\usekomafont{absheadline}\Large}
+\newtubsfont{subheadline}{\usekomafont{subtitle}\tubs@fontcolor{tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}\end{macro}
 %
 %    \begin{macro}{subheadlinesmall}
 % Schrifteinstellungen für Sub-Titel (klein)
 %    \begin{macrocode}
-\newkomafont{subheadlinesmall}{\usekomafont{absheadline}\large\tubs@fontcolor{
+\newtubsfont{subheadlinesmall}{\usekomafont{absheadline}\large\tubs@fontcolor{
 tubsheadings}}
 %    \end{macrocode}
 %    \end{macro}
@@ -268,61 +286,153 @@ tubsheadings}}
 %    \begin{macro}{infotext}
 %    \begin{macro}{infotextitem}
 %    \begin{macro}{copytext}
+%    \begin{macro}{caption}
+%    \begin{macro}{pagenumber}
+% Verschiedene Schriftelemente
 %    \begin{macrocode}
-\newkomafont{author}{\sffamily\LARGE}
-\newkomafont{date}{\large}
-%<!leaflet>\newkomafont{institute}{\sffamily\large\bfseries}
-%<leaflet>\newkomafont{institute}{\sffamily\fontsize{10pt}{12}\bfseries\selectfont}
-\newkomafont{infotext}{\large}
-\newkomafont{infotextitem}{\large}
-\newkomafont{copytext}{\normalsize}
-%    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
-%
-%    \begin{macrocode}
-\setkomafont{caption}{\small}
-%    \end{macrocode}
-%    \begin{macrocode}
-\providekomafont{pagenumber}{}
+\newtubsfont{author}{\sffamily\LARGE}
+\newtubsfont{date}{\large}
+%<!leaflet>\newtubsfont{institute}{\sffamily\large\bfseries}
+%<leaflet>\newtubsfont{institute}{\sffamily\fontsize{10pt}{12}\bfseries\selectfont}
+\newtubsfont{infotext}{\large}
+\newtubsfont{infotextitem}{\large}
+\newtubsfont{copytext}{\normalsize}
+\newtubsfont{caption}{\small}
+\newtubsfont{pagenumber}{}
 % \setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
-
-
-% Versalziffern sind Standard in enumerations
+%    \end{macrocode}
+%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Zifferndarstellung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Einige Elemente, wie Aufzählungen oder Überschriften verwenden nur Versalziffern
+%
+% Versalziffern enumerations\\
 % TODO: bisher nur quick\&dirty (TM)
+%    \begin{macrocode}
 \preto\labelenumi{\lnum}
 \preto\labelenumii{\lnum}
 \preto\labelenumiii{\lnum}
+%    \end{macrocode}
 %
-%% Versalziffern sind Standard in sections
-%% TODO: bisher nur quick\&dirty (TM)
-%<book|report|package>\ifdefined\thechapter\let\@old@thechapter\thechapter\gdef\thechapter{\lnum\@old@thechapter}\fi
-\let\@old@thesection\thesection\renewcommand*{\thesection}{\lnum\@old@thesection}
-\let\@old@thesubsection\thesubsection\renewcommand*{\thesubsection}{\lnum\@old@thesubsection}
-\let\@old@thesubsubsection\thesubsubsection\renewcommand*{\thesubsubsection}{\lnum\@old@thesubsubsection}
+% Versalziffern in part
+%    \begin{macrocode}
+\providecommand*{\partformat}{\partname~\lnum\thepart\autodot}
+%    \end{macrocode}
 %
-%% Versalziffern sind Standard in Tabellen
+% Versalziffern titlesec chapter\\
+% TODO: bisher nur quick\&dirty (TM)
+%    \begin{macrocode}
+%<*book|report|package>
+\RequirePackage[compact]{titlesec}
+\titleformat{\chapter}[block]
+{\usekomafont{chapter}}{\lnum\thechapter}{10pt}{}
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+%</book|report|package>
+%    \end{macrocode}
+%
+% Versalziffern in chapter
+%    \begin{macrocode}
+%<*book|report|package>
+% TODO: Behandlung von tubsdoc fehlt noch
+\providecommand*{\chapterformat}{}%
+\renewcommand*{\chapterformat}{%
+  \mbox{\chapappifchapterprefix{\nobreakspace}\lnum\thechapter\autodot\enskip}%
+}
+%</book|report|package>
+%    \end{macrocode}
+%
+% Versalziffern in chaptermark
+%    \begin{macrocode}
+%<*book|report|package>
+\providecommand*\chaptermarkformat{}%
+\renewcommand*\chaptermarkformat{\chapappifchapterprefix{\ }%
+  \lnum\thechapter\autodot\enskip}
+%</book|report|package>
+%    \end{macrocode}
+%
+% Versalziffern in allen sections
+%    \begin{macrocode}
+\providecommand*\@seccntformat[1]{}%
+\providecommand*{\othersectionlevelsformat}[3]{#3\enskip} % HERE!
+\renewcommand*\@seccntformat[1]{%
+   \protect\othersectionlevelsformat{#1}{%
+     \expandafter\aftergroup\noexpand\@gobble}{\lnum\csname the#1\endcsname}%
+}
+%    \end{macrocode}
+%
+% Versalziffern in sectionmark
+%    \begin{macrocode}
+\providecommand*\sectionmarkformat{}%
+\renewcommand*\sectionmarkformat{\lnum\thesection\autodot\enskip}%
+%    \end{macrocode}
+%
+% Versalziffern in figure
+%    \begin{macrocode}
+\providecommand*\figureformat{}%
+\renewcommand*{\figureformat}{%
+  \figurename~\lnum\thefigure%
+  \autodot%
+}
+%    \end{macrocode}
+%
+% Versalziffern in table 
+%    \begin{macrocode}
+\providecommand*\tableformat{}%
+\renewcommand*{\tableformat}{%
+  \tablename~\lnum\thetable%
+  \autodot%
+}
+%    \end{macrocode}
+%
+% Versalziffern in toc
+%    \begin{macrocode}
+\providecommand*\numberline@prefix{}%
+\renewcommand*{\numberline@prefix}{\lnum}%
+%    \end{macrocode}
+%
+% Versalziffern in listings caption and line numbering
+%    \begin{macrocode}
+\AfterPackage{listings}{%
+  \AtBeginDocument{%
+    \def\fnum@lstlisting{%
+    \lstlistingname
+    \ifx\lst@@caption\@empty\else~\lnum\thelstlisting\fi}%
+  }%
+%
+  \let\@orig@lst@numberstyle\lst@numberstyle
+  \lst@AddToHook{Init}{
+    \gdef\lst@numberstyle{\@orig@lst@numberstyle\lnum}%
+  }%
+}%
+%    \end{macrocode}
+%
+% Versalziffern in Tabellen
+%    \begin{macrocode}
 \preto\@tabular{\lnum}
 \preto\LT@array{\lnum}
-
 %    \end{macrocode}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Dokumententstruktur Fontdefinitionen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Eliminiert den standardmäßigen Abstand über |\chapter|, da dieser aufgrund
 % des tief hängenden Textbereichs überflüssig ist.
 %    \begin{macrocode}
-\RequirePackage[compact]{titlesec}
-\titleformat{\chapter}[block]
-{\usekomafont{chapter}}{\thechapter}{10pt}{}
-\titlespacing*{\chapter}{0pt}{0pt}{30pt}
 %<*book|report|package>
-\setkomafont{chapter}{\usekomafont{headlinesmall}}
+\newtubsfont{chapter}{\usekomafont{headlinesmall}}
 \if@tubs@tf@smallchap
 \addtokomafont{chapter}{\LARGE}
 \fi
 %</book|report|package>
-\setkomafont{section}{\usekomafont{subheadline}}
-\setkomafont{subsection}{\usekomafont{subheadlinesmall}}
-\addtokomafont{subsubsection}{\tubs@fontcolor{tubsheadings}}
-\setkomafont{intro}{\large\tubs@fontcolor{tubsheadings}}%TODO: mdseries???
+\newtubsfont{section}{\usekomafont{subheadline}}
+\newtubsfont{subsection}{\usekomafont{subheadlinesmall}}
+\addtotubsfont{subsubsection}{\tubs@fontcolor{tubsheadings}}
+\newtubsfont{intro}{\large\tubs@fontcolor{tubsheadings}}%TODO: mdseries???
 %    \end{macrocode}
 %
 %

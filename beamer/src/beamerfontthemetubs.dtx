@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2011 by Enrico Jörns
+% Copyright (C) 2011-2014 by Enrico Jörns
 % -----------------------------------
 %
 % This file may be distributed and/or modified under the
@@ -82,7 +82,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\ProvidesPackage{beamerfontthemetubs}[2010/10/23 v1.1 Font-Theme CD TU-Braunschweig]
+\ProvidesPackage{beamerfontthemetubs}[\tubslatexVersion\space TU Braunschweig (beamer) font theme]
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -95,6 +95,7 @@
 %    \begin{macrocode}
 \newboolean{tinytocinheader}\setboolean{tinytocinheader}{false}
 \newboolean{use@nexus}\setboolean{use@nexus}{false}
+\newboolean{use@lnum}\setboolean{use@lnum}{false}
 %    \end{macrocode}
 %
 %    \begin{key}{}{tinytocinheader}
@@ -104,14 +105,24 @@
 %    \end{key}
 %
 %    \begin{key}{}{nexus}
+% Verwende Arial Font
 %    \begin{macrocode}
 \DeclareOptionBeamer{nexus}{\setboolean{use@nexus}{true}}
 %    \end{macrocode}
+% Verwende Versalziffern
 %    \end{key}
 %
 %    \begin{key}{}{arial}
+% Verwende Nexus Font
 %    \begin{macrocode}
 \DeclareOptionBeamer{arial}{\setboolean{use@nexus}{false}}
+%    \end{macrocode}
+%    \end{key}
+%
+%    \begin{key}{}{lnum}
+% Verwende Versalziffern
+%    \begin{macrocode}
+\DeclareOptionBeamer{lnum}{\setboolean{use@lnum}{true}}
 %    \end{macrocode}
 %    \end{key}
 %
@@ -127,7 +138,10 @@
 }{%
   \RequirePackage{type1cm}% prevent OT1 font size warnings
   \PassOptionsToPackage{arial}{nexus}
-}
+}%
+\ifthenelse{\boolean{use@lnum}}{%
+  \PassOptionsToPackage{lnum}{nexus}
+}{}%
 \RequirePackage{nexus}
 %    \end{macrocode}
 %

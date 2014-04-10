@@ -135,6 +135,7 @@
 %    \end{key}
 %
 %    \begin{key}{}{logo}
+% Option ermoeglicht Benutzung eines Logos im Bulletin-Style
 %    \begin{macrocode}
 \def\@userlogo{}%
 \define@key{tubsposter}{logo}{%
@@ -214,8 +215,8 @@
 %
 }{\ifthenelse{\equal{\tubs@poster@style}{bulletin}}{%
   \renewcommand\tubsposter[1][]{%
-%     \setkeys{tubsposter}{#1}
-%     \gausspagesetup{#1}
+    \setkeys{tubsposter}{#1}%
+%     \gausspagesetup{#1}%
     \gausspage
     \showtubslogo[left]%
     \showlogo{\@userlogo}%
@@ -227,8 +228,8 @@
     \fi
   }
   \def\endtubsposter{%
-    \endsegment%
-    \endgausspage%
+    \endsegment
+    \endgausspage
   }
 %
 }{% default

@@ -5,21 +5,21 @@
 include Makefile.include
 
 # 
-# HG_TEXSTYLE = tex.hgstyle
+# VCS_TEXSTYLE = tex.hgstyle
 
 
 .PHONY: clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch versiondtx
 
 release: clean versiondtx buildinstaller mkdir fetch
 
-# generate: $(HG_DTXOUT) sourcedoc documentation examples
+# generate: $(VCS_DTXOUT) sourcedoc documentation examples
 
 versiondtx:
 	$(ECHO) -e '$(WARN_COLOR)This is tubslatex Version $(TUBSLATEX_FULLVERSION)$(NO_COLOR)'
 	$(CAT) $(TEX_HGTEMPLATE) \
-	  | $(SED) 's:\$$HG_DATE\$$:'"$(HG_DATE)"':g' \
+	  | $(SED) 's:\$$VCS_DATE\$$:'"$(VCS_DATE)"':g' \
 	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
-	  | $(SED) -e 's/\$$HG_REV\$$/'"$(HG_REVISION)"'/g' > $(HG_DTXOUT)
+	  | $(SED) -e 's/\$$VCS_REV\$$/'"$(VCS_REVISION)"'/g' > $(VCS_DTXOUT)
 
 # TODO: make dependent from existence of directory
 mkdir:
