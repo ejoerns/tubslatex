@@ -436,13 +436,20 @@
 %<*class>
     \@twosidefalse% Prevents from generating automatic backpage
 %</class>
-    % Zusätzlicher Abstand bei maketitle
-    \l@addto@macro\clearpage{\vspace*{2\tubsborderwidth}}%
     % Makros sichern (werden bei KOMAs \maketitle ueberschrieben!)
     \let\save@uppertitleback\@uppertitleback
     \let\save@lowertitleback\@lowertitleback
+    \begingroup
+%    \end{macrocode}
+% Hack für Zusätzlicher Abstand bei maketitle
+%    \begin{macrocode}
+    \let\@oldtitlehead\@titlehead
+    \def\@titlehead{\vspace*{2\tubsborderwidth}\@oldtitlehead}
     \origmaketitle
-    % Makros wiederherstellen
+    \endgroup
+%    \end{macrocode}
+% Makros wiederherstellen
+%    \begin{macrocode}
     \global\let\@uppertitleback\save@uppertitleback
     \global\let\@lowertitleback\save@lowertitleback
   }%
