@@ -1,0 +1,68 @@
+\documentclass[%
+  a4paper,%
+  11pt,% <10pt, 9pt>
+]{scrartcl}
+\usepackage[utf8x]{inputenc}
+
+\usepackage[ngerman]{babel}
+
+\usepackage{lipsum} % Blindtext-Paket
+
+\usepackage[%
+  %style=screen,
+  %sender=bottom,
+  blue,% <orange, green, violet>
+  %rgb, <cmyk>
+  %mono,
+  %extramargin,
+  %marginleft, <marginright>
+]{tubsdoc}
+
+% Titelseiten-Elemente
+\title{Beispieltitel}
+\subtitle{Untertitel}
+\author{Max Mustermann}
+%\logo{Institut fuer Lorem Ipsum}
+\logo{\includegraphics{dummy_institut.pdf}}
+\titleabstract{\lipsum[2]}
+\titlepicture{infozentrum.jpg}
+
+
+\begin{document}
+
+\maketitle%[<plain/image/imagetext>,<logo=left/right>]
+
+\tableofcontents
+
+
+\section{Ut purus elit}
+
+\textcolor{tubsSecondary}{Dies ist ein Text in \texttt{tubsSecondary}.}
+\textcolor{tubsViolet}{Dies ist ein Text in \texttt{tubsViolet}.}
+\textcolor{tubsGreenDark}{Dies ist ein Text in \texttt{tubsGreenDark}.}\bigskip
+
+\lipsum[1]
+
+\begin{itemize}
+  \item Aufzählungspunkt Eins
+  \item Aufzählungspunkt Zwei
+    \begin{itemize}
+      \item Unter-Aufzählungspunkt Eins
+      \item Unter-Aufzählungspunkt Zwei
+    \end{itemize}
+  \item Aufzählungspunkt Drei
+\end{itemize}
+
+\section{Phasellus eu tellus sit amet}
+
+\lipsum[2-5]
+
+\section{Nulla malesuada porttitor diam.}
+
+\lipsum[1-3]
+
+\subsection{Donec felis erat}
+
+\lipsum[4-7]
+
+\end{document}
