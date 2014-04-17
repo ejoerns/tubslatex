@@ -362,10 +362,10 @@
 %    \begin{macrocode}
 \providecommand{\if@OldKomaVersion}{\iffalse}
 \if@OldKomaVersion%
+\newkomavar{fixdate}
+\newsavebox{\@fixdate}
 \let\oldopening\opening
 \renewcommand\opening[1]{%
-    \newkomavar{fixdate}
-    \newsavebox{\@fixdate}
     \sbox{\@fixdate}{\footnotesize\sffamily\usekomavar{date}}
     \setkomavar{fixdate}{\usebox{\@fixdate}}
     \setkomavar{date}{}

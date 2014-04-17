@@ -1,60 +1,38 @@
-Version 1.0-RC3:
-- Briefklasse
-  - Verbesserte Behandlung fuer mehrere Briefe in selbem Dokument
-    - Seitenzahl wird korrekt gesetzt
-    - Seitenbreite auf Folgeseiten wird korrekt gesetzt
-  - Unterstützung von englischer Ausgabe für Seitenzahl und Datumsangabe
+Version 1.0.2:
 
-- Beamer
-  - Farbstufe der block-title-Hintergrundfarbe von 60 auf 40 korrigiert
-  - Versionsnummer in Konsolenausgabe
+- Allgemein
+  - Verwendung von \tubslatexVersion in allen Paketen/Klassen
+
+- Präsentation
+  - Option 'lnum' hinzugefuegt
+    Fixes: #0000136
 
 - Dokumentenklassen
-  - Ueberschriften, Tabellen und enumerations verwenden Versalziffern
+  - tubsfont-Definitionen ueberarbeitet.
+    Fixes: #0000138, #0000139
+  - Zusätzlicher Abstand fuer scrartcl maketitle ueber
+    \@titlehead erzeugen anstelle von \clearpage, da dies bei neueren
+    Koma-Klassen zu Leerseiten vor dem Titel führt
+    Fixes: #0000141
 
 - Briefklasse
-  - Koma-Variable 'fromuniversity' erlaubt Modifikation des Uni-Namens
+  - Nur \pagemark redefinieren, um bessere Kompatibilität mit KOMA zu behalten.
+  - Platzierung des Labels fuer Seitenzahl-Berechnung korrigiert
+  - Setzte \familydefault zu \sffamily anstelle von \sffamily in \AtBeginLetter
+  - Doppelte Redefinition von opening und Setzen vom uselettercount label korrigiert
+  - Fixed #0000147
 
-- Installation
-  - Skript testet Verfuegbarkeit von kpsewhich
+- Poster
+  - Option 'logo' fuer Bulletin-Style poster aktiviert
 
-Version 1.0-RC2:
+Version 1.0:
+
 - Allgemein
   - Korrektur in horizontaler Sekundaerlogopositionierung
   - Erster Absatz in gaussbox wird nicht eingerueckt
   - definierte vertikale Hoehe in gaussbox fuer vfill-Verwendung
   - Optionsbehandlung fuer 'imagefit' korrigiert
   - Benennung von eps-RGB Siegelbandlogo korrigiert
-
-- Dokumentenklassen
-  - Logopositionierung fuer plain-Style
-  - Korrektur in twoside-Behandlung bei Titelseiten
-  - Einrueckungen auf Titelseiten korrigiert
-  - \titlegraphic als Alias fuer titlepicture
-  - plain-Stil fuer tubsdoc wieder verfuegbar gemacht
-  - Wiederherstellung von @upptertitleback und @lowertitleback fuer plain-Stil
-
-- Installation
-  - Unix Install-Script verbessert
-  - Weitreichende funktionale Ueberarbeitung des Windows-Installers
-  - Verbositaet fuer Windows-Installer verbessert, Logfile zu Debuggingzwecken
-  - Debian-Paket verbessert (Lintian-Check fehlerfrei), Verwendung von debconf
-    statt read, Test auf lokale fontmap zurueckgenommen
-
-
-Version 1.0-RC1:
-- Dokumentation
-  - Installationshinweise für Mac OS-Installation hinzugefuegt
-  - Paket-Dokumentationen erweitert
-  - Erklärung zu Gauss-Layoutsystem, Plakaten und Flyern deutlich erweitert
-
-- Dokumentenklassen
-  - \author auf CD-Titelseiten unterstützt nun \and
-  - Unterstützung von \uppertitleback und \lowertitleback für backpage style
-  - Titelseiten-Style für landscape
-  - Umfassender Optionen- und Befehlsindex
-
-- Allgemein
   - Bessere Unterstützung von unbekannten Papierformaten (tubstypearea)
   - Seitengröße mittel Optionen 'paperwidth' und 'paperheight' teilweise einstellbar
   - Optionsweiterleitung an bgelement korrigiert
@@ -70,6 +48,38 @@ Version 1.0-RC1:
   - automatische Erkennung von individuellen Hoch-/Querformaten
   - verbesserte Behandlung unbekannter Formate
 
+- Briefklasse
+  - Verbesserte Behandlung fuer mehrere Briefe in selbem Dokument
+    - Seitenzahl wird korrekt gesetzt
+    - Seitenbreite auf Folgeseiten wird korrekt gesetzt
+  - Unterstützung von englischer Ausgabe für Seitenzahl und Datumsangabe
+
+- Beamer
+  - Farbstufe der block-title-Hintergrundfarbe von 60 auf 40 korrigiert
+  - Versionsnummer in Konsolenausgabe
+
+- Dokumentenklassen
+  - Ueberschriften, Tabellen und enumerations verwenden Versalziffern
+  - Logopositionierung fuer plain-Style
+  - Korrektur in twoside-Behandlung bei Titelseiten
+  - Einrueckungen auf Titelseiten korrigiert
+  - \titlegraphic als Alias fuer titlepicture
+  - plain-Stil fuer tubsdoc wieder verfuegbar gemacht
+  - Wiederherstellung von @upptertitleback und @lowertitleback fuer plain-Stil
+  - \author auf CD-Titelseiten unterstützt nun \and
+  - Unterstützung von \uppertitleback und \lowertitleback für backpage style
+  - Titelseiten-Style für landscape
+  - Umfassender Optionen- und Befehlsindex
+
+- Plakate
+  - Berechnungsfehler für Modulsystem korrigiert
+  - Option 'logo' für Bulletin-Poster
+  - Korrekte Schriftgrößendefinitionen angelegt
+  - korrigierte Logo-Darstellung (landscape)
+
+- Briefklasse
+  - Koma-Variable 'fromuniversity' erlaubt Modifikation des Uni-Namens
+
 - Fonts
   - \footnotesize-Deklaration für A0 korrigiert
   - mathsf und mathtt fuer Nexus definiert
@@ -79,11 +89,20 @@ Version 1.0-RC1:
   - institute-Font auf \bfseries gesetzt
   - Farbeinstellungen bei CD-Schriften werden nur bei Option aktiviert
 
-- Plakate
-  - Berechnungsfehler für Modulsystem korrigiert
-  - Option 'logo' für Bulletin-Poster
-  - Korrekte Schriftgrößendefinitionen angelegt
-  - korrigierte Logo-Darstellung (landscape)
+- Installation
+  - Skript testet Verfuegbarkeit von kpsewhich
+  - Unix Install-Script verbessert
+  - Weitreichende funktionale Ueberarbeitung des Windows-Installers
+  - Verbositaet fuer Windows-Installer verbessert, Logfile zu Debuggingzwecken
+  - Debian-Paket verbessert (Lintian-Check fehlerfrei), Verwendung von debconf
+    statt read, Test auf lokale fontmap zurueckgenommen
+  - postinst und postrm-Skripte des deb-Paketes korrigiert und erweitert
+  - deb-Abhängigkeiten erweitert für Kompatibilität mit Ubuntu 12.04
+
+- Dokumentation
+  - Installationshinweise für Mac OS-Installation hinzugefuegt
+  - Paket-Dokumentationen erweitert
+  - Erklärung zu Gauss-Layoutsystem, Plakaten und Flyern deutlich erweitert
 
 - tubsdoc
   - Paket nun auch mit KOMA-Klassen zusammen nutzbar
@@ -101,10 +120,6 @@ Version 1.0-RC1:
   - \institute-Befehl zeigt ursprüngliches Verhalten und wird auf
     Titelseiten dargestellt
   - Minimalabstand von Titlepage-Text zu Segmentobergrenze
-
-- Installation:
-  - postinst und postrm-Skripte des deb-Paketes korrigiert und erweitert
-  - deb-Abhängigkeiten erweitert für Kompatibilität mit Ubuntu 12.04
 
 - Besipiel-Dateien:
   - tubsleaflet-Beispiel hinzugefuegt
