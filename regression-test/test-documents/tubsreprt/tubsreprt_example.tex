@@ -1,0 +1,72 @@
+\documentclass[%
+  a4paper,%
+  11pt,% <10pt, 9pt>
+  %smallchapters,
+  %style=screen,
+  %sender=bottom,
+  blue,% <orange, green, violet>
+  %rgb, <cmyk>
+  %mono
+  ]{tubsreprt}
+\usepackage[utf8x]{inputenc}
+
+\usepackage[ngerman]{babel}
+
+\usepackage{lipsum} % Blindtext-Paket
+
+% Titelseiten-Elemente
+\title{Beispieltitel}
+\subtitle{Untertitel}
+\author{Max Mustermann}
+%\logo{Institut fuer Lorem Ipsum}
+\logo{\includegraphics{dummy_institut.pdf}}
+\titleabstract{\lipsum[2]}
+\titlepicture{infozentrum.jpg}
+% Rückseiten-Elemente
+\address{%
+  Herr Mustermann\\
+  Schlossallee 1\\
+  33333 Darmstadt}
+\backpageinfo{%
+  \lipsum[5]
+}
+
+\begin{document}
+
+\maketitle[image,logo=right]%[<plain/image/imagetext>,<logo=left/right>]
+\makebackpage[trisec]%[<plain/info/addressinfo>]
+
+\tableofcontents
+
+
+\chapter{Ut purus elit}
+
+\textcolor{tubsSecondary}{Dies ist ein Text in \texttt{tubsSecondary}.}
+\textcolor{tubsViolet}{Dies ist ein Text in \texttt{tubsViolet}.}
+\textcolor{tubsGreenDark}{Dies ist ein Text in \texttt{tubsGreenDark}.}\bigskip
+
+\lipsum[1]
+
+\begin{itemize}
+  \item Aufzählungspunkt Eins
+  \item Aufzählungspunkt Zwei
+    \begin{itemize}
+      \item Unter-Aufzählungspunkt Eins
+      \item Unter-Aufzählungspunkt Zwei
+    \end{itemize}
+  \item Aufzählungspunkt Drei
+\end{itemize}
+
+\chapter{Phasellus eu tellus sit amet}
+
+\lipsum[2-5]
+
+\chapter{Nulla malesuada porttitor diam.}
+
+\lipsum[1-3]
+
+\section{Donec felis erat}
+
+\lipsum[4-7]
+
+\end{document}

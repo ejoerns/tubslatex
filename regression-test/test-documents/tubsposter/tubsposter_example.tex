@@ -1,0 +1,86 @@
+\documentclass[%
+  a3paper,% <a4paper/a2paper/a1paper/a0paper>
+  %rgb,
+  %arial
+  ]{tubsposter}
+\usepackage[utf8]{inputenc}
+
+\usepackage{lipsum}
+
+\begin{document}
+
+\begin{tubsposter}[sender=bottom]
+  %% Aktiviert die horizontale Linie am Ende des Kommunikationsbereichs.
+  %\showtopline
+
+  %% Stellt das TU-Logo an der gewünschten Seite (links/rechts) dar.
+  \showtubslogo[right]
+
+  %% Stellt das Institutslogo im Absenderbereich dar.
+  \showlogo{Institutslogo einfügen oder Institutsname/\\
+    zentrale Einrichtung als Text eingeben}
+  %% Alternative Version des Logos mit Bild statt Text.
+  %\showlogo{\includegraphics{dummy_institut.pdf}}
+
+  %% Beginnt eine neuen Bereich mit der angegebenen Höhe im Gaußraster.
+  \begin{posterrow}[bgcolor=tubsRed100]{4}
+    {\usekomafont{headlinesmall}\color{tuWhite} Headline small\bigskip}
+
+    \vfill
+    \hfill\parbox{0.6\textwidth}{\usekomafont{subheadlinesmall}\color{tuWhite}%
+      Subheadline small\\
+      Mitant dur Wolche to illemit drusi puzen, um brackl jaun utten.
+      Rumber olst gumme Placke on ofen heiritate us.
+    }
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tubsGray20]{4}
+    \lipsum[2]
+    \lipsum[3]
+    \vfill
+    \textbf{www.tu-braunschweig.de}
+  \end{posterrow}
+\end{tubsposter}
+
+
+\begin{tubsposter}[sender=top]
+  %% Aktiviert die horizontale Linie am oberen Ende des Kommunikationsbereichs.
+  %\showtopline
+
+  %% Stellt das TU-Logo an der gewünschten Seite (links/rechts) dar.
+  \showtubslogo[right]
+
+  %% Stellt das Institutslogo im Absenderbereich dar.
+  \showlogo{Institutslogo einfügen oder Institutsname/\\
+    zentrale Einrichtung als Text eingeben}
+  %% Alternative Version des Logos mit Bild statt Text.
+  %\showlogo{\includegraphics{dummy_institut.pdf}}
+
+  %% Beginnt eine neuen Bereich mit der angegebenen Höhe im Gaußraster.
+  \begin{posterrow}[bgcolor=tubsRed100]{2}
+    \color{tuWhite}
+    {\usekomafont{headline}\color{tuWhite} Headline large\bigskip}
+
+    {\usekomafont{subheadline}\color{tuWhite} Subheadline large\\
+    Mitant dur Wolche to illemit drusi puzen, um brackl jaun utten}
+    \vfill
+    \large
+    \begin{itemize}
+      \item Item 1
+      \item Item 2
+      \item Item 3
+    \end{itemize}
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tubsGray20]{3}
+  \end{posterrow}
+  \begin{posterrow}[bgcolor=tubsRed40]{3}
+    Copy 12 pt\\
+    Kisuali antux e weimi Kameran.\\
+    Quol damnarin Tropi zu klenne perdi Utilira regau socht mol sunt.\\
+    Her mitant dur Wolche to illemit drusi puzen, um brackl jaun utten.
+    Rumber olst gumme Placke on ofen heiritate us.
+    \vfill
+    \textbf{www.tu-braunschweig.de}
+  \end{posterrow}
+\end{tubsposter}
+
+\end{document}
