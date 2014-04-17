@@ -155,9 +155,9 @@
 % Lade Klasse, Versionstest und Hack für Datum
 %    \begin{macrocode}
 \LoadClass{scrlttr2}[2011/06/16]
-\@ifpackagelater{scrbase}{2011/06/16}{}{%
-  \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
-}
+%\@ifpackagelater{scrbase}{2011/06/16}{}{%
+%  \setkomavar{date}{}% Wird bei alter Version wie refline=nodate interpretiert!
+%}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -354,6 +354,7 @@
 \setkomavar{fromuniversity}{Technische Universit\"at\linebreak[1] Braunschweig}
 %    \end{macrocode}
 %
+%    \begin{macro}{opening}
 % Kompatiblitätshack für KOMA-Skript-Version < 3.09a
 % Der Inhalt von date wird bei |\opening| in eine savebox gespeichert
 % und so invariant in die Koma-Variable fixdate gepackt.
@@ -361,18 +362,18 @@
 %    \begin{macrocode}
 \providecommand{\if@OldKomaVersion}{\iffalse}
 \if@OldKomaVersion%
-  \newkomavar{fixdate}
-  \newsavebox{\@fixdate}
-  \let\oldopening\opening
-  \renewcommand\opening[1]{%
-    \stepcounter{uselettercount}% Setze counter fuer page reference
+\newkomavar{fixdate}
+\newsavebox{\@fixdate}
+\let\oldopening\opening
+\renewcommand\opening[1]{%
     \sbox{\@fixdate}{\footnotesize\sffamily\usekomavar{date}}
     \setkomavar{fixdate}{\usebox{\@fixdate}}
     \setkomavar{date}{}
-    \oldopening{#1}
-  }
+\oldopening{#1}
+}
 \else\relax\fi
 %    \end{macrocode}
+%    \end{macro}
 %
 % Setzen der Schriftattribute
 %    \begin{macrocode}
@@ -584,12 +585,29 @@ Deutschland\\
 % Fuer mehrere Briefe in einem Dokument brauchen wir ein label nach jedem
 % Brief, um die Seitenzahl zu bekommen.
 %
+%    \end{macrocode}
 % Speicher fuer lettercount
+%    \begin{macrocode}
 \newcounter{setlettercount}%
+%    \end{macrocode}
 % Benutzung von lettercount
+%    \begin{macrocode}
 \newcounter{uselettercount}%
 \setcounter{setlettercount}{1}%
+%    \end{macrocode}
 %
+%    \begin{macro}{letter}
+%    \begin{macrocode}
+\let\oldletter\letter
+\renewcommand\letter{%
+  \stepcounter{uselettercount}% Setze counter fuer page reference
+  \oldletter
+}
+%    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{endletter}
+%    \begin{macrocode}
 \let\oldendletter\endletter
 \renewcommand\endletter{%
   \edef\@lblname{letter\arabic{setlettercount}}%
@@ -597,7 +615,10 @@ Deutschland\\
   \stepcounter{setlettercount}%
   \oldendletter
 }%
+%    \end{macrocode}
+%    \end{macro}
 % Darstellung als 'Seite x von y'
+%    \begin{macrocode}
 \renewcommand*{\pagemark}{{%
     \edef\@lblname{letter\arabic{uselettercount}}%
     \usekomafont{pagenumber}%
@@ -605,6 +626,8 @@ Deutschland\\
     \thepage\ %
     \pageof\ %
     \pageref{\@lblname}}}
+%    \end{macrocode}
+%    \begin{macrocode}
 % Darstellung der Seitenzahl auch auf der ersten Seite
 % TODO: Deaktivierungsoption?
 \@fix@firstfoot{%
