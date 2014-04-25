@@ -145,10 +145,8 @@
 %    \begin{macrocode}
 \newcommand\newtubsfont[3][\relax]{%
   \@ifundefined{scr@fnt@#2}{%
-    \typeout{#2 undefined}
     \newkomafont[#1]{#2}{#3}%
   }{%
-    \typeout{#2 defined}
     \setkomafont{#2}{#3}
   }
 }
