@@ -403,7 +403,7 @@ tubsheadings}}
 %
   \let\@orig@lst@numberstyle\lst@numberstyle
   \lst@AddToHook{Init}{%
-    \gdef\lst@numberstyle{\@orig@lst@numberstyle\lnum}%
+    \l@addto@macro\lst@numberstyle\lnum
   }%
 }%
 %    \end{macrocode}
