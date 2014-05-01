@@ -308,6 +308,13 @@ tubsheadings}}
 % 
 % Einige Elemente, wie Aufzählungen oder Überschriften verwenden nur Versalziffern
 %
+% Fußnoten in versalziffern darstellen
+% TODO: nur für numbers?
+%    \begin{macrocode}
+\deffootnotemark{\lnum\textsuperscript{\thefootnotemark}}
+\addtotubsfont{footnote}{\lnum}% TODO (see above)
+%    \end{macrocode}
+%
 % Versalziffern enumerations\\
 % TODO: bisher nur quick\&dirty (TM)
 %    \begin{macrocode}
