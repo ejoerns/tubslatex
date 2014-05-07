@@ -1,3 +1,21 @@
+Version 1.0.3:
+
+- Dokumentenklassen
+  - Diverse Kompatibilitaetsfixes fuer `tikz` package
+    - Unterstuetzung fuer `external` library
+      Fixes: #0000104
+    - Probleme mit Transparenz behoben
+  - Diverse Kompatibilitaetsfixes fuer `listings` package
+    - Spacing-Fehler bei `\lstinline` korrigiert
+    - Korrigierte Behandlung fuer line numbers
+  - Versalziffern fuer footnotes
+
+- Dokumentation
+  - Projekt-Website korrigiert und als hyperref-url gesetzt
+
+- Installation
+  - Fehlerhafte permissions in .deb-Skript korrigiert
+
 Version 1.0.2:
 
 - Allgemein
