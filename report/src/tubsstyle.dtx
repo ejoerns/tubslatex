@@ -209,10 +209,6 @@
 \fi%
 %    \end{macrocode}
 %
-%    \begin{macrocode}
-\RequirePackage{transparent}% TODO: noch nicht benutzt...
-%    \end{macrocode}
-%
 %
 % Temporäre Längen für Berechnungen
 %    \begin{macrocode}
@@ -909,6 +905,25 @@
 %    \end{macrocode}
 %    \end{macro}
 %
+%    \begin{macro}{\only@ifshipout@allowed}
+% Sicherheits-Check, der shipouts nur setzt, wenn die aktuelle Umgebung
+% dies erlaubt.\par
+% Aktuell wird nur getestet, ob die tikz-library |external| geladen
+% wurde, da diese inkompatibel zur tubslatex shipout-Routine ist
+% und sonst Teile des bglayout im externalisierten Bild zu finden sind.
+%    \begin{macrocode}
+\newcommand\only@ifshipout@allowed[1]{%
+  \ifdefined\tikzifexternalizing
+    \tikzifexternalizing{}{%
+      #1%
+    }%
+  \else
+    #1%
+  \fi
+}
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macro}{\@layout@post}
 % Layout-Postprocessing, Setzen des Bildes, Zusicherung der Reihenfolge.
 % Die unter dem Makro |\@next@shipout| gespeicherten Kommandos für den
@@ -921,13 +936,15 @@
   \ifthenelse{\boolean{tubsstyle@designhelper}}{%
     \setboolean{tubsstyle@designhelper}{false}%
     \showdesignhelper%
-  }{}
+  }{}%
   \tubs@draw@designhelper% TODO: keep?
-  \ifthenelse{\boolean{tubsstyle@singlepage}}{%
-    \AddToShipoutPicture*{\@next@shipout}
-  }{%
-    \AddToShipoutPicture{\@next@shipout}
-  }
+  \only@ifshipout@allowed{%
+    \ifthenelse{\boolean{tubsstyle@singlepage}}{%
+      \AddToShipoutPicture*{\@next@shipout}%
+    }{%
+      \AddToShipoutPicture{\@next@shipout}%
+    }%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}

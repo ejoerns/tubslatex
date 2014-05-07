@@ -145,10 +145,8 @@
 %    \begin{macrocode}
 \newcommand\newtubsfont[3][\relax]{%
   \@ifundefined{scr@fnt@#2}{%
-    \typeout{#2 undefined}
     \newkomafont[#1]{#2}{#3}%
   }{%
-    \typeout{#2 defined}
     \setkomafont{#2}{#3}
   }
 }
@@ -310,6 +308,13 @@ tubsheadings}}
 % 
 % Einige Elemente, wie Aufzählungen oder Überschriften verwenden nur Versalziffern
 %
+% Fußnoten in versalziffern darstellen
+% TODO: nur für numbers?
+%    \begin{macrocode}
+\deffootnotemark{\lnum\textsuperscript{\thefootnotemark}}
+\addtotubsfont{footnote}{\lnum}% TODO (see above)
+%    \end{macrocode}
+%
 % Versalziffern enumerations\\
 % TODO: bisher nur quick\&dirty (TM)
 %    \begin{macrocode}
@@ -404,8 +409,8 @@ tubsheadings}}
   }%
 %
   \let\@orig@lst@numberstyle\lst@numberstyle
-  \lst@AddToHook{Init}{
-    \gdef\lst@numberstyle{\@orig@lst@numberstyle\lnum}%
+  \lst@AddToHook{Init}{%
+    \l@addto@macro\lst@numberstyle\lnum
   }%
 }%
 %    \end{macrocode}

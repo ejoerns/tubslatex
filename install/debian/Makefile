@@ -51,6 +51,8 @@ fetch:
 	$(SED) 's/INSTALLSIZE/'"`du -sk --apparent-size texlive-tubs | awk  '{print $$1}' `"'/g' > control
 	$(CP) lintian-overrides-texlive-tubs texlive-tubs$(LINOVRDPATH)/texlive-tubs
 	$(CP) control postinst prerm postrm templates texlive-tubs/DEBIAN/.
+	chmod 755 texlive-tubs/DEBIAN/postinst texlive-tubs/DEBIAN/prerm texlive-tubs/DEBIAN/postrm
+	chmod 644 texlive-tubs/DEBIAN/templates
 	$(CP) changelog.Debian.template changelog.Debian
 	$(CP) changelog.template changelog
 	$(GZIP) -9f changelog
