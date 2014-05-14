@@ -187,17 +187,9 @@
 % Positionierung des Logos.
 % Mögliche Werte: |left|, |inside|, |right|, |outside|
 %    \begin{macrocode}
-\newcommand\tubs@tp@logopos{left}
-\define@choicekey*{tubs@tp}{logo}[\val\nr]{left,inside,right,outside}{%
-  \ifcase\nr\relax
-    \renewcommand\tubs@tp@logopos{left}
-  \or
-    \renewcommand\tubs@tp@logopos{left}
-  \or
-    \renewcommand\tubs@tp@logopos{right}
-  \or
-    \renewcommand\tubs@tp@logopos{right}
-  \fi
+\define@key{tubs@tp}{logo}{%
+  %\savekeys{tubs@tp@logoopts}{#1}%
+  \setkeys{tubslogo}{#1}%
 }
 %    \end{macrocode}
 %    \end{key}
@@ -242,6 +234,7 @@
 % Stellt optionales Argument für Style-Auswahl etc. zur Verfügung.
 %    \begin{macrocode}
 \renewcommand*{\maketitle}[1][]{%
+  \begingroup
   \setkeys*{tubs@tp}{logo=left,#1}%
   \ifthenelse{\equal{\XKV@rm}{}}{%
     \csname tubs@style@content@\style@select\endcsname%
@@ -250,6 +243,7 @@
     \csname tubs@style@content@\XKV@rm\endcsname%
     \csname tubs@style@bg@\XKV@rm\endcsname%
   }
+  \endgroup
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -258,6 +252,7 @@
 % Kommando um Rückseiten im CD zu erzeugen.
 %    \begin{macrocode}
 \newcommand{\makebackpage}[1][\style@select]{%
+  \begingroup
   \setkeys*{tubs@tp}{#1}%
   \ifthenelse{\equal{\XKV@rm}{}}{%
     \csname tubs@backstyle@content@\style@select\endcsname%
@@ -266,6 +261,7 @@
     \csname tubs@backstyle@content@\XKV@rm\endcsname%
     \csname tubs@backstyle@bg@\XKV@rm\endcsname%
   }
+  \endgroup
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -407,11 +403,11 @@
   {%
     % Setze background-Layout
     \bglayout[pages=single]{%
-      \showtubslogo[\tubs@tp@logopos]
+      \showtubslogo
       \showtopline
       \showlogo{\tubs@tp@logo}%
     }%
-    \def\tmp@showtubslogo{\showtubslogo[\tubs@tp@logopos]}
+    \def\tmp@showtubslogo{\showtubslogo}
     \let\tmp@showtopline\showtopline
     \def\tmp@showlogo{\showlogo{\tubs@tp@logo}}%
     \l@addto@macro\titlepage{%
@@ -468,7 +464,7 @@
 		\begin{tabular}[t]{@{}l}%
 	}%
   \begin{titlepage}
-    \showtubslogo[\tubs@tp@logopos]
+    \showtubslogo
     \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{3}
     \endtitlerow
@@ -503,7 +499,7 @@
 		\begin{tabular}[t]{@{}l}%
 	}%
   \begin{titlepage}
-    \showtubslogo[\tubs@tp@logopos]
+    \showtubslogo
     \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{2}
     \endtitlerow
@@ -543,7 +539,7 @@
     \begin{tabular}[t]{@{}l}%
   }%
   \begin{titlepage}
-    \showtubslogo[\tubs@tp@logopos]
+    \showtubslogo
     \showlogo{\tubs@tp@logo}
     \expandafter\titlerow\tubs@tp@titlepicture{2}
     \endtitlerow
@@ -576,7 +572,7 @@
   \begin{gausspage}
     \ifKV@tubs@tp@notubslogo\else
       \showtopline
-      \showtubslogo[\tubs@tp@logopos,plain]%
+      \showtubslogo
     \fi
     \begin{segment}{8}%
       \noindent\tubs@tp@address\par
@@ -598,7 +594,7 @@
 \new@back@style{addressinfo}{}{%
   \begin{gausspage}
     \ifKV@tubs@tp@notubslogo\else
-      \showtubslogo[\tubs@tp@logopos,plain]
+      \showtubslogo
     \fi
     \begin{segment}[bgcolor=tuSecondary]{2}
       \leavevmode\color{white}\tubs@tp@address
@@ -619,7 +615,7 @@
 \new@back@style{info}{}{%
   \begin{gausspage}
     \ifKV@tubs@tp@notubslogo\else
-      \showtubslogo[\tubs@tp@logopos,plain]
+      \showtubslogo
     \fi
     \begin{segment}[bgcolor=tuSecondaryLight]{8}
       \noindent\@uppertitleback\par
@@ -637,7 +633,7 @@
 \new@back@style{trisec}{}{%
   \begin{gausspage}
     \ifKV@tubs@tp@notubslogo\else
-      \showtubslogo[\tubs@tp@logopos,plain]
+      \showtubslogo
     \fi
     \begin{segment}[bgcolor=tuSecondaryLight]{2}
       \usekomafont{copytext}\noindent\tubs@tp@address
