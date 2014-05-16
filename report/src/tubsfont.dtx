@@ -86,7 +86,7 @@
 %<*option>
 %    \end{macrocode}
 %
-%    \begin{key}{tubsfont.sty}{colorheadings}
+%    \begin{key}{tubsfont.sty}{fontsize}
 % foo
 %    \begin{macrocode}
 \newcommand\tubs@fontsize{11pt}
@@ -147,8 +147,8 @@
   \@ifundefined{scr@fnt@#2}{%
     \newkomafont[#1]{#2}{#3}%
   }{%
-    \setkomafont{#2}{#3}
-  }
+    \setkomafont{#2}{#3}%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -159,8 +159,8 @@
 %    \begin{macrocode}
 \newcommand*\addtotubsfont[2]{%
   \@ifundefined{scr@fnt@#1}{}{%
-    \addtokomafont{#1}{#2}
-  }
+    \addtokomafont{#1}{#2}%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -169,7 +169,7 @@
 %    \begin{macro}{\usetubsfont}
 % Aliase für weiter Koma-Font-Befehle
 %    \begin{macrocode}
-\let\settubsfont\setkomafont
+\let\settubsfont\newtubsfont
 \let\usetubsfont\usekomafont
 %    \end{macrocode}
 %    \end{macro}\end{macro}
