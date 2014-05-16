@@ -285,7 +285,6 @@ tubsheadings}}
 %    \begin{macro}{infotextitem}
 %    \begin{macro}{copytext}
 %    \begin{macro}{caption}
-%    \begin{macro}{pagenumber}
 % Verschiedene Schriftelemente
 %    \begin{macrocode}
 \newtubsfont{author}{\sffamily\LARGE}
@@ -296,11 +295,17 @@ tubsheadings}}
 \newtubsfont{infotextitem}{\large}
 \newtubsfont{copytext}{\normalsize}
 \newtubsfont{caption}{\small}
-\newtubsfont{pagenumber}{}
-% \setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
 %    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 %
+%    \begin{macro}{pageheadfoot}
+%    \begin{macro}{pagenumber}
+% Kopf- und Fußzeile
+%    \begin{macrocode}
+\settubsfont{pageheadfoot}{\normalfont\mdseries\scshape}
+\settubsfont{pagenumber}{\usekomafont{pagehead}\lnum}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Zifferndarstellung}
