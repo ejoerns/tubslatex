@@ -360,7 +360,7 @@ tubsheadings}}
 %<*book|report|package>
 \providecommand*\chaptermarkformat{}%
 \renewcommand*\chaptermarkformat{\chapappifchapterprefix{\ }%
-  \lnum\thechapter\autodot\enskip}
+  \protect\lnum\thechapter\autodot\enskip}
 %</book|report|package>
 %    \end{macrocode}
 %
@@ -370,14 +370,15 @@ tubsheadings}}
 \providecommand*{\othersectionlevelsformat}[3]{#3\enskip} % HERE!
 \renewcommand*\@seccntformat[1]{%
    \protect\othersectionlevelsformat{#1}{%
-     \expandafter\aftergroup\noexpand\@gobble}{\lnum\csname the#1\endcsname}%
+     \expandafter\aftergroup\noexpand\@gobble}{\protect\lnum\csname the#1\endcsname}%
 }
 %    \end{macrocode}
 %
 % Versalziffern in sectionmark
 %    \begin{macrocode}
 \providecommand*\sectionmarkformat{}%
-\renewcommand*\sectionmarkformat{\lnum\thesection\autodot\enskip}%
+% \renewcommand*\sectionmarkformat{[\protect\lnum\thesection\autodot\enskip]}%
+\renewcommand*\sectionmarkformat{{\protect\lnum\thesection\autodot\enskip}}%
 %    \end{macrocode}
 %
 % Versalziffern in figure
