@@ -109,8 +109,8 @@ LangString STRING_DIRECTORYPAGE_TEXT_TOP ${LANG_GERMAN} "Die Inhalte können im M
 LangString STRING_INSTALLMODEPAGE_TEXT_TOP ${LANG_ENGLISH} "Note: A local installation will create a local database. As a result, global changes will be ignored henceforth."
 LangString STRING_INSTALLMODEPAGE_TEXT_TOP ${LANG_GERMAN} "Hinweis: Eine lokale Installation legt eine lokale Datenbank an, wodurch globale Änderungen fortan ignoriert werden."
 
-LangString STRING_MB_LOCALDB_FOUND ${LANG_ENGLISH} "Warning! Found local database!$\rSystem-wide installation my cause problems.$\r$\rDo you want to continue?"
-LangString STRING_MB_LOCALDB_FOUND ${LANG_GERMAN} "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?"
+LangString STRING_MB_LOCALDB_FOUND ${LANG_ENGLISH} "Warning! Found local font database '$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map'!$\r$\nThe system-wide database will be ignored.$\r$\n$\r$\nA local install or deleting the local database is recommended.$\r$\n$\r$\nContinue anyway?"
+LangString STRING_MB_LOCALDB_FOUND ${LANG_GERMAN} "Warnung! Lokale Font-Datenbank gefunden: '$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map'!$\r$\nDie systemweite Datenbank wird ignoriert werden.$\r$\n$\r$\nEs wird empfohlen eine lokale Installation durchzuführen oder die lokale Datenbank zu löschen!$\r$\n$\r$\nTrotzdem Fortfahren?"
 
 LangString STRING_MB_NOMIKTEX ${LANG_ENGLISH} "Error: MiKTeX not installed, cancelling installation"
 LangString STRING_MB_NOMIKTEX ${LANG_GERMAN} "Fehler: Keine vorhandene MiKTeX-Installation gefunden, Installation wird abgebrochen."
@@ -156,7 +156,7 @@ Function setInstallMode
     ; Names of registry keys
     StrCpy $miktexRoots "CommonRoots"
     IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
-      MessageBox MB_YESNO "$(STRING_MB_LOCALDB_FOUND)" IDYES noskip
+      MessageBox MB_YESNO|MB_ICONEXCLAMATION "$(STRING_MB_LOCALDB_FOUND)" IDYES noskip
         StrCpy $R9 0 ;
         Call RelGotoPage
         Abort
