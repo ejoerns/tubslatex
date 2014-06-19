@@ -91,8 +91,11 @@ Var desiredInstallType
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "German"
 
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\n$\r$\nDo you want to continue installing Version ${VERSION}?$\r$\n(Previous version will be uninstalled.)"
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\n$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?$\r$\n(Vorherige Version wird deinstalliert.)"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\nShould be removed before installing new version.$\r$\n$\r$\nUninstall previous version?"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\nDiese sollte zuvor entfernt werden.$\r$\n$\r$\nVorige Version deinstallieren?"
+
+LangString STRING_UNINSTALL_FAILED ${LANG_ENGLISH} "Uninstalling previous tubslatex Version failed!$\r$\nUninstall or remove manually if required."
+LangString STRING_UNINSTALL_FAILED ${LANG_GERMAN} "Deinstallation von alter tubslatex-Version fehlgeschlagen!$\r$\nSollte wenn nötig manuell deinstalliert oder entfernt werden."
 
 LangString STRING_TEXT_ALLUSERS ${LANG_ENGLISH} "Install for all users (global)"
 LangString STRING_TEXT_ALLUSERS ${LANG_GERMAN} "Für alle Benutzer installieren (global)"
@@ -196,7 +199,7 @@ Function analyzeMiktex
   ${EndIf}
 FunctionEnd
 
-Var tubslatexPreVersion ; Version of prevoious tubslatex install
+Var tubslatexPreVersion ; Version of previous tubslatex install
 Var tubslatexPreSHCTX ; Shell context of previous tubslatex install
 
 Function analyzeTubslatex
@@ -426,16 +429,6 @@ Section "-preinstall"
   ;; check miktex installation
   Call analyzeMiktex
 
-  ;; Uninstall previous version
-  DetailPrint "Uninstalling previous Version of tubslatex..."
-  ${If} $tubslatexPreSHCTX == "HKLM"
-    ReadRegStr $preUninstallString HKLM "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
-  ${Else}
-    ReadRegStr $preUninstallString HKCU "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
-  ${EndIf}
-  Exec "$preUninstallString /S"
-
-  
 SectionEnd
 
 
@@ -524,7 +517,7 @@ Section "-postinst" SecPostInstall
   ;; register uninstaller for windows uninstall manager
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "Publisher" "TU Braunschweig"
-  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayVersion" "${VERSION}"
 SectionEnd
 
@@ -584,10 +577,26 @@ Function myGuiInit
   
   ; show message box if previous version was found
   ${If} $tubslatexPreVersion != ""
-    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDYES noabort
-      DetailPrint "STOP: User aborted installation."
-      Abort
-    noabort:
+    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDNO nouninstall
+
+    ;; Uninstall previous version
+    DetailPrint "Uninstalling previous Version of tubslatex..."
+    ${If} $tubslatexPreSHCTX == "HKLM"
+      ReadRegStr $preUninstallString HKLM "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
+    ${Else}
+      ReadRegStr $preUninstallString HKCU "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
+    ${EndIf}
+    ;; INSTDIR hack required to allow waiting for end of execution but prevents
+    ;; installer from deleting itself.
+    ;;ExecWait "$preUninstallString _?=$INSTDIR" $0
+    ExecWait "$preUninstallString" $0
+    ${If} $0 != 0
+      MessageBox MB_OK|MB_ICONEXCLAMATION "$(STRING_UNINSTALL_FAILED)"
+    ;;${Else}
+    ;;  MessageBox MB_OK|MB_ICONEXCLAMATION "Previous tubslatex sucessfully uninstalled!"
+    ${EndIf}
+
+    nouninstall:
   ${EndIf}
 FunctionEnd
 
