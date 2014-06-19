@@ -414,6 +414,11 @@ Function un.disableUpdmaps
 	;; add map
 FunctionEnd
 
+Function OutputToLog
+  #Log the Output into the nsis logfile
+  LogText "$0"
+  Pop $0
+FunctionEnd
 
 Var UpdmapDir
 Var preUninstallString
@@ -455,13 +460,14 @@ Section "Nexus" SecNexus
 	Push "NexusProSerif.map"
 	Call enableUpdmaps
 
-	;; run font update
+  ;; run font update
   DetailPrint "Updating font database..."
-	${If} $MultiUser.InstallMode == AllUsers
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
-	${Else}
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --mkmaps"'
-	${EndIf}
+  GetFunctionAddress $R2 OutputToLog
+  ${If} $MultiUser.InstallMode == AllUsers
+    ExecDos::exec /TIMEOUT=60000 /TOFUNC "initexmf -v --admin --mkmaps" "" $R2
+  ${Else}
+    ExecDos::exec /TIMEOUT=60000 /TOFUNC "initexmf -v --mkmaps" "" $R2
+  ${EndIf}
 SectionEnd
 
 
