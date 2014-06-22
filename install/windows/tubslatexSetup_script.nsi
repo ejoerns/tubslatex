@@ -383,6 +383,16 @@ Function enableUpdmaps
 FunctionEnd
 
 
+Function updateFNDB
+  ;; run file db update script
+  DetailPrint "Updating fndb..."
+  ${If} $MultiUser.InstallMode == AllUsers
+    ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
+  ${Else}
+    ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+  ${EndIf}
+FunctionEnd
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Searches in given updmap config file for given map definitions and
 ;; removes them if found.
@@ -460,6 +470,9 @@ Section "Nexus" SecNexus
 	Push "NexusProSerif.map"
 	Call enableUpdmaps
 
+  ;; run file db update script
+  Call updateFNDB
+
   ;; run font update
   DetailPrint "Updating font database..."
   GetFunctionAddress $R2 OutputToLog
@@ -494,12 +507,7 @@ Section "tubslatex" SecTubslatex
 	FILE /r data\tex
 
 	;; run file db update script
-  DetailPrint "Updating fndb..."
-  ${If} $MultiUser.InstallMode == AllUsers
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
-  ${Else}
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
-	${EndIf}
+  Call updateFNDB
 
 SectionEnd
 
