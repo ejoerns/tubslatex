@@ -142,20 +142,30 @@
 %    \end{macro}
 %
 %
+%    \begin{macro}{\titlestyle}
 %    \begin{macrocode}
 \newcommand*{\titlestyle}[1]{%
   \csname tubs@style@bg@#1\endcsname
 }
 %    \end{macrocode}
+%    \end{macro}
+%
+%    \begin{macro}{\setdefaulttitlestyle}
+%    \begin{macrocode}
+\newcommand*{\setdefaulttitlestyle}[1]{%
+  \presetkeys{tubs@tp@titlestyle}{#1}{}%
+}
+%    \end{macrocode}
+%    \end{macro}
 %
 % \subsection{Kommandos zur Style-Definition}
 %
-%    \begin{macro}{\new@title@style}
+%    \begin{macro}{\def@title@style}
 % \marg{name}\marg{bgstyle}\marg{content}
 % Erstellt neuen Titel-Style
 % Erzeugt Makros vom Typ |\tubs@style@bg@stylename|
 %    \begin{macrocode}
-\newcommand{\new@title@style}[3]{%
+\newcommand{\def@title@style}[3]{%
   \expandafter\def\csname tubs@style@bg@#1\endcsname{#2}
   \expandafter\def\csname tubs@style@content@#1\endcsname{%
     \cleardoublepage%
@@ -179,6 +189,24 @@
 }
 %    \end{macrocode}
 %    \end{macro}
+%
+%    \begin{macrocode}
+\def\tubs@titlestyle@content{\tubs@style@content@plain}%
+\def\tubs@titlestyle@bg{\tubs@style@bg@plain}%
+%    \end{macrocode}
+%    \begin{macro}{\newtitlestyle}
+%    \begin{macrocode}
+\newcommand\newtitlestyle[3]{%
+  \define@key{tubs@tp@titlestyle}{#1}[]{%
+    \typeout{Selected title style '#1'}
+    \expandafter\global\expandafter\let\expandafter\tubs@titlestyle@content\csname tubs@style@content@#1\endcsname%
+    \expandafter\global\expandafter\let\expandafter\tubs@titlestyle@bg\csname tubs@style@bg@#1\endcsname%
+  }%
+  \def@title@style{#1}{#2}{#3}%
+}%
+%    \end{macrocode}
+%    \end{macro}
+%
 %
 % \subsection{Befehle und Umgebungen zu Erstellung von Titel- und Rückseiten}
 %
@@ -236,13 +264,15 @@
 \renewcommand*{\maketitle}[1][]{%
   \begingroup
   \setkeys*{tubs@tp}{logo=left,#1}%
-  \ifthenelse{\equal{\XKV@rm}{}}{%
-    \csname tubs@style@content@\style@select\endcsname%
-    \csname tubs@style@bg@\style@select\endcsname%
-  }{%
-    \csname tubs@style@content@\XKV@rm\endcsname%
-    \csname tubs@style@bg@\XKV@rm\endcsname%
-  }
+  % Try to select title style form remaining keys
+  \setrmkeys*{tubs@tp@titlestyle}
+  \ifthenelse{\equal{\XKV@rm}{}}{}{%
+    \PackageWarning{tubstitlepage}{Unknown option '\XKV@rm' in \maketitle.
+      Perhaps you misspelled it?}%
+  }%
+  % Set resulting title style
+  \tubs@titlestyle@content
+  \tubs@titlestyle@bg
   \endgroup
 }
 %    \end{macrocode}
@@ -253,7 +283,7 @@
 %    \begin{macrocode}
 \newcommand{\makebackpage}[1][\style@select]{%
   \begingroup
-  \setkeys*{tubs@tp}{#1}%
+  \setkeys*{tubs@tp}{logo=plain,#1}%
   \ifthenelse{\equal{\XKV@rm}{}}{%
     \csname tubs@backstyle@content@\style@select\endcsname%
     \csname tubs@backstyle@bg@\style@select\endcsname%
@@ -399,7 +429,7 @@
 %<*article|report|book|package>
 \newif\iftubs@tp@plainbacklogo% TODO: Implementierung fehlt noch (maketitle-Option?)
 \tubs@tp@plainbacklogofalse
-\new@title@style{plain}{}{%
+\newtitlestyle{plain}{}{%
   {%
     % Setze background-Layout
     \bglayout[pages=single]{%
@@ -462,7 +492,7 @@
 %
 %    \begin{macro}{image}
 %    \begin{macrocode}
-\new@title@style{image}{}{%
+\newtitlestyle{image}{}{%
 	% For left aligned author list
 	\renewcommand*\and{%
 		\end{tabular}%
@@ -497,7 +527,7 @@
 %
 %    \begin{macro}{imagetext}
 %    \begin{macrocode}
-\new@title@style{imagetext}{}{%
+\newtitlestyle{imagetext}{}{%
 	% For left aligned author list
 	\renewcommand*\and{%
 		\end{tabular}%
@@ -538,7 +568,7 @@
 %
 %    \begin{macro}{landscape}
 %    \begin{macrocode}
-\new@title@style{landscape}{}{%
+\newtitlestyle{landscape}{}{%
   \renewcommand*\and{%
     \end{tabular}%
     \hskip 1em \relax
