@@ -417,8 +417,11 @@
     }%
     % Kompatibilität mit KOMA-twoside-Unterstützung für titlepage
 %<*package>
+    \let\oldnext@tpage\next@tpage
     \def\next@tpage{%
-      \endtitlepage
+      \if@titlepage
+        \endtitlepage
+      \fi
       \let\tmp@showlogo\relax
       \iftubs@tp@plainbacklogo
         \def\tmp@showtubslogo{\showtubslogo[plain]}%
@@ -426,7 +429,10 @@
         \let\tmp@showtubslogo\relax
         \let\tmp@showtopline\relax
       \fi
-      \titlepage
+      \oldnext@tpage
+      \if@titlepage
+        \titlepage
+      \fi
     }%
 %</package>
 %<*class>
