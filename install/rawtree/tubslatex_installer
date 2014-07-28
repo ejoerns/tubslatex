@@ -98,6 +98,12 @@ check_texlive() {
 #--- checks if sudo is available
 check_sudo() {
   rootrun=""
+  # If we are root, we do note require sudo
+  if [ $UID -eq 0 ]; then
+    log_d "you are root"
+    return 0
+  fi
+
   if sudo -v >/dev/null 2>&1; then
     log_d "sudo ok"
     rootrun="sudo"
