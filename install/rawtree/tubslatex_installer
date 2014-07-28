@@ -341,7 +341,7 @@ else
   error_occured=1
 fi
     
-if [ -z `$ECHO $pdftexmap | grep /var/lib` ]; then
+if [ -z `$ECHO $pdftexmap | grep '/var/lib\|/usr/share'` ]; then
   $ECHO ""
   $ECHO "Warning: You seem to use a local font map\n  ($pdftexmap)."
   $ECHO "Only global font maps are supported in this installation"
