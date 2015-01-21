@@ -519,18 +519,35 @@ Deutschland\\
 % }{%
 % }%
 ~\\%TODO: better control for placement of newlines if opts not used
-\ifkomavarempty{yourref}{\relax}{~\\Ihr Zeichen: \usekomavar{yourref}\\}
-\ifkomavarempty{yourmail}{\relax}{Ihre Nachricht vom: \usekomavar{yourmail}\\}
-\ifkomavarempty{myref}{\relax}{Unser Zeichen: \usekomavar{myref}\\}
-\ifkomavarempty{mymail}{\relax}{Unsere Nachricht vom: \usekomavar{mymail}\\}
+\ifkomavarempty{yourref}{\relax}{~\\\yourrefname: \usekomavar{yourref}\\}
+\ifkomavarempty{yourmail}{\relax}{\yourmailname: \usekomavar{yourmail}\\}
+\ifkomavarempty{myref}{\relax}{\myrefname: \usekomavar{myref}\\}
+\ifkomavarempty{mymail}{\relax}{\mymailname: \usekomavar{mymail}\\}
 ~\\
 \ifkomavarempty{frombank}{\relax}{\usekomavar{frombank}\\~\\}
 \ifkomavarempty{fromIBAN}{\relax}{IBAN: \usekomavar{fromIBAN}\\}
 \ifkomavarempty{fromBIC}{\relax}{BIC (Swift Code): \usekomavar{fromBIC}\\}
-\ifkomavarempty{fromUStID}{\relax}{USt.-ID-Nr.: \usekomavar{fromUStID}\\}
-\ifkomavarempty{fromSteuernummer}{\relax}{Steuer-Nr.: \usekomavar{fromSteuernummer}}
+\ifkomavarempty{fromUStID}{\relax}{\vatinname: \usekomavar{fromUStID}\\}
+\ifkomavarempty{fromSteuernummer}{\relax}{\taxidname: \usekomavar{fromSteuernummer}}
 \end{flushleft}
 }
+% Platziere Caption-Name overwrites
+\AtBeginDocument{%
+% Hinweis: renewcaptionname funktioniert nur, wenn Sprache auch verwendet wird
+%          Daher ist eine Abfrage der verwendeten Sprache notwendig
+\iflanguage{ngerman}{%
+% Ersezte 'Ihr Schreiben vom' mit 'Ihre Nachricht vom'
+\renewcaptionname{ngerman}\yourmailname{Ihre Nachricht vom}%
+\providecaptionname{ngerman}\mymailname{Unsere Nachricht vom}%
+\providecaptionname{ngerman}\taxidname{Steuer-Nr.}%
+\providecaptionname{ngerman}\vatinname{USt.-ID-Nr.}%
+}{}%
+\iflanguage{english}{%
+\providecaptionname{english}\mymailname{Our letter of}%
+\providecaptionname{english}\taxidname{tax ID}%
+\providecaptionname{english}\vatinname{VATIN}%
+}{}%
+}%
 %    \end{macrocode}
 %
 % Es werden Kopf- und Fußzeilen auf Folgeseiten gesetzt
