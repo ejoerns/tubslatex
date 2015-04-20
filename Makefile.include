@@ -88,8 +88,8 @@ INSTALL_WIN_DIR = $(BASEDIR)/install/windows
 INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
 
 ### Settings
-# VERBOSE(=yes)
-ifeq ($(VERBOSE),yes)
+# V(=1)
+ifeq ($(V),1)
 else
   Q=@
   SILENT=1>&1 > /dev/null
