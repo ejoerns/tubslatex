@@ -1,3 +1,27 @@
+Version 1.1:
+
+- Dokumentenklassen
+  - Option 'inbcorr' fuer Fortfuehrung des Logos in der Bindekorrektur
+  - Logo-Optionen verbessert
+  - Diverse Fixes fuer Schriftauswahl
+
+- Installer
+  - Windows-Installer ueberarbeitet
+  - UNIX Installations-Skript erweitert
+
+- Beamer
+  - Setze \title und \subtitle linksbuendig
+
+- Prospekte (leaflet)
+  - Darstellungsprobleme behoben (Text wurde nicht angezeigt)
+
+- Briefe
+  - Darstellung fuer englische Briefe verbessert
+
+- Sonstiges
+  - Dokumentation und Beispiele ueberarbeitet
+  - Interne Verbesserungen
+
 Version 1.0.3:
 
 - Dokumentenklassen
