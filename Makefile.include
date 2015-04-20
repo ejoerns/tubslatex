@@ -4,8 +4,8 @@
 #
 
 V_MAJOR = 1
-V_MINOR = 0
-V_PATCH = 3
+V_MINOR = 1
+V_PATCH = 0
 #V_STAGE = RC2
 RELEASE = Y
 
@@ -88,8 +88,8 @@ INSTALL_WIN_DIR = $(BASEDIR)/install/windows
 INSTALL_EXE = tubslatexSetup_$(TUBSLATEX_FULLVERSION).exe
 
 ### Settings
-# VERBOSE(=yes)
-ifeq ($(VERBOSE),yes)
+# V(=1)
+ifeq ($(V),1)
 else
   Q=@
   SILENT=1>&1 > /dev/null

@@ -9,7 +9,7 @@ EXAMPLEDIRS = beamer tubsdoc tubsartcl tubsreprt tubsbook tubslttr2 tubsposter t
 
 zip: examples
 	$(ECHO) -n 'Compressing examples as zip...'
-	$(ZIP) -r tubslatex_examples.zip $(EXAMPLEDIRS) $(SILENT)
+	$(ZIP) -FSr tubslatex_examples.zip $(EXAMPLEDIRS) -i "**/*.tex" -i "**/*.pdf" -i "**/*.jpg" -i "**/*.lco" $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
 examples:

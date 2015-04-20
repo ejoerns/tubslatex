@@ -324,9 +324,6 @@
   \setheadtopline[\tubsborderwidth]{1pt}[]
 \fi%
 %
-\renewcommand{\headfont}{\normalfont\mdseries\scshape}
-\let\footfont\headfont
-\let\pnumfont\headfont
 %    \end{macrocode}
 %
 % Inhalt der Kopf-/Fußzeilen festlegen
@@ -334,7 +331,6 @@
 %<report|book>\automark[chapter]{section}
 %<article>\automark[section]{subsection}
 \innerhead[\leftmark]{}
-\setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: make working in tubsfont
 \outersender[\pagemark]{\rightmark\qquad\pagemark}
 %    \end{macrocode}
 %

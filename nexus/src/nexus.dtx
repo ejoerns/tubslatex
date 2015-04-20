@@ -350,19 +350,45 @@
 %
 %    \begin{macro}{\lnum}
 % Schaltet auf Versalziffern (newstyle/lining numbers) um.
+% Hinweis: Dieser Befehl muss immer nach der Auswahl der font family
+% (z.B. |\sffamily|) gesetzt werden, da er |\sfdefault|,|\rmdefault| nicht ändert!
 %    \begin{macrocode}
 \def\cmp@nexserif{NexusProSerif}%
+\def\cmp@nexsans{NexusProSans}%
 \newcommand\lnum{%
-  \ifx\f@family\cmp@nexserif%
+  \ifx\f@family\cmp@nexserif
     \fontfamily{NexusProSerif-lnum}%
   \else
-    \fontfamily{NexusProSans-lnum}%
+    \ifx\f@family\cmp@nexsans
+      \fontfamily{NexusProSans-lnum}%
+    \fi
   \fi
   \selectfont
 }
 %    \end{macrocode}
 %    \end{macro}
-
+%
+%    \begin{macro}{\selectlnum}
+% Schaltet auf Versalziffern (newstyle/lining numbers) um.
+% Im Gegensatz zu |\lnum| werden auch |\sfdefault| und |\rmdefault| angepasst.
+%    \begin{macrocode}
+\newcommand\selectlnum{%
+  \ifx\f@family\cmp@nexserif
+    \fontfamily{NexusProSerif-lnum}%
+    \renewcommand*{\rmdefault}{NexusProSerif-lnum}%
+    \renewcommand*{\sfdefault}{NexusProSans-lnum}%
+  \else
+    \ifx\f@family\cmp@nexsans
+      \fontfamily{NexusProSans-lnum}%
+      \renewcommand*{\rmdefault}{NexusProSerif-lnum}%
+      \renewcommand*{\sfdefault}{NexusProSans-lnum}%
+    \fi
+  \fi
+  \selectfont
+}
+%    \end{macrocode}
+%    \end{macro}
+%
 %    \begin{macro}{\textlnum}
 % Setzt Text mit Versalziffern
 %    \begin{macrocode}
@@ -374,28 +400,34 @@
 %
 %    \begin{macro}{\oldstylenums}
 % Schaltet auf Mediävalziffern (oldstyle/text numbers) um.
+% Hinweis: Dieser Befehl muss immer nach der Auswahl der font family
+% (z.B. |\sffamily|) gesetzt werden, da er |\sfdefault|,|\rmdefault| nicht ändert!
 %    \begin{macrocode}
+\def\cmp@nexseriflnum{NexusProSerif-lnum}%
+\def\cmp@nexsanslnum{NexusProSans-lnum}%
 \newcommand\onum{%
-  \def\@test{NexusProSerif-lnum}%
-  \ifx\f@family\@test%
+  \ifx\f@family\cmp@nexseriflnum
     \fontfamily{NexusProSerif}%
   \else
-    \fontfamily{NexusProSans}%
+    \ifx\f@family\cmp@nexsanslnum
+      \fontfamily{NexusProSans}%
+    \fi
   \fi
   \selectfont
 }
-
 %    \end{macrocode}
 %    \end{macro}
 %
 %    \begin{macro}{\oldstylenums}
+%    \begin{macro}{\textonum}
 % Setzt Text mit Mediävalziffern
 %    \begin{macrocode}
 \renewcommand{\oldstylenums}[1]{%
   {\onum #1}%
 }
+\let\textonum\oldstylenums
 %    \end{macrocode}
-%    \end{macro}
+%    \end{macro}\end{macro}
 %
 % mathsf und mathtt passend definieren
 %    \begin{macrocode}

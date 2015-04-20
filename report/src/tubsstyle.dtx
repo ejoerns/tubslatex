@@ -222,10 +222,12 @@
 \newboolean{tubsstyle@singlepage}\setboolean{tubsstyle@singlepage}{false}
 \newboolean{tubsstyle@designhelper}\setboolean{tubsstyle@designhelper}{false}
 %    \end{macrocode}
-% Merker für horizontale Positionierung und Plain-Darstellung des Siegelbandlogos
+% Merker für horizontale Positionierung, Plain-Darstellung und
+% Bindekorrekturbehandlung des Siegelbandlogos
 %    \begin{macrocode}
-\newif\iftubslogo@right\tubslogo@rightfalse
+\newif\iftubslogo@inside\tubslogo@insidefalse
 \newif\iftubslogo@plain\tubslogo@plainfalse
+\newif\iftubslogo@expandinbcorr\tubslogo@expandinbcorrfalse
 %    \end{macrocode}
 %
 %
@@ -335,13 +337,13 @@
 %    \begin{macrocode}
 \define@choicekey{tubslogo}{pos}[\val\nr]{left,right,inside,outside}{%
   \ifcase\nr\relax%
-    \global\tubslogo@rightfalse%
+    \global\tubslogo@insidefalse%
   \or%
-    \global\tubslogo@righttrue%
+    \global\tubslogo@insidetrue%
   \or%
-    \global\tubslogo@rightfalse%
+    \global\tubslogo@insidefalse%
   \or%
-    \global\tubslogo@righttrue%
+    \global\tubslogo@insidetrue%
   \fi%
 }
 %    \end{macrocode}
@@ -396,6 +398,21 @@
 %    \end{macrocode}
 %    \end{key}
 %
+%    \begin{key}{tubslogo}{inbcorr}
+% Führt den Hintergrund des Siegelbandlogos in den Bereich der Bindekorrektur fort,
+% um optisch störende Abstände Zwischen Bindung und Siegelbandanfang zu vermeiden.
+% Die Option wirkt sich nur auf linksseitig platzierte Logos aus.
+%    \begin{macrocode}
+\define@boolkey{tubslogo}{inbcorr}[true]{%
+  \ifKV@tubslogo@inbcorr%
+    \tubslogo@expandinbcorrtrue
+  \else%
+    \tubslogo@expandinbcorrfalse
+  \fi%
+}
+%    \end{macrocode}
+%    \end{key}
+%
 % Standardpositionierung setzen.
 %    \begin{macrocode}
 \setkeys{tubslogo}{pos=left}%
@@ -409,14 +426,31 @@
 % Die Boolean-Varbiable |tubsstyle@logoright| wird gesetzt, um die automatische
 % Postionierung des individuellen Logos zu ermöglichen. Dieses wird auf der
 % entgegengesetzten Papierseite platziert.
+% Mit |tubslogo@expandinbcorr| wird bei linksseitig platziertem Siegelband
+% das Band bis in die Bindekorrektur hinein gezeichnet.
 %    \begin{macrocode}
 \newcommand\tubs@tubslogo[1][]{%
   \setkeys{tubslogo}{#1}%
-  \iftubslogo@right%
+  \iftubslogo@inside%
     \tubs@tubslogo@calcpos{right}{\tmp@posx}{\tmp@posy}%
   \else%
     \tubs@tubslogo@calcpos{left}{\tmp@posx}{\tmp@posy}%
   \fi%
+  \iftubslogo@expandinbcorr
+    \if@tubs@oddpage{%
+      \iftubslogo@inside\else
+        \addtolength\tmp@posx{-\tubspage@bcor}%
+        \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+          \fboxsep0mm\colorbox{tuRed}{\parbox[b][\tubslogoHeight]{\tubslogoWidth+\tubspage@bcor}{~}}}%
+        \addtolength\tmp@posx{\tubspage@bcor}%
+      \fi
+    }{%
+      \iftubslogo@inside\else
+        \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
+          \fboxsep0mm\colorbox{tuRed}{\parbox[b][\tubslogoHeight]{\tubslogoWidth+\tubspage@bcor}{~}}}%
+      \fi
+    }%
+  \fi
   \iftubslogo@plain%
     \put(\LenToUnit{\tmp@posx},\LenToUnit{\tmp@posy}){%
       \fboxsep0mm\colorbox{tuRed}{\parbox[b][\tubslogoHeight]{\tubslogoWidth}{~}}}%

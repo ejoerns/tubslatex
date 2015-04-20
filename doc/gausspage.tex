@@ -183,48 +183,6 @@ Mögliche Werte sind in \tablename~\ref{tbl:gausslayout:imagefitoptions} erläut
 \figurename~\ref{fig:gausslayout:imagefitexample} zeigt beispielhaft die Funktionalität
 der automatischen Einpassung.
 
-\makeatletter
-{%
-\fboxsep0mm
-\newcommand\imgscaleexample[3]{%
-%   \def\tubs@sb@imagefit{#1}%
-  \setkeys{tubsbox}{imagefit=#3}%
-  \tubs@sb@calc@autoscale{examples/infozentrum}{#1}{#2}%
-  \fbox{\parbox[t][#2]{#1}{%
-    \expandafter\includegraphics\expandafter[\@img@scale@param]{infozentrum}}%
-  }
-}
-\begin{figure}[!ht]
-\begin{minipage}[b]{0.3\textwidth}\centering
-  \imgscaleexample{\textwidth}{2cm}{autoclip}% TODO!!!!
-  \subcaption{\KOption{imagefit}\PValue{autoclip}}%
-\end{minipage}\hfill
-\begin{minipage}[b]{0.3\textwidth}\centering
-  \imgscaleexample{\textwidth}{2cm}{scaled}%
-  \subcaption{\KOption{imagefit}\PValue{scaled}}%
-\end{minipage}\hfill
-\begin{minipage}[b]{0.3\textwidth}\centering
-  \imgscaleexample{\textwidth}{2cm}{hclip}% TODO!!!!
-  \subcaption{\KOption{imagefit}\PValue{hclip}}%
-\end{minipage}\\[1ex]
-\begin{minipage}[b]{0.3\textwidth}\centering
-  \imgscaleexample{2cm}{\textwidth}{autoclip}% TODO!!!!
-  \subcaption{\KOption{imagefit}\PValue{autoclip}}%
-\end{minipage}\hfill
-\begin{minipage}[b]{0.3\textwidth}\centering
-  \imgscaleexample{2cm}{\textwidth}{scaled}%
-  \subcaption{\KOption{imagefit}\PValue{scaled}}%
-\end{minipage}\hfill
-\begin{minipage}[b]{0.3\textwidth}\centering
-  \imgscaleexample{2cm}{\textwidth}{vclip}% TODO!!!!
-  \subcaption{\KOption{imagefit}\PValue{vclip}}%
-\end{minipage}
-\caption{Beispiele zur Verwendung der automatischen Einpassung in \tubslatex}
-\label{fig:gausslayout:imagefitexample}
-\end{figure}
-
-}
-\makeatother
 
 \paragraph{Vertikale Textausrichtung}\hfill
 
@@ -442,7 +400,8 @@ Dazu ist jedoch kein mühsames manuelles Ausprobieren notwendig.
 Die Vorlagen verfügen über einen Algorithmus, der die Einpassung vollautomatisch
 übernimmt.
 Die Art der Einpassung lässt sich dabei mit der Option \Option{imagefit} kontrollieren.
-Sie erlaubt folgende Einstellungen:
+Sie erlaubt folgende Einstellungen, die auch in \figurename~\ref{fig:gausslayout:imagefitexample}
+dargestellt sind:
 
 \begin{desctable}
 \entry{\PValue{clipped}}{%
@@ -467,6 +426,49 @@ Sie erlaubt folgende Einstellungen:
   das Bild verzerrt werden.
 }
 \end{desctable}\label{tbl:gausslayout:imagefitoptions}
+
+\makeatletter
+{%
+\fboxsep0mm
+\newcommand\imgscaleexample[3]{%
+%   \def\tubs@sb@imagefit{#1}%
+  \setkeys{tubsbox}{imagefit=#3}%
+  \tubs@sb@calc@autoscale{examples/infozentrum}{#1}{#2}%
+  \fbox{\parbox[t][#2]{#1}{%
+    \expandafter\includegraphics\expandafter[\@img@scale@param]{infozentrum}}%
+  }
+}
+\begin{figure}[ht]
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{\textwidth}{2cm}{autoclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{autoclip}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{\textwidth}{2cm}{scaled}%
+  \subcaption{\KOption{imagefit}\PValue{scaled}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{\textwidth}{2cm}{hclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{hclip}}%
+\end{minipage}\\[1ex]
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{2cm}{\textwidth}{autoclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{autoclip}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{2cm}{\textwidth}{scaled}%
+  \subcaption{\KOption{imagefit}\PValue{scaled}}%
+\end{minipage}\hfill
+\begin{minipage}[b]{0.3\textwidth}\centering
+  \imgscaleexample{2cm}{\textwidth}{vclip}% TODO!!!!
+  \subcaption{\KOption{imagefit}\PValue{vclip}}%
+\end{minipage}
+\caption{Beispiele zur Verwendung der automatischen Einpassung in \tubslatex}
+\label{fig:gausslayout:imagefitexample}
+\end{figure}
+
+}
+\makeatother
 
 
 \subsection{Darstellungselemente}\label{sec:gausslayout:bglayout:elemente}
@@ -522,6 +524,15 @@ sondern stattdessen eine gleichgroße einfarbige Fläche in der Farbe
 des Siegelbandlogos dargestellt wird.
 Dies ist vor allem für Rückseiten sinnvoll.
 
+\begin{Declaration}
+  \Option{inbcorr}
+\end{Declaration}
+
+Mit der Siegelbandlogo-Option \Option{inbcorr} wird die Hintergrundfarbe
+des Siegelbandes in den Bereich der Bindekorrektur weiter geführt,
+sodass es nicht zu unschönen weißen Kanten bei zu schmaler Bindung kommen kann.
+Auch lässt sich das Logo so praktisch nahtlos um eine Broschüre von vorne
+nach hinten herum führen.
 
 \subsubsection{Instituts-Logo}
 

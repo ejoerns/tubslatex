@@ -59,7 +59,7 @@ check_downloader() {
   command -v wget >/dev/null 2>&1 || status=1
   if [ $status = 0 ]; then
     log_d "wget found"
-    download_cmd="wget -q -O 	-"
+    download_cmd="wget -O "
     return 0
   else
     log_d "wget not found"
@@ -70,7 +70,7 @@ check_downloader() {
   command -v curl >/dev/null 2>&1 || status=1
   if [ $status = 0 ]; then
     log_d "curl found"
-    download_cmd="curl -sS"
+    download_cmd="curl -S -o "
     return 0
   else
     log_d "curl not found"
@@ -98,6 +98,12 @@ check_texlive() {
 #--- checks if sudo is available
 check_sudo() {
   rootrun=""
+  # If we are root, we do note require sudo
+  if [ $UID -eq 0 ]; then
+    log_d "you are root"
+    return 0
+  fi
+
   if sudo -v >/dev/null 2>&1; then
     log_d "sudo ok"
     rootrun="sudo"
@@ -149,9 +155,8 @@ process_arguments() {
 
 #--- Downloads $zipurl to $unzipdir
 download_tds_zip() {
-  check_downloader
   $ECHO -n "Downloading zipped tds file..."
-  if $download_cmd $zipurl > $unzipdir/texlive_tubs.zip 2>>$logfile; then
+  if $download_cmd $unzipdir/texlive_tubs.zip $zipurl 2>>$logfile; then
     $ECHO "done."
   else
     $ECHO "failed."
@@ -228,6 +233,8 @@ check_previous_tubslatex
 # create tmpdir
 unzipdir=$(mktemp -d /tmp/texlive-tubs.XXXXXXXX)
 log_d "unzipdir dir is $unzipdir"
+
+check_downloader
 
 # download
 if [ ! -f $zipurl ]; then
@@ -340,7 +347,7 @@ else
   error_occured=1
 fi
     
-if [ -z `$ECHO $pdftexmap | grep /var/lib` ]; then
+if [ -z `$ECHO $pdftexmap | grep '/var/lib\|/usr/share'` ]; then
   $ECHO ""
   $ECHO "Warning: You seem to use a local font map\n  ($pdftexmap)."
   $ECHO "Only global font maps are supported in this installation"
@@ -375,7 +382,7 @@ else
   read yesno
   if [ $yesno = "y" ]; then
     $ECHO -n "Downloading and installing getnonfreefonts..."
-    if wget -P /tmp http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts >> $logfile 2>&1; then
+    if $download_cmd /tmp/install-getnonfreefonts http://tug.org/fonts/getnonfreefonts/install-getnonfreefonts >> $logfile 2>&1; then
       $rootrun texlua /tmp/install-getnonfreefonts >> $logfile 2>&1
       rm -f /tmp/install-getnonfreefonts
     $ECHO "done."

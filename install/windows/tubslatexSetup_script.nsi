@@ -91,8 +91,11 @@ Var desiredInstallType
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "German"
 
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\n$\r$\nDo you want to continue installing Version ${VERSION}?$\r$\n(Previous version will be uninstalled.)"
-LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\n$\r$\nWollen Sie mit der Installation von Version ${VERSION} fortfahren?$\r$\n(Vorherige Version wird deinstalliert.)"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_ENGLISH} "Previous version of tubslatex detected: $tubslatexPreVersion.$\r$\nShould be removed before installing new version.$\r$\n$\r$\nUninstall previous version?"
+LangString STRING_PREVIOUS_INSTALL_FOUND ${LANG_GERMAN} "Eine bereits installierte tubslatex-Version wurde gefunden: $tubslatexPreVersion.$\r$\nDiese sollte zuvor entfernt werden.$\r$\n$\r$\nVorige Version deinstallieren?"
+
+LangString STRING_UNINSTALL_FAILED ${LANG_ENGLISH} "Uninstalling previous tubslatex Version failed!$\r$\nUninstall or remove manually if required."
+LangString STRING_UNINSTALL_FAILED ${LANG_GERMAN} "Deinstallation von alter tubslatex-Version fehlgeschlagen!$\r$\nSollte wenn nötig manuell deinstalliert oder entfernt werden."
 
 LangString STRING_TEXT_ALLUSERS ${LANG_ENGLISH} "Install for all users (global)"
 LangString STRING_TEXT_ALLUSERS ${LANG_GERMAN} "Für alle Benutzer installieren (global)"
@@ -106,8 +109,8 @@ LangString STRING_DIRECTORYPAGE_TEXT_TOP ${LANG_GERMAN} "Die Inhalte können im M
 LangString STRING_INSTALLMODEPAGE_TEXT_TOP ${LANG_ENGLISH} "Note: A local installation will create a local database. As a result, global changes will be ignored henceforth."
 LangString STRING_INSTALLMODEPAGE_TEXT_TOP ${LANG_GERMAN} "Hinweis: Eine lokale Installation legt eine lokale Datenbank an, wodurch globale Änderungen fortan ignoriert werden."
 
-LangString STRING_MB_LOCALDB_FOUND ${LANG_ENGLISH} "Warning! Found local database!$\rSystem-wide installation my cause problems.$\r$\rDo you want to continue?"
-LangString STRING_MB_LOCALDB_FOUND ${LANG_GERMAN} "Warnung! Lokale Datenbank gefunden!$\rEs können Probleme bei systemweiter Installation auftreten.$\r$\rTrotzdem Fortfahren?"
+LangString STRING_MB_LOCALDB_FOUND ${LANG_ENGLISH} "Warning! Found local font database '$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map'!$\r$\nThe system-wide database will be ignored.$\r$\n$\r$\nA local install or deleting the local database is recommended.$\r$\n$\r$\nContinue anyway?"
+LangString STRING_MB_LOCALDB_FOUND ${LANG_GERMAN} "Warnung! Lokale Font-Datenbank gefunden: '$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map'!$\r$\nDie systemweite Datenbank wird ignoriert werden.$\r$\n$\r$\nEs wird empfohlen eine lokale Installation durchzuführen oder die lokale Datenbank zu löschen!$\r$\n$\r$\nTrotzdem Fortfahren?"
 
 LangString STRING_MB_NOMIKTEX ${LANG_ENGLISH} "Error: MiKTeX not installed, cancelling installation"
 LangString STRING_MB_NOMIKTEX ${LANG_GERMAN} "Fehler: Keine vorhandene MiKTeX-Installation gefunden, Installation wird abgebrochen."
@@ -153,7 +156,7 @@ Function setInstallMode
     ; Names of registry keys
     StrCpy $miktexRoots "CommonRoots"
     IfFileExists "$LOCALAPPDATA\MiKTeX\2.9\pdftex\config\pdftex.map" 0 +5
-      MessageBox MB_YESNO "$(STRING_MB_LOCALDB_FOUND)" IDYES noskip
+      MessageBox MB_YESNO|MB_ICONEXCLAMATION "$(STRING_MB_LOCALDB_FOUND)" IDYES noskip
         StrCpy $R9 0 ;
         Call RelGotoPage
         Abort
@@ -196,7 +199,7 @@ Function analyzeMiktex
   ${EndIf}
 FunctionEnd
 
-Var tubslatexPreVersion ; Version of prevoious tubslatex install
+Var tubslatexPreVersion ; Version of previous tubslatex install
 Var tubslatexPreSHCTX ; Shell context of previous tubslatex install
 
 Function analyzeTubslatex
@@ -380,6 +383,16 @@ Function enableUpdmaps
 FunctionEnd
 
 
+Function updateFNDB
+  ;; run file db update script
+  DetailPrint "Updating fndb..."
+  ${If} $MultiUser.InstallMode == AllUsers
+    ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
+  ${Else}
+    ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
+  ${EndIf}
+FunctionEnd
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Searches in given updmap config file for given map definitions and
 ;; removes them if found.
@@ -411,6 +424,11 @@ Function un.disableUpdmaps
 	;; add map
 FunctionEnd
 
+Function OutputToLog
+  #Log the Output into the nsis logfile
+  LogText "$0"
+  Pop $0
+FunctionEnd
 
 Var UpdmapDir
 Var preUninstallString
@@ -426,16 +444,6 @@ Section "-preinstall"
   ;; check miktex installation
   Call analyzeMiktex
 
-  ;; Uninstall previous version
-  DetailPrint "Uninstalling previous Version of tubslatex..."
-  ${If} $tubslatexPreSHCTX == "HKLM"
-    ReadRegStr $preUninstallString HKLM "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
-  ${Else}
-    ReadRegStr $preUninstallString HKCU "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
-  ${EndIf}
-  Exec "$preUninstallString /S"
-
-  
 SectionEnd
 
 
@@ -462,13 +470,17 @@ Section "Nexus" SecNexus
 	Push "NexusProSerif.map"
 	Call enableUpdmaps
 
-	;; run font update
+  ;; run file db update script
+  Call updateFNDB
+
+  ;; run font update
   DetailPrint "Updating font database..."
-	${If} $MultiUser.InstallMode == AllUsers
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --mkmaps"'
-	${Else}
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --mkmaps"'
-	${EndIf}
+  GetFunctionAddress $R2 OutputToLog
+  ${If} $MultiUser.InstallMode == AllUsers
+    ExecDos::exec /TIMEOUT=60000 /TOFUNC "initexmf -v --admin --mkmaps" "" $R2
+  ${Else}
+    ExecDos::exec /TIMEOUT=60000 /TOFUNC "initexmf -v --mkmaps" "" $R2
+  ${EndIf}
 SectionEnd
 
 
@@ -495,12 +507,7 @@ Section "tubslatex" SecTubslatex
 	FILE /r data\tex
 
 	;; run file db update script
-  DetailPrint "Updating fndb..."
-  ${If} $MultiUser.InstallMode == AllUsers
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --admin --update-fndb"'
-  ${Else}
-  	ExecCmd::exec /TIMEOUT=60000 '"initexmf -v --update-fndb"'
-	${EndIf}
+  Call updateFNDB
 
 SectionEnd
 
@@ -524,7 +531,7 @@ Section "-postinst" SecPostInstall
   ;; register uninstaller for windows uninstall manager
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayName" "tubslatex -- LaTeX Coporate Design Templates"
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "Publisher" "TU Braunschweig"
-  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+  WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\""
   WriteRegStr SHCTX "${TUBSLATEX_UNINST_REGDIR}" "DisplayVersion" "${VERSION}"
 SectionEnd
 
@@ -584,10 +591,26 @@ Function myGuiInit
   
   ; show message box if previous version was found
   ${If} $tubslatexPreVersion != ""
-    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDYES noabort
-      DetailPrint "STOP: User aborted installation."
-      Abort
-    noabort:
+    MessageBox MB_YESNO "$(STRING_PREVIOUS_INSTALL_FOUND)" IDNO nouninstall
+
+    ;; Uninstall previous version
+    DetailPrint "Uninstalling previous Version of tubslatex..."
+    ${If} $tubslatexPreSHCTX == "HKLM"
+      ReadRegStr $preUninstallString HKLM "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
+    ${Else}
+      ReadRegStr $preUninstallString HKCU "${TUBSLATEX_UNINST_REGDIR}" "UninstallString"
+    ${EndIf}
+    ;; INSTDIR hack required to allow waiting for end of execution but prevents
+    ;; installer from deleting itself.
+    ;;ExecWait "$preUninstallString _?=$INSTDIR" $0
+    ExecWait "$preUninstallString" $0
+    ${If} $0 != 0
+      MessageBox MB_OK|MB_ICONEXCLAMATION "$(STRING_UNINSTALL_FAILED)"
+    ;;${Else}
+    ;;  MessageBox MB_OK|MB_ICONEXCLAMATION "Previous tubslatex sucessfully uninstalled!"
+    ${EndIf}
+
+    nouninstall:
   ${EndIf}
 FunctionEnd
 

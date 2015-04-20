@@ -78,7 +78,7 @@ sind im Folgenden aufgelistet.
 
 Die Anweisungen \Macro{opening} und \Macro{closing} sind für das Erstellen
 eines Briefes unerlässlich. Mit \Macro{opening} wird sowohl die Anrede
-festgelegt (z.B. \textit{Seehr geehrte Damen und Herren}) als auch der
+festgelegt (z.B. \textit{Sehr geehrte Damen und Herren}) als auch der
 Bereich für den Brieftext begonnen.
 Dieser Bereich wird dann wiederum mit dem Befehl \Macro{closing}, über den
 man zugleich eine Grußfloskel angibt (z.B. \textit{Mit freundlichen Grüßen}),
@@ -134,6 +134,17 @@ Absatzes auf der zweiten Seite.
     innerhalb eines Briefdokuments nach \cite[S.171]{koma-skript} }
   \label{fig:scrlttr2.letter}
 \end{figure}
+
+\subsection{Sprachen}
+
+\begin{Declaration}
+\Macro{usepackage}\OParameter{Sprache}\Parameter{babel}
+\end{Declaration}
+
+Die Briefklasse unterstüzt sowohl deutsch- als auch englischsprachige Briefe.
+Die Sprache kann als Option beim Laden des Paketes \PValue{babel} ausgewählt werden.
+Für deutsche Texte sollte \PValue{ngerman}, für englische \PValue{english}
+verwendet werden.
 
 
 \section{Variablen}\label{sec:lettervars}
@@ -217,10 +228,10 @@ gesetzt.
   \ventry{subject}{Inhalt der Betreffzeile}
   \ventry{specialmail}{Spezielle Versandart, wird zwischen Rücksendeadresse
     und Empfängeradresse dargestellt.}
-  \ventry{yourref}{Feld \glqq Ihr Zeichen:\grqq}
-  \ventry{yourmail}{Feld \glqq Ihre Nachricht vom:\grqq}
-  \ventry{myref}{Feld \glqq Unser Zeichen:\grqq}
-  \ventry{mymail}{Feld \glqq Unsere Nachricht vom:\grqq}
+  \ventry{yourref}{Feld \glqq Ihr Zeichen:\grqq\ / \glqq Your ref:\grqq }
+  \ventry{yourmail}{Feld \glqq Ihre Nachricht vom:\grqq\ / \glqq Your letter of:\grqq }
+  \ventry{myref}{Feld \glqq Unser Zeichen:\grqq\ / \glqq Our ref:\grqq }
+  \ventry{mymail}{Feld \glqq Unsere Nachricht vom:\grqq\ / \glqq Our letter of:\grqq }
 \end{desctable}
 
 

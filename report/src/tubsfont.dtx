@@ -86,7 +86,7 @@
 %<*option>
 %    \end{macrocode}
 %
-%    \begin{key}{tubsfont.sty}{colorheadings}
+%    \begin{key}{tubsfont.sty}{fontsize}
 % foo
 %    \begin{macrocode}
 \newcommand\tubs@fontsize{11pt}
@@ -147,8 +147,8 @@
   \@ifundefined{scr@fnt@#2}{%
     \newkomafont[#1]{#2}{#3}%
   }{%
-    \setkomafont{#2}{#3}
-  }
+    \setkomafont{#2}{#3}%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -159,8 +159,8 @@
 %    \begin{macrocode}
 \newcommand*\addtotubsfont[2]{%
   \@ifundefined{scr@fnt@#1}{}{%
-    \addtokomafont{#1}{#2}
-  }
+    \addtokomafont{#1}{#2}%
+  }%
 }
 %    \end{macrocode}
 %    \end{macro}
@@ -169,7 +169,7 @@
 %    \begin{macro}{\usetubsfont}
 % Aliase für weiter Koma-Font-Befehle
 %    \begin{macrocode}
-\let\settubsfont\setkomafont
+\let\settubsfont\newtubsfont
 \let\usetubsfont\usekomafont
 %    \end{macrocode}
 %    \end{macro}\end{macro}
@@ -285,7 +285,6 @@ tubsheadings}}
 %    \begin{macro}{infotextitem}
 %    \begin{macro}{copytext}
 %    \begin{macro}{caption}
-%    \begin{macro}{pagenumber}
 % Verschiedene Schriftelemente
 %    \begin{macrocode}
 \newtubsfont{author}{\sffamily\LARGE}
@@ -296,11 +295,17 @@ tubsheadings}}
 \newtubsfont{infotextitem}{\large}
 \newtubsfont{copytext}{\normalsize}
 \newtubsfont{caption}{\small}
-\newtubsfont{pagenumber}{}
-% \setkomafont{pagenumber}{\fontfamily{NexusProSerif-lnum}\selectfont}%TODO: not yet working!..
 %    \end{macrocode}
-%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
+%    \end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}\end{macro}
 %
+%    \begin{macro}{pageheadfoot}
+%    \begin{macro}{pagenumber}
+% Kopf- und Fußzeile
+%    \begin{macrocode}
+\settubsfont{pageheadfoot}{\normalfont\mdseries\scshape}
+\settubsfont{pagenumber}{\usekomafont{pagehead}\lnum}
+%    \end{macrocode}
+%    \end{macro}\end{macro}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Zifferndarstellung}
@@ -355,7 +360,7 @@ tubsheadings}}
 %<*book|report|package>
 \providecommand*\chaptermarkformat{}%
 \renewcommand*\chaptermarkformat{\chapappifchapterprefix{\ }%
-  \lnum\thechapter\autodot\enskip}
+  \protect\lnum\thechapter\autodot\enskip}
 %</book|report|package>
 %    \end{macrocode}
 %
@@ -365,14 +370,15 @@ tubsheadings}}
 \providecommand*{\othersectionlevelsformat}[3]{#3\enskip} % HERE!
 \renewcommand*\@seccntformat[1]{%
    \protect\othersectionlevelsformat{#1}{%
-     \expandafter\aftergroup\noexpand\@gobble}{\lnum\csname the#1\endcsname}%
+     \expandafter\aftergroup\noexpand\@gobble}{\protect\lnum\csname the#1\endcsname}%
 }
 %    \end{macrocode}
 %
 % Versalziffern in sectionmark
 %    \begin{macrocode}
 \providecommand*\sectionmarkformat{}%
-\renewcommand*\sectionmarkformat{\lnum\thesection\autodot\enskip}%
+% \renewcommand*\sectionmarkformat{[\protect\lnum\thesection\autodot\enskip]}%
+\renewcommand*\sectionmarkformat{{\protect\lnum\thesection\autodot\enskip}}%
 %    \end{macrocode}
 %
 % Versalziffern in figure
