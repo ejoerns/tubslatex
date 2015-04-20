@@ -376,7 +376,7 @@ weiterführende Information zu Definitionsmöglichkeiten auch in
 Abschnitt~\ref{sec:gausslayout}.
 
 \begin{Declaration}
-  \Macro{showtubslogo}\OParameter{Seite}\\
+  \Macro{showtubslogo}\OParameter{Optionen}\\
   \Macro{showlogo}\Parameter{Inhalt}\\
   \Macro{showtopline}
 \end{Declaration}
@@ -386,14 +386,12 @@ Abschnitt~\ref{sec:gausslayout}.
 
 Die Verwendung einer dieser Befehle innerhalb einer \Environment{titlepage}-Umgebung
 sorgt dafür, dass das entsprechende Element auf der Seite dargestellt wird.
-\Macro{showtubslogo} stellt das Siegelbandlogo dar. Der optionale Parameter
-\PName{Seite} legt dabei fest auf welcher Seite des Blattes
-das Logo gezeigt werden soll.
-Der Wert \PValue{left} entspricht der Standardeinstellung und platziert das Logo auf der linken Seite.
-Mit dem Wert \PValue{right} wird dagegen eine Darstellung auf der rechten
-Seite des Blattes erwirkt. Gleichzeitig hat dies Auswirkungen
-auf die Positionierung des Zweitlogos, das automatisch immer auf der 
-dem Siegelbandlogo gegenüberliegenden Seite platziert wird.
+\Macro{showtubslogo} stellt das Siegelbandlogo dar, während
+\Macro{showlogo} das Instituts-Logo und \Macro{showtopline}
+einer rote Trennlinie anzeigt.
+Für Details zur Verwendung und verfügbarer Optionen sei hier auf
+\chaptername~\ref{sec:gausslayout:bglayout:elemente} verwiesen.
+
 
 \begin{Declaration}
   \Macro{showdesignhelper}
@@ -480,7 +478,7 @@ erstellt werden, welche in Kapitel~\ref{sec:gausslayout:gausspage} näher beschr
 %TODO: Hinweis Schriftgrößen, KOMA-Fonts
 
 Für Titelseiten gibt es 3 vordefinierte Styles, die durch Angabe des
-Style-Namens als Option von \Macro{maketitle} verwendet werden können
+Style-Namens als Option von \Macro{maketitle} verwendet werden können.
 
 \begin{Declaration}
   \KOption{logo}\PName{Position}
