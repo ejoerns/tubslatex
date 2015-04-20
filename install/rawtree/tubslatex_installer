@@ -218,7 +218,7 @@ if [ -z $zipurl ]; then
   read -p "Do you want to install the latest stable release automatically? (y/n)" yesno
   case $yesno in
     y|Y)
-      zipurl=http://enricojoerns.de/tubslatex/tubslatex_latest_stable.tds.zip
+      zipurl=http://tubslatex.ejoerns.de/current/tubslatex.tds.zip
       ;;
     *)
       $ECHO "Nothing will be done."

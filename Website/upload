@@ -1,2 +1,2 @@
 #!/bin/bash
-rsync -vrz -e 'ssh -p 23' . enrico@enricojoerns.de:/var/www/enricojoerns.de/httpdocs/tubslatex/.
+rsync -vrz . ejoerns:/var/www/vhosts/ejoerns.de/tubslatex.ejoerns.de/.
