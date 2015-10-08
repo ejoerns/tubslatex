@@ -1,0 +1,32 @@
+language: tex
+ubuntu-version: 14.04
+before_install:
+  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu/
+    trusty main restricted universe multiverse" -y
+  - sudo apt-get update -qq
+  #- sudo rm /etc/dpkg/dpkg.cfg.d/multiarch
+  - sudo apt-get install -qq -y -o Dpkg::Options::="--force-confnew" comparepdf latexmk
+
+  # Install comparepdf
+  #- sudo apt-get install libpoppler-qt4-3 libpoppler-qt4-dev libpoppler-dev libpoppler-cpp-dev 
+  #- git clone git://git.debian.org/collab-maint/comparepdf.git
+  #- cd comparepdf
+  #- qmake-qt4
+  #- make
+  #- sudo cp comparepdf /usr/bin/comparepdf
+  #- cd -
+  - sudo apt-get install debconf texlive-base texlive-latex-extra texlive-fonts-extra latex-beamer texlive-lang-german texlive-fonts-recommended texlive-extra-utils cm-super wget
+    #- wget http://de.archive.ubuntu.com/ubuntu/pool/universe/c/comparepdf/comparepdf_1.0.1-1build1_amd64.deb
+    #- sudo dpkg -i comparepdf_1.0.1-1build1_amd64.deb
+    #- wget http://old-releases.ubuntu.com/ubuntu/pool/universe/c/comparepdf/comparepdf_1.0.1-1build1_amd64.deb
+    #- sudo dpkg -i comparepdf_1.0.1-1build1_amd64.deb
+script:
+  # build tubslatex
+  - make -C install/rawtree zip
+  - mv install/rawtree/tubslatex*.zip tubslatex.zip
+  - mkdir -p ~/texmf/
+  - unzip tubslatex.zip -d ~/texmf/
+  # test tubslatex
+  - cd regression-test
+  - ./new-test.sh | tee test.log
+  - cat $(cat test.log | grep dumped | cut -d\  -f4)
