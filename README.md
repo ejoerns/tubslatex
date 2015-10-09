@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ejoerns/tubslatex.svg)](https://travis-ci.org/ejoerns/tubslatex)
+
 Benötigte Tools
 
 NSIS: (Installation mit Wine)
