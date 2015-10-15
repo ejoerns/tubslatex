@@ -41,7 +41,7 @@ VCS_DTXOUT = $(BASEDIR)/tubsvers.inc
 TEX_HGTEMPLATE = $(BASEDIR)/tex.hgtemplate
 
 # Konfigurierbare Verzeichnisse
-BASEDIR = ~/CD-LaTeX
+BASEDIR ?= ~/CD-LaTeX
 NSISDIR = ~/.wine/drive_c/Program\ Files/NSIS/makensis.exe
 
 
