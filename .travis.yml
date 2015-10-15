@@ -22,7 +22,12 @@ before_install:
     #- sudo dpkg -i comparepdf_1.0.1-1build1_amd64.deb
 script:
   # build tubslatex
-  - make -C install/rawtree zip
+  - sudo apt-get install -qq lcdf-typetools
+  - sudo apt-get install -qq tree
+  - tree
+  - export BASEDIR=$(pwd)
+  #- BASEDIR=$(pwd) make -C install/rawtree zip V=1
+  - make zip V=1
   - mv install/rawtree/tubslatex*.zip tubslatex.zip
   - mkdir -p ~/texmf/
   - unzip tubslatex.zip -d ~/texmf/

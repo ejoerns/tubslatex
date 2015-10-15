@@ -31,6 +31,8 @@ test:
 
 $(STYLIST): $(DTXLIST)
 	$(ECHO) -n 'Generating LaTeX-files for $<'...
+	$(ECHO) "pwd is: '$(shell pwd)'"
+	$(ECHO) "INSFILE is: '$(INSFILE)'"
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
