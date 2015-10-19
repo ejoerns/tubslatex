@@ -38,7 +38,7 @@ sourcedoc:
 
 buildinstaller: zip deb exe
 
-zip:
+zip: versiondtx
 # 	$(MAKE) -C $(INSTALL_RAW_DIR)
 	$(MAKE) -C $(INSTALL_RAW_DIR) zip
 

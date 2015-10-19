@@ -11,7 +11,7 @@ BUILDDIR = build
 # Dateien
 STYLIST = tubscolors.sty tubslogo.sty
 DTXLIST = tubscolors.dtx tubslogo.dtx
-INSFILE = cd-base.ins
+INSFILE = src/cd-base.ins
 
 # prefix with '$(SRCDIR)/'
 DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
