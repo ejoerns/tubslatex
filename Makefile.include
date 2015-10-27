@@ -37,7 +37,7 @@ endif
 
 # 
 # VCS_TEXSTYLE = tex.hgstyle
-VCS_DTXOUT = $(BASEDIR)/tubsvers.inc
+VCS_DTXOUT = tubsvers.inc
 TEX_HGTEMPLATE = $(BASEDIR)/tex.hgtemplate
 
 # Konfigurierbare Verzeichnisse
@@ -135,4 +135,10 @@ WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
 DONE_STRING=$(OK_COLOR)[DONE]$(NO_COLOR)
 
 
-VCS_DTXOUT = $(BASEDIR)/tubsvers.inc
+versiondtx:
+	$(ECHO) -e '$(WARN_COLOR)This is tubslatex Version $(TUBSLATEX_FULLVERSION)$(NO_COLOR)'
+	$(CAT) $(TEX_HGTEMPLATE) \
+	  | $(SED) 's:\$$VCS_DATE\$$:'"$(VCS_DATE)"':g' \
+	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
+	  | $(SED) -e 's/\$$VCS_REV\$$/'"$(VCS_REVISION)"'/g' > $(VCS_DTXOUT)
+

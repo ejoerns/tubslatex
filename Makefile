@@ -14,12 +14,6 @@ release: clean versiondtx buildinstaller mkdir fetch
 
 # generate: $(VCS_DTXOUT) sourcedoc documentation examples
 
-versiondtx:
-	$(ECHO) -e '$(WARN_COLOR)This is tubslatex Version $(TUBSLATEX_FULLVERSION)$(NO_COLOR)'
-	$(CAT) $(TEX_HGTEMPLATE) \
-	  | $(SED) 's:\$$VCS_DATE\$$:'"$(VCS_DATE)"':g' \
-	  | $(SED) 's/\$$VERSION\$$/$(TUBSLATEX_VERSION)/g' \
-	  | $(SED) -e 's/\$$VCS_REV\$$/'"$(VCS_REVISION)"'/g' > $(VCS_DTXOUT)
 
 # TODO: make dependent from existence of directory
 mkdir:

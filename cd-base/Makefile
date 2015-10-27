@@ -2,7 +2,6 @@
 # ---------------------------------
 # Erzeugt cd-base-Pakete und Dokumentation
 #
-include ../Makefile.include
 
 SRCDIR = src
 BUILDDIR = build
@@ -29,7 +28,7 @@ doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf)
 test:
 	$(MAKE) -C test
 
-$(STYLIST): $(DTXLIST)
+$(STYLIST): versiondtx $(DTXLIST)
 	$(ECHO) -n 'Generating LaTeX-files for $<'...
 	$(ECHO) "pwd is: '$(shell pwd)'"
 	$(ECHO) "INSFILE is: '$(INSFILE)'"
@@ -51,3 +50,5 @@ clean: cleantemp
 	$(ECHO) -en 'Cleaning generated files...'
 	$(RM) -f *.sty *.pdf
 	$(ECHO) -e '$(OK_STRING)'
+
+include ../Makefile.include
