@@ -2,7 +2,6 @@
 # ---------------------------------
 # Erzeugt beamer-Pakete und Dokumentation
 #
-include ../Makefile.include
 
 SRCDIR = src
 BUILDDIR = build
@@ -14,8 +13,8 @@ INSFILE = tubsbeamer.ins
 TEXDOCFILE = tubsbeamerdoc.tex
 
 # prefix with '$(SRCDIR)/'
-DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
-INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
+#DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
+#INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
 .PHONY: cleantemp clean
 
@@ -26,7 +25,7 @@ src: init $(STYLIST)
 init:
 	$(MAKE) -C $(BASEDIR) versiondtx
 
-doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) $(TEXDOCFILE:%.tex=%.pdf) cleantemp
+doc: $(DTXLIST:%.dtx=%.pdf) $(TEXDOCFILE:%.tex=%.pdf) cleantemp
 
 $(TEXDOCFILE:%.tex=%.pdf):
 	$(ECHO) -n 'Generating main documentation $<'...
@@ -40,7 +39,7 @@ $(STYLIST): $(DTXLIST)
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-%.pdf: $(SRCDIR)/%.dtx
+%.pdf: %.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 # 	makeindex -s gind.ist -o $(basename $< .dtx).ind $(basename $< .dtx).idx
@@ -56,3 +55,5 @@ clean: cleantemp
 	$(ECHO) -en 'Cleaning temporary files...'
 	$(RM) -f *.sty *.pdf
 	$(ECHO) -e '$(OK_STRING)'
+
+include ../Makefile.include

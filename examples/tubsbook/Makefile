@@ -1,5 +1,3 @@
-include ../../Makefile.include
-
 PDFLIST=tubsbook_example.pdf
 
 all: $(PDFLIST) cleantemp
@@ -17,3 +15,5 @@ clean: cleantemp
 	$(RM) -f $(PDFLIST)
 
 .PHONY: cleantemp clean
+
+include ../../Makefile.include

@@ -3,8 +3,6 @@
 # Erzeugt PDFs und entfernt anschliessend erzeugte Dateien,
 # die nicht benoetigt werden
 #
-include ../../Makefile.include
-
 PDFLIST = beamer_example.pdf
 
 all: $(PDFLIST) cleantemp
@@ -22,3 +20,5 @@ clean: cleantemp
 	$(RM) -f $(PDFLIST)
 
 .PHONY: cleantemp clean
+
+include ../../Makefile.include

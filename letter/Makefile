@@ -2,7 +2,6 @@
 # ---------------------------------
 # Erzeugt letter-Pakete und Dokumentation
 #
-include ../Makefile.include
 
 SRCDIR = src
 BUILDDIR = build
@@ -13,8 +12,8 @@ DTXLIST = tubslttr2.dtx
 INSFILE = tubslttr.ins
 
 # prefix with '$(SRCDIR)/'
-DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
-INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
+#DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
+#INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
 
 .PHONY: cleantemp clean
@@ -26,14 +25,14 @@ src: init $(GENLIST)
 init:
 	$(MAKE) -C $(BASEDIR) versiondtx
 
-doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) cleantemp
+doc: $(DTXLIST:%.dtx=%.pdf) cleantemp
 
 $(GENLIST): $(DTXLIST)
 	$(ECHO) -n 'Generating LaTeX-files for $<'...
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-%.pdf: $(SRCDIR)/%.dtx
+%.pdf: %.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
@@ -48,3 +47,5 @@ clean: cleantemp
 	$(ECHO) -en 'Cleaning generated files...'
 	$(RM) -f *.lco *.cls *.pdf
 	$(ECHO) -e '$(OK_STRING)'
+
+include ../Makefile.include

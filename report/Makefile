@@ -3,7 +3,6 @@
 # Erzeugt verschiedene tubslatex-Klassen, -Pakete und weitere Dateien,
 # sowie Dokumentation
 #
-include ../Makefile.include
 
 SRCDIR = src
 BUILDDIR = build
@@ -19,8 +18,8 @@ DTXLIST = tubsbox.dtx tubsdoc.dtx tubsflowfram.dtx tubsfont.dtx tubshead.dtx tub
 INSFILE = tubs.ins
 
 # prefix with '$(SRCDIR)/'
-DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
-INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
+#DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
+#INSFILE := $(patsubst %,$(SRCDIR)/%,$(INSFILE))
 
 TARGET_FILE = update.tmp
 
@@ -38,7 +37,7 @@ src: init $(GENLIST) $(TARGET_FILE)
 init:
 	$(MAKE) -C $(BASEDIR) versiondtx
 
-doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf) cleantemp
+doc: $(DTXLIST:%.dtx=%.pdf) cleantemp
 
 # Neu komipilieren, wenn TARGET_FILE nicht existiert
 $(TARGET_FILE):
@@ -47,7 +46,7 @@ $(TARGET_FILE):
 	$(TOUCH) $(TARGET_FILE)
 	$(ECHO) -e '$(DONE_STRING)'
 
-%.pdf: $(SRCDIR)/%.dtx
+%.pdf: %.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
 	$(Q)TEXINPUTS=.//:$$TEXINPUTS $(VPDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 	$(Q)TEXINPUTS=.//:$$TEXINPUTS $(VPDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
@@ -62,3 +61,5 @@ clean: cleantemp
 	$(ECHO) -n "Clean generated files..."
 	$(RM) -rf *.cls *.sty *.clo *.pdf
 	$(ECHO) -e '$(OK_STRING)'
+
+include ../Makefile.include

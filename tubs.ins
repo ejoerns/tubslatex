@@ -1,0 +1,294 @@
+%%
+%% Copyright (C) 2011 by Enrico Jörns and Mr. X
+%%
+
+\input docstrip
+\keepsilent
+
+\usedir{tex/latex/tubs}
+
+\preamble
+
+This is a generated file.
+
+Copyright (C) 2012 by Enrico Jörns et al.
+
+This file may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.2 of this license or (at your option) any later
+version. The latest version of this license is in:
+
+  http://www.latex-project.org/lppl.txt
+
+and version 1.2 or later is part of all distributions of
+LaTeX version 1999/12/01 or later.
+
+\endpreamble
+
+% --- Prevent overwrite questions ---
+\askforoverwritefalse
+
+% --- File generation ---
+
+% --- base files ---
+
+\usedir{tex/latex/tubs}
+\generate{\file{tubscolors.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubscolors.dtx}{package}
+}}
+
+\generate{\file{tubslogo.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubslogo.dtx}{package}
+}}
+
+% --- beamer ---
+
+\generate{\file{tubsbeamersizes.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubsbeamersizes.dtx}{package}
+}}
+
+\generate{\file{beamercolorthemetubs.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{beamercolorthemetubs.dtx}{colortheme}
+}}
+
+\generate{\file{beamerthemetubs.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{beamerthemetubs.dtx}{beamertheme}
+}}
+
+\generate{\file{beamerouterthemetubs.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{beamerouterthemetubs.dtx}{outertheme}
+}}
+
+\generate{\file{beamerinnerthemetubs.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{beamerinnerthemetubs.dtx}{innertheme}
+}}
+
+\generate{\file{beamerfontthemetubs.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{beamerfontthemetubs.dtx}{fonttheme}
+}}
+
+% --- documentaiton class ---
+
+\generate{\file{tubsltxdoc.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsltxdoc.dtx}{class}
+}}
+
+% --- document classes ---
+
+\generate{\file{tubsbook.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsdoc.dtx}{class,book,head}
+  \from{tubsdoc.dtx}{class,book,option}
+  \from{tubsfont.dtx}{class,book,option}
+  \from{tubshead.dtx}{class,book,option}
+  \from{tubstitlepage.dtx}{class,book,option}
+  \from{tubsdoc.dtx}{class,book,execoption}
+  \from{tubsdoc.dtx}{class,book,body}
+  \from{tubsfont.dtx}{class,book,body}
+  \from{tubshead.dtx}{class,book,body}
+  \from{tubstitlepage.dtx}{class,book,body}
+}}
+
+\generate{\file{tubsreprt.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsdoc.dtx}{class,report,head}
+  \from{tubsdoc.dtx}{class,report,option}
+  \from{tubsfont.dtx}{class,report,option}
+  \from{tubshead.dtx}{class,report,option}
+  \from{tubstitlepage.dtx}{class,report,option}
+  \from{tubsdoc.dtx}{class,report,execoption}
+  \from{tubsdoc.dtx}{class,report,body}
+  \from{tubsfont.dtx}{class,report,body}
+  \from{tubshead.dtx}{class,report,body}
+  \from{tubstitlepage.dtx}{class,report,body}
+}}
+
+\generate{\file{tubsartcl.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsdoc.dtx}{class,article,head}
+  \from{tubsdoc.dtx}{class,article,option}
+  \from{tubsfont.dtx}{class,article,option}
+  \from{tubshead.dtx}{class,article,option}
+  \from{tubstitlepage.dtx}{class,article,option}
+  \from{tubsdoc.dtx}{class,article,execoption}
+  \from{tubsdoc.dtx}{class,article,body}
+  \from{tubsfont.dtx}{class,article,body}
+  \from{tubshead.dtx}{class,article,body}
+  \from{tubstitlepage.dtx}{class,article,body}
+}}
+
+\generate{\file{tubsposter.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsdoc.dtx}{class,poster,head}
+  \from{tubsdoc.dtx}{class,poster,option}
+  \from{tubsfont.dtx}{class,poster,option}
+  \from{tubsposter.dtx}{class,poster,option}
+  \from{tubsdoc.dtx}{class,poster,execoption}
+  \from{tubsposter.dtx}{class,poster,execoption}
+  \from{tubsdoc.dtx}{class,poster,body}
+  \from{tubsfont.dtx}{class,poster,body}
+  \from{tubsposter.dtx}{class,poster,body}
+}}
+
+\generate{\file{tubsleaflet.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsdoc.dtx}{class,leaflet,head}
+  \from{tubsdoc.dtx}{class,leaflet,option}
+  \from{tubsfont.dtx}{class,leaflet,option}
+  \from{tubshead.dtx}{class,leaflet,option}
+  \from{tubsdoc.dtx}{class,leaflet,execoption}
+  \from{tubsdoc.dtx}{class,leaflet,body}
+  \from{tubsfont.dtx}{class,leaflet,body}
+  \from{tubshead.dtx}{class,leaflet,body}
+}}
+
+% --- Generate fontsize informations
+
+\generate{\file{tubsa040pt.clo}{%
+  \from{tubsfont.dtx}{clo,a0}
+}}
+
+\generate{\file{tubsa0scifi40pt.clo}{%
+  \from{tubsfont.dtx}{clo,a0,scifi}
+}}
+
+\generate{\file{tubsa125pt.clo}{%
+  \from{tubsfont.dtx}{clo,a1}
+}}
+
+\generate{\file{tubsa1scifi25pt.clo}{%
+  \from{tubsfont.dtx}{clo,a1,scifi}
+}}
+
+\generate{\file{tubsa218pt.clo}{%
+  \from{tubsfont.dtx}{clo,a2}
+}}
+
+\generate{\file{tubsa2scifi18pt.clo}{%
+  \from{tubsfont.dtx}{clo,a2,scifi}
+}}
+
+\generate{\file{tubsa313pt.clo}{%
+  \from{tubsfont.dtx}{clo,a3}
+}}
+
+% Pseudo-Definition (Gleiche wie tubsa313pt)
+\generate{\file{tubsa3scifi13pt.clo}{%
+  \from{tubsfont.dtx}{clo,a3}
+}}
+
+% A4 @ 9pt, 10pt, 11pt
+
+\generate{\file{tubsa49pt.clo}{%
+  \from{tubsfont.dtx}{clo,a4,9}
+}}
+
+\generate{\file{tubsa410pt.clo}{%
+  \from{tubsfont.dtx}{clo,a4,10}
+}}
+
+\generate{\file{tubsa411pt.clo}{%
+  \from{tubsfont.dtx}{clo,a4,11}
+}}
+
+% A5 @ 9pt, 10pt
+
+\generate{\file{tubsa59pt.clo}{%
+  \from{tubsfont.dtx}{clo,a5,9}
+}}
+
+\generate{\file{tubsa510pt.clo}{%
+  \from{tubsfont.dtx}{clo,a5,10}
+}}
+
+\generate{\file{tubsa511pt.clo}{%
+  \from{tubsfont.dtx}{clo,a5,11}
+}}
+
+% DIN lang @ 9pt
+
+\generate{\file{tubslang9pt.clo}{%
+  \from{tubsfont.dtx}{clo,lang,9}
+}}
+
+\generate{\file{tubslang10pt.clo}{%
+  \from{tubsfont.dtx}{clo,lang,10}
+}}
+
+\generate{\file{tubslang11pt.clo}{%
+  \from{tubsfont.dtx}{clo,lang,11}
+}}
+
+
+\generate{\file{tubsdoc.sty}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubsdoc.dtx}{package,head}
+  \from{tubsdoc.dtx}{package,option}
+%   \from{tubshead.dtx}{package,option}
+  \from{tubsfont.dtx}{package,option}
+  \from{tubstitlepage.dtx}{package,option}
+  \from{tubsdoc.dtx}{package,execoption}
+  \from{tubsdoc.dtx}{package,body}
+%   \from{tubshead.dtx}{package,body}
+  \from{tubstitlepage.dtx}{package,body}
+  \from{tubsfont.dtx}{package,body}
+}}
+
+
+\generate{\file{tubsflowfram.sty}{%
+  \from{tubsflowfram.dtx}{package}
+}}
+
+
+\generate{\file{tubstypearea.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubstypearea.dtx}{package}
+}}
+
+
+\generate{\file{tubsstyle.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubsstyle.dtx}{package}
+}}
+
+
+\generate{\file{tubsbox.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubsbox.dtx}{package}
+}}
+
+
+\generate{\file{tubsdebug.sty}{%
+  \from{tubsvers.inc}{default}
+  \from{tubsdebug.dtx}{package,option}
+  \from{tubsdebug.dtx}{package,body}
+}}
+
+% --- nexus ---
+
+\generate{\file{nexus.sty}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{nexus.dtx}{package}
+}}
+
+% --- letter ---
+
+\generate{\file{tubslttr2.cls}{%
+  \from{tubsvers.inc}{default,extra}
+  \from{tubslttr2.dtx}{class}
+}}
+
+\generate{\file{tubs.lco}{%
+  \from{tubslttr2.dtx}{lco}
+}}
+
+\endbatchfile

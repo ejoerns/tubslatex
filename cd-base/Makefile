@@ -10,12 +10,11 @@ BUILDDIR = build
 # Dateien
 STYLIST = tubscolors.sty tubslogo.sty
 DTXLIST = tubscolors.dtx tubslogo.dtx
-INSFILE = src/cd-base.ins
+INSFILE = cd-base.ins
 
 # prefix with '$(SRCDIR)/'
-DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
-INSLIST := $(patsubst %,$(SRCDIR)/%,$(INSLIST))
-
+#DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
+#INSLIST := $(patsubst %,$(SRCDIR)/%,$(INSLIST))
 
 .PHONY: cleantemp clean test
 
@@ -23,7 +22,7 @@ all: src cleantemp
 
 src: $(STYLIST) cleantemp
 
-doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf)
+doc: $(DTXLIST:%.dtx=%.pdf)
 
 test:
 	$(MAKE) -C test
@@ -35,7 +34,7 @@ $(STYLIST): versiondtx $(DTXLIST)
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-%.pdf: $(SRCDIR)/%.dtx
+%.pdf: %.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)

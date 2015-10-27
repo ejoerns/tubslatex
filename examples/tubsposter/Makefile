@@ -1,5 +1,3 @@
-include ../../Makefile.include
-
 PDFLIST=tubsposter_example.pdf scifiposter_example.pdf bulletin_example.pdf
 
 all: $(PDFLIST) cleantemp
@@ -17,3 +15,5 @@ clean:
 	$(RM) -f $(PDFLIST)
 
 .PHONY: cleantemp clean
+
+include ../../Makefile.include

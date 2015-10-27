@@ -36,12 +36,25 @@
 % \iffalse
 %
 %<*driver>
-\documentclass{tubsltxdoc}
+\documentclass{ltxdoc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{nexus}
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
 \usepackage{tabularx}
+\newenvironment{key}[2]{\expandafter\macro\expandafter{`#2'}}{\endmacro}
+\newenvironment{Options}%
+ {\begin{list}{}{%
+  \renewcommand{\makelabel}[1]{\texttt{##1}\hfil}%
+  \setlength{\itemsep}{-.5\parsep}
+  \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+  \setlength{\leftmargin}{\labelwidth}%
+  \addtolength{\leftmargin}{\labelsep}}%
+  \raggedright}%
+ {\end{list}}%
+%
+\parindent0mm
+\parskip\medskipamount
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -185,10 +198,9 @@
 %
 % \section{Implementierung}
 %
-%
-%    \begin{macrocode}
+%\iffalse
 %<*package>
-%    \end{macrocode}
+%\fi
 %
 %    \begin{macrocode}
 \ProvidesPackage{nexus}[\tubslatexVersion\space Nexus font]
@@ -466,9 +478,137 @@
 \fi%
 %    \end{macrocode}
 %
-%    \begin{macrocode}
+%\iffalse
 %</package>
+%\fi
+% \subsection{The Font Definition Files --- \texttt{LY1NexusPro*.fd}}
+%
+%\iffalse
+%<*fdsans>
+%\fi
+%    \begin{macrocode}
+\ProvidesFile{LY1NexusProSans.fd}[Fontshop NexusProSans font definitions]
+\DeclareFontFamily{LY1}{NexusProSans}{}
+
+\DeclareFontShape{LY1}{NexusProSans}{m}{n}{ <-> NexusProSans-Regular }{}
+\DeclareFontShape{LY1}{NexusProSans}{m}{sc}{ <-> NexusProSans-SmallCaps }{}
+\DeclareFontShape{LY1}{NexusProSans}{m}{sl}{ <-> NexusProSans-Slanted }{}
+\DeclareFontShape{LY1}{NexusProSans}{m}{it}{ <-> NexusProSans-Italic}{}
+
+\DeclareFontShape{LY1}{NexusProSans}{b}{n}{ <-> NexusProSans-Bold-Regular }{}
+\DeclareFontShape{LY1}{NexusProSans}{b}{sc}{ <-> NexusProSans-Bold-SmallCaps }{}
+\DeclareFontShape{LY1}{NexusProSans}{b}{sl}{ <-> NexusProSans-Bold-Slanted }{}
+\DeclareFontShape{LY1}{NexusProSans}{b}{it}{ <-> NexusProSans-Bold-Italic}{}
+
+\DeclareFontShape{LY1}{NexusProSans}{bx}{n}{ <-> ssub * NexusProSans/b/n }{}
+\DeclareFontShape{LY1}{NexusProSans}{bx}{sc}{ <-> ssub * NexusProSans/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSans}{bx}{sl}{ <-> ssub * NexusProSans/b/sl }{}
+\DeclareFontShape{LY1}{NexusProSans}{bx}{it}{ <-> ssub * NexusProSans/b/it }{}
+
+\DeclareFontShape{LY1}{NexusProSans}{sb}{n}{ <-> ssub * NexusProSans/b/n }{}
+\DeclareFontShape{LY1}{NexusProSans}{sb}{sc}{ <-> ssub * NexusProSans/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSans}{sb}{sl}{ <-> ssub * NexusProSans/b/sl }{}
+\DeclareFontShape{LY1}{NexusProSans}{sb}{it}{ <-> ssub * NexusProSans/b/it }{}
+        
 %    \end{macrocode}
+%\iffalse
+%</fdsans>
+%\fi
+%
+%\iffalse
+%<*fdsanslnum>
+%\fi
+%    \begin{macrocode}
+\ProvidesFile{LY1NexusProSans-lnum.fd}[Fontshop NexusProSans-lnum font definitions]
+\DeclareFontFamily{LY1}{NexusProSans-lnum}{}
+
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{n}{ <-> NexusProSans-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{sc}{ <-> NexusProSans-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{sl}{ <-> NexusProSans-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{m}{it}{ <-> NexusProSans-Italic-lnum }{}
+
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{n}{ <-> NexusProSans-Bold-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{sc}{ <-> NexusProSans-Bold-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{sl}{ <-> NexusProSans-Bold-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{b}{it}{ <-> NexusProSans-Bold-Italic-lnum }{}
+
+\DeclareFontShape{LY1}{NexusProSans-lnum}{bx}{n}{ <-> ssub * NexusProSans-lnum/b/n }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{bx}{sc}{ <-> ssub * NexusProSans-lnum/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{bx}{sl}{ <-> ssub * NexusProSans-lnum/b/sl }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{bx}{it}{ <-> ssub * NexusProSans-lnum/b/it }{}
+
+\DeclareFontShape{LY1}{NexusProSans-lnum}{sb}{n}{ <-> ssub * NexusProSans-lnum/b/n }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{sb}{sc}{ <-> ssub * NexusProSans-lnum/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{sb}{sl}{ <-> ssub * NexusProSans-lnum/b/sl }{}
+\DeclareFontShape{LY1}{NexusProSans-lnum}{sb}{it}{ <-> ssub * NexusProSans-lnum/b/it }{}
+%    \end{macrocode}
+%\iffalse
+%</fdsanslnum>
+%\fi
+%
+%\iffalse
+%<*fdserif>
+%\fi
+%    \begin{macrocode}
+\ProvidesFile{LY1NexusProSerif.fd}[Fontshop NexusProSerif font definitions]
+\DeclareFontFamily{LY1}{NexusProSerif}{}
+
+\DeclareFontShape{LY1}{NexusProSerif}{m}{n}{ <-> NexusProSerif-Regular }{}
+\DeclareFontShape{LY1}{NexusProSerif}{m}{sc}{ <-> NexusProSerif-SmallCaps }{}
+\DeclareFontShape{LY1}{NexusProSerif}{m}{sl}{ <-> NexusProSerif-Slanted }{}
+\DeclareFontShape{LY1}{NexusProSerif}{m}{it}{ <-> NexusProSerif-Italic}{}
+
+\DeclareFontShape{LY1}{NexusProSerif}{b}{n}{ <-> NexusProSerif-Bold-Regular }{}
+\DeclareFontShape{LY1}{NexusProSerif}{b}{sc}{ <-> NexusProSerif-Bold-SmallCaps }{}
+\DeclareFontShape{LY1}{NexusProSerif}{b}{sl}{ <-> NexusProSerif-Bold-Slanted }{}
+\DeclareFontShape{LY1}{NexusProSerif}{b}{it}{ <-> NexusProSerif-Bold-Italic }{}
+
+\DeclareFontShape{LY1}{NexusProSerif}{bx}{n}{ <-> ssub * NexusProSerif/b/n }{}
+\DeclareFontShape{LY1}{NexusProSerif}{bx}{it}{ <-> ssub * NexusProSerif/b/it }{}
+\DeclareFontShape{LY1}{NexusProSerif}{bx}{sc}{ <-> ssub * NexusProSerif/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSerif}{bx}{sl}{ <-> ssub * NexusProSerif/b/sl }{}
+
+\DeclareFontShape{LY1}{NexusProSerif}{sb}{n}{ <-> ssub * NexusProSerif/b/n }{}
+\DeclareFontShape{LY1}{NexusProSerif}{sb}{it}{ <-> ssub * NexusProSerif/b/it }{}
+\DeclareFontShape{LY1}{NexusProSerif}{sb}{sc}{ <-> ssub * NexusProSerif/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSerif}{sb}{sl}{ <-> ssub * NexusProSerif/b/sl }{}
+%    \end{macrocode}
+%\iffalse
+%</fdserif>
+%\fi
+%
+%\iffalse
+%<*fdseriflnum>
+%\fi
+%    \begin{macrocode}
+\ProvidesFile{LY1NexusProSerif-lnum.fd}[Fontshop NexusProSerif-lnum font definitions]
+\DeclareFontFamily{LY1}{NexusProSerif-lnum}{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{n}{ <-> NexusProSerif-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{sc}{ <-> NexusProSerif-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{sl}{ <-> NexusProSerif-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{m}{it}{ <-> NexusProSerif-Italic-lnum}{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{n}{ <-> NexusProSerif-Bold-Regular-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{sc}{ <-> NexusProSerif-Bold-SmallCaps-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{sl}{ <-> NexusProSerif-Bold-Slanted-lnum }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{b}{it}{ <-> NexusProSerif-Bold-Italic-lnum }{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{n}{ <-> ssub * NexusProSerif-lnum/b/n }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{it}{ <-> ssub * NexusProSerif-lnum/b/it }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{sc}{ <-> ssub * NexusProSerif-lnum/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{bx}{sl}{ <-> ssub * NexusProSerif-lnum/b/sl }{}
+
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{n}{ <-> ssub * NexusProSerif-lnum/b/n }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{it}{ <-> ssub * NexusProSerif-lnum/b/it }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{sc}{ <-> ssub * NexusProSerif-lnum/b/sc }{}
+\DeclareFontShape{LY1}{NexusProSerif-lnum}{sb}{sl}{ <-> ssub * NexusProSerif-lnum/b/sl }{}
+%    \end{macrocode}
+%\iffalse
+%</fdseriflnum>
+%\fi
+
+
 %
 % \Finale
 \endinput

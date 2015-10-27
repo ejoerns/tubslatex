@@ -2,21 +2,15 @@
 # ---------------------------------
 # Erzeugt nexus-Paket und Dokumentation
 #
-include ../Makefile.include
 
 SRCDIR = src
 OTFSRCDIR = otf-src
 BUILDDIR = build
 
 # Dateien
-STYLIST := nexus.sty
+STYLIST := nexus.sty LY1NexusProSans.fd LY1NexusProSans-lnum.fd LY1NexusProSerif.fd LY1NexusProSerif-lnum.fd
 DTXLIST = nexus.dtx
 INSFILE = nexus.ins
-
-# prefix with '$(SRCDIR)/'
-DTXLIST := $(patsubst %,$(SRCDIR)/%,$(DTXLIST))
-INSLIST := $(patsubst %,$(SRCDIR)/%,$(INSLIST))
-
 
 OTFDEFAULT = --warn-missing
 OTFDEFAULT += --encoding=texnansx
@@ -49,14 +43,14 @@ test:
 
 src: $(STYLIST)
 
-doc: $(DTXLIST:$(SRCDIR)/%.dtx=%.pdf)
+doc: $(DTXLIST:%.dtx=%.pdf)
 
 $(STYLIST): $(DTXLIST)
 	$(ECHO) -n 'Generating LaTeX-files for $<'...
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-%.pdf: $(SRCDIR)/%.dtx
+%.pdf: %.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
@@ -114,13 +108,15 @@ fonts:
 
 	$(ECHO) -e '$(OK_STRING)'
 
-cleantemp:
+clean:
 	$(ECHO) -n "Clean temporary files..."
 	$(RM) -f *~ build/*~ *.aux *.log *.glo *.idx *.out *.toc *.backup
 	$(ECHO) -e '$(OK_STRING)'
 
-clean: cleantemp
+distclean: clean
 	$(ECHO) -n "Clean build files..."
-	$(RM) -rf *.sty *.pdf
+	$(RM) -rf *.sty *.pdf *.fd
 	$(RM) -rf fonts
 	$(ECHO) -e '$(OK_STRING)'
+
+include ../Makefile.include

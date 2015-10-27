@@ -5,7 +5,6 @@
 # Bekannte Probleme:
 # - Aktualisierungen in examples fuehren nicht zur
 #   Neukompilierung von tubsdocguide.
-include ../Makefile.include
 
 DOCFILE = tubsdocguide.pdf
 EXAMPLEDIR = ../examples
@@ -57,3 +56,5 @@ clean: cleantemp
 	$(RM) -rf *.pdf
 	$(ECHO) -e '$(OK_STRING)'
 	$(MAKE) -C $(EXAMPLEDIR) clean
+
+include ../Makefile.include
