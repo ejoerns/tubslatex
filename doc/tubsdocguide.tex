@@ -78,7 +78,7 @@
 \tableofcontents
 
 
-\newcommand{\newdocumentclass}[1]{\textcolor{tuGreenDark}{\lstinline{#1}}}
+\newcommand{\newdocumentclass}[1]{\textcolor{tuGreenDark}{\lstinline!#1!}}
 \newcommand{\newpackage}[1]{\textcolor{tuGreenDark}{\lstinline{#1}}}
 
 \include{intro}       % Kapitel 'Einleitung'
@@ -154,8 +154,8 @@ im Allgemeinen nicht erforderlich sein sollte.
 % Index
 \addcontentsline{toc}{chapter}{Index}
 \chapter*{Index}
-\printindex{general}{Allgemeiner Index}
-\printindex{cmd}{Index der Befehle und Umgebungen}
-\printindex{option}{Index der Optionen}
+\printindex[general]%{Allgemeiner Index}
+\printindex[cmd]%{Index der Befehle und Umgebungen}
+\printindex[option]%{Index der Optionen}
 
 \end{document}
