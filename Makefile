@@ -206,8 +206,7 @@ buildinstaller: zip deb exe
 pre-install: zip
 
 zip: textree
-	cd build/; \
-	$(ZIP) -r tubslatex_$(TUBSLATEX_FULLVERSION).tds.zip * $(SILENT)
+	$(ZIP) -r build/tubslatex_$(TUBSLATEX_FULLVERSION).tds.zip build/* $(SILENT)
 
 deb:
 	$(MAKE) -C $(INSTALL_DEB_DIR) deb
