@@ -27,4 +27,9 @@ RUN wget https://tug.org/fonts/getnonfreefonts/install-getnonfreefonts && \
   texlua install-getnonfreefonts && \
   getnonfreefonts --sys --verbose arial-urw
 
+# for trusty
+RUN apt-get update && apt-get install -y \
+  etoolbox \
+  texlive-latex-extra
+
 USER ${user}
