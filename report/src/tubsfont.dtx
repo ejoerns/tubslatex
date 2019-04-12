@@ -337,10 +337,15 @@ tubsheadings}}
 % TODO: bisher nur quick\&dirty (TM)
 %    \begin{macrocode}
 %<*book|report|package>
-\RequirePackage[compact]{titlesec}
-\titleformat{\chapter}[block]
-{\usekomafont{chapter}}{\lnum\thechapter}{10pt}{}
-\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+% Neuere Koma-Skript-Versionen erlauben eine native Redeklaration der Section-Abstaende
+\ifthenelse{\isundefined{\RedeclareSectionCommand}}{
+	\RequirePackage[compact]{titlesec}
+	\titleformat{\chapter}[block]
+		{\usekomafont{chapter}}{\lnum\thechapter}{10pt}{}
+	\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+}{%
+	\RedeclareSectionCommand[beforeskip=0pt, afterskip=30pt]{chapter}
+}
 %</book|report|package>
 %    \end{macrocode}
 %
