@@ -1,5 +1,12 @@
 [![Build Status](https://travis-ci.org/ejoerns/tubslatex.svg)](https://travis-ci.org/ejoerns/tubslatex)
 
+# Building
+
+Requires:
+- otftotfm`
+
+sudo apt-get install lcdf-typetools
+
 # Documentation
 
 Run `make doc` to generate documentation (requires tubslatex itself to be installed first.
