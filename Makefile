@@ -226,7 +226,8 @@ fetch:
 	$(ECHO) -e '$(DONE_STRING)'
 
 clean:
-	$(RM) -f *.log *.aux *.toc *.out *.glo *.idx
+	$(RM) -f *.log *.aux *.toc *.out *.glo *.idx *.ilg *.ind
+	$(RM) -f *.tfm *.vf *.pfb *.enc
 
 distclean: clean
 	$(RM) -f $(GENLIST) $(NEXUS_GENLIST) $(DTXLIST:%.dtx=%.pdf) $(NEXUS_DTXLIST:%.dtx=%.pdf)
