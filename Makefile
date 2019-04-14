@@ -66,10 +66,16 @@ LNUMFEATURE = --feature=lnum
 # For small caps
 SMCPFEATURE = --feature=smcp
 
-.PHONY: clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch versiondtx nexus src
+.PHONY: docstrip.cfg clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch versiondtx nexus src
 
 all: $(GENLIST) nexus doc nexus-doc
 	make -C doc
+
+docstrip.cfg:
+	echo "\BaseDirectory{build}\UseTDS" > docstrip.cfg
+	$(MKDIR) -p build/tex/latex/tubs
+	$(MKDIR) -p build/doc/latex/tubs
+	$(MKDIR) -p build/source/latex/tubs
 
 # Generate documentation
 doc: $(DTXLIST:%.dtx=%.pdf)
@@ -87,7 +93,7 @@ tmpmedia: $(notdir $(MEDIALIST))
 	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-$(GENLIST): $(DTXLIST)
+$(GENLIST): docstrip.cfg $(DTXLIST)
 	#$(ECHO) -n 'Generating LaTeX-files for $<'...
 	$(ECHO) -n 'Generating LaTeX-files ...'
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
@@ -103,9 +109,6 @@ font-setup:
 
 # Create tex tree in build dir
 textree: src nexus-textree doc documentation
-	$(MKDIR) -p build/tex/latex/tubs
-	$(MKDIR) -p build/doc/latex/tubs
-	$(MKDIR) -p build/source/latex/tubs
 	$(CP) *.dtx build/source/latex/tubs
 	$(CP) *.cls *.sty *.clo build/tex/latex/tubs/
 	$(CP) $(MEDIALIST) build/tex/latex
@@ -230,7 +233,7 @@ clean:
 	$(RM) -f *.tfm *.vf *.pfb *.enc
 
 distclean: clean
-	$(RM) -f $(GENLIST) $(NEXUS_GENLIST) $(DTXLIST:%.dtx=%.pdf) $(NEXUS_DTXLIST:%.dtx=%.pdf)
+	$(RM) -f docstrip.cfg $(GENLIST) $(NEXUS_GENLIST) $(DTXLIST:%.dtx=%.pdf) $(NEXUS_DTXLIST:%.dtx=%.pdf)
 	$(RM) -rf build
 	$(RM) -f tubslatex_$(TUBSLATEX_FULLVERSION).tds.zip
 
