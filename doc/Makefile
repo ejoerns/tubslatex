@@ -48,7 +48,7 @@ examples:
 cleantemp:
 	$(ECHO) -n "Clean temporary files..."
 	$(RM) -f *~ build/*~ *.acn *.acr *.alg *.aux *.bbl *.blg *.glg *.glo *.gls
-	$(RM) -f *.glsdefs *.ist *.lof *.log *.lol *.out *.toc
+	$(RM) -f *.glsdefs *.ist *.lof *.log *.lol *.out *.toc *.idx *.ilg *.ind
 	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp

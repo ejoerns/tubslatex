@@ -19,7 +19,7 @@ all: $(EXAMPLELIST) cleantemp
 
 cleantemp:
 	$(ECHO) -n "Clean temporary files..."
-	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.toc *.backup
+	$(RM) -f *~ *.aux *.log *.glo *.idx *.out *.toc *.backup *.nav *.snm
 	$(ECHO) -e '$(OK_STRING)'
 
 clean: cleantemp
