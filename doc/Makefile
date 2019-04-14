@@ -7,7 +7,7 @@
 #   Neukompilierung von tubsdocguide.
 
 DOCFILE = tubsdocguide.pdf
-EXAMPLEDIR = ../examples
+EXAMPLEDIR = examples
 DOC_EXAMPLEDIR = examples
 
 # autovars
