@@ -115,18 +115,15 @@ textree: src nexus-textree doc documentation
 	$(CP) $(DTXLIST:%.dtx=%.pdf) build/doc/latex/tubs/
 	$(CP) doc/tubsdocguide.pdf build/doc/latex/tubs/
 
-$(NEXUS_GENLIST): $(NEXUS_DTXLIST)
-	$(ECHO) -n 'Generating LaTeX-files for $<'...
-	$(LATEX) $(PDFLATEX_SILENT) $(NEXUS_INSFILE) $(SILENT)
-	$(ECHO) -e '$(DONE_STRING)'
-
-nexus-textree: versiondtx $(NEXUS_GENLIST) fonts-textree font-setup nexus-doc
+nexusins:
 	$(MKDIR) -p build/tex/latex/nexus
 	$(MKDIR) -p build/source/latex/nexus
 	$(MKDIR) -p build/doc/latex/nexus
-	$(CP) *.fd nexus.sty build/tex/latex/nexus/
-	$(CP) nexus.dtx build/source/latex/nexus/
-	$(CP) nexus.pdf build/doc/latex/nexus/
+	$(ECHO) -n 'Generating nexus LaTeX-files ...'
+	$(LATEX) $(PDFLATEX_SILENT) $(NEXUS_INSFILE) $(SILENT)
+	$(ECHO) -e '$(DONE_STRING)'
+
+nexus-textree: versiondtx nexusins fonts-textree font-setup nexus-doc
 
 # TODO: make dependent from existence of directory
 mkdir:
