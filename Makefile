@@ -68,7 +68,7 @@ SMCPFEATURE = --feature=smcp
 
 .PHONY: docstrip.cfg clean mkdir generate sourcedoc documentation examples buildinstaller zip deb exe fetch versiondtx nexus src
 
-all: $(GENLIST) nexus doc nexus-doc
+all: docstrip.cfg tubsins nexus doc nexus-doc
 	make -C doc
 
 docstrip.cfg:
@@ -89,12 +89,12 @@ tmpmedia: $(notdir $(MEDIALIST))
 # Generate documentation from dtx files
 %.pdf: %.dtx
 	$(ECHO) -n 'Compiling doc for $<'...
-	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
-	$(PDFLATEX) $(PDFLATEX_SILENT) $< $(SILENT)
+	${Q}TEXMFHOME=build/ pdflatex $(PDFLATEX_SILENT) $< $(SILENT)
+	${Q}TEXMFHOME=build/ pdflatex $(PDFLATEX_SILENT) $< $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
 
-$(GENLIST): docstrip.cfg $(DTXLIST)
-	#$(ECHO) -n 'Generating LaTeX-files for $<'...
+#$(GENLIST):
+tubsins:
 	$(ECHO) -n 'Generating LaTeX-files ...'
 	$(LATEX) $(PDFLATEX_SILENT) $(INSFILE) $(SILENT)
 	$(ECHO) -e '$(DONE_STRING)'
